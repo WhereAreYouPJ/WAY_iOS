@@ -2,10 +2,9 @@
 platform :ios, '13.0'
 
 target 'Where_Are_You' do
-  # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
 	pod 'Alamofire'
 	pod 'SwiftLint'
-
+	pod 'SnapKit'
 end

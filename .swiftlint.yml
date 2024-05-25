@@ -28,6 +28,6 @@ identifier_name:
         warning: 1
 
 excluded:
-- Where_Are_You/AppDelegate.swift
+- Where_Are_You/App/AppDelegate.swift
 - Pods
 - Libraries
