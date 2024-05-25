@@ -7,6 +7,8 @@
 		<string>Ttangsbudaejjigae-Bold.otf</string>
 		<string>Ttangsbudaejjigae-Light.otf</string>
 		<string>Ttangsbudaejjigae-Medium.otf</string>
+		<string>NotoSansKR-Bold.ttf</string>
+		<string>NotoSansKR-Medium.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

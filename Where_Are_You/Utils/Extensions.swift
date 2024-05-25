@@ -92,6 +92,7 @@ extension UIColor {
     
     static let brancColor = UIColor.rgb(red: 123, green: 80, blue: 255)
     static let letterBrandColor = UIColor.rgb(red: 98, green: 54, blue: 233)
+    static let warningColor = UIColor.rgb(red: 223, green: 67, blue: 67)
 }
 
 // MARK: - UIFont
@@ -107,7 +108,7 @@ extension UIFont {
         case .light:
             weightString = "OTTtangsbudaejjigaeL"
         case .medium:
-            weightString = "OTTtangsbudaejjigaeM"
+            weightString = "NotoSansKR-Medium"
         default:
             weightString = "Regular"
         }
@@ -115,3 +116,8 @@ extension UIFont {
         return UIFont(name: "\(weightString)", size: fontSize) ?? .systemFont(ofSize: fontSize, weight: weight)
     }
 }
+
+// 글자 폰트 이름
+// NotoSansMyanmar-Regular
+// NotoSansMyanmar-Light
+// NotoSansMyanmar-Bold
