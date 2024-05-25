@@ -6,25 +6,24 @@
 //
 
 import UIKit
+import SnapKit
 
 class LoginView: UIView {
     // MARK: - Properties
     
     let titleLabel: UILabel = {
         let label = UILabel()
-//        let attrString = NSAttributedString(
-//            string: "지금 어디?",
-//            attributes: [
-//                NSAttributedString.Key.foregroundColor: UIColor.mainPurple,
-//                NSAttributedString.Key.font: UIFont.pretendard(size: 36, weight: .bold),
-//                NSAttributedString.Key.strokeWidth: -0.3
-//            ]
-//        )
-//        
-//        label.attributedText = attrString
         label.font = UIFont.pretendard(size: 36, weight: .bold)
         label.text = "지금 어디?"
-        label.textColor = UIColor.mainPurple
+        label.textColor = UIColor.letterBrandColor
+        return label
+    }()
+    
+    let subtitleLabel: UILabel = {
+       let label = UILabel()
+        label.text = "위치기반 일정관리 플랫폼"
+        label.font = UIFont(name: "Noto Sans KR", size: 14)
+        label.textColor = UIColor.rgb(red: 68, green: 68, blue: 68)
         return label
     }()
     

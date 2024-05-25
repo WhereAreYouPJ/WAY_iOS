@@ -21,6 +21,7 @@
 		99C9B23E2C01ACBE008D7CBD /* Ttangsbudaejjigae-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 99C9B23B2C01ACBE008D7CBD /* Ttangsbudaejjigae-Bold.otf */; };
 		99C9B23F2C01ACBE008D7CBD /* Ttangsbudaejjigae-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 99C9B23C2C01ACBE008D7CBD /* Ttangsbudaejjigae-Light.otf */; };
 		99C9B2422C01CE4C008D7CBD /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2412C01CE4C008D7CBD /* LoginViewModel.swift */; };
+		99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2472C01D2B7008D7CBD /* Utilities.swift */; };
 		D79EFAD9E5409233E5338E46 /* Pods_Where_Are_You.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,7 @@
 		99C9B23B2C01ACBE008D7CBD /* Ttangsbudaejjigae-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ttangsbudaejjigae-Bold.otf"; sourceTree = "<group>"; };
 		99C9B23C2C01ACBE008D7CBD /* Ttangsbudaejjigae-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ttangsbudaejjigae-Light.otf"; sourceTree = "<group>"; };
 		99C9B2412C01CE4C008D7CBD /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		99C9B2472C01D2B7008D7CBD /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5015275FE458D5F6450041 /* Pods-Where_Are_You.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You.release.xcconfig"; path = "Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -129,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				99C9B2312C01A45C008D7CBD /* Extensions.swift */,
+				99C9B2472C01D2B7008D7CBD /* Utilities.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 				9953583D2C00C555005BF799 /* AppDelegate.swift in Sources */,
 				99C9B2422C01CE4C008D7CBD /* LoginViewModel.swift in Sources */,
 				99C9B2292C0197CA008D7CBD /* User.swift in Sources */,
+				99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */,
 				9953583F2C00C555005BF799 /* SceneDelegate.swift in Sources */,
 				99C9B2322C01A45C008D7CBD /* Extensions.swift in Sources */,
 			);
