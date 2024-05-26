@@ -16,12 +16,10 @@ class AccountLoginController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
+        view = accountView
         view.backgroundColor = .white
     }
     
-    func setupView() {
-        view.addSubview(accountView)
-    }
+
 
 }

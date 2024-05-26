@@ -93,6 +93,9 @@ extension UIColor {
     static let brancColor = UIColor.rgb(red: 123, green: 80, blue: 255)
     static let letterBrandColor = UIColor.rgb(red: 98, green: 54, blue: 233)
     static let warningColor = UIColor.rgb(red: 223, green: 67, blue: 67)
+    static let separatorColor = UIColor.rgb(red: 234, green: 234, blue: 234)
+    static let mentionTextColor = UIColor.rgb(red: 102, green: 102, blue: 102)
+    static let boxBorderColor = UIColor.rgb(red: 212, green: 212, blue: 212)
 }
 
 // MARK: - UIFont

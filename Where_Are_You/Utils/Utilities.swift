@@ -44,7 +44,7 @@ class Utilities {
         let tf = UITextField()
         tf.textColor = .black
         tf.font = UIFont.pretendard(size: 14, weight: .medium)
-        tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.mentionTextColor])
         return tf
     }
 }

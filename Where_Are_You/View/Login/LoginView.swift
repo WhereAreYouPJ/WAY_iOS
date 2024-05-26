@@ -31,67 +31,46 @@ class LoginView: UIView {
         return label
     }()
     
-    private lazy var kakaoLogin: UIImageView = {
-        let iv = UIImageView()
-        let image = #imageLiteral(resourceName: "kakaoLogin")
-        iv.image = image
-        iv.layer.cornerRadius = 50
-        
-        let followTap = UITapGestureRecognizer(target: self, action: #selector(kakaoLoginTapped))
-        iv.isUserInteractionEnabled = true
-        iv.addGestureRecognizer(followTap)
-        
-        return iv
+    let kakaoLogin: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "kakaoLogin"), for: .normal)
+        return button
     }()
     
-    private lazy var appleLogin: UIImageView = {
-        let iv = UIImageView()
-        let image = #imageLiteral(resourceName: "appleLogin")
-        iv.image = image
-        iv.layer.cornerRadius = 50
-        
-        let followTap = UITapGestureRecognizer(target: self, action: #selector(appleLoginTapped))
-        iv.isUserInteractionEnabled = true
-        iv.addGestureRecognizer(followTap)
-        
-        return iv
+    let appleLogin: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "appleLogin"), for: .normal)
+        return button
     }()
     
-    private lazy var accountLogin: UIImageView = {
-        let iv = UIImageView()
-        let image = #imageLiteral(resourceName: "accountLogin")
-        iv.image = image
-        iv.layer.cornerRadius = 50
-        
-        let followTap = UITapGestureRecognizer(target: self, action: #selector(accountLoginTapped))
-        iv.isUserInteractionEnabled = true
-        iv.addGestureRecognizer(followTap)
-        
-        return iv
+    let accountLogin: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "accountLogin"), for: .normal)
+        return button
     }()
     
-    let separatorView1: UIView = {
+    let leftLine: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .separatorColor
         return view
     }()
     
-    let separatorView2: UIView = {
+    let rightLine: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .separatorColor
         return view
     }()
     
     let separatorLabel: UILabel = {
         let label = Utilities().fontLabel(fontStyle: .medium, text: "또는", size: 14)
-        label.textColor = .gray
+        label.textColor = .mentionTextColor
         return label
     }()
     
     let signupButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("회원가입", for: .normal)
-        button.setTitleColor(.gray, for: .normal)
+        button.setTitleColor(.mentionTextColor, for: .normal)
         button.setDimensions(width: 64, height: 28)
         return button
     }()
@@ -99,15 +78,27 @@ class LoginView: UIView {
     let findAccountButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("계정찾기", for: .normal)
-        button.setTitleColor(.gray, for: .normal)
+        button.setTitleColor(.mentionTextColor, for: .normal)
         return button
     }()
     
     let inquiryButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("문의하기", for: .normal)
-        button.setTitleColor(.gray, for: .normal)
+        button.setTitleColor(.mentionTextColor, for: .normal)
         return button
+    }()
+    
+    let firstLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = .separatorColor
+        return view
+    }()
+    
+    let secondLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = .separatorColor
+        return view
     }()
     
     // MARK: - Lifecycle
@@ -133,14 +124,14 @@ class LoginView: UIView {
         addSubview(separatorLabel)
         separatorLabel.centerX(inView: loginStack, topAnchor: loginStack.bottomAnchor, paddingTop: 20)
         
-        addSubview(separatorView1)
-        separatorView1.setDimensions(width: 100, height: 0.5)
-        separatorView1.centerY(inView: separatorLabel)
-        separatorView1.anchor(right: separatorLabel.leftAnchor, paddingRight: 12)
+        addSubview(leftLine)
+        leftLine.setDimensions(width: 100, height: 1)
+        leftLine.centerY(inView: separatorLabel)
+        leftLine.anchor(right: separatorLabel.leftAnchor, paddingRight: 12)
         
-        addSubview(separatorView2)
-        separatorView2.setDimensions(width: 100, height: 0.5)
-        separatorView2.centerY(inView: separatorLabel, leftAnchor: separatorLabel.rightAnchor, paddingLeft: 12)
+        addSubview(rightLine)
+        rightLine.setDimensions(width: 100, height: 1)
+        rightLine.centerY(inView: separatorLabel, leftAnchor: separatorLabel.rightAnchor, paddingLeft: 12)
         
         let buttonStack = UIStackView(arrangedSubviews: [signupButton, findAccountButton, inquiryButton])
         buttonStack.spacing = 8
@@ -149,24 +140,19 @@ class LoginView: UIView {
         
         addSubview(buttonStack)
         buttonStack.centerX(inView: separatorLabel, topAnchor: separatorLabel.bottomAnchor, paddingTop: 16)
+        
+        addSubview(firstLine)
+        firstLine.centerY(inView: buttonStack)
+        firstLine.anchor(left: signupButton.rightAnchor, paddingLeft: 4)
+        firstLine.setDimensions(width: 1, height: 14)
+        
+        addSubview(secondLine)
+        secondLine.centerY(inView: buttonStack)
+        secondLine.anchor(left: findAccountButton.rightAnchor, paddingLeft: 4)
+        secondLine.setDimensions(width: 1, height: 14)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Selectors
-    
-    @objc func kakaoLoginTapped() {
-        
-    }
-    
-    @objc func appleLoginTapped() {
-        
-    }
-    
-    @objc func accountLoginTapped() {
-        delegate?.accountLoginTapped()
-    }
-
 }

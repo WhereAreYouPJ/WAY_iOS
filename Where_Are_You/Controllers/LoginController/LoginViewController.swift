@@ -8,7 +8,6 @@
 import UIKit
 
 class LoginViewController: UIViewController {
-    
     // MARK: - Properties
     private let loginView = LoginView()
 
@@ -17,25 +16,42 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         setupView()
-        serviceButtonAction()
+        buttonAction()
     }
     
     // MARK: - Helpers
     func setupView() {
         view.addSubview(loginView)
         loginView.frame = view.bounds
-        loginView.delegate = self
     }
     
-    func serviceButtonAction() {
+    func buttonAction() {
+        loginView.kakaoLogin.addTarget(self, action: #selector(kakaoLoginTapped), for: .touchUpInside)
+        loginView.appleLogin.addTarget(self, action: #selector(appleLoginTapped), for: .touchUpInside)
+        loginView.accountLogin.addTarget(self, action: #selector(accountLoginTapped), for: .touchUpInside)
         loginView.signupButton.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
-        
         loginView.findAccountButton.addTarget(self, action: #selector(findAccountButtonTapped), for: .touchUpInside)
-        
         loginView.inquiryButton.addTarget(self, action: #selector(inquiryButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Selectors
+    
+    @objc func kakaoLoginTapped() {
+        
+    }
+    
+    @objc func appleLoginTapped() {
+        
+    }
+    
+    @objc func accountLoginTapped() {
+        let controller = AccountLoginController()
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
+        return
+    }
+    
     @objc func signupButtonTapped() {
         
     }
@@ -47,16 +63,4 @@ class LoginViewController: UIViewController {
     @objc func inquiryButtonTapped() {
         
     }
-}
-
-// MARK: - LoginViewDelegate
-extension LoginViewController: LoginViewDelegate {
-    func accountLoginTapped() {
-        let controller = AccountLoginController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
-        return
-    }
-    
 }
