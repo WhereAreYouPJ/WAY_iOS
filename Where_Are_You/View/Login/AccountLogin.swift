@@ -68,12 +68,20 @@ class AccountLogin: UIView {
         return button
     }()
     
+    let findAccountButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("계정찾기", for: .normal)
+        button.setTitleColor(.color102, for: .normal)
+        button.titleLabel?.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
+        return button
+    }()
+    
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         addSubview(titleLabel)
-        titleLabel.anchor(top: topAnchor, left: leftAnchor, paddingTop: 124, paddingLeft: 21)
+        titleLabel.anchor(top: topAnchor, left: leftAnchor, paddingTop: 34, paddingLeft: 21)
         
         let idStack = UIStackView(arrangedSubviews: [idLabel, idTextField, idErrorLabel])
         idStack.axis = .vertical
@@ -92,6 +100,14 @@ class AccountLogin: UIView {
         addSubview(loginButton)
         loginButton.centerX(inView: self, topAnchor: loginStack.bottomAnchor, paddingTop: 30)
         loginButton.anchor(left: loginStack.leftAnchor)
+        
+        addSubview(findAccountButton)
+        findAccountButton.snp.makeConstraints { make in
+            make.top.equalTo(loginButton.snp.bottom).offset(26)
+            make.centerX.equalTo(loginButton)
+            make.width.equalTo(64)
+            make.height.equalTo(28)
+        }
         
     }
     

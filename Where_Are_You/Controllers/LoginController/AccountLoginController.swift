@@ -16,15 +16,28 @@ class AccountLoginController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view = accountView
+        view.addSubview(accountView)
+        accountView.frame = view.bounds
         view.backgroundColor = .white
         
         configureNavigationBar()
-    }
-    // MARK: - Selectors
-
-    @objc func handleDismissal() {
         
+        accountView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        
+        accountView.findAccountButton.addTarget(self, action: #selector(findAccountButtonTapped), for: .touchUpInside)
+    }
+    
+    // MARK: - Selectors
+    @objc func backButtonTapped() {
+        
+    }
+    
+    @objc func loginButtonTapped() {
+        print("login button tapped")
+    }
+    
+    @objc func findAccountButtonTapped() {
+        print("findAccountbutton Tapped")
     }
     
     // MARK: - Helpers
@@ -39,7 +52,6 @@ class AccountLoginController: UIViewController {
         navigationController?.navigationBar.tintColor = .white
         
         navigationItem.title = "로그인"
-        uibarbuttonit
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: "arrow.backward", target: self, action: #selector(handleDismissal))
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: "arrow.backward", target: self, action: #selector(backButtonTapped))
     }
 }
