@@ -6,56 +6,54 @@
 //
 
 import UIKit
+import SnapKit
 
 class AccountLogin: UIView {
     // MARK: - Properties
     
-    private let titleLabel: UILabel = {
-        let label = Utilities().fontLabel(fontStyle: .bold, text: "로그인하기", size: 22)
-        return label
+    private let titleLabel: UIView = {
+        let label = Utilities().createLabel(NotoSans: .bold, text: "로그인하기", textColor: .color34, fontSize: 22)
+        let view = Utilities().inputContainerView(label: label)
+        return view
     }()
     
-    private let idLabel: UILabel = {
-        let label = Utilities().fontLabel(fontStyle: .medium, text: "  아이디", size: 12)
-        label.heightAnchor.constraint(equalToConstant: 23).isActive = true
-        return label
+    private let idLabel: UIView = {
+        let label = Utilities().createLabel(NotoSans: .medium, text: "아이디", textColor: .color51, fontSize: 12)
+        let view = Utilities().inputContainerView(label: label)
+        return view
     }()
     
-    private let idTextField: UITextField = {
-        let tf = Utilities().textField(withPlaceholder: "   아이디를 입력해주세요.")
-        tf.layer.borderWidth = 1
-        tf.layer.cornerRadius = 10
-        tf.layer.borderColor = UIColor.boxBorderColor.cgColor
-        tf.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        return tf
+    private let idTextField: UIView = {
+        let tf = Utilities().textField(withPlaceholder: "아이디를 입력해주세요.")
+        let view = Utilities().inputContainerView(textField: tf)
+        view.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        return view
     }()
     
     private let idErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .warningColor
-        label.font = UIFont.pretendard(size: 12, weight: .medium)
+        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 12)
         return label
     }()
     
-    private let passwordLabel: UILabel = {
-        let label = Utilities().fontLabel(fontStyle: .medium, text: "  비밀번호", size: 12)
-        label.heightAnchor.constraint(equalToConstant: 23).isActive = true
-        return label
+    private let passwordLabel: UIView = {
+        let label = Utilities().createLabel(NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: 12)
+        let view = Utilities().inputContainerView(label: label)
+        return view
     }()
     
-    private let passwordTextField: UITextField = {
-        let tf = Utilities().textField(withPlaceholder: "   비밀번호를 입력해주세요.")
-        tf.layer.borderWidth = 1
-        tf.layer.cornerRadius = 10
-        tf.layer.borderColor = UIColor.boxBorderColor.cgColor
-        tf.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        return tf
+    private let passwordTextField: UIView = {
+        let tf = Utilities().textField(withPlaceholder: "비밀번호를 입력해주세요.")
+        let view = Utilities().inputContainerView(textField: tf)
+        view.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        return view
     }()
     
     private let passwordErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .warningColor
-        label.font = UIFont.pretendard(size: 12, weight: .medium)
+        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 12)
         return label
     }()
     
@@ -64,16 +62,11 @@ class AccountLogin: UIView {
         button.titleLabel?.font = UIFont(name: "NotoSansMyanmar-Bold", size: 18)
         button.setTitle("로그인하기", for: .normal)
         button.backgroundColor = .brancColor
-        button.heightAnchor.constraint(equalToConstant: 50)
         button.titleLabel?.textColor = UIColor.rgb(red: 242, green: 242, blue: 242)
+        button.layer.cornerRadius = 7
+        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return button
     }()
-    
-//    let loginButton: UIButton = {
-//        let button = UIButton()
-//        button.setImage(UIImage(named: "loginButton"), for: .normal)
-//        return button
-//    }()
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {
@@ -92,13 +85,14 @@ class AccountLogin: UIView {
         loginStack.spacing = 10
         loginStack.axis = .vertical
         
-        let stack = UIStackView(arrangedSubviews: [loginStack, loginButton])
-        stack.spacing = 30
-        stack.axis = .vertical
+        addSubview(loginStack)
+        loginStack.centerX(inView: self, topAnchor: titleLabel.bottomAnchor, paddingTop: 30)
+        loginStack.anchor(left: leftAnchor, paddingLeft: 21)
+
+        addSubview(loginButton)
+        loginButton.centerX(inView: self, topAnchor: loginStack.bottomAnchor, paddingTop: 30)
+        loginButton.anchor(left: loginStack.leftAnchor)
         
-        addSubview(stack)
-        stack.centerX(inView: self, topAnchor: titleLabel.bottomAnchor, paddingTop: 30)
-        stack.anchor(left: leftAnchor, paddingLeft: 21)
     }
     
     required init?(coder: NSCoder) {

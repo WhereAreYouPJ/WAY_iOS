@@ -19,14 +19,16 @@ class LoginView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.pretendard(size: 36, weight: .bold)
+        label.font = UIFont.pretendard(Ttangsbudae: .bold, fontSize: 36)
         label.text = "지금 어디?"
         label.textColor = UIColor.letterBrandColor
         return label
     }()
     
     private let subtitleLabel: UILabel = {
-        let label = Utilities().fontLabel(fontStyle: .medium, text: "위치기반 일정관리 플랫폼", size: 14)
+        let label = UILabel()
+        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
+        label.text = "위치기반 일정관리 플랫폼"
         label.textColor = UIColor.rgb(red: 68, green: 68, blue: 68)
         return label
     }()
@@ -51,26 +53,25 @@ class LoginView: UIView {
     
     let leftLine: UIView = {
         let view = UIView()
-        view.backgroundColor = .separatorColor
+        view.backgroundColor = .color234
         return view
     }()
     
     let rightLine: UIView = {
         let view = UIView()
-        view.backgroundColor = .separatorColor
+        view.backgroundColor = .color234
         return view
     }()
     
     let separatorLabel: UILabel = {
-        let label = Utilities().fontLabel(fontStyle: .medium, text: "또는", size: 14)
-        label.textColor = .mentionTextColor
+        let label = Utilities().createLabel(NotoSans: .medium, text: "또는", textColor: .color102, fontSize: 14)
         return label
     }()
     
     let signupButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("회원가입", for: .normal)
-        button.setTitleColor(.mentionTextColor, for: .normal)
+        button.setTitleColor(.color102, for: .normal)
         button.setDimensions(width: 64, height: 28)
         return button
     }()
@@ -78,26 +79,26 @@ class LoginView: UIView {
     let findAccountButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("계정찾기", for: .normal)
-        button.setTitleColor(.mentionTextColor, for: .normal)
+        button.setTitleColor(.color102, for: .normal)
         return button
     }()
     
     let inquiryButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("문의하기", for: .normal)
-        button.setTitleColor(.mentionTextColor, for: .normal)
+        button.setTitleColor(.color102, for: .normal)
         return button
     }()
     
     let firstLine: UIView = {
         let view = UIView()
-        view.backgroundColor = .separatorColor
+        view.backgroundColor = .color234
         return view
     }()
     
     let secondLine: UIView = {
         let view = UIView()
-        view.backgroundColor = .separatorColor
+        view.backgroundColor = .color234
         return view
     }()
     

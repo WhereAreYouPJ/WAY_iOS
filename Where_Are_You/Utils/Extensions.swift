@@ -93,15 +93,18 @@ extension UIColor {
     static let brancColor = UIColor.rgb(red: 123, green: 80, blue: 255)
     static let letterBrandColor = UIColor.rgb(red: 98, green: 54, blue: 233)
     static let warningColor = UIColor.rgb(red: 223, green: 67, blue: 67)
-    static let separatorColor = UIColor.rgb(red: 234, green: 234, blue: 234)
-    static let mentionTextColor = UIColor.rgb(red: 102, green: 102, blue: 102)
-    static let boxBorderColor = UIColor.rgb(red: 212, green: 212, blue: 212)
+    
+    static let color34 = UIColor.rgb(red: 34, green: 34, blue: 34)
+    static let color51 = UIColor.rgb(red: 51, green: 51, blue: 51)
+    static let color102 = UIColor.rgb(red: 102, green: 102, blue: 102)
+    static let color212 = UIColor.rgb(red: 212, green: 212, blue: 212)
+    static let color234 = UIColor.rgb(red: 234, green: 234, blue: 234)
 }
 
 // MARK: - UIFont
 
 extension UIFont {
-    static func pretendard(size fontSize: CGFloat, weight: UIFont.Weight) -> UIFont {
+    static func pretendard(Ttangsbudae weight: UIFont.Weight, fontSize: CGFloat) -> UIFont {
         
         var weightString: String
         
@@ -111,6 +114,24 @@ extension UIFont {
         case .light:
             weightString = "OTTtangsbudaejjigaeL"
         case .medium:
+            weightString = "OTTtangsbudaejjigaeLM"
+        default:
+            weightString = "Regular"
+        }
+        
+        return UIFont(name: "\(weightString)", size: fontSize) ?? .systemFont(ofSize: fontSize, weight: weight)
+    }
+    
+    static func pretendard(NotoSans weight: UIFont.Weight, fontSize: CGFloat) -> UIFont {
+        
+        var weightString: String
+        
+        switch weight {
+        case .bold:
+            weightString = "NotoSansKR-Bold"
+        case .light:
+            weightString = "NotoSansKR-Light"
+        case .medium:
             weightString = "NotoSansKR-Medium"
         default:
             weightString = "Regular"
@@ -119,8 +140,3 @@ extension UIFont {
         return UIFont(name: "\(weightString)", size: fontSize) ?? .systemFont(ofSize: fontSize, weight: weight)
     }
 }
-
-// 글자 폰트 이름
-// NotoSansMyanmar-Regular
-// NotoSansMyanmar-Light
-// NotoSansMyanmar-Bold
