@@ -11,7 +11,7 @@ class AccountLoginController: UIViewController {
     // MARK: - Properties
     
     private let accountView = AccountLogin()
-
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -29,20 +29,27 @@ class AccountLoginController: UIViewController {
     
     // MARK: - Selectors
     @objc func backButtonTapped() {
-        
+        dismiss(animated: true)
     }
     
     @objc func loginButtonTapped() {
+        // 아이디, 비번 확인하고 로그인 체크
         print("login button tapped")
     }
     
     @objc func findAccountButtonTapped() {
+        // 계정찾기로 넘어가기
         print("findAccountbutton Tapped")
     }
     
     // MARK: - Helpers
-
+    
     func configureNavigationBar() {
+        
+        let image = UIImage(systemName: "arrow.backward")
+        let backButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(backButtonTapped))
+        backButton.tintColor = .color172
+        
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         navigationController?.navigationBar.standardAppearance = appearance
@@ -50,8 +57,8 @@ class AccountLoginController: UIViewController {
         navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.tintColor = .white
+        navigationItem.leftBarButtonItem = backButton
         
         navigationItem.title = "로그인"
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: "arrow.backward", target: self, action: #selector(backButtonTapped))
     }
 }
