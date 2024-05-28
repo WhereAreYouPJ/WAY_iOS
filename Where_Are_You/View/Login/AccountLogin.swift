@@ -58,21 +58,26 @@ class AccountLogin: UIView {
     }()
     
     let loginButton: UIButton = {
-       let button = UIButton()
+       let button = UIButton(type: .system)
         button.titleLabel?.font = UIFont(name: "NotoSansMyanmar-Bold", size: 18)
         button.setTitle("로그인하기", for: .normal)
         button.backgroundColor = .brancColor
-        button.titleLabel?.textColor = UIColor.rgb(red: 242, green: 242, blue: 242)
+        button.tintColor = .color242
         button.layer.cornerRadius = 7
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return button
     }()
     
     let findAccountButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.setTitle("계정찾기", for: .normal)
         button.setTitleColor(.color102, for: .normal)
         button.titleLabel?.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
+        return button
+    }()
+    
+    let signupButton: UIButton = {
+        let button = Utilities().attributedButton("계정이 없으신가요?", "  가입하기")
         return button
     }()
     
@@ -81,34 +86,46 @@ class AccountLogin: UIView {
         super.init(frame: frame)
         
         addSubview(titleLabel)
-        titleLabel.anchor(top: topAnchor, left: leftAnchor, paddingTop: 34, paddingLeft: 21)
-        
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(self).offset(34)
+            make.left.equalTo(self).offset(21)
+        }
+
         let idStack = UIStackView(arrangedSubviews: [idLabel, idTextField, idErrorLabel])
         idStack.axis = .vertical
         
         let passwordStack = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField, passwordErrorLabel])
         passwordStack.axis = .vertical
         
-        let loginStack = UIStackView(arrangedSubviews: [idStack, passwordStack])
-        loginStack.spacing = 10
-        loginStack.axis = .vertical
+        let stack = UIStackView(arrangedSubviews: [idStack, passwordStack])
+        stack.spacing = 10
+        stack.axis = .vertical
         
-        addSubview(loginStack)
-        loginStack.centerX(inView: self, topAnchor: titleLabel.bottomAnchor, paddingTop: 30)
-        loginStack.anchor(left: leftAnchor, paddingLeft: 21)
+        addSubview(stack)
+        stack.snp.makeConstraints { make in
+            make.centerX.equalTo(self)
+            make.top.equalTo(titleLabel.snp.bottom).offset(30)
+            make.left.equalTo(self).offset(21)
+        }
 
         addSubview(loginButton)
-        loginButton.centerX(inView: self, topAnchor: loginStack.bottomAnchor, paddingTop: 30)
-        loginButton.anchor(left: loginStack.leftAnchor)
+        loginButton.snp.makeConstraints { make in
+            make.centerX.equalTo(self)
+            make.top.equalTo(stack.snp.bottom).offset(30)
+            make.left.equalTo(stack.snp.left)
+        }
         
         addSubview(findAccountButton)
         findAccountButton.snp.makeConstraints { make in
             make.top.equalTo(loginButton.snp.bottom).offset(26)
-            make.centerX.equalTo(loginButton)
-            make.width.equalTo(64)
-            make.height.equalTo(28)
+            make.centerX.equalTo(self)
         }
         
+        addSubview(signupButton)
+        signupButton.snp.makeConstraints { make in
+            make.top.equalTo(findAccountButton.snp.bottom).offset(14)
+            make.centerX.equalTo(self)
+        }
     }
     
     required init?(coder: NSCoder) {

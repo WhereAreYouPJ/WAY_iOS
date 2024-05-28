@@ -147,7 +147,7 @@
 		99C9B2272C01974A008D7CBD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				99C9B2532C0231B2008D7CBD /* LoginController */,
+				99C9B2532C0231B2008D7CBD /* Login */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -185,13 +185,13 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		99C9B2532C0231B2008D7CBD /* LoginController */ = {
+		99C9B2532C0231B2008D7CBD /* Login */ = {
 			isa = PBXGroup;
 			children = (
 				995358402C00C555005BF799 /* LoginViewController.swift */,
 				99C9B2512C022DE3008D7CBD /* AccountLoginController.swift */,
 			);
-			path = LoginController;
+			path = Login;
 			sourceTree = "<group>";
 		};
 		AD1C714E32C1CFC6F61EAA5F /* Frameworks */ = {

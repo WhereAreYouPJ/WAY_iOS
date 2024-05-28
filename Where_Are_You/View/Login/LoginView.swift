@@ -8,20 +8,13 @@
 import UIKit
 import SnapKit
 
-protocol LoginViewDelegate: AnyObject {
-    func accountLoginTapped()
-}
-
 class LoginView: UIView {
     // MARK: - Properties
-    
-    weak var delegate: LoginViewDelegate?
-    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.pretendard(Ttangsbudae: .bold, fontSize: 36)
         label.text = "지금 어디?"
-        label.textColor = UIColor.letterBrandColor
+        label.textColor = .letterBrandColor
         return label
     }()
     
@@ -29,7 +22,7 @@ class LoginView: UIView {
         let label = UILabel()
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
         label.text = "위치기반 일정관리 플랫폼"
-        label.textColor = UIColor.rgb(red: 68, green: 68, blue: 68)
+        label.textColor = .color68
         return label
     }()
     
@@ -103,7 +96,6 @@ class LoginView: UIView {
     }()
     
     // MARK: - Lifecycle
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
