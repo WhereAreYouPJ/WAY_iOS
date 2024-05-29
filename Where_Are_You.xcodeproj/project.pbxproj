@@ -101,40 +101,45 @@
 		9953583B2C00C555005BF799 /* Where_Are_You */ = {
 			isa = PBXGroup;
 			children = (
-				9953584D2C00C558005BF799 /* Info.plist */,
-				99C9B2222C01973C008D7CBD /* Model */,
-				99C9B2232C01973E008D7CBD /* View */,
-				99C9B2242C019741008D7CBD /* ViewModel */,
-				99C9B2272C01974A008D7CBD /* Controllers */,
+				9953583C2C00C555005BF799 /* AppDelegate.swift */,
+				9953583E2C00C555005BF799 /* SceneDelegate.swift */,
+				99C9B2222C01973C008D7CBD /* Domain */,
+				99C9B2242C019741008D7CBD /* Data */,
+				99C9B2232C01973E008D7CBD /* Presentation */,
 				99C9B2262C019748008D7CBD /* Utils */,
-				99C9B22D2C019E16008D7CBD /* Fonts */,
-				99C9B2402C01CD29008D7CBD /* App */,
+				99D11EBB2C07848B006BE265 /* Resources */,
 			);
 			path = Where_Are_You;
 			sourceTree = "<group>";
 		};
-		99C9B2222C01973C008D7CBD /* Model */ = {
+		99C9B2222C01973C008D7CBD /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				99C9B2282C0197CA008D7CBD /* User.swift */,
+				99D11EB22C07836C006BE265 /* Entities */,
+				99D11EB32C078374006BE265 /* UseCases */,
 			);
-			path = Model;
+			path = Domain;
 			sourceTree = "<group>";
 		};
-		99C9B2232C01973E008D7CBD /* View */ = {
+		99C9B2232C01973E008D7CBD /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				99C9B22A2C019AC2008D7CBD /* Login */,
+				99D11EB42C078389006BE265 /* ViewControllers */,
+				99C9B22A2C019AC2008D7CBD /* Views */,
+				99D11EB52C0783CC006BE265 /* ViewModels */,
 			);
-			path = View;
+			path = Presentation;
 			sourceTree = "<group>";
 		};
-		99C9B2242C019741008D7CBD /* ViewModel */ = {
+		99C9B2242C019741008D7CBD /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				99C9B2412C01CE4C008D7CBD /* LoginViewModel.swift */,
+				99D11EBA2C07844C006BE265 /* Repositories */,
+				99D11EB82C078444006BE265 /* DataModels */,
+				99D11EB72C078439006BE265 /* Network */,
+				99D11EB62C0783F9006BE265 /* Persistence */,
 			);
-			path = ViewModel;
+			path = Data;
 			sourceTree = "<group>";
 		};
 		99C9B2262C019748008D7CBD /* Utils */ = {
@@ -147,21 +152,13 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		99C9B2272C01974A008D7CBD /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				99C9B2532C0231B2008D7CBD /* Login */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
-		99C9B22A2C019AC2008D7CBD /* Login */ = {
+		99C9B22A2C019AC2008D7CBD /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				99C9B22B2C019C67008D7CBD /* LoginView.swift */,
 				99C9B24F2C0229CF008D7CBD /* AccountLogin.swift */,
 			);
-			path = Login;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		99C9B22D2C019E16008D7CBD /* Fonts */ = {
@@ -176,18 +173,6 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		99C9B2402C01CD29008D7CBD /* App */ = {
-			isa = PBXGroup;
-			children = (
-				9953583C2C00C555005BF799 /* AppDelegate.swift */,
-				9953583E2C00C555005BF799 /* SceneDelegate.swift */,
-				995358482C00C558005BF799 /* Assets.xcassets */,
-				9953584A2C00C558005BF799 /* LaunchScreen.storyboard */,
-				995358452C00C555005BF799 /* Where_Are_You.xcdatamodeld */,
-			);
-			path = App;
-			sourceTree = "<group>";
-		};
 		99C9B2532C0231B2008D7CBD /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +180,77 @@
 				99C9B2512C022DE3008D7CBD /* AccountLoginController.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		99D11EB22C07836C006BE265 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				99C9B2282C0197CA008D7CBD /* User.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		99D11EB32C078374006BE265 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		99D11EB42C078389006BE265 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				99C9B2532C0231B2008D7CBD /* Login */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		99D11EB52C0783CC006BE265 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				99C9B2412C01CE4C008D7CBD /* LoginViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		99D11EB62C0783F9006BE265 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		99D11EB72C078439006BE265 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		99D11EB82C078444006BE265 /* DataModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DataModels;
+			sourceTree = "<group>";
+		};
+		99D11EBA2C07844C006BE265 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		99D11EBB2C07848B006BE265 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				99C9B22D2C019E16008D7CBD /* Fonts */,
+				9953584A2C00C558005BF799 /* LaunchScreen.storyboard */,
+				9953584D2C00C558005BF799 /* Info.plist */,
+				995358482C00C558005BF799 /* Assets.xcassets */,
+				995358452C00C555005BF799 /* Where_Are_You.xcdatamodeld */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		AD1C714E32C1CFC6F61EAA5F /* Frameworks */ = {
