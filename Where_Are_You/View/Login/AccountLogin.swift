@@ -78,16 +78,8 @@ class AccountLogin: UIView {
         let idStack = UIStackView(arrangedSubviews: [idLabel, idTextField, idErrorLabel])
         idStack.axis = .vertical
         
-        idTextField.snp.makeConstraints { make in
-            make.height.equalTo(self.snp.height).multipliedBy(0.5)
-        }
-        
         let passwordStack = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField, passwordErrorLabel])
         passwordStack.axis = .vertical
-        
-        passwordTextField.snp.makeConstraints { make in
-            make.height.equalTo(idTextField.snp.height)
-        }
         
         let stack = UIStackView(arrangedSubviews: [idStack, passwordStack])
         stack.spacing = 10
@@ -99,12 +91,21 @@ class AccountLogin: UIView {
             make.top.equalTo(titleLabel.snp.bottom).offset(30)
             make.left.equalToSuperview().offset(21)
         }
+        
+        idTextField.snp.makeConstraints { make in
+            make.height.equalTo(stack.snp.width).multipliedBy(0.13)
+        }
+        
+        passwordTextField.snp.makeConstraints { make in
+            make.height.equalTo(idTextField)
+        }
 
         addSubview(loginButton)
         loginButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(stack.snp.bottom).offset(30)
             make.left.equalTo(stack.snp.left)
+            make.height.equalTo(loginButton.snp.width).multipliedBy(0.145)
         }
         
         addSubview(findAccountButton)
