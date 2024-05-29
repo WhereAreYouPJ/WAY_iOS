@@ -10,6 +10,28 @@ import SnapKit
 
 class Utilities {
     
+    // 스택뷰 생성
+    func createStackView(arrangedSubviews: [UIView], axis: NSLayoutConstraint.Axis, spacing: CGFloat, distribution: UIStackView.Distribution) -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: arrangedSubviews)
+        stackView.axis = axis
+        stackView.spacing = spacing
+        stackView.distribution = distribution
+        return stackView
+    }
+    
+    // button이 들어간 뷰
+    func inputContainerView(button: UIButton) -> UIView {
+        let view = UIView()
+        view.addSubview(button)
+        button.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.left.equalTo(view).offset(6)
+            make.bottom.equalTo(view).offset(-4)
+        }
+        return view
+    }
+    
+    // label이 들어간 뷰
     func inputContainerView(label: UILabel) -> UIView {
         let view = UIView()
         view.addSubview(label)
@@ -29,6 +51,7 @@ class Utilities {
         return label
     }
     
+    // 텍스트 필드가 들어간 뷰 (left: 8, top: 12)
     func inputContainerView(textField: UITextField) -> UIView {
         let view = UIView()
         view.addSubview(textField)
@@ -43,6 +66,7 @@ class Utilities {
         return view
     }
     
+    // placeholder이 들어간 텍스트 필드
     func textField(withPlaceholder placeholder: String) -> UITextField {
         let tf = UITextField()
         tf.textColor = .black
@@ -52,6 +76,7 @@ class Utilities {
         return tf
     }
     
+    // 이미지가 들어간 버튼
     func inputContainerButton(withImage image: String, title: String, backgroundColor: UIColor, textColor: UIColor) -> UIButton {
         let button = UIButton()
         button.setImage(UIImage(named: image), for: .normal)
@@ -63,6 +88,7 @@ class Utilities {
         return button
     }
     
+    // 두개의 label이 들어간 하나의 버튼
     func attributedButton(_ firstPart: String, _ secondPart: String) -> UIButton {
         let button = UIButton(type: .system)
         

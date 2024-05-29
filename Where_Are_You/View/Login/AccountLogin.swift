@@ -26,7 +26,6 @@ class AccountLogin: UIView {
     private let idTextField: UIView = {
         let tf = Utilities().textField(withPlaceholder: "아이디를 입력해주세요.")
         let view = Utilities().inputContainerView(textField: tf)
-        view.heightAnchor.constraint(equalToConstant: 44).isActive = true
         return view
     }()
     
@@ -57,24 +56,9 @@ class AccountLogin: UIView {
         return label
     }()
     
-    let loginButton: UIButton = {
-       let button = UIButton(type: .system)
-        button.titleLabel?.font = UIFont(name: "NotoSansMyanmar-Bold", size: 18)
-        button.setTitle("로그인하기", for: .normal)
-        button.backgroundColor = .brancColor
-        button.tintColor = .color242
-        button.layer.cornerRadius = 7
-        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        return button
-    }()
+    let loginButton = CustomButton(title: "로그인하기", backgroundColor: .brancColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
     
-    let findAccountButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("계정찾기", for: .normal)
-        button.setTitleColor(.color102, for: .normal)
-        button.titleLabel?.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
-        return button
-    }()
+    let findAccountButton = CustomButtonView(text: "계정찾기", weight: .medium, textColor: .color102, fontSize: 14)
     
     let signupButton: UIButton = {
         let button = Utilities().attributedButton("계정이 없으신가요?", "  가입하기")
@@ -87,15 +71,23 @@ class AccountLogin: UIView {
         
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(self).offset(34)
-            make.left.equalTo(self).offset(21)
+            make.top.equalToSuperview().offset(34)
+            make.left.equalToSuperview().offset(21)
         }
 
         let idStack = UIStackView(arrangedSubviews: [idLabel, idTextField, idErrorLabel])
         idStack.axis = .vertical
         
+        idTextField.snp.makeConstraints { make in
+            make.height.equalTo(self.snp.height).multipliedBy(0.5)
+        }
+        
         let passwordStack = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField, passwordErrorLabel])
         passwordStack.axis = .vertical
+        
+        passwordTextField.snp.makeConstraints { make in
+            make.height.equalTo(idTextField.snp.height)
+        }
         
         let stack = UIStackView(arrangedSubviews: [idStack, passwordStack])
         stack.spacing = 10
@@ -103,14 +95,14 @@ class AccountLogin: UIView {
         
         addSubview(stack)
         stack.snp.makeConstraints { make in
-            make.centerX.equalTo(self)
+            make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(30)
-            make.left.equalTo(self).offset(21)
+            make.left.equalToSuperview().offset(21)
         }
 
         addSubview(loginButton)
         loginButton.snp.makeConstraints { make in
-            make.centerX.equalTo(self)
+            make.centerX.equalToSuperview()
             make.top.equalTo(stack.snp.bottom).offset(30)
             make.left.equalTo(stack.snp.left)
         }
@@ -118,13 +110,13 @@ class AccountLogin: UIView {
         addSubview(findAccountButton)
         findAccountButton.snp.makeConstraints { make in
             make.top.equalTo(loginButton.snp.bottom).offset(26)
-            make.centerX.equalTo(self)
+            make.centerX.equalToSuperview()
         }
         
         addSubview(signupButton)
         signupButton.snp.makeConstraints { make in
             make.top.equalTo(findAccountButton.snp.bottom).offset(14)
-            make.centerX.equalTo(self)
+            make.centerX.equalToSuperview()
         }
     }
     

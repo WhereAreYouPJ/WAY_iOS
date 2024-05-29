@@ -24,7 +24,7 @@ class AccountLoginController: UIViewController {
         
         accountView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         
-        accountView.findAccountButton.addTarget(self, action: #selector(findAccountButtonTapped), for: .touchUpInside)
+        accountView.findAccountButton.button.addTarget(self, action: #selector(findAccountButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Selectors

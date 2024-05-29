@@ -26,6 +26,7 @@
 		99C9B24E2C01ECCE008D7CBD /* NotoSansKR-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99C9B24C2C01DDF7008D7CBD /* NotoSansKR-Medium.ttf */; };
 		99C9B2502C0229CF008D7CBD /* AccountLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B24F2C0229CF008D7CBD /* AccountLogin.swift */; };
 		99C9B2522C022DE3008D7CBD /* AccountLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2512C022DE3008D7CBD /* AccountLoginController.swift */; };
+		99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D11EB02C06F56F006BE265 /* CustomButton.swift */; };
 		D79EFAD9E5409233E5338E46 /* Pods_Where_Are_You.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,7 @@
 		99C9B24C2C01DDF7008D7CBD /* NotoSansKR-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.ttf"; sourceTree = "<group>"; };
 		99C9B24F2C0229CF008D7CBD /* AccountLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLogin.swift; sourceTree = "<group>"; };
 		99C9B2512C022DE3008D7CBD /* AccountLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLoginController.swift; sourceTree = "<group>"; };
+		99D11EB02C06F56F006BE265 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5015275FE458D5F6450041 /* Pods-Where_Are_You.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You.release.xcconfig"; path = "Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -140,6 +142,7 @@
 			children = (
 				99C9B2312C01A45C008D7CBD /* Extensions.swift */,
 				99C9B2472C01D2B7008D7CBD /* Utilities.swift */,
+				99D11EB02C06F56F006BE265 /* CustomButton.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				995358472C00C555005BF799 /* Where_Are_You.xcdatamodeld in Sources */,
 				99C9B22C2C019C67008D7CBD /* LoginView.swift in Sources */,
 				995358412C00C555005BF799 /* LoginViewController.swift in Sources */,
+				99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */,
 				9953583D2C00C555005BF799 /* AppDelegate.swift in Sources */,
 				99C9B2422C01CE4C008D7CBD /* LoginViewModel.swift in Sources */,
 				99C9B2292C0197CA008D7CBD /* User.swift in Sources */,

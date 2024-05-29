@@ -44,67 +44,32 @@ class LoginView: UIView {
         return button
     }()
     
-    let leftLine: UIView = {
-        let view = UIView()
-        view.backgroundColor = .color234
-        return view
-    }()
-    
-    let rightLine: UIView = {
-        let view = UIView()
-        view.backgroundColor = .color234
-        return view
-    }()
-    
-    let separatorLabel: UILabel = {
+    let separatorLabel: UIView = {
         let label = Utilities().createLabel(NotoSans: .medium, text: "또는", textColor: .color102, fontSize: 14)
-        return label
-    }()
-    
-    let signupButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("회원가입", for: .normal)
-        button.setTitleColor(.color102, for: .normal)
-        button.setDimensions(width: 64, height: 28)
-        return button
-    }()
-    
-    let findAccountButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("계정찾기", for: .normal)
-        button.setTitleColor(.color102, for: .normal)
-        return button
-    }()
-    
-    let inquiryButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("문의하기", for: .normal)
-        button.setTitleColor(.color102, for: .normal)
-        return button
-    }()
-    
-    let firstLine: UIView = {
-        let view = UIView()
-        view.backgroundColor = .color234
+        let view = Utilities().inputContainerView(label: label)
         return view
     }()
     
-    let secondLine: UIView = {
-        let view = UIView()
-        view.backgroundColor = .color234
-        return view
-    }()
-    
+    let signupButton = CustomButtonView(text: "회원가입", weight: .medium, textColor: .color102, fontSize: 14)
+    let findAccountButton = CustomButtonView(text: "계정찾기", weight: .medium, textColor: .color102, fontSize: 14)
+    let inquiryButton = CustomButtonView(text: "문의하기", weight: .medium, textColor: .color102, fontSize: 14)
+   
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
         
         addSubview(titleLabel)
-        titleLabel.centerX(inView: self, topAnchor: safeAreaLayoutGuide.topAnchor, paddingTop: 150)
+        titleLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(safeAreaLayoutGuide).offset(150)
+        }
         
         addSubview(subtitleLabel)
-        subtitleLabel.centerX(inView: titleLabel, topAnchor: titleLabel.bottomAnchor)
+        subtitleLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(titleLabel.snp.bottom)
+        }
         
         let loginStack = UIStackView(arrangedSubviews: [kakaoLogin, appleLogin, accountLogin])
         loginStack.axis = .vertical
@@ -112,40 +77,55 @@ class LoginView: UIView {
         loginStack.distribution = .fillEqually
         
         addSubview(loginStack)
-        loginStack.centerX(inView: self, topAnchor: subtitleLabel.bottomAnchor, paddingTop: 46)
+        loginStack.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(subtitleLabel.snp.bottom).offset(46)
+        }
         
         addSubview(separatorLabel)
-        separatorLabel.centerX(inView: loginStack, topAnchor: loginStack.bottomAnchor, paddingTop: 20)
+        separatorLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(loginStack.snp.bottom).offset(20)
+        }
         
-        addSubview(leftLine)
-        leftLine.setDimensions(width: 100, height: 1)
-        leftLine.centerY(inView: separatorLabel)
-        leftLine.anchor(right: separatorLabel.leftAnchor, paddingRight: 12)
-        
-        addSubview(rightLine)
-        rightLine.setDimensions(width: 100, height: 1)
-        rightLine.centerY(inView: separatorLabel, leftAnchor: separatorLabel.rightAnchor, paddingLeft: 12)
+        setupLine(relatedView: separatorLabel, anchor: .left, height: 1, width: 100)
+        setupLine(relatedView: separatorLabel, anchor: .right, height: 1, width: 100)
         
         let buttonStack = UIStackView(arrangedSubviews: [signupButton, findAccountButton, inquiryButton])
         buttonStack.spacing = 8
         buttonStack.axis = .horizontal
-        buttonStack.distribution = .fillEqually
         
         addSubview(buttonStack)
-        buttonStack.centerX(inView: separatorLabel, topAnchor: separatorLabel.bottomAnchor, paddingTop: 16)
+        buttonStack.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(separatorLabel.snp.bottom).offset(16)
+        }
         
-        addSubview(firstLine)
-        firstLine.centerY(inView: buttonStack)
-        firstLine.anchor(left: signupButton.rightAnchor, paddingLeft: 4)
-        firstLine.setDimensions(width: 1, height: 14)
-        
-        addSubview(secondLine)
-        secondLine.centerY(inView: buttonStack)
-        secondLine.anchor(left: findAccountButton.rightAnchor, paddingLeft: 4)
-        secondLine.setDimensions(width: 1, height: 14)
+        setupLine(relatedView: findAccountButton, anchor: .left, height: 14, width: 1)
+        setupLine(relatedView: findAccountButton, anchor: .right, height: 14, width: 1)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Helpers
+    
+    // 분리선 오토레이아웃
+    private func setupLine(relatedView: UIView, anchor: NSLayoutConstraint.Attribute, height: CGFloat, width: CGFloat) {
+        let view = UIView()
+        view.backgroundColor = .color234
+        
+        addSubview(view)
+        view.snp.makeConstraints { make in
+            make.centerY.equalTo(relatedView)
+            if anchor == .right {
+                make.left.equalTo(relatedView.snp.right).offset(4)
+            } else {
+                make.right.equalTo(relatedView.snp.left).offset(-4)
+            }
+            make.width.equalTo(width)
+            make.height.equalTo(height)
+        }
     }
 }
