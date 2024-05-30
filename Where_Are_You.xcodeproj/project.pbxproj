@@ -104,7 +104,7 @@
 				9953583C2C00C555005BF799 /* AppDelegate.swift */,
 				9953583E2C00C555005BF799 /* SceneDelegate.swift */,
 				99C9B2222C01973C008D7CBD /* Domain */,
-				99C9B2242C019741008D7CBD /* Data */,
+				99D5060B2C08A77900A6CF7B /* Data */,
 				99C9B2232C01973E008D7CBD /* Presentation */,
 				99C9B2262C019748008D7CBD /* Utils */,
 				99D11EBB2C07848B006BE265 /* Resources */,
@@ -116,7 +116,6 @@
 			isa = PBXGroup;
 			children = (
 				99D11EB22C07836C006BE265 /* Entities */,
-				99D11EB32C078374006BE265 /* UseCases */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -129,17 +128,6 @@
 				99D11EB52C0783CC006BE265 /* ViewModels */,
 			);
 			path = Presentation;
-			sourceTree = "<group>";
-		};
-		99C9B2242C019741008D7CBD /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				99D11EBA2C07844C006BE265 /* Repositories */,
-				99D11EB82C078444006BE265 /* DataModels */,
-				99D11EB72C078439006BE265 /* Network */,
-				99D11EB62C0783F9006BE265 /* Persistence */,
-			);
-			path = Data;
 			sourceTree = "<group>";
 		};
 		99C9B2262C019748008D7CBD /* Utils */ = {
@@ -190,13 +178,6 @@
 			path = Entities;
 			sourceTree = "<group>";
 		};
-		99D11EB32C078374006BE265 /* UseCases */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = UseCases;
-			sourceTree = "<group>";
-		};
 		99D11EB42C078389006BE265 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -213,34 +194,6 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		99D11EB62C0783F9006BE265 /* Persistence */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Persistence;
-			sourceTree = "<group>";
-		};
-		99D11EB72C078439006BE265 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		99D11EB82C078444006BE265 /* DataModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DataModels;
-			sourceTree = "<group>";
-		};
-		99D11EBA2C07844C006BE265 /* Repositories */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Repositories;
-			sourceTree = "<group>";
-		};
 		99D11EBB2C07848B006BE265 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,6 +204,13 @@
 				995358452C00C555005BF799 /* Where_Are_You.xcdatamodeld */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		99D5060B2C08A77900A6CF7B /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		AD1C714E32C1CFC6F61EAA5F /* Frameworks */ = {
@@ -558,7 +518,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8CKPNKA3V9;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Where_Are_You/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Where_Are_You/Resources/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -591,7 +551,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8CKPNKA3V9;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Where_Are_You/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Where_Are_You/Resources/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
