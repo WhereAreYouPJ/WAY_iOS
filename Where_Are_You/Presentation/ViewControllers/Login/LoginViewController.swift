@@ -30,7 +30,6 @@ class LoginViewController: UIViewController {
         loginView.appleLogin.addTarget(self, action: #selector(appleLoginTapped), for: .touchUpInside)
         loginView.accountLogin.addTarget(self, action: #selector(accountLoginTapped), for: .touchUpInside)
         loginView.signupButton.button.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
-//        loginView.signupButton.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
         loginView.findAccountButton.button.addTarget(self, action: #selector(findAccountButtonTapped), for: .touchUpInside)
         loginView.inquiryButton.button.addTarget(self, action: #selector(inquiryButtonTapped), for: .touchUpInside)
     }
@@ -57,7 +56,10 @@ class LoginViewController: UIViewController {
     }
     
     @objc func findAccountButtonTapped() {
-        
+        let controller = FindAccountController()
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
     }
     
     @objc func inquiryButtonTapped() {

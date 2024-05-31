@@ -45,7 +45,6 @@ class AccountLogin: UIView {
     private let passwordTextField: UIView = {
         let tf = Utilities().textField(withPlaceholder: "비밀번호를 입력해주세요.")
         let view = Utilities().inputContainerView(textField: tf)
-        view.heightAnchor.constraint(equalToConstant: 44).isActive = true
         return view
     }()
     
@@ -60,10 +59,7 @@ class AccountLogin: UIView {
     
     let findAccountButton = CustomButtonView(text: "계정찾기", weight: .medium, textColor: .color102, fontSize: 14)
     
-    let signupButton: UIButton = {
-        let button = Utilities().attributedButton("계정이 없으신가요?", "  가입하기")
-        return button
-    }()
+    let signupButton = Utilities().attributedButton("계정이 없으신가요?", "  가입하기")
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {

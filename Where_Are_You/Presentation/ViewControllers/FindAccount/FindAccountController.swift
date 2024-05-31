@@ -1,48 +1,49 @@
 //
-//  AccountLoginController.swift
+//  FindAccountController.swift
 //  Where_Are_You
 //
-//  Created by 오정석 on 25/5/2024.
+//  Created by 오정석 on 31/5/2024.
 //
 
 import UIKit
 
-class AccountLoginController: UIViewController {
+class FindAccountController: UIViewController {
     // MARK: - Properties
-    private let accountView = AccountLogin()
-    
+    private let findAccountView = FindAccount()
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(accountView)
-        accountView.frame = view.bounds
-        view.backgroundColor = .white
         
+        setupView()
+        buttonAction()
         configureNavigationBar()
-        
-        accountView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
-        
-        accountView.findAccountButton.button.addTarget(self, action: #selector(findAccountButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Selectors
+    
     @objc func backButtonTapped() {
         dismiss(animated: true)
     }
     
-    @objc func loginButtonTapped() {
-        // 아이디, 비번 확인하고 로그인 체크
-        print("login button tapped")
+    @objc func searchID() {
+        print("saerchID")
     }
     
-    @objc func findAccountButtonTapped() {
-        let controller = FindAccountController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
+    @objc func resetPassword() {
+        print("resetPassword")
     }
-    
+
     // MARK: - Helpers
+    func setupView() {
+        view.addSubview(findAccountView)
+        findAccountView.frame = view.bounds
+    }
+    
+    func buttonAction() {
+        findAccountView.findID.addTarget(self, action: #selector(searchID), for: .touchUpInside)
+        findAccountView.resetPassword.addTarget(self, action: #selector(resetPassword), for: .touchUpInside)
+    }
     
     func configureNavigationBar() {
         
@@ -59,6 +60,6 @@ class AccountLoginController: UIViewController {
         navigationController?.navigationBar.tintColor = .white
         navigationItem.leftBarButtonItem = backButton
         
-        navigationItem.title = "로그인"
+        navigationItem.title = "계정찾기"
     }
 }

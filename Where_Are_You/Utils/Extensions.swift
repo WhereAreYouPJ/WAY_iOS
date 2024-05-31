@@ -17,10 +17,12 @@ extension UIColor {
     static let letterBrandColor = UIColor.rgb(red: 98, green: 54, blue: 233)
     static let warningColor = UIColor.rgb(red: 223, green: 67, blue: 67)
     
+    static let color17 = UIColor.rgb(red: 17, green: 17, blue: 17)
     static let color34 = UIColor.rgb(red: 34, green: 34, blue: 34)
     static let color51 = UIColor.rgb(red: 51, green: 51, blue: 51)
     static let color68 = UIColor.rgb(red: 68, green: 68, blue: 68)
     static let color102 = UIColor.rgb(red: 102, green: 102, blue: 102)
+    static let color118 = UIColor.rgb(red: 118, green: 118, blue: 118)
     static let color153 = UIColor.rgb(red: 153, green: 153, blue: 153)
     static let color172 = UIColor.rgb(red: 172, green: 172, blue: 172)
     static let color212 = UIColor.rgb(red: 212, green: 212, blue: 212)

@@ -10,8 +10,51 @@ import SnapKit
 
 // MARK: - CustomButton
 
-class CustomButton: UIButton {
+class CustomButtonFindAccount: UIButton {
     
+    private let arrowImageView = UIImageView()
+    
+    init(title: String, description: String) {
+        super.init(frame: .zero)
+        
+        setupView(title: title, description: description)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupView(title: String, description: String) {
+        layer.borderColor = UIColor.color118.cgColor
+        layer.borderWidth = 1
+        layer.cornerRadius = 7
+        backgroundColor = .white
+        
+        let titleLabel = Utilities().createLabel(NotoSans: .medium, text: title, textColor: .color34, fontSize: 14)
+        let descriptionLabel = Utilities().createLabel(NotoSans: .medium, text: description, textColor: .color102, fontSize: 12)
+        descriptionLabel.numberOfLines = 0
+        
+        arrowImageView.image = UIImage(systemName: "chevron.right")
+        arrowImageView.tintColor = .color17
+        
+        let stackView = Utilities().createStackView(arrangedSubviews: [titleLabel, descriptionLabel], axis: .vertical, spacing: 0, distribution: .fillProportionally)
+        
+        addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.left.top.equalToSuperview().offset(9)
+            make.centerY.equalToSuperview()
+            make.width.equalTo(272)
+        }
+        
+        addSubview(arrowImageView)
+        arrowImageView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().inset(12)
+        }
+    }
+}
+
+class CustomButton: UIButton {
     // MARK: - Lifecycle
     
     init(title: String, backgroundColor: UIColor, titleColor: UIColor, font: UIFont, image: UIImage? = nil) {
@@ -46,14 +89,12 @@ class CustomButton: UIButton {
 }
 
 // MARK: - CustomButton inside View
-
 class CustomButtonView: UIView {
-    // MARK: - Properties
     
+    // MARK: - Properties
     let button: UIButton
     
     // MARK: - Lifecycle
-    
     init(text: String, weight: UIFont.Weight, textColor: UIColor, fontSize: CGFloat) {
         self.button = UIButton(type: .system)
         super.init(frame: .zero)
