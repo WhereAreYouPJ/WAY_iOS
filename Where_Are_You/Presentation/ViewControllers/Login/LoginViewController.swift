@@ -14,17 +14,13 @@ class LoginViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(loginView)
+        loginView.frame = view.bounds
         
-        setupView()
         buttonAction()
     }
     
     // MARK: - Helpers
-    func setupView() {
-        view.addSubview(loginView)
-        loginView.frame = view.bounds
-    }
-    
     func buttonAction() {
         loginView.kakaoLogin.addTarget(self, action: #selector(kakaoLoginTapped), for: .touchUpInside)
         loginView.appleLogin.addTarget(self, action: #selector(appleLoginTapped), for: .touchUpInside)

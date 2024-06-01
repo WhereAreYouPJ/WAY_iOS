@@ -21,6 +21,7 @@ class SearchIDView: UIView {
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .white
     }
     
     required init?(coder: NSCoder) {

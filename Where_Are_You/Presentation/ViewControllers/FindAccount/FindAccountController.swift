@@ -14,8 +14,9 @@ class FindAccountController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(findAccountOptionsView)
+        findAccountOptionsView.frame = view.bounds
         
-        setupView()
         buttonAction()
         configureNavigationBar()
     }
@@ -27,7 +28,10 @@ class FindAccountController: UIViewController {
     }
     
     @objc func searchID() {
-        print("saerchID")
+        let controller = SearchIDViewController()
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
     }
     
     @objc func resetPassword() {
@@ -35,11 +39,6 @@ class FindAccountController: UIViewController {
     }
 
     // MARK: - Helpers
-    func setupView() {
-        view.addSubview(findAccountOptionsView)
-        findAccountOptionsView.frame = view.bounds
-    }
-    
     func buttonAction() {
         findAccountOptionsView.findID.addTarget(self, action: #selector(searchID), for: .touchUpInside)
         findAccountOptionsView.resetPassword.addTarget(self, action: #selector(resetPassword), for: .touchUpInside)

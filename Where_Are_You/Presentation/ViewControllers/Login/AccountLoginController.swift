@@ -16,10 +16,9 @@ class AccountLoginController: UIViewController {
         super.viewDidLoad()
         view.addSubview(accountLoginView)
         accountLoginView.frame = view.bounds
-        view.backgroundColor = .white
-        
+    
         configureNavigationBar()
-        
+    
         accountLoginView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         accountLoginView.findAccountButton.button.addTarget(self, action: #selector(findAccountButtonTapped), for: .touchUpInside)
         accountLoginView.signupButton.addTarget(self, action: #selector(registerAccountButtonTapped), for: .touchUpInside)
