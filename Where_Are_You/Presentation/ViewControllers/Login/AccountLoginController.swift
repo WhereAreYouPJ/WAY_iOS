@@ -9,20 +9,20 @@ import UIKit
 
 class AccountLoginController: UIViewController {
     // MARK: - Properties
-    private let accountView = AccountLogin()
+    private let accountLoginView = AccountLoginView()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(accountView)
-        accountView.frame = view.bounds
+        view.addSubview(accountLoginView)
+        accountLoginView.frame = view.bounds
         view.backgroundColor = .white
         
         configureNavigationBar()
         
-        accountView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
-        
-        accountView.findAccountButton.button.addTarget(self, action: #selector(findAccountButtonTapped), for: .touchUpInside)
+        accountLoginView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        accountLoginView.findAccountButton.button.addTarget(self, action: #selector(findAccountButtonTapped), for: .touchUpInside)
+        accountLoginView.signupButton.addTarget(self, action: #selector(registerAccountButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Selectors
@@ -40,6 +40,11 @@ class AccountLoginController: UIViewController {
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true, completion: nil)
+    }
+    
+    @objc func registerAccountButtonTapped() {
+        // 회원가입 이동하기
+        print("registerAccountTapped")
     }
     
     // MARK: - Helpers

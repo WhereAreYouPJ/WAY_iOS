@@ -9,7 +9,7 @@ import UIKit
 
 class FindAccountController: UIViewController {
     // MARK: - Properties
-    private let findAccountView = FindAccount()
+    private let findAccountOptionsView = FindAccountOptionsView()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -36,13 +36,13 @@ class FindAccountController: UIViewController {
 
     // MARK: - Helpers
     func setupView() {
-        view.addSubview(findAccountView)
-        findAccountView.frame = view.bounds
+        view.addSubview(findAccountOptionsView)
+        findAccountOptionsView.frame = view.bounds
     }
     
     func buttonAction() {
-        findAccountView.findID.addTarget(self, action: #selector(searchID), for: .touchUpInside)
-        findAccountView.resetPassword.addTarget(self, action: #selector(resetPassword), for: .touchUpInside)
+        findAccountOptionsView.findID.addTarget(self, action: #selector(searchID), for: .touchUpInside)
+        findAccountOptionsView.resetPassword.addTarget(self, action: #selector(resetPassword), for: .touchUpInside)
     }
     
     func configureNavigationBar() {

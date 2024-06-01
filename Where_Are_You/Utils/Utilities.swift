@@ -19,21 +19,14 @@ class Utilities {
         return stackView
     }
     
-    // button이 들어간 뷰
-    func inputContainerView(button: UIButton) -> UIView {
+    // paddingLabel (left 4,bottom 6)
+    func inputContainerLabel(UILabel_NotoSans weight: UIFont.Weight, text: String, textColor: UIColor, fontSize: CGFloat) -> UIView {
         let view = UIView()
-        view.addSubview(button)
-        button.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.left.equalTo(view).offset(6)
-            make.bottom.equalTo(view).offset(-4)
-        }
-        return view
-    }
-    
-    // label이 들어간 뷰
-    func inputContainerView(label: UILabel) -> UIView {
-        let view = UIView()
+        let label = UILabel()
+        label.text = text
+        label.textColor = textColor
+        label.font = UIFont.pretendard(NotoSans: weight, fontSize: fontSize)
+        label.numberOfLines = 0
         view.addSubview(label)
         label.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -51,41 +44,30 @@ class Utilities {
         return label
     }
     
-    // 텍스트 필드가 들어간 뷰 (left: 8, top: 12)
-    func inputContainerView(textField: UITextField) -> UIView {
-        let view = UIView()
-        view.addSubview(textField)
-        view.layer.borderWidth = 1
-        view.layer.cornerRadius = 10
-        view.layer.borderColor = UIColor.color212.cgColor
-        textField.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.left.equalTo(view).offset(8)
-            make.bottom.equalTo(view).offset(-12)
-        }
-        return view
-    }
-    
-    // placeholder이 들어간 텍스트 필드
-    func textField(withPlaceholder placeholder: String) -> UITextField {
+    // TextField with layer and placeholder
+    func inputContainerTextField(withPlaceholder placeholder: String, fontSize: CGFloat) -> UITextField {
         let tf = UITextField()
-        tf.textColor = .black
-        tf.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
+        tf.textColor = .color34
+        tf.font = UIFont.pretendard(NotoSans: .medium, fontSize: fontSize)
         tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.color102])
+        tf.layer.borderWidth = 1
         tf.layer.cornerRadius = 7
+        tf.layer.borderColor = UIColor.color212.cgColor
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: tf.frame.height))
+        tf.leftView = paddingView
+        tf.rightView = paddingView
+        tf.leftViewMode = .always
+        tf.rightViewMode = .always
         return tf
     }
     
-    // 이미지가 들어간 버튼
-    func inputContainerButton(withImage image: String, title: String, backgroundColor: UIColor, textColor: UIColor) -> UIButton {
-        let button = UIButton()
-        button.setImage(UIImage(named: image), for: .normal)
-        button.setTitle(title, for: .normal)
-        button.setTitleColor(textColor, for: .normal)
-        button.backgroundColor = backgroundColor
-        button.layer.cornerRadius = 7
-        button.semanticContentAttribute = .forceLeftToRight
-        return button
+    // TextField with placeholder
+    func textField(withPlaceholder placeholder: String, fontSize: CGFloat) -> UITextField {
+        let tf = UITextField()
+        tf.textColor = .color34
+        tf.font = UIFont.pretendard(NotoSans: .medium, fontSize: fontSize)
+        tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.color102])
+        return tf
     }
     
     // 두개의 label이 들어간 하나의 버튼

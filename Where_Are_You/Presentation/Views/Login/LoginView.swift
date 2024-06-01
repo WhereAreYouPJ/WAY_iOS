@@ -18,13 +18,7 @@ class LoginView: UIView {
         return label
     }()
     
-    private let subtitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
-        label.text = "위치기반 일정관리 플랫폼"
-        label.textColor = .color68
-        return label
-    }()
+    private let subtitleLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .medium, text: "위치기반 일정관리 플랫폼", textColor: .color68, fontSize: 14)
     
     let kakaoLogin: UIButton = {
         let button = UIButton()
@@ -44,11 +38,7 @@ class LoginView: UIView {
         return button
     }()
     
-    let separatorLabel: UIView = {
-        let label = Utilities().createLabel(NotoSans: .medium, text: "또는", textColor: .color102, fontSize: 14)
-        let view = Utilities().inputContainerView(label: label)
-        return view
-    }()
+    let separatorLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .medium, text: "또는", textColor: .color102, fontSize: 14)
     
     let signupButton = CustomButtonView(text: "회원가입", weight: .medium, textColor: .color102, fontSize: 14)
     let findAccountButton = CustomButtonView(text: "계정찾기", weight: .medium, textColor: .color102, fontSize: 14)

@@ -8,26 +8,14 @@
 import UIKit
 import SnapKit
 
-class AccountLogin: UIView {
+class AccountLoginView: UIView {
     // MARK: - Properties
     
-    private let titleLabel: UIView = {
-        let label = Utilities().createLabel(NotoSans: .bold, text: "로그인하기", textColor: .color34, fontSize: 22)
-        let view = Utilities().inputContainerView(label: label)
-        return view
-    }()
+    private let titleLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .bold, text: "로그인하기", textColor: .color34, fontSize: 22)
     
-    private let idLabel: UIView = {
-        let label = Utilities().createLabel(NotoSans: .medium, text: "아이디", textColor: .color51, fontSize: 12)
-        let view = Utilities().inputContainerView(label: label)
-        return view
-    }()
+    private let idLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .medium, text: "아이디", textColor: .color51, fontSize: 12)
     
-    private let idTextField: UIView = {
-        let tf = Utilities().textField(withPlaceholder: "아이디를 입력해주세요.")
-        let view = Utilities().inputContainerView(textField: tf)
-        return view
-    }()
+    let idTextField = Utilities().inputContainerTextField(withPlaceholder: "아이디를 입력해주세요.", fontSize: 14)
     
     private let idErrorLabel: UILabel = {
         let label = UILabel()
@@ -36,17 +24,9 @@ class AccountLogin: UIView {
         return label
     }()
     
-    private let passwordLabel: UIView = {
-        let label = Utilities().createLabel(NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: 12)
-        let view = Utilities().inputContainerView(label: label)
-        return view
-    }()
-    
-    private let passwordTextField: UIView = {
-        let tf = Utilities().textField(withPlaceholder: "비밀번호를 입력해주세요.")
-        let view = Utilities().inputContainerView(textField: tf)
-        return view
-    }()
+    private let passwordLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: 12)
+
+    private let passwordTextField = Utilities().inputContainerTextField(withPlaceholder: "비밀번호를 입력해주세요.", fontSize: 14)
     
     private let passwordErrorLabel: UILabel = {
         let label = UILabel()

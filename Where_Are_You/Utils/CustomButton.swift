@@ -8,8 +8,7 @@
 import UIKit
 import SnapKit
 
-// MARK: - CustomButton
-
+// MARK: - CustomButton in SearchAccountOptionsView
 class CustomButtonFindAccount: UIButton {
     
     private let arrowImageView = UIImageView()
@@ -30,14 +29,14 @@ class CustomButtonFindAccount: UIButton {
         layer.cornerRadius = 7
         backgroundColor = .white
         
-        let titleLabel = Utilities().createLabel(NotoSans: .medium, text: title, textColor: .color34, fontSize: 14)
-        let descriptionLabel = Utilities().createLabel(NotoSans: .medium, text: description, textColor: .color102, fontSize: 12)
-        descriptionLabel.numberOfLines = 0
+        let titleLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .medium, text: title, textColor: .color34, fontSize: 14)
+        let descriptionLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .medium, text: description, textColor: .color102, fontSize: 12)
         
         arrowImageView.image = UIImage(systemName: "chevron.right")
         arrowImageView.tintColor = .color17
         
-        let stackView = Utilities().createStackView(arrangedSubviews: [titleLabel, descriptionLabel], axis: .vertical, spacing: 0, distribution: .fillProportionally)
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel])
+        stackView.axis = .vertical
         
         addSubview(stackView)
         stackView.snp.makeConstraints { make in
@@ -54,9 +53,9 @@ class CustomButtonFindAccount: UIButton {
     }
 }
 
+// MARK: - Box Button
 class CustomButton: UIButton {
-    // MARK: - Lifecycle
-    
+
     init(title: String, backgroundColor: UIColor, titleColor: UIColor, font: UIFont, image: UIImage? = nil) {
         super.init(frame: .zero)
         setupButton(title: title, backgroundColor: backgroundColor, titleColor: titleColor, font: font, image: image)
@@ -66,7 +65,6 @@ class CustomButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Helpers
     private func setupButton(title: String, backgroundColor: UIColor, titleColor: UIColor, font: UIFont, image: UIImage?) {
         self.setTitle(title, for: .normal)
         self.backgroundColor = backgroundColor
@@ -88,7 +86,7 @@ class CustomButton: UIButton {
     }
 }
 
-// MARK: - CustomButton inside View
+// MARK: - ONLY Label
 class CustomButtonView: UIView {
     
     // MARK: - Properties

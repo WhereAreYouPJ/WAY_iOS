@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class FindAccount: UIView {
+class FindAccountOptionsView: UIView {
     // MARK: - Properties
     
     let findID = CustomButtonFindAccount(title: "아이디 찾기", description: "가입한 지금어디 계정에 등록된 이메일 정보로 계정을 찾을 수 있어요.")
