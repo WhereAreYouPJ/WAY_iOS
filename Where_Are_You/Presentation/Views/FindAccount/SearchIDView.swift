@@ -11,13 +11,13 @@ import SnapKit
 class SearchIDView: UIView {
     // MARK: - Properties
     
-    let titleLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .bold, text: "지금어디 가입 정보로 아이디를 확인하세요", textColor: .color34, fontSize: 22)
+    var titleLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .bold, text: "지금어디 가입 정보로 아이디를 확인하세요", textColor: .color34, fontSize: 22)
     
-    let emailLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .medium, text: "이메일 주소", textColor: .color51, fontSize: 12)
+    var emailLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .medium, text: "이메일 주소", textColor: .color51, fontSize: 12)
     
     let emailTextField = Utilities().inputContainerTextField(withPlaceholder: "이메일", fontSize: 14)
     
-    let requestAuthButton = CustomButton(title: "인증요청", backgroundColor: .brancColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
+    let requestAuthButton = CustomButton(title: "인증요청", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
     
     private let emailErrorLabel: UILabel = {
         let label = UILabel()
@@ -36,7 +36,7 @@ class SearchIDView: UIView {
         return label
     }()
     
-    let authNumberCheckButton = CustomButton(title: "확인", backgroundColor: .brancColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
+    let authNumberCheckButton = CustomButton(title: "확인", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
     
     private let authNumberErrorLabel: UILabel = {
         let label = UILabel()
@@ -52,7 +52,7 @@ class SearchIDView: UIView {
         return view
     }()
     
-    let bottomConfirmButton = CustomButton(title: "확인", backgroundColor: .brancColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
+    let bottomConfirmButton = CustomButton(title: "확인", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {

@@ -1,49 +1,49 @@
 //
-//  SearchIDViewController.swift
+//  CheckIDViewController.swift
 //  Where_Are_You
 //
-//  Created by 오정석 on 1/6/2024.
+//  Created by 오정석 on 2/6/2024.
 //
 
 import UIKit
 import SnapKit
 
-class SearchIDViewController: UIViewController {
-    // MARK: - Properties
-    
-    let searchIDView = SearchIDView()
+class CheckIDViewController: UIViewController {
+    // MARK: - Propeties
+    let checkIDView = CheckIDView()
     
     // MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(searchIDView)
-        searchIDView.frame = view.bounds
+        view.addSubview(checkIDView)
+        checkIDView.frame = view.bounds
+        
+        buttonAction()
         configureNavigationBar()
-        actionButton()
     }
     
     // MARK: - Selectors
-    @objc func backButtonTapped() {
-        dismiss(animated: true)
-    }
-    @objc func confirmButtonTapped() {
-        let controller = CheckIDViewController()
+    @objc func loginButtonTapped() {
+        let controller = LoginViewController()
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true, completion: nil)
     }
-
+    
+    @objc func searchPasswordButtonTapped() {
+        let controller = SearchPasswordViewController()
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
+    }
+    
     // MARK: - Helpers
-    func actionButton() {
-        searchIDView.bottomConfirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
+    func buttonAction() {
+        checkIDView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        checkIDView.searchPasswordButton.addTarget(self, action: #selector(searchPasswordButtonTapped), for: .touchUpInside)
     }
     
     func configureNavigationBar() {
-        let image = UIImage(systemName: "arrow.backward")
-        let backButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(backButtonTapped))
-        backButton.tintColor = .color172
-        
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         navigationController?.navigationBar.standardAppearance = appearance
@@ -51,7 +51,6 @@ class SearchIDViewController: UIViewController {
         navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.tintColor = .white
-        navigationItem.leftBarButtonItem = backButton
         navigationItem.title = "아이디 찾기"
     }
 }

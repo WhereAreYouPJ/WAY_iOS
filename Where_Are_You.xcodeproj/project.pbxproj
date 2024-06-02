@@ -14,7 +14,10 @@
 		995358492C00C558005BF799 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 995358482C00C558005BF799 /* Assets.xcassets */; };
 		9953584C2C00C558005BF799 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 9953584B2C00C558005BF799 /* Base */; };
 		995358552C00DB0A005BF799 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 995358542C00DB0A005BF799 /* .swiftlint.yml */; };
+		99938EE02C0C8B9D00239FA1 /* SearchPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99938EDF2C0C8B9D00239FA1 /* SearchPasswordViewController.swift */; };
+		99938EE22C0C8FE300239FA1 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99938EE12C0C8FE300239FA1 /* CustomLabel.swift */; };
 		99B397832C0C3E9D00D7A109 /* CheckIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B397822C0C3E9D00D7A109 /* CheckIDView.swift */; };
+		99B397852C0C41D300D7A109 /* CheckIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B397842C0C41D300D7A109 /* CheckIDViewController.swift */; };
 		99C9B2292C0197CA008D7CBD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2282C0197CA008D7CBD /* User.swift */; };
 		99C9B22C2C019C67008D7CBD /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B22B2C019C67008D7CBD /* LoginView.swift */; };
 		99C9B2322C01A45C008D7CBD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2312C01A45C008D7CBD /* Extensions.swift */; };
@@ -47,7 +50,10 @@
 		9953584B2C00C558005BF799 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9953584D2C00C558005BF799 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		995358542C00DB0A005BF799 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		99938EDF2C0C8B9D00239FA1 /* SearchPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPasswordViewController.swift; sourceTree = "<group>"; };
+		99938EE12C0C8FE300239FA1 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		99B397822C0C3E9D00D7A109 /* CheckIDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIDView.swift; sourceTree = "<group>"; };
+		99B397842C0C41D300D7A109 /* CheckIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIDViewController.swift; sourceTree = "<group>"; };
 		99C9B2282C0197CA008D7CBD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		99C9B22B2C019C67008D7CBD /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		99C9B2312C01A45C008D7CBD /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -148,6 +154,7 @@
 				99C9B2312C01A45C008D7CBD /* Extensions.swift */,
 				99C9B2472C01D2B7008D7CBD /* Utilities.swift */,
 				99D11EB02C06F56F006BE265 /* CustomButton.swift */,
+				99938EE12C0C8FE300239FA1 /* CustomLabel.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -251,6 +258,8 @@
 			children = (
 				99F78F1B2C09BB8F004C0C72 /* FindAccountController.swift */,
 				99F9FADD2C0B6187005B36B9 /* SearchIDViewController.swift */,
+				99B397842C0C41D300D7A109 /* CheckIDViewController.swift */,
+				99938EDF2C0C8B9D00239FA1 /* SearchPasswordViewController.swift */,
 			);
 			path = FindAccount;
 			sourceTree = "<group>";
@@ -410,10 +419,13 @@
 				9953583D2C00C555005BF799 /* AppDelegate.swift in Sources */,
 				99C9B2422C01CE4C008D7CBD /* LoginViewModel.swift in Sources */,
 				99F78F172C09B10D004C0C72 /* FindAccountOptionsView.swift in Sources */,
+				99B397852C0C41D300D7A109 /* CheckIDViewController.swift in Sources */,
 				99C9B2292C0197CA008D7CBD /* User.swift in Sources */,
+				99938EE22C0C8FE300239FA1 /* CustomLabel.swift in Sources */,
 				99F9FADE2C0B6187005B36B9 /* SearchIDViewController.swift in Sources */,
 				99B397832C0C3E9D00D7A109 /* CheckIDView.swift in Sources */,
 				99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */,
+				99938EE02C0C8B9D00239FA1 /* SearchPasswordViewController.swift in Sources */,
 				99C9B2522C022DE3008D7CBD /* AccountLoginController.swift in Sources */,
 				99F78F1C2C09BB8F004C0C72 /* FindAccountController.swift in Sources */,
 				9953583F2C00C555005BF799 /* SceneDelegate.swift in Sources */,

@@ -1,42 +1,38 @@
 //
-//  SearchIDViewController.swift
+//  SearchPasswordViewController.swift
 //  Where_Are_You
 //
-//  Created by 오정석 on 1/6/2024.
+//  Created by 오정석 on 2/6/2024.
 //
 
 import UIKit
 import SnapKit
 
-class SearchIDViewController: UIViewController {
+class SearchPasswordViewController: UIViewController {
     // MARK: - Properties
     
-    let searchIDView = SearchIDView()
+    let searchPasswordView = SearchIDView()
     
     // MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(searchIDView)
-        searchIDView.frame = view.bounds
+        view.addSubview(searchPasswordView)
+        searchPasswordView.frame = view.bounds
+        
+        setupUI()
         configureNavigationBar()
-        actionButton()
     }
     
     // MARK: - Selectors
     @objc func backButtonTapped() {
         dismiss(animated: true)
     }
-    @objc func confirmButtonTapped() {
-        let controller = CheckIDViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
-    }
-
+    
     // MARK: - Helpers
-    func actionButton() {
-        searchIDView.bottomConfirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
+    func setupUI() {
+        searchPasswordView.emailLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .medium, text: "아이디", textColor: .color51, fontSize: 12)
+    
+        searchPasswordView.emailTextField.placeholder = "아이디"
     }
     
     func configureNavigationBar() {
@@ -52,6 +48,6 @@ class SearchIDViewController: UIViewController {
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.tintColor = .white
         navigationItem.leftBarButtonItem = backButton
-        navigationItem.title = "아이디 찾기"
+        navigationItem.title = "비밀번호 찾기"
     }
 }

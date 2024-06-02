@@ -13,7 +13,7 @@ extension UIColor {
         return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
     }
     
-    static let brancColor = UIColor.rgb(red: 123, green: 80, blue: 255)
+    static let brandColor = UIColor.rgb(red: 123, green: 80, blue: 255)
     static let letterBrandColor = UIColor.rgb(red: 98, green: 54, blue: 233)
     static let warningColor = UIColor.rgb(red: 223, green: 67, blue: 67)
     
