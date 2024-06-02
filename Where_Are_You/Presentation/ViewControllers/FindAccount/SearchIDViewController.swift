@@ -20,6 +20,7 @@ class SearchIDViewController: UIViewController {
         view.addSubview(searchIDView)
         searchIDView.frame = view.bounds
         configureNavigationBar()
+        actionButton()
     }
     
     // MARK: - Selectors
@@ -28,6 +29,10 @@ class SearchIDViewController: UIViewController {
     }
 
     // MARK: - Helpers
+    func actionButton() {
+        
+    }
+    
     func configureNavigationBar() {
         let image = UIImage(systemName: "arrow.backward")
         let backButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(backButtonTapped))
