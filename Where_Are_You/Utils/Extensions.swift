@@ -7,6 +7,14 @@
 
 import UIKit
 
+// MARK: - UIViewController
+extension UIViewController {
+    func configureNavigationBar(title: String, backButtonAction: Selector? = nil, showBackButton: Bool = true) {
+        Utilities.configureNavigationBar(for: self, title: title, backButtonAction: backButtonAction, showBackButton: showBackButton)
+    }
+}
+
+
 // MARK: - UIColor
 extension UIColor {
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {

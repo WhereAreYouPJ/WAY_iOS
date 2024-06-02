@@ -31,9 +31,9 @@
 		99C9B2502C0229CF008D7CBD /* AccountLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B24F2C0229CF008D7CBD /* AccountLoginView.swift */; };
 		99C9B2522C022DE3008D7CBD /* AccountLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2512C022DE3008D7CBD /* AccountLoginController.swift */; };
 		99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D11EB02C06F56F006BE265 /* CustomButton.swift */; };
-		99F78F172C09B10D004C0C72 /* FindAccountOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F162C09B10D004C0C72 /* FindAccountOptionsView.swift */; };
-		99F78F1C2C09BB8F004C0C72 /* FindAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F1B2C09BB8F004C0C72 /* FindAccountController.swift */; };
-		99F78F1E2C09C98D004C0C72 /* SearchIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F1D2C09C98D004C0C72 /* SearchIDView.swift */; };
+		99F78F172C09B10D004C0C72 /* SearchAccountOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F162C09B10D004C0C72 /* SearchAccountOptionsView.swift */; };
+		99F78F1C2C09BB8F004C0C72 /* SearchAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F1B2C09BB8F004C0C72 /* SearchAccountController.swift */; };
+		99F78F1E2C09C98D004C0C72 /* SearchAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F1D2C09C98D004C0C72 /* SearchAuthView.swift */; };
 		99F9FADA2C0B3306005B36B9 /* LoginAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9FAD92C0B3306005B36B9 /* LoginAuthentication.swift */; };
 		99F9FADE2C0B6187005B36B9 /* SearchIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9FADD2C0B6187005B36B9 /* SearchIDViewController.swift */; };
 		D79EFAD9E5409233E5338E46 /* Pods_Where_Are_You.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */; };
@@ -67,9 +67,9 @@
 		99C9B24F2C0229CF008D7CBD /* AccountLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLoginView.swift; sourceTree = "<group>"; };
 		99C9B2512C022DE3008D7CBD /* AccountLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLoginController.swift; sourceTree = "<group>"; };
 		99D11EB02C06F56F006BE265 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
-		99F78F162C09B10D004C0C72 /* FindAccountOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindAccountOptionsView.swift; sourceTree = "<group>"; };
-		99F78F1B2C09BB8F004C0C72 /* FindAccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindAccountController.swift; sourceTree = "<group>"; };
-		99F78F1D2C09C98D004C0C72 /* SearchIDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIDView.swift; sourceTree = "<group>"; };
+		99F78F162C09B10D004C0C72 /* SearchAccountOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAccountOptionsView.swift; sourceTree = "<group>"; };
+		99F78F1B2C09BB8F004C0C72 /* SearchAccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAccountController.swift; sourceTree = "<group>"; };
+		99F78F1D2C09C98D004C0C72 /* SearchAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAuthView.swift; sourceTree = "<group>"; };
 		99F9FAD92C0B3306005B36B9 /* LoginAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAuthentication.swift; sourceTree = "<group>"; };
 		99F9FADD2C0B6187005B36B9 /* SearchIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIDViewController.swift; sourceTree = "<group>"; };
 		A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -237,8 +237,8 @@
 		99F78F182C09B111004C0C72 /* FindAccount */ = {
 			isa = PBXGroup;
 			children = (
-				99F78F162C09B10D004C0C72 /* FindAccountOptionsView.swift */,
-				99F78F1D2C09C98D004C0C72 /* SearchIDView.swift */,
+				99F78F162C09B10D004C0C72 /* SearchAccountOptionsView.swift */,
+				99F78F1D2C09C98D004C0C72 /* SearchAuthView.swift */,
 				99B397822C0C3E9D00D7A109 /* CheckIDView.swift */,
 			);
 			path = FindAccount;
@@ -256,7 +256,7 @@
 		99F78F1A2C09BB7D004C0C72 /* FindAccount */ = {
 			isa = PBXGroup;
 			children = (
-				99F78F1B2C09BB8F004C0C72 /* FindAccountController.swift */,
+				99F78F1B2C09BB8F004C0C72 /* SearchAccountController.swift */,
 				99F9FADD2C0B6187005B36B9 /* SearchIDViewController.swift */,
 				99B397842C0C41D300D7A109 /* CheckIDViewController.swift */,
 				99938EDF2C0C8B9D00239FA1 /* SearchPasswordViewController.swift */,
@@ -415,10 +415,10 @@
 				99C9B22C2C019C67008D7CBD /* LoginView.swift in Sources */,
 				995358412C00C555005BF799 /* LoginViewController.swift in Sources */,
 				99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */,
-				99F78F1E2C09C98D004C0C72 /* SearchIDView.swift in Sources */,
+				99F78F1E2C09C98D004C0C72 /* SearchAuthView.swift in Sources */,
 				9953583D2C00C555005BF799 /* AppDelegate.swift in Sources */,
 				99C9B2422C01CE4C008D7CBD /* LoginViewModel.swift in Sources */,
-				99F78F172C09B10D004C0C72 /* FindAccountOptionsView.swift in Sources */,
+				99F78F172C09B10D004C0C72 /* SearchAccountOptionsView.swift in Sources */,
 				99B397852C0C41D300D7A109 /* CheckIDViewController.swift in Sources */,
 				99C9B2292C0197CA008D7CBD /* User.swift in Sources */,
 				99938EE22C0C8FE300239FA1 /* CustomLabel.swift in Sources */,
@@ -427,7 +427,7 @@
 				99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */,
 				99938EE02C0C8B9D00239FA1 /* SearchPasswordViewController.swift in Sources */,
 				99C9B2522C022DE3008D7CBD /* AccountLoginController.swift in Sources */,
-				99F78F1C2C09BB8F004C0C72 /* FindAccountController.swift in Sources */,
+				99F78F1C2C09BB8F004C0C72 /* SearchAccountController.swift in Sources */,
 				9953583F2C00C555005BF799 /* SceneDelegate.swift in Sources */,
 				99F9FADA2C0B3306005B36B9 /* LoginAuthentication.swift in Sources */,
 				99C9B2322C01A45C008D7CBD /* Extensions.swift in Sources */,

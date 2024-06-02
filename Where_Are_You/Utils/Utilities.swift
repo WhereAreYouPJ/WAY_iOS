@@ -9,6 +9,28 @@ import UIKit
 import SnapKit
 
 class Utilities {
+    // 네비게이션 바 생성
+    static func configureNavigationBar(for viewController: UIViewController, title: String, backButtonAction: Selector?, showBackButton: Bool = true) {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        
+        if let navigationController = viewController.navigationController {
+            navigationController.navigationBar.standardAppearance = appearance
+            navigationController.navigationBar.scrollEdgeAppearance = navigationController.navigationBar.standardAppearance
+            navigationController.navigationBar.barStyle = .black
+            navigationController.navigationBar.isTranslucent = false
+            navigationController.navigationBar.tintColor = .white
+        }
+        
+        if showBackButton, let backButtonAction = backButtonAction {
+            let image = UIImage(systemName: "arrow.backward")
+            let backButton = UIBarButtonItem(image: image, style: .plain, target: viewController, action: backButtonAction)
+            backButton.tintColor = .color172
+            viewController.navigationItem.leftBarButtonItem = backButton
+        }
+        
+        viewController.navigationItem.title = title
+    }
     
     // 스택뷰 생성
     func createStackView(arrangedSubviews: [UIView], axis: NSLayoutConstraint.Axis, spacing: CGFloat, distribution: UIStackView.Distribution) -> UIStackView {

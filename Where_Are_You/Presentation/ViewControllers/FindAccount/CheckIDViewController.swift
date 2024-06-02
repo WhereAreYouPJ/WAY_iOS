@@ -19,38 +19,24 @@ class CheckIDViewController: UIViewController {
         checkIDView.frame = view.bounds
         
         buttonAction()
-        configureNavigationBar()
+        configureNavigationBar(title: "아이디 찾기", showBackButton: false)
     }
     
     // MARK: - Selectors
     @objc func loginButtonTapped() {
         let controller = LoginViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     @objc func searchPasswordButtonTapped() {
         let controller = SearchPasswordViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
+        navigationController?.pushViewController(controller, animated: true)
+
     }
     
     // MARK: - Helpers
     func buttonAction() {
         checkIDView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         checkIDView.searchPasswordButton.addTarget(self, action: #selector(searchPasswordButtonTapped), for: .touchUpInside)
-    }
-    
-    func configureNavigationBar() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
-        navigationController?.navigationBar.barStyle = .black
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.tintColor = .white
-        navigationItem.title = "아이디 찾기"
     }
 }

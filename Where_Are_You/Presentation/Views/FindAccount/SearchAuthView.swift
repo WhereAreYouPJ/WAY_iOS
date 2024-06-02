@@ -8,12 +8,12 @@
 import UIKit
 import SnapKit
 
-class SearchIDView: UIView {
+class SearchAuthView: UIView {
     // MARK: - Properties
     
     var titleLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .bold, text: "지금어디 가입 정보로 아이디를 확인하세요", textColor: .color34, fontSize: 22)
     
-    var emailLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .medium, text: "이메일 주소", textColor: .color51, fontSize: 12)
+    var emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이메일 주소", textColor: .color51, fontSize: 12)
     
     let emailTextField = Utilities().inputContainerTextField(withPlaceholder: "이메일", fontSize: 14)
     

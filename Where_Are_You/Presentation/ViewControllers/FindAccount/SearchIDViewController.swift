@@ -10,8 +10,7 @@ import SnapKit
 
 class SearchIDViewController: UIViewController {
     // MARK: - Properties
-    
-    let searchIDView = SearchIDView()
+    let searchIDView = SearchAuthView()
     
     // MARK: - Lifecycle
     
@@ -19,39 +18,21 @@ class SearchIDViewController: UIViewController {
         super.viewDidLoad()
         view.addSubview(searchIDView)
         searchIDView.frame = view.bounds
-        configureNavigationBar()
+        configureNavigationBar(title: "아이디 찾기", backButtonAction: #selector(backButtonTapped))
         actionButton()
     }
     
     // MARK: - Selectors
     @objc func backButtonTapped() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     @objc func confirmButtonTapped() {
         let controller = CheckIDViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
+        navigationController?.pushViewController(controller, animated: true)
     }
 
     // MARK: - Helpers
     func actionButton() {
         searchIDView.bottomConfirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
-    }
-    
-    func configureNavigationBar() {
-        let image = UIImage(systemName: "arrow.backward")
-        let backButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(backButtonTapped))
-        backButton.tintColor = .color172
-        
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
-        navigationController?.navigationBar.barStyle = .black
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.tintColor = .white
-        navigationItem.leftBarButtonItem = backButton
-        navigationItem.title = "아이디 찾기"
     }
 }
