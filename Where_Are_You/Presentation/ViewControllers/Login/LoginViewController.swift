@@ -42,7 +42,9 @@ class LoginViewController: UIViewController {
     
     @objc func accountLoginTapped() {
         let controller = AccountLoginController()
-        navigationController?.pushViewController(controller, animated: true)
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
     }
     
     @objc func signupButtonTapped() {

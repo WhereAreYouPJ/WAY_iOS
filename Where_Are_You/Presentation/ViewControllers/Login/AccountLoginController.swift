@@ -28,7 +28,7 @@ class AccountLoginController: UIViewController {
 
     // MARK: - Selectors
     @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
     
     @objc func loginButtonTapped() {
@@ -37,8 +37,12 @@ class AccountLoginController: UIViewController {
     }
     
     @objc func findAccountButtonTapped() {
+        print("tapped")
         let controller = SearchAccountController()
-        navigationController?.pushViewController(controller, animated: true)
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
+        
     }
     
     @objc func registerAccountButtonTapped() {
