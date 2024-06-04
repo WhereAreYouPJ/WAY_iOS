@@ -8,8 +8,32 @@
 import Foundation
 
 protocol UserUseCase {
-    func login(email: String, password: String, comlpetion: @escaping(Result<User, Error>) -> Void)
+    func login(userID: String, password: String, comlpetion: @escaping(Result<User, Error>) -> Void)
     func register(user: User, completion: @escaping (Result<User, Error>) -> Void)
     func findAccount(email: String, completion: @escaping (Result<String, Error>) -> Void)
-    func resetPassword(id: String, newPassword: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func resetPassword(email: String, newPassword: String, completion: @escaping (Result<Void, Error>) -> Void)
+}
+
+class UserCaseImpl: UserUseCase {
+    private let userRepository: UserRepository
+    
+    init(userRepository: UserRepository) {
+        self.userRepository = userRepository
+    }
+    
+    func login(userID: String, password: String, comlpetion: @escaping (Result<User, any Error>) -> Void) {
+        userRepository.login(userID: userID, password: password, completion: comlpetion)
+    }
+    
+    func register(user: User, completion: @escaping (Result<User, any Error>) -> Void) {
+        userRepository.register(user: user, completion: completion)
+    }
+    
+    func findAccount(email: String, completion: @escaping (Result<String, any Error>) -> Void) {
+        userRepository.findAccount(email: email, completion: completion)
+    }
+    
+    func resetPassword(email: String, newPassword: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+        userRepository.resetPassword(email: email, newPassword: newPassword, completion: completion)
+    }
 }

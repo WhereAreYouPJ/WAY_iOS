@@ -26,7 +26,7 @@ class AccountLoginView: UIView {
     
     private let passwordLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: 12)
 
-    private let passwordTextField = Utilities().inputContainerTextField(withPlaceholder: "비밀번호를 입력해주세요.", fontSize: 14)
+    let passwordTextField = Utilities().inputContainerTextField(withPlaceholder: "비밀번호를 입력해주세요.", fontSize: 14)
     
     private let passwordErrorLabel: UILabel = {
         let label = UILabel()

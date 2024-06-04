@@ -7,7 +7,7 @@
 
 import Foundation
 
-class LoginViewModel {
+class AccountLoginViewModel {
     private let userUseCase: UserUseCase
     
     var user: User?
@@ -17,8 +17,8 @@ class LoginViewModel {
         self.userUseCase = userUseCase
     }
     
-    func login(email: String, password: String, completion: @escaping () -> Void) {
-        userUseCase.login(email: email, password: password) { [weak self] result in
+    func login(userID: String, password: String, completion: @escaping () -> Void) {
+        userUseCase.login(userID: userID, password: password) { [weak self] result in
             switch result {
             case .success(let user):
                 self?.user = user

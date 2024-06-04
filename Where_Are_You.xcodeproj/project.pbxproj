@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		990337572C0DDBE6007F314A /* EmailVerificationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990337562C0DDBE5007F314A /* EmailVerificationUseCase.swift */; };
+		9903375B2C0DDCDA007F314A /* EmailVerificationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9903375A2C0DDCDA007F314A /* EmailVerificationRepository.swift */; };
+		9903375D2C0DDDF8007F314A /* EmailVerificationRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9903375C2C0DDDF8007F314A /* EmailVerificationRepositoryImpl.swift */; };
 		9953583D2C00C555005BF799 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9953583C2C00C555005BF799 /* AppDelegate.swift */; };
 		9953583F2C00C555005BF799 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9953583E2C00C555005BF799 /* SceneDelegate.swift */; };
 		995358412C00C555005BF799 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995358402C00C555005BF799 /* LoginViewController.swift */; };
@@ -24,7 +27,7 @@
 		99C9B23D2C01ACBE008D7CBD /* Ttangsbudaejjigae-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 99C9B23A2C01ACBE008D7CBD /* Ttangsbudaejjigae-Medium.otf */; };
 		99C9B23E2C01ACBE008D7CBD /* Ttangsbudaejjigae-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 99C9B23B2C01ACBE008D7CBD /* Ttangsbudaejjigae-Bold.otf */; };
 		99C9B23F2C01ACBE008D7CBD /* Ttangsbudaejjigae-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 99C9B23C2C01ACBE008D7CBD /* Ttangsbudaejjigae-Light.otf */; };
-		99C9B2422C01CE4C008D7CBD /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2412C01CE4C008D7CBD /* LoginViewModel.swift */; };
+		99C9B2422C01CE4C008D7CBD /* AccountLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2412C01CE4C008D7CBD /* AccountLoginViewModel.swift */; };
 		99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2472C01D2B7008D7CBD /* Utilities.swift */; };
 		99C9B24D2C01ECCB008D7CBD /* NotoSansKR-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99C9B24B2C01DDF1008D7CBD /* NotoSansKR-Bold.ttf */; };
 		99C9B24E2C01ECCE008D7CBD /* NotoSansKR-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99C9B24C2C01DDF7008D7CBD /* NotoSansKR-Medium.ttf */; };
@@ -32,7 +35,6 @@
 		99C9B2522C022DE3008D7CBD /* AccountLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2512C022DE3008D7CBD /* AccountLoginController.swift */; };
 		99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D11EB02C06F56F006BE265 /* CustomButton.swift */; };
 		99EC20A32C0D99900018904D /* UserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20A22C0D99900018904D /* UserUseCase.swift */; };
-		99EC20A52C0D9BD60018904D /* UserCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20A42C0D9BD60018904D /* UserCaseImpl.swift */; };
 		99EC20A72C0D9C0E0018904D /* UserRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20A62C0D9C0E0018904D /* UserRepositoryImpl.swift */; };
 		99EC20A92C0D9C1A0018904D /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20A82C0D9C1A0018904D /* UserRepository.swift */; };
 		99EC20AB2C0D9D9D0018904D /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20AA2C0D9D9D0018904D /* RegisterViewModel.swift */; };
@@ -40,13 +42,15 @@
 		99F78F172C09B10D004C0C72 /* SearchAccountOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F162C09B10D004C0C72 /* SearchAccountOptionsView.swift */; };
 		99F78F1C2C09BB8F004C0C72 /* SearchAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F1B2C09BB8F004C0C72 /* SearchAccountController.swift */; };
 		99F78F1E2C09C98D004C0C72 /* SearchAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F1D2C09C98D004C0C72 /* SearchAuthView.swift */; };
-		99F9FADA2C0B3306005B36B9 /* LoginAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9FAD92C0B3306005B36B9 /* LoginAuthentication.swift */; };
 		99F9FADE2C0B6187005B36B9 /* SearchIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9FADD2C0B6187005B36B9 /* SearchIDViewController.swift */; };
 		D79EFAD9E5409233E5338E46 /* Pods_Where_Are_You.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0FC7C11057ACE416B59D9BFA /* Pods-Where_Are_You.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You.debug.xcconfig"; path = "Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You.debug.xcconfig"; sourceTree = "<group>"; };
+		990337562C0DDBE5007F314A /* EmailVerificationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationUseCase.swift; sourceTree = "<group>"; };
+		9903375A2C0DDCDA007F314A /* EmailVerificationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationRepository.swift; sourceTree = "<group>"; };
+		9903375C2C0DDDF8007F314A /* EmailVerificationRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationRepositoryImpl.swift; sourceTree = "<group>"; };
 		995358392C00C555005BF799 /* Where_Are_You.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Where_Are_You.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9953583C2C00C555005BF799 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9953583E2C00C555005BF799 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,7 +70,7 @@
 		99C9B23A2C01ACBE008D7CBD /* Ttangsbudaejjigae-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ttangsbudaejjigae-Medium.otf"; sourceTree = "<group>"; };
 		99C9B23B2C01ACBE008D7CBD /* Ttangsbudaejjigae-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ttangsbudaejjigae-Bold.otf"; sourceTree = "<group>"; };
 		99C9B23C2C01ACBE008D7CBD /* Ttangsbudaejjigae-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ttangsbudaejjigae-Light.otf"; sourceTree = "<group>"; };
-		99C9B2412C01CE4C008D7CBD /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		99C9B2412C01CE4C008D7CBD /* AccountLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLoginViewModel.swift; sourceTree = "<group>"; };
 		99C9B2472C01D2B7008D7CBD /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		99C9B24B2C01DDF1008D7CBD /* NotoSansKR-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold.ttf"; sourceTree = "<group>"; };
 		99C9B24C2C01DDF7008D7CBD /* NotoSansKR-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.ttf"; sourceTree = "<group>"; };
@@ -74,7 +78,6 @@
 		99C9B2512C022DE3008D7CBD /* AccountLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLoginController.swift; sourceTree = "<group>"; };
 		99D11EB02C06F56F006BE265 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		99EC20A22C0D99900018904D /* UserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUseCase.swift; sourceTree = "<group>"; };
-		99EC20A42C0D9BD60018904D /* UserCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCaseImpl.swift; sourceTree = "<group>"; };
 		99EC20A62C0D9C0E0018904D /* UserRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryImpl.swift; sourceTree = "<group>"; };
 		99EC20A82C0D9C1A0018904D /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		99EC20AA2C0D9D9D0018904D /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
@@ -82,7 +85,6 @@
 		99F78F162C09B10D004C0C72 /* SearchAccountOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAccountOptionsView.swift; sourceTree = "<group>"; };
 		99F78F1B2C09BB8F004C0C72 /* SearchAccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAccountController.swift; sourceTree = "<group>"; };
 		99F78F1D2C09C98D004C0C72 /* SearchAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAuthView.swift; sourceTree = "<group>"; };
-		99F9FAD92C0B3306005B36B9 /* LoginAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAuthentication.swift; sourceTree = "<group>"; };
 		99F9FADD2C0B6187005B36B9 /* SearchIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIDViewController.swift; sourceTree = "<group>"; };
 		A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5015275FE458D5F6450041 /* Pods-Where_Are_You.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You.release.xcconfig"; path = "Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You.release.xcconfig"; sourceTree = "<group>"; };
@@ -206,7 +208,6 @@
 			isa = PBXGroup;
 			children = (
 				99C9B2282C0197CA008D7CBD /* User.swift */,
-				99F9FAD92C0B3306005B36B9 /* LoginAuthentication.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -223,7 +224,7 @@
 		99D11EB52C0783CC006BE265 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				99C9B2412C01CE4C008D7CBD /* LoginViewModel.swift */,
+				99C9B2412C01CE4C008D7CBD /* AccountLoginViewModel.swift */,
 				99EC20AA2C0D9D9D0018904D /* RegisterViewModel.swift */,
 				99EC20AC2C0D9DB50018904D /* FindAccountViewModel.swift */,
 			);
@@ -254,7 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				99EC20A22C0D99900018904D /* UserUseCase.swift */,
-				99EC20A42C0D9BD60018904D /* UserCaseImpl.swift */,
+				990337562C0DDBE5007F314A /* EmailVerificationUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -264,6 +265,8 @@
 			children = (
 				99EC20A82C0D9C1A0018904D /* UserRepository.swift */,
 				99EC20A62C0D9C0E0018904D /* UserRepositoryImpl.swift */,
+				9903375A2C0DDCDA007F314A /* EmailVerificationRepository.swift */,
+				9903375C2C0DDDF8007F314A /* EmailVerificationRepositoryImpl.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -446,14 +449,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				995358472C00C555005BF799 /* Where_Are_You.xcdatamodeld in Sources */,
+				990337572C0DDBE6007F314A /* EmailVerificationUseCase.swift in Sources */,
 				99C9B22C2C019C67008D7CBD /* LoginView.swift in Sources */,
 				995358412C00C555005BF799 /* LoginViewController.swift in Sources */,
 				99EC20A92C0D9C1A0018904D /* UserRepository.swift in Sources */,
-				99EC20A52C0D9BD60018904D /* UserCaseImpl.swift in Sources */,
 				99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */,
 				99F78F1E2C09C98D004C0C72 /* SearchAuthView.swift in Sources */,
 				9953583D2C00C555005BF799 /* AppDelegate.swift in Sources */,
-				99C9B2422C01CE4C008D7CBD /* LoginViewModel.swift in Sources */,
+				99C9B2422C01CE4C008D7CBD /* AccountLoginViewModel.swift in Sources */,
 				99F78F172C09B10D004C0C72 /* SearchAccountOptionsView.swift in Sources */,
 				99B397852C0C41D300D7A109 /* CheckIDViewController.swift in Sources */,
 				99C9B2292C0197CA008D7CBD /* User.swift in Sources */,
@@ -469,7 +472,8 @@
 				99EC20AB2C0D9D9D0018904D /* RegisterViewModel.swift in Sources */,
 				99EC20AD2C0D9DB50018904D /* FindAccountViewModel.swift in Sources */,
 				99EC20A32C0D99900018904D /* UserUseCase.swift in Sources */,
-				99F9FADA2C0B3306005B36B9 /* LoginAuthentication.swift in Sources */,
+				9903375B2C0DDCDA007F314A /* EmailVerificationRepository.swift in Sources */,
+				9903375D2C0DDDF8007F314A /* EmailVerificationRepositoryImpl.swift in Sources */,
 				99C9B2322C01A45C008D7CBD /* Extensions.swift in Sources */,
 				99C9B2502C0229CF008D7CBD /* AccountLoginView.swift in Sources */,
 			);

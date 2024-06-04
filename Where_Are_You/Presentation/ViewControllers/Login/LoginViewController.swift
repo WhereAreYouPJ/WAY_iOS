@@ -10,7 +10,7 @@ import UIKit
 class LoginViewController: UIViewController {
     // MARK: - Properties
     private let loginView = LoginView()
-
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()

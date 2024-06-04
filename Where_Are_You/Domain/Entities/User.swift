@@ -8,8 +8,8 @@
 import Foundation
 
 struct User: Codable {
-    let name: String
-    let id: Int?
+    let userName: String
+    let userID: Int?
     let password: String?
     let email: String
 }

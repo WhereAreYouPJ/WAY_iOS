@@ -8,8 +8,8 @@
 import Foundation
 
 protocol UserRepository {
-    func login(email: String, password: String, completion: @escaping (Result<User, Error>) -> Void)
-        func register(user: User, completion: @escaping (Result<User, Error>) -> Void)
-        func findAccount(email: String, completion: @escaping (Result<String, Error>) -> Void)
-        func resetPassword(id: String, newPassword: String, completion: @escaping (Result<Void, Error>) -> Void)
-    }
+    func login(userID: String, password: String, completion: @escaping (Result<User, Error>) -> Void)
+    func register(user: User, completion: @escaping (Result<User, Error>) -> Void)
+    func findAccount(email: String, completion: @escaping (Result<String, Error>) -> Void)
+    func resetPassword(email: String, newPassword: String, completion: @escaping (Result<Void, Error>) -> Void)
+}

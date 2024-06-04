@@ -9,11 +9,13 @@ import UIKit
 import SnapKit
 
 class SearchPasswordViewController: UIViewController {
+    
     // MARK: - Properties
     
     let searchPasswordView = SearchAuthView()
     
     // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(searchPasswordView)
@@ -24,11 +26,13 @@ class SearchPasswordViewController: UIViewController {
     }
     
     // MARK: - Selectors
+    
     @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
     
     // MARK: - Helpers
+    
     func setupUI() {
         searchPasswordView.emailLabel.label.text = "아이디"
         searchPasswordView.emailTextField.placeholder = "아이디"

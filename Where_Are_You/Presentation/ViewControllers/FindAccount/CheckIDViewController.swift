@@ -25,12 +25,16 @@ class CheckIDViewController: UIViewController {
     // MARK: - Selectors
     @objc func loginButtonTapped() {
         let controller = LoginViewController()
-        navigationController?.pushViewController(controller, animated: true)
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
     }
     
     @objc func searchPasswordButtonTapped() {
         let controller = SearchPasswordViewController()
-        navigationController?.pushViewController(controller, animated: true)
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
 
     }
     

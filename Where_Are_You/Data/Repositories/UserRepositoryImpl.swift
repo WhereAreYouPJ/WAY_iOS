@@ -8,15 +8,15 @@
 import Foundation
 
 class UserRepositoryImpl: UserRepository {
-    private let baseURL = "http://3.39.14.175:8080"
+    private let baseURL = "http://3.39.14.175:8080/v1"
     
-    func login(email: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
-        let url = URL(string: "\(baseURL)/login")!
+    func login(userID: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
+        let url = URL(string: "\(baseURL)/member/login")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let loginData = ["email": email, "password": password]
+        let loginData = ["userID": userID, "password": password]
         request.httpBody = try? JSONSerialization.data(withJSONObject: loginData, options: [])
         
         URLSession.shared.dataTask(with: request) { data, response, error in
@@ -40,7 +40,7 @@ class UserRepositoryImpl: UserRepository {
     }
     
     func register(user: User, completion: @escaping (Result<User, Error>) -> Void) {
-        let url = URL(string: baseURL)!
+        let url = URL(string: "\(baseURL)/member")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -68,7 +68,9 @@ class UserRepositoryImpl: UserRepository {
     }
     
     func findAccount(email: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let url = URL(string: "\(baseURL)/findAccount?email=\(email)")!
+        let url = URL(string: "\(baseURL)/findID")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
@@ -89,13 +91,13 @@ class UserRepositoryImpl: UserRepository {
         }.resume()
     }
     
-    func resetPassword(id: String, newPassword: String, completion: @escaping (Result<Void, Error>) -> Void) {
+    func resetPassword(email: String, newPassword: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let url = URL(string: "\(baseURL)/resetPassword")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let resetData = ["id": id, "newPassword": newPassword]
+        let resetData = ["email": email, "newPassword": newPassword]
         request.httpBody = try? JSONSerialization.data(withJSONObject: resetData, options: [])
         
         URLSession.shared.dataTask(with: request) { data, response, error in
