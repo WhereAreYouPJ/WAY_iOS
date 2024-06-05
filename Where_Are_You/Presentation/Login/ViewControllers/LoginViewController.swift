@@ -48,7 +48,10 @@ class LoginViewController: UIViewController {
     }
     
     @objc func signupButtonTapped() {
-        
+        let controller = TermsAgreementViewController()
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
     }
     
     @objc func findAccountButtonTapped() {

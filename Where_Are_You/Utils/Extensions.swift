@@ -22,6 +22,7 @@ extension UIColor {
     
     static let brandColor = UIColor.rgb(red: 123, green: 80, blue: 255)
     static let letterBrandColor = UIColor.rgb(red: 98, green: 54, blue: 233)
+    static let lightpurple = UIColor.rgb(red: 146, green: 134, blue: 255)
     static let warningColor = UIColor.rgb(red: 223, green: 67, blue: 67)
     
     static let color17 = UIColor.rgb(red: 17, green: 17, blue: 17)

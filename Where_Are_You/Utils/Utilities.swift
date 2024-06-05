@@ -9,6 +9,28 @@ import UIKit
 import SnapKit
 
 class Utilities {
+    
+    func makeColorProgressBar(wholePages: Double, nowPage: Double) -> UIView {
+        let view = UIView()
+        view.backgroundColor = .color234
+        if nowPage != wholePages {
+            let colorView = UIView()
+            colorView.backgroundColor = .lightpurple
+            colorView.layer.cornerRadius = 7
+            colorView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+            let multipliedBy = nowPage / wholePages
+            print(multipliedBy)
+            view.addSubview(colorView)
+            colorView.snp.makeConstraints { make in
+                make.left.equalToSuperview()
+                make.width.equalTo(view.snp.width).multipliedBy(multipliedBy)
+            }
+        } else {
+            view.backgroundColor = .lightpurple
+        }
+        return view
+    }
+    
     // 네비게이션 바 생성
     static func configureNavigationBar(for viewController: UIViewController, title: String, backButtonAction: Selector?, showBackButton: Bool = true) {
         let appearance = UINavigationBarAppearance()

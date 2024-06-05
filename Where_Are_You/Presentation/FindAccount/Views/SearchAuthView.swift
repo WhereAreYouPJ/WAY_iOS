@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 
+// 아이디 찾기, 비밀번호 찾기 뷰
 class SearchAuthView: UIView {
     // MARK: - Properties
     

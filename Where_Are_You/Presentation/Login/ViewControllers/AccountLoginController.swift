@@ -45,12 +45,10 @@ class AccountLoginController: UIViewController {
     }
     
     @objc func findAccountButtonTapped() {
-        print("tapped")
         let controller = SearchAccountController()
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true, completion: nil)
-        
     }
     
     @objc func registerAccountButtonTapped() {
