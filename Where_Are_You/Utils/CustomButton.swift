@@ -8,6 +8,37 @@
 import UIKit
 import SnapKit
 
+// MARK: - 자주 사용하는 하단의 inputcontainer 버튼 한개
+class CommonBottomButton: UIView {
+    
+    init(title: String) {
+        super.init(frame: .zero)
+        setupView(title: title)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupView(title: String) {
+        self.layer.borderColor = UIColor.color221.cgColor
+        self.layer.borderWidth = 1
+        self.snp.makeConstraints { make in
+            make.height.equalTo(220)
+        }
+        
+        let bottomConfirmButton = CustomButton(title: title, backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
+        
+        addSubview(bottomConfirmButton)
+        bottomConfirmButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(12)
+            make.left.equalToSuperview().offset(15)
+            make.height.equalTo(self.snp.width).multipliedBy(0.145)
+        }
+    }
+}
+
 // MARK: - CustomButton in SearchAccountOptionsView
 class CustomButtonFindAccount: UIButton {
     
@@ -89,10 +120,8 @@ class CustomButton: UIButton {
 // MARK: - ONLY Label
 class CustomButtonView: UIView {
     
-    // MARK: - Properties
     let button: UIButton
     
-    // MARK: - Lifecycle
     init(text: String, weight: UIFont.Weight, textColor: UIColor, fontSize: CGFloat) {
         self.button = UIButton(type: .system)
         super.init(frame: .zero)
