@@ -49,14 +49,7 @@ class SearchAuthView: UIView {
         return label
     }()
     
-    let bottomContainerView: UIView = {
-        let view = UIView()
-        view.layer.borderColor = UIColor.color221.cgColor
-        view.layer.borderWidth = 1
-        return view
-    }()
-    
-    let bottomConfirmButton = CustomButton(title: "확인", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
+    let bottomButtonView = BottomButtonView(title: "확인")
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {
@@ -120,18 +113,12 @@ class SearchAuthView: UIView {
             make.height.equalTo(requestAuthButton)
         }
         
-        addSubview(bottomContainerView)
-        bottomContainerView.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview()
+        addSubview(bottomButtonView)
+        bottomButtonView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.left.equalToSuperview()
+            make.bottom.equalToSuperview()
             make.height.equalTo(220)
-        }
-        
-        bottomContainerView.addSubview(bottomConfirmButton)
-        bottomConfirmButton.snp.makeConstraints { make in
-            make.centerX.equalTo(bottomContainerView)
-            make.top.equalTo(bottomContainerView.snp.top).offset(12)
-            make.width.equalTo(stack)
-            make.height.equalTo(stack.snp.width).multipliedBy(0.145)
         }
     }
 }

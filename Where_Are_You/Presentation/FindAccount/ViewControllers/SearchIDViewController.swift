@@ -35,6 +35,6 @@ class SearchIDViewController: UIViewController {
 
     // MARK: - Helpers
     func actionButton() {
-        searchIDView.bottomConfirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
+        searchIDView.bottomButtonView.button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
     }
 }

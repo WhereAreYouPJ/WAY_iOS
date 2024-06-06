@@ -47,6 +47,6 @@ class SearchPasswordViewController: UIViewController {
     }
     
     func buttonActions() {
-        searchPasswordView.bottomConfirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
+        searchPasswordView.bottomButtonView.button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
     }
 }
