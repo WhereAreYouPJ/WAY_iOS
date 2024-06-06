@@ -27,14 +27,7 @@ class SignUpFormView: UIView {
     
     private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "아래 내용을 작성해주세요", textColor: .color34, fontSize: 22)
     
-    let bottomContainerView: UIView = {
-        let view = UIView()
-        view.layer.borderColor = UIColor.color221.cgColor
-        view.layer.borderWidth = 1
-        return view
-    }()
-    
-    let bottomConfirmButton = CustomButton(title: "시작하기", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
+    let bottomButtonView = BottomButtonView(title: "시작하기")
     
     // MARK: - Lifecycle
     
@@ -71,18 +64,12 @@ class SignUpFormView: UIView {
             make.left.equalToSuperview().offset(20)
         }
         
-        addSubview(bottomContainerView)
-        bottomContainerView.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview()
+        addSubview(bottomButtonView)
+        bottomButtonView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.left.equalToSuperview()
+            make.bottom.equalToSuperview()
             make.height.equalTo(220)
-        }
-        
-        bottomContainerView.addSubview(bottomConfirmButton)
-        bottomConfirmButton.snp.makeConstraints { make in
-            make.centerX.equalTo(bottomContainerView)
-            make.top.equalTo(bottomContainerView.snp.top).offset(12)
-            make.left.equalToSuperview().offset(15)
-            make.height.equalTo(bottomConfirmButton.snp.width).multipliedBy(0.145)
         }
     }
     

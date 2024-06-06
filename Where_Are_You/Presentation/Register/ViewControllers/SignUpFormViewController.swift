@@ -26,7 +26,7 @@ class SignUpFormViewController: UIViewController {
     // MARK: - Helpers
     
     func buttonActions() {
-        signUpView.bottomConfirmButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
+        signUpView.bottomButtonView.button.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
     }
 
     // MARK: - Selectors
