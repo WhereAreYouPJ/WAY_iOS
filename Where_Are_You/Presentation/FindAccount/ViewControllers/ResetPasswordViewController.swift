@@ -29,7 +29,10 @@ class ResetPasswordViewController: UIViewController {
     }
     
     @objc func confirmButtonTapped() {
-        print("비밀번호 페이지")
+        let controller = FinishResetPasswordViewController()
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
     }
 
     func buttonActions() {

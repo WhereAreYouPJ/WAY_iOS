@@ -45,6 +45,8 @@
 		99EC20AB2C0D9D9D0018904D /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20AA2C0D9D9D0018904D /* RegisterViewModel.swift */; };
 		99EC20AD2C0D9DB50018904D /* FindAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20AC2C0D9DB50018904D /* FindAccountViewModel.swift */; };
 		99EC78CE2C11DBA5007C4415 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC78CD2C11DBA5007C4415 /* ResetPasswordViewController.swift */; };
+		99EC78D02C11E20F007C4415 /* FinishResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC78CF2C11E20F007C4415 /* FinishResetPasswordView.swift */; };
+		99EC78D22C11E437007C4415 /* FinishResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC78D12C11E437007C4415 /* FinishResetPasswordViewController.swift */; };
 		99F78F172C09B10D004C0C72 /* SearchAccountOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F162C09B10D004C0C72 /* SearchAccountOptionsView.swift */; };
 		99F78F1C2C09BB8F004C0C72 /* SearchAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F1B2C09BB8F004C0C72 /* SearchAccountController.swift */; };
 		99F78F1E2C09C98D004C0C72 /* CommonSearchAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F1D2C09C98D004C0C72 /* CommonSearchAuthView.swift */; };
@@ -94,6 +96,8 @@
 		99EC20AA2C0D9D9D0018904D /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		99EC20AC2C0D9DB50018904D /* FindAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindAccountViewModel.swift; sourceTree = "<group>"; };
 		99EC78CD2C11DBA5007C4415 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		99EC78CF2C11E20F007C4415 /* FinishResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishResetPasswordView.swift; sourceTree = "<group>"; };
+		99EC78D12C11E437007C4415 /* FinishResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishResetPasswordViewController.swift; sourceTree = "<group>"; };
 		99F78F162C09B10D004C0C72 /* SearchAccountOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAccountOptionsView.swift; sourceTree = "<group>"; };
 		99F78F1B2C09BB8F004C0C72 /* SearchAccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAccountController.swift; sourceTree = "<group>"; };
 		99F78F1D2C09C98D004C0C72 /* CommonSearchAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSearchAuthView.swift; sourceTree = "<group>"; };
@@ -164,6 +168,7 @@
 				99F78F1D2C09C98D004C0C72 /* CommonSearchAuthView.swift */,
 				99B397822C0C3E9D00D7A109 /* CheckIDView.swift */,
 				9950C65C2C10B9BB003155A7 /* ResetPasswordView.swift */,
+				99EC78CF2C11E20F007C4415 /* FinishResetPasswordView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -176,6 +181,7 @@
 				99B397842C0C41D300D7A109 /* CheckIDViewController.swift */,
 				99938EDF2C0C8B9D00239FA1 /* SearchPasswordViewController.swift */,
 				99EC78CD2C11DBA5007C4415 /* ResetPasswordViewController.swift */,
+				99EC78D12C11E437007C4415 /* FinishResetPasswordViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -514,7 +520,9 @@
 				99B397852C0C41D300D7A109 /* CheckIDViewController.swift in Sources */,
 				99C9B2292C0197CA008D7CBD /* User.swift in Sources */,
 				9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */,
+				99EC78D22C11E437007C4415 /* FinishResetPasswordViewController.swift in Sources */,
 				99938EE22C0C8FE300239FA1 /* CustomLabel.swift in Sources */,
+				99EC78D02C11E20F007C4415 /* FinishResetPasswordView.swift in Sources */,
 				99EC20A72C0D9C0E0018904D /* UserRepositoryImpl.swift in Sources */,
 				99F9FADE2C0B6187005B36B9 /* SearchIDViewController.swift in Sources */,
 				99EC78CE2C11DBA5007C4415 /* ResetPasswordViewController.swift in Sources */,

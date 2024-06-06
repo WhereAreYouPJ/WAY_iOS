@@ -77,12 +77,10 @@ class ResetPasswordView: UIView {
             make.top.equalTo(titleLabel.snp.bottom).offset(30)
         }
         
-//        resetStack.addSubview(resetPasswordTextField)
         resetPasswordTextField.snp.makeConstraints { make in
             make.height.equalTo(stack.snp.width).multipliedBy(0.13)
         }
         
-//        checkStack.addSubview(checkPasswordTextField)
         checkPasswordTextField.snp.makeConstraints { make in
             make.height.equalTo(resetPasswordTextField)
         }
