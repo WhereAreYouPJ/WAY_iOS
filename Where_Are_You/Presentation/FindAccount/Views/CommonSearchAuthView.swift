@@ -23,7 +23,8 @@ class SearchAuthView: UIView {
     private let emailErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .warningColor
-        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 12)
+        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
+        label.adjustsFontForContentSizeCategory = true
         return label
     }()
     
@@ -32,7 +33,8 @@ class SearchAuthView: UIView {
     private let timer: UILabel = {
         let label = UILabel()
         label.textColor = .warningColor
-        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
+        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
+        label.adjustsFontForContentSizeCategory = true
         label.text = "4:59"
         return label
     }()
@@ -42,7 +44,8 @@ class SearchAuthView: UIView {
     private let authNumberErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .warningColor
-        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 12)
+        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
+        label.adjustsFontForContentSizeCategory = true
         return label
     }()
     

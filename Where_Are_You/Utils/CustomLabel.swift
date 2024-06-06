@@ -16,16 +16,17 @@ class CustomLabel: UILabel {
     init(UILabel_NotoSans weight: UIFont.Weight, text: String, textColor: UIColor, fontSize: CGFloat) {
         super.init(frame: .zero)
         
-            label.text = text
-            label.textColor = textColor
-            label.font = UIFont.pretendard(NotoSans: weight, fontSize: fontSize)
-            label.numberOfLines = 0
-            addSubview(label)
-            label.snp.makeConstraints { make in
-                make.center.equalToSuperview()
-                make.left.equalToSuperview().offset(6)
-                make.bottom.equalToSuperview().offset(-4)
-            }
+        label.text = text
+        label.textColor = textColor
+        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: weight, fontSize: fontSize))
+        label.adjustsFontForContentSizeCategory = true
+        label.numberOfLines = 0
+        addSubview(label)
+        label.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.left.equalToSuperview().offset(6)
+            make.bottom.equalToSuperview().offset(-4)
+        }
     }
     
     required init?(coder: NSCoder) {

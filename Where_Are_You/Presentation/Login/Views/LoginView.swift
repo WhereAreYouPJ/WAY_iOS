@@ -12,7 +12,8 @@ class LoginView: UIView {
     // MARK: - Properties
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.pretendard(Ttangsbudae: .bold, fontSize: 36)
+        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(Ttangsbudae: .bold, fontSize: 36))
+        label.adjustsFontForContentSizeCategory = true
         label.text = "지금 어디?"
         label.textColor = .letterBrandColor
         return label

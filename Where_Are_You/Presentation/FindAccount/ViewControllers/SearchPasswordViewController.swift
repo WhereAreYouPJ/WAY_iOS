@@ -23,6 +23,7 @@ class SearchPasswordViewController: UIViewController {
         
         setupUI()
         configureNavigationBar(title: "비밀번호 찾기", backButtonAction: #selector(backButtonTapped))
+        buttonActions()
     }
     
     // MARK: - Selectors
@@ -31,10 +32,21 @@ class SearchPasswordViewController: UIViewController {
         dismiss(animated: true)
     }
     
+    @objc func confirmButtonTapped() {
+        let controller = ResetPasswordViewController()
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
+    }
+    
     // MARK: - Helpers
     
     func setupUI() {
         searchPasswordView.emailLabel.label.text = "아이디"
         searchPasswordView.emailTextField.placeholder = "아이디"
+    }
+    
+    func buttonActions() {
+        searchPasswordView.bottomConfirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
     }
 }

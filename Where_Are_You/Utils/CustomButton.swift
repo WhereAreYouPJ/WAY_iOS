@@ -9,7 +9,9 @@ import UIKit
 import SnapKit
 
 // MARK: - 자주 사용하는 하단의 inputcontainer 버튼 한개
-class CommonBottomButton: UIView {
+class BottomButtonView: UIView {
+    
+    var button = UIButton()
     
     init(title: String) {
         super.init(frame: .zero)
@@ -27,10 +29,10 @@ class CommonBottomButton: UIView {
             make.height.equalTo(220)
         }
         
-        let bottomConfirmButton = CustomButton(title: title, backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
+        button = CustomButton(title: title, backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
         
-        addSubview(bottomConfirmButton)
-        bottomConfirmButton.snp.makeConstraints { make in
+        addSubview(button)
+        button.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(12)
             make.left.equalToSuperview().offset(15)
@@ -100,9 +102,10 @@ class CustomButton: UIButton {
         self.setTitle(title, for: .normal)
         self.backgroundColor = backgroundColor
         self.setTitleColor(titleColor, for: .normal)
-        self.titleLabel?.font = font
+        self.titleLabel?.font = UIFontMetrics.default.scaledFont(for: font)
         self.layer.cornerRadius = 7
         self.clipsToBounds = true
+        self.titleLabel?.adjustsFontForContentSizeCategory = true
         
         if let image = image {
             self.setImage(image, for: .normal)
@@ -127,8 +130,9 @@ class CustomButtonView: UIView {
         super.init(frame: .zero)
         
         button.setTitle(text, for: .normal)
-        button.titleLabel?.font = UIFont.pretendard(NotoSans: weight, fontSize: fontSize)
+        button.titleLabel?.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: weight, fontSize: fontSize))
         button.setTitleColor(textColor, for: .normal)
+        button.titleLabel?.adjustsFontForContentSizeCategory = true
         
         setupUI()
     }

@@ -10,7 +10,7 @@ import UIKit
 // MARK: - UIViewController
 extension UIViewController {
     func configureNavigationBar(title: String, backButtonAction: Selector? = nil, showBackButton: Bool = true) {
-        Utilities.configureNavigationBar(for: self, title: title, backButtonAction: backButtonAction, showBackButton: showBackButton)
+        Utilities.createNavigationBar(for: self, title: title, backButtonAction: backButtonAction, showBackButton: showBackButton)
     }
 }
 

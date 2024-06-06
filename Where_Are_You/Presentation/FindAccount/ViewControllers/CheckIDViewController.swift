@@ -18,7 +18,7 @@ class CheckIDViewController: UIViewController {
         view.addSubview(checkIDView)
         checkIDView.frame = view.bounds
         
-        buttonAction()
+        buttonActions()
         configureNavigationBar(title: "아이디 찾기", showBackButton: false)
     }
     
@@ -39,7 +39,7 @@ class CheckIDViewController: UIViewController {
     }
     
     // MARK: - Helpers
-    func buttonAction() {
+    func buttonActions() {
         checkIDView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         checkIDView.searchPasswordButton.addTarget(self, action: #selector(searchPasswordButtonTapped), for: .touchUpInside)
     }

@@ -10,29 +10,8 @@ import SnapKit
 
 class Utilities {
     
-    func makeColorProgressBar(wholePages: Double, nowPage: Double) -> UIView {
-        let view = UIView()
-        view.backgroundColor = .color234
-        if nowPage != wholePages {
-            let colorView = UIView()
-            colorView.backgroundColor = .lightpurple
-            colorView.layer.cornerRadius = 7
-            colorView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
-            let multipliedBy = nowPage / wholePages
-            print(multipliedBy)
-            view.addSubview(colorView)
-            colorView.snp.makeConstraints { make in
-                make.left.equalToSuperview()
-                make.width.equalTo(view.snp.width).multipliedBy(multipliedBy)
-            }
-        } else {
-            view.backgroundColor = .lightpurple
-        }
-        return view
-    }
-    
     // 네비게이션 바 생성
-    static func configureNavigationBar(for viewController: UIViewController, title: String, backButtonAction: Selector?, showBackButton: Bool = true) {
+    static func createNavigationBar(for viewController: UIViewController, title: String, backButtonAction: Selector?, showBackButton: Bool = true) {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         
@@ -67,9 +46,10 @@ class Utilities {
     func inputContainerLabel(UILabel_NotoSans weight: UIFont.Weight, text: String, textColor: UIColor, fontSize: CGFloat) -> UIView {
         let view = UIView()
         let label = UILabel()
+        label.adjustsFontForContentSizeCategory = true
         label.text = text
         label.textColor = textColor
-        label.font = UIFont.pretendard(NotoSans: weight, fontSize: fontSize)
+        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: weight, fontSize: fontSize))
         label.numberOfLines = 0
         view.addSubview(label)
         label.snp.makeConstraints { make in
@@ -84,15 +64,17 @@ class Utilities {
         let label = UILabel()
         label.text = text
         label.textColor = textColor
-        label.font = UIFont.pretendard(NotoSans: weight, fontSize: fontSize)
+        label.adjustsFontForContentSizeCategory = true
+        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: weight, fontSize: fontSize))
         return label
     }
     
     // TextField with layer and placeholder
     func inputContainerTextField(withPlaceholder placeholder: String, fontSize: CGFloat) -> UITextField {
         let tf = UITextField()
+        tf.adjustsFontForContentSizeCategory = true
         tf.textColor = .color34
-        tf.font = UIFont.pretendard(NotoSans: .medium, fontSize: fontSize)
+        tf.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: fontSize))
         tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.color102])
         tf.layer.borderWidth = 1
         tf.layer.cornerRadius = 7
@@ -109,7 +91,8 @@ class Utilities {
     func textField(withPlaceholder placeholder: String, fontSize: CGFloat) -> UITextField {
         let tf = UITextField()
         tf.textColor = .color34
-        tf.font = UIFont.pretendard(NotoSans: .medium, fontSize: fontSize)
+        tf.adjustsFontForContentSizeCategory = true
+        tf.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: fontSize))
         tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.color102])
         return tf
     }
@@ -118,12 +101,12 @@ class Utilities {
     func attributedButton(_ firstPart: String, _ secondPart: String) -> UIButton {
         let button = UIButton(type: .system)
         
-        let attributedTitle = NSMutableAttributedString(string: firstPart, attributes: [NSAttributedString.Key.font: UIFont.pretendard(NotoSans: .medium, fontSize: 14), NSAttributedString.Key.foregroundColor: UIColor.color153])
+        let attributedTitle = NSMutableAttributedString(string: firstPart, attributes: [NSAttributedString.Key.font: UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14)), NSAttributedString.Key.foregroundColor: UIColor.color153])
         
-        attributedTitle.append(NSAttributedString(string: secondPart, attributes: [NSAttributedString.Key.font: UIFont.pretendard(NotoSans: .medium, fontSize: 14), NSAttributedString.Key.foregroundColor: UIColor.color102]))
+        attributedTitle.append(NSAttributedString(string: secondPart, attributes: [NSAttributedString.Key.font: UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14)), NSAttributedString.Key.foregroundColor: UIColor.color102]))
         
         button.setAttributedTitle(attributedTitle, for: .normal)
-        
+        button.titleLabel?.adjustsFontForContentSizeCategory = true
         return button
     }
 }

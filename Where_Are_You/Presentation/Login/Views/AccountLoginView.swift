@@ -20,7 +20,8 @@ class AccountLoginView: UIView {
     private let idErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .warningColor
-        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 12)
+        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
+        label.adjustsFontForContentSizeCategory = true
         return label
     }()
     
@@ -31,7 +32,8 @@ class AccountLoginView: UIView {
     private let passwordErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .warningColor
-        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 12)
+        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
+        label.adjustsFontForContentSizeCategory = true
         return label
     }()
     
