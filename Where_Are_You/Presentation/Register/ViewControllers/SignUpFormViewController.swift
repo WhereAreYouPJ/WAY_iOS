@@ -20,6 +20,7 @@ class SignUpFormViewController: UIViewController {
         signUpView.frame = view.bounds
         
         configureNavigationBar(title: "회원가입", backButtonAction: #selector(backButtonTapped))
+        buttonActions()
     }
     
     // MARK: - Helpers
@@ -35,6 +36,9 @@ class SignUpFormViewController: UIViewController {
     }
     
     @objc func startButtonTapped() {
-        
+        let controller = FinishRegisterViewController()
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
     }
 }

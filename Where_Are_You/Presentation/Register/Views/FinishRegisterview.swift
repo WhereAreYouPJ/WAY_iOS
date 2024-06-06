@@ -1,5 +1,5 @@
 //
-//  FinishResetPasswordView.swift
+//  FinishRegisterview.swift
 //  Where_Are_You
 //
 //  Created by 오정석 on 6/6/2024.
@@ -8,10 +8,16 @@
 import UIKit
 import SnapKit
 
-class FinishResetPasswordView: UIView {
+class FinishRegisterview: UIView {
     // MARK: - Properties
     
-    let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "비밀번호 재설정이 완료되었습니다", textColor: .color34, fontSize: 22)
+    private let progressBar: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightpurple
+        return view
+    }()
+    
+    let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "회원가입이\n완료되었습니다", textColor: .color34, fontSize: 22)
     
     let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: "시작화면에서 로그인해주세요.\n최초 로그인 이후 접속 시, 자동 로그인이 활성화됩니다.", textColor: .color102, fontSize: 14)
     
@@ -29,9 +35,17 @@ class FinishResetPasswordView: UIView {
     }
     
     func constraints() {
+        addSubview(progressBar)
+        progressBar.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.left.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.height.equalTo(4)
+        }
+        
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(38)
+            make.top.equalTo(progressBar).offset(30)
             make.left.equalToSuperview().offset(15)
             make.width.equalToSuperview().multipliedBy(0.477)
             make.height.equalTo(titleLabel.snp.width).multipliedBy(0.402)
@@ -41,7 +55,7 @@ class FinishResetPasswordView: UIView {
         descriptionLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(26)
-            make.left.equalToSuperview().offset(15)
+            make.left.equalTo(titleLabel)
         }
         
         addSubview(bottomButtonView)
