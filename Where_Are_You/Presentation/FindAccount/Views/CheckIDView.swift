@@ -11,23 +11,23 @@ import SnapKit
 class CheckIDView: UIView {
     // MARK: - Properties
     
-    let titleLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .bold, text: "회원님의 아이디를 확인해주세요", textColor: .color34, fontSize: 22)
+    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "회원님의 아이디를 확인해주세요", textColor: .color34, fontSize: 22)
     
-    let idLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .medium, text: "회원님의 아이디는", textColor: .color34, fontSize: 14)
+    private let idLabel = CustomLabel(UILabel_NotoSans: .medium, text: "회원님의 아이디는", textColor: .color34, fontSize: 14)
     
-    let idDescriptionLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .bold, text: "qwer0865", textColor: .letterBrandColor, fontSize: 18)
+    lazy var idDescriptionLabel = CustomLabel(UILabel_NotoSans: .bold, text: "qwer0865", textColor: .letterBrandColor, fontSize: 18)
         
-    let idLabel2 = Utilities().inputContainerLabel(UILabel_NotoSans: .medium, text: "입니다.", textColor: .color34, fontSize: 14)
+    private let idLabel2 = CustomLabel(UILabel_NotoSans: .medium, text: "입니다.", textColor: .color34, fontSize: 14)
     
     let separatorView = UIView()
     
-    let descriptionLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .medium, text: "로그인 또는 비밀번호 찾기 버튼을 눌러주세요.", textColor: .color102, fontSize: 14)
+    private let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: "로그인 또는 비밀번호 찾기 버튼을 눌러주세요.", textColor: .color102, fontSize: 14)
     
     let buttonView = UIView()
     
-    let loginButton = CustomButton(title: "로그인하기", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
+    lazy var loginButton = CustomButton(title: "로그인하기", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
     
-    let searchPasswordButton = CustomButton(title: "비밀번호 찾기", backgroundColor: .white, titleColor: .letterBrandColor, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
+    lazy var searchPasswordButton = CustomButton(title: "비밀번호 찾기", backgroundColor: .white, titleColor: .letterBrandColor, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {

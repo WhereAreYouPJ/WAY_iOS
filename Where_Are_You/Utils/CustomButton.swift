@@ -62,8 +62,9 @@ class CustomButtonFindAccount: UIButton {
         layer.cornerRadius = 7
         backgroundColor = .white
         
-        let titleLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .medium, text: title, textColor: .color34, fontSize: 14)
-        let descriptionLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .medium, text: description, textColor: .color102, fontSize: 12)
+        let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: title, textColor: .color34, fontSize: 14)
+        
+        let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: description, textColor: .color102, fontSize: 12)
         
         arrowImageView.image = UIImage(systemName: "chevron.right")
         arrowImageView.tintColor = .color17

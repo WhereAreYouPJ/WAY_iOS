@@ -33,33 +33,7 @@ class Utilities {
         viewController.navigationItem.title = title
     }
     
-    // 스택뷰 생성
-    func createStackView(arrangedSubviews: [UIView], axis: NSLayoutConstraint.Axis, spacing: CGFloat, distribution: UIStackView.Distribution) -> UIStackView {
-        let stackView = UIStackView(arrangedSubviews: arrangedSubviews)
-        stackView.axis = axis
-        stackView.spacing = spacing
-        stackView.distribution = distribution
-        return stackView
-    }
-    
-    // paddingLabel (left 4,bottom 6)
-    func inputContainerLabel(UILabel_NotoSans weight: UIFont.Weight, text: String, textColor: UIColor, fontSize: CGFloat) -> UIView {
-        let view = UIView()
-        let label = UILabel()
-        label.adjustsFontForContentSizeCategory = true
-        label.text = text
-        label.textColor = textColor
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: weight, fontSize: fontSize))
-        label.numberOfLines = 0
-        view.addSubview(label)
-        label.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.left.equalTo(view).offset(6)
-            make.bottom.equalTo(view).offset(-4)
-        }
-        return view
-    }
-    
+    // 레이블 생성
     func createLabel(NotoSans weight: UIFont.Weight, text: String, textColor: UIColor, fontSize: CGFloat) -> UILabel {
         let label = UILabel()
         label.text = text
