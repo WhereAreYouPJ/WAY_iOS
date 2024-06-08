@@ -11,9 +11,9 @@ import SnapKit
 class AccountLoginView: UIView {
     // MARK: - Properties
     
-    private let titleLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .bold, text: "로그인하기", textColor: .color34, fontSize: 22)
+    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "로그인하기", textColor: .color34, fontSize: 22)
     
-    private let idLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .medium, text: "아이디", textColor: .color51, fontSize: 12)
+    private let idLabel = CustomLabel(UILabel_NotoSans: .medium, text: "아이디", textColor: .color51, fontSize: 12)
     
     let idTextField = Utilities().inputContainerTextField(withPlaceholder: "아이디를 입력해주세요.", fontSize: 14)
     
@@ -25,7 +25,7 @@ class AccountLoginView: UIView {
         return label
     }()
     
-    private let passwordLabel = Utilities().inputContainerLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: 12)
+    private let passwordLabel = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: 12)
 
     let passwordTextField = Utilities().inputContainerTextField(withPlaceholder: "비밀번호를 입력해주세요.", fontSize: 14)
     

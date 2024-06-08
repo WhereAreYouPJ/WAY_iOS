@@ -27,6 +27,13 @@ class SignUpFormView: UIView {
     
     private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "아래 내용을 작성해주세요", textColor: .color34, fontSize: 22)
     
+    let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이름", textColor: .color51, fontSize: 12)
+    
+    let userNameTextField = Utilities().inputContainerTextField(withPlaceholder: "이름", fontSize: 14)
+    
+    
+    
+    
     let bottomButtonView = BottomButtonView(title: "시작하기")
     
     // MARK: - Lifecycle
