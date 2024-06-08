@@ -16,7 +16,7 @@ class SearchAuthView: UIView {
     
     var emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이메일 주소", textColor: .color51, fontSize: 12)
     
-    let emailTextField = Utilities().inputContainerTextField(withPlaceholder: "이메일", fontSize: 14)
+    let emailTextField = Utilities().inputContainerTextField(withPlaceholder: "이메일", fontSize: textFieldFontSize)
     
     private lazy var requestAuthButton = CustomButton(title: "인증요청", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
     
@@ -28,7 +28,7 @@ class SearchAuthView: UIView {
         return label
     }()
     
-    let authNumberTextField = Utilities().inputContainerTextField(withPlaceholder: "인증코드 입력", fontSize: 14)
+    let authNumberTextField = Utilities().inputContainerTextField(withPlaceholder: "인증코드 입력", fontSize: textFieldFontSize)
     
     private let timer: UILabel = {
         let label = UILabel()
@@ -103,13 +103,11 @@ class SearchAuthView: UIView {
         emailBoxStack.addSubview(requestAuthButton)
         requestAuthButton.snp.makeConstraints { make in
             make.width.equalTo(stack).multipliedBy(0.29)
-            make.height.equalTo(stack.snp.width).multipliedBy(0.12)
         }
         
         authBoxStack.addSubview(authNumberCheckButton)
         authNumberCheckButton.snp.makeConstraints { make in
             make.width.equalTo(requestAuthButton)
-            make.height.equalTo(requestAuthButton)
         }
         
         addSubview(bottomButtonView)

@@ -39,6 +39,7 @@
 		99C9B2502C0229CF008D7CBD /* AccountLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B24F2C0229CF008D7CBD /* AccountLoginView.swift */; };
 		99C9B2522C022DE3008D7CBD /* AccountLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2512C022DE3008D7CBD /* AccountLoginController.swift */; };
 		99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D11EB02C06F56F006BE265 /* CustomButton.swift */; };
+		99DC27922C1481C6001388EE /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DC27912C1481C6001388EE /* CustomTextField.swift */; };
 		99EC20A32C0D99900018904D /* UserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20A22C0D99900018904D /* UserUseCase.swift */; };
 		99EC20A72C0D9C0E0018904D /* UserRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20A62C0D9C0E0018904D /* UserRepositoryImpl.swift */; };
 		99EC20A92C0D9C1A0018904D /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20A82C0D9C1A0018904D /* UserRepository.swift */; };
@@ -92,6 +93,7 @@
 		99C9B24F2C0229CF008D7CBD /* AccountLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLoginView.swift; sourceTree = "<group>"; };
 		99C9B2512C022DE3008D7CBD /* AccountLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLoginController.swift; sourceTree = "<group>"; };
 		99D11EB02C06F56F006BE265 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		99DC27912C1481C6001388EE /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		99EC20A22C0D99900018904D /* UserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUseCase.swift; sourceTree = "<group>"; };
 		99EC20A62C0D9C0E0018904D /* UserRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryImpl.swift; sourceTree = "<group>"; };
 		99EC20A82C0D9C1A0018904D /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				99C9B2472C01D2B7008D7CBD /* Utilities.swift */,
 				99D11EB02C06F56F006BE265 /* CustomButton.swift */,
 				99938EE12C0C8FE300239FA1 /* CustomLabel.swift */,
+				99DC27912C1481C6001388EE /* CustomTextField.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -536,6 +539,7 @@
 				99B397832C0C3E9D00D7A109 /* CheckIDView.swift in Sources */,
 				99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */,
 				99938EE02C0C8B9D00239FA1 /* SearchPasswordViewController.swift in Sources */,
+				99DC27922C1481C6001388EE /* CustomTextField.swift in Sources */,
 				99C9B2522C022DE3008D7CBD /* AccountLoginController.swift in Sources */,
 				99F78F1C2C09BB8F004C0C72 /* SearchAccountController.swift in Sources */,
 				9953583F2C00C555005BF799 /* SceneDelegate.swift in Sources */,

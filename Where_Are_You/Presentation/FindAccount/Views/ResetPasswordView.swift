@@ -15,7 +15,7 @@ class ResetPasswordView: UIView {
     
     private let passwordLabel = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: 12)
     
-    let resetPasswordTextField = Utilities().inputContainerTextField(withPlaceholder: "새 비밀번호", fontSize: 14)
+    let resetPasswordTextField = Utilities().inputContainerTextField(withPlaceholder: "새 비밀번호", fontSize: textFieldFontSize)
     
     let resetPasswordDescription: UILabel = {
         let label = UILabel()
@@ -25,7 +25,7 @@ class ResetPasswordView: UIView {
         return label
     }()
     
-    let checkPasswordTextField = Utilities().inputContainerTextField(withPlaceholder: "비밀번호 확인", fontSize: 14)
+    let checkPasswordTextField = Utilities().inputContainerTextField(withPlaceholder: "비밀번호 확인", fontSize: textFieldFontSize)
     
     let checkPasswordDescription: UILabel = {
         let label = UILabel()
@@ -75,14 +75,6 @@ class ResetPasswordView: UIView {
             make.left.equalTo(titleLabel)
             make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(30)
-        }
-        
-        resetPasswordTextField.snp.makeConstraints { make in
-            make.height.equalTo(stack.snp.width).multipliedBy(0.13)
-        }
-        
-        checkPasswordTextField.snp.makeConstraints { make in
-            make.height.equalTo(resetPasswordTextField)
         }
         
         addSubview(bottomButtonView)

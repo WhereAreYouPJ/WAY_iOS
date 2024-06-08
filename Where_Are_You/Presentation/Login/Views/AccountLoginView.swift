@@ -15,7 +15,7 @@ class AccountLoginView: UIView {
     
     private let idLabel = CustomLabel(UILabel_NotoSans: .medium, text: "아이디", textColor: .color51, fontSize: 12)
     
-    let idTextField = Utilities().inputContainerTextField(withPlaceholder: "아이디를 입력해주세요.", fontSize: 14)
+    let idTextField = Utilities().inputContainerTextField(withPlaceholder: "아이디를 입력해주세요.", fontSize: textFieldFontSize)
     
     private let idErrorLabel: UILabel = {
         let label = UILabel()
@@ -27,7 +27,7 @@ class AccountLoginView: UIView {
     
     private let passwordLabel = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: 12)
 
-    let passwordTextField = Utilities().inputContainerTextField(withPlaceholder: "비밀번호를 입력해주세요.", fontSize: 14)
+    let passwordTextField = Utilities().inputContainerTextField(withPlaceholder: "비밀번호를 입력해주세요.", fontSize: textFieldFontSize)
     
     private let passwordErrorLabel: UILabel = {
         let label = UILabel()
@@ -69,14 +69,6 @@ class AccountLoginView: UIView {
             make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(30)
             make.left.equalToSuperview().offset(21)
-        }
-        
-        idTextField.snp.makeConstraints { make in
-            make.height.equalTo(stack.snp.width).multipliedBy(0.13)
-        }
-        
-        passwordTextField.snp.makeConstraints { make in
-            make.height.equalTo(idTextField)
         }
 
         addSubview(loginButton)

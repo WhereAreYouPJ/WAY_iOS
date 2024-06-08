@@ -8,6 +8,9 @@
 import UIKit
 import SnapKit
 
+let textFieldFontSize: CGFloat = 14
+let descriptionFontSize: CGFloat = 12
+
 class Utilities {
     
     // 네비게이션 바 생성
@@ -44,20 +47,12 @@ class Utilities {
     }
     
     // TextField with layer and placeholder
-    func inputContainerTextField(withPlaceholder placeholder: String, fontSize: CGFloat) -> UITextField {
-        let tf = UITextField()
+    func inputContainerTextField(withPlaceholder placeholder: String, fontSize: CGFloat) -> CustomTextField {
+        let tf = CustomTextField()
         tf.adjustsFontForContentSizeCategory = true
         tf.textColor = .color34
         tf.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: fontSize))
         tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.color102])
-        tf.layer.borderWidth = 1
-        tf.layer.cornerRadius = 7
-        tf.layer.borderColor = UIColor.color212.cgColor
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: tf.frame.height))
-        tf.leftView = paddingView
-        tf.rightView = paddingView
-        tf.leftViewMode = .always
-        tf.rightViewMode = .always
         return tf
     }
     
