@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "apple1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "appleLogin.png",
+      "filename" : "apple2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "apple3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

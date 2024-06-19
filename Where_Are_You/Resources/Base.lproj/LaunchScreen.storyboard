@@ -16,20 +16,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="title" translatesAutoresizingMaskIntoConstraints="NO" id="5xT-Iy-YeA">
-                                <rect key="frame" x="70.666666666666671" y="215" width="251.66666666666663" height="46.666666666666686"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_title" translatesAutoresizingMaskIntoConstraints="NO" id="5xT-Iy-YeA">
+                                <rect key="frame" x="60" y="215" width="273" height="46.333333333333314"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Typo" translatesAutoresizingMaskIntoConstraints="NO" id="t2x-mm-uQq">
-                                <rect key="frame" x="116" y="261.66666666666669" width="161" height="28"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_description" translatesAutoresizingMaskIntoConstraints="NO" id="t2x-mm-uQq">
+                                <rect key="frame" x="113.66666666666669" y="261.33333333333331" width="166" height="28"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="XHD-lE-Afp"/>
                         <color key="backgroundColor" red="0.4823529412" green="0.31372549020000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="5xT-Iy-YeA" firstAttribute="leading" secondItem="eAG-mZ-zpW" secondAttribute="leading" constant="60" id="8mt-xW-74V"/>
                             <constraint firstItem="t2x-mm-uQq" firstAttribute="centerX" secondItem="eAG-mZ-zpW" secondAttribute="centerX" id="GKR-pc-O89"/>
                             <constraint firstItem="5xT-Iy-YeA" firstAttribute="centerX" secondItem="eAG-mZ-zpW" secondAttribute="centerX" id="cGk-5G-aeY"/>
                             <constraint firstItem="5xT-Iy-YeA" firstAttribute="top" secondItem="XHD-lE-Afp" secondAttribute="top" constant="156" id="e3c-Ol-add"/>
                             <constraint firstItem="t2x-mm-uQq" firstAttribute="top" secondItem="5xT-Iy-YeA" secondAttribute="bottom" id="oYR-uN-XYO"/>
+                            <constraint firstItem="t2x-mm-uQq" firstAttribute="leading" secondItem="XHD-lE-Afp" secondAttribute="leading" constant="113.5" id="wEX-Cn-LYi"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -39,7 +41,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Typo" width="161" height="28"/>
-        <image name="title" width="251.5" height="46.5"/>
+        <image name="launch_description" width="160.33332824707031" height="28"/>
+        <image name="launch_title" width="251" height="46.333332061767578"/>
     </resources>
 </document>

@@ -41,6 +41,7 @@ class SignUpFormViewController: UIViewController {
     @objc private func duplicateCheckButtonTapped() {
         guard let userID = signUpView.userIDTextField.text, !userID.isEmpty else {
                 // 아이디가 비어있을 때 알림
+            
             signUpView.userIDErrorLabel.text = "아이디를 입력해주세요."
                 return
             }
