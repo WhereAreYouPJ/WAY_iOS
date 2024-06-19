@@ -7,9 +7,26 @@
 
 import Foundation
 
-protocol UserRepository {
-    func login(userID: String, password: String, completion: @escaping (Result<User, Error>) -> Void)
-    func register(user: User, completion: @escaping (Result<User, Error>) -> Void)
-    func findAccount(email: String, completion: @escaping (Result<String, Error>) -> Void)
-    func resetPassword(email: String, newPassword: String, completion: @escaping (Result<Void, Error>) -> Void)
+//protocol UserRepository {
+//    func login(userID: String, password: String, completion: @escaping (Result<User, Error>) -> Void)
+//    func register(user: User, completion: @escaping (Result<User, Error>) -> Void)
+//    func findAccount(email: String, completion: @escaping (Result<String, Error>) -> Void)
+//    func resetPassword(email: String, newPassword: String, completion: @escaping (Result<Void, Error>) -> Void)
+//}
+
+protocol UserRepositoryProtocol {
+    func checkDuplicateID(id: String, completion: @escaping (Result<Bool, Error>) -> Void)
 }
+
+class UserRepository: UserRepositoryProtocol {
+    private let apiService: APIServiceProtocol
+    
+    init(apiService: APIServiceProtocol) {
+        self.apiService = apiService
+    }
+    
+    func checkDuplicateID(id: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        apiService.checkDuplicateID(id: id, completion: completion)
+    }
+}
+

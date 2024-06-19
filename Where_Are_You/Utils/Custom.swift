@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 
+// MARK: - CustomButton
+
 // MARK: - 자주 사용하는 하단의 inputcontainer 버튼 한개
 class BottomButtonView: UIView {
     
@@ -121,7 +123,7 @@ class CustomButton: UIButton {
     }
 }
 
-// MARK: - ONLY Label
+// MARK: - Button ONLY Label
 class CustomButtonView: UIView {
     
     let button: UIButton
@@ -147,5 +149,68 @@ class CustomButtonView: UIView {
         button.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(UIEdgeInsets(top: 4, left: 6, bottom: 4, right: 6))
         }
+    }
+}
+
+// MARK: - CustomLabel
+
+// inputContainerLabel
+class CustomLabel: UILabel {
+    
+    let label = UILabel()
+    
+    init(UILabel_NotoSans weight: UIFont.Weight, text: String, textColor: UIColor, fontSize: CGFloat) {
+        super.init(frame: .zero)
+        
+        label.text = text
+        label.textColor = textColor
+        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: weight, fontSize: fontSize))
+        label.adjustsFontForContentSizeCategory = true
+        label.numberOfLines = 0
+        addSubview(label)
+        label.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.left.equalToSuperview().offset(6)
+            make.bottom.equalToSuperview().offset(-4)
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - CustomTextField
+
+class CustomTextField: UITextField {
+    
+    var textPadding = UIEdgeInsets(top: 11, left: 8, bottom: 11, right: 8)
+    
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: textPadding)
+    }
+    
+    override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: textPadding)
+    }
+    
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: textPadding)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupBorder()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupBorder()
+    }
+    
+    private func setupBorder() {
+        layer.borderColor = UIColor.color212.cgColor
+        layer.borderWidth = 1.0
+        layer.cornerRadius = 7.0
     }
 }
