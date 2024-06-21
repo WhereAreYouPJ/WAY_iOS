@@ -25,8 +25,8 @@ class UserRepository: UserRepositoryProtocol {
         self.apiService = apiService
     }
     
-    func checkDuplicateID(id: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-        apiService.checkDuplicateID(id: id, completion: completion)
+    func checkDuplicateID(userID: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        apiService.checkDuplicateID(userID: userID, completion: completion)
     }
 }
 

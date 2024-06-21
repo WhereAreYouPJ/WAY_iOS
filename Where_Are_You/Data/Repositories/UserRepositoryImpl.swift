@@ -10,6 +10,7 @@ import Foundation
 class UserRepositoryImpl: UserRepository {
     private let baseURL = "https://wlrmadjel.com/v1"
     
+    // MARK: - login
     func login(userID: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
         let url = URL(string: "\(baseURL)/member/login")!
         var request = URLRequest(url: url)
@@ -39,6 +40,7 @@ class UserRepositoryImpl: UserRepository {
         }.resume()
     }
     
+    // MARK: - register
     func register(user: User, completion: @escaping (Result<User, Error>) -> Void) {
         let url = URL(string: "\(baseURL)/member")!
         var request = URLRequest(url: url)
@@ -67,6 +69,8 @@ class UserRepositoryImpl: UserRepository {
         }.resume()
     }
     
+    // MARK: - findAccount
+
     func findAccount(email: String, completion: @escaping (Result<String, Error>) -> Void) {
         let url = URL(string: "\(baseURL)/findID")!
         var request = URLRequest(url: url)
@@ -91,6 +95,7 @@ class UserRepositoryImpl: UserRepository {
         }.resume()
     }
     
+    // MARK: - resetPassword
     func resetPassword(email: String, newPassword: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let url = URL(string: "\(baseURL)/resetPassword")!
         var request = URLRequest(url: url)
@@ -108,5 +113,11 @@ class UserRepositoryImpl: UserRepository {
             
             completion(.success(()))
         }.resume()
+    }
+    
+    // MARK: - checkDuplicateID
+    
+    func checkDuplicateID(id: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        
     }
 }
