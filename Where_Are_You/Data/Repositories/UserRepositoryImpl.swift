@@ -8,7 +8,7 @@
 import Foundation
 
 class UserRepositoryImpl: UserRepository {
-    private let baseURL = "http://3.39.14.175:8080/v1"
+    private let baseURL = "https://wlrmadjel.com/v1"
     
     func login(userID: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
         let url = URL(string: "\(baseURL)/member/login")!
