@@ -71,7 +71,7 @@ class APIService: APIServiceProtocol {
     }
     
     func sendEmailVerificationCode(email: String, completion: @escaping (Result<EmailVerificationResponseModel, any Error>) -> Void) {
-        let url = "\(baseURL)/member/email/verify"
+        let url = "\(baseURL)/member/email/send"
         
         let parameters: [String: Any] = ["email": email]
         
@@ -85,6 +85,18 @@ class APIService: APIServiceProtocol {
                 }
             }
     }
+    
+//    func checkEmailVerificationCode(email: String, code: String) {
+//        let url = "\(baseURL)/member/email/verify"
+//        
+//        let parameters: [String: Any] = [
+//            "email": email,
+//            "code": code
+//        ]
+//        
+//        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+//            .responseDecodable(of: <#T##Decodable.Type#>, completionHandler: <#T##(DataResponse<Decodable, AFError>) -> Void#>)
+//    }
     
 }
 

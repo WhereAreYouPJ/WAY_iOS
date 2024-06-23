@@ -195,13 +195,13 @@
 			path = Password;
 			sourceTree = "<group>";
 		};
-		9950C64C2C102E18003155A7 /* Register */ = {
+		9950C64C2C102E18003155A7 /* SingUp */ = {
 			isa = PBXGroup;
 			children = (
 				9950C6552C1040BD003155A7 /* Views */,
 				9950C6542C1040B7003155A7 /* ViewControllers */,
 			);
-			path = Register;
+			path = SingUp;
 			sourceTree = "<group>";
 		};
 		9950C64F2C103031003155A7 /* Network */ = {
@@ -324,7 +324,7 @@
 				99D11EB52C0783CC006BE265 /* ViewModels */,
 				99C9B2532C0231B2008D7CBD /* Login */,
 				99F78F1A2C09BB7D004C0C72 /* FindAccount */,
-				9950C64C2C102E18003155A7 /* Register */,
+				9950C64C2C102E18003155A7 /* SingUp */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";

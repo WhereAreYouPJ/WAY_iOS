@@ -28,9 +28,10 @@ class SignUpViewModel {
     var onEmailAvailabilityChecked: ((Bool) -> Void)?
     var onEmailVerificationCodeSent: ((Bool) -> Void)?
     
-    
-    
-    init(signUpUseCase: SignUpUseCase, checkUserIDAvailabilityUseCase: CheckUserIDAvailabilityUseCase, checkEmailAvailabilityUseCase: CheckEmailAvailabilityUseCase, sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase) {
+    init(signUpUseCase: SignUpUseCase,
+         checkUserIDAvailabilityUseCase: CheckUserIDAvailabilityUseCase,
+         checkEmailAvailabilityUseCase: CheckEmailAvailabilityUseCase,
+         sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase) {
         self.signUpUseCase = signUpUseCase
         self.checkUserIDAvailabilityUseCase = checkUserIDAvailabilityUseCase
         self.checkEmailAvailabilityUseCase = checkEmailAvailabilityUseCase
@@ -38,11 +39,6 @@ class SignUpViewModel {
     }
     
     func signUp() {
-        guard password == confirmPassword else {
-            onSignUpFailure?("Passwords do not match")
-            return
-        }
-        
         let request = SignUpRequestModel(userName: userName, userID: userID, password: password, email: email)
         signUpUseCase.execute(request: request) { result in
             switch result {
@@ -54,7 +50,7 @@ class SignUpViewModel {
         }
     }
     
-    func checkUsernameAvailability() {
+    func checkUserIDAvailability() {
         checkUserIDAvailabilityUseCase.execute(userID: userID) { result in
             switch result {
             case .success(let isAvailable):
