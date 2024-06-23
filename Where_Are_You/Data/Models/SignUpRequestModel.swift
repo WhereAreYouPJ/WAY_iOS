@@ -13,8 +13,3 @@ struct SignUpRequestModel {
     let password: String
     let email: String
 }
-
-struct SignUpResponseModel: Codable {
-    let success: Bool
-    let message: String
-}

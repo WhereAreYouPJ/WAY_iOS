@@ -17,4 +17,16 @@ class UserRepository: UserRepositoryProtocol {
     func signUp(request: SignUpRequestModel, completion: @escaping (Result<SignUpResponseModel, any Error>) -> Void) {
         apiService.signUp(request: request, completion: completion)
     }
+    
+    func checkUserIDAvailability(userID: String, completion: @escaping (Result<CheckAvailabilityResponseModel, any Error>) -> Void) {
+        <#code#>
+    }
+    
+    func checkEmailAvailability(email: String, completion: @escaping (Result<CheckAvailabilityResponseModel, any Error>) -> Void) {
+        <#code#>
+    }
+    
+    func sendEmailVerificationCode(email: String, completion: @escaping (Result<EmailVerificationResponseModel, any Error>) -> Void) {
+        <#code#>
+    }
 }

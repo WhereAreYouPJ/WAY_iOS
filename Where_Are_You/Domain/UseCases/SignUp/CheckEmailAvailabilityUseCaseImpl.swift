@@ -15,6 +15,6 @@ class CheckEmailAvailabilityUseCaseImpl: CheckEmailAvailabilityUseCase {
     }
     
     func execute(email: String, completion: @escaping (Result<Bool, any Error>) -> Void) {
-        userRepository.checkEmailAvailability(email: email, completion: T##<<error type>>)
+
     }
 }

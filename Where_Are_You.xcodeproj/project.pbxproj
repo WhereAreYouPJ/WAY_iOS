@@ -17,6 +17,10 @@
 		990F57A12C27F8AC00F6E1AD /* CheckUserIDAvailabilityUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57A02C27F8AC00F6E1AD /* CheckUserIDAvailabilityUseCaseImpl.swift */; };
 		990F57A32C27F9FE00F6E1AD /* CheckEmailAvailabilityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57A22C27F9FE00F6E1AD /* CheckEmailAvailabilityUseCase.swift */; };
 		990F57A52C27FA3B00F6E1AD /* CheckEmailAvailabilityUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57A42C27FA3B00F6E1AD /* CheckEmailAvailabilityUseCaseImpl.swift */; };
+		990F57AA2C28032300F6E1AD /* CheckAvailabilityRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57A92C28032300F6E1AD /* CheckAvailabilityRequestModel.swift */; };
+		990F57AC2C2803DB00F6E1AD /* EmailVerificationResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57AB2C2803DB00F6E1AD /* EmailVerificationResponseModel.swift */; };
+		990F57AE2C28041400F6E1AD /* SignUpResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57AD2C28041400F6E1AD /* SignUpResponseModel.swift */; };
+		990F57B02C28044100F6E1AD /* CheckAvailabilityResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57AF2C28044100F6E1AD /* CheckAvailabilityResponseModel.swift */; };
 		9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C64D2C102FB6003155A7 /* TermsAgreementView.swift */; };
 		9950C6572C1040FD003155A7 /* TermsAgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C6562C1040FD003155A7 /* TermsAgreementViewController.swift */; };
 		9950C6592C10B0DF003155A7 /* SignUpFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C6582C10B0DF003155A7 /* SignUpFormView.swift */; };
@@ -73,6 +77,10 @@
 		990F57A02C27F8AC00F6E1AD /* CheckUserIDAvailabilityUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUserIDAvailabilityUseCaseImpl.swift; sourceTree = "<group>"; };
 		990F57A22C27F9FE00F6E1AD /* CheckEmailAvailabilityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailAvailabilityUseCase.swift; sourceTree = "<group>"; };
 		990F57A42C27FA3B00F6E1AD /* CheckEmailAvailabilityUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailAvailabilityUseCaseImpl.swift; sourceTree = "<group>"; };
+		990F57A92C28032300F6E1AD /* CheckAvailabilityRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAvailabilityRequestModel.swift; sourceTree = "<group>"; };
+		990F57AB2C2803DB00F6E1AD /* EmailVerificationResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationResponseModel.swift; sourceTree = "<group>"; };
+		990F57AD2C28041400F6E1AD /* SignUpResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpResponseModel.swift; sourceTree = "<group>"; };
+		990F57AF2C28044100F6E1AD /* CheckAvailabilityResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAvailabilityResponseModel.swift; sourceTree = "<group>"; };
 		9950C64D2C102FB6003155A7 /* TermsAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAgreementView.swift; sourceTree = "<group>"; };
 		9950C6562C1040FD003155A7 /* TermsAgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAgreementViewController.swift; sourceTree = "<group>"; };
 		9950C6582C10B0DF003155A7 /* SignUpFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFormView.swift; sourceTree = "<group>"; };
@@ -145,6 +153,10 @@
 			isa = PBXGroup;
 			children = (
 				990F57952C27EE4B00F6E1AD /* SignUpRequestModel.swift */,
+				990F57AD2C28041400F6E1AD /* SignUpResponseModel.swift */,
+				990F57A92C28032300F6E1AD /* CheckAvailabilityRequestModel.swift */,
+				990F57AF2C28044100F6E1AD /* CheckAvailabilityResponseModel.swift */,
+				990F57AB2C2803DB00F6E1AD /* EmailVerificationResponseModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -154,6 +166,33 @@
 			children = (
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		990F57A62C28028100F6E1AD /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				990F57A22C27F9FE00F6E1AD /* CheckEmailAvailabilityUseCase.swift */,
+				990F57A02C27F8AC00F6E1AD /* CheckUserIDAvailabilityUseCaseImpl.swift */,
+				990F579E2C27F86A00F6E1AD /* CheckUserIDAvailabilityUseCase.swift */,
+				990F57922C27ED1000F6E1AD /* SignUpUseCaseImpl.swift */,
+				990F57902C27ECDC00F6E1AD /* SignUpUseCase.swift */,
+				990F57A42C27FA3B00F6E1AD /* CheckEmailAvailabilityUseCaseImpl.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
+		990F57A72C2802A300F6E1AD /* Email */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Email;
+			sourceTree = "<group>";
+		};
+		990F57A82C2802B800F6E1AD /* Password */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Password;
 			sourceTree = "<group>";
 		};
 		9950C64C2C102E18003155A7 /* Register */ = {
@@ -364,14 +403,11 @@
 		99EC209F2C0D8DEC0018904D /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				990F57A62C28028100F6E1AD /* SignUp */,
+				990F57A72C2802A300F6E1AD /* Email */,
+				990F57A82C2802B800F6E1AD /* Password */,
 				99EC20A22C0D99900018904D /* UserUseCase.swift */,
 				990337562C0DDBE5007F314A /* EmailVerificationUseCase.swift */,
-				990F57902C27ECDC00F6E1AD /* SignUpUseCase.swift */,
-				990F57922C27ED1000F6E1AD /* SignUpUseCaseImpl.swift */,
-				990F579E2C27F86A00F6E1AD /* CheckUserIDAvailabilityUseCase.swift */,
-				990F57A02C27F8AC00F6E1AD /* CheckUserIDAvailabilityUseCaseImpl.swift */,
-				990F57A22C27F9FE00F6E1AD /* CheckEmailAvailabilityUseCase.swift */,
-				990F57A42C27FA3B00F6E1AD /* CheckEmailAvailabilityUseCaseImpl.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -379,8 +415,8 @@
 		99EC20A02C0D8E030018904D /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				990F579B2C27F23900F6E1AD /* UserRepositoryProtocol.swift */,
 				990F57992C27EEF400F6E1AD /* UserRepository.swift */,
+				990F579B2C27F23900F6E1AD /* UserRepositoryProtocol.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -543,8 +579,10 @@
 			files = (
 				995358472C00C555005BF799 /* Where_Are_You.xcdatamodeld in Sources */,
 				990337572C0DDBE6007F314A /* EmailVerificationUseCase.swift in Sources */,
+				990F57B02C28044100F6E1AD /* CheckAvailabilityResponseModel.swift in Sources */,
 				9950C65B2C10B0F5003155A7 /* SignUpFormViewController.swift in Sources */,
 				99C9B22C2C019C67008D7CBD /* LoginView.swift in Sources */,
+				990F57AE2C28041400F6E1AD /* SignUpResponseModel.swift in Sources */,
 				9950C6572C1040FD003155A7 /* TermsAgreementViewController.swift in Sources */,
 				995358412C00C555005BF799 /* LoginViewController.swift in Sources */,
 				99E755512C22E66F0016A0A6 /* APIService.swift in Sources */,
@@ -569,6 +607,7 @@
 				99EC78CE2C11DBA5007C4415 /* ResetPasswordViewController.swift in Sources */,
 				99B397832C0C3E9D00D7A109 /* CheckIDView.swift in Sources */,
 				99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */,
+				990F57AA2C28032300F6E1AD /* CheckAvailabilityRequestModel.swift in Sources */,
 				99938EE02C0C8B9D00239FA1 /* SearchPasswordViewController.swift in Sources */,
 				990F57932C27ED1000F6E1AD /* SignUpUseCaseImpl.swift in Sources */,
 				99C9B2522C022DE3008D7CBD /* AccountLoginController.swift in Sources */,
@@ -580,6 +619,7 @@
 				99EC20AB2C0D9D9D0018904D /* RegisterViewModel.swift in Sources */,
 				99EC20AD2C0D9DB50018904D /* FindAccountViewModel.swift in Sources */,
 				99EC20A32C0D99900018904D /* UserUseCase.swift in Sources */,
+				990F57AC2C2803DB00F6E1AD /* EmailVerificationResponseModel.swift in Sources */,
 				99EC78D62C11E8A3007C4415 /* FinishRegisterViewController.swift in Sources */,
 				99C9B2322C01A45C008D7CBD /* Extensions.swift in Sources */,
 				990F579A2C27EEF400F6E1AD /* UserRepository.swift in Sources */,

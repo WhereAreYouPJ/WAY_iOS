@@ -44,12 +44,21 @@ class APIService: APIServiceProtocol {
         
         let parameters: [String: Any] = ["userID": userID]
         
-        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default). responseDecodable(of: CheckAvailabilityResponseModel.self) { response in
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            .responseDecodable(of: CheckAvailabilityResponseModel.self) { response in
             switch response.result {
             case . success(let availabilityResponse):
                 completion(.success(availabilityResponse))
             }
         }
+    }
+    
+    func checkEmailAvailability(email: String, completion: @escaping (Result<CheckAvailabilityResponseModel, any Error>) -> Void) {
+        
+    }
+    
+    func sendEmailVerificationCode(email: String, completion: @escaping (Result<EmailVerificationResponseModel, any Error>) -> Void) {
+        
     }
     
     //    func checkDuplicateID(userID: String, completion: @escaping (Result<Bool, Error>) -> Void) {
