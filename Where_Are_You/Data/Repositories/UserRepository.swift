@@ -7,6 +7,13 @@
 
 import Alamofire
 
+protocol UserRepositoryProtocol {
+    func signUp(request: SignUpRequestModel, completion: @escaping (Result<SignUpResponseModel, Error>) -> Void)
+    func checkUserIDAvailability(userID: String, completion: @escaping (Result<CheckAvailabilityResponseModel, Error>) -> Void)
+    func checkEmailAvailability(email: String, completion: @escaping (Result<CheckAvailabilityResponseModel, Error>) -> Void)
+    func sendEmailVerificationCode(email: String, completion: @escaping (Result<EmailVerificationResponseModel, Error>) -> Void)
+}
+
 class UserRepository: UserRepositoryProtocol {
     private let apiService: APIServiceProtocol
     
@@ -19,14 +26,14 @@ class UserRepository: UserRepositoryProtocol {
     }
     
     func checkUserIDAvailability(userID: String, completion: @escaping (Result<CheckAvailabilityResponseModel, any Error>) -> Void) {
-        <#code#>
+        apiService.checkUserIDAvailability(userID: userID, completion: completion)
     }
     
     func checkEmailAvailability(email: String, completion: @escaping (Result<CheckAvailabilityResponseModel, any Error>) -> Void) {
-        <#code#>
+        apiService.checkEmailAvailability(email: email, completion: completion)
     }
     
     func sendEmailVerificationCode(email: String, completion: @escaping (Result<EmailVerificationResponseModel, any Error>) -> Void) {
-        <#code#>
+        apiService.sendEmailVerificationCode(email: email, completion: completion)
     }
 }
