@@ -81,13 +81,24 @@ class SignUpViewModel {
     }
     
     func sendEmailVerificationCode() {
-        sendEmailVerificationCodeUseCase.execute(email: email) { result in
-            switch result {
-            case .success(let isSent):
-                self.onEmailVerificationCodeSent?(isSent)
-            case .failure(let error):
-                self.onSignUpFailure?(error.localizedDescription)
+            checkEmailAvailabilityUseCase.execute(email: email) { result in
+                switch result {
+                case .success(let isAvailable):
+                    if isAvailable {
+                        self.sendEmailVerificationCodeUseCase.execute(email: self.email) { result in
+                            switch result {
+                            case .success:
+                                self.onEmailVerificationCodeSent?("인증코드가 전송되었습니다.")
+                            case .failure(let error):
+                                self.onSignUpFailure?(error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        self.onSignUpFailure?("이미 존재하는 이메일입니다.")
+                    }
+                case .failure(let error):
+                    self.onSignUpFailure?(error.localizedDescription)
+                }
             }
         }
-    }
 }
