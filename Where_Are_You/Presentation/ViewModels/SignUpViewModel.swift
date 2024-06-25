@@ -24,21 +24,27 @@ class SignUpViewModel {
     // Output
     var onSignUpSuccess: (() -> Void)?
     var onSignUpFailure: ((String) -> Void)?
-    var onUserIDAvailabilityChecked: ((Bool) -> Void)?
-    var onEmailAvailabilityChecked: ((Bool) -> Void)?
-    var onEmailVerificationCodeSent: ((Bool) -> Void)?
+    var onUserIDAvailabilityChecked: ((String,  Bool) -> Void)?
+    var onEmailAvailabilityChecked: ((String) -> Void)?
+    var onEmailVerificationCodeSent: ((String) -> Void)?
+    var onEmailVerificationCodeVerified: ((String) -> Void)?
     
     init(signUpUseCase: SignUpUseCase,
          checkUserIDAvailabilityUseCase: CheckUserIDAvailabilityUseCase,
          checkEmailAvailabilityUseCase: CheckEmailAvailabilityUseCase,
          sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase) {
-        self.signUpUseCase = signUpUseCase
-        self.checkUserIDAvailabilityUseCase = checkUserIDAvailabilityUseCase
-        self.checkEmailAvailabilityUseCase = checkEmailAvailabilityUseCase
-        self.sendEmailVerificationCodeUseCase = sendEmailVerificationCodeUseCase
-    }
+            self.signUpUseCase = signUpUseCase
+            self.checkUserIDAvailabilityUseCase = checkUserIDAvailabilityUseCase
+            self.checkEmailAvailabilityUseCase = checkEmailAvailabilityUseCase
+            self.sendEmailVerificationCodeUseCase = sendEmailVerificationCodeUseCase
+        }
     
     func signUp() {
+        guard password == confirmPassword else {
+            onSignUpFailure?("패스워드가 일치하지 않습니다.")
+            return
+        }
+        
         let request = SignUpRequestModel(userName: userName, userID: userID, password: password, email: email)
         signUpUseCase.execute(request: request) { result in
             switch result {
@@ -54,9 +60,10 @@ class SignUpViewModel {
         checkUserIDAvailabilityUseCase.execute(userID: userID) { result in
             switch result {
             case .success(let isAvailable):
-                self.onUserIDAvailabilityChecked?(isAvailable)
+                let message = isAvailable ? "사용가능한 아이디입니다." : "중복된 아이디입니다."
+                self.onUserIDAvailabilityChecked?(message, isAvailable)
             case .failure(let error):
-                self.onSignUpFailure?(error.localizedDescription)
+                self.onUserIDAvailabilityChecked?(error.localizedDescription, false)
             }
         }
     }
@@ -65,7 +72,8 @@ class SignUpViewModel {
         checkEmailAvailabilityUseCase.execute(email: email) { result in
             switch result {
             case .success(let isAvailable):
-                self.onEmailAvailabilityChecked?(isAvailable)
+                let message = isAvailable ? "인증코드가 전송되었습니다." : "중복된 이메일입니다."
+                self.onEmailAvailabilityChecked?(message)
             case .failure(let error):
                 self.onSignUpFailure?(error.localizedDescription)
             }
