@@ -41,7 +41,8 @@ class SignUpViewModel {
     
     private var timer: Timer?
     private var timerCount: Int = 300
-    
+    var onUpdateTimer: ((String) -> Void)?
+
     // MARK: - LifeCycle
     
     init(signUpUseCase: SignUpUseCase,
@@ -140,10 +141,15 @@ class SignUpViewModel {
         timerCount = 300
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            self?.timerCount -= 1
-            if self?.timerCount == 0 {
-                self?.stopTimer()
-                self?.onSignUpFailure?("인증 시간이 만료되었습니다. 이메일 인증을 다시 요청하세요.")
+            guard let self = self else { return }
+            self.timerCount -= 1
+            let minutes = self.timerCount / 60
+            let seconds = self.timerCount % 60
+            let timeString = String(format: "%02d:%02d", minutes, seconds)
+            self.onUpdateTimer?(timeString)
+            if self.timerCount == 0 {
+                self.stopTimer()
+                self.onSignUpFailure?("인증 시간이 만료되었습니다. 이메일 인증을 다시 요청하세요.")
             }
         }
     }

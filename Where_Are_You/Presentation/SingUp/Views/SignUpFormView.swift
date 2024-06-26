@@ -100,7 +100,7 @@ class SignUpFormView: UIView {
         return label
     }()
     
-    private let timer: UILabel = {
+    var timer: UILabel = {
         let label = UILabel()
         label.textColor = .warningColor
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14))

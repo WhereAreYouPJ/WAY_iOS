@@ -92,8 +92,43 @@ class SignUpFormViewController: UIViewController {
             }
         }
         
+        // 이메일 인증 코드 발송 결과 처리
+        viewModel.onEmailAvailabilityChecked = { [weak self] message in
+            DispatchQueue.main.async {
+                self?.signUpView.emailErrorLabel.text = message
+                self?.signUpView.emailErrorLabel.textColor = message == "인증코드가 전송되었습니다." ? .brandColor : .warningColor
+                self?.signUpView.authStack.isHidden = message != "인증코드가 전송되었습니다."
+            }
+        }
         
+        // 이메일 인증 코드 전송 완료 처리
+        viewModel.onEmailVerificationCodeSent = { [weak self] message in
+            DispatchQueue.main.async {
+                self?.showAlert(title: "Email Verification", message: message)
+            }
+        }
         
+        // 이메일 인증 코드 확인 결과 처리
+        viewModel.onEmailVerificationCodeVerified = { [weak self] message in
+            DispatchQueue.main.async {
+                self?.showAlert(title: "Verification", message: message)
+            }
+        }
+        
+        // 비밀번호 형식 오류 처리
+        viewModel.onPasswordFormatError = { [weak self] message in
+            DispatchQueue.main.async {
+                self?.signUpView.passwordErrorLabel.text = message
+                self?.signUpView.passwordErrorLabel.textColor = .warningColor
+            }
+        }
+        
+        // 타이머 업데이트 처리 - 수정된 부분
+        viewModel.onUpdateTimer = { [weak self] timeString in
+            DispatchQueue.main.async {
+                self?.signUpView.timer.text = timeString
+            }
+        }
     }
     
     // MARK: - Selectors
@@ -126,7 +161,6 @@ class SignUpFormViewController: UIViewController {
             signUpView.userIDErrorLabel.text = "영문 소문자와 숫자만 사용하여, 영문 소문자로 시작하는 5~12자의 아이디를 입력해주세요"
             return
         }
-        // 여기에 api 통신 넣기
         viewModel.checkUserIDAvailability()
     }
     
@@ -135,8 +169,6 @@ class SignUpFormViewController: UIViewController {
             signUpView.emailErrorLabel.text = "이메일 형식에 알맞지 않습니다."
             return
         }
-        // 여기에 signUpView.authCheckStack.isHidden = false로 설정하고 api 넣기
-        signUpView.authStack.isHidden = false
         viewModel.checkEmailAvailability()
     }
     

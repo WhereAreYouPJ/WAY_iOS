@@ -7,6 +7,12 @@
 
 import Foundation
 
-struct CheckAvailabilityResponseModel: Codable {
+struct CheckAvailabilityResponseModel: Decodable {
+    let status: Int
+    let message: String
+    let data: CheckAvailabilityData
+}
+
+struct CheckAvailabilityData: Decodable {
     let isAvailable: Bool
 }
