@@ -85,36 +85,4 @@ class APIService: APIServiceProtocol {
                 }
             }
     }
-    
-//    func checkEmailVerificationCode(email: String, code: String) {
-//        let url = "\(baseURL)/member/email/verify"
-//        
-//        let parameters: [String: Any] = [
-//            "email": email,
-//            "code": code
-//        ]
-//        
-//        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
-//            .responseDecodable(of: <#T##Decodable.Type#>, completionHandler: <#T##(DataResponse<Decodable, AFError>) -> Void#>)
-//    }
-    
 }
-
-//    func resetPassword(email: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-//        let url = "\(baseURL)/member/resetPassword"
-//        let parameters: [String: Any] = ["email": email]
-//
-//        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-//            switch response.result {
-//            case .success(let value):
-//                if let json = value as? [String: Any], let success = json["success"] as? Bool {
-//                    completion(.success(success))
-//                } else {
-//                    completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid response"])))
-//                }
-//            case .failure(let error):
-//                completion(.failure(error))
-//            }
-//        }
-//    }
-

@@ -18,8 +18,8 @@ class SignUpFormViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         buttonActions()
-        setupBindings()
         setupViewModel()
+        setupBindings()
     }
     
     // MARK: - Helpers
@@ -51,16 +51,59 @@ class SignUpFormViewController: UIViewController {
     }
     
     private func setupBindings() {
-        viewModel.onUserIDAvailabilityChecked = { [weak self] message in
-            if message {
-                self?.signUpView.userIDErrorLabel.text = "사용가능한 아이디입니다."
-            } else {
-                self?.signUpView.userIDErrorLabel.text = "중복된 아이디입니다."
+        
+        // 회원 가입 성공 시 콜백 처리
+        viewModel.onSignUpSuccess = { [weak self] in
+            DispatchQueue.main.async {
+                self?.navigateToNextScreen()
+            }
+        }
+        
+        // 회원 가입 실패 시 콜백 처리
+        viewModel.onUserIDAvailabilityChecked = { [weak self] message, isAvailable in
+            DispatchQueue.main.async {
+                self?.signUpView.userIDErrorLabel.text = message
+                self?.signUpView.userIDErrorLabel.textColor = isAvailable ? .brandColor : .warningColor
+                self?.signUpView.userIDTextField.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
+            }
+        }
+        
+        // 아이디 중복 확인 결과 처리
+            viewModel.onUserIDAvailabilityChecked = { [weak self] message, isAvailable in
+                DispatchQueue.main.async {
+                    self?.signUpView.userIDErrorLabel.text = message
+                    self?.signUpView.userIDErrorLabel.textColor = isAvailable ? .brandColor : .warningColor
+                }
+            }
+        
+        // 이메일 형식 오류 처리
+        viewModel.onEmailFormatError = { [weak self] message in
+            DispatchQueue.main.async {
+                self?.signUpView.emailErrorLabel.text = message
+                self?.signUpView.emailErrorLabel.textColor = .warningColor
             }
         }
     }
     
     // MARK: - Selectors
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        switch textField {
+        case signUpView.userNameTextField:
+            viewModel.userName = textField.text ?? ""
+        case signUpView.userIDTextField:
+            viewModel.userID = textField.text ?? ""
+        case signUpView.passwordTextField:
+            viewModel.password = textField.text ?? ""
+        case signUpView.checkPasswordTextField:
+            viewModel.confirmPassword = textField.text ?? ""
+        case signUpView.emailTextField:
+            viewModel.email = textField.text ?? ""
+        case signUpView.authCodeTextField:
+            viewModel.verificationCode = textField.text ?? ""
+        default:
+            break
+        }
+    }
     
     @objc func backButtonTapped() {
         dismiss(animated: true)
@@ -88,17 +131,20 @@ class SignUpFormViewController: UIViewController {
     
     @objc func authCheckButtonTapped() {
         guard let code = signUpView.authCodeTextField.text, !code.isEmpty else {
-            signUpView.authCodeErrorLabel.text = ""
+            signUpView.authCodeErrorLabel.text = "인증코드가 알맞지 않습니다."
             return
         }
+        viewModel.verifyEmailCode(inputCode: code)
     }
     
     @objc func startButtonTapped() {
         viewModel.signUp()
+        
+    }
+    
+    private func navigateToNextScreen() {
         let controller = FinishRegisterViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
+        navigationController?.pushViewController(controller, animated: true)
     }
     
 }

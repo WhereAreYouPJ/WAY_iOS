@@ -28,16 +28,17 @@ class SignUpViewModel {
     var onEmailAvailabilityChecked: ((String) -> Void)?
     var onEmailVerificationCodeSent: ((String) -> Void)?
     var onEmailVerificationCodeVerified: ((String) -> Void)?
+    var onEmailFormatError: ((String) -> Void)?
     
     init(signUpUseCase: SignUpUseCase,
          checkUserIDAvailabilityUseCase: CheckUserIDAvailabilityUseCase,
          checkEmailAvailabilityUseCase: CheckEmailAvailabilityUseCase,
          sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase) {
-            self.signUpUseCase = signUpUseCase
-            self.checkUserIDAvailabilityUseCase = checkUserIDAvailabilityUseCase
-            self.checkEmailAvailabilityUseCase = checkEmailAvailabilityUseCase
-            self.sendEmailVerificationCodeUseCase = sendEmailVerificationCodeUseCase
-        }
+        self.signUpUseCase = signUpUseCase
+        self.checkUserIDAvailabilityUseCase = checkUserIDAvailabilityUseCase
+        self.checkEmailAvailabilityUseCase = checkEmailAvailabilityUseCase
+        self.sendEmailVerificationCodeUseCase = sendEmailVerificationCodeUseCase
+    }
     
     func signUp() {
         guard password == confirmPassword else {
@@ -75,30 +76,53 @@ class SignUpViewModel {
                 let message = isAvailable ? "인증코드가 전송되었습니다." : "중복된 이메일입니다."
                 self.onEmailAvailabilityChecked?(message)
             case .failure(let error):
-                self.onSignUpFailure?(error.localizedDescription)
+                self.onEmailAvailabilityChecked?(error.localizedDescription)
             }
         }
     }
     
     func sendEmailVerificationCode() {
-            checkEmailAvailabilityUseCase.execute(email: email) { result in
-                switch result {
-                case .success(let isAvailable):
-                    if isAvailable {
-                        self.sendEmailVerificationCodeUseCase.execute(email: self.email) { result in
-                            switch result {
-                            case .success:
-                                self.onEmailVerificationCodeSent?("인증코드가 전송되었습니다.")
-                            case .failure(let error):
-                                self.onSignUpFailure?(error.localizedDescription)
-                            }
+        guard isValidEmail(email) else {
+            onEmailFormatError?("유효하지 않은 이메일 형식입니다.")
+            return
+        }
+        
+        checkEmailAvailabilityUseCase.execute(email: email) { result in
+            switch result {
+            case .success(let isAvailable):
+                if isAvailable {
+                    self.sendEmailVerificationCodeUseCase.execute(email: self.email) { result in
+                        switch result {
+                        case .success:
+                            self.onEmailVerificationCodeSent?("인증코드가 전송되었습니다.")
+                        case .failure(let error):
+                            self.onSignUpFailure?(error.localizedDescription)
                         }
-                    } else {
-                        self.onSignUpFailure?("이미 존재하는 이메일입니다.")
                     }
-                case .failure(let error):
-                    self.onSignUpFailure?(error.localizedDescription)
+                } else {
+                    self.onSignUpFailure?("이미 존재하는 이메일입니다.")
                 }
+            case .failure(let error):
+                self.onSignUpFailure?(error.localizedDescription)
             }
         }
+    }
+    
+    func verifyEmailCode(inputCode: String) {
+        if inputCode == self.verificationCode {
+            self.onEmailVerificationCodeVerified?("인증코드가 확인되었습니다.")
+        } else {
+            self.onSignUpFailure?("인증코드가 일치하지 않습니다.")
+        }
+    }
+    
+    private func isValidID(_ id: String) -> Bool {
+        return false
+    }
+    
+    private func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
+    }
 }
