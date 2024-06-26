@@ -17,8 +17,8 @@ class SendEmailVerificationCodeUseCaseImpl: SendEmailVerificationCodeUseCase {
     func execute(email: String, completion: @escaping (Result<Bool, Error>) -> Void) {
         userRepository.sendEmailVerificationCode(email: email) { result in
             switch result {
-            case .success(let response):
-                completion(.success(response.isSent))
+            case .success:
+                completion(.success(true))
             case .failure(let error):
                 completion(.failure(error))
             }
