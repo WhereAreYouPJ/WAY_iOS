@@ -35,6 +35,15 @@ class SignUpFormViewController: UIViewController {
         signUpView.userIDCheckButton.addTarget(self, action: #selector(duplicateCheckButtonTapped), for: .touchUpInside)
         signUpView.emailCheckButton.addTarget(self, action: #selector(authRequestButtonTapped), for: .touchUpInside)
         signUpView.authCheckButton.addTarget(self, action: #selector(authCheckButtonTapped), for: .touchUpInside)
+        
+        // 텍스트 필드 변경 감지
+        signUpView.userNameTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        signUpView.userIDTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        signUpView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        signUpView.checkPasswordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        signUpView.emailTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        signUpView.authCodeTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        
     }
     
     private func setupViewModel() {
@@ -60,29 +69,31 @@ class SignUpFormViewController: UIViewController {
         }
         
         // 회원 가입 실패 시 콜백 처리
-        viewModel.onUserIDAvailabilityChecked = { [weak self] message, isAvailable in
+        viewModel.onSignUpFailure = { [weak self] message in
             DispatchQueue.main.async {
-                self?.signUpView.userIDErrorLabel.text = message
-                self?.signUpView.userIDErrorLabel.textColor = isAvailable ? .brandColor : .warningColor
-                self?.signUpView.userIDTextField.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
+                self?.showAlert(title: "로그인 실패", message: message)
             }
         }
         
         // 아이디 중복 확인 결과 처리
-            viewModel.onUserIDAvailabilityChecked = { [weak self] message, isAvailable in
-                DispatchQueue.main.async {
-                    self?.signUpView.userIDErrorLabel.text = message
-                    self?.signUpView.userIDErrorLabel.textColor = isAvailable ? .brandColor : .warningColor
-                }
+        viewModel.onUserIDAvailabilityChecked = { [weak self] message, isAvailable in
+            DispatchQueue.main.async {
+                self?.signUpView.userIDErrorLabel.text = message
+                self?.signUpView.userIDErrorLabel.textColor = isAvailable ? .brandColor : .warningColor
             }
+        }
         
         // 이메일 형식 오류 처리
         viewModel.onEmailFormatError = { [weak self] message in
             DispatchQueue.main.async {
                 self?.signUpView.emailErrorLabel.text = message
                 self?.signUpView.emailErrorLabel.textColor = .warningColor
+                self?.signUpView.authStack.isHidden = true
             }
         }
+        
+        
+        
     }
     
     // MARK: - Selectors
@@ -121,7 +132,7 @@ class SignUpFormViewController: UIViewController {
     
     @objc func authRequestButtonTapped() {
         guard let email = signUpView.emailTextField.text, !email.isEmpty else {
-            signUpView.emailErrorLabel.text = "이메일 형식에 맞지 않습니다."
+            signUpView.emailErrorLabel.text = "이메일 형식에 알맞지 않습니다."
             return
         }
         // 여기에 signUpView.authCheckStack.isHidden = false로 설정하고 api 넣기
@@ -147,4 +158,10 @@ class SignUpFormViewController: UIViewController {
         navigationController?.pushViewController(controller, animated: true)
     }
     
+    
+    private func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alertController, animated: true)
+    }
 }

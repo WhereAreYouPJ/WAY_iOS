@@ -41,9 +41,11 @@ class APIService: APIServiceProtocol {
     func checkUserIDAvailability(userID: String, completion: @escaping (Result<CheckAvailabilityResponseModel, any Error>) -> Void) {
         let url = "\(baseURL)/member/checkID"
         
-        let parameters: [String: Any] = ["userID": userID]
+        let parameters: [String: Any] = [
+            "userID": userID
+        ]
         
-        AF.request(url, method: .get, parameters: parameters, encoding: JSONEncoding.default)
+        AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default)
             .responseDecodable(of: CheckAvailabilityResponseModel.self) { response in
                 switch response.result {
                 case .success(let availabilityResponse):

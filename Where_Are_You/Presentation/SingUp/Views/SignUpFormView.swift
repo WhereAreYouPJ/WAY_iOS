@@ -40,6 +40,7 @@ class SignUpFormView: UIView {
     let userIDErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .warningColor
+        label.numberOfLines = 0
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
         label.adjustsFontForContentSizeCategory = true
         return label
@@ -52,6 +53,7 @@ class SignUpFormView: UIView {
     let passwordErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .warningColor
+        label.numberOfLines = 0
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
         label.adjustsFontForContentSizeCategory = true
         return label
@@ -62,6 +64,7 @@ class SignUpFormView: UIView {
     let checkPasswordErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .warningColor
+        label.numberOfLines = 0
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
         label.adjustsFontForContentSizeCategory = true
         return label
@@ -76,6 +79,7 @@ class SignUpFormView: UIView {
     let emailErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .warningColor
+        label.numberOfLines = 0
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
         label.adjustsFontForContentSizeCategory = true
         return label
@@ -90,6 +94,7 @@ class SignUpFormView: UIView {
     let authCodeErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .warningColor
+        label.numberOfLines = 0
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
         label.adjustsFontForContentSizeCategory = true
         return label
