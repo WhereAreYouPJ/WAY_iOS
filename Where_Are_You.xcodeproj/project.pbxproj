@@ -50,6 +50,7 @@
 		99C9B2522C022DE3008D7CBD /* AccountLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2512C022DE3008D7CBD /* AccountLoginController.swift */; };
 		99D11EB12C06F56F006BE265 /* Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D11EB02C06F56F006BE265 /* Custom.swift */; };
 		99E755512C22E66F0016A0A6 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E755502C22E66F0016A0A6 /* APIService.swift */; };
+		99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */; };
 		99EC20AB2C0D9D9D0018904D /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20AA2C0D9D9D0018904D /* SignUpViewModel.swift */; };
 		99EC20AD2C0D9DB50018904D /* FindAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20AC2C0D9DB50018904D /* FindAccountViewModel.swift */; };
 		99EC78CE2C11DBA5007C4415 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC78CD2C11DBA5007C4415 /* ResetPasswordViewController.swift */; };
@@ -111,6 +112,7 @@
 		99C9B2512C022DE3008D7CBD /* AccountLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLoginController.swift; sourceTree = "<group>"; };
 		99D11EB02C06F56F006BE265 /* Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Custom.swift; sourceTree = "<group>"; };
 		99E755502C22E66F0016A0A6 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
 		99EC20AA2C0D9D9D0018904D /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		99EC20AC2C0D9DB50018904D /* FindAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindAccountViewModel.swift; sourceTree = "<group>"; };
 		99EC78CD2C11DBA5007C4415 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				990F57A92C28032300F6E1AD /* CheckAvailabilityRequestModel.swift */,
 				990F57AF2C28044100F6E1AD /* CheckAvailabilityResponseModel.swift */,
 				990F57AB2C2803DB00F6E1AD /* EmailVerificationResponseModel.swift */,
+				99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -588,6 +591,7 @@
 				990F57A32C27F9FE00F6E1AD /* CheckEmailAvailabilityUseCase.swift in Sources */,
 				9953583D2C00C555005BF799 /* AppDelegate.swift in Sources */,
 				99C9B2422C01CE4C008D7CBD /* AccountLoginViewModel.swift in Sources */,
+				99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */,
 				990F579F2C27F86A00F6E1AD /* CheckUserIDAvailabilityUseCase.swift in Sources */,
 				99F78F172C09B10D004C0C72 /* SearchAccountOptionsView.swift in Sources */,
 				99B397852C0C41D300D7A109 /* CheckIDViewController.swift in Sources */,

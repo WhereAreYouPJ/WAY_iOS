@@ -48,8 +48,8 @@ class APIService: APIServiceProtocol {
         AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default)
             .responseDecodable(of: CheckAvailabilityResponseModel.self) { response in
                 switch response.result {
-                case .success(let availabilityResponse):
-                    completion(.success(availabilityResponse))
+                case .success(let data):
+                    completion(.success(data))
                 case .failure(let error):
                     completion(.failure(error))
                 }

@@ -14,5 +14,11 @@ struct CheckAvailabilityResponseModel: Decodable {
 }
 
 struct CheckAvailabilityData: Decodable {
-    let isAvailable: Bool
+    let userID: String
+    let email: String
+    
+    enum CodingKeys: String, CodingKey {
+        case userID = "userId"
+        case email = "email"
+    }
 }

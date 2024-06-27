@@ -18,7 +18,7 @@ class CheckUserIDAvailabilityUseCaseImpl: CheckUserIDAvailabilityUseCase {
         userRepository.checkUserIDAvailability(userID: userID) { result in
             switch result {
             case .success(let response):
-                completion(.success(response.data.isAvailable))
+                completion(.success(response.data))
             case .failure(let error):
                 completion(.failure(error))
             }
