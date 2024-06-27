@@ -35,6 +35,10 @@ class SignUpFormViewController: UIViewController {
         signUpView.userIDCheckButton.addTarget(self, action: #selector(duplicateCheckButtonTapped), for: .touchUpInside)
         signUpView.emailCheckButton.addTarget(self, action: #selector(authRequestButtonTapped), for: .touchUpInside)
         signUpView.authCheckButton.addTarget(self, action: #selector(authCheckButtonTapped), for: .touchUpInside)
+        
+        // 텍스트 필드 변경 감지
+        signUpView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        signUpView.checkPasswordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     private func setupViewModel() {
@@ -81,6 +85,24 @@ class SignUpFormViewController: UIViewController {
             }
         }
         
+        // 비밀번호 형식 오류 처리
+        viewModel.onPasswordFormatError = { [weak self] message in
+            DispatchQueue.main.async {
+                self?.signUpView.passwordErrorLabel.text = message
+                self?.signUpView.passwordErrorLabel.textColor = message == "사용가능한 비밀번호입니다." ? .brandColor : .warningColor
+                self?.signUpView.passwordTextField.layer.borderColor = message == "사용가능한 비밀번호입니다." ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
+            }
+        }
+        
+        // 비밀번호 일치 오류 처리
+        viewModel.onCheckPasswordFormatError = { [weak self] message in
+            DispatchQueue.main.async {
+                self?.signUpView.checkPasswordErrorLabel.text = message
+                self?.signUpView.checkPasswordErrorLabel.textColor = message == "비밀번호가 일치힙니다." ? .brandColor : .warningColor
+                self?.signUpView.checkPasswordTextField.layer.borderColor = message == "비밀번호가 일치힙니다." ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
+            }
+        }
+        
         // 이메일 형식 오류 처리
         viewModel.onEmailFormatError = { [weak self] message in
             DispatchQueue.main.async {
@@ -106,14 +128,6 @@ class SignUpFormViewController: UIViewController {
             }
         }
         
-        // 비밀번호 형식 오류 처리
-        viewModel.onPasswordFormatError = { [weak self] message in
-            DispatchQueue.main.async {
-                self?.signUpView.passwordErrorLabel.text = message
-                self?.signUpView.passwordErrorLabel.textColor = .warningColor
-            }
-        }
-        
         // 타이머 업데이트 처리 - 수정된 부분
         viewModel.onUpdateTimer = { [weak self] timeString in
             DispatchQueue.main.async {
@@ -123,6 +137,21 @@ class SignUpFormViewController: UIViewController {
     }
     
     // MARK: - Selectors
+    
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        guard let pw = signUpView.passwordTextField.text else { return }
+        guard let checkpw = signUpView.checkPasswordTextField.text else { return }
+        
+        switch textField {
+        case signUpView.passwordTextField:
+            viewModel.checkPasswordAvailability(password: pw)
+        case signUpView.checkPasswordTextField:
+            viewModel.checkSamePassword(password: pw, checkPassword: checkpw)
+        default:
+            break
+        }
+    }
+    
     @objc func backButtonTapped() {
         dismiss(animated: true)
     }
@@ -140,6 +169,7 @@ class SignUpFormViewController: UIViewController {
     }
     
     @objc func startButtonTapped() {
+        print("시작하기 눌림")
         viewModel.signUp()
     }
     

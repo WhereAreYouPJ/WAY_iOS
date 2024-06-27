@@ -10,7 +10,6 @@ import Foundation
 class SignUpViewModel {
     
     // MARK: - Properties
-    
     private let signUpUseCase: SignUpUseCase
     private let checkUserIDAvailabilityUseCase: CheckUserIDAvailabilityUseCase
     private let checkEmailAvailabilityUseCase: CheckEmailAvailabilityUseCase
@@ -22,7 +21,6 @@ class SignUpViewModel {
     var password: String = ""
     var confirmPassword: String = ""
     var email: String = ""
-//    var verificationCode: String = ""
     
     // Output
     var onSignUpSuccess: (() -> Void)?
@@ -35,12 +33,13 @@ class SignUpViewModel {
     
     var onUserIDFormatError: ((String) -> Void)?
     var onPasswordFormatError: ((String) -> Void)?
+    var onCheckPasswordFormatError: ((String) -> Void)?
     var onEmailFormatError: ((String) -> Void)?
     var onShowVerificationCodeField: (() -> Void)?
+    var onUpdateTimer: ((String) -> Void)?
     
     private var timer: Timer?
     private var timerCount: Int = 300
-    var onUpdateTimer: ((String) -> Void)?
 
     // MARK: - LifeCycle
     
@@ -59,15 +58,6 @@ class SignUpViewModel {
     // MARK: - Helpers(로그인, 아이디, 이메일, 코드확인)
     
     func signUp() {
-        guard isValidPassword(password) else {
-            onPasswordFormatError?("영문 대문자, 소문자로 시작하는 6~20자의 영문 대문자, 소문자, 숫자를 포함해 입력해주세요.")
-            return
-        }
-        
-        guard password == confirmPassword else {
-            onSignUpFailure?("패스워드가 일치하지 않습니다.")
-            return
-        }
         
         user.password = confirmPassword
         signUpUseCase.execute(request: user) { result in
@@ -98,6 +88,22 @@ class SignUpViewModel {
             case .failure(let error):
                 self.onUserIDAvailabilityChecked?(error.localizedDescription, false)
             }
+        }
+    }
+    
+    func checkPasswordAvailability(password: String) {
+        if isValidPassword(password) {
+            onPasswordFormatError?("사용가능한 비밀번호입니다.")
+        } else {
+            onPasswordFormatError?("영문 대문자, 소문자로 시작하는 6~20자의 영문 대문자, 소문자, 숫자를 포함해 입력해주세요.")
+        }
+    }
+    
+    func checkSamePassword(password: String, checkPassword: String) {
+        if isPasswordSame(password, checkpw: checkPassword) {
+            onCheckPasswordFormatError?("비밀번호가 일치힙니다.")
+        } else {
+            onCheckPasswordFormatError?("비밀번호가 일치하지 않습니다.")
         }
     }
     
@@ -171,19 +177,23 @@ class SignUpViewModel {
     
     // MARK: - 아이디, 비밀번호, 이메일 형식 조건
     
-    private func isValidUserID(_ userID: String) -> Bool {
+    func isValidUserID(_ userID: String) -> Bool {
         let idRegex = "^[a-z][a-z0-9]{4,11}$"
         let userIDPred = NSPredicate(format: "SELF MATCHES %@", idRegex)
         return userIDPred.evaluate(with: userID)
     }
     
-    private func isValidPassword(_ pw: String) -> Bool {
+    func isValidPassword(_ pw: String) -> Bool {
         let pwRegex = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=-]).{6,20}$"
         let pwPred = NSPredicate(format: "SELF MATCHES %@", pwRegex)
         return pwPred.evaluate(with: pw)
     }
     
-    private func isValidEmail(_ email: String) -> Bool {
+    func isPasswordSame(_ pw: String, checkpw: String) -> Bool {
+        return pw == checkpw
+    }
+    
+    func isValidEmail(_ email: String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let emailPred = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
         return emailPred.evaluate(with: email)
