@@ -8,9 +8,18 @@
 import Foundation
 
 protocol VerifyEmailCodeUseCase {
-    
+    func execute(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void)
+
 }
 
-class VerifyEmailCodeUseCaseImpl {
-    
+class VerifyEmailCodeUseCaseImpl: VerifyEmailCodeUseCase {
+    private let repository: UserRepository
+        
+        init(repository: UserRepository) {
+            self.repository = repository
+        }
+        
+        func execute(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void) {
+            repository.verifyEmailCode(email: email, code: code, completion: completion)
+        }
 }

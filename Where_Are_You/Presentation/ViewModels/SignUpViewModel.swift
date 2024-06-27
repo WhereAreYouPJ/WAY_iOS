@@ -21,6 +21,8 @@ class SignUpViewModel {
     // Input
     var password: String = ""
     var confirmPassword: String = ""
+    var email: String = ""
+//    var verificationCode: String = ""
     
     // Output
     var onSignUpSuccess: (() -> Void)?
@@ -125,6 +127,7 @@ class SignUpViewModel {
             switch result {
             case .success:
                 self.onEmailVerificationCodeSent?("인증코드가 전송되었습니다.")
+                self.email = email
             case .failure(let error):
                 self.onSignUpFailure?(error.localizedDescription)
             }
@@ -132,11 +135,11 @@ class SignUpViewModel {
     }
     
     // 이 부분을 apiservice를 통해 하는걸로 추가해야함
-    func verifyEmailCode(email: String, inputCode: String) {
+    func verifyEmailCode(inputCode: String) {
         verifyEmailCodeUseCase.execute(email: email, code: inputCode) { result in
             switch result {
             case .success:
-                self.user.email = email
+                self.user.email = self.email
                 self.onEmailVerificationCodeVerified?("인증코드가 확인되었습니다.")
             case .failure(let error):
                 self.onSignUpFailure?(error.localizedDescription)

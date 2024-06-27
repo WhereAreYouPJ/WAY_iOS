@@ -35,15 +35,6 @@ class SignUpFormViewController: UIViewController {
         signUpView.userIDCheckButton.addTarget(self, action: #selector(duplicateCheckButtonTapped), for: .touchUpInside)
         signUpView.emailCheckButton.addTarget(self, action: #selector(authRequestButtonTapped), for: .touchUpInside)
         signUpView.authCheckButton.addTarget(self, action: #selector(authCheckButtonTapped), for: .touchUpInside)
-        
-        // 텍스트 필드 변경 감지
-        signUpView.userNameTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        signUpView.userIDTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        signUpView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        signUpView.checkPasswordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        signUpView.emailTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        signUpView.authCodeTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        
     }
     
     private func setupViewModel() {
@@ -53,14 +44,18 @@ class SignUpFormViewController: UIViewController {
         let checkUserIDAvailabilityUseCase = CheckUserIDAvailabilityUseCaseImpl(userRepository: userRepository)
         let checkEmailAvailabilityUseCase = CheckEmailAvailabilityUseCaseImpl(userRepository: userRepository)
         let sendEmailVerificationCodeUseCase = SendEmailVerificationCodeUseCaseImpl(userRepository: userRepository)
-        viewModel = SignUpViewModel(signUpUseCase: signUpUseCase,
-                                    checkUserIDAvailabilityUseCase: checkUserIDAvailabilityUseCase,
-                                    checkEmailAvailabilityUseCase: checkEmailAvailabilityUseCase,
-                                    sendEmailVerificationCodeUseCase: sendEmailVerificationCodeUseCase)
+        let verifyEmailCodeUseCase = VerifyEmailCodeUseCaseImpl(repository: userRepository)
+        
+        viewModel = SignUpViewModel(
+            signUpUseCase: signUpUseCase,
+            checkUserIDAvailabilityUseCase: checkUserIDAvailabilityUseCase,
+            checkEmailAvailabilityUseCase: checkEmailAvailabilityUseCase,
+            sendEmailVerificationCodeUseCase: sendEmailVerificationCodeUseCase,
+            verifyEmailCodeUseCase: verifyEmailCodeUseCase
+        )
     }
     
     private func setupBindings() {
-        
         // 회원 가입 성공 시 콜백 처리
         viewModel.onSignUpSuccess = { [weak self] in
             DispatchQueue.main.async {
@@ -71,7 +66,7 @@ class SignUpFormViewController: UIViewController {
         // 회원 가입 실패 시 콜백 처리
         viewModel.onSignUpFailure = { [weak self] message in
             DispatchQueue.main.async {
-                self?.showAlert(title: "로그인 실패", message: message)
+                self?.showAlert(title: "회원가입 실패", message: message)
             }
         }
         
@@ -80,6 +75,9 @@ class SignUpFormViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.signUpView.userIDErrorLabel.text = message
                 self?.signUpView.userIDErrorLabel.textColor = isAvailable ? .brandColor : .warningColor
+                if isAvailable {
+                    self?.viewModel.user.userID = self?.signUpView.userIDTextField.text
+                }
             }
         }
         
@@ -101,17 +99,10 @@ class SignUpFormViewController: UIViewController {
             }
         }
         
-        // 이메일 인증 코드 전송 완료 처리
-        viewModel.onEmailVerificationCodeSent = { [weak self] message in
-            DispatchQueue.main.async {
-                self?.showAlert(title: "Email Verification", message: message)
-            }
-        }
-        
         // 이메일 인증 코드 확인 결과 처리
         viewModel.onEmailVerificationCodeVerified = { [weak self] message in
             DispatchQueue.main.async {
-                self?.showAlert(title: "Verification", message: message)
+                self?.signUpView.authCodeErrorLabel.text = message
             }
         }
         
@@ -132,64 +123,30 @@ class SignUpFormViewController: UIViewController {
     }
     
     // MARK: - Selectors
-    @objc private func textFieldDidChange(_ textField: UITextField) {
-        switch textField {
-        case signUpView.userNameTextField:
-            viewModel.userName = textField.text ?? ""
-        case signUpView.userIDTextField:
-            viewModel.userID = textField.text ?? ""
-        case signUpView.passwordTextField:
-            viewModel.password = textField.text ?? ""
-        case signUpView.checkPasswordTextField:
-            viewModel.confirmPassword = textField.text ?? ""
-        case signUpView.emailTextField:
-            viewModel.email = textField.text ?? ""
-        case signUpView.authCodeTextField:
-            viewModel.verificationCode = textField.text ?? ""
-        default:
-            break
-        }
-    }
-    
     @objc func backButtonTapped() {
         dismiss(animated: true)
     }
     
     @objc private func duplicateCheckButtonTapped() {
-        guard let userID = signUpView.userIDTextField.text, !userID.isEmpty else {
-            // 아이디가 비어있을 때 알림
-            signUpView.userIDErrorLabel.text = "영문 소문자와 숫자만 사용하여, 영문 소문자로 시작하는 5~12자의 아이디를 입력해주세요"
-            return
-        }
-        viewModel.checkUserIDAvailability()
+        viewModel.checkUserIDAvailability(userID: signUpView.userIDTextField.text ?? "")
     }
     
     @objc func authRequestButtonTapped() {
-        guard let email = signUpView.emailTextField.text, !email.isEmpty else {
-            signUpView.emailErrorLabel.text = "이메일 형식에 알맞지 않습니다."
-            return
-        }
-        viewModel.checkEmailAvailability()
+        viewModel.checkEmailAvailability(email: signUpView.emailTextField.text ?? "")
     }
     
     @objc func authCheckButtonTapped() {
-        guard let code = signUpView.authCodeTextField.text, !code.isEmpty else {
-            signUpView.authCodeErrorLabel.text = "인증코드가 알맞지 않습니다."
-            return
-        }
-        viewModel.verifyEmailCode(inputCode: code)
+        viewModel.verifyEmailCode(inputCode: signUpView.authCodeTextField.text ?? "")
     }
     
     @objc func startButtonTapped() {
         viewModel.signUp()
-        
     }
     
     private func navigateToNextScreen() {
         let controller = FinishRegisterViewController()
         navigationController?.pushViewController(controller, animated: true)
     }
-    
     
     private func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)

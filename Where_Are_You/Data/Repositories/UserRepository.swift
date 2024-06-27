@@ -12,6 +12,7 @@ protocol UserRepositoryProtocol {
     func checkUserIDAvailability(userID: String, completion: @escaping (Result<GenericResponse<CheckDuplicateUserID>, Error>) -> Void)
     func checkEmailAvailability(email: String, completion: @escaping (Result<GenericResponse<CheckDuplicateEmail>, Error>) -> Void)
     func sendEmailVerificationCode(email: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class UserRepository: UserRepositoryProtocol {
@@ -36,4 +37,8 @@ class UserRepository: UserRepositoryProtocol {
     func sendEmailVerificationCode(email: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         apiService.sendEmailVerificationCode(email: email, completion: completion)
     }
+    
+    func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+            apiService.verifyEmailCode(email: email, code: code, completion: completion)
+        }
 }
