@@ -8,9 +8,9 @@
 import Alamofire
 
 protocol APIServiceProtocol {
-    func signUp(request: SignUpRequestModel, completion: @escaping (Result<SignUpResponseModel, Error>) -> Void)
-    func checkUserIDAvailability(userID: String, completion: @escaping (Result<CheckAvailabilityResponseModel, Error>) -> Void)
-    func checkEmailAvailability(email: String, completion: @escaping (Result<CheckAvailabilityResponseModel, Error>) -> Void)
+    func signUp(request: User, completion: @escaping (Result<GenericResponse<SignUp>, Error>) -> Void)
+    func checkUserIDAvailability(userID: String, completion: @escaping (Result<GenericResponse<CheckDuplicateUserID>, Error>) -> Void)
+    func checkEmailAvailability(email: String, completion: @escaping (Result<GenericResponse<CheckDuplicateEmail>, Error>) -> Void)
 //    func sendEmailVerificationCode(email: String, completion: @escaping (Result<EmailVerificationResponseModel, Error>) -> Void)
     func sendEmailVerificationCode(email: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
@@ -19,7 +19,7 @@ class APIService: APIServiceProtocol {
     
     private let baseURL = "https://wlrmadjel.com/v1"
     
-    func signUp(request: SignUpRequestModel, completion: @escaping (Result<SignUpResponseModel, any Error>) -> Void) {
+    func signUp(request: User, completion: @escaping (Result<GenericResponse<SignUp>, any Error>) -> Void) {
         let url = "\(baseURL)/member"
         
         let parameters: [String: Any] = [
@@ -30,7 +30,7 @@ class APIService: APIServiceProtocol {
         ]
         
         AF.request(url, method: .post, encoding: JSONEncoding.default)
-            .responseDecodable(of: SignUpResponseModel.self) { response in
+            .responseDecodable(of: GenericResponse<SignUp>.self) { response in
                 switch response.result {
                 case.success(let data):
                     completion(.success(data))
@@ -40,13 +40,13 @@ class APIService: APIServiceProtocol {
             }
     }
     
-    func checkUserIDAvailability(userID: String, completion: @escaping (Result<CheckAvailabilityResponseModel, any Error>) -> Void) {
+    func checkUserIDAvailability(userID: String, completion: @escaping (Result<GenericResponse<CheckDuplicateUserID>, any Error>) -> Void) {
         let url = "\(baseURL)/member/checkID"
         
         let parameters: [String: Any] = ["userID": userID]
         
         AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default)
-            .responseDecodable(of: CheckAvailabilityResponseModel.self) { response in
+            .responseDecodable(of: GenericResponse<CheckDuplicateUserID>.self) { response in
                 switch response.result {
                 case .success(let data):
                     completion(.success(data))
@@ -56,16 +56,16 @@ class APIService: APIServiceProtocol {
             }
     }
     
-    func checkEmailAvailability(email: String, completion: @escaping (Result<CheckAvailabilityResponseModel, any Error>) -> Void) {
+    func checkEmailAvailability(email: String, completion: @escaping (Result<GenericResponse<CheckDuplicateEmail>, any Error>) -> Void) {
         let url = "\(baseURL)/member/checkEmail"
         
         let parameters: [String: Any] = ["email": email]
         
         AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default)
-            .responseDecodable(of: CheckAvailabilityResponseModel.self) { response in
+            .responseDecodable(of: GenericResponse<CheckDuplicateEmail>.self) { response in
                 switch response.result {
-                case .success(let availabilityResponse):
-                    completion(.success(availabilityResponse))
+                case .success(let data):
+                    completion(.success(data))
                 case .failure(let error):
                     completion(.failure(error))
                 }

@@ -8,5 +8,17 @@
 import Foundation
 
 protocol SignUpUseCase {
-    func execute(request: SignUpRequestModel, completion: @escaping (Result<SignUpResponseModel, Error>) -> Void)
+    func execute(request: User, completion: @escaping (Result<GenericResponse<SignUp>, Error>) -> Void)
+}
+
+class SignUpUseCaseImpl: SignUpUseCase {
+    private let userRepository: UserRepositoryProtocol
+    
+    init(userRepository: UserRepositoryProtocol) {
+        self.userRepository = userRepository
+    }
+    
+    func execute(request: User, completion: @escaping (Result<GenericResponse<SignUp>, any Error>) -> Void) {
+        userRepository.signUp(request: request, completion: completion)
+    }
 }

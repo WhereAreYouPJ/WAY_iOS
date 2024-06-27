@@ -10,3 +10,22 @@ import Foundation
 protocol SendEmailVerificationCodeUseCase {
     func execute(email: String, completion: @escaping (Result<Bool, Error>) -> Void)
 }
+
+class SendEmailVerificationCodeUseCaseImpl: SendEmailVerificationCodeUseCase {
+    private let userRepository: UserRepositoryProtocol
+    
+    init(userRepository: UserRepositoryProtocol) {
+        self.userRepository = userRepository
+    }
+    
+    func execute(email: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        userRepository.sendEmailVerificationCode(email: email) { result in
+            switch result {
+            case .success:
+                completion(.success(true))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+}

@@ -8,5 +8,17 @@
 import Foundation
 
 protocol CheckEmailAvailabilityUseCase {
-    func execute(email: String, completion: @escaping ( Result<Bool, Error>) -> Void)
+    func execute(email: String, completion: @escaping ( Result<GenericResponse<CheckDuplicateEmail>, Error>) -> Void)
+}
+
+class CheckEmailAvailabilityUseCaseImpl: CheckEmailAvailabilityUseCase {
+    private let userRepository: UserRepositoryProtocol
+    
+    init(userRepository: UserRepositoryProtocol) {
+        self.userRepository = userRepository
+    }
+    
+    func execute(email: String, completion: @escaping (Result<GenericResponse<CheckDuplicateEmail>, any Error>) -> Void) {
+        userRepository.checkEmailAvailability(email: email, completion: completion)
+    }
 }

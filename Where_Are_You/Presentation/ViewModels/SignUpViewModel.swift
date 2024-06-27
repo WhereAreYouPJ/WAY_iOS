@@ -15,14 +15,12 @@ class SignUpViewModel {
     private let checkUserIDAvailabilityUseCase: CheckUserIDAvailabilityUseCase
     private let checkEmailAvailabilityUseCase: CheckEmailAvailabilityUseCase
     private let sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase
+    private let verifyEmailCodeUseCase: VerifyEmailCodeUseCase
+    var user = User()
     
     // Input
-    var userName: String = ""
-    var userID: String = ""
     var password: String = ""
     var confirmPassword: String = ""
-    var email: String = ""
-    var verificationCode: String = ""
     
     // Output
     var onSignUpSuccess: (() -> Void)?
@@ -30,7 +28,6 @@ class SignUpViewModel {
     
     var onUserIDAvailabilityChecked: ((String, Bool) -> Void)?
     var onEmailAvailabilityChecked: ((String) -> Void)?
-    
     var onEmailVerificationCodeSent: ((String) -> Void)?
     var onEmailVerificationCodeVerified: ((String) -> Void)?
     
@@ -48,28 +45,30 @@ class SignUpViewModel {
     init(signUpUseCase: SignUpUseCase,
          checkUserIDAvailabilityUseCase: CheckUserIDAvailabilityUseCase,
          checkEmailAvailabilityUseCase: CheckEmailAvailabilityUseCase,
-         sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase) {
+         sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase,
+         verifyEmailCodeUseCase: VerifyEmailCodeUseCase) {
         self.signUpUseCase = signUpUseCase
         self.checkUserIDAvailabilityUseCase = checkUserIDAvailabilityUseCase
         self.checkEmailAvailabilityUseCase = checkEmailAvailabilityUseCase
         self.sendEmailVerificationCodeUseCase = sendEmailVerificationCodeUseCase
+        self.verifyEmailCodeUseCase = verifyEmailCodeUseCase
     }
     
     // MARK: - Helpers(로그인, 아이디, 이메일, 코드확인)
     
     func signUp() {
-        guard password == confirmPassword else {
-            onSignUpFailure?("패스워드가 일치하지 않습니다.")
-            return
-        }
-        
         guard isValidPassword(password) else {
             onPasswordFormatError?("영문 대문자, 소문자로 시작하는 6~20자의 영문 대문자, 소문자, 숫자를 포함해 입력해주세요.")
             return
         }
         
-        let request = SignUpRequestModel(userName: userName, userID: userID, password: password, email: email)
-        signUpUseCase.execute(request: request) { result in
+        guard password == confirmPassword else {
+            onSignUpFailure?("패스워드가 일치하지 않습니다.")
+            return
+        }
+        
+        user.password = confirmPassword
+        signUpUseCase.execute(request: user) { result in
             switch result {
             case .success:
                 self.onSignUpSuccess?()
@@ -79,7 +78,7 @@ class SignUpViewModel {
         }
     }
     
-    func checkUserIDAvailability() {
+    func checkUserIDAvailability(userID: String) {
         guard isValidUserID(userID) else {
             onUserIDFormatError?("영문 소문자와 숫자만 사용하여, 영문 소문자로 시작하는 5~12자의 아이디를 입력해주세요")
             return
@@ -87,16 +86,20 @@ class SignUpViewModel {
         
         checkUserIDAvailabilityUseCase.execute(userID: userID) { result in
             switch result {
-            case .success(let isAvailable):
-                let message = isAvailable ? "사용가능한 아이디입니다." : "중복된 아이디입니다."
-                self.onUserIDAvailabilityChecked?(message, isAvailable)
+            case .success(let data):
+                if data.isSuccess {
+                    self.user.userID = userID
+                    self.onUserIDAvailabilityChecked?("사용가능한 아이디입니다.", true)
+                } else {
+                    self.onUserIDAvailabilityChecked?("중복된 아이디입니다.", false)
+                }
             case .failure(let error):
                 self.onUserIDAvailabilityChecked?(error.localizedDescription, false)
             }
         }
     }
     
-    func checkEmailAvailability() {
+    func checkEmailAvailability(email: String) {
         guard isValidEmail(email) else {
             onEmailFormatError?("유효하지 않은 이메일 형식입니다.")
             return
@@ -104,10 +107,10 @@ class SignUpViewModel {
         
         checkEmailAvailabilityUseCase.execute(email: email) { result in
             switch result {
-            case .success(let isAvailable):
-                if isAvailable {
+            case .success(let data):
+                if data.isSuccess {
                     self.onShowVerificationCodeField?()
-                    self.sendEmailVerificationCode()
+                    self.sendEmailVerificationCode(email: email)
                 } else {
                     self.onEmailAvailabilityChecked?("중복된 이메일입니다.")
                 }
@@ -117,7 +120,7 @@ class SignUpViewModel {
         }
     }
     
-    func sendEmailVerificationCode() {
+    func sendEmailVerificationCode(email: String) {
         sendEmailVerificationCodeUseCase.execute(email: email) { result in
             switch result {
             case .success:
@@ -129,11 +132,15 @@ class SignUpViewModel {
     }
     
     // 이 부분을 apiservice를 통해 하는걸로 추가해야함
-    func verifyEmailCode(inputCode: String) {
-        if inputCode == self.verificationCode {
-            self.onEmailVerificationCodeVerified?("인증코드가 확인되었습니다.")
-        } else {
-            self.onSignUpFailure?("인증코드가 일치하지 않습니다.")
+    func verifyEmailCode(email: String, inputCode: String) {
+        verifyEmailCodeUseCase.execute(email: email, code: inputCode) { result in
+            switch result {
+            case .success:
+                self.user.email = email
+                self.onEmailVerificationCodeVerified?("인증코드가 확인되었습니다.")
+            case .failure(let error):
+                self.onSignUpFailure?(error.localizedDescription)
+            }
         }
     }
     

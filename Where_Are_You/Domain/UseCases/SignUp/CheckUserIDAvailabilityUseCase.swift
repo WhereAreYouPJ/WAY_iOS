@@ -8,5 +8,17 @@
 import Foundation
 
 protocol CheckUserIDAvailabilityUseCase {
-    func execute(userID: String, completion: @escaping (Result<Bool, Error>) -> Void)
+    func execute(userID: String, completion: @escaping (Result<GenericResponse<CheckDuplicateUserID>, Error>) -> Void)
+}
+
+class CheckUserIDAvailabilityUseCaseImpl: CheckUserIDAvailabilityUseCase {
+    private let userRepository: UserRepositoryProtocol
+    
+    init(userRepository: UserRepositoryProtocol) {
+        self.userRepository = userRepository
+    }
+    
+    func execute(userID: String, completion: @escaping (Result<GenericResponse<CheckDuplicateUserID>, any Error>) -> Void) {
+        userRepository.checkUserIDAvailability(userID: userID, completion: completion)
+    }
 }
