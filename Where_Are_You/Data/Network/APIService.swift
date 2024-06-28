@@ -9,7 +9,7 @@ import Alamofire
 
 protocol APIServiceProtocol {
     func signUp(request: User, completion: @escaping (Result<GenericResponse<SignUp>, Error>) -> Void)
-    func checkUserIDAvailability(userID: String, completion: @escaping (Result<GenericResponse<CheckDuplicateUserID>, Error>) -> Void)
+    func checkUserIDAvailability(userId: String, completion: @escaping (Result<GenericResponse<CheckDuplicateUserID>, Error>) -> Void)
     func checkEmailAvailability(email: String, completion: @escaping (Result<GenericResponse<CheckDuplicateEmail>, Error>) -> Void)
     func sendEmailVerificationCode(email: String, completion: @escaping (Result<Void, Error>) -> Void)
     func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void)
@@ -23,12 +23,13 @@ class APIService: APIServiceProtocol {
         
         let parameters: [String: Any] = [
             "userName": request.userName,
-            "userID": request.userID,
+            "userId": request.userId,
             "password": request.password,
             "email": request.email
         ]
         
-        AF.request(url, method: .post, encoding: JSONEncoding.default)
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            .validate(statusCode: 200..<300)
             .responseDecodable(of: GenericResponse<SignUp>.self) { response in
                 switch response.result {
                 case.success(let data):
@@ -39,12 +40,13 @@ class APIService: APIServiceProtocol {
             }
     }
     
-    func checkUserIDAvailability(userID: String, completion: @escaping (Result<GenericResponse<CheckDuplicateUserID>, any Error>) -> Void) {
-        let url = "\(baseURL)/member/checkID"
+    func checkUserIDAvailability(userId: String, completion: @escaping (Result<GenericResponse<CheckDuplicateUserID>, any Error>) -> Void) {
+        let url = "\(baseURL)/member/checkId"
         
-        let parameters: [String: Any] = ["userID": userID]
+        let parameters: [String: Any] = ["userId": userId]
         
         AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default)
+            .validate(statusCode: 200..<300)
             .responseDecodable(of: GenericResponse<CheckDuplicateUserID>.self) { response in
                 switch response.result {
                 case .success(let data):
@@ -61,6 +63,7 @@ class APIService: APIServiceProtocol {
         let parameters: [String: Any] = ["email": email]
         
         AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default)
+            .validate(statusCode: 200..<300)
             .responseDecodable(of: GenericResponse<CheckDuplicateEmail>.self) { response in
                 switch response.result {
                 case .success(let data):
@@ -70,40 +73,40 @@ class APIService: APIServiceProtocol {
                 }
             }
     }
-
+    
     func sendEmailVerificationCode(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let url = "\(baseURL)/member/email/send"
-            let parameters: [String: Any] = ["email": email]
-            
-            AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
-                .responseDecodable(of: EmptyResponse.self) { response in
-                    switch response.result {
-                    case .success:
-                        completion(.success(()))
-                    case .failure(let error):
-                        completion(.failure(error))
-                    }
-                }
-        }
-    
-    func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void) {
-            let url = "\(baseURL)/member/email/verify"
-            let parameters: [String: Any] = ["email": email, "code": code]
-            
-            AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).response { response in
+        let parameters: [String: Any] = ["email": email]
+        
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            .responseDecodable(of: EmptyResponse.self) { response in
                 switch response.result {
                 case .success:
-                    if response.response?.statusCode == 200 {
-                        completion(.success(()))
-                    } else {
-                        let error = NSError(domain: "", code: response.response?.statusCode ?? -1, userInfo: [NSLocalizedDescriptionKey: "Email verification failed"])
-                        completion(.failure(error))
-                    }
+                    completion(.success(()))
                 case .failure(let error):
                     completion(.failure(error))
                 }
             }
+    }
+    
+    func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        let url = "\(baseURL)/member/email/verify"
+        let parameters: [String: Any] = ["email": email, "code": code]
+        
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).response { response in
+            switch response.result {
+            case .success:
+                if response.response?.statusCode == 200 {
+                    completion(.success(()))
+                } else {
+                    let error = NSError(domain: "", code: response.response?.statusCode ?? -1, userInfo: [NSLocalizedDescriptionKey: "Email verification failed"])
+                    completion(.failure(error))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
         }
+    }
 }
 
 struct EmptyResponse: Decodable {}

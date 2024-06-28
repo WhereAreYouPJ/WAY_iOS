@@ -40,7 +40,7 @@ class SignUpViewModel {
     
     private var timer: Timer?
     private var timerCount: Int = 300
-
+    
     // MARK: - LifeCycle
     
     init(signUpUseCase: SignUpUseCase,
@@ -70,17 +70,17 @@ class SignUpViewModel {
         }
     }
     
-    func checkUserIDAvailability(userID: String) {
-        guard isValidUserID(userID) else {
+    func checkUserIDAvailability(userId: String) {
+        guard isValidUserID(userId) else {
             onUserIDFormatError?("영문 소문자와 숫자만 사용하여, 영문 소문자로 시작하는 5~12자의 아이디를 입력해주세요")
             return
         }
         
-        checkUserIDAvailabilityUseCase.execute(userID: userID) { result in
+        checkUserIDAvailabilityUseCase.execute(userId: userId) { result in
             switch result {
             case .success(let data):
                 if data.isSuccess {
-                    self.user.userID = userID
+                    self.user.userId = userId
                     self.onUserIDAvailabilityChecked?("사용가능한 아이디입니다.", true)
                 } else {
                     self.onUserIDAvailabilityChecked?("중복된 아이디입니다.", false)

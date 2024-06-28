@@ -80,7 +80,7 @@ class SignUpFormViewController: UIViewController {
                 self?.signUpView.userIDErrorLabel.text = message
                 self?.signUpView.userIDErrorLabel.textColor = isAvailable ? .brandColor : .warningColor
                 if isAvailable {
-                    self?.viewModel.user.userID = self?.signUpView.userIDTextField.text
+                    self?.viewModel.user.userId = self?.signUpView.userIDTextField.text
                 }
             }
         }
@@ -157,7 +157,7 @@ class SignUpFormViewController: UIViewController {
     }
     
     @objc private func duplicateCheckButtonTapped() {
-        viewModel.checkUserIDAvailability(userID: signUpView.userIDTextField.text ?? "")
+        viewModel.checkUserIDAvailability(userId: signUpView.userIDTextField.text ?? "")
     }
     
     @objc func authRequestButtonTapped() {

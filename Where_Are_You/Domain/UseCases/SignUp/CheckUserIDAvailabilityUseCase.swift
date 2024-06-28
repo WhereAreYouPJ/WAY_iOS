@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CheckUserIDAvailabilityUseCase {
-    func execute(userID: String, completion: @escaping (Result<GenericResponse<CheckDuplicateUserID>, Error>) -> Void)
+    func execute(userId: String, completion: @escaping (Result<GenericResponse<CheckDuplicateUserID>, Error>) -> Void)
 }
 
 class CheckUserIDAvailabilityUseCaseImpl: CheckUserIDAvailabilityUseCase {
@@ -18,7 +18,7 @@ class CheckUserIDAvailabilityUseCaseImpl: CheckUserIDAvailabilityUseCase {
         self.userRepository = userRepository
     }
     
-    func execute(userID: String, completion: @escaping (Result<GenericResponse<CheckDuplicateUserID>, any Error>) -> Void) {
-        userRepository.checkUserIDAvailability(userID: userID, completion: completion)
+    func execute(userId: String, completion: @escaping (Result<GenericResponse<CheckDuplicateUserID>, any Error>) -> Void) {
+        userRepository.checkUserIDAvailability(userId: userId, completion: completion)
     }
 }
