@@ -13,8 +13,7 @@ class FinishResetPasswordViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(finisView)
-        finisView.frame = view.bounds
+        self.view = finisView
         
         configureNavigationBar(title: "비밀번호 찾기")
         buttonActions()

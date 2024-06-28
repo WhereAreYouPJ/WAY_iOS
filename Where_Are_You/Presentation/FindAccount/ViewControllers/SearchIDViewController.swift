@@ -16,8 +16,7 @@ class SearchIDViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(searchIDView)
-        searchIDView.frame = view.bounds
+        self.view = searchIDView
         configureNavigationBar(title: "아이디 찾기", backButtonAction: #selector(backButtonTapped))
         actionButton()
     }

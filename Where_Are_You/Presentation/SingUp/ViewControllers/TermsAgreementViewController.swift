@@ -17,8 +17,7 @@ class TermsAgreementViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(termsAgreementView)
-        termsAgreementView.frame = view.bounds
+        self.view = termsAgreementView
         
         configureNavigationBar(title: "회원가입", backButtonAction: #selector(backButtonTapped))
         

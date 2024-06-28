@@ -141,13 +141,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		990F579D2C27F7E000F6E1AD /* Auth */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Auth;
-			sourceTree = "<group>";
-		};
 		990F57A62C28028100F6E1AD /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
@@ -276,7 +269,6 @@
 		9953583B2C00C555005BF799 /* Where_Are_You */ = {
 			isa = PBXGroup;
 			children = (
-				990F579D2C27F7E000F6E1AD /* Auth */,
 				9953583C2C00C555005BF799 /* AppDelegate.swift */,
 				9953583E2C00C555005BF799 /* SceneDelegate.swift */,
 				99D11EBB2C07848B006BE265 /* Resources */,

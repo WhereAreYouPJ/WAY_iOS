@@ -13,6 +13,12 @@ import SnapKit
 // MARK: - 자주 사용하는 하단의 inputcontainer 버튼 한개
 class BottomButtonView: UIView {
     
+    let border: UIView = {
+        let view = UIView()
+        view.backgroundColor = .color221
+        return view
+    }()
+    
     var button = UIButton()
     
     init(title: String) {
@@ -25,10 +31,12 @@ class BottomButtonView: UIView {
     }
     
     func setupView(title: String) {
-        self.layer.borderColor = UIColor.color221.cgColor
-        self.layer.borderWidth = 1
-        self.snp.makeConstraints { make in
-            make.height.equalTo(220)
+        addSubview(border)
+        border.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.left.equalToSuperview()
+            make.height.equalTo(1)
         }
         
         button = CustomButton(title: title, backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
@@ -36,9 +44,10 @@ class BottomButtonView: UIView {
         addSubview(button)
         button.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(12)
+            make.top.equalTo(border.snp.bottom).offset(12)
             make.left.equalToSuperview().offset(15)
             make.height.equalTo(self.snp.width).multipliedBy(0.145)
+            make.bottom.equalToSuperview().inset(24)
         }
     }
 }

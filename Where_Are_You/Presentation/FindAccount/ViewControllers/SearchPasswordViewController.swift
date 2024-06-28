@@ -18,8 +18,7 @@ class SearchPasswordViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(searchPasswordView)
-        searchPasswordView.frame = view.bounds
+        self.view = searchPasswordView
         
         setupUI()
         configureNavigationBar(title: "비밀번호 찾기", backButtonAction: #selector(backButtonTapped))

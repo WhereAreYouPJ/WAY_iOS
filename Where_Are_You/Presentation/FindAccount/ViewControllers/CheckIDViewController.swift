@@ -15,8 +15,7 @@ class CheckIDViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(checkIDView)
-        checkIDView.frame = view.bounds
+        self.view = checkIDView
         
         buttonActions()
         configureNavigationBar(title: "아이디 찾기", showBackButton: false)

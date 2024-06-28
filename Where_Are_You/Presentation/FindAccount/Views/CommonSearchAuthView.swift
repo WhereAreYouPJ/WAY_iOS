@@ -114,8 +114,7 @@ class SearchAuthView: UIView {
         bottomButtonView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.left.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.height.equalTo(220)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
     }
 }

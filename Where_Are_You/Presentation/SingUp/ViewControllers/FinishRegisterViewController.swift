@@ -16,8 +16,7 @@ class FinishRegisterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(finishView)
-        finishView.frame = view.bounds
+        self.view = finishView
         
         configureNavigationBar(title: "회원가입")
         buttonActions()

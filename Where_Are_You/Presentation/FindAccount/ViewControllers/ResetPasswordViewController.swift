@@ -15,8 +15,7 @@ class ResetPasswordViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(resetPasswordView)
-        resetPasswordView.frame = view.bounds
+        self.view = resetPasswordView
         
         configureNavigationBar(title: "비밀번호 찾기", backButtonAction: #selector(backButtonTapped))
         buttonActions()

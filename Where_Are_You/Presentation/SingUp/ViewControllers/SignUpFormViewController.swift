@@ -25,8 +25,7 @@ class SignUpFormViewController: UIViewController {
     // MARK: - Helpers
     
     func setupUI() {
-        view.addSubview(signUpView)
-        signUpView.frame = view.bounds
+        self.view = signUpView
         configureNavigationBar(title: "회원가입", backButtonAction: #selector(backButtonTapped))
     }
     
@@ -103,16 +102,7 @@ class SignUpFormViewController: UIViewController {
             }
         }
         
-        // 이메일 형식 오류 처리
-        viewModel.onEmailFormatError = { [weak self] message in
-            DispatchQueue.main.async {
-                self?.signUpView.emailErrorLabel.text = message
-                self?.signUpView.emailErrorLabel.textColor = .warningColor
-                self?.signUpView.authStack.isHidden = true
-            }
-        }
-        
-        // 이메일 인증 코드 발송 결과 처리
+        // 이메일 형식 확인 + 인증 코드 발송 결과 처리
         viewModel.onEmailVerificationCodeSent = { [weak self] message in
             DispatchQueue.main.async {
                 self?.signUpView.emailErrorLabel.text = message
@@ -125,6 +115,8 @@ class SignUpFormViewController: UIViewController {
         viewModel.onEmailVerificationCodeVerified = { [weak self] message in
             DispatchQueue.main.async {
                 self?.signUpView.authCodeErrorLabel.text = message
+                self?.signUpView.authCodeErrorLabel.textColor = message == "인증코드가 확인되었습니다." ? .brandColor : .warningColor
+                self?.signUpView.authCodeTextField.layer.borderColor = message == "인증코드가 확인되었습니다." ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
             }
         }
         

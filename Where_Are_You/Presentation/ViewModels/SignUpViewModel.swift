@@ -27,7 +27,6 @@ class SignUpViewModel {
     var onSignUpFailure: ((String) -> Void)?
     
     var onUserIDAvailabilityChecked: ((String, Bool) -> Void)?
-    var onEmailAvailabilityChecked: ((String) -> Void)?
     var onEmailVerificationCodeSent: ((String) -> Void)?
     var onEmailVerificationCodeVerified: ((String) -> Void)?
     
@@ -35,7 +34,6 @@ class SignUpViewModel {
     var onPasswordFormatError: ((String) -> Void)?
     var onCheckPasswordFormatError: ((String) -> Void)?
     var onEmailFormatError: ((String) -> Void)?
-    var onShowVerificationCodeField: (() -> Void)?
     var onUpdateTimer: ((String) -> Void)?
     
     private var timer: Timer?
@@ -109,7 +107,7 @@ class SignUpViewModel {
     
     func checkEmailAvailability(email: String) {
         guard isValidEmail(email) else {
-            onEmailFormatError?("유효하지 않은 이메일 형식입니다.")
+            onEmailVerificationCodeSent?("유효하지 않은 이메일 형식입니다.")
             return
         }
         
@@ -120,7 +118,7 @@ class SignUpViewModel {
                     self.sendEmailVerificationCode(email: email)
                 }
             case .failure(let error):
-                self.onEmailAvailabilityChecked?(error.localizedDescription)
+                self.onEmailVerificationCodeSent?(error.localizedDescription)
             }
         }
     }
@@ -132,7 +130,7 @@ class SignUpViewModel {
                 self.onEmailVerificationCodeSent?("인증코드가 전송되었습니다.")
                 self.email = email
             case .failure(let error):
-                self.onSignUpFailure?(error.localizedDescription)
+                self.onEmailVerificationCodeVerified?(error.localizedDescription)
             }
         }
     }
@@ -145,7 +143,7 @@ class SignUpViewModel {
                 self.user.email = self.email
                 self.onEmailVerificationCodeVerified?("인증코드가 확인되었습니다.")
             case .failure(let error):
-                self.onSignUpFailure?(error.localizedDescription)
+                self.onEmailVerificationCodeVerified?(error.localizedDescription)
             }
         }
     }

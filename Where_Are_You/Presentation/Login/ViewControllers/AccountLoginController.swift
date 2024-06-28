@@ -14,8 +14,7 @@ class AccountLoginController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(accountLoginView)
-        accountLoginView.frame = view.bounds
+        self.view = accountLoginView
         
         configureNavigationBar(title: "로그인", backButtonAction: #selector(backButtonTapped))
     }

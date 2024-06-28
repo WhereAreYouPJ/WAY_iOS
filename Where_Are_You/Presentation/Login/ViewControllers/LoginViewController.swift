@@ -14,8 +14,7 @@ class LoginViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(loginView)
-        loginView.frame = view.bounds
+        self.view = loginView
         
         buttonAction()
     }

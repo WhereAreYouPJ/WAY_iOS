@@ -14,8 +14,7 @@ class SearchAccountController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(searchAccountOptionsView)
-        searchAccountOptionsView.frame = view.bounds
+        self.view = searchAccountOptionsView
         
         buttonAction()
         configureNavigationBar(title: "계정찾기", backButtonAction: #selector(backButtonTapped))

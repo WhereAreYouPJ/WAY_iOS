@@ -96,22 +96,40 @@ class APIService: APIServiceProtocol {
     
     func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let url = "\(baseURL)/member/email/verify"
-        let parameters: [String: Any] = ["email": email, "code": code]
+        let parameters: [String: String] = ["email": email, "code": code]
         
-        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).response { response in
-            switch response.result {
-            case .success:
-                if response.response?.statusCode == 200 {
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            .validate(statusCode: 200..<300)
+            .responseJSON { response in
+                switch response.result {
+                case .success:
                     completion(.success(()))
-                } else {
-                    let error = NSError(domain: "", code: response.response?.statusCode ?? -1, userInfo: [NSLocalizedDescriptionKey: "Email verification failed"])
-                    completion(.failure(error))
+                case .failure(let error):
+                    if let data = response.data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any], let message = json["message"] as? String {
+                        let customError = NSError(domain: "", code: response.response?.statusCode ?? -1, userInfo: [NSLocalizedDescriptionKey: message])
+                        completion(.failure(customError))
+                    } else {
+                        completion(.failure(error))
+                    }
                 }
-            case .failure(let error):
-                completion(.failure(error))
             }
-        }
     }
+    
+//    func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void) {
+//        let url = "\(baseURL)/member/email/verify"
+//        let parameters: [String: String] = ["email": email, "code": code]
+//        
+//        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+//            .validate(statusCode: 200..<300)
+//            .responseDecodable(of: EmptyResponse.self) { response in
+//            switch response.result {
+//            case .success:
+//                completion(.success(()))
+//            case .failure(let error):
+//                completion(.failure(error))
+//            }
+//        }
+//    }
 }
 
 struct EmptyResponse: Decodable {}

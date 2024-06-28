@@ -39,7 +39,6 @@ class SignUpFormView: UIView {
     
     let userIDErrorLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .warningColor
         label.numberOfLines = 0
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
         label.adjustsFontForContentSizeCategory = true
@@ -52,7 +51,6 @@ class SignUpFormView: UIView {
     
     let passwordErrorLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .warningColor
         label.numberOfLines = 0
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
         label.adjustsFontForContentSizeCategory = true
@@ -63,7 +61,6 @@ class SignUpFormView: UIView {
     
     let checkPasswordErrorLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .warningColor
         label.numberOfLines = 0
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
         label.adjustsFontForContentSizeCategory = true
@@ -78,7 +75,6 @@ class SignUpFormView: UIView {
     
     let emailErrorLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .warningColor
         label.numberOfLines = 0
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
         label.adjustsFontForContentSizeCategory = true
@@ -93,7 +89,6 @@ class SignUpFormView: UIView {
     
     let authCodeErrorLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .warningColor
         label.numberOfLines = 0
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
         label.adjustsFontForContentSizeCategory = true
@@ -151,8 +146,7 @@ class SignUpFormView: UIView {
         bottomButtonView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.left.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.height.equalTo(220)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
     }
     
@@ -185,6 +179,7 @@ class SignUpFormView: UIView {
         authCheckStack.spacing = 4
         
         authStack = UIStackView(arrangedSubviews: [authCheckStack, authCodeErrorLabel])
+        authStack.axis = .vertical
         
         let stack = UIStackView(arrangedSubviews: [usernameStack, idStack, passwordEnterStack, passwordCheckStack, emailStack, authStack])
         stack.axis = .vertical
@@ -195,6 +190,7 @@ class SignUpFormView: UIView {
             make.top.equalTo(titleLabel.snp.bottom).offset(30)
             make.left.equalTo(titleLabel)
             make.centerX.equalToSuperview()
+            make.bottom.lessThanOrEqualTo(bottomButtonView.snp.top).offset(-20)
         }
         
         idCheckStack.addSubview(userIDCheckButton)
@@ -209,7 +205,7 @@ class SignUpFormView: UIView {
         
         authStack.addSubview(authCheckStack)
         authCheckStack.snp.makeConstraints { make in
-            make.width.equalTo(userIDTextField)
+            make.width.equalTo(idCheckStack)
         }
         
         authCheckStack.addSubview(authCheckButton)
