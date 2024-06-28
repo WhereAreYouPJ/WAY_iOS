@@ -72,7 +72,7 @@ class SignUpViewModel {
     
     func checkUserIDAvailability(userId: String) {
         guard isValidUserID(userId) else {
-            onUserIDFormatError?("영문 소문자와 숫자만 사용하여, 영문 소문자로 시작하는 5~12자의 아이디를 입력해주세요")
+            onUserIDAvailabilityChecked?("영문 소문자와 숫자만 사용하여, 영문 소문자로 시작하는 5~12자의 아이디를 입력해주세요", false)
             return
         }
         
