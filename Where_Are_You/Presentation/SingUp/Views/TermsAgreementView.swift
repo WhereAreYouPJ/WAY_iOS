@@ -35,14 +35,15 @@ class TermsAgreementView: UIView {
         view.addSubview(imageview)
         imageview.snp.makeConstraints { make in
             make.center.equalToSuperview()
+            make.left.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
         return view
     }()
     
-    let agreeButton = CustomButton(title: "동의하고 시작하기", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
+    let bottomButtonView = BottomButtonView(title: "동의하고 시작하기")
     
     // MARK: - Lifecycle
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
@@ -80,18 +81,15 @@ class TermsAgreementView: UIView {
         addSubview(agreeView)
         agreeView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
             make.left.equalToSuperview()
-            make.height.equalTo(420)
         }
         
-        agreeView.addSubview(agreeButton)
-        agreeButton.snp.makeConstraints { make in
+        agreeView.addSubview(bottomButtonView)
+        bottomButtonView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.left.equalToSuperview().offset(15)
-            make.height.equalTo(agreeButton.snp.width).multipliedBy(0.145)
-            make.top.equalToSuperview().offset(192)
+            make.left.equalToSuperview()
+            make.bottom.equalTo(agreeView.snp.bottom)
         }
-        
     }
 }

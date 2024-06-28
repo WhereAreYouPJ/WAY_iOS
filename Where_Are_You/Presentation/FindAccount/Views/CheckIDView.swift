@@ -22,9 +22,7 @@ class CheckIDView: UIView {
     let separatorView = UIView()
     
     private let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: "로그인 또는 비밀번호 찾기 버튼을 눌러주세요.", textColor: .color102, fontSize: 14)
-    
-    let buttonView = UIView()
-    
+        
     lazy var loginButton = CustomButton(title: "로그인하기", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
     
     lazy var searchPasswordButton = CustomButton(title: "비밀번호 찾기", backgroundColor: .white, titleColor: .letterBrandColor, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
@@ -83,12 +81,6 @@ class CheckIDView: UIView {
     }
     
     func setupButtons() {
-        addSubview(buttonView)
-        buttonView.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview()
-            make.height.equalTo(256)
-        }
-        
         let buttonStack = UIStackView(arrangedSubviews: [loginButton, searchPasswordButton])
         buttonStack.spacing = 10
         buttonStack.axis = .vertical
@@ -101,11 +93,11 @@ class CheckIDView: UIView {
             make.height.equalTo(buttonStack.snp.width).multipliedBy(0.14)
         }
         
-        buttonView.addSubview(buttonStack)
+        addSubview(buttonStack)
         buttonStack.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.left.equalTo(buttonView.snp.left).offset(15)
-            make.top.equalTo(buttonView.snp.top).offset(12)
+            make.left.equalToSuperview().offset(15)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(24)
         }
     }
 }

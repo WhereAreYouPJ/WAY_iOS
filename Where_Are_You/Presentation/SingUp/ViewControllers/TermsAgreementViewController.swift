@@ -27,7 +27,7 @@ class TermsAgreementViewController: UIViewController {
     // MARK: - Helpers
     
     func buttonActions() {
-        termsAgreementView.agreeButton.addTarget(self, action: #selector(agreeButtonTapped), for: .touchUpInside)
+        termsAgreementView.bottomButtonView.button.addTarget(self, action: #selector(agreeButtonTapped), for: .touchUpInside)
     }
 
     // MARK: - Selectors

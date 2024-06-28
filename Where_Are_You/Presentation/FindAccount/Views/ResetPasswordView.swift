@@ -41,7 +41,6 @@ class ResetPasswordView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
-        
         constraints()
     }
     
@@ -50,7 +49,6 @@ class ResetPasswordView: UIView {
     }
     
     // MARK: - Helpers
-    
     func constraints() {
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
@@ -81,9 +79,7 @@ class ResetPasswordView: UIView {
         bottomButtonView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.left.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.height.equalTo(220)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
     }
-    
 }
