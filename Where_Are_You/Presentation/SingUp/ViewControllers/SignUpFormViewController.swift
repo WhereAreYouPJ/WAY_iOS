@@ -113,7 +113,7 @@ class SignUpFormViewController: UIViewController {
         }
         
         // 이메일 인증 코드 발송 결과 처리
-        viewModel.onEmailAvailabilityChecked = { [weak self] message in
+        viewModel.onEmailVerificationCodeSent = { [weak self] message in
             DispatchQueue.main.async {
                 self?.signUpView.emailErrorLabel.text = message
                 self?.signUpView.emailErrorLabel.textColor = message == "인증코드가 전송되었습니다." ? .brandColor : .warningColor

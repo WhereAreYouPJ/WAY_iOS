@@ -117,10 +117,7 @@ class SignUpViewModel {
             switch result {
             case .success(let data):
                 if data.isSuccess {
-                    self.onShowVerificationCodeField?()
                     self.sendEmailVerificationCode(email: email)
-                } else {
-                    self.onEmailAvailabilityChecked?("중복된 이메일입니다.")
                 }
             case .failure(let error):
                 self.onEmailAvailabilityChecked?(error.localizedDescription)

@@ -69,8 +69,13 @@ class APIService: APIServiceProtocol {
                 case .success(let data):
                     completion(.success(data))
                 case .failure(let error):
-                    completion(.failure(error))
-                }
+                    // 409 에러를 처리하는 로직 추가
+                    if let afError = error.asAFError, afError.responseCode == 409 {
+                        let errorResponse = GenericResponse<CheckDuplicateEmail>(status: 409, message: "중복된 이메일 입니다.", data: CheckDuplicateEmail(email: email))
+                        completion(.success(errorResponse))
+                    } else {
+                        completion(.failure(error))
+                    }                }
             }
     }
     
