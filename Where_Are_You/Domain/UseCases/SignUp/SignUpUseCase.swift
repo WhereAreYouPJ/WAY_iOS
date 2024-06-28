@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SignUpUseCase {
-    func execute(request: User, completion: @escaping (Result<GenericResponse<SignUp>, Error>) -> Void)
+    func execute(request: User, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class SignUpUseCaseImpl: SignUpUseCase {
@@ -18,7 +18,7 @@ class SignUpUseCaseImpl: SignUpUseCase {
         self.userRepository = userRepository
     }
     
-    func execute(request: User, completion: @escaping (Result<GenericResponse<SignUp>, any Error>) -> Void) {
+    func execute(request: User, completion: @escaping (Result<Void, any Error>) -> Void) {
         userRepository.signUp(request: request, completion: completion)
     }
 }

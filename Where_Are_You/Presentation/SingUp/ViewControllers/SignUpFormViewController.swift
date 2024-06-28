@@ -36,6 +36,7 @@ class SignUpFormViewController: UIViewController {
         signUpView.authCheckButton.addTarget(self, action: #selector(authCheckButtonTapped), for: .touchUpInside)
         
         // 텍스트 필드 변경 감지
+        signUpView.userNameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingDidEnd)
         signUpView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         signUpView.checkPasswordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
@@ -85,38 +86,38 @@ class SignUpFormViewController: UIViewController {
         }
         
         // 비밀번호 형식 오류 처리
-        viewModel.onPasswordFormatError = { [weak self] message in
+        viewModel.onPasswordFormatError = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
                 self?.signUpView.passwordErrorLabel.text = message
-                self?.signUpView.passwordErrorLabel.textColor = message == "사용가능한 비밀번호입니다." ? .brandColor : .warningColor
-                self?.signUpView.passwordTextField.layer.borderColor = message == "사용가능한 비밀번호입니다." ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
+                self?.signUpView.passwordErrorLabel.textColor = isAvailable ? .brandColor : .warningColor
+                self?.signUpView.passwordTextField.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
             }
         }
         
         // 비밀번호 일치 오류 처리
-        viewModel.onCheckPasswordFormatError = { [weak self] message in
+        viewModel.onCheckPasswordFormatError = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
                 self?.signUpView.checkPasswordErrorLabel.text = message
-                self?.signUpView.checkPasswordErrorLabel.textColor = message == "비밀번호가 일치힙니다." ? .brandColor : .warningColor
-                self?.signUpView.checkPasswordTextField.layer.borderColor = message == "비밀번호가 일치힙니다." ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
+                self?.signUpView.checkPasswordErrorLabel.textColor = isAvailable ? .brandColor : .warningColor
+                self?.signUpView.checkPasswordTextField.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
             }
         }
         
         // 이메일 형식 확인 + 인증 코드 발송 결과 처리
-        viewModel.onEmailVerificationCodeSent = { [weak self] message in
+        viewModel.onEmailVerificationCodeSent = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
                 self?.signUpView.emailErrorLabel.text = message
-                self?.signUpView.emailErrorLabel.textColor = message == "인증코드가 전송되었습니다." ? .brandColor : .warningColor
-                self?.signUpView.authStack.isHidden = message != "인증코드가 전송되었습니다."
+                self?.signUpView.emailErrorLabel.textColor = isAvailable ? .brandColor : .warningColor
+                self?.signUpView.authStack.isHidden = !isAvailable
             }
         }
         
         // 이메일 인증 코드 확인 결과 처리
-        viewModel.onEmailVerificationCodeVerified = { [weak self] message in
+        viewModel.onEmailVerificationCodeVerified = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
                 self?.signUpView.authCodeErrorLabel.text = message
-                self?.signUpView.authCodeErrorLabel.textColor = message == "인증코드가 확인되었습니다." ? .brandColor : .warningColor
-                self?.signUpView.authCodeTextField.layer.borderColor = message == "인증코드가 확인되었습니다." ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
+                self?.signUpView.authCodeErrorLabel.textColor = isAvailable ? .brandColor : .warningColor
+                self?.signUpView.authCodeTextField.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
             }
         }
         
@@ -131,10 +132,13 @@ class SignUpFormViewController: UIViewController {
     // MARK: - Selectors
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
+        guard let userName = signUpView.userNameTextField.text else { return }
         guard let pw = signUpView.passwordTextField.text else { return }
         guard let checkpw = signUpView.checkPasswordTextField.text else { return }
         
         switch textField {
+        case signUpView.userNameTextField:
+            viewModel.user.userName = userName
         case signUpView.passwordTextField:
             viewModel.checkPasswordAvailability(password: pw)
         case signUpView.checkPasswordTextField:

@@ -8,7 +8,7 @@
 import Alamofire
 
 protocol APIServiceProtocol {
-    func signUp(request: User, completion: @escaping (Result<GenericResponse<SignUp>, Error>) -> Void)
+    func signUp(request: User, completion: @escaping (Result<Void, Error>) -> Void)
     func checkUserIDAvailability(userId: String, completion: @escaping (Result<GenericResponse<CheckDuplicateUserID>, Error>) -> Void)
     func checkEmailAvailability(email: String, completion: @escaping (Result<GenericResponse<CheckDuplicateEmail>, Error>) -> Void)
     func sendEmailVerificationCode(email: String, completion: @escaping (Result<Void, Error>) -> Void)
@@ -18,17 +18,10 @@ protocol APIServiceProtocol {
 class APIService: APIServiceProtocol {
     private let baseURL = "https://wlrmadjel.com/v1"
     
-    func signUp(request: User, completion: @escaping (Result<GenericResponse<SignUp>, any Error>) -> Void) {
+    func signUp(request: User, completion: @escaping (Result<Void, any Error>) -> Void) {
         let url = "\(baseURL)/member"
         
-        let parameters: [String: Any] = [
-            "userName": request.userName,
-            "userId": request.userId,
-            "password": request.password,
-            "email": request.email
-        ]
-        
-        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        AF.request(url, method: .post, parameters: request, encoding: JSONEncoding.default)
             .validate(statusCode: 200..<300)
             .responseDecodable(of: GenericResponse<SignUp>.self) { response in
                 switch response.result {
@@ -105,7 +98,8 @@ class APIService: APIServiceProtocol {
                 case .success:
                     completion(.success(()))
                 case .failure(let error):
-                    if let data = response.data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any], let message = json["message"] as? String {
+                    if let data = response.data,
+                       let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any], let message = json["message"] as? String {
                         let customError = NSError(domain: "", code: response.response?.statusCode ?? -1, userInfo: [NSLocalizedDescriptionKey: message])
                         completion(.failure(customError))
                     } else {
@@ -115,21 +109,21 @@ class APIService: APIServiceProtocol {
             }
     }
     
-//    func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void) {
-//        let url = "\(baseURL)/member/email/verify"
-//        let parameters: [String: String] = ["email": email, "code": code]
-//        
-//        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
-//            .validate(statusCode: 200..<300)
-//            .responseDecodable(of: EmptyResponse.self) { response in
-//            switch response.result {
-//            case .success:
-//                completion(.success(()))
-//            case .failure(let error):
-//                completion(.failure(error))
-//            }
-//        }
-//    }
+    //    func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void) {
+    //        let url = "\(baseURL)/member/email/verify"
+    //        let parameters: [String: String] = ["email": email, "code": code]
+    //
+    //        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+    //            .validate(statusCode: 200..<300)
+    //            .responseDecodable(of: EmptyResponse.self) { response in
+    //            switch response.result {
+    //            case .success:
+    //                completion(.success(()))
+    //            case .failure(let error):
+    //                completion(.failure(error))
+    //            }
+    //        }
+    //    }
 }
 
 struct EmptyResponse: Decodable {}

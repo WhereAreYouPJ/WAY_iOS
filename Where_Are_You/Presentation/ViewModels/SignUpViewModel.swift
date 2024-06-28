@@ -27,13 +27,11 @@ class SignUpViewModel {
     var onSignUpFailure: ((String) -> Void)?
     
     var onUserIDAvailabilityChecked: ((String, Bool) -> Void)?
-    var onEmailVerificationCodeSent: ((String) -> Void)?
-    var onEmailVerificationCodeVerified: ((String) -> Void)?
+    var onPasswordFormatError: ((String, Bool) -> Void)?
+    var onCheckPasswordFormatError: ((String, Bool) -> Void)?
+    var onEmailVerificationCodeSent: ((String, Bool) -> Void)?
+    var onEmailVerificationCodeVerified: ((String, Bool) -> Void)?
     
-    var onUserIDFormatError: ((String) -> Void)?
-    var onPasswordFormatError: ((String) -> Void)?
-    var onCheckPasswordFormatError: ((String) -> Void)?
-    var onEmailFormatError: ((String) -> Void)?
     var onUpdateTimer: ((String) -> Void)?
     
     private var timer: Timer?
@@ -56,6 +54,30 @@ class SignUpViewModel {
     // MARK: - Helpers(로그인, 아이디, 이메일, 코드확인)
     
     func signUp() {
+        guard let username = user.userName, !username.isEmpty else {
+            onSignUpFailure?("이름을 입력해주세요.")
+            return
+        }
+        
+        guard let userId = user.userId, !userId.isEmpty else {
+            onSignUpFailure?("아이디를 입력해주세요.")
+            return
+        }
+        
+        guard let email = user.email, !email.isEmpty else {
+            onSignUpFailure?("이메일을 입력해주세요.")
+            return
+        }
+        
+        guard password == confirmPassword else {
+            onSignUpFailure?("비밀번호가 일치하지 않습니다.")
+            return
+        }
+        
+        guard isValidPassword(password) else {
+            onSignUpFailure?("영문 대문자, 소문자로 시작하는 6~20자의 영문 대문자, 소문자, 숫자를 포함해 입력해주세요.")
+            return
+        }
         
         user.password = confirmPassword
         signUpUseCase.execute(request: user) { result in
@@ -91,23 +113,23 @@ class SignUpViewModel {
     
     func checkPasswordAvailability(password: String) {
         if isValidPassword(password) {
-            onPasswordFormatError?("사용가능한 비밀번호입니다.")
+            onPasswordFormatError?("사용가능한 비밀번호입니다.", true)
         } else {
-            onPasswordFormatError?("영문 대문자, 소문자로 시작하는 6~20자의 영문 대문자, 소문자, 숫자를 포함해 입력해주세요.")
+            onPasswordFormatError?("영문 대문자, 소문자로 시작하는 6~20자의 영문 대문자, 소문자, 숫자를 포함해 입력해주세요.", false)
         }
     }
     
     func checkSamePassword(password: String, checkPassword: String) {
         if isPasswordSame(password, checkpw: checkPassword) {
-            onCheckPasswordFormatError?("비밀번호가 일치힙니다.")
+            onCheckPasswordFormatError?("비밀번호가 일치힙니다.", true)
         } else {
-            onCheckPasswordFormatError?("비밀번호가 일치하지 않습니다.")
+            onCheckPasswordFormatError?("비밀번호가 일치하지 않습니다.", false)
         }
     }
     
     func checkEmailAvailability(email: String) {
         guard isValidEmail(email) else {
-            onEmailVerificationCodeSent?("유효하지 않은 이메일 형식입니다.")
+            onEmailVerificationCodeSent?("유효하지 않은 이메일 형식입니다.", false)
             return
         }
         
@@ -118,7 +140,7 @@ class SignUpViewModel {
                     self.sendEmailVerificationCode(email: email)
                 }
             case .failure(let error):
-                self.onEmailVerificationCodeSent?(error.localizedDescription)
+                self.onEmailVerificationCodeSent?(error.localizedDescription, false)
             }
         }
     }
@@ -127,10 +149,10 @@ class SignUpViewModel {
         sendEmailVerificationCodeUseCase.execute(email: email) { result in
             switch result {
             case .success:
-                self.onEmailVerificationCodeSent?("인증코드가 전송되었습니다.")
+                self.onEmailVerificationCodeSent?("인증코드가 전송되었습니다.", true)
                 self.email = email
             case .failure(let error):
-                self.onEmailVerificationCodeVerified?(error.localizedDescription)
+                self.onEmailVerificationCodeVerified?(error.localizedDescription, false)
             }
         }
     }
@@ -141,9 +163,9 @@ class SignUpViewModel {
             switch result {
             case .success:
                 self.user.email = self.email
-                self.onEmailVerificationCodeVerified?("인증코드가 확인되었습니다.")
+                self.onEmailVerificationCodeVerified?("인증코드가 확인되었습니다.", true)
             case .failure(let error):
-                self.onEmailVerificationCodeVerified?(error.localizedDescription)
+                self.onEmailVerificationCodeVerified?(error.localizedDescription, false)
             }
         }
     }

@@ -8,7 +8,7 @@
 import Alamofire
 
 protocol UserRepositoryProtocol {
-    func signUp(request: User, completion: @escaping (Result<GenericResponse<SignUp>, Error>) -> Void)
+    func signUp(request: User, completion: @escaping (Result<Void, Error>) -> Void)
     func checkUserIDAvailability(userId: String, completion: @escaping (Result<GenericResponse<CheckDuplicateUserID>, Error>) -> Void)
     func checkEmailAvailability(email: String, completion: @escaping (Result<GenericResponse<CheckDuplicateEmail>, Error>) -> Void)
     func sendEmailVerificationCode(email: String, completion: @escaping (Result<Void, Error>) -> Void)
@@ -22,7 +22,7 @@ class UserRepository: UserRepositoryProtocol {
         self.apiService = apiService
     }
     
-    func signUp(request: User, completion: @escaping (Result<GenericResponse<SignUp>, any Error>) -> Void) {
+    func signUp(request: User, completion: @escaping (Result<Void, any Error>) -> Void) {
         apiService.signUp(request: request, completion: completion)
     }
     
