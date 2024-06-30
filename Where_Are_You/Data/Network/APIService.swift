@@ -78,7 +78,8 @@ class APIService: APIServiceProtocol {
                         completion(.success(errorResponse))
                     } else {
                         completion(.failure(error))
-                    }                }
+                    }
+                }
             }
     }
     
@@ -103,7 +104,7 @@ class APIService: APIServiceProtocol {
         
         AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .validate(statusCode: 200..<300)
-            .responseJSON { response in
+            .responseDecodable(of: EmptyResponse.self) { response in
                 switch response.result {
                 case .success:
                     completion(.success(()))
@@ -118,22 +119,6 @@ class APIService: APIServiceProtocol {
                 }
             }
     }
-    
-    //    func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void) {
-    //        let url = "\(baseURL)/member/email/verify"
-    //        let parameters: [String: String] = ["email": email, "code": code]
-    //
-    //        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
-    //            .validate(statusCode: 200..<300)
-    //            .responseDecodable(of: EmptyResponse.self) { response in
-    //            switch response.result {
-    //            case .success:
-    //                completion(.success(()))
-    //            case .failure(let error):
-    //                completion(.failure(error))
-    //            }
-    //        }
-    //    }
 }
 
 struct EmptyResponse: Decodable {}

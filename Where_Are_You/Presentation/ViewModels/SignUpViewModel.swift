@@ -138,6 +138,8 @@ class SignUpViewModel {
             case .success(let data):
                 if data.isSuccess {
                     self.sendEmailVerificationCode(email: email)
+                } else {
+                    self.onEmailVerificationCodeSent?(data.message, false)
                 }
             case .failure(let error):
                 self.onEmailVerificationCodeSent?(error.localizedDescription, false)
