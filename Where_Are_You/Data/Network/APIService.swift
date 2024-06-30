@@ -21,12 +21,17 @@ class APIService: APIServiceProtocol {
     func signUp(request: User, completion: @escaping (Result<Void, any Error>) -> Void) {
         let url = "\(baseURL)/member"
         
-        AF.request(url, method: .post, parameters: request, encoding: JSONEncoding.default)
+        guard let parameters = request.toParameters() else {
+            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid parameters"])))
+            return
+        }
+        
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .validate(statusCode: 200..<300)
-            .responseDecodable(of: GenericResponse<SignUp>.self) { response in
+            .response { response in
                 switch response.result {
-                case.success(let data):
-                    completion(.success(data))
+                case .success:
+                    completion(.success(()))
                 case .failure(let error):
                     completion(.failure(error))
                 }
@@ -45,7 +50,12 @@ class APIService: APIServiceProtocol {
                 case .success(let data):
                     completion(.success(data))
                 case .failure(let error):
-                    completion(.failure(error))
+                    if let afError = error.asAFError, afError.responseCode == 409 {
+                        let errorResponse = GenericResponse<CheckDuplicateUserID>(status: 409, message: "중복된 아이디 입니다.", data: CheckDuplicateUserID(userId: userId))
+                        completion(.success(errorResponse))
+                    } else {
+                        completion(.failure(error))
+                    }
                 }
             }
     }

@@ -201,7 +201,7 @@ class SignUpViewModel {
     }
     
     func isValidPassword(_ pw: String) -> Bool {
-        let pwRegex = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=-]).{6,20}$"
+        let pwRegex = "^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z][A-Za-z0-9]{5,19}$"
         let pwPred = NSPredicate(format: "SELF MATCHES %@", pwRegex)
         return pwPred.evaluate(with: pw)
     }
