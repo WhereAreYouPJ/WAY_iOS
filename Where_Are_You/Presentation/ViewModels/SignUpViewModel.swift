@@ -98,15 +98,14 @@ class SignUpViewModel {
         
         checkUserIDAvailabilityUseCase.execute(userId: userId) { result in
             switch result {
-            case .success(let data):
-                if data.isSuccess {
-                    self.user.userId = userId
-                    self.onUserIDAvailabilityChecked?("사용가능한 아이디입니다.", true)
-                } else {
-                    self.onUserIDAvailabilityChecked?("중복된 아이디입니다.", false)
-                }
+            case .success:
+                self.onUserIDAvailabilityChecked?("사용가능한 아이디입니다.", true)
             case .failure(let error):
-                self.onUserIDAvailabilityChecked?(error.localizedDescription, false)
+                if let nsError = error as NSError?, nsError.code == 409 {
+                    self.onUserIDAvailabilityChecked?("중복된 아이디입니다.", false)
+                } else {
+                    self.onUserIDAvailabilityChecked?(error.localizedDescription, false)
+                }
             }
         }
     }
@@ -135,14 +134,14 @@ class SignUpViewModel {
         
         checkEmailAvailabilityUseCase.execute(email: email) { result in
             switch result {
-            case .success(let data):
-                if data.isSuccess {
-                    self.sendEmailVerificationCode(email: email)
-                } else {
-                    self.onEmailVerificationCodeSent?(data.message, false)
-                }
+            case .success:
+                self.sendEmailVerificationCode(email: email)
             case .failure(let error):
-                self.onEmailVerificationCodeSent?(error.localizedDescription, false)
+                if let nsError = error as NSError?, nsError.code == 409 {
+                    self.onEmailVerificationCodeSent?("중복된 이메일 입니다.", false)
+                } else {
+                    self.onEmailVerificationCodeSent?(error.localizedDescription, false)
+                }
             }
         }
     }

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CheckEmailAvailabilityUseCase {
-    func execute(email: String, completion: @escaping ( Result<GenericResponse<CheckDuplicateEmail>, Error>) -> Void)
+    func execute(email: String, completion: @escaping ( Result<Void, Error>) -> Void)
 }
 
 class CheckEmailAvailabilityUseCaseImpl: CheckEmailAvailabilityUseCase {
@@ -18,7 +18,7 @@ class CheckEmailAvailabilityUseCaseImpl: CheckEmailAvailabilityUseCase {
         self.userRepository = userRepository
     }
     
-    func execute(email: String, completion: @escaping (Result<GenericResponse<CheckDuplicateEmail>, any Error>) -> Void) {
+    func execute(email: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         userRepository.checkEmailAvailability(email: email, completion: completion)
     }
 }

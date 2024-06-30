@@ -9,8 +9,8 @@ import Alamofire
 
 protocol APIServiceProtocol {
     func signUp(request: User, completion: @escaping (Result<Void, Error>) -> Void)
-    func checkUserIDAvailability(userId: String, completion: @escaping (Result<GenericResponse<CheckDuplicateUserID>, Error>) -> Void)
-    func checkEmailAvailability(email: String, completion: @escaping (Result<GenericResponse<CheckDuplicateEmail>, Error>) -> Void)
+    func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func checkEmailAvailability(email: String, completion: @escaping (Result<Void, Error>) -> Void)
     func sendEmailVerificationCode(email: String, completion: @escaping (Result<Void, Error>) -> Void)
     func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
@@ -38,7 +38,7 @@ class APIService: APIServiceProtocol {
             }
     }
     
-    func checkUserIDAvailability(userId: String, completion: @escaping (Result<GenericResponse<CheckDuplicateUserID>, any Error>) -> Void) {
+    func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         let url = "\(baseURL)/member/checkId"
         
         let parameters: [String: Any] = ["userId": userId]
@@ -47,12 +47,13 @@ class APIService: APIServiceProtocol {
             .validate(statusCode: 200..<300)
             .responseDecodable(of: GenericResponse<CheckDuplicateUserID>.self) { response in
                 switch response.result {
-                case .success(let data):
-                    completion(.success(data))
+                case .success:
+                    completion(.success(()))
                 case .failure(let error):
+                    // 409 에러를 처리하는 로직 추가
                     if let afError = error.asAFError, afError.responseCode == 409 {
-                        let errorResponse = GenericResponse<CheckDuplicateUserID>(status: 409, message: "중복된 아이디 입니다.", data: CheckDuplicateUserID(userId: userId))
-                        completion(.success(errorResponse))
+                        let customError = NSError(domain: "", code: 409, userInfo: [NSLocalizedDescriptionKey: "중복된 아이디 입니다."])
+                        completion(.failure(customError))
                     } else {
                         completion(.failure(error))
                     }
@@ -60,22 +61,22 @@ class APIService: APIServiceProtocol {
             }
     }
     
-    func checkEmailAvailability(email: String, completion: @escaping (Result<GenericResponse<CheckDuplicateEmail>, any Error>) -> Void) {
+    func checkEmailAvailability(email: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         let url = "\(baseURL)/member/checkEmail"
         
         let parameters: [String: Any] = ["email": email]
         
         AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default)
             .validate(statusCode: 200..<300)
-            .responseDecodable(of: GenericResponse<CheckDuplicateEmail>.self) { response in
+            .responseDecodable(of: EmptyResponse.self) { response in
                 switch response.result {
-                case .success(let data):
-                    completion(.success(data))
+                case .success:
+                    completion(.success(()))
                 case .failure(let error):
                     // 409 에러를 처리하는 로직 추가
                     if let afError = error.asAFError, afError.responseCode == 409 {
-                        let errorResponse = GenericResponse<CheckDuplicateEmail>(status: 409, message: "중복된 이메일 입니다.", data: CheckDuplicateEmail(email: email))
-                        completion(.success(errorResponse))
+                        let customError = NSError(domain: "", code: 409, userInfo: [NSLocalizedDescriptionKey: "중복된 이메일 입니다."])
+                        completion(.failure(customError))
                     } else {
                         completion(.failure(error))
                     }
