@@ -24,6 +24,7 @@
 		995358492C00C558005BF799 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 995358482C00C558005BF799 /* Assets.xcassets */; };
 		9953584C2C00C558005BF799 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 9953584B2C00C558005BF799 /* Base */; };
 		995358552C00DB0A005BF799 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 995358542C00DB0A005BF799 /* .swiftlint.yml */; };
+		997746A52C329D68004FB0DF /* FindUserIDUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997746A42C329D68004FB0DF /* FindUserIDUseCase.swift */; };
 		99938EE02C0C8B9D00239FA1 /* SearchPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99938EDF2C0C8B9D00239FA1 /* SearchPasswordViewController.swift */; };
 		99B397832C0C3E9D00D7A109 /* CheckIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B397822C0C3E9D00D7A109 /* CheckIDView.swift */; };
 		99B397852C0C41D300D7A109 /* CheckIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B397842C0C41D300D7A109 /* CheckIDViewController.swift */; };
@@ -44,7 +45,7 @@
 		99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */; };
 		99E8BC452C2D26CF00536B95 /* VerifyEmailCodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E8BC442C2D26CF00536B95 /* VerifyEmailCodeUseCase.swift */; };
 		99EC20AB2C0D9D9D0018904D /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20AA2C0D9D9D0018904D /* SignUpViewModel.swift */; };
-		99EC20AD2C0D9DB50018904D /* FindAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20AC2C0D9DB50018904D /* FindAccountViewModel.swift */; };
+		99EC20AD2C0D9DB50018904D /* FindIDViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20AC2C0D9DB50018904D /* FindIDViewModel.swift */; };
 		99EC78CE2C11DBA5007C4415 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC78CD2C11DBA5007C4415 /* ResetPasswordViewController.swift */; };
 		99EC78D02C11E20F007C4415 /* FinishResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC78CF2C11E20F007C4415 /* FinishResetPasswordView.swift */; };
 		99EC78D22C11E437007C4415 /* FinishResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC78D12C11E437007C4415 /* FinishResetPasswordViewController.swift */; };
@@ -53,7 +54,7 @@
 		99F78F172C09B10D004C0C72 /* SearchAccountOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F162C09B10D004C0C72 /* SearchAccountOptionsView.swift */; };
 		99F78F1C2C09BB8F004C0C72 /* SearchAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F1B2C09BB8F004C0C72 /* SearchAccountController.swift */; };
 		99F78F1E2C09C98D004C0C72 /* CommonSearchAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F1D2C09C98D004C0C72 /* CommonSearchAuthView.swift */; };
-		99F9FADE2C0B6187005B36B9 /* SearchIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9FADD2C0B6187005B36B9 /* SearchIDViewController.swift */; };
+		99F9FADE2C0B6187005B36B9 /* FindIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9FADD2C0B6187005B36B9 /* FindIDViewController.swift */; };
 		D79EFAD9E5409233E5338E46 /* Pods_Where_Are_You.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +79,7 @@
 		9953584B2C00C558005BF799 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9953584D2C00C558005BF799 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		995358542C00DB0A005BF799 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		997746A42C329D68004FB0DF /* FindUserIDUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUserIDUseCase.swift; sourceTree = "<group>"; };
 		99938EDF2C0C8B9D00239FA1 /* SearchPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPasswordViewController.swift; sourceTree = "<group>"; };
 		99B397822C0C3E9D00D7A109 /* CheckIDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIDView.swift; sourceTree = "<group>"; };
 		99B397842C0C41D300D7A109 /* CheckIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIDViewController.swift; sourceTree = "<group>"; };
@@ -98,7 +100,7 @@
 		99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
 		99E8BC442C2D26CF00536B95 /* VerifyEmailCodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailCodeUseCase.swift; sourceTree = "<group>"; };
 		99EC20AA2C0D9D9D0018904D /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
-		99EC20AC2C0D9DB50018904D /* FindAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindAccountViewModel.swift; sourceTree = "<group>"; };
+		99EC20AC2C0D9DB50018904D /* FindIDViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDViewModel.swift; sourceTree = "<group>"; };
 		99EC78CD2C11DBA5007C4415 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		99EC78CF2C11E20F007C4415 /* FinishResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishResetPasswordView.swift; sourceTree = "<group>"; };
 		99EC78D12C11E437007C4415 /* FinishResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishResetPasswordViewController.swift; sourceTree = "<group>"; };
@@ -107,7 +109,7 @@
 		99F78F162C09B10D004C0C72 /* SearchAccountOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAccountOptionsView.swift; sourceTree = "<group>"; };
 		99F78F1B2C09BB8F004C0C72 /* SearchAccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAccountController.swift; sourceTree = "<group>"; };
 		99F78F1D2C09C98D004C0C72 /* CommonSearchAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSearchAuthView.swift; sourceTree = "<group>"; };
-		99F9FADD2C0B6187005B36B9 /* SearchIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIDViewController.swift; sourceTree = "<group>"; };
+		99F9FADD2C0B6187005B36B9 /* FindIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDViewController.swift; sourceTree = "<group>"; };
 		A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5015275FE458D5F6450041 /* Pods-Where_Are_You.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You.release.xcconfig"; path = "Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -156,6 +158,7 @@
 		990F57A72C2802A300F6E1AD /* Email */ = {
 			isa = PBXGroup;
 			children = (
+				997746A42C329D68004FB0DF /* FindUserIDUseCase.swift */,
 			);
 			path = Email;
 			sourceTree = "<group>";
@@ -218,7 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				99F78F1B2C09BB8F004C0C72 /* SearchAccountController.swift */,
-				99F9FADD2C0B6187005B36B9 /* SearchIDViewController.swift */,
+				99F9FADD2C0B6187005B36B9 /* FindIDViewController.swift */,
 				99B397842C0C41D300D7A109 /* CheckIDViewController.swift */,
 				99938EDF2C0C8B9D00239FA1 /* SearchPasswordViewController.swift */,
 				99EC78CD2C11DBA5007C4415 /* ResetPasswordViewController.swift */,
@@ -344,7 +347,7 @@
 			children = (
 				99EC20AA2C0D9D9D0018904D /* SignUpViewModel.swift */,
 				99C9B2412C01CE4C008D7CBD /* AccountLoginViewModel.swift */,
-				99EC20AC2C0D9DB50018904D /* FindAccountViewModel.swift */,
+				99EC20AC2C0D9DB50018904D /* FindIDViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -561,13 +564,14 @@
 				990F579F2C27F86A00F6E1AD /* CheckUserIDAvailabilityUseCase.swift in Sources */,
 				99F78F172C09B10D004C0C72 /* SearchAccountOptionsView.swift in Sources */,
 				99B397852C0C41D300D7A109 /* CheckIDViewController.swift in Sources */,
+				997746A52C329D68004FB0DF /* FindUserIDUseCase.swift in Sources */,
 				99C9B2292C0197CA008D7CBD /* User.swift in Sources */,
 				9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */,
 				99E8BC452C2D26CF00536B95 /* VerifyEmailCodeUseCase.swift in Sources */,
 				990F57912C27ECDC00F6E1AD /* SignUpUseCase.swift in Sources */,
 				99EC78D22C11E437007C4415 /* FinishResetPasswordViewController.swift in Sources */,
 				99EC78D02C11E20F007C4415 /* FinishResetPasswordView.swift in Sources */,
-				99F9FADE2C0B6187005B36B9 /* SearchIDViewController.swift in Sources */,
+				99F9FADE2C0B6187005B36B9 /* FindIDViewController.swift in Sources */,
 				99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */,
 				99EC78CE2C11DBA5007C4415 /* ResetPasswordViewController.swift in Sources */,
 				99B397832C0C3E9D00D7A109 /* CheckIDView.swift in Sources */,
@@ -579,7 +583,7 @@
 				990F57B22C282C5900F6E1AD /* SendEmailVerificationCodeUseCase.swift in Sources */,
 				9950C6592C10B0DF003155A7 /* SignUpFormView.swift in Sources */,
 				99EC20AB2C0D9D9D0018904D /* SignUpViewModel.swift in Sources */,
-				99EC20AD2C0D9DB50018904D /* FindAccountViewModel.swift in Sources */,
+				99EC20AD2C0D9DB50018904D /* FindIDViewModel.swift in Sources */,
 				99EC78D62C11E8A3007C4415 /* FinishRegisterViewController.swift in Sources */,
 				99C9B2322C01A45C008D7CBD /* Extensions.swift in Sources */,
 				990F579A2C27EEF400F6E1AD /* UserRepository.swift in Sources */,

@@ -18,9 +18,9 @@ class SearchAuthView: UIView {
     
     let emailTextField = Utilities().inputContainerTextField(withPlaceholder: "이메일", fontSize: textFieldFontSize)
     
-    private lazy var requestAuthButton = CustomButton(title: "인증요청", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
+    lazy var requestAuthButton = CustomButton(title: "인증요청", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
     
-    private let emailErrorLabel: UILabel = {
+    let emailErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .warningColor
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
@@ -30,7 +30,7 @@ class SearchAuthView: UIView {
     
     let authNumberTextField = Utilities().inputContainerTextField(withPlaceholder: "인증코드 입력", fontSize: textFieldFontSize)
     
-    private let timer: UILabel = {
+    let timer: UILabel = {
         let label = UILabel()
         label.textColor = .warningColor
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
@@ -38,9 +38,9 @@ class SearchAuthView: UIView {
         return label
     }()
     
-    private lazy var authNumberCheckButton = CustomButton(title: "확인", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
+    lazy var authNumberCheckButton = CustomButton(title: "확인", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
     
-    private let authNumberErrorLabel: UILabel = {
+    let authNumberErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .warningColor
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))

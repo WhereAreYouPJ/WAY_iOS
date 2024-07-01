@@ -12,3 +12,4 @@ struct GenericResponse<T: Codable>: Codable {
     let message: String
     let data: T
 }
+

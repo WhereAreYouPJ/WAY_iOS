@@ -13,6 +13,9 @@ protocol APIServiceProtocol {
     func checkEmailAvailability(email: String, completion: @escaping (Result<Void, Error>) -> Void)
     func sendEmailVerificationCode(email: String, completion: @escaping (Result<Void, Error>) -> Void)
     func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void)
+    
+    func findUserID(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void)
+    
     func login(userId: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
@@ -76,6 +79,23 @@ class APIService: APIServiceProtocol {
                    completion: completion)
     }
     
+    // MARK: - findUserID
+    
+    func findUserID(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void) {
+            let url = "\(baseURL)/member/findId"
+        let parameters: [String: Any] = ["email": email, "code": code]
+            AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+                .validate(statusCode: 200..<300)
+                .responseDecodable(of: FindUserIDResponse.self) { response in
+                    switch response.result {
+                    case .success(let data):
+                        completion(.success(data.userID))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
+        }
+    
     // MARK: - login
     
     func login(userId: String, password: String, completion: @escaping (Result<Void, any Error>) -> Void) {
@@ -111,3 +131,6 @@ class APIService: APIServiceProtocol {
 }
 
 struct EmptyResponse: Decodable {}
+struct FindUserIDResponse: Decodable {
+    let userID: String
+}
