@@ -11,20 +11,4 @@ struct GenericResponse<T: Codable>: Codable {
     let status: Int
     let message: String
     let data: T
-    
-//    var isSuccess: Bool {
-//        return message.lowercased() == "success"
-//    }
-}
-
-struct CheckDuplicateUserID: Codable {
-    let userId: String?
-}
-
-struct CheckDuplicateEmail: Codable {
-    let email: String?
-}
-
-struct SignUp: Codable {
-    let isSignUp: String
 }
