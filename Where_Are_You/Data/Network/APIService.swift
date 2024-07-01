@@ -13,6 +13,8 @@ protocol APIServiceProtocol {
     func checkEmailAvailability(email: String, completion: @escaping (Result<Void, Error>) -> Void)
     func sendEmailVerificationCode(email: String, completion: @escaping (Result<Void, Error>) -> Void)
     func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void)
+    
+    func login(userId: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class APIService: APIServiceProtocol {
@@ -41,7 +43,7 @@ class APIService: APIServiceProtocol {
     }
     
     // MARK: - checkUserIDAvailability
-
+    
     func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         let url = "\(baseURL)/member/checkId"
         
@@ -50,23 +52,12 @@ class APIService: APIServiceProtocol {
         AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default)
             .validate(statusCode: 200..<300)
             .responseDecodable(of: EmptyResponse.self) { response in
-                switch response.result {
-                case .success:
-                    completion(.success(()))
-                case .failure(let error):
-                    // 409 에러를 처리하는 로직
-                    if let afError = error.asAFError, afError.responseCode == 409 {
-                        let customError = NSError(domain: "", code: 409, userInfo: [NSLocalizedDescriptionKey: "중복된 아이디 입니다."])
-                        completion(.failure(customError))
-                    } else {
-                        completion(.failure(error))
-                    }
-                }
+                self.handleResponse(response: response, expectedErrorCodes: [409: "중복된 아이디 입니다."], completion: completion)
             }
     }
     
     // MARK: - checkEmailAvailability
-
+    
     func checkEmailAvailability(email: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         let url = "\(baseURL)/member/checkEmail"
         
@@ -75,28 +66,43 @@ class APIService: APIServiceProtocol {
         AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default)
             .validate(statusCode: 200..<300)
             .responseDecodable(of: EmptyResponse.self) { response in
-                switch response.result {
-                case .success:
-                    completion(.success(()))
-                case .failure(let error):
-                    // 409 에러를 처리하는 로직
-                    if let afError = error.asAFError, afError.responseCode == 409 {
-                        let customError = NSError(domain: "", code: 409, userInfo: [NSLocalizedDescriptionKey: "중복된 이메일 입니다."])
-                        completion(.failure(customError))
-                    } else {
-                        completion(.failure(error))
-                    }
-                }
+                self.handleResponse(response: response, expectedErrorCodes: [409: "중복된 이메일 입니다."], completion: completion)
             }
     }
     
     // MARK: - sendEmailVerificationCode
-
+    
     func sendEmailVerificationCode(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let url = "\(baseURL)/member/email/send"
         let parameters: [String: Any] = ["email": email]
         
         AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            .responseDecodable(of: EmptyResponse.self) { response in
+                self.handleResponse(response: response, completion: completion)
+            }
+    }
+    
+    // MARK: - verifyEmailCode
+    
+    func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        let url = "\(baseURL)/member/email/verify"
+        let parameters: [String: String] = ["email": email, "code": code]
+        
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            .validate(statusCode: 200..<300)
+            .responseDecodable(of: EmptyResponse.self) { response in
+                self.handleResponse(response: response, expectedErrorCodes: [400: "인증코드가 알맞지 않습니다."], completion: completion)
+            }
+    }
+    
+    // MARK: - login
+    
+    func login(userId: String, password: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+        let url = "\(baseURL)/member/login"
+        let parameters: [String: String] = ["userId": userId, "password": password]
+        
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            .validate(statusCode: 200..<300)
             .responseDecodable(of: EmptyResponse.self) { response in
                 switch response.result {
                 case .success:
@@ -107,28 +113,20 @@ class APIService: APIServiceProtocol {
             }
     }
     
-    // MARK: - verifyEmailCode
-
-    func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        let url = "\(baseURL)/member/email/verify"
-        let parameters: [String: String] = ["email": email, "code": code]
-        
-        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
-            .validate(statusCode: 200..<300)
-            .responseDecodable(of: EmptyResponse.self) { response in
-                switch response.result {
-                case .success:
-                    completion(.success(()))
-                case .failure(let error):
-                    // 400 에러를 처리하는 로직
-                    if let afError = error.asAFError, afError.responseCode == 400 {
-                        let customError = NSError(domain: "", code: 400, userInfo: [NSLocalizedDescriptionKey: "인증코드가 알맞지 않습니다."])
-                        completion(.failure(customError))
-                    } else {
-                        completion(.failure(error))
-                    }
-                }
+    // MARK: - Helper
+    
+    private func handleResponse(response: AFDataResponse<EmptyResponse>, expectedErrorCodes: [Int: String] = [:], completion: @escaping (Result<Void, Error>) -> Void) {
+        switch response.result {
+        case .success:
+            completion(.success(()))
+        case .failure(let error):
+            if let afError = error.asAFError, let customErrorMessage = expectedErrorCodes[afError.responseCode ?? -1] {
+                let customError = NSError(domain: "", code: afError.responseCode ?? -1, userInfo: [NSLocalizedDescriptionKey: customErrorMessage])
+                completion(.failure(customError))
+            } else {
+                completion(.failure(error))
             }
+        }
     }
 }
 
