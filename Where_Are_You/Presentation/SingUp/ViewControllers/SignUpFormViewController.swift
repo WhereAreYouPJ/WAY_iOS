@@ -103,16 +103,19 @@ class SignUpFormViewController: UIViewController {
             }
         }
         
-        // 이메일 형식 확인 + 인증 코드 발송 결과 처리
+        // 이메일 형식체크 + 인증코드 발송 결과 처리
         viewModel.onEmailVerificationCodeSent = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
                 self?.signUpView.emailErrorLabel.text = message
                 self?.signUpView.emailErrorLabel.textColor = isAvailable ? .brandColor : .warningColor
                 self?.signUpView.authStack.isHidden = !isAvailable
+                if isAvailable {
+                    self?.viewModel.startTimer()
+                }
             }
         }
         
-        // 이메일 인증 코드 확인 결과 처리
+        // 이메일 인증코드 확인 결과 처리
         viewModel.onEmailVerificationCodeVerified = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
                 self?.signUpView.authCodeErrorLabel.text = message
@@ -121,7 +124,7 @@ class SignUpFormViewController: UIViewController {
             }
         }
         
-        // 타이머 업데이트 처리 - 수정된 부분
+        // 타이머 업데이트 처리
         viewModel.onUpdateTimer = { [weak self] timeString in
             DispatchQueue.main.async {
                 self?.signUpView.timer.text = timeString
@@ -167,7 +170,6 @@ class SignUpFormViewController: UIViewController {
     }
     
     @objc func startButtonTapped() {
-        print("시작하기 눌림")
         viewModel.signUp()
     }
     

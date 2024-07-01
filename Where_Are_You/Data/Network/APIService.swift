@@ -110,9 +110,9 @@ class APIService: APIServiceProtocol {
                 case .success:
                     completion(.success(()))
                 case .failure(let error):
-                    if let data = response.data,
-                       let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any], let message = json["message"] as? String {
-                        let customError = NSError(domain: "", code: response.response?.statusCode ?? -1, userInfo: [NSLocalizedDescriptionKey: message])
+                    // 400 에러를 처리하는 로직 추가
+                    if let afError = error.asAFError, afError.responseCode == 400 {
+                        let customError = NSError(domain: "", code: 400, userInfo: [NSLocalizedDescriptionKey: "인증코드가 알맞지 않습니다."])
                         completion(.failure(customError))
                     } else {
                         completion(.failure(error))

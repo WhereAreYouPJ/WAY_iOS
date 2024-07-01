@@ -53,6 +53,7 @@ class SignUpViewModel {
     
     // MARK: - Helpers(로그인, 아이디, 이메일, 코드확인)
     
+    // 회원가입
     func signUp() {
         guard let username = user.userName, !username.isEmpty else {
             onSignUpFailure?("이름을 입력해주세요.")
@@ -69,13 +70,13 @@ class SignUpViewModel {
             return
         }
         
-        guard password == confirmPassword else {
-            onSignUpFailure?("비밀번호가 일치하지 않습니다.")
+        guard isValidPassword(password) else {
+            onSignUpFailure?("영문 대문자, 소문자로 시작하는 6~20자의 영문 대문자, 소문자, 숫자를 포함해 입력해주세요.")
             return
         }
         
-        guard isValidPassword(password) else {
-            onSignUpFailure?("영문 대문자, 소문자로 시작하는 6~20자의 영문 대문자, 소문자, 숫자를 포함해 입력해주세요.")
+        guard password == confirmPassword else {
+            onSignUpFailure?("비밀번호가 일치하지 않습니다.")
             return
         }
         
@@ -90,6 +91,7 @@ class SignUpViewModel {
         }
     }
     
+    // 아이디 중복 체크
     func checkUserIDAvailability(userId: String) {
         guard isValidUserID(userId) else {
             onUserIDAvailabilityChecked?("영문 소문자와 숫자만 사용하여, 영문 소문자로 시작하는 5~12자의 아이디를 입력해주세요", false)
@@ -110,6 +112,7 @@ class SignUpViewModel {
         }
     }
     
+    // 비밀번호 형식 체크
     func checkPasswordAvailability(password: String) {
         if isValidPassword(password) {
             onPasswordFormatError?("사용가능한 비밀번호입니다.", true)
@@ -118,6 +121,7 @@ class SignUpViewModel {
         }
     }
     
+    // 비밀번호 일치체크
     func checkSamePassword(password: String, checkPassword: String) {
         if isPasswordSame(password, checkpw: checkPassword) {
             onCheckPasswordFormatError?("비밀번호가 일치힙니다.", true)
@@ -126,6 +130,7 @@ class SignUpViewModel {
         }
     }
     
+    // 이메일 중복체크
     func checkEmailAvailability(email: String) {
         guard isValidEmail(email) else {
             onEmailVerificationCodeSent?("유효하지 않은 이메일 형식입니다.", false)
@@ -146,32 +151,39 @@ class SignUpViewModel {
         }
     }
     
+    // 인증코드 전송
     func sendEmailVerificationCode(email: String) {
         sendEmailVerificationCodeUseCase.execute(email: email) { result in
             switch result {
             case .success:
                 self.onEmailVerificationCodeSent?("인증코드가 전송되었습니다.", true)
                 self.email = email
+                self.startTimer()
             case .failure(let error):
                 self.onEmailVerificationCodeVerified?(error.localizedDescription, false)
             }
         }
     }
     
-    // 이 부분을 apiservice를 통해 하는걸로 추가해야함
+    // 인증코드 확인
     func verifyEmailCode(inputCode: String) {
-        verifyEmailCodeUseCase.execute(email: email, code: inputCode) { result in
-            switch result {
-            case .success:
-                self.user.email = self.email
-                self.onEmailVerificationCodeVerified?("인증코드가 확인되었습니다.", true)
-            case .failure(let error):
-                self.onEmailVerificationCodeVerified?(error.localizedDescription, false)
+        if timerCount == 0 {
+            self.onEmailVerificationCodeVerified?("이메일 재인증 요청이 필요합니다.", false)
+        } else {
+            verifyEmailCodeUseCase.execute(email: email, code: inputCode) { result in
+                switch result {
+                case .success:
+                    self.user.email = self.email
+                    self.onEmailVerificationCodeVerified?("인증코드가 확인되었습니다.", true)
+                case .failure(let error):
+                    self.onEmailVerificationCodeVerified?(error.localizedDescription, false)
+                }
             }
         }
     }
     
-    private func startTimer() {
+    // 타이머 시작
+    func startTimer() {
         timerCount = 300
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
@@ -183,7 +195,7 @@ class SignUpViewModel {
             self.onUpdateTimer?(timeString)
             if self.timerCount == 0 {
                 self.stopTimer()
-                self.onSignUpFailure?("인증 시간이 만료되었습니다. 이메일 인증을 다시 요청하세요.")
+                self.onEmailVerificationCodeVerified?("이메일 재인증 요청이 필요합니다.", false)
             }
         }
     }
