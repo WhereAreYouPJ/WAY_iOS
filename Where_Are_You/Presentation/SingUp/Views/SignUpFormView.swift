@@ -114,6 +114,8 @@ class SignUpFormView: UIView {
         constraints()
         setupAuthStack()
         authStack.isHidden = true
+        passwordTextField.isSecureTextEntry = true
+        checkPasswordTextField.isSecureTextEntry = true
     }
     
     required init?(coder: NSCoder) {
@@ -151,9 +153,11 @@ class SignUpFormView: UIView {
     }
     
     func setupAuthStack() {
+        // 이름 + 이름tf
         let usernameStack = UIStackView(arrangedSubviews: [userNameLabel, userNameTextField])
         usernameStack.axis = .vertical
         
+        // 아이디 + 아이디tf + 중복확인 + description
         let idCheckStack = UIStackView(arrangedSubviews: [userIDTextField, userIDCheckButton])
         idCheckStack.axis = .horizontal
         idCheckStack.spacing = 4
@@ -161,12 +165,14 @@ class SignUpFormView: UIView {
         let idStack = UIStackView(arrangedSubviews: [userIDLabel, idCheckStack, userIDErrorLabel])
         idStack.axis = .vertical
         
+        // 비밀번호 + 비밀번호tf + description + 비밀번호 일치tf + description
         let passwordEnterStack = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField, passwordErrorLabel])
         passwordEnterStack.axis = .vertical
         
         let passwordCheckStack = UIStackView(arrangedSubviews: [checkPasswordTextField, checkPasswordErrorLabel])
         passwordCheckStack.axis = .vertical
         
+        // 이메일 + 이메일tf + 이메일 중복버튼 + description
         let emailCheckStack = UIStackView(arrangedSubviews: [emailTextField, emailCheckButton])
         emailCheckStack.axis = .horizontal
         emailCheckStack.spacing = 4
@@ -174,6 +180,7 @@ class SignUpFormView: UIView {
         let emailStack = UIStackView(arrangedSubviews: [emailLabel, emailCheckStack, emailErrorLabel])
         emailStack.axis = .vertical
         
+        // 인증코드tf + 인증코드 확인버튼 + description
         let authCheckStack = UIStackView(arrangedSubviews: [authCodeTextField, authCheckButton])
         authCheckStack.axis = .horizontal
         authCheckStack.spacing = 4
@@ -185,6 +192,7 @@ class SignUpFormView: UIView {
         stack.axis = .vertical
         stack.spacing = 10
         
+        // stack constraints
         addSubview(stack)
         stack.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(30)

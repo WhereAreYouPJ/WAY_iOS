@@ -56,22 +56,22 @@ class SignUpViewModel {
     // 회원가입
     func signUp() {
         guard let username = user.userName, !username.isEmpty else {
-            onSignUpFailure?("이름을 입력해주세요.")
+            onSignUpFailure?("이름을 확인해주세요.")
             return
         }
         
         guard let userId = user.userId, !userId.isEmpty else {
-            onSignUpFailure?("아이디를 입력해주세요.")
+            onSignUpFailure?("아이디를 확인해주세요.")
             return
         }
         
         guard let email = user.email, !email.isEmpty else {
-            onSignUpFailure?("이메일을 입력해주세요.")
+            onSignUpFailure?("이메일을 확인해주세요.")
             return
         }
         
         guard isValidPassword(password) else {
-            onSignUpFailure?("영문 대문자, 소문자로 시작하는 6~20자의 영문 대문자, 소문자, 숫자를 포함해 입력해주세요.")
+            onSignUpFailure?("비밀번호를 확인해주세요.")
             return
         }
         
@@ -205,7 +205,7 @@ class SignUpViewModel {
         timer = nil
     }
     
-    // MARK: - 아이디, 비밀번호, 이메일 형식 조건
+    // MARK: - 형식 조건
     
     func isValidUserID(_ userID: String) -> Bool {
         let idRegex = "^[a-z][a-z0-9]{4,11}$"
