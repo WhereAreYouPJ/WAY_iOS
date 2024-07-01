@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SendEmailVerificationCodeUseCase {
-    func execute(email: String, completion: @escaping (Result<Bool, Error>) -> Void)
+    func execute(email: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class SendEmailVerificationCodeUseCaseImpl: SendEmailVerificationCodeUseCase {
@@ -18,14 +18,7 @@ class SendEmailVerificationCodeUseCaseImpl: SendEmailVerificationCodeUseCase {
         self.userRepository = userRepository
     }
     
-    func execute(email: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-        userRepository.sendEmailVerificationCode(email: email) { result in
-            switch result {
-            case .success:
-                completion(.success(true))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func execute(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        userRepository.sendEmailVerificationCode(email: email, completion: completion)
     }
 }

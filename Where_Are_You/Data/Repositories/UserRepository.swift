@@ -22,23 +22,23 @@ class UserRepository: UserRepositoryProtocol {
         self.apiService = apiService
     }
     
-    func signUp(request: User, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func signUp(request: User, completion: @escaping (Result<Void, Error>) -> Void) {
         apiService.signUp(request: request, completion: completion)
     }
     
-    func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         apiService.checkUserIDAvailability(userId: userId, completion: completion)
     }
     
-    func checkEmailAvailability(email: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func checkEmailAvailability(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
         apiService.checkEmailAvailability(email: email, completion: completion)
     }
     
-    func sendEmailVerificationCode(email: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func sendEmailVerificationCode(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
         apiService.sendEmailVerificationCode(email: email, completion: completion)
     }
     
-    func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void) {
             apiService.verifyEmailCode(email: email, code: code, completion: completion)
         }
 }

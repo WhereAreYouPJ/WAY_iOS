@@ -13,13 +13,13 @@ protocol VerifyEmailCodeUseCase {
 }
 
 class VerifyEmailCodeUseCaseImpl: VerifyEmailCodeUseCase {
-    private let repository: UserRepository
+    private let userRepository: UserRepository
         
-        init(repository: UserRepository) {
-            self.repository = repository
+        init(userRepository: UserRepository) {
+            self.userRepository = userRepository
         }
         
         func execute(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void) {
-            repository.verifyEmailCode(email: email, code: code, completion: completion)
+            userRepository.verifyEmailCode(email: email, code: code, completion: completion)
         }
 }

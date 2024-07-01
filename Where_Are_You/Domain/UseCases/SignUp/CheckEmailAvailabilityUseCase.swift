@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CheckEmailAvailabilityUseCase {
-    func execute(email: String, completion: @escaping ( Result<Void, Error>) -> Void)
+    func execute(email: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class CheckEmailAvailabilityUseCaseImpl: CheckEmailAvailabilityUseCase {

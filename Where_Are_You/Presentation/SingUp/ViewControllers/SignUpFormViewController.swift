@@ -17,7 +17,7 @@ class SignUpFormViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        buttonActions()
+        setupActions()
         setupViewModel()
         setupBindings()
     }
@@ -25,17 +25,16 @@ class SignUpFormViewController: UIViewController {
     // MARK: - Helpers
     
     func setupUI() {
-        self.view = signUpView
+        view = signUpView
         configureNavigationBar(title: "회원가입", backButtonAction: #selector(backButtonTapped))
     }
     
-    func buttonActions() {
+    func setupActions() {
         signUpView.bottomButtonView.button.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
         signUpView.userIDCheckButton.addTarget(self, action: #selector(duplicateCheckButtonTapped), for: .touchUpInside)
         signUpView.emailCheckButton.addTarget(self, action: #selector(authRequestButtonTapped), for: .touchUpInside)
         signUpView.authCheckButton.addTarget(self, action: #selector(authCheckButtonTapped), for: .touchUpInside)
         
-        // 텍스트 필드 변경 감지
         signUpView.userNameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingDidEnd)
         signUpView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         signUpView.checkPasswordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -44,70 +43,52 @@ class SignUpFormViewController: UIViewController {
     private func setupViewModel() {
         let apiService = APIService()
         let userRepository = UserRepository(apiService: apiService)
-        let signUpUseCase = SignUpUseCaseImpl(userRepository: userRepository)
-        let checkUserIDAvailabilityUseCase = CheckUserIDAvailabilityUseCaseImpl(userRepository: userRepository)
-        let checkEmailAvailabilityUseCase = CheckEmailAvailabilityUseCaseImpl(userRepository: userRepository)
-        let sendEmailVerificationCodeUseCase = SendEmailVerificationCodeUseCaseImpl(userRepository: userRepository)
-        let verifyEmailCodeUseCase = VerifyEmailCodeUseCaseImpl(repository: userRepository)
-        
         viewModel = SignUpViewModel(
-            signUpUseCase: signUpUseCase,
-            checkUserIDAvailabilityUseCase: checkUserIDAvailabilityUseCase,
-            checkEmailAvailabilityUseCase: checkEmailAvailabilityUseCase,
-            sendEmailVerificationCodeUseCase: sendEmailVerificationCodeUseCase,
-            verifyEmailCodeUseCase: verifyEmailCodeUseCase
+            signUpUseCase: SignUpUseCaseImpl(userRepository: userRepository),
+            checkUserIDAvailabilityUseCase: CheckUserIDAvailabilityUseCaseImpl(userRepository: userRepository),
+            checkEmailAvailabilityUseCase: CheckEmailAvailabilityUseCaseImpl(userRepository: userRepository),
+            sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCaseImpl(userRepository: userRepository),
+            verifyEmailCodeUseCase: VerifyEmailCodeUseCaseImpl(userRepository: userRepository)
         )
     }
     
     private func setupBindings() {
-        // 회원 가입 성공 시 콜백 처리
         viewModel.onSignUpSuccess = { [weak self] in
             DispatchQueue.main.async {
                 self?.navigateToNextScreen()
             }
         }
         
-        // 회원 가입 실패 시 콜백 처리
         viewModel.onSignUpFailure = { [weak self] message in
             DispatchQueue.main.async {
                 self?.showAlert(title: "회원가입 실패", message: message)
             }
         }
         
-        // 아이디 중복 확인 결과 처리
         viewModel.onUserIDAvailabilityChecked = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
-                self?.signUpView.userIDErrorLabel.text = message
-                self?.signUpView.userIDErrorLabel.textColor = isAvailable ? .brandColor : .warningColor
+                self?.updateStatus(label: self?.signUpView.userIDErrorLabel, message: message, isAvailable: isAvailable, textField: nil)
                 if isAvailable {
                     self?.viewModel.user.userId = self?.signUpView.userIDTextField.text
                 }
             }
         }
         
-        // 비밀번호 형식 오류 처리
         viewModel.onPasswordFormatError = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
-                self?.signUpView.passwordErrorLabel.text = message
-                self?.signUpView.passwordErrorLabel.textColor = isAvailable ? .brandColor : .warningColor
-                self?.signUpView.passwordTextField.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
+                self?.updateStatus(label: self?.signUpView.passwordErrorLabel, message: message, isAvailable: isAvailable, textField: self?.signUpView.passwordTextField)
             }
         }
         
-        // 비밀번호 일치 오류 처리
         viewModel.onCheckPasswordFormatError = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
-                self?.signUpView.checkPasswordErrorLabel.text = message
-                self?.signUpView.checkPasswordErrorLabel.textColor = isAvailable ? .brandColor : .warningColor
-                self?.signUpView.checkPasswordTextField.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
+                self?.updateStatus(label: self?.signUpView.checkPasswordErrorLabel, message: message, isAvailable: isAvailable, textField: self?.signUpView.checkPasswordTextField)
             }
         }
         
-        // 이메일 형식체크 + 인증코드 발송 결과 처리
         viewModel.onEmailVerificationCodeSent = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
-                self?.signUpView.emailErrorLabel.text = message
-                self?.signUpView.emailErrorLabel.textColor = isAvailable ? .brandColor : .warningColor
+                self?.updateStatus(label: self?.signUpView.emailErrorLabel, message: message, isAvailable: isAvailable, textField: nil)
                 self?.signUpView.authStack.isHidden = !isAvailable
                 if isAvailable {
                     self?.viewModel.startTimer()
@@ -115,29 +96,24 @@ class SignUpFormViewController: UIViewController {
             }
         }
         
-        // 이메일 인증코드 확인 결과 처리
         viewModel.onEmailVerificationCodeVerified = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
-                self?.signUpView.authCodeErrorLabel.text = message
-                self?.signUpView.authCodeErrorLabel.textColor = isAvailable ? .brandColor : .warningColor
-                self?.signUpView.authCodeTextField.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
+                self?.updateStatus(label: self?.signUpView.authCodeErrorLabel, message: message, isAvailable: isAvailable, textField: self?.signUpView.authCodeTextField)
             }
         }
         
-        // 타이머 업데이트 처리
         viewModel.onUpdateTimer = { [weak self] timeString in
             DispatchQueue.main.async {
                 self?.signUpView.timer.text = timeString
             }
         }
     }
-    
     // MARK: - Selectors
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        guard let userName = signUpView.userNameTextField.text else { return }
-        guard let pw = signUpView.passwordTextField.text else { return }
-        guard let checkpw = signUpView.checkPasswordTextField.text else { return }
+        guard let userName = signUpView.userNameTextField.text,
+              let pw = signUpView.passwordTextField.text,
+              let checkpw = signUpView.checkPasswordTextField.text else { return }
         
         switch textField {
         case signUpView.userNameTextField:
@@ -173,6 +149,8 @@ class SignUpFormViewController: UIViewController {
         viewModel.signUp()
     }
     
+    // MARK: - Helpers
+    
     private func navigateToNextScreen() {
         let controller = FinishRegisterViewController()
         navigationController?.pushViewController(controller, animated: true)
@@ -182,5 +160,11 @@ class SignUpFormViewController: UIViewController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
         present(alertController, animated: true)
+    }
+    
+    private func updateStatus(label: UILabel?, message: String, isAvailable: Bool, textField: UITextField?) {
+        label?.text = message
+        label?.textColor = isAvailable ? .brandColor : .warningColor
+        textField?.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
     }
 }
