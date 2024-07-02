@@ -14,7 +14,6 @@ class FindIDViewModel {
     private let findUserIDUseCase: FindUserIDUseCase
     
     var email: String = ""
-    var authCode: String = ""
     
     // Output
     var onRequestCodeSuccess: (() -> Void)?

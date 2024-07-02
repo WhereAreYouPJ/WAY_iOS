@@ -117,11 +117,11 @@ class FindIDViewController: UIViewController {
     }
     
     @objc func confirmButtonTapped() {
-        if userId.isEmpty {
+        if userId == "" {
             showAlert(title: "아이디 찾기 실패", message: "아이디가 존재하지 않습니다.")
         } else {
             // 다음화면 userid 데이터를 가지고 넘어가야함
-            let controller = CheckIDViewController()
+            let controller = CheckIDViewController(userId: userId)
             controller.userId = userId
             let nav = UINavigationController(rootViewController: controller)
             nav.modalPresentationStyle = .fullScreen

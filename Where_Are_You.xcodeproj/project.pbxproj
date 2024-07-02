@@ -40,6 +40,8 @@
 		99C9B24E2C01ECCE008D7CBD /* NotoSansKR-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99C9B24C2C01DDF7008D7CBD /* NotoSansKR-Medium.ttf */; };
 		99C9B2502C0229CF008D7CBD /* AccountLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B24F2C0229CF008D7CBD /* AccountLoginView.swift */; };
 		99C9B2522C022DE3008D7CBD /* AccountLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2512C022DE3008D7CBD /* AccountLoginController.swift */; };
+		99CA4F262C33B704007C027C /* PasswordResetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CA4F252C33B704007C027C /* PasswordResetViewModel.swift */; };
+		99CA4F282C33B72C007C027C /* ResetPasswordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CA4F272C33B72C007C027C /* ResetPasswordUseCase.swift */; };
 		99D11EB12C06F56F006BE265 /* Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D11EB02C06F56F006BE265 /* Custom.swift */; };
 		99E755512C22E66F0016A0A6 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E755502C22E66F0016A0A6 /* APIService.swift */; };
 		99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */; };
@@ -95,6 +97,8 @@
 		99C9B24C2C01DDF7008D7CBD /* NotoSansKR-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.ttf"; sourceTree = "<group>"; };
 		99C9B24F2C0229CF008D7CBD /* AccountLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLoginView.swift; sourceTree = "<group>"; };
 		99C9B2512C022DE3008D7CBD /* AccountLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLoginController.swift; sourceTree = "<group>"; };
+		99CA4F252C33B704007C027C /* PasswordResetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetViewModel.swift; sourceTree = "<group>"; };
+		99CA4F272C33B72C007C027C /* ResetPasswordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordUseCase.swift; sourceTree = "<group>"; };
 		99D11EB02C06F56F006BE265 /* Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Custom.swift; sourceTree = "<group>"; };
 		99E755502C22E66F0016A0A6 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
@@ -321,6 +325,7 @@
 				99EC20AA2C0D9D9D0018904D /* SignUpViewModel.swift */,
 				99C9B2412C01CE4C008D7CBD /* AccountLoginViewModel.swift */,
 				99EC20AC2C0D9DB50018904D /* FindIDViewModel.swift */,
+				99CA4F252C33B704007C027C /* PasswordResetViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -356,6 +361,7 @@
 				99E8BC442C2D26CF00536B95 /* VerifyEmailCodeUseCase.swift */,
 				990F57902C27ECDC00F6E1AD /* SignUpUseCase.swift */,
 				997746A42C329D68004FB0DF /* FindUserIDUseCase.swift */,
+				99CA4F272C33B72C007C027C /* ResetPasswordUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -552,6 +558,7 @@
 				99EC78CE2C11DBA5007C4415 /* ResetPasswordViewController.swift in Sources */,
 				99B397832C0C3E9D00D7A109 /* CheckIDView.swift in Sources */,
 				99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */,
+				99CA4F282C33B72C007C027C /* ResetPasswordUseCase.swift in Sources */,
 				99938EE02C0C8B9D00239FA1 /* SearchPasswordViewController.swift in Sources */,
 				99C9B2522C022DE3008D7CBD /* AccountLoginController.swift in Sources */,
 				99F78F1C2C09BB8F004C0C72 /* SearchAccountController.swift in Sources */,
@@ -560,6 +567,7 @@
 				9950C6592C10B0DF003155A7 /* SignUpFormView.swift in Sources */,
 				99EC20AB2C0D9D9D0018904D /* SignUpViewModel.swift in Sources */,
 				99EC20AD2C0D9DB50018904D /* FindIDViewModel.swift in Sources */,
+				99CA4F262C33B704007C027C /* PasswordResetViewModel.swift in Sources */,
 				99EC78D62C11E8A3007C4415 /* FinishRegisterViewController.swift in Sources */,
 				99C9B2322C01A45C008D7CBD /* Extensions.swift in Sources */,
 				990F579A2C27EEF400F6E1AD /* UserRepository.swift in Sources */,
