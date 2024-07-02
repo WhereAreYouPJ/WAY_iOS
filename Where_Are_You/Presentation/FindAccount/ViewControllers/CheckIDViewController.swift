@@ -11,6 +11,7 @@ import SnapKit
 class CheckIDViewController: UIViewController {
     // MARK: - Propeties
     let checkIDView = CheckIDView()
+    var userId = ""
     
     // MARK: - Lifecycle
     override func viewDidLoad() {

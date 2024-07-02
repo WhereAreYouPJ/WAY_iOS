@@ -12,6 +12,7 @@ class FindIDViewController: UIViewController {
     // MARK: - Properties
     let searchIDView = SearchAuthView()
     private var viewModel: FindIDViewModel!
+    var userId = ""
     
     // MARK: - Lifecycle
     
@@ -29,12 +30,10 @@ class FindIDViewController: UIViewController {
         let apiService = APIService()
         let userRepository = UserRepository(apiService: apiService)
         let sendEmailVerificationCodeUseCase = SendEmailVerificationCodeUseCaseImpl(userRepository: userRepository)
-        let verifyEmailCodeUseCase = VerifyEmailCodeUseCaseImpl(userRepository: userRepository)
         let findUserIDUseCase = FindUserIDUseCaseImpl(userRepository: userRepository)
         
         viewModel = FindIDViewModel(
             sendEmailVerificationCodeUseCase: sendEmailVerificationCodeUseCase,
-            verifyEmailCodeUseCase: verifyEmailCodeUseCase,
             findUserIDUseCase: findUserIDUseCase
         )
     }
@@ -74,10 +73,10 @@ class FindIDViewController: UIViewController {
         }
         
         // 아이디 찾기 성공
-        viewModel.onFindIDSuccess = { [weak self] userID in
+        viewModel.onFindIDSuccess = { [weak self] userId in
             DispatchQueue.main.async {
                 // 여기의 userid를 다음 화면에 넘기기
-                self?.showAlert(title: "아이디 찾기 성공", message: "회원님의 아이디는 \(userID) 입니다.")
+                self?.userId = userId
             }
         }
         
@@ -118,7 +117,16 @@ class FindIDViewController: UIViewController {
     }
     
     @objc func confirmButtonTapped() {
-        // 다음화면 userid 데이터를 가지고 넘어가야함
+        if userId.isEmpty {
+            showAlert(title: "아이디 찾기 실패", message: "아이디가 존재하지 않습니다.")
+        } else {
+            // 다음화면 userid 데이터를 가지고 넘어가야함
+            let controller = CheckIDViewController()
+            controller.userId = userId
+            let nav = UINavigationController(rootViewController: controller)
+            nav.modalPresentationStyle = .fullScreen
+            self.present(nav, animated: true, completion: nil)
+        }
     }
     
     private func showAlert(title: String, message: String) {

@@ -11,7 +11,6 @@ class FindIDViewModel {
     
     // MARK: - Properties
     private let sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase
-    private let verifyEmailCodeUseCase: VerifyEmailCodeUseCase
     private let findUserIDUseCase: FindUserIDUseCase
     
     var email: String = ""
@@ -33,10 +32,8 @@ class FindIDViewModel {
     // MARK: - LifeCycle
     
     init(sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase,
-         verifyEmailCodeUseCase: VerifyEmailCodeUseCase,
          findUserIDUseCase: FindUserIDUseCase) {
         self.sendEmailVerificationCodeUseCase = sendEmailVerificationCodeUseCase
-        self.verifyEmailCodeUseCase = verifyEmailCodeUseCase
         self.findUserIDUseCase = findUserIDUseCase
     }
     
@@ -67,8 +64,8 @@ class FindIDViewModel {
         } else {
             findUserIDUseCase.execute(email: email, code: code) { [weak self] result in
                 switch result {
-                case .success(let userID):
-                    self?.onFindIDSuccess?(userID)
+                case .success(let userId):
+                    self?.onFindIDSuccess?(userId)
                 case .failure(let error):
                     self?.onFindIDFailure?(error.localizedDescription)
                 }

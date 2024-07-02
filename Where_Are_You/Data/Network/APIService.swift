@@ -86,10 +86,10 @@ class APIService: APIServiceProtocol {
         let parameters: [String: Any] = ["email": email, "code": code]
             AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
                 .validate(statusCode: 200..<300)
-                .responseDecodable(of: FindUserIDResponse.self) { response in
+                .responseDecodable(of: GenericResponse<FindIDResponse>.self) { response in
                     switch response.result {
                     case .success(let data):
-                        completion(.success(data.userID))
+                        completion(.success(data.data.userId))
                     case .failure(let error):
                         completion(.failure(error))
                     }
@@ -131,6 +131,3 @@ class APIService: APIServiceProtocol {
 }
 
 struct EmptyResponse: Decodable {}
-struct FindUserIDResponse: Decodable {
-    let userID: String
-}
