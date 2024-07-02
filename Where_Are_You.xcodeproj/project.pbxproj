@@ -143,33 +143,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		990F57A62C28028100F6E1AD /* SignUp */ = {
-			isa = PBXGroup;
-			children = (
-				990F579E2C27F86A00F6E1AD /* CheckUserIDAvailabilityUseCase.swift */,
-				990F57A22C27F9FE00F6E1AD /* CheckEmailAvailabilityUseCase.swift */,
-				990F57B12C282C5900F6E1AD /* SendEmailVerificationCodeUseCase.swift */,
-				99E8BC442C2D26CF00536B95 /* VerifyEmailCodeUseCase.swift */,
-				990F57902C27ECDC00F6E1AD /* SignUpUseCase.swift */,
-			);
-			path = SignUp;
-			sourceTree = "<group>";
-		};
-		990F57A72C2802A300F6E1AD /* Email */ = {
-			isa = PBXGroup;
-			children = (
-				997746A42C329D68004FB0DF /* FindUserIDUseCase.swift */,
-			);
-			path = Email;
-			sourceTree = "<group>";
-		};
-		990F57A82C2802B800F6E1AD /* Password */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Password;
-			sourceTree = "<group>";
-		};
 		9950C64C2C102E18003155A7 /* SingUp */ = {
 			isa = PBXGroup;
 			children = (
@@ -377,9 +350,12 @@
 		99EC209F2C0D8DEC0018904D /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				990F57A62C28028100F6E1AD /* SignUp */,
-				990F57A72C2802A300F6E1AD /* Email */,
-				990F57A82C2802B800F6E1AD /* Password */,
+				990F579E2C27F86A00F6E1AD /* CheckUserIDAvailabilityUseCase.swift */,
+				990F57A22C27F9FE00F6E1AD /* CheckEmailAvailabilityUseCase.swift */,
+				990F57B12C282C5900F6E1AD /* SendEmailVerificationCodeUseCase.swift */,
+				99E8BC442C2D26CF00536B95 /* VerifyEmailCodeUseCase.swift */,
+				990F57902C27ECDC00F6E1AD /* SignUpUseCase.swift */,
+				997746A42C329D68004FB0DF /* FindUserIDUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";

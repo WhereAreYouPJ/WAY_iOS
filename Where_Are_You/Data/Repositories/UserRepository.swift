@@ -13,7 +13,7 @@ protocol UserRepositoryProtocol {
     func checkEmailAvailability(email: String, completion: @escaping (Result<Void, Error>) -> Void)
     func sendEmailVerificationCode(email: String, completion: @escaping (Result<Void, Error>) -> Void)
     func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func findUserID(email: String, completion: @escaping (Result<String, Error>) -> Void)
+    func findUserID(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void)
 }
 
 class UserRepository: UserRepositoryProtocol {
@@ -44,7 +44,7 @@ class UserRepository: UserRepositoryProtocol {
         apiService.verifyEmailCode(email: email, code: code, completion: completion)
     }
     
-    func findUserID(email: String, completion: @escaping (Result<String, Error>) -> Void) {
-        apiService.findUserID(email: email, completion: completion)
+    func findUserID(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void) {
+        apiService.findUserID(email: email, code: code, completion: completion)
     }
 }

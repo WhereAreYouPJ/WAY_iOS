@@ -8,7 +8,7 @@
 import Foundation
 
 protocol FindUserIDUseCase {
-    func execute(email: String, completion: @escaping (Result<String, Error>) -> Void)
+    func execute(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void)
 }
 
 class FindUserIDUseCaseImpl: FindUserIDUseCase {
@@ -18,7 +18,7 @@ class FindUserIDUseCaseImpl: FindUserIDUseCase {
         self.userRepository = userRepository
     }
     
-    func execute(email: String, completion: @escaping (Result<String, Error>) -> Void) {
-        userRepository.findUserID(email: email, completion: completion)
+    func execute(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void) {
+        userRepository.findUserID(email: email, code: code, completion: completion)
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 class FindIDViewModel {
     
     // MARK: - Properties
-    private let requestEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase
+    private let sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase
     private let verifyEmailCodeUseCase: VerifyEmailCodeUseCase
     private let findUserIDUseCase: FindUserIDUseCase
     
@@ -32,26 +32,27 @@ class FindIDViewModel {
     
     // MARK: - LifeCycle
     
-    init(requestEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase,
+    init(sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase,
          verifyEmailCodeUseCase: VerifyEmailCodeUseCase,
          findUserIDUseCase: FindUserIDUseCase) {
-        self.requestEmailVerificationCodeUseCase = requestEmailVerificationCodeUseCase
+        self.sendEmailVerificationCodeUseCase = sendEmailVerificationCodeUseCase
         self.verifyEmailCodeUseCase = verifyEmailCodeUseCase
         self.findUserIDUseCase = findUserIDUseCase
     }
     
     // MARK: - Helpers
     
-    func requestEmailVerificationCode() {
+    func sendEmailVerificationCode(email: String) {
         guard isValidEmail(email) else {
             onRequestCodeFailure?("이메일 형식에 알맞지 않습니다.")
             return
         }
         
-        requestEmailVerificationCodeUseCase.execute(email: email) { [weak self] result in
+        sendEmailVerificationCodeUseCase.execute(email: email) { [weak self] result in
             switch result {
             case .success:
                 self?.onRequestCodeSuccess?()
+                self?.email = email
                 self?.startTimer()
             case .failure(let error):
                 self?.onRequestCodeFailure?(error.localizedDescription)
@@ -59,28 +60,18 @@ class FindIDViewModel {
         }
     }
     
-    func verifyEmailCode(code: String) {
+    // 수정해야하는 부분(userid 받을수 있게 response 수정 해야함)
+    func findUserID(code: String) {
         if timerCount == 0 {
             self.onVerifyCodeFailure?("이메일 재인증 요청이 필요합니다.")
         } else {
-            verifyEmailCodeUseCase.execute(email: email, code: code) { [weak self] result in
+            findUserIDUseCase.execute(email: email, code: code) { [weak self] result in
                 switch result {
-                case .success:
-                    self?.onVerifyCodeSuccess?()
+                case .success(let userID):
+                    self?.onFindIDSuccess?(userID)
                 case .failure(let error):
-                    self?.onVerifyCodeFailure?(error.localizedDescription)
+                    self?.onFindIDFailure?(error.localizedDescription)
                 }
-            }
-        }
-    }
-    
-    func findUserID() {
-        findUserIDUseCase.execute(email: email) { [weak self] result in
-            switch result {
-            case .success(let userID):
-                self?.onFindIDSuccess?(userID)
-            case .failure(let error):
-                self?.onFindIDFailure?(error.localizedDescription)
             }
         }
     }

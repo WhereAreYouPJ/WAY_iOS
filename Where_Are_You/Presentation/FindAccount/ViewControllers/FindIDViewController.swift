@@ -28,12 +28,12 @@ class FindIDViewController: UIViewController {
     private func setupViewModel() {
         let apiService = APIService()
         let userRepository = UserRepository(apiService: apiService)
-        let requestEmailVerificationCodeUseCase = SendEmailVerificationCodeUseCaseImpl(userRepository: userRepository)
+        let sendEmailVerificationCodeUseCase = SendEmailVerificationCodeUseCaseImpl(userRepository: userRepository)
         let verifyEmailCodeUseCase = VerifyEmailCodeUseCaseImpl(userRepository: userRepository)
         let findUserIDUseCase = FindUserIDUseCaseImpl(userRepository: userRepository)
         
         viewModel = FindIDViewModel(
-            requestEmailVerificationCodeUseCase: requestEmailVerificationCodeUseCase,
+            sendEmailVerificationCodeUseCase: sendEmailVerificationCodeUseCase,
             verifyEmailCodeUseCase: verifyEmailCodeUseCase,
             findUserIDUseCase: findUserIDUseCase
         )
@@ -43,6 +43,7 @@ class FindIDViewController: UIViewController {
         // 인증코드 요청 성공
         viewModel.onRequestCodeSuccess = { [weak self] in
             DispatchQueue.main.async {
+                self?.viewModel.email = self?.searchIDView.emailTextField.text ?? ""
                 self?.searchIDView.emailErrorLabel.text = "인증코드가 전송되었습니다."
                 self?.searchIDView.emailErrorLabel.textColor = .brandColor
             }
@@ -75,6 +76,7 @@ class FindIDViewController: UIViewController {
         // 아이디 찾기 성공
         viewModel.onFindIDSuccess = { [weak self] userID in
             DispatchQueue.main.async {
+                // 여기의 userid를 다음 화면에 넘기기
                 self?.showAlert(title: "아이디 찾기 성공", message: "회원님의 아이디는 \(userID) 입니다.")
             }
         }
@@ -97,7 +99,7 @@ class FindIDViewController: UIViewController {
     private func setupActions() {
         searchIDView.bottomButtonView.button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
         searchIDView.requestAuthButton.addTarget(self, action: #selector(requestAuthCodeTapped), for: .touchUpInside)
-        searchIDView.authNumberCheckButton.addTarget(self, action: #selector(checkAuthCodeTapped), for: .touchUpInside)
+        searchIDView.authNumberCheckButton.addTarget(self, action: #selector(findUserId), for: .touchUpInside)
     }
     
     // MARK: - Selectors
@@ -105,18 +107,18 @@ class FindIDViewController: UIViewController {
         dismiss(animated: true)
     }
     
-    @objc func confirmButtonTapped() {
-        viewModel.findUserID()
-    }
-    
     @objc private func requestAuthCodeTapped() {
-        viewModel.email = searchIDView.emailTextField.text ?? ""
-        viewModel.requestEmailVerificationCode()
+        let email = searchIDView.emailTextField.text ?? ""
+        viewModel.sendEmailVerificationCode(email: email)
     }
     
-    @objc private func checkAuthCodeTapped() {
+    @objc private func findUserId() {
         let code = searchIDView.authNumberTextField.text ?? ""
-        viewModel.verifyEmailCode(code: code)
+        viewModel.findUserID(code: code)
+    }
+    
+    @objc func confirmButtonTapped() {
+        // 다음화면 userid 데이터를 가지고 넘어가야함
     }
     
     private func showAlert(title: String, message: String) {
