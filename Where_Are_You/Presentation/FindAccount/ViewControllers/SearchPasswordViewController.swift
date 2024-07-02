@@ -13,6 +13,7 @@ class SearchPasswordViewController: UIViewController {
     // MARK: - Properties
     
     let searchPasswordView = SearchAuthView()
+    private var viewModel: PasswordResetViewModel!
     
     // MARK: - Lifecycle
     
@@ -23,6 +24,28 @@ class SearchPasswordViewController: UIViewController {
         setupUI()
         configureNavigationBar(title: "비밀번호 찾기", backButtonAction: #selector(backButtonTapped))
         buttonActions()
+    }
+    
+    // MARK: - Helpers
+    
+    func setupUI() {
+        searchPasswordView.emailLabel.label.text = "아이디"
+        searchPasswordView.emailTextField.placeholder = "아이디"
+    }
+    
+    func setupViewModel() {
+        let apiService = APIService()
+        let userRepository = UserRepository(apiService: apiService)
+        let sendEmailVerificationCodeUseCase = SendEmailVerificationCodeUseCaseImpl(userRepository: userRepository)
+        let verifyEmailCodeUseCase = VerifyEmailCodeUseCaseImpl(userRepository: userRepository)
+        
+        viewModel = PasswordResetViewModel(
+            sendEmailVerificationCodeUseCase: sendEmailVerificationCodeUseCase,
+            verifyEmailCodeUseCase: verifyEmailCodeUseCase)
+    }
+    
+    func buttonActions() {
+        searchPasswordView.bottomButtonView.button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Selectors
@@ -38,14 +61,5 @@ class SearchPasswordViewController: UIViewController {
         present(nav, animated: true, completion: nil)
     }
     
-    // MARK: - Helpers
     
-    func setupUI() {
-        searchPasswordView.emailLabel.label.text = "아이디"
-        searchPasswordView.emailTextField.placeholder = "아이디"
-    }
-    
-    func buttonActions() {
-        searchPasswordView.bottomButtonView.button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
-    }
 }
