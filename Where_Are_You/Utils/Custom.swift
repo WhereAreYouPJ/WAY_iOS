@@ -100,7 +100,7 @@ class CustomButtonFindAccount: UIButton {
 
 // MARK: - Box Button
 class CustomButton: UIButton {
-
+    
     init(title: String, backgroundColor: UIColor, titleColor: UIColor, font: UIFont, image: UIImage? = nil) {
         super.init(frame: .zero)
         setupButton(title: title, backgroundColor: backgroundColor, titleColor: titleColor, font: font, image: image)
@@ -111,24 +111,37 @@ class CustomButton: UIButton {
     }
     
     private func setupButton(title: String, backgroundColor: UIColor, titleColor: UIColor, font: UIFont, image: UIImage?) {
-        self.setTitle(title, for: .normal)
-        self.backgroundColor = backgroundColor
-        self.setTitleColor(titleColor, for: .normal)
-        self.titleLabel?.font = UIFontMetrics.default.scaledFont(for: font)
-        self.layer.cornerRadius = 7
-        self.clipsToBounds = true
-        self.titleLabel?.adjustsFontForContentSizeCategory = true
+        var configuration = UIButton.Configuration.filled()
+        configuration.title = title
+        configuration.baseBackgroundColor = backgroundColor
+        configuration.baseForegroundColor = titleColor
+        configuration.image = image
+        configuration.imagePadding = 8 // 이미지와 타이틀 사이의 간격
+        configuration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+        configuration.cornerStyle = .medium
         
-        if let image = image {
-            self.setImage(image, for: .normal)
-            self.imageView?.contentMode = .scaleAspectFit
-            self.contentHorizontalAlignment = .center
-            self.contentEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-            self.imageEdgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 0)
-            self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
-        } else {
-            self.contentHorizontalAlignment = .center
-        }
+        self.configuration = configuration
+        self.titleLabel?.font = UIFontMetrics.default.scaledFont(for: font)
+        self.titleLabel?.adjustsFontForContentSizeCategory = true
+        self.clipsToBounds = true
+        //        self.setTitle(title, for: .normal)
+        //        self.backgroundColor = backgroundColor
+        //        self.setTitleColor(titleColor, for: .normal)
+        //        self.titleLabel?.font = UIFontMetrics.default.scaledFont(for: font)
+        //        self.layer.cornerRadius = 7
+        //        self.clipsToBounds = true
+        //        self.titleLabel?.adjustsFontForContentSizeCategory = true
+        //
+        //        if let image = image {
+        //            self.setImage(image, for: .normal)
+        //            self.imageView?.contentMode = .scaleAspectFit
+        //            self.contentHorizontalAlignment = .center
+        //            self.contentEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        //            self.imageEdgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 0)
+        //            self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
+        //        } else {
+        //            self.contentHorizontalAlignment = .center
+        //        }
     }
 }
 
