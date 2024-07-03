@@ -56,7 +56,7 @@ class UserIdEmailVerificaitonViewModel {
         } else {
             verifyEmailCodeUseCase.execute(userId: userId, code: code) { [weak self] result in
                 switch result {
-                case .success(let userId):
+                case .success:
                     self?.onVerifyCodeSuccess?("인증코드가 확인되었습니다.")
                     self?.okayToMove = true
                 case .failure(let error):

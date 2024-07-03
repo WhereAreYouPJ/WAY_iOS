@@ -100,8 +100,9 @@ class SearchPasswordViewController: UIViewController {
     }
     
     func setupActions() {
-        searchPasswordView.bottomButtonView.button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
         searchPasswordView.requestAuthButton.addTarget(self, action: #selector(requestAuth), for: .touchUpInside)
+        searchPasswordView.authNumberCheckButton.addTarget(self, action: #selector(authCodeCheck), for: .touchUpInside)
+        searchPasswordView.bottomButtonView.button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Selectors
@@ -113,6 +114,11 @@ class SearchPasswordViewController: UIViewController {
     @objc func requestAuth() {
         guard let userId = searchPasswordView.emailTextField.text else { return }
         viewModel.sendEmailVerificationCode(userId: userId)
+    }
+    
+    @objc func authCodeCheck() {
+        guard let code = searchPasswordView.authNumberTextField.text else { return }
+        viewModel.verifyEmailCode(code: code)
     }
     
     @objc func confirmButtonTapped() {

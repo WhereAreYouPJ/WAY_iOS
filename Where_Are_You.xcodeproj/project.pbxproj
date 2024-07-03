@@ -40,7 +40,7 @@
 		99C9B24E2C01ECCE008D7CBD /* NotoSansKR-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99C9B24C2C01DDF7008D7CBD /* NotoSansKR-Medium.ttf */; };
 		99C9B2502C0229CF008D7CBD /* AccountLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B24F2C0229CF008D7CBD /* AccountLoginView.swift */; };
 		99C9B2522C022DE3008D7CBD /* AccountLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2512C022DE3008D7CBD /* AccountLoginController.swift */; };
-		99CA4F262C33B704007C027C /* PasswordResetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CA4F252C33B704007C027C /* PasswordResetViewModel.swift */; };
+		99CA4F262C33B704007C027C /* ResetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CA4F252C33B704007C027C /* ResetPasswordViewModel.swift */; };
 		99CA4F282C33B72C007C027C /* ResetPasswordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CA4F272C33B72C007C027C /* ResetPasswordUseCase.swift */; };
 		99CA4F2C2C33EB7F007C027C /* UserIdEmailVerificaitonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CA4F2B2C33EB7F007C027C /* UserIdEmailVerificaitonViewModel.swift */; };
 		99D11EB12C06F56F006BE265 /* Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D11EB02C06F56F006BE265 /* Custom.swift */; };
@@ -98,7 +98,7 @@
 		99C9B24C2C01DDF7008D7CBD /* NotoSansKR-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.ttf"; sourceTree = "<group>"; };
 		99C9B24F2C0229CF008D7CBD /* AccountLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLoginView.swift; sourceTree = "<group>"; };
 		99C9B2512C022DE3008D7CBD /* AccountLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLoginController.swift; sourceTree = "<group>"; };
-		99CA4F252C33B704007C027C /* PasswordResetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetViewModel.swift; sourceTree = "<group>"; };
+		99CA4F252C33B704007C027C /* ResetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewModel.swift; sourceTree = "<group>"; };
 		99CA4F272C33B72C007C027C /* ResetPasswordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordUseCase.swift; sourceTree = "<group>"; };
 		99CA4F2B2C33EB7F007C027C /* UserIdEmailVerificaitonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdEmailVerificaitonViewModel.swift; sourceTree = "<group>"; };
 		99D11EB02C06F56F006BE265 /* Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Custom.swift; sourceTree = "<group>"; };
@@ -328,7 +328,7 @@
 				99C9B2412C01CE4C008D7CBD /* AccountLoginViewModel.swift */,
 				99EC20AC2C0D9DB50018904D /* FindIDViewModel.swift */,
 				99CA4F2B2C33EB7F007C027C /* UserIdEmailVerificaitonViewModel.swift */,
-				99CA4F252C33B704007C027C /* PasswordResetViewModel.swift */,
+				99CA4F252C33B704007C027C /* ResetPasswordViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -571,7 +571,7 @@
 				9950C6592C10B0DF003155A7 /* SignUpFormView.swift in Sources */,
 				99EC20AB2C0D9D9D0018904D /* SignUpViewModel.swift in Sources */,
 				99EC20AD2C0D9DB50018904D /* FindIDViewModel.swift in Sources */,
-				99CA4F262C33B704007C027C /* PasswordResetViewModel.swift in Sources */,
+				99CA4F262C33B704007C027C /* ResetPasswordViewModel.swift in Sources */,
 				99EC78D62C11E8A3007C4415 /* FinishRegisterViewController.swift in Sources */,
 				99C9B2322C01A45C008D7CBD /* Extensions.swift in Sources */,
 				990F579A2C27EEF400F6E1AD /* UserRepository.swift in Sources */,

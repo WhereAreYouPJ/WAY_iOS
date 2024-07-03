@@ -7,15 +7,20 @@
 
 import Foundation
 
-class PasswordResetViewModel {
+class ResetPasswordViewModel {
     
     // MARK: - Properties
     private let resetPasswordUseCase: ResetPasswordUseCase
     
     var userId: String = ""
+    var password: String = ""
+    var checkPassword: String = ""
     
     var onResetPasswordSuccess: (() -> Void)?
     var onResetPasswordFailure: ((String) -> Void)?
+    
+    var onCheckPasswordForm: ((String, Bool) -> Void)?
+    var onCheckSamePassword: ((String, Bool) -> Void)?
     
     init(resetPasswordUseCase: ResetPasswordUseCase) {
         self.resetPasswordUseCase = resetPasswordUseCase
@@ -24,22 +29,38 @@ class PasswordResetViewModel {
     // 이전의 확인받은 userID와 패스워드 체크 패스워드 입력해서 변경하기
     func resetPassword(password: String, checkPassword: String) {
         guard isValidPassword(password) else {
-            onResetPasswordFailure?("비밀번호를 확인해주세요.")
+            onResetPasswordFailure?("비밀번호를 다시 한번 확인해 주세요")
             return
         }
         
         guard password == checkPassword else {
-            onResetPasswordFailure?("비밀번호가 일치하지 않습니다.")
+            onResetPasswordFailure?("비밀번호를 다시 한번 확인해 주세요")
             return
         }
         
         resetPasswordUseCase.execute(userId: userId, password: password, checkPassword: checkPassword) { [weak self] result in
             switch result {
-            case .success():
+            case .success:
                 self?.onResetPasswordSuccess?()
             case .failure(let error):
                 self?.onResetPasswordFailure?(error.localizedDescription)
             }
+        }
+    }
+    
+    func checkPasswordForm(pw: String) {
+        if isValidPassword(pw) {
+            onCheckPasswordForm?("", true)
+        } else {
+            onCheckPasswordForm?("", false)
+        }
+    }
+    
+    func checkSamePassword(pw: String, checkpw: String) {
+        if isPasswordSame(pw, checkpw: checkpw) {
+            onCheckSamePassword?("", true)
+        } else {
+            onCheckSamePassword?("", false)
         }
     }
     
