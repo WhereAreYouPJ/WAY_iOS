@@ -93,7 +93,7 @@ class ResetPasswordViewController: UIViewController {
     @objc func confirmButtonTapped() {
         guard let pw = resetPasswordView.resetPasswordTextField.text,
               let checkpw = resetPasswordView.checkPasswordTextField.text else { return }
-        viewModel.resetPassword(password: pw, checkPassword: checkpw)
+        viewModel.resetPassword(userId: userId, password: pw, checkPassword: checkpw)
     }
     
     private func showAlert(title: String, message: String) {

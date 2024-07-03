@@ -86,7 +86,7 @@ class APIService: APIServiceProtocol {
     
     func verifyEmailCode(userId: String, code: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let parameters: [String: String] = ["userId": userId, "code": code]
-        requestAPI(endpoint: "/member/email/verify",
+        requestAPI(endpoint: "/member/email/verifyPassword",
                    method: .post,
                    parameters: parameters,
                    expectedErrorCodes: [400: "인증코드가 알맞지 않습니다."],

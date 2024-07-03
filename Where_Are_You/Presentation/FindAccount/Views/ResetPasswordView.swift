@@ -50,6 +50,9 @@ class ResetPasswordView: UIView {
     
     // MARK: - Helpers
     func constraints() {
+        resetPasswordTextField.isSecureTextEntry = true
+        checkPasswordTextField.isSecureTextEntry = true
+        
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(34)

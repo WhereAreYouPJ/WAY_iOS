@@ -38,12 +38,9 @@ class SearchPasswordViewController: UIViewController {
     func setupViewModel() {
         let apiService = APIService()
         let userRepository = UserRepository(apiService: apiService)
-        let sendEmailVerificationCodeUseCase = SendEmailVerificationCodeUseCaseImpl(userRepository: userRepository)
-        let verifyEmailCodeUseCase = VerifyEmailCodeUseCaseImpl(userRepository: userRepository)
-        
         viewModel = UserIdEmailVerificaitonViewModel(
-            sendEmailVerificationCodeUseCase: sendEmailVerificationCodeUseCase,
-            verifyEmailCodeUseCase: verifyEmailCodeUseCase)
+            sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCaseImpl(userRepository: userRepository),
+            verifyEmailCodeUseCase: VerifyEmailCodeUseCaseImpl(userRepository: userRepository))
     }
     
     func setupBindings() {
