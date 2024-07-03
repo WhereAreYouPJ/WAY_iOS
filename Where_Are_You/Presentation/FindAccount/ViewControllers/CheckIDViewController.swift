@@ -11,7 +11,7 @@ import SnapKit
 class CheckIDViewController: UIViewController {
     // MARK: - Propeties
     let checkIDView = CheckIDView()
-    var userId: String
+    var userId: String = ""
     
     // MARK: - Lifecycle
     init(userId: String) {
@@ -33,7 +33,7 @@ class CheckIDViewController: UIViewController {
     
     func setupUI() {
         configureNavigationBar(title: "아이디 찾기", showBackButton: false)
-        checkIDView.idDescriptionLabel.text = userId
+        checkIDView.idDescriptionLabel.label.text = userId
     }
     
     func buttonActions() {

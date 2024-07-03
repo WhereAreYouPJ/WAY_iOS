@@ -15,7 +15,7 @@ class CheckIDView: UIView {
     
     private let idLabel = CustomLabel(UILabel_NotoSans: .medium, text: "회원님의 아이디는", textColor: .color34, fontSize: 14)
     
-    lazy var idDescriptionLabel = CustomLabel(UILabel_NotoSans: .bold, text: "qwer0865", textColor: .letterBrandColor, fontSize: 18)
+    lazy var idDescriptionLabel = CustomLabel(UILabel_NotoSans: .bold, text: "", textColor: .letterBrandColor, fontSize: 18)
         
     private let idLabel2 = CustomLabel(UILabel_NotoSans: .medium, text: "입니다.", textColor: .color34, fontSize: 14)
     
