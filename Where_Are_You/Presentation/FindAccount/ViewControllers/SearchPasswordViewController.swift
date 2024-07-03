@@ -13,17 +13,18 @@ class SearchPasswordViewController: UIViewController {
     // MARK: - Properties
     
     let searchPasswordView = SearchAuthView()
-    private var viewModel: PasswordResetViewModel!
+    private var viewModel: UserIdEmailVerificaitonViewModel!
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view = searchPasswordView
+        view = searchPasswordView
         
         setupUI()
-        configureNavigationBar(title: "비밀번호 찾기", backButtonAction: #selector(backButtonTapped))
-        buttonActions()
+        setupViewModel()
+        setupBindings()
+        setupActions()
     }
     
     // MARK: - Helpers
@@ -31,6 +32,7 @@ class SearchPasswordViewController: UIViewController {
     func setupUI() {
         searchPasswordView.emailLabel.label.text = "아이디"
         searchPasswordView.emailTextField.placeholder = "아이디"
+        configureNavigationBar(title: "비밀번호 찾기", backButtonAction: #selector(backButtonTapped))
     }
     
     func setupViewModel() {
@@ -39,13 +41,67 @@ class SearchPasswordViewController: UIViewController {
         let sendEmailVerificationCodeUseCase = SendEmailVerificationCodeUseCaseImpl(userRepository: userRepository)
         let verifyEmailCodeUseCase = VerifyEmailCodeUseCaseImpl(userRepository: userRepository)
         
-        viewModel = PasswordResetViewModel(
+        viewModel = UserIdEmailVerificaitonViewModel(
             sendEmailVerificationCodeUseCase: sendEmailVerificationCodeUseCase,
             verifyEmailCodeUseCase: verifyEmailCodeUseCase)
     }
     
-    func buttonActions() {
+    func setupBindings() {
+        // 인증코드 전송 결과
+        viewModel.onRequestCodeSuccess = { [weak self] message in
+            DispatchQueue.main.async {
+                self?.searchPasswordView.emailErrorLabel.text = message
+                self?.searchPasswordView.emailErrorLabel.textColor = .brandColor
+                self?.searchPasswordView.authStack.isHidden = false
+            }
+        }
+        
+        viewModel.onRequestCodeFailure = { [weak self] message in
+            DispatchQueue.main.async {
+                self?.searchPasswordView.emailErrorLabel.text = message
+                self?.searchPasswordView.emailErrorLabel.textColor = .warningColor
+                self?.searchPasswordView.authStack.isHidden = true
+            }
+        }
+        
+        // 인증코드 결과
+        viewModel.onVerifyCodeSuccess = { [weak self] message in
+            DispatchQueue.main.async {
+                self?.searchPasswordView.authNumberErrorLabel.text = message
+                self?.searchPasswordView.authNumberErrorLabel.textColor = .brandColor
+            }
+        }
+        
+        viewModel.onVerifyCodeFailure = { [weak self] message in
+            DispatchQueue.main.async {
+                self?.searchPasswordView.authNumberErrorLabel.text = message
+                self?.searchPasswordView.authNumberErrorLabel.textColor = .warningColor
+            }
+        }
+        
+        // 다음화면으로 넘어가기 버튼
+        viewModel.onVerifySuccess = { [weak self] in
+            DispatchQueue.main.async {
+                self?.navigateToResetPassword()
+            }
+        }
+    
+        viewModel.onVerifyFailure = { [weak self] message in
+            DispatchQueue.main.async {
+                self?.showAlert(title: "인증 실패", message: message)
+            }
+        }
+        
+        viewModel.onUpdateTimer = { [weak self] timeString in
+            DispatchQueue.main.async {
+                self?.searchPasswordView.timer.text = timeString
+            }
+        }
+    }
+    
+    func setupActions() {
         searchPasswordView.bottomButtonView.button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
+        searchPasswordView.requestAuthButton.addTarget(self, action: #selector(requestAuth), for: .touchUpInside)
     }
     
     // MARK: - Selectors
@@ -54,12 +110,26 @@ class SearchPasswordViewController: UIViewController {
         dismiss(animated: true)
     }
     
-    @objc func confirmButtonTapped() {
-        let controller = ResetPasswordViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
+    @objc func requestAuth() {
+        guard let userId = searchPasswordView.emailTextField.text else { return }
+        viewModel.sendEmailVerificationCode(userId: userId)
     }
     
+    @objc func confirmButtonTapped() {
+        viewModel.moveToReset()
+    }
     
+    private func navigateToResetPassword() {
+            let controller = ResetPasswordViewController()
+            controller.userId = viewModel.userId
+            let nav = UINavigationController(rootViewController: controller)
+            nav.modalPresentationStyle = .fullScreen
+            present(nav, animated: true, completion: nil)
+        }
+    
+    private func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alertController, animated: true)
+    }
 }

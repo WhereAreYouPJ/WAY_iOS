@@ -67,8 +67,6 @@ class UserRepository: UserRepositoryProtocol {
         apiService.findUserID(email: email, code: code, completion: completion)
     }
     
-    
-    
     func resetPassword(userId: String, password: String, checkPassword: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         apiService.resetPassword(userId: userId, password: password, checkPassword: checkPassword, completion: completion)
     }

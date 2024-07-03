@@ -327,8 +327,8 @@
 				99EC20AA2C0D9D9D0018904D /* SignUpViewModel.swift */,
 				99C9B2412C01CE4C008D7CBD /* AccountLoginViewModel.swift */,
 				99EC20AC2C0D9DB50018904D /* FindIDViewModel.swift */,
-				99CA4F252C33B704007C027C /* PasswordResetViewModel.swift */,
 				99CA4F2B2C33EB7F007C027C /* UserIdEmailVerificaitonViewModel.swift */,
+				99CA4F252C33B704007C027C /* PasswordResetViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";

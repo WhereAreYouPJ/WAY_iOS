@@ -18,8 +18,12 @@ class UserIdEmailVerificaitonViewModel {
     
     var onRequestCodeSuccess: ((String) -> Void)?
     var onRequestCodeFailure: ((String) -> Void)?
-    var onVerifyCodeSuccess: (() -> Void)?
+    var onVerifyCodeSuccess: ((String) -> Void)?
     var onVerifyCodeFailure: ((String) -> Void)?
+    var onVerifySuccess: (() -> Void)?
+    var onVerifyFailure: ((String) -> Void)?
+    
+    var okayToMove = false
     
     var onUpdateTimer: ((String) -> Void)?
     private var timer: Timer?
@@ -52,12 +56,21 @@ class UserIdEmailVerificaitonViewModel {
         } else {
             verifyEmailCodeUseCase.execute(userId: userId, code: code) { [weak self] result in
                 switch result {
-                case .success():
-                    self?.onVerifyCodeSuccess?()
+                case .success(let userId):
+                    self?.onVerifyCodeSuccess?("인증코드가 확인되었습니다.")
+                    self?.okayToMove = true
                 case .failure(let error):
                     self?.onVerifyCodeFailure?(error.localizedDescription)
                 }
             }
+        }
+    }
+    
+    func moveToReset() {
+        if okayToMove {
+            self.onVerifySuccess?()
+        } else {
+            self.onVerifyFailure?("아이디 혹은 인증코드를 다시 한번 확인해 주세요")
         }
     }
     

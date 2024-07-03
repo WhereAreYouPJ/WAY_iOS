@@ -48,6 +48,8 @@ class SearchAuthView: UIView {
         return label
     }()
     
+    var authStack = UIStackView()
+    
     let bottomButtonView = BottomButtonView(title: "확인")
     
     // MARK: - Lifecycle
@@ -55,6 +57,7 @@ class SearchAuthView: UIView {
         super.init(frame: frame)
         backgroundColor = .white
         setupUI()
+        authStack.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -86,7 +89,7 @@ class SearchAuthView: UIView {
             make.right.equalTo(authNumberTextField.snp.right).inset(11)
         }
         
-        let authStack = UIStackView(arrangedSubviews: [authBoxStack, authNumberErrorLabel])
+        authStack = UIStackView(arrangedSubviews: [authBoxStack, authNumberErrorLabel])
         authStack.axis = .vertical
         
         let stack = UIStackView(arrangedSubviews: [emailStack, authStack])

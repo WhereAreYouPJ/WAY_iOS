@@ -14,11 +14,12 @@ class FindIDViewModel {
     private let findUserIDUseCase: FindUserIDUseCase
     
     var email: String = ""
+    var userId: String = ""
     
     // Output
-    var onRequestCodeSuccess: (() -> Void)?
+    var onRequestCodeSuccess: ((String) -> Void)?
     var onRequestCodeFailure: ((String) -> Void)?
-    var onVerifyCodeSuccess: (() -> Void)?
+    var onVerifyCodeSuccess: ((String) -> Void)?
     var onVerifyCodeFailure: ((String) -> Void)?
     var onFindIDSuccess: ((String) -> Void)?
     var onFindIDFailure: ((String) -> Void)?
@@ -47,7 +48,7 @@ class FindIDViewModel {
         sendEmailVerificationCodeUseCase.execute(email: email) { [weak self] result in
             switch result {
             case .success:
-                self?.onRequestCodeSuccess?()
+                self?.onRequestCodeSuccess?("인증코드가 전송되었습니다.")
                 self?.email = email
                 self?.startTimer()
             case .failure(let error):
@@ -64,11 +65,20 @@ class FindIDViewModel {
             findUserIDUseCase.execute(email: email, code: code) { [weak self] result in
                 switch result {
                 case .success(let userId):
-                    self?.onFindIDSuccess?(userId)
+                    self?.userId = userId
+                    self?.onVerifyCodeSuccess?("인증코드가 확인되었습니다.")
                 case .failure(let error):
                     self?.onFindIDFailure?(error.localizedDescription)
                 }
             }
+        }
+    }
+    
+    func okayToMove() {
+        if !userId.isEmpty {
+            onFindIDSuccess?(userId)
+        } else {
+            onFindIDFailure?("이메일 혹은 인증코드를 다시 한번 확인해 주세요")
         }
     }
     

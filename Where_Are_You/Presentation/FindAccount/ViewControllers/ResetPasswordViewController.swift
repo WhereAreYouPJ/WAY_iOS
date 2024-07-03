@@ -11,6 +11,7 @@ class ResetPasswordViewController: UIViewController {
     // MARK: - Properties
     
     let resetPasswordView = ResetPasswordView()
+    var userId: String = ""
     
     // MARK: - Lifecycle
     override func viewDidLoad() {

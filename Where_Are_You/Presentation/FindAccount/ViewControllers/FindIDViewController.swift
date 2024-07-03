@@ -40,11 +40,11 @@ class FindIDViewController: UIViewController {
     
     private func setupBindings() {
         // 인증코드 요청 성공
-        viewModel.onRequestCodeSuccess = { [weak self] in
+        viewModel.onRequestCodeSuccess = { [weak self] message in
             DispatchQueue.main.async {
-                self?.viewModel.email = self?.searchIDView.emailTextField.text ?? ""
-                self?.searchIDView.emailErrorLabel.text = "인증코드가 전송되었습니다."
+                self?.searchIDView.emailErrorLabel.text = message
                 self?.searchIDView.emailErrorLabel.textColor = .brandColor
+                self?.searchIDView.authStack.isHidden = false
             }
         }
         
@@ -57,9 +57,9 @@ class FindIDViewController: UIViewController {
         }
         
         // 인증코드 확인 성공
-        viewModel.onVerifyCodeSuccess = { [weak self] in
+        viewModel.onVerifyCodeSuccess = { [weak self] message in
             DispatchQueue.main.async {
-                self?.searchIDView.authNumberErrorLabel.text = "인증코드가 확인되었습니다."
+                self?.searchIDView.authNumberErrorLabel.text = message
                 self?.searchIDView.authNumberErrorLabel.textColor = .brandColor
             }
         }
@@ -76,7 +76,11 @@ class FindIDViewController: UIViewController {
         viewModel.onFindIDSuccess = { [weak self] userId in
             DispatchQueue.main.async {
                 // 여기의 userid를 다음 화면에 넘기기
-                self?.userId = userId
+                let controller = CheckIDViewController(userId: userId)
+                controller.userId = userId
+                let nav = UINavigationController(rootViewController: controller)
+                nav.modalPresentationStyle = .fullScreen
+                self?.present(nav, animated: true, completion: nil)
             }
         }
         
@@ -117,16 +121,7 @@ class FindIDViewController: UIViewController {
     }
     
     @objc func confirmButtonTapped() {
-        if userId == "" {
-            showAlert(title: "아이디 찾기 실패", message: "아이디가 존재하지 않습니다.")
-        } else {
-            // 다음화면 userid 데이터를 가지고 넘어가야함
-            let controller = CheckIDViewController(userId: userId)
-            controller.userId = userId
-            let nav = UINavigationController(rootViewController: controller)
-            nav.modalPresentationStyle = .fullScreen
-            self.present(nav, animated: true, completion: nil)
-        }
+        viewModel.okayToMove()
     }
     
     private func showAlert(title: String, message: String) {
