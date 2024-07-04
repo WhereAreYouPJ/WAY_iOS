@@ -16,13 +16,13 @@ class CheckIDView: UIView {
     private let idLabel = CustomLabel(UILabel_NotoSans: .medium, text: "회원님의 아이디는", textColor: .color34, fontSize: 14)
     
     lazy var idDescriptionLabel = CustomLabel(UILabel_NotoSans: .bold, text: "", textColor: .letterBrandColor, fontSize: 18)
-        
+    
     private let idLabel2 = CustomLabel(UILabel_NotoSans: .medium, text: "입니다.", textColor: .color34, fontSize: 14)
     
     let separatorView = UIView()
     
     private let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: "로그인 또는 비밀번호 찾기 버튼을 눌러주세요.", textColor: .color102, fontSize: 14)
-        
+    
     lazy var loginButton = CustomButton(title: "로그인하기", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
     
     lazy var searchPasswordButton = CustomButton(title: "비밀번호 찾기", backgroundColor: .white, titleColor: .letterBrandColor, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))

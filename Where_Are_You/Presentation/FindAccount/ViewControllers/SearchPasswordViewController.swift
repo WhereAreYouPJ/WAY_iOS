@@ -82,7 +82,7 @@ class SearchPasswordViewController: UIViewController {
                 self?.navigateToResetPassword()
             }
         }
-    
+        
         viewModel.onVerifyFailure = { [weak self] message in
             DispatchQueue.main.async {
                 self?.showAlert(title: "인증 실패", message: message)
@@ -123,12 +123,12 @@ class SearchPasswordViewController: UIViewController {
     }
     
     private func navigateToResetPassword() {
-            let controller = ResetPasswordViewController()
-            controller.userId = viewModel.userId
-            let nav = UINavigationController(rootViewController: controller)
-            nav.modalPresentationStyle = .fullScreen
-            present(nav, animated: true, completion: nil)
-        }
+        let controller = ResetPasswordViewController()
+        controller.userId = viewModel.userId
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
+    }
     
     private func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)

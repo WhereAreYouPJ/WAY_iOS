@@ -39,7 +39,7 @@ class BottomButtonView: UIView {
             make.left.equalToSuperview()
             make.height.equalTo(1)
         }
-
+        
         addSubview(button)
         button.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -81,6 +81,7 @@ class CustomButtonFindAccount: UIButton {
         
         let stackView = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel])
         stackView.axis = .vertical
+        stackView.isUserInteractionEnabled = false
         
         addSubview(stackView)
         stackView.snp.makeConstraints { make in
