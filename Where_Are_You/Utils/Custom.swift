@@ -19,9 +19,10 @@ class BottomButtonView: UIView {
         return view
     }()
     
-    var button = UIButton()
+    var button: CustomButton
     
     init(title: String) {
+        self.button = CustomButton(title: title, backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
         super.init(frame: .zero)
         setupView(title: title)
     }
@@ -38,9 +39,7 @@ class BottomButtonView: UIView {
             make.left.equalToSuperview()
             make.height.equalTo(1)
         }
-        
-        button = CustomButton(title: title, backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
-        
+
         addSubview(button)
         button.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -55,11 +54,15 @@ class BottomButtonView: UIView {
 // MARK: - CustomButton in SearchAccountOptionsView
 class CustomButtonFindAccount: UIButton {
     
-    private let arrowImageView = UIImageView()
+    private let arrowImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "chevron.right")
+        imageView.tintColor = .color17
+        return imageView
+    }()
     
     init(title: String, description: String) {
         super.init(frame: .zero)
-        
         setupView(title: title, description: description)
     }
     
@@ -67,18 +70,14 @@ class CustomButtonFindAccount: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupView(title: String, description: String) {
+    private func setupView(title: String, description: String) {
         layer.borderColor = UIColor.color118.cgColor
         layer.borderWidth = 1
         layer.cornerRadius = 7
         backgroundColor = .white
         
         let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: title, textColor: .color34, fontSize: 14)
-        
         let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: description, textColor: .color102, fontSize: descriptionFontSize)
-        
-        arrowImageView.image = UIImage(systemName: "chevron.right")
-        arrowImageView.tintColor = .color17
         
         let stackView = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel])
         stackView.axis = .vertical
@@ -115,7 +114,7 @@ class CustomButton: UIButton {
         configuration.baseBackgroundColor = backgroundColor
         configuration.baseForegroundColor = titleColor
         configuration.image = image
-        configuration.imagePadding = 8 // 이미지와 타이틀 사이의 간격
+        configuration.imagePadding = 8
         configuration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
         configuration.cornerStyle = .medium
         
@@ -190,7 +189,19 @@ class CustomLabel: UILabel {
 
 class CustomTextField: UITextField {
     
-    var textPadding = UIEdgeInsets(top: 11, left: 8, bottom: 11, right: 8)
+    private var textPadding: UIEdgeInsets
+    
+    init(textPadding: UIEdgeInsets = UIEdgeInsets(top: 11, left: 8, bottom: 11, right: 8)) {
+        self.textPadding = textPadding
+        super.init(frame: .zero)
+        setupBorder()
+    }
+    
+    required init?(coder: NSCoder) {
+        self.textPadding = UIEdgeInsets(top: 11, left: 8, bottom: 11, right: 8)
+        super.init(coder: coder)
+        setupBorder()
+    }
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: textPadding)
@@ -204,19 +215,13 @@ class CustomTextField: UITextField {
         return bounds.inset(by: textPadding)
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupBorder()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupBorder()
-    }
-    
     private func setupBorder() {
         layer.borderColor = UIColor.color212.cgColor
         layer.borderWidth = 1.0
         layer.cornerRadius = 7.0
+    }
+    
+    func setBorderColor(_ color: UIColor) {
+        layer.borderColor = color.cgColor
     }
 }

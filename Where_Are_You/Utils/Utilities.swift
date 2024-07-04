@@ -14,10 +14,12 @@ let descriptionFontSize: CGFloat = 12
 class Utilities {
     
     // 네비게이션 바 생성
-    static func createNavigationBar(for viewController: UIViewController, title: String, backButtonAction: Selector?, showBackButton: Bool = true) {
+    static func createNavigationBar(for viewController: UIViewController, title: String, backButtonAction: Selector? = nil, showBackButton: Bool = true) {
+        // 네비게이션 바의 외형을 설정
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         
+        // 네비게이션 컨트롤러가 존재할 경우 설정 적용
         if let navigationController = viewController.navigationController {
             navigationController.navigationBar.standardAppearance = appearance
             navigationController.navigationBar.scrollEdgeAppearance = navigationController.navigationBar.standardAppearance
@@ -26,24 +28,14 @@ class Utilities {
             navigationController.navigationBar.tintColor = .white
         }
         
+        // 뒤로 가기 버튼을 설정
         if showBackButton, let backButtonAction = backButtonAction {
             let image = UIImage(systemName: "arrow.backward")
             let backButton = UIBarButtonItem(image: image, style: .plain, target: viewController, action: backButtonAction)
             backButton.tintColor = .color172
             viewController.navigationItem.leftBarButtonItem = backButton
         }
-        
         viewController.navigationItem.title = title
-    }
-    
-    // 레이블 생성
-    func createLabel(NotoSans weight: UIFont.Weight, text: String, textColor: UIColor, fontSize: CGFloat) -> UILabel {
-        let label = UILabel()
-        label.text = text
-        label.textColor = textColor
-        label.adjustsFontForContentSizeCategory = true
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: weight, fontSize: fontSize))
-        return label
     }
     
     // TextField with layer and placeholder
