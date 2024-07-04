@@ -27,6 +27,39 @@ protocol APIServiceProtocol {
 class APIService: APIServiceProtocol {
     
     private let baseURL = "https://wlrmadjel.com/v1"
+    private let session: Session
+    
+    init(session: Session = .default) {
+        self.session = session
+    }
+    
+    // MARK: - Helper
+    
+    private func requestAPI<T: Decodable>(endpoint: String, method: HTTPMethod, parameters: Parameters?, responseType: T.Type, expectedErrorCodes: [Int: String] = [:], completion: @escaping (Result<T, Error>) -> Void) {
+        let url = baseURL + endpoint
+        
+        var encoding: ParameterEncoding = JSONEncoding.default
+        if method == .get {
+            encoding = URLEncoding.default
+        }
+        
+        AF.request(url, method: method, parameters: parameters, encoding: encoding)
+            .validate(statusCode: 200..<300)
+            .responseDecodable(of: responseType) { response in
+                switch response.result {
+                case .success(let data):
+                    completion(.success(data))
+                case .failure(let error):
+                    if let afError = error.asAFError,
+                       let customErrorMessage = expectedErrorCodes[afError.responseCode ?? -1] {
+                        let customError = NSError(domain: "", code: afError.responseCode ?? -1, userInfo: [NSLocalizedDescriptionKey: customErrorMessage])
+                        completion(.failure(customError))
+                    } else {
+                        completion(.failure(error))
+                    }
+                }
+            }
+    }
     
     // MARK: - signUp
     
@@ -45,9 +78,9 @@ class APIService: APIServiceProtocol {
     
     // MARK: - checkUserIDAvailability
     
-    func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let parameters: [String: Any] = ["userId": userId]
-        requestAPI(endpoint: "/member/checkId", 
+        requestAPI(endpoint: "/member/checkId",
                    method: .get,
                    parameters: parameters,
                    responseType: EmptyResponse.self,
@@ -141,29 +174,6 @@ class APIService: APIServiceProtocol {
             completion(result.map { _ in () })
         }
     }
-    
-    // MARK: - Helper
-    
-    private func requestAPI<T: Decodable>(endpoint: String, method: HTTPMethod, parameters: Parameters, responseType: T.Type, expectedErrorCodes: [Int: String] = [:], completion: @escaping (Result<T, Error>) -> Void) {
-        let url = baseURL + endpoint
-        
-        AF.request(url, method: method, parameters: parameters, encoding: JSONEncoding.default)
-            .validate(statusCode: 200..<300)
-            .responseDecodable(of: responseType) { response in
-                switch response.result {
-                case .success(let data):
-                    completion(.success(data))
-                case .failure(let error):
-                    if let afError = error.asAFError,
-                       let customErrorMessage = expectedErrorCodes[afError.responseCode ?? -1] {
-                        let customError = NSError(domain: "", code: afError.responseCode ?? -1, userInfo: [NSLocalizedDescriptionKey: customErrorMessage])
-                        completion(.failure(customError))
-                    } else {
-                        completion(.failure(error))
-                    }
-                }
-            }
-    }
 }
 
-struct EmptyResponse: Decodable {}
+struct EmptyResponse: Decodable, Encodable {}

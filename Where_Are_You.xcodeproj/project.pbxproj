@@ -55,7 +55,6 @@
 		99EC78D22C11E437007C4415 /* FinishResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC78D12C11E437007C4415 /* FinishResetPasswordViewController.swift */; };
 		99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC78D32C11E809007C4415 /* FinishRegisterview.swift */; };
 		99EC78D62C11E8A3007C4415 /* FinishRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC78D52C11E8A3007C4415 /* FinishRegisterViewController.swift */; };
-		99EF53982C366D2B00C6A399 /* Where_Are_YouTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EF53972C366D2B00C6A399 /* Where_Are_YouTests.swift */; };
 		99EF53A02C366D8900C6A399 /* APIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EF539F2C366D8900C6A399 /* APIServiceTests.swift */; };
 		99F78F172C09B10D004C0C72 /* SearchAccountOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F162C09B10D004C0C72 /* SearchAccountOptionsView.swift */; };
 		99F78F1C2C09BB8F004C0C72 /* SearchAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F1B2C09BB8F004C0C72 /* SearchAccountController.swift */; };
@@ -73,6 +72,18 @@
 			remoteInfo = Where_Are_You;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		99EF53A32C3672A500C6A399 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0FC7C11057ACE416B59D9BFA /* Pods-Where_Are_You.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You.debug.xcconfig"; path = "Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You.debug.xcconfig"; sourceTree = "<group>"; };
@@ -128,7 +139,6 @@
 		99EC78D32C11E809007C4415 /* FinishRegisterview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishRegisterview.swift; sourceTree = "<group>"; };
 		99EC78D52C11E8A3007C4415 /* FinishRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishRegisterViewController.swift; sourceTree = "<group>"; };
 		99EF53952C366D2B00C6A399 /* Where_Are_You_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Where_Are_You_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		99EF53972C366D2B00C6A399 /* Where_Are_YouTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Where_Are_YouTests.swift; sourceTree = "<group>"; };
 		99EF539F2C366D8900C6A399 /* APIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceTests.swift; sourceTree = "<group>"; };
 		99EF53A12C366EEE00C6A399 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99F78F162C09B10D004C0C72 /* SearchAccountOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAccountOptionsView.swift; sourceTree = "<group>"; };
@@ -412,7 +422,6 @@
 		99EF53962C366D2B00C6A399 /* Where_Are_You_Tests */ = {
 			isa = PBXGroup;
 			children = (
-				99EF53972C366D2B00C6A399 /* Where_Are_YouTests.swift */,
 				99EF539F2C366D8900C6A399 /* APIServiceTests.swift */,
 			);
 			path = Where_Are_You_Tests;
@@ -469,6 +478,7 @@
 				99EF53922C366D2B00C6A399 /* Frameworks */,
 				99EF53932C366D2B00C6A399 /* Resources */,
 				1D2E8DFA42207C2064238541 /* [CP] Embed Pods Frameworks */,
+				99EF53A32C3672A500C6A399 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -698,7 +708,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				99EF53A02C366D8900C6A399 /* APIServiceTests.swift in Sources */,
-				99EF53982C366D2B00C6A399 /* Where_Are_YouTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

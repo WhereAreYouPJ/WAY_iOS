@@ -29,13 +29,19 @@ class APIServiceTests: XCTestCase {
     
     func testSignUpSuccess() {
         // Given
-        let user = User(userId: "testuser", password: "password123", email: "test@example.com")
+        let user = User(userName: "testname", userId: "testuser", password: "password123", email: "test@example.com")
         let expectedResponse = EmptyResponse()
         
         // Mock response
         MockURLProtocol.requestHandler = { request in
             let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
-            let data = try! JSONEncoder().encode(expectedResponse)
+            let data: Data
+            do {
+                data = try JSONEncoder().encode(expectedResponse)
+            } catch {
+                XCTFail("Encoding error: \(error)")
+                throw error
+            }
             return (response, data)
         }
         
