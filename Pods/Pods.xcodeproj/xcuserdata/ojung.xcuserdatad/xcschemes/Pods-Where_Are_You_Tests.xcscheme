@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8A8DB685241263AFDF5E6B20FE67B93A"
-               BuildableName = "SnapKit_Privacy.bundle"
-               BlueprintName = "SnapKit-SnapKit_Privacy"
+               BlueprintIdentifier = "07AD79309E12D8B6AEAC05FAD505B999"
+               BuildableName = "Pods_Where_Are_You_Tests.framework"
+               BlueprintName = "Pods-Where_Are_You_Tests"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
