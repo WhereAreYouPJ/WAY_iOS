@@ -26,7 +26,7 @@ protocol APIServiceProtocol {
 
 class APIService: APIServiceProtocol {
     
-    private let baseURL = "https://wlrmadjel.com/v1"
+    private let baseURL = Config.baseURL
     private let session: Session
     
     init(session: Session = .default) {

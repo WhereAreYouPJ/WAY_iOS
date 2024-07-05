@@ -9,6 +9,9 @@
 #           - AS PER https://guides.cocoapods.org/using/using-cocoapods.html NEVER IGNORE THE LOCK FILE
 Pods/
 
+# Config.swift 파일 제외
+Config/Config.swift
+
 ### macOS ###
 # General
 .DS_Store
@@ -97,7 +100,7 @@ playground.xcworkspace
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 # Pods/
 # Add this line if you want to avoid checking in source code from the Xcode workspace
-# *.xcworkspace
+*.xcworkspace
 
 # Carthage
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
