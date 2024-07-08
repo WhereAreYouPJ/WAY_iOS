@@ -31,16 +31,6 @@ class AccountLoginController: UIViewController {
     }
     
     @objc func loginButtonTapped() {
-//        guard let userID = accountLoginView.idTextField.text, let password = accountLoginView.passwordTextField.text else { return }
-//        
-//        viewModel.login(userID: userID, password: password) {
-//            if let error = self.viewModel.error {
-//                print(error)
-//            } else {
-//                
-//                print("success")
-//            }
-//        }
     }
     
     @objc func findAccountButtonTapped() {

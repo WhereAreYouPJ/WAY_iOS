@@ -9,4 +9,7 @@ import Foundation
 
 class AccountLoginViewModel {
     
+    func login(userId: String, password: String) {
+        UserDefaults.standard.isLoggedIn = true
+    }
 }

@@ -46,8 +46,14 @@
 		99CA4F262C33B704007C027C /* ResetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CA4F252C33B704007C027C /* ResetPasswordViewModel.swift */; };
 		99CA4F282C33B72C007C027C /* ResetPasswordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CA4F272C33B72C007C027C /* ResetPasswordUseCase.swift */; };
 		99CA4F2C2C33EB7F007C027C /* UserIdEmailVerificaitonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CA4F2B2C33EB7F007C027C /* UserIdEmailVerificaitonViewModel.swift */; };
-		99D11EB12C06F56F006BE265 /* Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D11EB02C06F56F006BE265 /* Custom.swift */; };
+		99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D11EB02C06F56F006BE265 /* CustomButton.swift */; };
 		99D8FBB52C3B9F9F0062AF10 /* MainHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8FBB42C3B9F9F0062AF10 /* MainHomeView.swift */; };
+		99D8FBB72C3BA1B40062AF10 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8FBB62C3BA1B40062AF10 /* UserService.swift */; };
+		99D8FBB92C3BA1CD0062AF10 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */; };
+		99D8FBBB2C3BA1D90062AF10 /* MainHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8FBBA2C3BA1D90062AF10 /* MainHomeViewController.swift */; };
+		99D8FBBD2C3BA1E60062AF10 /* MainHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8FBBC2C3BA1E60062AF10 /* MainHomeViewModel.swift */; };
+		99D8FBC02C3BA2180062AF10 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8FBBF2C3BA2180062AF10 /* CustomLabel.swift */; };
+		99D8FBC22C3BA25B0062AF10 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8FBC12C3BA25B0062AF10 /* CustomTextField.swift */; };
 		99E755512C22E66F0016A0A6 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E755502C22E66F0016A0A6 /* AuthService.swift */; };
 		99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */; };
 		99E8BC452C2D26CF00536B95 /* VerifyCodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E8BC442C2D26CF00536B95 /* VerifyCodeUseCase.swift */; };
@@ -132,8 +138,14 @@
 		99CA4F252C33B704007C027C /* ResetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewModel.swift; sourceTree = "<group>"; };
 		99CA4F272C33B72C007C027C /* ResetPasswordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordUseCase.swift; sourceTree = "<group>"; };
 		99CA4F2B2C33EB7F007C027C /* UserIdEmailVerificaitonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdEmailVerificaitonViewModel.swift; sourceTree = "<group>"; };
-		99D11EB02C06F56F006BE265 /* Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Custom.swift; sourceTree = "<group>"; };
+		99D11EB02C06F56F006BE265 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		99D8FBB42C3B9F9F0062AF10 /* MainHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHomeView.swift; sourceTree = "<group>"; };
+		99D8FBB62C3BA1B40062AF10 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		99D8FBBA2C3BA1D90062AF10 /* MainHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHomeViewController.swift; sourceTree = "<group>"; };
+		99D8FBBC2C3BA1E60062AF10 /* MainHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHomeViewModel.swift; sourceTree = "<group>"; };
+		99D8FBBF2C3BA2180062AF10 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
+		99D8FBC12C3BA25B0062AF10 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		99E755502C22E66F0016A0A6 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
 		99E8BC442C2D26CF00536B95 /* VerifyCodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCodeUseCase.swift; sourceTree = "<group>"; };
@@ -217,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				99E755502C22E66F0016A0A6 /* AuthService.swift */,
+				99D8FBB62C3BA1B40062AF10 /* UserService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -344,9 +357,9 @@
 		99C9B2262C019748008D7CBD /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				99D8FBBE2C3BA1FB0062AF10 /* Common */,
 				99C9B2312C01A45C008D7CBD /* Extensions.swift */,
 				99C9B2472C01D2B7008D7CBD /* Utilities.swift */,
-				99D11EB02C06F56F006BE265 /* Custom.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -424,6 +437,8 @@
 		99D8FBAF2C3B99BF0062AF10 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */,
+				99D8FBBA2C3BA1D90062AF10 /* MainHomeViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -457,8 +472,19 @@
 		99D8FBB32C3B9F7D0062AF10 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				99D8FBBC2C3BA1E60062AF10 /* MainHomeViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		99D8FBBE2C3BA1FB0062AF10 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				99D11EB02C06F56F006BE265 /* CustomButton.swift */,
+				99D8FBBF2C3BA2180062AF10 /* CustomLabel.swift */,
+				99D8FBC12C3BA25B0062AF10 /* CustomTextField.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		99EC209F2C0D8DEC0018904D /* UseCases */ = {
@@ -727,10 +753,12 @@
 				9950C65B2C10B0F5003155A7 /* SignUpFormViewController.swift in Sources */,
 				99C9B22C2C019C67008D7CBD /* LoginView.swift in Sources */,
 				9950C6572C1040FD003155A7 /* TermsAgreementViewController.swift in Sources */,
+				99D8FBBB2C3BA1D90062AF10 /* MainHomeViewController.swift in Sources */,
 				99D8FBB52C3B9F9F0062AF10 /* MainHomeView.swift in Sources */,
 				995358412C00C555005BF799 /* LoginViewController.swift in Sources */,
 				99E755512C22E66F0016A0A6 /* AuthService.swift in Sources */,
-				99D11EB12C06F56F006BE265 /* Custom.swift in Sources */,
+				99D8FBC22C3BA25B0062AF10 /* CustomTextField.swift in Sources */,
+				99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */,
 				99F78F1E2C09C98D004C0C72 /* CommonSearchAuthView.swift in Sources */,
 				9950C65D2C10B9BB003155A7 /* ResetPasswordView.swift in Sources */,
 				990F57A32C27F9FE00F6E1AD /* CheckEmailAvailabilityUseCase.swift in Sources */,
@@ -738,12 +766,14 @@
 				99C9B2422C01CE4C008D7CBD /* AccountLoginViewModel.swift in Sources */,
 				99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */,
 				990F579F2C27F86A00F6E1AD /* CheckUserIDAvailabilityUseCase.swift in Sources */,
+				99D8FBB92C3BA1CD0062AF10 /* MainTabBarController.swift in Sources */,
 				99F78F172C09B10D004C0C72 /* SearchAccountOptionsView.swift in Sources */,
 				99B397852C0C41D300D7A109 /* CheckIDViewController.swift in Sources */,
 				997746A52C329D68004FB0DF /* FindUserIDUseCase.swift in Sources */,
 				99C9B2292C0197CA008D7CBD /* User.swift in Sources */,
 				9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */,
 				99E8BC452C2D26CF00536B95 /* VerifyCodeUseCase.swift in Sources */,
+				99D8FBBD2C3BA1E60062AF10 /* MainHomeViewModel.swift in Sources */,
 				990F57912C27ECDC00F6E1AD /* SignUpUseCase.swift in Sources */,
 				99EC78D22C11E437007C4415 /* FinishResetPasswordViewController.swift in Sources */,
 				99EC78D02C11E20F007C4415 /* FinishResetPasswordView.swift in Sources */,
@@ -753,10 +783,12 @@
 				99B397832C0C3E9D00D7A109 /* CheckIDView.swift in Sources */,
 				99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */,
 				99CA4F282C33B72C007C027C /* ResetPasswordUseCase.swift in Sources */,
+				99D8FBB72C3BA1B40062AF10 /* UserService.swift in Sources */,
 				99938EE02C0C8B9D00239FA1 /* SearchPasswordViewController.swift in Sources */,
 				99CA4F2C2C33EB7F007C027C /* UserIdEmailVerificaitonViewModel.swift in Sources */,
 				99C9B2522C022DE3008D7CBD /* AccountLoginController.swift in Sources */,
 				99F78F1C2C09BB8F004C0C72 /* SearchAccountController.swift in Sources */,
+				99D8FBC02C3BA2180062AF10 /* CustomLabel.swift in Sources */,
 				9953583F2C00C555005BF799 /* SceneDelegate.swift in Sources */,
 				990F57B22C282C5900F6E1AD /* SendVerificationCodeUseCase.swift in Sources */,
 				9950C6592C10B0DF003155A7 /* SignUpFormView.swift in Sources */,

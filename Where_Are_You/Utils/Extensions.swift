@@ -7,6 +7,23 @@
 
 import UIKit
 
+// MARK: - 로그인 확인을 위한 UserDefaults 확장
+
+extension UserDefaults {
+    private enum keys {
+        static let isLoggedIn = "isLoggedIn"
+    }
+    
+    var isLoggedIn: Bool {
+        get {
+            return bool(forKey: keys.isLoggedIn)
+        }
+        set {
+            set(newValue, forKey: keys.isLoggedIn)
+        }
+    }
+}
+
 // MARK: - UIViewController
 extension UIViewController {
     func configureNavigationBar(title: String, backButtonAction: Selector? = nil, showBackButton: Bool = true) {

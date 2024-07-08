@@ -72,7 +72,7 @@ class Utilities {
     }
 }
 
-// MARK: - ValidationHelper
+// MARK: - ValidationHelper (형식 조건 확인)
 
 class ValidationHelper {
     static func isValidUserID(_ userID: String) -> Bool {
@@ -98,7 +98,7 @@ class ValidationHelper {
     }
 }
 
-// MARK: - TimerHelper
+// MARK: - TimerHelper (5분 타이머 설정)
 class TimerHelper {
     private var timer: Timer?
     var timerCount: Int = 300
