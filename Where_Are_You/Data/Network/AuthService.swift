@@ -9,7 +9,7 @@ import Alamofire
 
 // MARK: - APIServiceProtocol
 
-protocol APIServiceProtocol {
+protocol AuthServiceProtocol {
     func signUp(request: User, completion: @escaping (Result<Void, Error>) -> Void)
     func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, Error>) -> Void)
     func checkEmailAvailability(email: String, completion: @escaping (Result<Void, Error>) -> Void)
@@ -50,7 +50,7 @@ enum VerificationType {
 
 // MARK: - APIService
 
-class APIService: APIServiceProtocol {
+class AuthService: AuthServiceProtocol {
     
     private let baseURL = Config.baseURL
     private let session: Session

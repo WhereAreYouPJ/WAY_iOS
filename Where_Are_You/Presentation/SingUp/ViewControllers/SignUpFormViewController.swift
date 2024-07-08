@@ -41,8 +41,8 @@ class SignUpFormViewController: UIViewController {
     }
     
     private func setupViewModel() {
-        let apiService = APIService()
-        let userRepository = UserRepository(apiService: apiService)
+        let authService = AuthService()
+        let userRepository = UserRepository(authService: authService)
         viewModel = SignUpViewModel(
             signUpUseCase: SignUpUseCaseImpl(userRepository: userRepository),
             checkUserIDAvailabilityUseCase: CheckUserIDAvailabilityUseCaseImpl(userRepository: userRepository),

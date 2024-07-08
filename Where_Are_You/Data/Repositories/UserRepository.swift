@@ -20,38 +20,37 @@ protocol UserRepositoryProtocol {
 
 class UserRepository: UserRepositoryProtocol {
     
-    private let apiService: APIServiceProtocol
+    private let authService: AuthServiceProtocol
     
-    init(apiService: APIServiceProtocol) {
-        self.apiService = apiService
+    init(authService: AuthServiceProtocol) {
+        self.authService = authService
     }
     
     func signUp(request: User, completion: @escaping (Result<Void, Error>) -> Void) {
-        apiService.signUp(request: request, completion: completion)
+        authService.signUp(request: request, completion: completion)
     }
     
     func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        apiService.checkUserIDAvailability(userId: userId, completion: completion)
+        authService.checkUserIDAvailability(userId: userId, completion: completion)
     }
     
     func checkEmailAvailability(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        apiService.checkEmailAvailability(email: email, completion: completion)
+        authService.checkEmailAvailability(email: email, completion: completion)
     }
     
     func sendVerificationCode(identifier: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void) {
-        apiService.sendVerificationCode(identifier: identifier, type: type, completion: completion)
+        authService.sendVerificationCode(identifier: identifier, type: type, completion: completion)
     }
     
     func verifyEmailCode(identifier: String, code: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void) {
-        apiService.verifyEmailCode(identifier: identifier, code: code, type: type, completion: completion)
+        authService.verifyEmailCode(identifier: identifier, code: code, type: type, completion: completion)
     }
     
-    
     func findUserID(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        apiService.findUserID(email: email, code: code, completion: completion)
+        authService.findUserID(email: email, code: code, completion: completion)
     }
     
     func resetPassword(userId: String, password: String, checkPassword: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        apiService.resetPassword(userId: userId, password: password, checkPassword: checkPassword, completion: completion)
+        authService.resetPassword(userId: userId, password: password, checkPassword: checkPassword, completion: completion)
     }
 }
