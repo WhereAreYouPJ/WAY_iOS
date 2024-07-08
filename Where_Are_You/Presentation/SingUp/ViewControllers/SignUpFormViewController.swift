@@ -111,7 +111,7 @@ class SignUpFormViewController: UIViewController {
         
         switch textField {
         case signUpView.userNameTextField:
-            viewModel.user.userName = userName
+            viewModel.authCredentials.userName = userName
         case signUpView.passwordTextField:
             viewModel.password = pw
             viewModel.checkPasswordAvailability(password: pw)

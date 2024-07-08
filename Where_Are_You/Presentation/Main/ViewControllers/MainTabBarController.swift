@@ -23,7 +23,6 @@ class MainTabBarController: UITabBarController {
         }
     }
     
-    // TODO: 컨트롤러 변경하기
     override func viewDidLoad() {
         super.viewDidLoad()
         

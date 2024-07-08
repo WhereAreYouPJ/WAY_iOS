@@ -8,7 +8,7 @@
 import Alamofire
 
 protocol UserRepositoryProtocol {
-    func signUp(request: User, completion: @escaping (Result<Void, Error>) -> Void)
+    func signUp(request: AuthCredentials, completion: @escaping (Result<Void, Error>) -> Void)
     func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, Error>) -> Void)
     func checkEmailAvailability(email: String, completion: @escaping (Result<Void, Error>) -> Void)
     func sendVerificationCode(identifier: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void)
@@ -26,7 +26,7 @@ class UserRepository: UserRepositoryProtocol {
         self.authService = authService
     }
     
-    func signUp(request: User, completion: @escaping (Result<Void, Error>) -> Void) {
+    func signUp(request: AuthCredentials, completion: @escaping (Result<Void, Error>) -> Void) {
         authService.signUp(request: request, completion: completion)
     }
     

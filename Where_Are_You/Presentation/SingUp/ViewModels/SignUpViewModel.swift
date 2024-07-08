@@ -16,7 +16,7 @@ class SignUpViewModel {
     private let sendVerificationCodeUseCase: SendVerificationCodeUseCase
     private let verifyCodeUseCase: VerifyCodeUseCase
     private let timerHelper = TimerHelper()
-    var user = User()
+    var authCredentials = AuthCredentials()
     
     // Input
     var password: String = ""
@@ -72,8 +72,8 @@ class SignUpViewModel {
     func signUp() {
         guard validateSignUpInputs() else { return }
         
-        user.password = confirmPassword
-        signUpUseCase.execute(request: user) { result in
+        authCredentials.password = confirmPassword
+        signUpUseCase.execute(request: authCredentials) { result in
             switch result {
             case .success:
                 self.onSignUpSuccess?()
@@ -94,7 +94,7 @@ class SignUpViewModel {
             switch result {
             case .success:
                 self.onUserIDAvailabilityChecked?("사용가능한 아이디입니다.", true)
-                self.user.userId = userId
+                self.authCredentials.userId = userId
             case .failure(let error):
                 if let nsError = error as NSError?, nsError.code == 409 {
                     self.onUserIDAvailabilityChecked?(self.duplicateUserIDMessage, false)
@@ -166,7 +166,7 @@ class SignUpViewModel {
             verifyCodeUseCase.execute(identifier: email, code: inputCode, type: .email) { result in
                 switch result {
                 case .success:
-                    self.user.email = self.email
+                    self.authCredentials.email = self.email
                     self.onEmailVerificationCodeVerified?(self.emailVerificationSuccessMessage, true)
                 case .failure(let error):
                     self.onEmailVerificationCodeVerified?(error.localizedDescription, false)
@@ -178,17 +178,17 @@ class SignUpViewModel {
     // MARK: - Validation Helpers
     
     private func validateSignUpInputs() -> Bool {
-        guard let username = user.userName, !username.isEmpty else {
+        guard let username = authCredentials.userName, !username.isEmpty else {
             onSignUpFailure?("이름을 확인해주세요.")
             return false
         }
         
-        guard let userId = user.userId, !userId.isEmpty else {
+        guard let userId = authCredentials.userId, !userId.isEmpty else {
             onSignUpFailure?("아이디를 확인해주세요.")
             return false
         }
         
-        guard let email = user.email, !email.isEmpty else {
+        guard let email = authCredentials.email, !email.isEmpty else {
             onSignUpFailure?("이메일을 확인해주세요.")
             return false
         }

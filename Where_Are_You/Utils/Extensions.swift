@@ -10,16 +10,16 @@ import UIKit
 // MARK: - 로그인 확인을 위한 UserDefaults 확장
 
 extension UserDefaults {
-    private enum keys {
+    private enum Keys {
         static let isLoggedIn = "isLoggedIn"
     }
     
     var isLoggedIn: Bool {
         get {
-            return bool(forKey: keys.isLoggedIn)
+            return bool(forKey: Keys.isLoggedIn)
         }
         set {
-            set(newValue, forKey: keys.isLoggedIn)
+            set(newValue, forKey: Keys.isLoggedIn)
         }
     }
 }

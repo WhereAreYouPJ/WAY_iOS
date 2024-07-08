@@ -7,10 +7,27 @@
 
 import Alamofire
 
+// MARK: - AuthCredentials
+
+struct AuthCredentials: Codable {
+    var userName: String?
+    var userId: String?
+    var password: String?
+    var email: String?
+    
+    func toParameters() -> [String: Any]? {
+        guard let data = try? JSONEncoder().encode(self),
+              let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+            return nil
+        }
+        return json
+    }
+}
+
 // MARK: - APIServiceProtocol
 
 protocol AuthServiceProtocol {
-    func signUp(request: User, completion: @escaping (Result<Void, Error>) -> Void)
+    func signUp(request: AuthCredentials, completion: @escaping (Result<Void, Error>) -> Void)
     func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, Error>) -> Void)
     func checkEmailAvailability(email: String, completion: @escaping (Result<Void, Error>) -> Void)
     
@@ -89,7 +106,7 @@ class AuthService: AuthServiceProtocol {
     
     // MARK: - signUp
     
-    func signUp(request: User, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func signUp(request: AuthCredentials, completion: @escaping (Result<Void, any Error>) -> Void) {
         guard let parameters = request.toParameters() else {
             completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid parameters"])))
             return
