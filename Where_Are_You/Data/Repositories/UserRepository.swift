@@ -11,10 +11,8 @@ protocol UserRepositoryProtocol {
     func signUp(request: User, completion: @escaping (Result<Void, Error>) -> Void)
     func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, Error>) -> Void)
     func checkEmailAvailability(email: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func sendEmailVerificationCode(email: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func sendEmailVerificationCode(userId: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func verifyEmailCode(userId: String, code: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func sendVerificationCode(identifier: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void)
+    func verifyEmailCode(identifier: String, code: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void)
     func findUserID(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void)
     func resetPassword(userId: String, password: String, checkPassword: String, completion: @escaping (Result<Void, Error>) -> Void)
 
@@ -40,21 +38,14 @@ class UserRepository: UserRepositoryProtocol {
         apiService.checkEmailAvailability(email: email, completion: completion)
     }
     
-    func sendEmailVerificationCode(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        apiService.sendEmailVerificationCode(email: email, completion: completion)
+    func sendVerificationCode(identifier: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void) {
+        apiService.sendVerificationCode(identifier: identifier, type: type, completion: completion)
     }
     
-    func sendEmailVerificationCode(userId: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        apiService.sendEmailVerificationCode(userId: userId, completion: completion)
+    func verifyEmailCode(identifier: String, code: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void) {
+        apiService.verifyEmailCode(identifier: identifier, code: code, type: type, completion: completion)
     }
     
-    func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        apiService.verifyEmailCode(email: email, code: code, completion: completion)
-    }
-    
-    func verifyEmailCode(userId: String, code: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        apiService.verifyEmailCode(userId: userId, code: code, completion: completion)
-    }
     
     func findUserID(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void) {
         apiService.findUserID(email: email, code: code, completion: completion)

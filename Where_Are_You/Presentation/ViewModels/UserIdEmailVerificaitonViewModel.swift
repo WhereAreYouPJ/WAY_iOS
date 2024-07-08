@@ -10,8 +10,8 @@ import Foundation
 class UserIdEmailVerificaitonViewModel {
     
     // MARK: - Properties
-    private let sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase
-    private let verifyEmailCodeUseCase: VerifyEmailCodeUseCase
+    private let sendVerificationCodeUseCase: SendVerificationCodeUseCase
+    private let verifyCodeUseCase: VerifyCodeUseCase
     
     var userId: String = ""
     var code: String = ""
@@ -29,15 +29,15 @@ class UserIdEmailVerificaitonViewModel {
     private var timer: Timer?
     private var timerCount: Int = 300
     
-    init(sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase,
-         verifyEmailCodeUseCase: VerifyEmailCodeUseCase) {
-        self.sendEmailVerificationCodeUseCase = sendEmailVerificationCodeUseCase
-        self.verifyEmailCodeUseCase = verifyEmailCodeUseCase
+    init(sendVerificationCodeUseCase: SendVerificationCodeUseCase,
+         verifyCodeUseCase: VerifyCodeUseCase) {
+        self.sendVerificationCodeUseCase = sendVerificationCodeUseCase
+        self.verifyCodeUseCase = verifyCodeUseCase
     }
     
     // userID를 통해 이메일 인증코드 보내기
     func sendEmailVerificationCode(userId: String) {
-        sendEmailVerificationCodeUseCase.execute(userId: userId) { [weak self] result in
+        sendVerificationCodeUseCase.execute(identifier: userId, type: .userId) { [weak self] result in
             switch result {
             case .success:
                 self?.onRequestCodeSuccess?("인증코드가 전송되었습니다.")
@@ -54,7 +54,7 @@ class UserIdEmailVerificaitonViewModel {
         if timerCount == 0 {
             self.onVerifyCodeFailure?("이메일 재인증 요청이 필요합니다.")
         } else {
-            verifyEmailCodeUseCase.execute(userId: userId, code: code) { [weak self] result in
+            verifyCodeUseCase.execute(identifier: userId, code: code, type: .userId) { [weak self] result in
                 switch result {
                 case .success:
                     self?.onVerifyCodeSuccess?("인증코드가 확인되었습니다.")

@@ -29,11 +29,11 @@ class FindIDViewController: UIViewController {
     private func setupViewModel() {
         let apiService = APIService()
         let userRepository = UserRepository(apiService: apiService)
-        let sendEmailVerificationCodeUseCase = SendEmailVerificationCodeUseCaseImpl(userRepository: userRepository)
+        let sendVerificationCodeUseCase = SendVerificationCodeUseCaseImpl(userRepository: userRepository)
         let findUserIDUseCase = FindUserIDUseCaseImpl(userRepository: userRepository)
         
         viewModel = FindIDViewModel(
-            sendEmailVerificationCodeUseCase: sendEmailVerificationCodeUseCase,
+            sendVerificationCodeUseCase: sendVerificationCodeUseCase,
             findUserIDUseCase: findUserIDUseCase
         )
     }

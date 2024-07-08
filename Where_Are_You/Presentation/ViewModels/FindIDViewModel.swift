@@ -10,7 +10,7 @@ import Foundation
 class FindIDViewModel {
     
     // MARK: - Properties
-    private let sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase
+    private let sendVerificationCodeUseCase: SendVerificationCodeUseCase
     private let findUserIDUseCase: FindUserIDUseCase
     
     var email: String = ""
@@ -31,9 +31,9 @@ class FindIDViewModel {
     
     // MARK: - LifeCycle
     
-    init(sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase,
+    init(sendVerificationCodeUseCase: SendVerificationCodeUseCase,
          findUserIDUseCase: FindUserIDUseCase) {
-        self.sendEmailVerificationCodeUseCase = sendEmailVerificationCodeUseCase
+        self.sendVerificationCodeUseCase = sendVerificationCodeUseCase
         self.findUserIDUseCase = findUserIDUseCase
     }
     
@@ -45,7 +45,7 @@ class FindIDViewModel {
             return
         }
         
-        sendEmailVerificationCodeUseCase.execute(email: email) { [weak self] result in
+        sendVerificationCodeUseCase.execute(identifier: email, type: .email) { [weak self] result in
             switch result {
             case .success:
                 self?.onRequestCodeSuccess?("인증코드가 전송되었습니다.")

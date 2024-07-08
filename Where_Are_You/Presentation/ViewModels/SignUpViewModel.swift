@@ -13,8 +13,8 @@ class SignUpViewModel {
     private let signUpUseCase: SignUpUseCase
     private let checkUserIDAvailabilityUseCase: CheckUserIDAvailabilityUseCase
     private let checkEmailAvailabilityUseCase: CheckEmailAvailabilityUseCase
-    private let sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase
-    private let verifyEmailCodeUseCase: VerifyEmailCodeUseCase
+    private let sendVerificationCodeUseCase: SendVerificationCodeUseCase
+    private let verifyCodeUseCase: VerifyCodeUseCase
     private let timerHelper = TimerHelper()
     var user = User()
     
@@ -49,13 +49,13 @@ class SignUpViewModel {
     init(signUpUseCase: SignUpUseCase,
          checkUserIDAvailabilityUseCase: CheckUserIDAvailabilityUseCase,
          checkEmailAvailabilityUseCase: CheckEmailAvailabilityUseCase,
-         sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase,
-         verifyEmailCodeUseCase: VerifyEmailCodeUseCase) {
+         sendVerificationCodeUseCase: SendVerificationCodeUseCase,
+         verifyCodeUseCase: VerifyCodeUseCase) {
         self.signUpUseCase = signUpUseCase
         self.checkUserIDAvailabilityUseCase = checkUserIDAvailabilityUseCase
         self.checkEmailAvailabilityUseCase = checkEmailAvailabilityUseCase
-        self.sendEmailVerificationCodeUseCase = sendEmailVerificationCodeUseCase
-        self.verifyEmailCodeUseCase = verifyEmailCodeUseCase
+        self.sendVerificationCodeUseCase = sendVerificationCodeUseCase
+        self.verifyCodeUseCase = verifyCodeUseCase
         
         timerHelper.onUpdateTimer = { [weak self] timeString in
             self?.onUpdateTimer?(timeString)
@@ -94,6 +94,7 @@ class SignUpViewModel {
             switch result {
             case .success:
                 self.onUserIDAvailabilityChecked?("사용가능한 아이디입니다.", true)
+                self.user.userId = userId
             case .failure(let error):
                 if let nsError = error as NSError?, nsError.code == 409 {
                     self.onUserIDAvailabilityChecked?(self.duplicateUserIDMessage, false)
@@ -145,7 +146,7 @@ class SignUpViewModel {
     
     // 인증코드 전송
     func sendEmailVerificationCode(email: String) {
-        sendEmailVerificationCodeUseCase.execute(email: email) { result in
+        sendVerificationCodeUseCase.execute(identifier: email, type: .email) { result in
             switch result {
             case .success:
                 self.onEmailVerificationCodeSent?("인증코드가 전송되었습니다.", true)
@@ -162,7 +163,7 @@ class SignUpViewModel {
         if timerHelper.timerCount == 0 {
             self.onEmailVerificationCodeVerified?(emailVerificationExpiredMessage, false)
         } else {
-            verifyEmailCodeUseCase.execute(email: email, code: inputCode) { result in
+            verifyCodeUseCase.execute(identifier: email, code: inputCode, type: .email) { result in
                 switch result {
                 case .success:
                     self.user.email = self.email

@@ -7,22 +7,48 @@
 
 import Alamofire
 
+// MARK: - APIServiceProtocol
+
 protocol APIServiceProtocol {
     func signUp(request: User, completion: @escaping (Result<Void, Error>) -> Void)
     func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, Error>) -> Void)
     func checkEmailAvailability(email: String, completion: @escaping (Result<Void, Error>) -> Void)
     
-    func sendEmailVerificationCode(email: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func sendEmailVerificationCode(userId: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func sendVerificationCode(identifier: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void)
     
-    func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func verifyEmailCode(userId: String, code: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func verifyEmailCode(identifier: String, code: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void)
     
     func findUserID(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void)
     func resetPassword(userId: String, password: String, checkPassword: String, completion: @escaping (Result<Void, Error>) -> Void)
     
     func login(userId: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
+
+enum VerificationType {
+    case userId
+    case email
+    
+    var endpoint: String {
+        switch self {
+        case .email:
+            return "/member/email/send"
+        case .userId:
+            return "/member/email/senduserId"
+        }
+    }
+    
+    var verifyEndpoint: String {
+        switch self {
+        case .email:
+            return "/member/email/verify"
+        case .userId:
+            return "/member/email/verifyPassword"
+        }
+        
+    }
+}
+
+// MARK: - APIService
 
 class APIService: APIServiceProtocol {
     
@@ -104,42 +130,21 @@ class APIService: APIServiceProtocol {
     
     // MARK: - sendEmailVerificationCode
     
-    func sendEmailVerificationCode(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        let parameters: [String: Any] = ["email": email]
-        requestAPI(endpoint: "/member/email/send",
+    func sendVerificationCode(identifier: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void) {
+        let parameters: [String: Any] = [type == .email ? "email" : "userId": identifier]
+        requestAPI(endpoint: type.endpoint,
                    method: .post,
                    parameters: parameters,
                    responseType: EmptyResponse.self) { result in
             completion(result.map { _ in () })
         }
-    }
-    
-    func sendEmailVerificationCode(userId: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        let parameters: [String: String] = ["userId": userId]
-        requestAPI(endpoint: "/member/email/sendUserId",
-                   method: .post,
-                   parameters: parameters,
-                   responseType: EmptyResponse.self) { result in
-                    completion(result.map { _ in () })
-                }
     }
     
     // MARK: - verifyEmailCode
     
-    func verifyEmailCode(email: String, code: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        let parameters: [String: String] = ["email": email, "code": code]
+    func verifyEmailCode(identifier: String, code: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void) {
+        let parameters: [String: String] = [type == .email ? "email" : "userId": identifier, "code": code]
         requestAPI(endpoint: "/member/email/verify",
-                   method: .post,
-                   parameters: parameters,
-                   responseType: EmptyResponse.self,
-                   expectedErrorCodes: [400: "인증코드가 알맞지 않습니다."]) { result in
-            completion(result.map { _ in () })
-        }
-    }
-    
-    func verifyEmailCode(userId: String, code: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        let parameters: [String: String] = ["userId": userId, "code": code]
-        requestAPI(endpoint: "/member/email/verifyPassword",
                    method: .post,
                    parameters: parameters,
                    responseType: EmptyResponse.self,

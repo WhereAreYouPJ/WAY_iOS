@@ -47,8 +47,8 @@ class SignUpFormViewController: UIViewController {
             signUpUseCase: SignUpUseCaseImpl(userRepository: userRepository),
             checkUserIDAvailabilityUseCase: CheckUserIDAvailabilityUseCaseImpl(userRepository: userRepository),
             checkEmailAvailabilityUseCase: CheckEmailAvailabilityUseCaseImpl(userRepository: userRepository),
-            sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCaseImpl(userRepository: userRepository),
-            verifyEmailCodeUseCase: VerifyEmailCodeUseCaseImpl(userRepository: userRepository)
+            sendVerificationCodeUseCase: SendVerificationCodeUseCaseImpl(userRepository: userRepository),
+            verifyCodeUseCase: VerifyCodeUseCaseImpl(userRepository: userRepository)
         )
     }
     
@@ -68,9 +68,6 @@ class SignUpFormViewController: UIViewController {
         viewModel.onUserIDAvailabilityChecked = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
                 self?.updateStatus(label: self?.signUpView.userIDErrorLabel, message: message, isAvailable: isAvailable, textField: nil)
-                if isAvailable {
-                    self?.viewModel.user.userId = self?.signUpView.userIDTextField.text
-                }
             }
         }
         
