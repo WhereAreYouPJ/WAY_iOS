@@ -7,8 +7,7 @@
 
 import UIKit
 import SnapKit
-
-// MARK: - CustomButton
+import Foundation
 
 // MARK: - 자주 사용하는 하단의 inputcontainer 버튼 한개
 class BottomButtonView: UIView {

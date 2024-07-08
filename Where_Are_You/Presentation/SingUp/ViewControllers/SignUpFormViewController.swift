@@ -90,9 +90,6 @@ class SignUpFormViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.updateStatus(label: self?.signUpView.emailErrorLabel, message: message, isAvailable: isAvailable, textField: nil)
                 self?.signUpView.authStack.isHidden = !isAvailable
-                if isAvailable {
-                    self?.viewModel.startTimer()
-                }
             }
         }
         

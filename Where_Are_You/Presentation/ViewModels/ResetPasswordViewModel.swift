@@ -27,7 +27,7 @@ class ResetPasswordViewModel {
     
     // 이전의 확인받은 userID와 패스워드 체크 패스워드 입력해서 변경하기
     func resetPassword(userId: String, password: String, checkPassword: String) {
-        guard isValidPassword(password) else {
+        guard ValidationHelper.isValidPassword(password) else {
             onResetPasswordFailure?("비밀번호를 다시 한번 확인해 주세요")
             return
         }
@@ -48,7 +48,7 @@ class ResetPasswordViewModel {
     }
     
     func checkPasswordForm(pw: String) {
-        if isValidPassword(pw) {
+        if ValidationHelper.isValidPassword(pw) {
             onCheckPasswordForm?("", true)
         } else {
             onCheckPasswordForm?("영문 대문자, 소문자로 시작하는 6~20자의 영문 대문자, 소문자, 숫자를 포함해 입력해주세요.", false)
@@ -56,20 +56,10 @@ class ResetPasswordViewModel {
     }
     
     func checkSamePassword(pw: String, checkpw: String) {
-        if isPasswordSame(pw, checkpw: checkpw) {
+        if ValidationHelper.isPasswordSame(pw, checkpw: checkpw) {
             onCheckSamePassword?("", true)
         } else {
             onCheckSamePassword?("비밀번호가 일치하지 않습니다.", false)
         }
-    }
-    
-    func isValidPassword(_ pw: String) -> Bool {
-        let pwRegex = "^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z][A-Za-z0-9]{5,19}$"
-        let pwPred = NSPredicate(format: "SELF MATCHES %@", pwRegex)
-        return pwPred.evaluate(with: pw)
-    }
-    
-    func isPasswordSame(_ pw: String, checkpw: String) -> Bool {
-        return pw == checkpw
     }
 }

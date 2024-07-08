@@ -15,6 +15,7 @@ class SignUpViewModel {
     private let checkEmailAvailabilityUseCase: CheckEmailAvailabilityUseCase
     private let sendEmailVerificationCodeUseCase: SendEmailVerificationCodeUseCase
     private let verifyEmailCodeUseCase: VerifyEmailCodeUseCase
+    private let timerHelper = TimerHelper()
     var user = User()
     
     // Input
@@ -33,9 +34,6 @@ class SignUpViewModel {
     var onEmailVerificationCodeVerified: ((String, Bool) -> Void)?
     
     var onUpdateTimer: ((String) -> Void)?
-    
-    private var timer: Timer?
-    private var timerCount: Int = 300
     
     // 에러 description
     private let invalidUserIDMessage = "영문 소문자와 숫자만 사용하여, 영문 소문자로 시작하는 5~12자의 아이디를 입력해주세요"
@@ -58,6 +56,14 @@ class SignUpViewModel {
         self.checkEmailAvailabilityUseCase = checkEmailAvailabilityUseCase
         self.sendEmailVerificationCodeUseCase = sendEmailVerificationCodeUseCase
         self.verifyEmailCodeUseCase = verifyEmailCodeUseCase
+        
+        timerHelper.onUpdateTimer = { [weak self] timeString in
+            self?.onUpdateTimer?(timeString)
+        }
+        
+        timerHelper.onTimerExpired = { [weak self]  in
+            self?.onEmailVerificationCodeVerified?("이메일 재인증 요청이 필요합니다.", false)
+        }
     }
     
     // MARK: - Helpers(로그인, 아이디, 이메일, 코드확인)
@@ -79,7 +85,7 @@ class SignUpViewModel {
     
     // 아이디 중복 체크
     func checkUserIDAvailability(userId: String) {
-        guard isValidUserID(userId) else {
+        guard ValidationHelper.isValidUserID(userId) else {
             onUserIDAvailabilityChecked?(invalidUserIDMessage, false)
             return
         }
@@ -100,7 +106,7 @@ class SignUpViewModel {
     
     // 비밀번호 형식 체크
     func checkPasswordAvailability(password: String) {
-        if isValidPassword(password) {
+        if ValidationHelper.isValidPassword(password) {
             onPasswordFormatError?("사용가능한 비밀번호입니다.", true)
         } else {
             onPasswordFormatError?(invalidPasswordMessage, false)
@@ -109,7 +115,7 @@ class SignUpViewModel {
     
     // 비밀번호 일치체크
     func checkSamePassword(password: String, checkPassword: String) {
-        if isPasswordSame(password, checkpw: checkPassword) {
+        if ValidationHelper.isPasswordSame(password, checkpw: checkPassword) {
             onCheckPasswordFormatError?("비밀번호가 일치힙니다.", true)
         } else {
             onCheckPasswordFormatError?("비밀번호가 일치하지 않습니다.", false)
@@ -118,7 +124,7 @@ class SignUpViewModel {
     
     // 이메일 중복체크
     func checkEmailAvailability(email: String) {
-        guard isValidEmail(email) else {
+        guard ValidationHelper.isValidEmail(email) else {
             onEmailVerificationCodeSent?(invalidEmailMessage, false)
             return
         }
@@ -144,7 +150,7 @@ class SignUpViewModel {
             case .success:
                 self.onEmailVerificationCodeSent?("인증코드가 전송되었습니다.", true)
                 self.email = email
-                self.startTimer()
+                self.timerHelper.startTimer()
             case .failure(let error):
                 self.onEmailVerificationCodeVerified?(error.localizedDescription, false)
             }
@@ -153,7 +159,7 @@ class SignUpViewModel {
     
     // 인증코드 확인
     func verifyEmailCode(inputCode: String) {
-        if timerCount == 0 {
+        if timerHelper.timerCount == 0 {
             self.onEmailVerificationCodeVerified?(emailVerificationExpiredMessage, false)
         } else {
             verifyEmailCodeUseCase.execute(email: email, code: inputCode) { result in
@@ -168,81 +174,34 @@ class SignUpViewModel {
         }
     }
     
-    // 타이머 시작
-    func startTimer() {
-        timerCount = 300
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            guard let self = self else { return }
-            self.timerCount -= 1
-            let minutes = self.timerCount / 60
-            let seconds = self.timerCount % 60
-            let timeString = String(format: "%02d:%02d", minutes, seconds)
-            self.onUpdateTimer?(timeString)
-            if self.timerCount == 0 {
-                self.stopTimer()
-                self.onEmailVerificationCodeVerified?(emailVerificationExpiredMessage, false)
-            }
-        }
-    }
-    
-    private func stopTimer() {
-        timer?.invalidate()
-        timer = nil
-    }
-    
     // MARK: - Validation Helpers
-
+    
     private func validateSignUpInputs() -> Bool {
-            guard let username = user.userName, !username.isEmpty else {
-                onSignUpFailure?("이름을 확인해주세요.")
-                return false
-            }
-            
-            guard let userId = user.userId, !userId.isEmpty else {
-                onSignUpFailure?("아이디를 확인해주세요.")
-                return false
-            }
-            
-            guard let email = user.email, !email.isEmpty else {
-                onSignUpFailure?("이메일을 확인해주세요.")
-                return false
-            }
-            
-            guard isValidPassword(password) else {
-                onSignUpFailure?("비밀번호를 확인해주세요.")
-                return false
-            }
-            
-            guard password == confirmPassword else {
-                onSignUpFailure?("비밀번호가 일치하지 않습니다.")
-                return false
-            }
-            
-            return true
+        guard let username = user.userName, !username.isEmpty else {
+            onSignUpFailure?("이름을 확인해주세요.")
+            return false
         }
-
-    // MARK: - 형식 조건
-    
-    func isValidUserID(_ userID: String) -> Bool {
-        let idRegex = "^[a-z][a-z0-9]{4,11}$"
-        let userIDPred = NSPredicate(format: "SELF MATCHES %@", idRegex)
-        return userIDPred.evaluate(with: userID)
-    }
-    
-    func isValidPassword(_ pw: String) -> Bool {
-        let pwRegex = "^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z][A-Za-z0-9]{5,19}$"
-        let pwPred = NSPredicate(format: "SELF MATCHES %@", pwRegex)
-        return pwPred.evaluate(with: pw)
-    }
-    
-    func isPasswordSame(_ pw: String, checkpw: String) -> Bool {
-        return pw == checkpw
-    }
-    
-    func isValidEmail(_ email: String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let emailPred = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
-        return emailPred.evaluate(with: email)
+        
+        guard let userId = user.userId, !userId.isEmpty else {
+            onSignUpFailure?("아이디를 확인해주세요.")
+            return false
+        }
+        
+        guard let email = user.email, !email.isEmpty else {
+            onSignUpFailure?("이메일을 확인해주세요.")
+            return false
+        }
+        
+        guard ValidationHelper.isValidPassword(password) else {
+            onSignUpFailure?("비밀번호를 확인해주세요.")
+            return false
+        }
+        
+        guard password == confirmPassword else {
+            onSignUpFailure?("비밀번호가 일치하지 않습니다.")
+            return false
+        }
+        
+        return true
     }
 }

@@ -40,7 +40,7 @@ class FindIDViewModel {
     // MARK: - Helpers
     
     func sendEmailVerificationCode(email: String) {
-        guard isValidEmail(email) else {
+        guard ValidationHelper.isValidEmail(email) else {
             onRequestCodeFailure?("이메일 형식에 알맞지 않습니다.")
             return
         }
@@ -103,13 +103,5 @@ class FindIDViewModel {
     private func stopTimer() {
         timer?.invalidate()
         timer = nil
-    }
-    
-    // MARK: - Validation Helpers
-    
-    private func isValidEmail(_ email: String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let emailPred = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
-        return emailPred.evaluate(with: email)
     }
 }
