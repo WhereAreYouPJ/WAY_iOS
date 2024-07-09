@@ -7,6 +7,7 @@ target 'Where_Are_You' do
 	pod 'Alamofire'
 	pod 'SwiftLint'
 	pod 'SnapKit'
+	pod 'KeychainAccess'
 
 
 	target 'Where_Are_You_Tests' do
