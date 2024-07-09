@@ -14,7 +14,6 @@
 		990F57A32C27F9FE00F6E1AD /* CheckEmailAvailabilityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57A22C27F9FE00F6E1AD /* CheckEmailAvailabilityUseCase.swift */; };
 		990F57B22C282C5900F6E1AD /* SendVerificationCodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57B12C282C5900F6E1AD /* SendVerificationCodeUseCase.swift */; };
 		992F1EC62C37ED400042CB1A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 992F1EC52C37ED400042CB1A /* .gitignore */; };
-		992F1EC82C37F04B0042CB1A /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F1EC72C37F04B0042CB1A /* Config.swift */; };
 		9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C64D2C102FB6003155A7 /* TermsAgreementView.swift */; };
 		9950C6572C1040FD003155A7 /* TermsAgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C6562C1040FD003155A7 /* TermsAgreementViewController.swift */; };
 		9950C6592C10B0DF003155A7 /* SignUpFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C6582C10B0DF003155A7 /* SignUpFormView.swift */; };
@@ -28,6 +27,8 @@
 		9953584C2C00C558005BF799 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 9953584B2C00C558005BF799 /* Base */; };
 		995358552C00DB0A005BF799 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 995358542C00DB0A005BF799 /* .swiftlint.yml */; };
 		997746A52C329D68004FB0DF /* FindUserIDUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997746A42C329D68004FB0DF /* FindUserIDUseCase.swift */; };
+		997DC6552C3D231000EACA5F /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997DC6542C3D231000EACA5F /* Config.swift */; };
+		997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997DC6562C3D253000EACA5F /* UserDefaultManager.swift */; };
 		99938EE02C0C8B9D00239FA1 /* SearchPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99938EDF2C0C8B9D00239FA1 /* SearchPasswordViewController.swift */; };
 		99B397832C0C3E9D00D7A109 /* CheckIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B397822C0C3E9D00D7A109 /* CheckIDView.swift */; };
 		99B397852C0C41D300D7A109 /* CheckIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B397842C0C41D300D7A109 /* CheckIDViewController.swift */; };
@@ -104,7 +105,6 @@
 		990F57A22C27F9FE00F6E1AD /* CheckEmailAvailabilityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailAvailabilityUseCase.swift; sourceTree = "<group>"; };
 		990F57B12C282C5900F6E1AD /* SendVerificationCodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendVerificationCodeUseCase.swift; sourceTree = "<group>"; };
 		992F1EC52C37ED400042CB1A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		992F1EC72C37F04B0042CB1A /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		9950C64D2C102FB6003155A7 /* TermsAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAgreementView.swift; sourceTree = "<group>"; };
 		9950C6562C1040FD003155A7 /* TermsAgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAgreementViewController.swift; sourceTree = "<group>"; };
 		9950C6582C10B0DF003155A7 /* SignUpFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFormView.swift; sourceTree = "<group>"; };
@@ -120,6 +120,8 @@
 		9953584D2C00C558005BF799 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		995358542C00DB0A005BF799 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		997746A42C329D68004FB0DF /* FindUserIDUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUserIDUseCase.swift; sourceTree = "<group>"; };
+		997DC6542C3D231000EACA5F /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		997DC6562C3D253000EACA5F /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		99938EDF2C0C8B9D00239FA1 /* SearchPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPasswordViewController.swift; sourceTree = "<group>"; };
 		99B397822C0C3E9D00D7A109 /* CheckIDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIDView.swift; sourceTree = "<group>"; };
 		99B397842C0C41D300D7A109 /* CheckIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIDViewController.swift; sourceTree = "<group>"; };
@@ -203,16 +205,9 @@
 			isa = PBXGroup;
 			children = (
 				99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */,
+				997DC6562C3D253000EACA5F /* UserDefaultManager.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		992F1EC92C37F11E0042CB1A /* Config */ = {
-			isa = PBXGroup;
-			children = (
-				992F1EC72C37F04B0042CB1A /* Config.swift */,
-			);
-			path = Config;
 			sourceTree = "<group>";
 		};
 		9950C64C2C102E18003155A7 /* SingUp */ = {
@@ -300,7 +295,7 @@
 		995358302C00C555005BF799 = {
 			isa = PBXGroup;
 			children = (
-				992F1EC92C37F11E0042CB1A /* Config */,
+				997DC6512C3D22DD00EACA5F /* Config */,
 				992F1EC52C37ED400042CB1A /* .gitignore */,
 				995358542C00DB0A005BF799 /* .swiftlint.yml */,
 				9953583B2C00C555005BF799 /* Where_Are_You */,
@@ -332,6 +327,14 @@
 				99C9B2232C01973E008D7CBD /* Presentation */,
 			);
 			path = Where_Are_You;
+			sourceTree = "<group>";
+		};
+		997DC6512C3D22DD00EACA5F /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				997DC6542C3D231000EACA5F /* Config.swift */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		99C9B2222C01973C008D7CBD /* Domain */ = {
@@ -771,6 +774,7 @@
 				99B397852C0C41D300D7A109 /* CheckIDViewController.swift in Sources */,
 				997746A52C329D68004FB0DF /* FindUserIDUseCase.swift in Sources */,
 				99C9B2292C0197CA008D7CBD /* User.swift in Sources */,
+				997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */,
 				9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */,
 				99E8BC452C2D26CF00536B95 /* VerifyCodeUseCase.swift in Sources */,
 				99D8FBBD2C3BA1E60062AF10 /* MainHomeViewModel.swift in Sources */,
@@ -787,13 +791,13 @@
 				99938EE02C0C8B9D00239FA1 /* SearchPasswordViewController.swift in Sources */,
 				99CA4F2C2C33EB7F007C027C /* UserIdEmailVerificaitonViewModel.swift in Sources */,
 				99C9B2522C022DE3008D7CBD /* AccountLoginController.swift in Sources */,
+				997DC6552C3D231000EACA5F /* Config.swift in Sources */,
 				99F78F1C2C09BB8F004C0C72 /* SearchAccountController.swift in Sources */,
 				99D8FBC02C3BA2180062AF10 /* CustomLabel.swift in Sources */,
 				9953583F2C00C555005BF799 /* SceneDelegate.swift in Sources */,
 				990F57B22C282C5900F6E1AD /* SendVerificationCodeUseCase.swift in Sources */,
 				9950C6592C10B0DF003155A7 /* SignUpFormView.swift in Sources */,
 				99EC20AB2C0D9D9D0018904D /* SignUpViewModel.swift in Sources */,
-				992F1EC82C37F04B0042CB1A /* Config.swift in Sources */,
 				99EC20AD2C0D9DB50018904D /* FindIDViewModel.swift in Sources */,
 				99CA4F262C33B704007C027C /* ResetPasswordViewModel.swift in Sources */,
 				99EC78D62C11E8A3007C4415 /* FinishRegisterViewController.swift in Sources */,

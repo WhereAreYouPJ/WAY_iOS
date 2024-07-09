@@ -7,7 +7,6 @@
 
 import Alamofire
 
-
 // MARK: - AuthCredentials
 
 struct AuthCredentials: Codable {
@@ -31,14 +30,10 @@ protocol AuthServiceProtocol {
     func signUp(request: AuthCredentials, completion: @escaping (Result<Void, Error>) -> Void)
     func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, Error>) -> Void)
     func checkEmailAvailability(email: String, completion: @escaping (Result<Void, Error>) -> Void)
-    
     func sendVerificationCode(identifier: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void)
-    
     func verifyEmailCode(identifier: String, code: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void)
-    
     func findUserID(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void)
     func resetPassword(userId: String, password: String, checkPassword: String, completion: @escaping (Result<Void, Error>) -> Void)
-    
     func login(userId: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
@@ -79,7 +74,12 @@ class AuthService: AuthServiceProtocol {
     
     // MARK: - Helper
     
-    private func requestAPI<T: Decodable>(endpoint: String, method: HTTPMethod, parameters: Parameters?, responseType: T.Type, expectedErrorCodes: [Int: String] = [:], completion: @escaping (Result<T, Error>) -> Void) {
+    private func requestAPI<T: Decodable>(endpoint: String,
+                                          method: HTTPMethod,
+                                          parameters: Parameters?,
+                                          responseType: T.Type,
+                                          expectedErrorCodes: [Int: String] = [:],
+                                          completion: @escaping (Result<T, Error>) -> Void) {
         let url = baseURL + endpoint
         
         var encoding: ParameterEncoding = JSONEncoding.default
@@ -87,7 +87,10 @@ class AuthService: AuthServiceProtocol {
             encoding = URLEncoding.default
         }
         
-        AF.request(url, method: method, parameters: parameters, encoding: encoding)
+        AF.request(url,
+                   method: method,
+                   parameters: parameters,
+                   encoding: encoding)
             .validate(statusCode: 200..<300)
             .responseDecodable(of: responseType) { response in
                 switch response.result {
@@ -175,7 +178,10 @@ class AuthService: AuthServiceProtocol {
     
     func findUserID(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void) {
         let parameters: [String: Any] = ["email": email, "code": code]
-        requestAPI(endpoint: "/member/findId", method: .post, parameters: parameters, responseType: GenericResponse<FindIDResponse>.self) { result in
+        requestAPI(endpoint: "/member/findId",
+                   method: .post,
+                   parameters: parameters,
+                   responseType: GenericResponse<FindIDResponse>.self) { result in
             completion(result.map { $0.data.userId })
         }
     }
@@ -184,7 +190,10 @@ class AuthService: AuthServiceProtocol {
     
     func resetPassword(userId: String, password: String, checkPassword: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         let parameters: [String: String] = ["userId": userId, "password": password, "checkPassword": checkPassword]
-        requestAPI(endpoint: "/member/resetPassword", method: .post, parameters: parameters, responseType: EmptyResponse.self) { result in
+        requestAPI(endpoint: "/member/resetPassword",
+                   method: .post,
+                   parameters: parameters,
+                   responseType: EmptyResponse.self) { result in
             completion(result.map { _ in () })
         }
     }
@@ -193,8 +202,20 @@ class AuthService: AuthServiceProtocol {
     
     func login(userId: String, password: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         let parameters: [String: String] = ["userId": userId, "password": password]
-        requestAPI(endpoint: "/member/login", method: .post, parameters: parameters, responseType: EmptyResponse.self) { result in
-            completion(result.map { _ in () })
+        requestAPI(endpoint: "/member/login",
+                   method: .post,
+                   parameters: parameters,
+                   responseType: GenericResponse<LoginResponse>.self) { result in
+            switch result {
+            case .success(let response):
+                // 로그인 성공 시 UserDefaults에 데이터 저장 (임시로 추후에 Keychain, oAuth로 바꿀 것)
+                UserDefaultsManager.shared.saveAccessToken(response.data.accessToken)
+                UserDefaultsManager.shared.saveRefreshToken(response.data.refreshToken)
+                UserDefaultsManager.shared.saveMemberSeq(response.data.memberSeq)
+                completion(.success(()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
         }
     }
 }

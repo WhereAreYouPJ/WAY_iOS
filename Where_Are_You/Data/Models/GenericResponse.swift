@@ -16,3 +16,9 @@ struct GenericResponse<T: Codable>: Codable {
 struct FindIDResponse: Codable {
     let userId: String
 }
+
+struct LoginResponse: Codable {
+    let accessToken: String
+    let refreshToken: String
+    let memberSeq: Int
+}
