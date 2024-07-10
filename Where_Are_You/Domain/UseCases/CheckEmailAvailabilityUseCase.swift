@@ -12,9 +12,9 @@ protocol CheckEmailAvailabilityUseCase {
 }
 
 class CheckEmailAvailabilityUseCaseImpl: CheckEmailAvailabilityUseCase {
-    private let userRepository: UserRepositoryProtocol
+    private let userRepository: AuthRepositoryProtocol
     
-    init(userRepository: UserRepositoryProtocol) {
+    init(userRepository: AuthRepositoryProtocol) {
         self.userRepository = userRepository
     }
     

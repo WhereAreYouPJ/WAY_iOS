@@ -13,9 +13,9 @@ protocol VerifyCodeUseCase {
 
 class VerifyCodeUseCaseImpl: VerifyCodeUseCase {
     
-    private let userRepository: UserRepository
+    private let userRepository: AuthRepository
     
-    init(userRepository: UserRepository) {
+    init(userRepository: AuthRepository) {
         self.userRepository = userRepository
     }
     

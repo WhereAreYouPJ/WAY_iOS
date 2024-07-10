@@ -7,7 +7,7 @@
 
 import Alamofire
 
-protocol UserRepositoryProtocol {
+protocol AuthRepositoryProtocol {
     func signUp(request: AuthCredentials, completion: @escaping (Result<Void, Error>) -> Void)
     func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, Error>) -> Void)
     func checkEmailAvailability(email: String, completion: @escaping (Result<Void, Error>) -> Void)
@@ -15,10 +15,10 @@ protocol UserRepositoryProtocol {
     func verifyEmailCode(identifier: String, code: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void)
     func findUserID(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void)
     func resetPassword(userId: String, password: String, checkPassword: String, completion: @escaping (Result<Void, Error>) -> Void)
-
+    func login(userId: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
-class UserRepository: UserRepositoryProtocol {
+class AuthRepository: AuthRepositoryProtocol {
     
     private let authService: AuthServiceProtocol
     
@@ -53,4 +53,9 @@ class UserRepository: UserRepositoryProtocol {
     func resetPassword(userId: String, password: String, checkPassword: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         authService.resetPassword(userId: userId, password: password, checkPassword: checkPassword, completion: completion)
     }
+    
+    func login(userId: String, password: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+        authService.login(userId: userId, password: password, completion: completion)
+    }
+    
 }

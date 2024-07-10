@@ -28,7 +28,7 @@ class FindIDViewController: UIViewController {
     // MARK: - Helpers
     private func setupViewModel() {
         let authService = AuthService()
-        let userRepository = UserRepository(authService: authService)
+        let userRepository = AuthRepository(authService: authService)
         let sendVerificationCodeUseCase = SendVerificationCodeUseCaseImpl(userRepository: userRepository)
         let findUserIDUseCase = FindUserIDUseCaseImpl(userRepository: userRepository)
         

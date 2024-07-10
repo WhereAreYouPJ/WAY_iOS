@@ -219,5 +219,3 @@ class AuthService: AuthServiceProtocol {
         }
     }
 }
-
-struct EmptyResponse: Decodable, Encodable {}

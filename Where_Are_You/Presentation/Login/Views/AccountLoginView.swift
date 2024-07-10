@@ -17,7 +17,7 @@ class AccountLoginView: UIView {
     
     let idTextField = Utilities().inputContainerTextField(withPlaceholder: "아이디를 입력해주세요.", fontSize: textFieldFontSize)
     
-    private let idErrorLabel: UILabel = {
+    let idErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .warningColor
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))

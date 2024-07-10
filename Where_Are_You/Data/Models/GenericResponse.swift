@@ -13,6 +13,8 @@ struct GenericResponse<T: Codable>: Codable {
     let data: T
 }
 
+struct EmptyResponse: Decodable, Encodable {}
+
 struct FindIDResponse: Codable {
     let userId: String
 }

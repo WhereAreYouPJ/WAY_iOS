@@ -12,9 +12,9 @@ protocol SignUpUseCase {
 }
 
 class SignUpUseCaseImpl: SignUpUseCase {
-    private let userRepository: UserRepositoryProtocol
+    private let userRepository: AuthRepositoryProtocol
     
-    init(userRepository: UserRepositoryProtocol) {
+    init(userRepository: AuthRepositoryProtocol) {
         self.userRepository = userRepository
     }
     
