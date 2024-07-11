@@ -8,18 +8,20 @@
 import Foundation
 import UIKit
 
-class BannerView: UIView, UIScrollViewDelegate {
+class BannerView: UIView {
     
     // MARK: - Properties
-
-    private let scrollView = UIScrollView()
-    private let pageControl = UIPageControl()
-    private var images: [UIImage] = []
+    
+    var collectionView = UICollectionView()
+    let pageControl = UIPageControl()
     
     // MARK: - Lifecycle
-
-    init(images: [UIImage]) {
-        self.images = images
+    
+    init() {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         super.init(frame: .zero)
         setupViews()
     }
@@ -29,43 +31,22 @@ class BannerView: UIView, UIScrollViewDelegate {
     }
     
     // MARK: - Helpers
-
+    
     private func setupViews() {
-        scrollView.isPagingEnabled = true
-        scrollView.delegate = self
-        addSubview(scrollView)
+        collectionView.isPagingEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: BannerCollectionViewCell.identifier)
+        
+        addSubview(collectionView)
         addSubview(pageControl)
         
-        scrollView.snp.makeConstraints { make in
+        collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
         pageControl.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-10)
             make.centerX.equalToSuperview()
         }
-        
-        setupSlides()
-    }
-    
-    private func setupSlides() {
-        for (index, image) in images.enumerated() {
-            let imageView = UIImageView(image: image)
-            imageView.contentMode = .scaleAspectFill
-            scrollView.addSubview(imageView)
-            
-            imageView.snp.makeConstraints { make in
-                make.top.bottom.equalToSuperview()
-                make.width.equalToSuperview()
-                make.leading.equalToSuperview().offset(CGFloat(index) * UIScreen.main.bounds.width)
-            }
-        }
-        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(images.count), height: bounds.height)
-        pageControl.numberOfPages = images.count
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let pageIndex = round(scrollView.contentOffset.x / frame.width)
-        pageControl.currentPage = Int(pageIndex)
     }
 }

@@ -10,6 +10,6 @@ import Foundation
 struct User: Codable {
     var userName: String?
     var userId: String?
-    var password: String?
-    var email: String?
+    var profileImage: String?
+    var memberSeq: Int?
 }

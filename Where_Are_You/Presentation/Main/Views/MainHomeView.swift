@@ -10,7 +10,7 @@ import UIKit
 
 class MainHomeView: UIView {
     // MARK: - Properties
-
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(Ttangsbudae: .bold, fontSize: 20))
@@ -34,23 +34,56 @@ class MainHomeView: UIView {
     
     // 배너 슬라이드 이미지
     
+    let bannerView = BannerView()
+    
     // 자동 슬라이드 일정
     
-    private let reminderLabel = CustomLabel(UILabel_NotoSans: .medium, text: "함께한 추억을 확인해보세요!", textColor: .color34, fontSize: 20) // 새로 커스텀 버튼을 만들어서 추가하기
+    let scheduleView = ScheduleView()
+    
+    // 새로 커스텀 버튼을 만들어서 추가하기
+    let reminderButton = UIButton()
+    
+    let feedTableView: FeedTableView
     
     // MARK: - Lifecycle
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .white
-        setupConstraints()
+    init(feeds: [String]) {
+        feedTableView = FeedTableView()
+        super.init(frame: .zero)
+        setupViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupConstraints() {
+    func setupViews() {
+        addSubview(bannerView)
+        addSubview(scheduleView)
+        addSubview(reminderButton)
+        addSubview(feedTableView)
         
+        bannerView.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide).offset(16)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(150)
+        }
+        
+        scheduleView.snp.makeConstraints { make in
+            make.top.equalTo(bannerView.snp.bottom).offset(16)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(50)
+        }
+        
+        reminderButton.snp.makeConstraints { make in
+            make.top.equalTo(scheduleView.snp.bottom).offset(16)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(44)
+        }
+        
+        feedTableView.snp.makeConstraints { make in
+            make.top.equalTo(reminderButton.snp.bottom).offset(16)
+            make.leading.trailing.bottom.equalToSuperview().inset(16)
+        }
     }
     
 }

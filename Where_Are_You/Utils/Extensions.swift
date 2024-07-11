@@ -41,6 +41,7 @@ extension UIColor {
     static let letterBrandColor = UIColor.rgb(red: 98, green: 54, blue: 233)
     static let lightpurple = UIColor.rgb(red: 146, green: 134, blue: 255)
     static let warningColor = UIColor.rgb(red: 223, green: 67, blue: 67)
+    static let scheduleDateColor = UIColor.rgb(red: 252, green: 47, blue: 47)
     
     static let color17 = UIColor.rgb(red: 17, green: 17, blue: 17)
     static let color34 = UIColor.rgb(red: 34, green: 34, blue: 34)
@@ -50,6 +51,7 @@ extension UIColor {
     static let color118 = UIColor.rgb(red: 118, green: 118, blue: 118)
     static let color153 = UIColor.rgb(red: 153, green: 153, blue: 153)
     static let color172 = UIColor.rgb(red: 172, green: 172, blue: 172)
+    static let color191 = UIColor.rgb(red: 191, green: 191, blue: 191)
     static let color212 = UIColor.rgb(red: 212, green: 212, blue: 212)
     static let color221 = UIColor.rgb(red: 221, green: 221, blue: 221)
     static let color234 = UIColor.rgb(red: 234, green: 234, blue: 234)
