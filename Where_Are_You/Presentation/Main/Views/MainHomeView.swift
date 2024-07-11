@@ -22,7 +22,13 @@ class MainHomeView: UIView {
     
     private let notificationButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "bell_notification"), for: .normal)
+        button.setImage(UIImage(named: "icon_bell_notification"), for: .normal)
+        return button
+    }()
+    
+    private let profileButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "icon_profile"), for: .normal)
         return button
     }()
     
