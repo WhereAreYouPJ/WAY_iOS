@@ -22,7 +22,7 @@ class MainHomeViewModel {
         // 예시 이미지 로딩 (나중에 실제 데이터를 로딩하는 로직으로 대체)
         self.images = [
             UIImage(named: "banner1")!,
-            UIImage(named: "banner2")!
+            UIImage(named: "banner1")!
         ]
         onBannerDataFetched?()
     }

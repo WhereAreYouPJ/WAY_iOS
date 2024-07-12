@@ -9,18 +9,26 @@ import UIKit
 import SnapKit
 
 class ScheduleView: UIView {
+    // MARK: - Properties
+
     private let scrollView = UIScrollView()
+    
     private let stackView = UIStackView()
+    
     private let noScheduleLabel: UILabel = {
-        let label = CustomLabel(UILabel_NotoSans: .medium, text: "일정이 없습니다.", textColor: .color191, fontSize: 16)
+        let label = UILabel()
+        label.text = "일정이 없습니다."
         label.textAlignment = .center
-        label.backgroundColor = .white
         label.layer.borderColor = UIColor.color118.cgColor
+        label.textColor = .color191
+        label.layer.borderColor = UIColor.lightGray.cgColor
         label.layer.borderWidth = 1
         label.layer.cornerRadius = 10
         label.clipsToBounds = true
+        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 16)
         return label
     }()
+    
     private var timer: Timer?
     
     var schedules: [String] = [] {
@@ -29,6 +37,8 @@ class ScheduleView: UIView {
         }
     }
     
+    // MARK: - Lifecycle
+
     init() {
         super.init(frame: .zero)
         setupViews()
@@ -38,6 +48,8 @@ class ScheduleView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Helpers
+
     private func setupViews() {
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.isPagingEnabled = true
@@ -61,30 +73,26 @@ class ScheduleView: UIView {
         
         if schedules.isEmpty {
             stackView.addArrangedSubview(noScheduleLabel)
-            noScheduleLabel.snp.makeConstraints { make in
-                make.width.equalToSuperview()
-            }
-            stopAutoScroll()
         } else {
             for schedule in schedules {
                 let label = createScheduleLabel(with: schedule)
                 stackView.addArrangedSubview(label)
-                label.snp.makeConstraints { make in
-                    make.width.equalToSuperview()
-                }
             }
             startAutoScroll()
         }
     }
     
     private func createScheduleLabel(with schedule: String) -> UILabel {
-        let label = CustomLabel(UILabel_NotoSans: .medium, text: schedule, textColor: .color34, fontSize: 16)
+        let label = UILabel()
+        label.text = schedule
         label.textAlignment = .left
         label.backgroundColor = .white
+        label.textColor = .color34
         label.layer.borderColor = UIColor.color118.cgColor
         label.layer.borderWidth = 1
         label.layer.cornerRadius = 10
         label.clipsToBounds = true
+        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 16)
         
         let attributedText = NSMutableAttributedString(string: schedule)
         attributedText.addAttribute(.foregroundColor, value: UIColor.scheduleDateColor, range: (schedule as NSString).range(of: "D -"))

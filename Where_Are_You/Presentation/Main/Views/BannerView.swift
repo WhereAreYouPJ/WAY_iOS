@@ -12,7 +12,7 @@ class BannerView: UIView {
     
     // MARK: - Properties
     
-    var collectionView = UICollectionView()
+    var collectionView: UICollectionView
     let pageControl = UIPageControl()
     
     // MARK: - Lifecycle

@@ -40,16 +40,24 @@ class MainHomeView: UIView {
     
     let scheduleView = ScheduleView()
     
+    private let separateView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .color221
+        return view
+    }()
+    
     // 새로 커스텀 버튼을 만들어서 추가하기
     let reminderButton = UIButton()
     
     let feedTableView: FeedTableView
     
     // MARK: - Lifecycle
+    
     init(feeds: [String]) {
         feedTableView = FeedTableView()
         super.init(frame: .zero)
         setupViews()
+        backgroundColor = .white
     }
     
     required init?(coder: NSCoder) {
@@ -57,32 +65,58 @@ class MainHomeView: UIView {
     }
     
     func setupViews() {
+        addSubview(titleLabel)
         addSubview(bannerView)
         addSubview(scheduleView)
+        addSubview(separateView)
         addSubview(reminderButton)
         addSubview(feedTableView)
         
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide).offset(14)
+            make.left.equalToSuperview().offset(18)
+            make.width.equalTo(self.snp.width).multipliedBy(0.26)
+            make.height.equalTo(titleLabel.snp.width).multipliedBy(0.25)
+        }
+        
+        let iconStack = UIStackView(arrangedSubviews: [notificationButton, profileButton])
+        iconStack.axis = .horizontal
+        iconStack.distribution = .fillEqually
+        
+        addSubview(iconStack)
+        iconStack.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide).offset(8)
+            make.right.equalToSuperview().inset(11)
+        }
+        
         bannerView.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide).offset(16)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(150)
+            make.top.equalTo(titleLabel.snp.bottom).offset(21)
+            make.leading.trailing.equalToSuperview().inset(15)
+            make.height.equalTo(bannerView.snp.width).multipliedBy(0.55)
         }
         
         scheduleView.snp.makeConstraints { make in
-            make.top.equalTo(bannerView.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(50)
+            make.top.equalTo(bannerView.snp.bottom).offset(15)
+            make.leading.trailing.equalToSuperview().inset(15)
+            make.height.equalTo(scheduleView.snp.width).multipliedBy(0.15)
+        }
+        
+        // 분리선 넣기
+        separateView.snp.makeConstraints { make in
+            make.top.equalTo(scheduleView.snp.bottom).offset(14)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(4)
         }
         
         reminderButton.snp.makeConstraints { make in
-            make.top.equalTo(scheduleView.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(44)
+            make.top.equalTo(separateView.snp.bottom).offset(16)
+            make.leading.trailing.equalToSuperview().inset(25)
+            make.height.equalTo(37)
         }
         
         feedTableView.snp.makeConstraints { make in
-            make.top.equalTo(reminderButton.snp.bottom).offset(16)
-            make.leading.trailing.bottom.equalToSuperview().inset(16)
+            make.top.equalTo(reminderButton.snp.bottom).offset(12)
+            make.leading.trailing.bottom.equalToSuperview().inset(15)
         }
     }
     

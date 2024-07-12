@@ -103,7 +103,9 @@ extension MainHomeViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCollectionViewCell.identifier, for: indexPath) as? BannerCollectionViewCell else { fatalError("Unable to dequeue FeedTableViewCell") }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCollectionViewCell.identifier, for: indexPath) as? BannerCollectionViewCell else {
+            fatalError("Unable to dequeue FeedTableViewCell")
+        }
         let images = viewModel.getBannerImages()
         cell.configure(with: images[indexPath.item])
         return cell
@@ -138,7 +140,9 @@ extension MainHomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.identifier, for: indexPath) as? FeedTableViewCell else { fatalError("Unable to dequeue FeedTableViewCell") }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.identifier, for: indexPath) as? FeedTableViewCell else {
+            fatalError("Unable to dequeue FeedTableViewCell")
+        }
         cell.configure(with: viewModel.getFeeds()[indexPath.row])
         return cell
     }
