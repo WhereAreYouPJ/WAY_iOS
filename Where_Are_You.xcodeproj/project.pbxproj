@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1CFDF5866B2F09FBDCBFE6DB /* Pods_Where_Are_You_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E05660871E31DAF17D0F5C8 /* Pods_Where_Are_You_Tests.framework */; };
+		990BDE532C40CF1E00A7FB5D /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990BDE522C40CF1E00A7FB5D /* ScheduleCell.swift */; };
 		990F57912C27ECDC00F6E1AD /* SignUpUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57902C27ECDC00F6E1AD /* SignUpUseCase.swift */; };
 		990F579A2C27EEF400F6E1AD /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57992C27EEF400F6E1AD /* AuthRepository.swift */; };
 		990F579F2C27F86A00F6E1AD /* CheckUserIDAvailabilityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F579E2C27F86A00F6E1AD /* CheckUserIDAvailabilityUseCase.swift */; };
@@ -106,6 +107,7 @@
 		0FC7C11057ACE416B59D9BFA /* Pods-Where_Are_You.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You.debug.xcconfig"; path = "Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You.debug.xcconfig"; sourceTree = "<group>"; };
 		20C7F106D8DFB49B151D8073 /* Pods-Where_Are_You_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You_Tests.release.xcconfig"; path = "Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		5E05660871E31DAF17D0F5C8 /* Pods_Where_Are_You_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		990BDE522C40CF1E00A7FB5D /* ScheduleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCell.swift; sourceTree = "<group>"; };
 		990F57902C27ECDC00F6E1AD /* SignUpUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUseCase.swift; sourceTree = "<group>"; };
 		990F57992C27EEF400F6E1AD /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		990F579E2C27F86A00F6E1AD /* CheckUserIDAvailabilityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUserIDAvailabilityUseCase.swift; sourceTree = "<group>"; };
@@ -450,6 +452,7 @@
 				99D8FBB42C3B9F9F0062AF10 /* MainHomeView.swift */,
 				9911F9892C3F6B4100D0FDC9 /* BannerCollectionViewCell.swift */,
 				9911F9832C3F5AA600D0FDC9 /* BannerView.swift */,
+				990BDE522C40CF1E00A7FB5D /* ScheduleCell.swift */,
 				9911F9852C3F5E6F00D0FDC9 /* ScheduleView.swift */,
 				9911F98D2C3F913100D0FDC9 /* FeedTableViewCell.swift */,
 				9911F98B2C3F908E00D0FDC9 /* FeedTableView.swift */,
@@ -798,6 +801,7 @@
 				99B397852C0C41D300D7A109 /* CheckIDViewController.swift in Sources */,
 				9979622D2C3E6B2200E95CA6 /* AccountLoginUseCase.swift in Sources */,
 				997746A52C329D68004FB0DF /* FindUserIDUseCase.swift in Sources */,
+				990BDE532C40CF1E00A7FB5D /* ScheduleCell.swift in Sources */,
 				9911F98C2C3F908E00D0FDC9 /* FeedTableView.swift in Sources */,
 				99C9B2292C0197CA008D7CBD /* User.swift in Sources */,
 				997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */,

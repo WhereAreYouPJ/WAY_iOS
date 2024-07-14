@@ -147,3 +147,27 @@ extension MainHomeViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
 }
+
+// MARK: - UICollectionViewDataSource
+
+extension ScheduleView: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return schedules.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ScheduleCell.identifier, for: indexPath) as? ScheduleCell else {
+            fatalError("Unable to dequeue ScheduleCell")
+        }
+        cell.configure(with: schedules[indexPath.item])
+        return cell
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension ScheduleView: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+    }
+}

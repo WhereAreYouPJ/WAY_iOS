@@ -1,10 +1,3 @@
-//
-//  MainHomeViewModel.swift
-//  Where_Are_You
-//
-//  Created by 오정석 on 8/7/2024.
-//
-
 import Foundation
 import UIKit
 
@@ -12,7 +5,7 @@ class MainHomeViewModel {
     private var images: [UIImage] = []
     private var schedules: [String] = []
     private var feeds: [String] = []
-    
+
     var onBannerDataFetched: (() -> Void)?
     var onScheduleDataFetched: (() -> Void)?
     var onFeedsDataFetched: (() -> Void)?
@@ -22,11 +15,11 @@ class MainHomeViewModel {
         // 예시 이미지 로딩 (나중에 실제 데이터를 로딩하는 로직으로 대체)
         self.images = [
             UIImage(named: "banner1")!,
-            UIImage(named: "banner1")!
+            UIImage(named: "banner2")!
         ]
         onBannerDataFetched?()
     }
-    
+
     // 스케줄을 불러오는 메서드
     func fetchSchedules() {
         // 예시 일정 데이터 (나중에 실제 데이터를 로딩하는 로직으로 대체)
@@ -36,7 +29,7 @@ class MainHomeViewModel {
         ]
         onScheduleDataFetched?()
     }
-    
+
     // 피드를 불러오는 메서드
     func fetchFeeds() {
         // 예시 피드 데이터 (나중에 실제 데이터를 로딩하는 로직으로 대체)
@@ -51,13 +44,12 @@ class MainHomeViewModel {
     func getBannerImages() -> [UIImage] {
         return images
     }
-    
+
     func getSchedules() -> [String] {
         return schedules
     }
-    
+
     func getFeeds() -> [String] {
         return feeds
     }
-    
 }
