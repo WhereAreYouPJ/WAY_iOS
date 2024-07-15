@@ -32,14 +32,17 @@ class MainHomeView: UIView {
         return button
     }()
     
-    var iconStack = UIStackView()
+    var iconStack: UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .horizontal
+        sv.distribution = .fillEqually
+        return sv
+    }()
     
     // 배너 슬라이드 이미지
-    
     let bannerView = BannerView()
     
     // 자동 슬라이드 일정
-    
     let scheduleView = ScheduleView()
     
     private let separateView: UIView = {
@@ -49,15 +52,21 @@ class MainHomeView: UIView {
     }()
     
     // 새로 커스텀 버튼을 만들어서 추가하기
-    let reminderButton = UIButton()
+    let reminderButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("함께한 추억을 확인해보세요! ", for: .normal)
+        return button
+    }()
     
+    // 피드 테이블뷰
     let feedTableView = FeedTableView()
     
     // MARK: - Lifecycle
     
-    init() {
-        super.init(frame: .zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupViews()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -69,16 +78,14 @@ class MainHomeView: UIView {
 
         addSubview(titleLabel)
         addSubview(iconStack)
+        iconStack.addArrangedSubview(notificationButton)
+        iconStack.addArrangedSubview(profileButton)
 
         addSubview(bannerView)
         addSubview(scheduleView)
         addSubview(separateView)
         addSubview(reminderButton)
         addSubview(feedTableView)
-        
-        iconStack = UIStackView(arrangedSubviews: [notificationButton, profileButton])
-        iconStack.axis = .horizontal
-        iconStack.distribution = .fillEqually
     }
     
     func setupConstraints() {
