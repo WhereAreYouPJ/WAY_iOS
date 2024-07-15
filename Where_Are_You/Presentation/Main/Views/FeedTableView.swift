@@ -32,25 +32,25 @@ class FeedTableView: UIView {
             updateFeeds()
         }
     }
-
-    init() {
-        super.init(frame: .zero)
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupViews()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func setupViews() {
         addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-
+        
         tableView.register(FeedTableViewCell.self, forCellReuseIdentifier: FeedTableViewCell.identifier)
     }
-
+    
     private func updateFeeds() {
         if feeds.isEmpty {
             addSubview(noFeedLabel)
