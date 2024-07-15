@@ -78,6 +78,8 @@
 		99F78F1C2C09BB8F004C0C72 /* SearchAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F1B2C09BB8F004C0C72 /* SearchAccountController.swift */; };
 		99F78F1E2C09C98D004C0C72 /* CommonSearchAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F1D2C09C98D004C0C72 /* CommonSearchAuthView.swift */; };
 		99F9FADE2C0B6187005B36B9 /* FindIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9FADD2C0B6187005B36B9 /* FindIDViewController.swift */; };
+		99FBA54E2C453924002EEEC7 /* BannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA54D2C453924002EEEC7 /* BannerViewController.swift */; };
+		99FBA5502C45394E002EEEC7 /* BannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA54F2C45394E002EEEC7 /* BannerViewModel.swift */; };
 		D79EFAD9E5409233E5338E46 /* Pods_Where_Are_You.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */; };
 /* End PBXBuildFile section */
 
@@ -181,6 +183,8 @@
 		99F78F1B2C09BB8F004C0C72 /* SearchAccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAccountController.swift; sourceTree = "<group>"; };
 		99F78F1D2C09C98D004C0C72 /* CommonSearchAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSearchAuthView.swift; sourceTree = "<group>"; };
 		99F9FADD2C0B6187005B36B9 /* FindIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDViewController.swift; sourceTree = "<group>"; };
+		99FBA54D2C453924002EEEC7 /* BannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewController.swift; sourceTree = "<group>"; };
+		99FBA54F2C45394E002EEEC7 /* BannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewModel.swift; sourceTree = "<group>"; };
 		A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5015275FE458D5F6450041 /* Pods-Where_Are_You.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You.release.xcconfig"; path = "Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You.release.xcconfig"; sourceTree = "<group>"; };
 		EF2914052EE4B6C83BE57C93 /* Pods-Where_Are_You_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -465,6 +469,7 @@
 			children = (
 				99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */,
 				99D8FBBA2C3BA1D90062AF10 /* MainHomeViewController.swift */,
+				99FBA54D2C453924002EEEC7 /* BannerViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -499,6 +504,7 @@
 			isa = PBXGroup;
 			children = (
 				99D8FBBC2C3BA1E60062AF10 /* MainHomeViewModel.swift */,
+				99FBA54F2C45394E002EEEC7 /* BannerViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -778,6 +784,7 @@
 			files = (
 				995358472C00C555005BF799 /* Where_Are_You.xcdatamodeld in Sources */,
 				9950C65B2C10B0F5003155A7 /* SignUpFormViewController.swift in Sources */,
+				99FBA5502C45394E002EEEC7 /* BannerViewModel.swift in Sources */,
 				99C9B22C2C019C67008D7CBD /* LoginView.swift in Sources */,
 				9950C6572C1040FD003155A7 /* TermsAgreementViewController.swift in Sources */,
 				99D8FBBB2C3BA1D90062AF10 /* MainHomeViewController.swift in Sources */,
@@ -813,6 +820,7 @@
 				99EC78D02C11E20F007C4415 /* FinishResetPasswordView.swift in Sources */,
 				99F9FADE2C0B6187005B36B9 /* FindIDViewController.swift in Sources */,
 				99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */,
+				99FBA54E2C453924002EEEC7 /* BannerViewController.swift in Sources */,
 				99EC78CE2C11DBA5007C4415 /* ResetPasswordViewController.swift in Sources */,
 				99B397832C0C3E9D00D7A109 /* CheckIDView.swift in Sources */,
 				99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */,

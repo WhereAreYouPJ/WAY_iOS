@@ -17,7 +17,7 @@ class BannerView: UIView {
     
     // MARK: - Lifecycle
     
-    init() {
+    override init(frame: CGRect) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0

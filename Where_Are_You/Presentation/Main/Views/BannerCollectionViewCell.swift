@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 class BannerCollectionViewCell: UICollectionViewCell {
+    // MARK: - Properties
+
     static let identifier = "BannerCollectionViewCell"
     
     private let imageView: UIImageView = {
@@ -18,6 +20,8 @@ class BannerCollectionViewCell: UICollectionViewCell {
         return iv
     }()
     
+    // MARK: - Lifecycle
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(imageView)
@@ -33,6 +37,8 @@ class BannerCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Helpers
+
     func configure(with image: UIImage) {
         imageView.image = image
     }

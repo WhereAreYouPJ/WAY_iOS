@@ -32,6 +32,8 @@ class MainHomeView: UIView {
         return button
     }()
     
+    var iconStack = UIStackView()
+    
     // 배너 슬라이드 이미지
     
     let bannerView = BannerView()
@@ -49,15 +51,13 @@ class MainHomeView: UIView {
     // 새로 커스텀 버튼을 만들어서 추가하기
     let reminderButton = UIButton()
     
-    let feedTableView: FeedTableView
+    let feedTableView = FeedTableView()
     
     // MARK: - Lifecycle
     
-    init(feeds: [String]) {
-        feedTableView = FeedTableView()
+    init() {
         super.init(frame: .zero)
         setupViews()
-        backgroundColor = .white
     }
     
     required init?(coder: NSCoder) {
@@ -65,13 +65,23 @@ class MainHomeView: UIView {
     }
     
     func setupViews() {
+        backgroundColor = .white
+
         addSubview(titleLabel)
+        addSubview(iconStack)
+
         addSubview(bannerView)
         addSubview(scheduleView)
         addSubview(separateView)
         addSubview(reminderButton)
         addSubview(feedTableView)
         
+        iconStack = UIStackView(arrangedSubviews: [notificationButton, profileButton])
+        iconStack.axis = .horizontal
+        iconStack.distribution = .fillEqually
+    }
+    
+    func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide).offset(14)
             make.left.equalToSuperview().offset(18)
@@ -79,11 +89,6 @@ class MainHomeView: UIView {
             make.height.equalTo(titleLabel.snp.width).multipliedBy(0.25)
         }
         
-        let iconStack = UIStackView(arrangedSubviews: [notificationButton, profileButton])
-        iconStack.axis = .horizontal
-        iconStack.distribution = .fillEqually
-        
-        addSubview(iconStack)
         iconStack.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide).offset(8)
             make.right.equalToSuperview().inset(11)
