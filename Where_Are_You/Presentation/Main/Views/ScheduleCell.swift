@@ -26,9 +26,6 @@ class ScheduleCell: UICollectionViewCell {
         scheduleLabel.textAlignment = .center
         scheduleLabel.backgroundColor = .white
         scheduleLabel.textColor = .color34
-        scheduleLabel.layer.borderColor = UIColor.color118.cgColor
-        scheduleLabel.layer.borderWidth = 1
-        scheduleLabel.layer.cornerRadius = 10
         scheduleLabel.clipsToBounds = true
         scheduleLabel.font = UIFont.pretendard(NotoSans: .medium, fontSize: 16)
         

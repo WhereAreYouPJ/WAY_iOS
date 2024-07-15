@@ -26,22 +26,27 @@ class MainHomeViewController: UIViewController {
     }
     
     func setupViewControllers() {
+        // 서브뷰 컨트롤러 초기화
         bannerViewController = BannerViewController()
         scheduleViewController = ScheduleViewController()
         feedTableViewController = FeedTableViewController()
         
+        // 서브뷰 컨트롤러를 자식 컨트롤러로 추가
         addChild(bannerViewController)
         addChild(scheduleViewController)
         addChild(feedTableViewController)
         
+        // 서브뷰 컨트롤러의 뷰를 MainHomeView에 추가
         mainHomeView.bannerView.addSubview(bannerViewController.view)
         mainHomeView.scheduleView.addSubview(scheduleViewController.view)
         mainHomeView.feedTableView.addSubview(feedTableViewController.view)
         
+        // 서브뷰 컨트롤러의 뷰가 부모 컨트롤러에 추가되었음을 알림
         bannerViewController.didMove(toParent: self)
         scheduleViewController.didMove(toParent: self)
         feedTableViewController.didMove(toParent: self)
         
+        // 서브뷰 컨트롤러 뷰의 제약 조건 설정
         bannerViewController.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
