@@ -8,8 +8,8 @@
 import UIKit
 
 class FeedTableViewController: UIViewController {
-    private let feedTableView = FeedTableView()
-    private var viewModel: FeedTableViewModel!
+    let feedTableView = FeedTableView()
+    var viewModel: FeedTableViewModel!
     
     override func loadView() {
         view = feedTableView

@@ -8,8 +8,8 @@
 import UIKit
 
 class ScheduleViewController: UIViewController {
-    private let scheduleView = ScheduleView()
-    private var viewModel: ScheduleViewModel!
+    let scheduleView = ScheduleView()
+    var viewModel: ScheduleViewModel!
     
     override func loadView() {
         view = scheduleView

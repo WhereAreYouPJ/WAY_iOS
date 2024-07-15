@@ -8,8 +8,8 @@
 import UIKit
 
 class BannerViewController: UIViewController {
-    private let bannerView = BannerView()
-    private var viewModel: BannerViewModel!
+    let bannerView = BannerView()
+    var viewModel: BannerViewModel!
 
     override func loadView() {
         view = bannerView
