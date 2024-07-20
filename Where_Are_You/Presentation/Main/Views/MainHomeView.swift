@@ -53,8 +53,13 @@ class MainHomeView: UIView {
     
     // 새로 커스텀 버튼을 만들어서 추가하기
     let reminderButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("함께한 추억을 확인해보세요! ", for: .normal)
+        let button = UIButton(type: .system)
+        let attributedTitle = NSMutableAttributedString(string: "함께한 추억을 확인해보세요!", attributes: [NSAttributedString.Key.font: UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 20)), NSAttributedString.Key.foregroundColor: UIColor.color34])
+        
+        attributedTitle.append(NSAttributedString(string: "   ⟩", attributes: [NSAttributedString.Key.font: UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 25)), NSAttributedString.Key.foregroundColor: UIColor.color172]))
+        
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        button.titleLabel?.adjustsFontForContentSizeCategory = true
         return button
     }()
     
@@ -122,7 +127,7 @@ class MainHomeView: UIView {
         
         reminderButton.snp.makeConstraints { make in
             make.top.equalTo(separateView.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(25)
+            make.leading.equalToSuperview().inset(15)
             make.height.equalTo(37)
         }
         

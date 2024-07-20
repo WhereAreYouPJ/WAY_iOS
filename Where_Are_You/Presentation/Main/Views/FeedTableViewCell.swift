@@ -37,7 +37,7 @@ class FeedTableViewCell: UITableViewCell {
         contentView.addSubview(moreLabel)
 
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(6)
+            make.top.equalToSuperview().inset(18)
             make.leading.trailing.equalToSuperview()
         }
 
