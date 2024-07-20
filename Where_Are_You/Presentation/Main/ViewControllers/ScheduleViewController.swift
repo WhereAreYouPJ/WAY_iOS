@@ -21,6 +21,9 @@ class ScheduleViewController: UIViewController {
         setupBindings()
         setupCollectionView()
         viewModel.fetchSchedules()
+        
+        // NotificationCenter를 통해 알림을 수신하는 옵저버를 추가합니다.
+        NotificationCenter.default.addObserver(self, selector: #selector(scrollToScheduleIndex(_:)), name: .scrollToScheduleIndex, object: nil)
     }
     
     private func setupBindings() {
@@ -34,6 +37,18 @@ class ScheduleViewController: UIViewController {
     private func setupCollectionView() {
         scheduleView.collectionView.dataSource = self
         scheduleView.collectionView.delegate = self
+    }
+    
+    // NotificationCenter로부터 알림을 수신하여 콜렉션 뷰를 업데이트합니다.
+    @objc private func scrollToScheduleIndex(_ notification: Notification) {
+        if let userInfo = notification.userInfo, let indexPath = userInfo["indexPath"] as? IndexPath {
+            scheduleView.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        }
+    }
+    
+    deinit {
+        // 옵저버 제거
+        NotificationCenter.default.removeObserver(self)
     }
 }
 

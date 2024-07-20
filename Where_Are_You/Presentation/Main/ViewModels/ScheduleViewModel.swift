@@ -39,6 +39,13 @@ class ScheduleViewModel {
     }
     
     @objc private func scrollToNextSchedule() {
-        // Logic to automatically scroll to the next schedule
+        guard !schedules.isEmpty else { return }
+        currentIndex = (currentIndex + 1) % schedules.count
+        let indexPath = IndexPath(item: currentIndex, section: 0)
+        NotificationCenter.default.post(name: .scrollToScheduleIndex, object: nil, userInfo: ["indexPath": indexPath])
     }
+}
+
+extension NSNotification.Name {
+    static let scrollToScheduleIndex = NSNotification.Name("scrollToScheduleIndex")
 }

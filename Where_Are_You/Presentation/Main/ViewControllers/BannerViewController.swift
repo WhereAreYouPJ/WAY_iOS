@@ -10,19 +10,20 @@ import UIKit
 class BannerViewController: UIViewController {
     let bannerView = BannerView()
     var viewModel: BannerViewModel!
-
+    
     override func loadView() {
         view = bannerView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = BannerViewModel()
         setupBindings()
         setupCollectionView()
         viewModel.fetchBannerImages()
+        NotificationCenter.default.addObserver(self, selector: #selector(scrollToBannerIndex(_:)), name: .scrollToBannerIndex, object: nil)
     }
-
+    
     private func setupBindings() {
         viewModel.onBannerDataFetched = { [weak self] in
             DispatchQueue.main.async {
@@ -31,10 +32,21 @@ class BannerViewController: UIViewController {
             }
         }
     }
-
+    
     private func setupCollectionView() {
         bannerView.collectionView.dataSource = self
         bannerView.collectionView.delegate = self
+    }
+    
+    @objc private func scrollToBannerIndex(_ notification: Notification) {
+        if let userInfo = notification.userInfo, let indexPath = userInfo["indexPath"] as? IndexPath {
+            bannerView.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            bannerView.pageControl.currentPage = indexPath.item
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
