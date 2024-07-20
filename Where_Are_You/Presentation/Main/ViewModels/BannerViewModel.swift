@@ -9,17 +9,21 @@ import Foundation
 import UIKit
 
 class BannerViewModel {
+    // MARK: - Properties
+
     var onBannerDataFetched: (() -> Void)?
     private var bannerImages: [UIImage] = []
     private var timer: Timer?
-    private var currentIndex = 0
+    private(set) var currentIndex = 0
     
+    // MARK: - Helpers
+
     func fetchBannerImages() {
         // Fetch banner images from the API
         // Update bannerImages array
         self.bannerImages = [
             UIImage(named: "banner1")!,
-            UIImage(named: "banner1")!
+            UIImage(named: "banner2")!
         ]
         onBannerDataFetched?()
         startAutoScroll()
@@ -39,13 +43,25 @@ class BannerViewModel {
         timer = nil
     }
     
+    // currentIndex를 업데이트하는 메서드 추가
+        func updateCurrentIndex(to newIndex: Int) {
+            currentIndex = newIndex
+        }
+    
+    // MARK: - Selectors
+
     @objc private func scrollToNextPage() {
         guard !bannerImages.isEmpty else { return }
         currentIndex = (currentIndex + 1) % bannerImages.count
-        let indexPath = IndexPath(item: currentIndex, section: 0)
+        let indexPath = IndexPath(item: currentIndex + 1, section: 0) // +1 to account for fake cells
         NotificationCenter.default.post(name: .scrollToBannerIndex, object: nil, userInfo: ["indexPath": indexPath])
     }
+    
+    deinit {
+        stopAutoScroll()
+    }
 }
+
 
 extension Notification.Name {
     static let scrollToBannerIndex = Notification.Name("scrollToBannerIndex")

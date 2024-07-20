@@ -14,6 +14,16 @@ class BannerView: UIView {
     
     var collectionView: UICollectionView
     let pageControl = UIPageControl()
+    var pageNumberLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.textColor = .white
+        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 12)
+        label.backgroundColor = UIColor.color68.withAlphaComponent(0.6)
+        label.layer.cornerRadius = 8
+        label.clipsToBounds = true
+        return label
+    }()
     
     // MARK: - Lifecycle
     
@@ -39,6 +49,7 @@ class BannerView: UIView {
         
         addSubview(collectionView)
         addSubview(pageControl)
+        addSubview(pageNumberLabel)
         
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -47,6 +58,12 @@ class BannerView: UIView {
         pageControl.snp.makeConstraints { make in
             make.bottom.equalToSuperview().offset(-10)
             make.centerX.equalToSuperview()
+        }
+        
+        pageNumberLabel.snp.makeConstraints { make in
+            make.bottom.right.equalToSuperview().offset(-12)
+            make.width.equalTo(42)
+            make.height.equalTo(17)
         }
     }
 }
