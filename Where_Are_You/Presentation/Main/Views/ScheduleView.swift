@@ -39,6 +39,7 @@ class ScheduleView: UIView {
         
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isScrollEnabled = false // 스크롤 비활성화
         collectionView.register(ScheduleCell.self, forCellWithReuseIdentifier: ScheduleCell.identifier)
         
         addSubview(containerView)
@@ -53,4 +54,3 @@ class ScheduleView: UIView {
         }
     }
 }
-

@@ -11,8 +11,10 @@ import SnapKit
 class FeedTableViewCell: UITableViewCell {
     static let identifier = "FeedTableViewCell"
     
-    private let titleLabel = UILabel()
-    private let descriptionLabel = UILabel()
+    private let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color102, fontSize: 14)
+    
+    private let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color34, fontSize: 16)
+    
     private let moreLabel: UILabel = {
         let label = UILabel()
         label.text = "더 보기"
@@ -35,22 +37,25 @@ class FeedTableViewCell: UITableViewCell {
         contentView.addSubview(moreLabel)
 
         titleLabel.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview().inset(16)
+            make.top.equalToSuperview().inset(6)
+            make.leading.trailing.equalToSuperview()
         }
 
+        // 부제목 추가해야함
+        
         descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview().inset(16)
+            make.top.equalTo(titleLabel.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview()
         }
 
+        // 더보기 를 해결해야함
         moreLabel.snp.makeConstraints { make in
             make.top.equalTo(descriptionLabel.snp.bottom).offset(8)
-            make.leading.trailing.bottom.equalToSuperview().inset(16)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().inset(10)
         }
 
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
         descriptionLabel.numberOfLines = 2
-        descriptionLabel.textColor = .darkGray
     }
 
     func configure(with feed: String) {

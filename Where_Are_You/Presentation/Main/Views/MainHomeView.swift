@@ -128,7 +128,7 @@ class MainHomeView: UIView {
         
         feedTableView.snp.makeConstraints { make in
             make.top.equalTo(reminderButton.snp.bottom).offset(12)
-            make.leading.trailing.bottom.equalToSuperview().inset(15)
+            make.leading.trailing.bottom.equalToSuperview().inset(20)
         }
     }
     

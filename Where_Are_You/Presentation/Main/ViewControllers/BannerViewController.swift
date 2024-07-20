@@ -42,6 +42,11 @@ class BannerViewController: UIViewController {
         bannerView.collectionView.delegate = self
     }
     
+    private func scrollToInitialPosition() {
+        let initialIndexPath = IndexPath(item: 1, section: 0) // Start at the first actual item
+        bannerView.collectionView.scrollToItem(at: initialIndexPath, at: .centeredHorizontally, animated: false)
+    }
+    
     // MARK: - Selectors
 
     @objc private func scrollToBannerIndex(_ notification: Notification) {
@@ -50,11 +55,6 @@ class BannerViewController: UIViewController {
             bannerView.collectionView.scrollToItem(at: correctedIndex, at: .centeredHorizontally, animated: true)
             bannerView.pageControl.currentPage = correctedIndex.item % viewModel.getBannerImages().count
         }
-    }
-    
-    private func scrollToInitialPosition() {
-        let initialIndexPath = IndexPath(item: 1, section: 0) // Start at the first actual item
-        bannerView.collectionView.scrollToItem(at: initialIndexPath, at: .centeredHorizontally, animated: false)
     }
     
     deinit {
