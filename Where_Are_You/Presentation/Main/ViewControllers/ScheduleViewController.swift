@@ -43,6 +43,7 @@ class ScheduleViewController: UIViewController {
     }
     
     private func scrollToInitialPosition() {
+        if viewModel.getSchedules().isEmpty { return }
         let initialIndexPath = IndexPath(item: 1, section: 0) // Start at the first actual item
         scheduleView.collectionView.scrollToItem(at: initialIndexPath, at: .centeredHorizontally, animated: false)
     }
@@ -67,7 +68,7 @@ class ScheduleViewController: UIViewController {
 
 extension ScheduleViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.getSchedules().count + 2
+        return max(viewModel.getSchedules().count, 1) + 2
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -75,10 +76,13 @@ extension ScheduleViewController: UICollectionViewDataSource {
             fatalError("Unable to dequeue ScheduleCell")
         }
         let schedules = viewModel.getSchedules()
-        let correctedIndex = (indexPath.item + schedules.count) % (schedules.count + 2)
-        let schedule = schedules[correctedIndex % schedules.count]
-        cell.configure(with: schedule)
-        return cell
+                let correctedIndex = (indexPath.item + schedules.count) % (schedules.count + 2)
+                if schedules.isEmpty {
+                    cell.configure(with: nil)
+                } else {
+                    cell.configure(with: schedules[correctedIndex % schedules.count])
+                }
+                return cell
     }
 }
 

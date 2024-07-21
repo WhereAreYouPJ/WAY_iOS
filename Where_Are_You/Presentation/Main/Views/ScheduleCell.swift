@@ -13,7 +13,6 @@ class ScheduleCell: UICollectionViewCell {
     
     private let dDayLabel: UILabel = {
         let label = UILabel()
-        label.textAlignment = .left
         label.textColor = .scheduleDateColor
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
         return label
@@ -21,9 +20,17 @@ class ScheduleCell: UICollectionViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.textAlignment = .left
         label.textColor = .color34
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 16)
+        return label
+    }()
+    
+    private let emptyLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .color118
+        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 16)
+        label.text = "일정이 없습니다."
+        label.isHidden = true
         return label
     }()
     
@@ -39,6 +46,7 @@ class ScheduleCell: UICollectionViewCell {
     private func setupViews() {
         addSubview(dDayLabel)
         addSubview(titleLabel)
+        addSubview(emptyLabel)
         
         dDayLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(12)
@@ -46,13 +54,25 @@ class ScheduleCell: UICollectionViewCell {
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
+            make.center.equalToSuperview()
+        }
+        
+        emptyLabel.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
     }
     
-    func configure(with schedule: Schedule) {
-        dDayLabel.text = "D - \(schedule.dDay)"
-        titleLabel.text = schedule.title
+    func configure(with schedule: Schedule?) {
+        if let schedule = schedule {
+            dDayLabel.isHidden = false
+            titleLabel.isHidden = false
+            emptyLabel.isHidden = true
+            dDayLabel.text = "D - \(schedule.dDay)"
+            titleLabel.text = schedule.title
+        } else {
+            dDayLabel.isHidden = true
+            titleLabel.isHidden = true
+            emptyLabel.isHidden = false
+        }
     }
 }
