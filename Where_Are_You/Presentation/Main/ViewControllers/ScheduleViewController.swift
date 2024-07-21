@@ -27,7 +27,7 @@ class ScheduleViewController: UIViewController {
     }
     
     // MARK: - Helpers
-
+    
     private func setupBindings() {
         viewModel.onScheduleDataFetched = { [weak self] in
             DispatchQueue.main.async {
@@ -48,7 +48,7 @@ class ScheduleViewController: UIViewController {
     }
     
     // MARK: - Selectors
-
+    
     // NotificationCenter로부터 알림을 수신하여 콜렉션 뷰를 업데이트합니다.
     @objc private func scrollToScheduleIndex(_ notification: Notification) {
         if let userInfo = notification.userInfo, let indexPath = userInfo["indexPath"] as? IndexPath {
@@ -76,7 +76,8 @@ extension ScheduleViewController: UICollectionViewDataSource {
         }
         let schedules = viewModel.getSchedules()
         let correctedIndex = (indexPath.item + schedules.count) % (schedules.count + 2)
-        cell.configure(with: schedules[correctedIndex % schedules.count])
+        let schedule = schedules[correctedIndex % schedules.count]
+        cell.configure(with: schedule)
         return cell
     }
 }

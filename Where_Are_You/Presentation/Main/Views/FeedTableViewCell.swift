@@ -28,7 +28,7 @@ class FeedTableViewCell: UITableViewCell {
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
         label.textColor = .color153
         label.numberOfLines = 3
-        label.isUserInteractionEnabled = true
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
     
@@ -84,43 +84,6 @@ class FeedTableViewCell: UITableViewCell {
         profileImageView.image = feed.profileImage
         locationLabel.text = feed.location
         titleLabel.text = feed.title
-        
-        let maxDescriptionLines = 3
-        let fullText = feed.description
-        let truncatedText = truncateText(fullText, for: descriptionLabel, maxLines: maxDescriptionLines)
-        
-        let attributedString = NSMutableAttributedString(string: truncatedText)
-        
-        if truncatedText != fullText {
-            let moreText = "... 더 보기"
-            let moreAttributedString = NSAttributedString(string: moreText, attributes: [.foregroundColor: UIColor.blue])
-            attributedString.append(moreAttributedString)
-        }
-        
-        descriptionLabel.attributedText = attributedString
-    }
-    
-    private func truncateText(_ text: String, for label: UILabel, maxLines: Int) -> String {
-        let labelWidth = label.frame.width
-        let attributes = [NSAttributedString.Key.font: label.font!]
-        var low = 0
-        var high = text.count
-        var mid = 0
-        var currentText = text
-        
-        while low < high {
-            mid = (low + high) / 2
-            let substring = String(text.prefix(mid))
-            let size = (substring as NSString).boundingRect(with: CGSize(width: labelWidth, height: .greatestFiniteMagnitude), options: .usesLineFragmentOrigin, attributes: attributes, context: nil).size
-            
-            if Int(size.height / label.font.lineHeight) <= maxLines {
-                low = mid + 1
-                currentText = substring
-            } else {
-                high = mid
-            }
-        }
-        
-        return currentText
+        descriptionLabel.text = feed.description
     }
 }
