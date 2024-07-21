@@ -48,7 +48,16 @@ extension FeedTableViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.identifier, for: indexPath) as? FeedTableViewCell else {
             fatalError("Unable to dequeue FeedTableViewCell")
         }
-        cell.configure(with: viewModel.getFeeds()[indexPath.row])
+        let feed = viewModel.getFeeds()[indexPath.row]
+        cell.configure(with: feed)
         return cell
+    }
+    
+    // 해당 셀을 눌렀을때 피드 페이지로 넘어가게 설정
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //        let feed = viewModel.getFeeds()[indexPath.row]
+        //        let detailViewController = FeedDetailViewController()
+        //        detailViewController.configure(with: feed)
+        //        navigationController?.pushViewController(detailViewController, animated: true)
     }
 }

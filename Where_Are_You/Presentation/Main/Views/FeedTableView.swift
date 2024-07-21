@@ -27,7 +27,7 @@ class FeedTableView: UIView {
         return label
     }()
     
-    var feeds: [String] = [] {
+    var feeds: [Feed] = [] {
         didSet {
             updateFeeds()
         }

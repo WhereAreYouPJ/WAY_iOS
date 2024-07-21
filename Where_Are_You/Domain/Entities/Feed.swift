@@ -5,12 +5,11 @@
 //  Created by 오정석 on 11/7/2024.
 //
 
-import Foundation
+import UIKit
 
 struct Feed {
-    let caption: String
-    var timestamp: Date!
+    let profileImage: UIImage // 추후 string으로 바꿔야함
     let location: String
     let title: String
-    let user: User
+    let description: String
 }
