@@ -56,7 +56,7 @@ class BannerView: UIView {
         }
         
         pageControl.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(-10)
+            make.bottom.equalToSuperview().offset(-15)
             make.centerX.equalToSuperview()
         }
         
