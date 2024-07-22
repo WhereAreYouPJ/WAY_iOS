@@ -9,12 +9,12 @@ import UIKit
 
 class ScheduleViewController: UIViewController {
     // MARK: - Properties
-
+    
     let scheduleView = ScheduleView()
     var viewModel: ScheduleViewModel!
     
     // MARK: - Lifecycle
-
+    
     override func loadView() {
         view = scheduleView
     }
@@ -80,13 +80,13 @@ extension ScheduleViewController: UICollectionViewDataSource {
             fatalError("Unable to dequeue ScheduleCell")
         }
         let schedules = viewModel.getSchedules()
-                let correctedIndex = (indexPath.item + schedules.count) % (schedules.count + 2)
-                if schedules.isEmpty {
-                    cell.configure(with: nil)
-                } else {
-                    cell.configure(with: schedules[correctedIndex % schedules.count])
-                }
-                return cell
+        let correctedIndex = (indexPath.item + schedules.count) % (schedules.count + 2)
+        if schedules.isEmpty {
+            cell.configure(with: nil)
+        } else {
+            cell.configure(with: schedules[correctedIndex % schedules.count])
+        }
+        return cell
     }
 }
 

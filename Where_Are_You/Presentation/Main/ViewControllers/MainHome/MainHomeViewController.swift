@@ -78,9 +78,7 @@ class MainHomeViewController: UIViewController {
         bannerViewController.viewModel.onBannerDataFetched = { [weak self] in
             DispatchQueue.main.async {
                 self?.mainHomeView.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-                
-                //                self?.bannerViewController.bannerView.pageControl.numberOfPages = self?.bannerViewController.viewModel.getBannerImages().count ?? 0
-            }
+              }
         }
         
         scheduleViewController.viewModel.onScheduleDataFetched = { [weak self] in

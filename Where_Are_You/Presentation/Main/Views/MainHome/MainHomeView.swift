@@ -5,7 +5,6 @@
 //  Created by 오정석 on 8/7/2024.
 //
 
-import Foundation
 import UIKit
 import SnapKit
 
@@ -40,10 +39,7 @@ class MainHomeView: UIView {
         tableView.register(FeedTableViewCell.self, forCellReuseIdentifier: FeedTableViewCell.identifier)
         tableView.estimatedRowHeight = 150
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.separatorStyle = .singleLine // 기본 분리선 숨기기
-        
-        // 테이블 헤더 뷰 설정
-        tableView.tableHeaderView = headerView
+        tableView.separatorInset.right = 15
     }
     
     func setupConstraints() {

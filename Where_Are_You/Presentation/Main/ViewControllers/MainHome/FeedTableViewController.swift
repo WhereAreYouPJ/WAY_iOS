@@ -16,11 +16,13 @@ class FeedTableViewController: UIViewController {
     // MARK: - Lifecycle
 
     override func loadView() {
+        print("FeedTableViewController loadView called") // 디버그 로그
         view = feedTableView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("FeedTableViewController viewDidLoad called") // 디버그 로그
         viewModel = FeedTableViewModel()
         setupBindings()
         setupTableView()
@@ -39,17 +41,11 @@ class FeedTableViewController: UIViewController {
     }
     
     private func setupTableView() {
+        print("Setting up table view") // 디버그 로그
+
         feedTableView.tableView.dataSource = self
         feedTableView.tableView.delegate = self
-        
-        // 피드 테이블뷰 헤더에 reminderButton 추가
-        let headerView = UIView()
-        headerView.addSubview(feedTableView.reminderButton)
-        feedTableView.reminderButton.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(16)
-        }
-        headerView.frame.size.height = 50
-        feedTableView.tableView.tableHeaderView = headerView
+        feedTableView.tableView.register(FeedTableViewCell.self, forCellReuseIdentifier: FeedTableViewCell.identifier)
     }
     
     private func setupActions() {
@@ -68,11 +64,24 @@ class FeedTableViewController: UIViewController {
 // MARK: - UITableViewDataSource, UITableViewDelegate
 
 extension FeedTableViewController: UITableViewDataSource, UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2 // reminderbutton 섹션, 피드 섹션
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.getFeeds().count
+        print("Number of rows in section \(section)")
+        switch section {
+        case 0:
+            return 0 // reminderbutton 섹션
+        case 1:
+            return viewModel.getFeeds().count // 피드 섹션
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("Cell for row at \(indexPath)")
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.identifier, for: indexPath) as? FeedTableViewCell else {
             fatalError("Unable to dequeue FeedTableViewCell")
         }
@@ -84,6 +93,28 @@ extension FeedTableViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        print("View for header in section \(section)")
+
+            if section == 1 {
+                let headerView = UIView()
+                headerView.addSubview(feedTableView.reminderButton)
+                feedTableView.reminderButton.snp.makeConstraints { make in
+                    make.edges.equalToSuperview().inset(16)
+                }
+                return headerView
+            }
+            return nil
+        }
+        
+        func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+            print("Height for header in section \(section)")
+            if section == 1 {
+                return 50 // 헤더뷰의 높이 설정
+            }
+            return 0
+        }
     
     // 해당 셀을 눌렀을때 피드 페이지로 넘어가게 설정
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

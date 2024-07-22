@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class HeaderView: UIView {
     // MARK: - Properties
@@ -61,14 +62,5 @@ class HeaderView: UIView {
             make.height.equalTo(4)
             make.bottom.equalToSuperview()
         }
-    }
-    
-    // Calculate the total height of the header view based on its contents
-    func calculateHeight() -> CGFloat {
-        let bannerHeight = UIScreen.main.bounds.width * 0.55
-        let scheduleHeight = UIScreen.main.bounds.width * 0.15
-        let separatorHeight: CGFloat = 4
-        let totalHeight = bannerHeight + scheduleHeight + separatorHeight + 15 + 15 + 14 // Including offsets
-        return totalHeight
     }
 }

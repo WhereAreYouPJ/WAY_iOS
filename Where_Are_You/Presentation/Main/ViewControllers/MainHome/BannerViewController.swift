@@ -56,7 +56,6 @@ class BannerViewController: UIViewController {
         let currentPage = viewModel.currentIndex + 1
         let totalPages = viewModel.getBannerImages().count
         bannerView.pageNumberLabel.text = "\(currentPage) / \(totalPages)"
-        print("Page Number Updated: \(currentPage) / \(totalPages)") // 디버그 로그
     }
     
     // MARK: - Selectors
@@ -102,18 +101,15 @@ extension BannerViewController: UICollectionViewDelegateFlowLayout {
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         viewModel.stopAutoScroll()
-        print("Scroll View Will Begin Dragging") // 디버그 로그
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         viewModel.startAutoScroll()
-        print("Scroll View Did End Dragging") // 디버그 로그
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let pageWidth = bannerView.collectionView.frame.size.width
         let currentPage = Int(bannerView.collectionView.contentOffset.x / pageWidth)
-        print("Current Page: \(currentPage)") // 디버그 로그
         
         let imagesCount = viewModel.getBannerImages().count
         if currentPage == 0 {

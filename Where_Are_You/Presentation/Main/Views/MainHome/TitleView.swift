@@ -63,7 +63,6 @@ class TitleView: UIView {
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(14)
             make.leading.equalToSuperview().inset(18)
-//            make.width.equalToSuperview().multipliedBy(0.26)
             make.height.equalTo(titleLabel.snp.width).multipliedBy(0.25)
         }
         
