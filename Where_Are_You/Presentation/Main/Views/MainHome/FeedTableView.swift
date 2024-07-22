@@ -9,7 +9,23 @@ import UIKit
 import SnapKit
 
 class FeedTableView: UIView {
+    
+    // MARK: - Properties
+    
     let tableView = UITableView()
+    
+    // 새로 커스텀 버튼을 만들어서 추가하기
+    let reminderButton: UIButton = {
+        let button = UIButton(type: .system)
+        let attributedTitle = NSMutableAttributedString(string: "함께한 추억을 확인해보세요!", attributes: [NSAttributedString.Key.font: UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 20)), NSAttributedString.Key.foregroundColor: UIColor.color34])
+        
+        attributedTitle.append(NSAttributedString(string: "   ⟩", attributes: [NSAttributedString.Key.font: UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 25)), NSAttributedString.Key.foregroundColor: UIColor.color172]))
+        
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        button.titleLabel?.adjustsFontForContentSizeCategory = true
+        return button
+    }()
+    
     let noFeedLabel: UILabel = {
         let label = UILabel()
         label.text = """
@@ -33,6 +49,8 @@ class FeedTableView: UIView {
         }
     }
     
+    // MARK: - Lifecycle
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -42,6 +60,8 @@ class FeedTableView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Helpers
+
     private func setupViews() {
         addSubview(tableView)
         tableView.snp.makeConstraints { make in
@@ -49,6 +69,9 @@ class FeedTableView: UIView {
         }
         
         tableView.register(FeedTableViewCell.self, forCellReuseIdentifier: FeedTableViewCell.identifier)
+        
+        tableView.estimatedRowHeight = 150
+        tableView.rowHeight = UITableView.automaticDimension
     }
     
     private func updateFeeds() {

@@ -8,9 +8,13 @@
 import UIKit
 
 class ScheduleViewController: UIViewController {
+    // MARK: - Properties
+
     let scheduleView = ScheduleView()
     var viewModel: ScheduleViewModel!
     
+    // MARK: - Lifecycle
+
     override func loadView() {
         view = scheduleView
     }

@@ -8,9 +8,13 @@
 import UIKit
 
 class FeedTableViewController: UIViewController {
+    // MARK: - Properties
+
     let feedTableView = FeedTableView()
     var viewModel: FeedTableViewModel!
     
+    // MARK: - Lifecycle
+
     override func loadView() {
         view = feedTableView
     }
@@ -20,9 +24,12 @@ class FeedTableViewController: UIViewController {
         viewModel = FeedTableViewModel()
         setupBindings()
         setupTableView()
+        setupActions()
         viewModel.fetchFeeds()
     }
     
+    // MARK: - Helpers
+
     private func setupBindings() {
         viewModel.onFeedsDataFetched = { [weak self] in
             DispatchQueue.main.async {
@@ -34,6 +41,27 @@ class FeedTableViewController: UIViewController {
     private func setupTableView() {
         feedTableView.tableView.dataSource = self
         feedTableView.tableView.delegate = self
+        
+        // 피드 테이블뷰 헤더에 reminderButton 추가
+        let headerView = UIView()
+        headerView.addSubview(feedTableView.reminderButton)
+        feedTableView.reminderButton.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(16)
+        }
+        headerView.frame.size.height = 50
+        feedTableView.tableView.tableHeaderView = headerView
+    }
+    
+    private func setupActions() {
+        feedTableView.reminderButton.addTarget(self, action: #selector(reminderButtonTapped), for: .touchUpInside)
+    }
+    
+    // MARK: - Selectors
+
+    // 추후 피드 메인 컨트롤러 만들어야 함
+    @objc private func reminderButtonTapped() {
+        //        let feedViewController = FeedViewController()
+        //        navigationController?.pushViewController(feedViewController, animated: true)
     }
 }
 
@@ -51,6 +79,10 @@ extension FeedTableViewController: UITableViewDataSource, UITableViewDelegate {
         let feed = viewModel.getFeeds()[indexPath.row]
         cell.configure(with: feed)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
     
     // 해당 셀을 눌렀을때 피드 페이지로 넘어가게 설정

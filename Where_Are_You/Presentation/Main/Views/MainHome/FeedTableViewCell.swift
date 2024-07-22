@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 class FeedTableViewCell: UITableViewCell {
+    // MARK: - Properties
+
     static let identifier = "FeedTableViewCell"
     
     private let profileImageView: UIImageView = {
@@ -45,6 +47,8 @@ class FeedTableViewCell: UITableViewCell {
         return stackView
     }()
     
+    // MARK: - Lifecycle
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -54,6 +58,8 @@ class FeedTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Helpers
+
     private func setupViews() {
         textStackView.addArrangedSubview(locationLabel)
         textStackView.addArrangedSubview(titleLabel)

@@ -2,6 +2,8 @@ import Foundation
 import UIKit
 
 class MainHomeViewModel {
+    // MARK: - Properties
+
     private var images: [UIImage] = []
     private var schedules: [String] = []
     private var feeds: [String] = []
@@ -10,6 +12,8 @@ class MainHomeViewModel {
     var onScheduleDataFetched: (() -> Void)?
     var onFeedsDataFetched: (() -> Void)?
     
+    // MARK: - Helpers
+
     // 배너 이미지를 불러오는 메서드
     func fetchBannerImages() {
         // 예시 이미지 로딩 (나중에 실제 데이터를 로딩하는 로직으로 대체)

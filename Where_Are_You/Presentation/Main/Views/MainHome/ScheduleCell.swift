@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 class ScheduleCell: UICollectionViewCell {
+    // MARK: - Properties
+
     static let identifier = "ScheduleCell"
     
     private let dDayLabel: UILabel = {
@@ -34,6 +36,8 @@ class ScheduleCell: UICollectionViewCell {
         return label
     }()
     
+    // MARK: - Lifecycle
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -43,6 +47,8 @@ class ScheduleCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Helpers
+
     private func setupViews() {
         addSubview(dDayLabel)
         addSubview(titleLabel)

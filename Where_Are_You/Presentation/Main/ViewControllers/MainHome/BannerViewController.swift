@@ -8,10 +8,13 @@
 import UIKit
 
 class BannerViewController: UIViewController {
-    
+    // MARK: - Properties
+
     let bannerView = BannerView()
     var viewModel: BannerViewModel!
     
+    // MARK: - Lifecycle
+
     override func loadView() {
         view = bannerView
     }
