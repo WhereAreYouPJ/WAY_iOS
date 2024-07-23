@@ -44,13 +44,15 @@ class MainHomeView: UIView {
     
     func setupConstraints() {
         titleView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(safeAreaLayoutGuide)
+            make.top.equalTo(safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
             make.height.equalTo(46)
         }
         
         tableView.snp.makeConstraints { make in
             make.top.equalTo(titleView.snp.bottom)
-            make.leading.trailing.bottom.equalTo(safeAreaLayoutGuide)
+            make.leading.trailing.bottom.equalToSuperview()
+//            make.bottom.equalTo(safeAreaLayoutGuide)
         }
     }
 }

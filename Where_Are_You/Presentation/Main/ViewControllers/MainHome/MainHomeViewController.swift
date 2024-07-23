@@ -18,7 +18,7 @@ class MainHomeViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func loadView() {
-        mainHomeView = MainHomeView(frame: UIScreen.main.bounds)
+        mainHomeView = MainHomeView(/*frame: UIScreen.main.bounds*/)
         view = mainHomeView
     }
     
@@ -143,24 +143,6 @@ extension MainHomeViewController: UITableViewDataSource {
             return UITableViewCell()
         }
     }
-    
-    //    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    //        switch section {
-    //        case 1:
-    //            return feedTableViewController.feedTableView.headerView
-    //        default:
-    //            return nil
-    //        }
-    //    }
-    
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        switch section {
-//        case 1:
-//            return UITableView.automaticDimension
-//        default:
-//            return 0
-//        }
-//    }
 }
 
 // MARK: - UITableViewDelegate
