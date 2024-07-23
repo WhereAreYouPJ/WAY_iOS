@@ -27,7 +27,7 @@ class HeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViews()
+        configureViewComponents()
         setupConstraints()
     }
     
@@ -37,7 +37,7 @@ class HeaderView: UIView {
     
     // MARK: - Helpers
     
-    private func setupViews() {
+    private func configureViewComponents() {
         addSubview(bannerView)
         addSubview(scheduleView)
         addSubview(separateView)
@@ -55,11 +55,10 @@ class HeaderView: UIView {
             make.height.equalTo(scheduleView.snp.width).multipliedBy(0.15)
         }
         
-        // 분리선 넣기
         separateView.snp.makeConstraints { make in
             make.top.equalTo(scheduleView.snp.bottom).offset(14)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(4)
+            make.height.equalTo(4).priority(.low)
             make.bottom.equalToSuperview()
         }
     }

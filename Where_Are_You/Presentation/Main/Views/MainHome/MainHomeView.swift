@@ -11,7 +11,7 @@ import SnapKit
 class MainHomeView: UIView {
     // MARK: - Properties
     
-    let titleView = TitleView()
+    private let titleView = TitleView()
     let headerView = HeaderView()
     let tableView = UITableView()
     
@@ -19,7 +19,7 @@ class MainHomeView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViews()
+        configureViewComponents()
         setupConstraints()
     }
     
@@ -29,12 +29,16 @@ class MainHomeView: UIView {
     
     // MARK: - Helpers
 
-    func setupViews() {
+    func configureViewComponents() {
         backgroundColor = .white
         
         addSubview(titleView)
         addSubview(tableView)
-        
+
+        configureTableView()
+    }
+    
+    func configureTableView() {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.register(FeedTableViewCell.self, forCellReuseIdentifier: FeedTableViewCell.identifier)
         tableView.estimatedRowHeight = 150
@@ -52,7 +56,6 @@ class MainHomeView: UIView {
         tableView.snp.makeConstraints { make in
             make.top.equalTo(titleView.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
-//            make.bottom.equalTo(safeAreaLayoutGuide)
         }
     }
 }

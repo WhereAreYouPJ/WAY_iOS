@@ -31,18 +31,18 @@ class TitleView: UIView {
         return button
     }()
     
-    var iconStack: UIStackView = {
-        let sv = UIStackView()
-        sv.axis = .horizontal
-        sv.distribution = .fillEqually
-        return sv
+    private let iconStack: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        return stackView
     }()
     
     // MARK: - Lifecycle
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViews()
+        configureViewComponents()
         setupConstraints()
     }
     
@@ -52,7 +52,7 @@ class TitleView: UIView {
     
     // MARK: - Helpers
     
-    private func setupViews() {
+    private func configureViewComponents() {
         addSubview(titleLabel)
         addSubview(iconStack)
         iconStack.addArrangedSubview(notificationButton)

@@ -20,6 +20,8 @@
 		9911F98A2C3F6B4100D0FDC9 /* BannerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F9892C3F6B4100D0FDC9 /* BannerCollectionViewCell.swift */; };
 		9911F98C2C3F908E00D0FDC9 /* FeedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F98B2C3F908E00D0FDC9 /* FeedTableView.swift */; };
 		9911F98E2C3F913100D0FDC9 /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F98D2C3F913100D0FDC9 /* FeedTableViewCell.swift */; };
+		99149FEB2C4F97C300136097 /* ValidationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99149FEA2C4F97C300136097 /* ValidationHelper.swift */; };
+		99149FED2C4F97EA00136097 /* TimeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99149FEC2C4F97EA00136097 /* TimeHelper.swift */; };
 		992F1EC62C37ED400042CB1A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 992F1EC52C37ED400042CB1A /* .gitignore */; };
 		9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C64D2C102FB6003155A7 /* TermsAgreementView.swift */; };
 		9950C6572C1040FD003155A7 /* TermsAgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C6562C1040FD003155A7 /* TermsAgreementViewController.swift */; };
@@ -128,6 +130,8 @@
 		9911F9892C3F6B4100D0FDC9 /* BannerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCollectionViewCell.swift; sourceTree = "<group>"; };
 		9911F98B2C3F908E00D0FDC9 /* FeedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableView.swift; sourceTree = "<group>"; };
 		9911F98D2C3F913100D0FDC9 /* FeedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
+		99149FEA2C4F97C300136097 /* ValidationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationHelper.swift; sourceTree = "<group>"; };
+		99149FEC2C4F97EA00136097 /* TimeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeHelper.swift; sourceTree = "<group>"; };
 		992F1EC52C37ED400042CB1A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		9950C64D2C102FB6003155A7 /* TermsAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAgreementView.swift; sourceTree = "<group>"; };
 		9950C6562C1040FD003155A7 /* TermsAgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAgreementViewController.swift; sourceTree = "<group>"; };
@@ -397,6 +401,8 @@
 				99D8FBBE2C3BA1FB0062AF10 /* Common */,
 				99C9B2312C01A45C008D7CBD /* Extensions.swift */,
 				99C9B2472C01D2B7008D7CBD /* Utilities.swift */,
+				99149FEA2C4F97C300136097 /* ValidationHelper.swift */,
+				99149FEC2C4F97EA00136097 /* TimeHelper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -876,7 +882,9 @@
 				99CA4F282C33B72C007C027C /* ResetPasswordUseCase.swift in Sources */,
 				99D8FBB72C3BA1B40062AF10 /* UserService.swift in Sources */,
 				99938EE02C0C8B9D00239FA1 /* SearchPasswordViewController.swift in Sources */,
+				99149FED2C4F97EA00136097 /* TimeHelper.swift in Sources */,
 				99CA4F2C2C33EB7F007C027C /* UserIdEmailVerificaitonViewModel.swift in Sources */,
+				99149FEB2C4F97C300136097 /* ValidationHelper.swift in Sources */,
 				9911F98A2C3F6B4100D0FDC9 /* BannerCollectionViewCell.swift in Sources */,
 				99C9B2522C022DE3008D7CBD /* AccountLoginController.swift in Sources */,
 				997DC6552C3D231000EACA5F /* Config.swift in Sources */,

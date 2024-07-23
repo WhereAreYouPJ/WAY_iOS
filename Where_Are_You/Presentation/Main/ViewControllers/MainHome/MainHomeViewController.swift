@@ -10,7 +10,7 @@ import UIKit
 class MainHomeViewController: UIViewController {
     // MARK: - Properties
     
-    private var mainHomeView: MainHomeView!
+    private var mainHomeView = MainHomeView()
     private var bannerViewController: BannerViewController!
     private var scheduleViewController: ScheduleViewController!
     private var feedTableViewController: FeedTableViewController!
@@ -18,7 +18,6 @@ class MainHomeViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func loadView() {
-        mainHomeView = MainHomeView(/*frame: UIScreen.main.bounds*/)
         view = mainHomeView
     }
     
