@@ -41,6 +41,7 @@ class FeedTableViewController: UIViewController {
     private func setupTableView() {
         feedTableView.tableView.dataSource = self
         feedTableView.tableView.delegate = self
+        feedTableView.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "headerCell")
         feedTableView.tableView.register(FeedTableViewCell.self, forCellReuseIdentifier: FeedTableViewCell.identifier)
     }
     
@@ -65,18 +66,16 @@ extension FeedTableViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("Number of rows in section \(section)")
         return viewModel.getFeeds().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("Cell for row at \(indexPath)")
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.identifier, for: indexPath) as? FeedTableViewCell else {
-            fatalError("Unable to dequeue FeedTableViewCell")
-        }
-        let feed = viewModel.getFeeds()[indexPath.row]
-        cell.configure(with: feed)
-        return cell
+                    fatalError("Unable to dequeue FeedTableViewCell")
+                }
+                let feed = viewModel.getFeeds()[indexPath.row]
+                cell.configure(with: feed)
+                return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

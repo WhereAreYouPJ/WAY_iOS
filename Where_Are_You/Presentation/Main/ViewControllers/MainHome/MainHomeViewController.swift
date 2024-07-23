@@ -72,6 +72,8 @@ class MainHomeViewController: UIViewController {
     private func setupTableView() {
         mainHomeView.tableView.delegate = self
         mainHomeView.tableView.dataSource = self
+        mainHomeView.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        mainHomeView.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "headerCell")
     }
     
     private func setupBindings() {
@@ -107,7 +109,7 @@ extension MainHomeViewController: UITableViewDataSource {
         case 0:
             return 1 // 메인 섹션
         case 1:
-            return feedTableViewController.viewModel.getFeeds().count // 피드 섹션
+            return feedTableViewController.viewModel.getFeeds().count + 1 // 피드 섹션
         default:
             return 0
         }
@@ -125,35 +127,40 @@ extension MainHomeViewController: UITableViewDataSource {
             
             return cell
         case 1:
-            return feedTableViewController.tableView(tableView, cellForRowAt: indexPath) // 피드 섹션
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell", for: indexPath)
+                cell.contentView.addSubview(feedTableViewController.feedTableView.headerView)
+                
+                feedTableViewController.feedTableView.headerView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
+                
+                return cell
+            } else {
+                return feedTableViewController.tableView(tableView, cellForRowAt: IndexPath(row: indexPath.row - 1, section: 0)) // 피드 섹션
+            }
         default:
             return UITableViewCell()
         }
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        switch section {
-        case 1:
-            let headerView = UIView()
-            headerView.addSubview(feedTableViewController.feedTableView.reminderButton)
-            feedTableViewController.feedTableView.reminderButton.snp.makeConstraints { make in
-                make.leading.equalToSuperview().offset(15)
-                make.centerY.equalToSuperview()
-            }
-            return headerView
-        default:
-            return nil
-        }
-    }
+    //    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    //        switch section {
+    //        case 1:
+    //            return feedTableViewController.feedTableView.headerView
+    //        default:
+    //            return nil
+    //        }
+    //    }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch section {
-        case 1:
-            return UITableView.automaticDimension
-        default:
-            return 0
-        }
-    }
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        switch section {
+//        case 1:
+//            return UITableView.automaticDimension
+//        default:
+//            return 0
+//        }
+//    }
 }
 
 // MARK: - UITableViewDelegate
@@ -164,7 +171,11 @@ extension MainHomeViewController: UITableViewDelegate {
         case 0:
             return UITableView.automaticDimension // 메인 섹션 높이 자동 조절
         case 1:
-            return UITableView.automaticDimension // 피드 높이 자동 조절
+            if indexPath.row == 0 {
+                return 50 // 헤더뷰의 높이 설정
+            } else {
+                return UITableView.automaticDimension // 피드 높이 자동 조절
+            }
         default:
             return 0
         }

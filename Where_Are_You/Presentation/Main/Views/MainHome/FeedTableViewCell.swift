@@ -76,20 +76,20 @@ class FeedTableViewCell: UITableViewCell {
         
         mainStackView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(10)
-            make.leading.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(15)
         }
         
         descriptionLabel.snp.makeConstraints { make in
             make.top.equalTo(mainStackView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(15)
             make.bottom.equalToSuperview().inset(10)
         }
     }
     
     func configure(with feed: Feed) {
         profileImageView.image = feed.profileImage
-        locationLabel.text = feed.location
-        titleLabel.text = feed.title
+        locationLabel.label.text = feed.location
+        titleLabel.label.text = feed.title
         descriptionLabel.text = feed.description
     }
 }

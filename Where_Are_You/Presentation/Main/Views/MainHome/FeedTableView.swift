@@ -13,6 +13,7 @@ class FeedTableView: UIView {
     // MARK: - Properties
     
     let tableView = UITableView()
+    let headerView = UIView()
     
     // 새로 커스텀 버튼을 만들어서 추가하기
     let reminderButton: UIButton = {
@@ -63,14 +64,30 @@ class FeedTableView: UIView {
     // MARK: - Helpers
 
     private func setupViews() {
+        addSubview(headerView)
+        headerView.addSubview(reminderButton)
         addSubview(tableView)
+        
+        headerView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(50)
+        }
+        
+        reminderButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(15)
+            make.centerY.equalToSuperview()
+        }
+        
         tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(headerView.snp.bottom)
+//            make.leading.trailing.equalToSuperview().inset(15)
+            make.leading.trailing.bottom.equalToSuperview()
         }
         
         tableView.register(FeedTableViewCell.self, forCellReuseIdentifier: FeedTableViewCell.identifier)
         tableView.estimatedRowHeight = 150
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.separatorStyle = .none
     }
     
     private func updateFeeds() {
