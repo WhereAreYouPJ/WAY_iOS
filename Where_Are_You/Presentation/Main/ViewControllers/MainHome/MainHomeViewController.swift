@@ -78,7 +78,7 @@ class MainHomeViewController: UIViewController {
         bannerViewController.viewModel.onBannerDataFetched = { [weak self] in
             DispatchQueue.main.async {
                 self?.mainHomeView.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-              }
+            }
         }
         
         scheduleViewController.viewModel.onScheduleDataFetched = { [weak self] in
@@ -125,14 +125,33 @@ extension MainHomeViewController: UITableViewDataSource {
             
             return cell
         case 1:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.identifier, for: indexPath) as? FeedTableViewCell else {
-                fatalError("Unable to dequeue FeedTableViewCell")
-            }
-            let feed = feedTableViewController.viewModel.getFeeds()[indexPath.row]
-            cell.configure(with: feed)
-            return cell
+            return feedTableViewController.tableView(tableView, cellForRowAt: indexPath) // 피드 섹션
         default:
             return UITableViewCell()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        switch section {
+        case 1:
+            let headerView = UIView()
+            headerView.addSubview(feedTableViewController.feedTableView.reminderButton)
+            feedTableViewController.feedTableView.reminderButton.snp.makeConstraints { make in
+                make.leading.equalToSuperview().offset(15)
+                make.centerY.equalToSuperview()
+            }
+            return headerView
+        default:
+            return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case 1:
+            return UITableView.automaticDimension
+        default:
+            return 0
         }
     }
 }

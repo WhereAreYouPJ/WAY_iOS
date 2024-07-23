@@ -69,7 +69,6 @@ class FeedTableView: UIView {
         }
         
         tableView.register(FeedTableViewCell.self, forCellReuseIdentifier: FeedTableViewCell.identifier)
-        
         tableView.estimatedRowHeight = 150
         tableView.rowHeight = UITableView.automaticDimension
     }
