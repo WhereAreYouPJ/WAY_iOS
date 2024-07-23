@@ -164,7 +164,7 @@ class AuthService: AuthServiceProtocol {
     // MARK: - verifyEmailCode
     
     func verifyEmailCode(identifier: String, code: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void) {
-        let parameters: [String: String] = [type == .email ? "email" : "userId": identifier, "code": code]
+        let parameters: [String: String] = ["email": identifier, "code": code]
         requestAPI(endpoint: "/member/email/verify",
                    method: .post,
                    parameters: parameters,

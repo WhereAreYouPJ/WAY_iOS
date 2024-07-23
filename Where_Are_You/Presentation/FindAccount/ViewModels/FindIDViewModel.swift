@@ -12,6 +12,9 @@ class FindIDViewModel {
     // MARK: - Properties
     private let sendVerificationCodeUseCase: SendVerificationCodeUseCase
     private let findUserIDUseCase: FindUserIDUseCase
+    private let verifyCodeUseCase: VerifyCodeUseCase
+    
+    private let timerHelper = TimerHelper()
     
     var email: String = ""
     var userId: String = ""
@@ -32,9 +35,11 @@ class FindIDViewModel {
     // MARK: - LifeCycle
     
     init(sendVerificationCodeUseCase: SendVerificationCodeUseCase,
-         findUserIDUseCase: FindUserIDUseCase) {
+         findUserIDUseCase: FindUserIDUseCase,
+         verifyCodeUseCase: VerifyCodeUseCase) {
         self.sendVerificationCodeUseCase = sendVerificationCodeUseCase
         self.findUserIDUseCase = findUserIDUseCase
+        self.verifyCodeUseCase = verifyCodeUseCase
     }
     
     // MARK: - Helpers
@@ -58,17 +63,16 @@ class FindIDViewModel {
     }
     
     // 수정해야하는 부분(userid 받을수 있게 response 수정 해야함)
-    func findUserID(code: String) {
-        if timerCount == 0 {
-            self.onVerifyCodeFailure?("이메일 재인증 요청이 필요합니다.")
+    func verifyEmailCode(inputCode: String) {
+        if timerHelper.timerCount == 0 {
+            self.onVerifyCodeFailure?("인증코드 시간 지남")
         } else {
-            findUserIDUseCase.execute(email: email, code: code) { [weak self] result in
+            verifyCodeUseCase.execute(identifier: email, code: inputCode, type: .email) { result in
                 switch result {
-                case .success(let userId):
-                    self?.userId = userId
-                    self?.onVerifyCodeSuccess?("인증코드가 확인되었습니다.")
+                case .success:
+                    self.onVerifyCodeSuccess?("인증성공")
                 case .failure(let error):
-                    self?.onFindIDFailure?(error.localizedDescription)
+                    self.onVerifyCodeFailure?(error.localizedDescription)
                 }
             }
         }

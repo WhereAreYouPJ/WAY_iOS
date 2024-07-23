@@ -34,7 +34,8 @@ class FindIDViewController: UIViewController {
         
         viewModel = FindIDViewModel(
             sendVerificationCodeUseCase: sendVerificationCodeUseCase,
-            findUserIDUseCase: findUserIDUseCase
+            findUserIDUseCase: findUserIDUseCase,
+            verifyCodeUseCase: VerifyCodeUseCaseImpl(userRepository: userRepository)
         )
     }
     
@@ -117,7 +118,7 @@ class FindIDViewController: UIViewController {
     
     @objc private func findUserId() {
         let code = searchIDView.authNumberTextField.text ?? ""
-        viewModel.findUserID(code: code)
+        viewModel.verifyEmailCode(inputCode: code)
     }
     
     @objc func confirmButtonTapped() {
