@@ -52,7 +52,7 @@ class MainTabBarController: UITabBarController {
             selectedImage: UIImage(named: "icon-friends-filled")?.withRenderingMode(.alwaysOriginal)
         )
         
-        let myPageVC = UIViewController() // 추후에 실제 컨트롤러로 변경
+        let myPageVC = MyPageviewController() // 추후에 실제 컨트롤러로 변경
         myPageVC.view.backgroundColor = .white
         myPageVC.tabBarItem = UITabBarItem(
             title: "마이페이지",
