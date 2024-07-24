@@ -51,6 +51,7 @@ extension UIColor {
     static let color118 = UIColor.rgb(red: 118, green: 118, blue: 118)
     static let color153 = UIColor.rgb(red: 153, green: 153, blue: 153)
     static let color172 = UIColor.rgb(red: 172, green: 172, blue: 172)
+    static let color190 = UIColor.rgb(red: 190, green: 190, blue: 190)
     static let color191 = UIColor.rgb(red: 191, green: 191, blue: 191)
     static let color212 = UIColor.rgb(red: 212, green: 212, blue: 212)
     static let color221 = UIColor.rgb(red: 221, green: 221, blue: 221)

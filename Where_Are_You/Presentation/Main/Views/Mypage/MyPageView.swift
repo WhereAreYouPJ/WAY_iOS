@@ -41,6 +41,29 @@ class MyPageView: UIView {
     
     let userCodeLabel = CustomLabel(UILabel_NotoSans: .medium, text: "qwer0865", textColor: .letterBrandColor, fontSize: 14)
     
+    // 버튼 묶음 1
+    let mainStackView = UIStackView()
+    
+    // 버튼 묶음 2
+    let additionalStackView = UIStackView()
+    
+    let logoutButton = CustomButtonView(text: "로그아웃", weight: .medium, textColor: .color190, fontSize: 14)
+    
+    let separatorview: UIView = {
+        let view = UIView()
+        view.backgroundColor = .color190
+        return view
+    }()
+    
+    let deleteAccountButton = CustomButtonView(text: "회원탈퇴", weight: .medium, textColor: .color190, fontSize: 14)
+    
+    private lazy var buttonStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [logoutButton, deleteAccountButton])
+        stack.spacing = 4
+        stack.axis = .horizontal
+        return stack
+    }()
+    
     // MARK: - Lifecycle
     
     override init(frame: CGRect) {
@@ -64,6 +87,9 @@ class MyPageView: UIView {
         
         addSubview(codeBackgroundView)
         codeBackgroundView.addSubview(userCodeLabel)
+        
+        addSubview(buttonStack)
+        addSubview(separatorview)
     }
     
     func setupConstraints() {
@@ -91,6 +117,18 @@ class MyPageView: UIView {
         
         userCodeLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
+        }
+        
+        buttonStack.snp.makeConstraints { make in
+            make.bottom.equalTo(safeAreaLayoutGuide).inset(20)
+            make.leading.trailing.equalToSuperview().inset(120)
+            make.height.equalTo(buttonStack.snp.width).multipliedBy(0.206)
+        }
+        
+        separatorview.snp.makeConstraints { make in
+            make.width.equalTo(1)
+            make.height.equalTo(7)
+            make.top.bottom.equalToSuperview().inset(7)
         }
     }
 }
