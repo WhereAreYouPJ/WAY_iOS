@@ -21,6 +21,8 @@ class MyPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         myPageView.setButtonActions(target: self, action: #selector(buttonTapped(_:)))
+        myPageView.imageEditButton.addTarget(self, action: #selector(editImage), for: <#T##UIControl.Event#>)
+        myPageView.userNameEditButton.addTarget(self, action: #selector(editUserName), for: <#T##UIControl.Event#>)
     }
     
     @objc private func buttonTapped(_ sender: UIButton) {
@@ -48,4 +50,11 @@ class MyPageViewController: UIViewController {
             }
         }
     
+    @objc private func editImage() {
+        
+    }
+    
+    @objc private func editUserName() {
+        
+    }
 }
