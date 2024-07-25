@@ -30,7 +30,7 @@ class SearchPasswordViewController: UIViewController {
     // MARK: - Helpers
     
     func setupUI() {
-        searchPasswordView.emailLabel.label.text = "아이디"
+        searchPasswordView.emailLabel.text = "아이디"
         searchPasswordView.emailTextField.placeholder = "아이디"
         configureNavigationBar(title: "비밀번호 찾기", backButtonAction: #selector(backButtonTapped))
     }

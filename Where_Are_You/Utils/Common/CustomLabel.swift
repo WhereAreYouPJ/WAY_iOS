@@ -12,26 +12,29 @@ import UIKit
 
 // inputContainerLabel
 class CustomLabel: UILabel {
+    private let inset: UIEdgeInsets
     
-    let label = UILabel()
-    
-    init(UILabel_NotoSans weight: UIFont.Weight, text: String, textColor: UIColor, fontSize: CGFloat) {
+    init(UILabel_NotoSans weight: UIFont.Weight, text: String, textColor: UIColor, fontSize: CGFloat, inset: UIEdgeInsets = UIEdgeInsets(top: 4, left: 6, bottom: 4, right: 6)) {
+        self.inset = inset
         super.init(frame: .zero)
         
-        label.text = text
-        label.textColor = textColor
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: weight, fontSize: fontSize))
-        label.adjustsFontForContentSizeCategory = true
-        label.numberOfLines = 0
-        addSubview(label)
-        label.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.left.equalToSuperview().offset(6)
-            make.bottom.equalToSuperview().offset(-4)
-        }
+        self.text = text
+        self.textColor = textColor
+        self.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: weight, fontSize: fontSize))
+        self.adjustsFontForContentSizeCategory = true
+        self.numberOfLines = 0
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func drawText(in rect: CGRect) {
+        super.drawText(in: rect.inset(by: inset))
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        let size = super.intrinsicContentSize
+        return CGSize(width: size.width + inset.left + inset.right, height: size.height + inset.top + inset.bottom)
     }
 }

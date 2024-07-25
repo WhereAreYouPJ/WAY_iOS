@@ -33,7 +33,7 @@ class CheckIDViewController: UIViewController {
     
     func setupUI() {
         configureNavigationBar(title: "아이디 찾기", showBackButton: false)
-        checkIDView.idDescriptionLabel.label.text = userId
+        checkIDView.idDescriptionLabel.text = userId
     }
     
     func buttonActions() {

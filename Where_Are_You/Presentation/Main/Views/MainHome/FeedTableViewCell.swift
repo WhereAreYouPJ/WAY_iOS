@@ -88,8 +88,8 @@ class FeedTableViewCell: UITableViewCell {
     
     func configure(with feed: Feed) {
         profileImageView.image = feed.profileImage
-        locationLabel.label.text = feed.location
-        titleLabel.label.text = feed.title
+        locationLabel.text = feed.location
+        titleLabel.text = feed.title
         descriptionLabel.text = feed.description
     }
 }

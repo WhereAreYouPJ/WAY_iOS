@@ -20,7 +20,32 @@ class MyPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        myPageView.setButtonActions(target: self, action: #selector(buttonTapped(_:)))
     }
+    
+    @objc private func buttonTapped(_ sender: UIButton) {
+            switch sender.tag {
+            case 0:
+                // Handle "내 정보 관리"
+                print("내 정보 관리 tapped")
+            case 1:
+                // Handle "위치 즐겨찾기"
+                print("위치 즐겨찾기 tapped")
+            case 2:
+                // Handle "피드 책갈피"
+                print("피드 책갈피 tapped")
+            case 3:
+                // Handle "피드 보관함"
+                print("피드 보관함 tapped")
+            case 4:
+                // Handle "공지사항"
+                print("공지사항 tapped")
+            case 5:
+                // Handle "1:1 이용문의"
+                print("1:1 이용문의 tapped")
+            default:
+                break
+            }
+        }
     
 }
