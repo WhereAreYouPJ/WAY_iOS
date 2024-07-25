@@ -29,8 +29,22 @@ class MyPageView: UIView {
         return imageView
     }()
     
+    let imageEditButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "icon-Camera_Rotate"), for: .normal)
+        button.layer.cornerRadius = 10
+        return button
+    }()
+    
     let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "유저 이름", textColor: .white, fontSize: 20)
     
+    let userNameEditButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "icon-NameEdit"), for: .normal)
+        return button
+    }()
+    
+    // 유저코드(친추용)
     let userCodeBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -39,15 +53,13 @@ class MyPageView: UIView {
         return view
     }()
     
-    // 유저코드(친추용)
     let userCodeLabel = CustomLabel(UILabel_NotoSans: .medium, text: "qwer0865", textColor: .letterBrandColor, fontSize: 14)
     
     // 내정보관리, 위치 즐겨찾기, 피드책갈피, 피드보관함
     private lazy var manageStackView: UIStackView = createStackView(buttonTitles: ["내 정보 관리", "위치 즐겨찾기", "피드 책갈피", "피드 보관함"])
     
-    private lazy var supportStackView: UIStackView = createStackView(buttonTitles: ["공지사항", "1:1 이용문의"])
-    
     // 공지사항, 1:1이용문의
+    private lazy var supportStackView: UIStackView = createStackView(buttonTitles: ["공지사항", "1:1 이용문의"])
     
     // 로그아웃, 회원탈퇴
     let logoutButton = CustomButtonView(text: "로그아웃", weight: .medium, textColor: .color190, fontSize: 14)
@@ -88,6 +100,8 @@ class MyPageView: UIView {
         addSubview(profileBackgroundView)
         profileBackgroundView.addSubview(profileImageView)
         profileBackgroundView.addSubview(userNameLabel)
+        profileBackgroundView.addSubview(imageEditButton)
+        profileBackgroundView.addSubview(userNameEditButton)
         
         addSubview(userCodeBackgroundView)
         userCodeBackgroundView.addSubview(userCodeLabel)
@@ -112,9 +126,21 @@ class MyPageView: UIView {
             make.height.width.equalTo(self.snp.width).multipliedBy(0.266)
         }
         
+        // 편집 버튼
+        imageEditButton.snp.makeConstraints { make in
+            make.width.height.equalTo(24)
+            make.right.equalTo(profileImageView.snp.right).offset(6)
+            make.bottom.equalTo(profileImageView.snp.bottom)
+        }
+        
         userNameLabel.snp.makeConstraints { make in
             make.top.equalTo(profileImageView.snp.bottom).offset(6)
             make.centerX.equalToSuperview()
+        }
+        
+        userNameEditButton.snp.makeConstraints { make in
+            make.centerY.equalTo(userNameLabel)
+            make.left.equalTo(userNameLabel.snp.right)
         }
         
         // 유저코드
@@ -155,6 +181,8 @@ class MyPageView: UIView {
         }
     }
     
+    // MARK: - stackview func
+    
     private func createStackView(buttonTitles: [String]) -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -191,12 +219,14 @@ class MyPageView: UIView {
     
     private func createSeparator() -> UIView {
         let separator = UIView()
-        separator.backgroundColor = .lightGray
+        separator.backgroundColor = .color221
         separator.snp.makeConstraints { make in
             make.height.equalTo(1)
         }
         return separator
     }
+    
+    // MARK: - stackview button actions
     
     func setButtonActions(target: Any?, action: Selector) {
         manageStackView.arrangedSubviews.forEach {
