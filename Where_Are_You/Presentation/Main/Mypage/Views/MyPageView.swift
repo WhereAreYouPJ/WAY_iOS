@@ -80,6 +80,36 @@ class MyPageView: UIView {
         return view
     }()
     
+    // 추가 옵션 뷰
+    let moveToGallery: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .popupButtonColor
+        button.layer.cornerRadius = 10
+        button.clipsToBounds = true
+        button.isHidden = true // Initially hidden
+        
+        let label = UILabel()
+        label.text = "사진 보관함"
+        label.textColor = .white
+        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
+        label.adjustsFontForContentSizeCategory = true
+        button.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview().inset(14)
+        }
+        
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "icon-Gallery")
+        button.addSubview(imageView)
+        imageView.snp.makeConstraints { make in
+            make.height.width.equalTo(22)
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().inset(13)
+        }
+        return button
+    }()
+    
     // MARK: - Lifecycle
     
     override init(frame: CGRect) {
@@ -102,6 +132,7 @@ class MyPageView: UIView {
         profileBackgroundView.addSubview(userNameLabel)
         profileBackgroundView.addSubview(imageEditButton)
         profileBackgroundView.addSubview(userNameEditButton)
+        profileBackgroundView.addSubview(moveToGallery)
         
         addSubview(userCodeBackgroundView)
         userCodeBackgroundView.addSubview(userCodeLabel)
@@ -133,6 +164,14 @@ class MyPageView: UIView {
             make.bottom.equalTo(profileImageView.snp.bottom)
         }
         
+        // 추가 옵션 뷰
+        moveToGallery.snp.makeConstraints { make in
+            make.centerX.equalTo(profileImageView)
+            make.top.equalTo(profileImageView.snp.bottom).offset(13)
+            make.width.equalTo(190)
+            make.height.equalTo(38)
+        }
+        
         userNameLabel.snp.makeConstraints { make in
             make.top.equalTo(profileImageView.snp.bottom).offset(6)
             make.centerX.equalToSuperview()
@@ -147,7 +186,7 @@ class MyPageView: UIView {
         userCodeBackgroundView.snp.makeConstraints { make in
             make.centerY.equalTo(profileBackgroundView.snp.bottom)
             make.height.equalTo(profileBackgroundView.snp.height).multipliedBy(0.203)
-            make.leading.trailing.equalToSuperview().inset(6)
+            make.leading.trailing.equalToSuperview().inset(17)
         }
         
         userCodeLabel.snp.makeConstraints { make in

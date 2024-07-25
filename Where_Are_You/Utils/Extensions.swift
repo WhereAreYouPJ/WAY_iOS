@@ -42,6 +42,7 @@ extension UIColor {
     static let lightpurple = UIColor.rgb(red: 146, green: 134, blue: 255)
     static let warningColor = UIColor.rgb(red: 223, green: 67, blue: 67)
     static let scheduleDateColor = UIColor.rgb(red: 252, green: 47, blue: 47)
+    static let popupButtonColor = UIColor.rgb(red: 81, green: 70, blue: 117)
     
     static let color17 = UIColor.rgb(red: 17, green: 17, blue: 17)
     static let color34 = UIColor.rgb(red: 34, green: 34, blue: 34)
