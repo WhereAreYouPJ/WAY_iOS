@@ -376,17 +376,11 @@
 		995E3E592C507BBA006B4480 /* Mypage */ = {
 			isa = PBXGroup;
 			children = (
-				995E3E5A2C507FE6006B4480 /* MyPageView.swift */,
+				99CC5E662C52114D00A0509A /* Views */,
+				99CC5E672C52115200A0509A /* ViewControllers */,
+				99CC5E682C52115900A0509A /* ViewModels */,
 			);
 			path = Mypage;
-			sourceTree = "<group>";
-		};
-		995E3E5C2C508024006B4480 /* MyPage */ = {
-			isa = PBXGroup;
-			children = (
-				995E3E5D2C508039006B4480 /* MyPageViewController.swift */,
-			);
-			path = MyPage;
 			sourceTree = "<group>";
 		};
 		997DC6512C3D22DD00EACA5F /* Config */ = {
@@ -409,10 +403,8 @@
 		99C9B2232C01973E008D7CBD /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				9950C64C2C102E18003155A7 /* SingUp */,
-				99F78F1A2C09BB7D004C0C72 /* FindAccount */,
-				99C9B2532C0231B2008D7CBD /* Login */,
-				99D8FBAD2C3B64040062AF10 /* Main */,
+				99CC5E652C5210FF00A0509A /* Login */,
+				99CC5E6A2C5211ED00A0509A /* Main */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -441,22 +433,90 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		99C9B2532C0231B2008D7CBD /* Login */ = {
+		99C9B2532C0231B2008D7CBD /* Logins */ = {
 			isa = PBXGroup;
 			children = (
 				9950C6502C104056003155A7 /* Views */,
 				9950C6512C10405B003155A7 /* ViewControllers */,
 				99D8FBB12C3B9A270062AF10 /* ViewModels */,
 			);
+			path = Logins;
+			sourceTree = "<group>";
+		};
+		99CC5E652C5210FF00A0509A /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				99C9B2532C0231B2008D7CBD /* Logins */,
+				99F78F1A2C09BB7D004C0C72 /* FindAccount */,
+				9950C64C2C102E18003155A7 /* SingUp */,
+			);
 			path = Login;
 			sourceTree = "<group>";
 		};
-		99CC5E622C51EF9900A0509A /* MyPage */ = {
+		99CC5E662C52114D00A0509A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				995E3E5A2C507FE6006B4480 /* MyPageView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		99CC5E672C52115200A0509A /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				995E3E5D2C508039006B4480 /* MyPageViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		99CC5E682C52115900A0509A /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				99CC5E632C51EFAB00A0509A /* MyPageViewModel.swift */,
 			);
-			path = MyPage;
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		99CC5E692C5211C500A0509A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				99DA18B82C4E132A00D5CDA6 /* TitleView.swift */,
+				99DA18BA2C4E13D100D5CDA6 /* HeaderView.swift */,
+				99D8FBB42C3B9F9F0062AF10 /* MainHomeView.swift */,
+				9911F9892C3F6B4100D0FDC9 /* BannerCollectionViewCell.swift */,
+				9911F9832C3F5AA600D0FDC9 /* BannerView.swift */,
+				990BDE522C40CF1E00A7FB5D /* ScheduleCell.swift */,
+				9911F9852C3F5E6F00D0FDC9 /* ScheduleView.swift */,
+				9911F98D2C3F913100D0FDC9 /* FeedTableViewCell.swift */,
+				9911F98B2C3F908E00D0FDC9 /* FeedTableView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		99CC5E6A2C5211ED00A0509A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */,
+				99D8FBAD2C3B64040062AF10 /* Home */,
+				99CC5E6C2C52122E00A0509A /* Schedule */,
+				99CC5E6B2C52122500A0509A /* Friends */,
+				995E3E592C507BBA006B4480 /* Mypage */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		99CC5E6B2C52122500A0509A /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Friends;
+			sourceTree = "<group>";
+		};
+		99CC5E6C2C52122E00A0509A /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Schedule;
 			sourceTree = "<group>";
 		};
 		99D11EB22C07836C006BE265 /* Entities */ = {
@@ -491,31 +551,23 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
-		99D8FBAD2C3B64040062AF10 /* Main */ = {
+		99D8FBAD2C3B64040062AF10 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				99D8FBAE2C3B99B80062AF10 /* Views */,
+				99CC5E692C5211C500A0509A /* Views */,
 				99D8FBAF2C3B99BF0062AF10 /* ViewControllers */,
 				99D8FBB32C3B9F7D0062AF10 /* ViewModels */,
 			);
-			path = Main;
-			sourceTree = "<group>";
-		};
-		99D8FBAE2C3B99B80062AF10 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				99DA18B72C4DEEDF00D5CDA6 /* MainHome */,
-				995E3E592C507BBA006B4480 /* Mypage */,
-			);
-			path = Views;
+			path = Home;
 			sourceTree = "<group>";
 		};
 		99D8FBAF2C3B99BF0062AF10 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */,
-				99DA18B52C4DEE8300D5CDA6 /* MainHome */,
-				995E3E5C2C508024006B4480 /* MyPage */,
+				99D8FBBA2C3BA1D90062AF10 /* MainHomeViewController.swift */,
+				99FBA54D2C453924002EEEC7 /* BannerViewController.swift */,
+				99FBA5512C453B43002EEEC7 /* ScheduleViewController.swift */,
+				99FBA5552C453BDD002EEEC7 /* FeedTableViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -549,8 +601,10 @@
 		99D8FBB32C3B9F7D0062AF10 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				99DA18B62C4DEEB400D5CDA6 /* MainHome */,
-				99CC5E622C51EF9900A0509A /* MyPage */,
+				99D8FBBC2C3BA1E60062AF10 /* MainHomeViewModel.swift */,
+				99FBA54F2C45394E002EEEC7 /* BannerViewModel.swift */,
+				99FBA5532C453B6D002EEEC7 /* ScheduleViewModel.swift */,
+				99FBA5572C453C05002EEEC7 /* FeedTableViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -563,44 +617,6 @@
 				99D8FBC12C3BA25B0062AF10 /* CustomTextField.swift */,
 			);
 			path = Common;
-			sourceTree = "<group>";
-		};
-		99DA18B52C4DEE8300D5CDA6 /* MainHome */ = {
-			isa = PBXGroup;
-			children = (
-				99D8FBBA2C3BA1D90062AF10 /* MainHomeViewController.swift */,
-				99FBA54D2C453924002EEEC7 /* BannerViewController.swift */,
-				99FBA5512C453B43002EEEC7 /* ScheduleViewController.swift */,
-				99FBA5552C453BDD002EEEC7 /* FeedTableViewController.swift */,
-			);
-			path = MainHome;
-			sourceTree = "<group>";
-		};
-		99DA18B62C4DEEB400D5CDA6 /* MainHome */ = {
-			isa = PBXGroup;
-			children = (
-				99D8FBBC2C3BA1E60062AF10 /* MainHomeViewModel.swift */,
-				99FBA54F2C45394E002EEEC7 /* BannerViewModel.swift */,
-				99FBA5532C453B6D002EEEC7 /* ScheduleViewModel.swift */,
-				99FBA5572C453C05002EEEC7 /* FeedTableViewModel.swift */,
-			);
-			path = MainHome;
-			sourceTree = "<group>";
-		};
-		99DA18B72C4DEEDF00D5CDA6 /* MainHome */ = {
-			isa = PBXGroup;
-			children = (
-				99DA18B82C4E132A00D5CDA6 /* TitleView.swift */,
-				99DA18BA2C4E13D100D5CDA6 /* HeaderView.swift */,
-				99D8FBB42C3B9F9F0062AF10 /* MainHomeView.swift */,
-				9911F9892C3F6B4100D0FDC9 /* BannerCollectionViewCell.swift */,
-				9911F9832C3F5AA600D0FDC9 /* BannerView.swift */,
-				990BDE522C40CF1E00A7FB5D /* ScheduleCell.swift */,
-				9911F9852C3F5E6F00D0FDC9 /* ScheduleView.swift */,
-				9911F98D2C3F913100D0FDC9 /* FeedTableViewCell.swift */,
-				9911F98B2C3F908E00D0FDC9 /* FeedTableView.swift */,
-			);
-			path = MainHome;
 			sourceTree = "<group>";
 		};
 		99EC209F2C0D8DEC0018904D /* UseCases */ = {
