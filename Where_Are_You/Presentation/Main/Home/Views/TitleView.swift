@@ -19,13 +19,13 @@ class TitleView: UIView {
         return label
     }()
     
-    private let notificationButton: UIButton = {
+    let notificationButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "icon_bell_notification"), for: .normal)
         return button
     }()
     
-    private let profileButton: UIButton = {
+    let profileButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "icon-mypage"), for: .normal)
         return button

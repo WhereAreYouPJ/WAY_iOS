@@ -433,20 +433,20 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		99C9B2532C0231B2008D7CBD /* Logins */ = {
+		99C9B2532C0231B2008D7CBD /* Login */ = {
 			isa = PBXGroup;
 			children = (
 				9950C6502C104056003155A7 /* Views */,
 				9950C6512C10405B003155A7 /* ViewControllers */,
 				99D8FBB12C3B9A270062AF10 /* ViewModels */,
 			);
-			path = Logins;
+			path = Login;
 			sourceTree = "<group>";
 		};
 		99CC5E652C5210FF00A0509A /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				99C9B2532C0231B2008D7CBD /* Logins */,
+				99C9B2532C0231B2008D7CBD /* Login */,
 				99F78F1A2C09BB7D004C0C72 /* FindAccount */,
 				9950C64C2C102E18003155A7 /* SingUp */,
 			);
@@ -501,6 +501,7 @@
 				99CC5E6C2C52122E00A0509A /* Schedule */,
 				99CC5E6B2C52122500A0509A /* Friends */,
 				995E3E592C507BBA006B4480 /* Mypage */,
+				99CC5E6D2C521DE900A0509A /* Notification */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -517,6 +518,37 @@
 			children = (
 			);
 			path = Schedule;
+			sourceTree = "<group>";
+		};
+		99CC5E6D2C521DE900A0509A /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				99CC5E6E2C521E0200A0509A /* Views */,
+				99CC5E6F2C521E0600A0509A /* ViewControllers */,
+				99CC5E702C521E0B00A0509A /* Viewmodels */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
+		99CC5E6E2C521E0200A0509A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		99CC5E6F2C521E0600A0509A /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		99CC5E702C521E0B00A0509A /* Viewmodels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Viewmodels;
 			sourceTree = "<group>";
 		};
 		99D11EB22C07836C006BE265 /* Entities */ = {

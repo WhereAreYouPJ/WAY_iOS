@@ -27,6 +27,7 @@ class MainHomeViewController: UIViewController {
         setupViewControllers()
         setupTableView()
         setupBindings()
+        buttonActions()
         
         // 각각의 뷰모델이 데이터를 가져오도록 설정
         bannerViewController.viewModel.fetchBannerImages()
@@ -92,6 +93,22 @@ class MainHomeViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.mainHomeView.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
             }
+        }
+    }
+    
+    private func buttonActions() {
+        mainHomeView.titleView.notificationButton.addTarget(self, action: #selector(moveToNotification), for: .touchUpInside)
+        mainHomeView.titleView.profileButton.addTarget(self, action: #selector(moveToMyPage), for: .touchUpInside)
+    }
+    
+    @objc private func moveToNotification() {
+        // 알림 페이지로 이동
+    }
+    
+    @objc private func moveToMyPage() {
+        // 마이 페이지 이동
+        if let tabBarController = self.tabBarController {
+            tabBarController.selectedIndex = 3
         }
     }
 }

@@ -11,7 +11,7 @@ import SnapKit
 class MainHomeView: UIView {
     // MARK: - Properties
     
-    private let titleView = TitleView()
+    let titleView = TitleView()
     let headerView = HeaderView()
     let tableView = UITableView()
     
