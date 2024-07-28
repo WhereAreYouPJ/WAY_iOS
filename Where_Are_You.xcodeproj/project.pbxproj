@@ -38,6 +38,7 @@
 		995E3E5B2C507FE6006B4480 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995E3E5A2C507FE6006B4480 /* MyPageView.swift */; };
 		995E3E5E2C508039006B4480 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995E3E5D2C508039006B4480 /* MyPageViewController.swift */; };
 		9967C1522C56467D00927277 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9967C1512C56467D00927277 /* CustomAlert.swift */; };
+		9967C1542C566F2F00927277 /* CustomNetworkAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9967C1532C566F2F00927277 /* CustomNetworkAlert.swift */; };
 		997746A52C329D68004FB0DF /* FindUserIDUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997746A42C329D68004FB0DF /* FindUserIDUseCase.swift */; };
 		9979622D2C3E6B2200E95CA6 /* AccountLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979622C2C3E6B2200E95CA6 /* AccountLoginUseCase.swift */; };
 		997DC6552C3D231000EACA5F /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997DC6542C3D231000EACA5F /* Config.swift */; };
@@ -156,6 +157,7 @@
 		995E3E5A2C507FE6006B4480 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		995E3E5D2C508039006B4480 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		9967C1512C56467D00927277 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
+		9967C1532C566F2F00927277 /* CustomNetworkAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNetworkAlert.swift; sourceTree = "<group>"; };
 		997746A42C329D68004FB0DF /* FindUserIDUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUserIDUseCase.swift; sourceTree = "<group>"; };
 		9979622C2C3E6B2200E95CA6 /* AccountLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLoginUseCase.swift; sourceTree = "<group>"; };
 		997DC6542C3D231000EACA5F /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 		9967C1502C56465B00927277 /* LaunchScreen */ = {
 			isa = PBXGroup;
 			children = (
+				9967C1532C566F2F00927277 /* CustomNetworkAlert.swift */,
 				99CEAD492C539743006B3D41 /* SplashViewController.swift */,
 				9953584A2C00C558005BF799 /* LaunchScreen.storyboard */,
 			);
@@ -977,6 +980,7 @@
 				99CEAD4C2C5397B1006B3D41 /* DeviceConfig.swift in Sources */,
 				99FBA54E2C453924002EEEC7 /* BannerViewController.swift in Sources */,
 				99CC5E642C51EFAB00A0509A /* MyPageViewModel.swift in Sources */,
+				9967C1542C566F2F00927277 /* CustomNetworkAlert.swift in Sources */,
 				99EC78CE2C11DBA5007C4415 /* ResetPasswordViewController.swift in Sources */,
 				99B397832C0C3E9D00D7A109 /* CheckIDView.swift in Sources */,
 				99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */,
