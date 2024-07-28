@@ -28,25 +28,31 @@ class CustomAlert: UIView {
         return label
     }()
     
+    private lazy var labelStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, messageLabel])
+        stackView.axis = .vertical
+        return stackView
+    }()
+    
     private let cancelButton: UIButton = {
         let button = UIButton()
-        button.setTitleColor(.lightGray, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
         return button
     }()
     
     private let actionButton: UIButton = {
         let button = UIButton()
-        button.setTitleColor(.systemPurple, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.setTitleColor(.alertActionButtonColor, for: .normal)
+        button.titleLabel?.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
         return button
     }()
     
-    private let buttonStack: UIStackView = {
-        let stackView = UIStackView()
+    private lazy var buttonStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [cancelButton, actionButton])
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
-        stackView.spacing = 20
+        stackView.spacing = 24
         return stackView
     }()
     
@@ -55,8 +61,8 @@ class CustomAlert: UIView {
     init(title: String, message: String, cancelTitle: String, actionTitle: String, action: @escaping () -> Void) {
         super.init(frame: .zero)
         
-        backgroundColor = .darkGray
-        layer.cornerRadius = 10
+        backgroundColor = .color51.withAlphaComponent(0.8)
+        layer.cornerRadius = 12
         clipsToBounds = true
         
         titleLabel.text = title
@@ -69,10 +75,8 @@ class CustomAlert: UIView {
         
         addSubview(titleLabel)
         addSubview(messageLabel)
+        addSubview(labelStack)
         addSubview(buttonStack)
-        
-        buttonStack.addArrangedSubview(cancelButton)
-        buttonStack.addArrangedSubview(actionButton)
         
         setupConstraints()
         
@@ -88,20 +92,19 @@ class CustomAlert: UIView {
     private var action: (() -> Void)?
     
     private func setupConstraints() {
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
-            make.leading.trailing.equalToSuperview().inset(20)
+        labelStack.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(24)
+            make.leading.trailing.equalToSuperview().inset(17)
         }
         
-        messageLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview().inset(20)
+        titleLabel.snp.makeConstraints { make in
+            make.height.equalToSuperview().multipliedBy(0.176)
         }
         
         buttonStack.snp.makeConstraints { make in
-            make.top.equalTo(messageLabel.snp.bottom).offset(20)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview().offset(-20)
+            make.top.equalTo(labelStack.snp.bottom).offset(28)
+            make.trailing.equalToSuperview().inset(26)
+            make.bottom.equalToSuperview().inset(24)
         }
     }
     
