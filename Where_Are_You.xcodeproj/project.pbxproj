@@ -37,6 +37,7 @@
 		995358552C00DB0A005BF799 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 995358542C00DB0A005BF799 /* .swiftlint.yml */; };
 		995E3E5B2C507FE6006B4480 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995E3E5A2C507FE6006B4480 /* MyPageView.swift */; };
 		995E3E5E2C508039006B4480 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995E3E5D2C508039006B4480 /* MyPageViewController.swift */; };
+		9967C1522C56467D00927277 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9967C1512C56467D00927277 /* CustomAlert.swift */; };
 		997746A52C329D68004FB0DF /* FindUserIDUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997746A42C329D68004FB0DF /* FindUserIDUseCase.swift */; };
 		9979622D2C3E6B2200E95CA6 /* AccountLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979622C2C3E6B2200E95CA6 /* AccountLoginUseCase.swift */; };
 		997DC6552C3D231000EACA5F /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997DC6542C3D231000EACA5F /* Config.swift */; };
@@ -154,6 +155,7 @@
 		995358542C00DB0A005BF799 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		995E3E5A2C507FE6006B4480 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		995E3E5D2C508039006B4480 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		9967C1512C56467D00927277 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		997746A42C329D68004FB0DF /* FindUserIDUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUserIDUseCase.swift; sourceTree = "<group>"; };
 		9979622C2C3E6B2200E95CA6 /* AccountLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLoginUseCase.swift; sourceTree = "<group>"; };
 		997DC6542C3D231000EACA5F /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -387,9 +389,19 @@
 			path = Mypage;
 			sourceTree = "<group>";
 		};
+		9967C1502C56465B00927277 /* LaunchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				99CEAD492C539743006B3D41 /* SplashViewController.swift */,
+				9953584A2C00C558005BF799 /* LaunchScreen.storyboard */,
+			);
+			path = LaunchScreen;
+			sourceTree = "<group>";
+		};
 		997DC6512C3D22DD00EACA5F /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				99CEAD4B2C5397B1006B3D41 /* DeviceConfig.swift */,
 				997DC6542C3D231000EACA5F /* Config.swift */,
 			);
 			path = Config;
@@ -416,7 +428,7 @@
 		99C9B2262C019748008D7CBD /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				99D8FBBE2C3BA1FB0062AF10 /* Common */,
+				99D8FBBE2C3BA1FB0062AF10 /* Customs */,
 				99C9B2312C01A45C008D7CBD /* Extensions.swift */,
 				99C9B2472C01D2B7008D7CBD /* Utilities.swift */,
 				99149FEA2C4F97C300136097 /* ValidationHelper.swift */,
@@ -568,13 +580,11 @@
 		99D11EBB2C07848B006BE265 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9967C1502C56465B00927277 /* LaunchScreen */,
 				99C9B22D2C019E16008D7CBD /* Fonts */,
-				9953584A2C00C558005BF799 /* LaunchScreen.storyboard */,
 				9953584D2C00C558005BF799 /* Info.plist */,
 				995358482C00C558005BF799 /* Assets.xcassets */,
 				995358452C00C555005BF799 /* Where_Are_You.xcdatamodeld */,
-				99CEAD492C539743006B3D41 /* SplashViewController.swift */,
-				99CEAD4B2C5397B1006B3D41 /* DeviceConfig.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -647,14 +657,15 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		99D8FBBE2C3BA1FB0062AF10 /* Common */ = {
+		99D8FBBE2C3BA1FB0062AF10 /* Customs */ = {
 			isa = PBXGroup;
 			children = (
+				9967C1512C56467D00927277 /* CustomAlert.swift */,
 				99D11EB02C06F56F006BE265 /* CustomButton.swift */,
 				99D8FBBF2C3BA2180062AF10 /* CustomLabel.swift */,
 				99D8FBC12C3BA25B0062AF10 /* CustomTextField.swift */,
 			);
-			path = Common;
+			path = Customs;
 			sourceTree = "<group>";
 		};
 		99EC209F2C0D8DEC0018904D /* UseCases */ = {
@@ -975,6 +986,7 @@
 				99938EE02C0C8B9D00239FA1 /* SearchPasswordViewController.swift in Sources */,
 				99149FED2C4F97EA00136097 /* TimeHelper.swift in Sources */,
 				99CA4F2C2C33EB7F007C027C /* UserIdEmailVerificaitonViewModel.swift in Sources */,
+				9967C1522C56467D00927277 /* CustomAlert.swift in Sources */,
 				99149FEB2C4F97C300136097 /* ValidationHelper.swift in Sources */,
 				9911F98A2C3F6B4100D0FDC9 /* BannerCollectionViewCell.swift in Sources */,
 				99C9B2522C022DE3008D7CBD /* AccountLoginController.swift in Sources */,
