@@ -10,7 +10,7 @@ import UIKit
 class TitleView: UIView {
     // MARK: - Properties
 
-    private let titleLabel: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(Ttangsbudae: .bold, fontSize: 20))
         label.adjustsFontForContentSizeCategory = true
@@ -31,44 +31,10 @@ class TitleView: UIView {
         return button
     }()
     
-    private let iconStack: UIStackView = {
-        let stackView = UIStackView()
+    lazy var iconStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [notificationButton, profileButton])
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
         return stackView
     }()
-    
-    // MARK: - Lifecycle
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configureViewComponents()
-        setupConstraints()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Helpers
-    
-    private func configureViewComponents() {
-        addSubview(titleLabel)
-        addSubview(iconStack)
-        iconStack.addArrangedSubview(notificationButton)
-        iconStack.addArrangedSubview(profileButton)
-    }
-    
-    private func setupConstraints() {
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(14)
-            make.leading.equalToSuperview().inset(18)
-            make.height.equalTo(titleLabel.snp.width).multipliedBy(0.25)
-        }
-        
-        iconStack.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(8)
-            make.trailing.equalToSuperview().inset(11)
-        }
-    }
 }

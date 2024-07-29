@@ -15,19 +15,19 @@ class MainHomeViewController: UIViewController {
     private var scheduleViewController: ScheduleViewController!
     private var feedTableViewController: FeedTableViewController!
     
-    // MARK: - Lifecycle
+    private let titleView = TitleView()
     
-    override func loadView() {
-        view = mainHomeView
-    }
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view = mainHomeView
+
         setupViewControllers()
         setupTableView()
         setupBindings()
         buttonActions()
+        setupNavigationBar()
         
         // 각각의 뷰모델이 데이터를 가져오도록 설정
         bannerViewController.viewModel.fetchBannerImages()
@@ -36,6 +36,12 @@ class MainHomeViewController: UIViewController {
     }
     
     // MARK: - Helpers
+    private func setupNavigationBar() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleView.titleLabel)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: titleView.iconStack)
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.backgroundColor = .white
+    }
     
     private func setupViewControllers() {
         // 서브뷰 컨트롤러 초기화
@@ -97,8 +103,8 @@ class MainHomeViewController: UIViewController {
     }
     
     private func buttonActions() {
-        mainHomeView.titleView.notificationButton.addTarget(self, action: #selector(moveToNotification), for: .touchUpInside)
-        mainHomeView.titleView.profileButton.addTarget(self, action: #selector(moveToMyPage), for: .touchUpInside)
+        titleView.notificationButton.addTarget(self, action: #selector(moveToNotification), for: .touchUpInside)
+        titleView.profileButton.addTarget(self, action: #selector(moveToMyPage), for: .touchUpInside)
     }
     
     @objc private func moveToNotification() {

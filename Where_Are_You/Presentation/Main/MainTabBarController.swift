@@ -43,6 +43,7 @@ class MainTabBarController: UITabBarController {
         self.tabBar.unselectedItemTintColor = .color34
         tabBar.backgroundColor = .white
         
+        navigationController?.navigationBar.isHidden = true
         // 탭바의 분리선 추가
         addTabBarSeparator()
     }

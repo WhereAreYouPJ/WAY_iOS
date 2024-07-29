@@ -10,8 +10,6 @@ import SnapKit
 
 class MainHomeView: UIView {
     // MARK: - Properties
-    
-    let titleView = TitleView()
     let headerView = HeaderView()
     let tableView = UITableView()
     
@@ -32,7 +30,6 @@ class MainHomeView: UIView {
     func configureViewComponents() {
         backgroundColor = .white
         
-        addSubview(titleView)
         addSubview(tableView)
 
         configureTableView()
@@ -47,15 +44,8 @@ class MainHomeView: UIView {
     }
     
     func setupConstraints() {
-        titleView.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(46)
-        }
-        
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(titleView.snp.bottom)
-            make.leading.trailing.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
         }
     }
 }

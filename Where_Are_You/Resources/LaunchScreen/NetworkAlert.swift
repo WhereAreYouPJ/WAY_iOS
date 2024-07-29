@@ -54,7 +54,7 @@ class NetworkAlert: UIView {
     
     // MARK: - Lifecycle
     
-    init(title: String, message: String, cancelTitle: String, actionTitle: String, action: @escaping () -> Void) {
+    init(action: @escaping () -> Void) {
         super.init(frame: .zero)
         
         backgroundColor = .white

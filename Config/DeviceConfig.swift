@@ -9,17 +9,13 @@ import Foundation
 import SystemConfiguration
 
 class DeviceManager {
-    static let shared : DeviceManager = DeviceManager()
+    static let shared: DeviceManager = DeviceManager()
     
-    var networkStatue : Bool {
-        get {
-            return checkDeviceNetworkStatus()
-        }
+    var networkStatue: Bool {
+        return checkDeviceNetworkStatus()
     }
     
-    private init() {
-        
-    }
+    private init() {}
     
     private func checkDeviceNetworkStatus() -> Bool {
             print("Check to Device Natwork Status....")

@@ -45,7 +45,8 @@ class HeaderView: UIView {
     
     private func setupConstraints() {
         bannerView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview().inset(15)
+            make.top.equalToSuperview().inset(13)
+            make.leading.trailing.equalToSuperview().inset(15)
             make.height.equalTo(bannerView.snp.width).multipliedBy(0.55)
         }
         

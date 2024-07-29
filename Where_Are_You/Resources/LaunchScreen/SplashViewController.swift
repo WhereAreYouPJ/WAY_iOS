@@ -7,10 +7,11 @@
 
 import UIKit
 
-class SplashViewController : UIViewController {
+class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .brandColor
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -20,23 +21,16 @@ class SplashViewController : UIViewController {
     }
     
     func checkDeviceNetworkStatus() {
-        
         if !(DeviceManager.shared.networkStatue) {
-            let alert: UIAlertController = UIAlertController(title: "네트워크 상태 확인", message: "네트워크가 불안정 합니다.", preferredStyle: .alert)
-            let action: UIAlertAction = UIAlertAction(title: "다시 시도", style: .default, handler: { (action) in
+            let networkAlert = NetworkAlert(action: {
                 self.checkDeviceNetworkStatus()
             })
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
+            networkAlert.showAlert(on: self)
         } else {
-            guard let vc = self.storyboard?.instantiateViewController(identifier: "firstVC") else {
-                print("ERROR")
-                return
-            }
+            let vc = MainTabBarController()
             vc.modalTransitionStyle = .crossDissolve
             vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true, completion: nil)
+            self.present(vc, animated: true, completion: nil)
         }
-        
     }
 }
