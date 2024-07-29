@@ -5,10 +5,10 @@
 //  Created by 오정석 on 28/7/2024.
 //
 
-import Foundation
 import UIKit
+import SnapKit
 
-class CustomNetworkAlert: UIView {
+class NetworkAlert: UIView {
     
     // MARK: - Properties
 
@@ -58,7 +58,7 @@ class CustomNetworkAlert: UIView {
         super.init(frame: .zero)
         
         backgroundColor = .white
-        layer.cornerRadius = 12
+        layer.cornerRadius = 6
         clipsToBounds = true
         
         closeButton.addTarget(self, action: #selector(dismissAlert), for: .touchUpInside)
@@ -82,7 +82,20 @@ class CustomNetworkAlert: UIView {
     private var action: (() -> Void)?
     
     private func setupConstraints() {
+        errorImage.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(18)
+            make.centerX.equalToSuperview()
+        }
         
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(errorImage.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview().offset(39.5)
+        }
+        
+        buttonStack.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(20)
+            make.leading.trailing.equalToSuperview().offset(14)
+        }
     }
     
     // MARK: - Selectors
@@ -101,8 +114,8 @@ class CustomNetworkAlert: UIView {
             parentView.addSubview(self)
             self.snp.makeConstraints { make in
                 make.center.equalToSuperview()
-                make.width.equalTo(parentView).multipliedBy(0.8)
-                make.height.equalTo(parentView).multipliedBy(0.25)
+                make.width.equalTo(280)
+                make.height.equalTo(160)
             }
         }
     }
