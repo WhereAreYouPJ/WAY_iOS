@@ -39,8 +39,14 @@ class MainHomeViewController: UIViewController {
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleView.titleLabel)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: titleView.iconStack)
-        self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.backgroundColor = .white
+        
+        // 화면을 스크롤 했을때 네비게이션바가 여전히 색상을 유지
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.backgroundColor = UIColor.white
+        // 네비게이션 분리선 없애기
+        navigationBarAppearance.shadowColor = .clear
+        navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
     }
     
     private func setupViewControllers() {
