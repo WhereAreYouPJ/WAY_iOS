@@ -71,7 +71,7 @@ class MainHomeViewController: UIViewController {
         // HeaderView에 배너뷰와 스케쥴뷰 추가
         mainHomeView.headerView.bannerView.addSubview(bannerViewController.view)
         mainHomeView.headerView.scheduleView.addSubview(scheduleViewController.view)
-        
+                
         bannerViewController.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }

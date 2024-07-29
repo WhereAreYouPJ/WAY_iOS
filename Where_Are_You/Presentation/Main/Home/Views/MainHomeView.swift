@@ -40,7 +40,8 @@ class MainHomeView: UIView {
         tableView.register(FeedTableViewCell.self, forCellReuseIdentifier: FeedTableViewCell.identifier)
         tableView.estimatedRowHeight = 150
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.separatorInset.right = 15
+//        tableView.separatorInset.right = 15
+        tableView.separatorStyle = .none
     }
     
     func setupConstraints() {

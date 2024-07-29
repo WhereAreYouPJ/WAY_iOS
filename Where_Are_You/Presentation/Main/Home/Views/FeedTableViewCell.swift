@@ -25,6 +25,21 @@ class FeedTableViewCell: UITableViewCell {
     
     private let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color34, fontSize: 16)
     
+    // 장소, 타이틀
+    private lazy var textStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [locationLabel, titleLabel])
+        stackView.axis = .vertical
+        return stackView
+    }()
+    
+    // 프로필 이미지, (장소, 타이틀)
+    private lazy var titleStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [profileImageView, textStackView])
+        stackView.axis = .horizontal
+        stackView.spacing = 4
+        return stackView
+    }()
+    
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
@@ -34,15 +49,15 @@ class FeedTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let textStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        return stackView
+    private let separatorLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = .color221
+        return view
     }()
     
-    private let mainStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
+    private lazy var mainStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [titleStackView, descriptionLabel, separatorLine])
+        stackView.axis = .vertical
         stackView.spacing = 10
         return stackView
     }()
@@ -61,28 +76,21 @@ class FeedTableViewCell: UITableViewCell {
     // MARK: - Helpers
 
     private func setupViews() {
-        textStackView.addArrangedSubview(locationLabel)
-        textStackView.addArrangedSubview(titleLabel)
+        contentView.addSubview(mainStack)
         
-        mainStackView.addArrangedSubview(profileImageView)
-        mainStackView.addArrangedSubview(textStackView)
-        
-        contentView.addSubview(mainStackView)
-        contentView.addSubview(descriptionLabel)
-        
+        // 프로필 이미지 크기
         profileImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(contentView.snp.width).multipliedBy(0.15) // 프로필 이미지 크기
+            make.width.height.equalTo(contentView.snp.width).multipliedBy(0.15)
         }
-        
-        mainStackView.snp.makeConstraints { make in
+
+        mainStack.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(10)
             make.leading.trailing.equalToSuperview().inset(15)
+            make.bottom.equalToSuperview()
         }
         
-        descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(mainStackView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview().inset(15)
-            make.bottom.equalToSuperview().inset(10)
+        separatorLine.snp.makeConstraints { make in
+            make.height.equalTo(1)
         }
     }
     
