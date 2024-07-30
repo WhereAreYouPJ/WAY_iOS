@@ -48,6 +48,8 @@
 		99949F472C587A5400AE0177 /* CustomTabMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F462C587A5400AE0177 /* CustomTabMenu.swift */; };
 		99949F492C587BA500AE0177 /* FriendsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F482C587BA500AE0177 /* FriendsListView.swift */; };
 		99949F4B2C587BAC00AE0177 /* FeedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F4A2C587BAC00AE0177 /* FeedListView.swift */; };
+		99949F4F2C58890C00AE0177 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F4E2C58890C00AE0177 /* ProfileView.swift */; };
+		99949F512C588B6200AE0177 /* FavoritesTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F502C588B6200AE0177 /* FavoritesTableView.swift */; };
 		99B397832C0C3E9D00D7A109 /* CheckIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B397822C0C3E9D00D7A109 /* CheckIDView.swift */; };
 		99B397852C0C41D300D7A109 /* CheckIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B397842C0C41D300D7A109 /* CheckIDViewController.swift */; };
 		99C9B2292C0197CA008D7CBD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2282C0197CA008D7CBD /* User.swift */; };
@@ -171,6 +173,8 @@
 		99949F462C587A5400AE0177 /* CustomTabMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabMenu.swift; sourceTree = "<group>"; };
 		99949F482C587BA500AE0177 /* FriendsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListView.swift; sourceTree = "<group>"; };
 		99949F4A2C587BAC00AE0177 /* FeedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListView.swift; sourceTree = "<group>"; };
+		99949F4E2C58890C00AE0177 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		99949F502C588B6200AE0177 /* FavoritesTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableView.swift; sourceTree = "<group>"; };
 		99B397822C0C3E9D00D7A109 /* CheckIDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIDView.swift; sourceTree = "<group>"; };
 		99B397842C0C41D300D7A109 /* CheckIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIDViewController.swift; sourceTree = "<group>"; };
 		99C9B2282C0197CA008D7CBD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -467,6 +471,8 @@
 			isa = PBXGroup;
 			children = (
 				99949F482C587BA500AE0177 /* FriendsListView.swift */,
+				99949F4E2C58890C00AE0177 /* ProfileView.swift */,
+				99949F502C588B6200AE0177 /* FavoritesTableView.swift */,
 			);
 			path = Friends;
 			sourceTree = "<group>";
@@ -1055,6 +1061,7 @@
 				99949F492C587BA500AE0177 /* FriendsListView.swift in Sources */,
 				99F9FADE2C0B6187005B36B9 /* FindIDViewController.swift in Sources */,
 				99CE189D2C4CDEC300FD6393 /* Schedule.swift in Sources */,
+				99949F4F2C58890C00AE0177 /* ProfileView.swift in Sources */,
 				99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */,
 				995E3E5E2C508039006B4480 /* MyPageViewController.swift in Sources */,
 				99CEAD4C2C5397B1006B3D41 /* DeviceConfig.swift in Sources */,
@@ -1082,6 +1089,7 @@
 				990F57B22C282C5900F6E1AD /* SendVerificationCodeUseCase.swift in Sources */,
 				9950C6592C10B0DF003155A7 /* SignUpFormView.swift in Sources */,
 				99FBA5582C453C05002EEEC7 /* FeedTableViewModel.swift in Sources */,
+				99949F512C588B6200AE0177 /* FavoritesTableView.swift in Sources */,
 				9911F98E2C3F913100D0FDC9 /* FeedTableViewCell.swift in Sources */,
 				99EC20AB2C0D9D9D0018904D /* SignUpViewModel.swift in Sources */,
 				99EC20AD2C0D9DB50018904D /* FindIDViewModel.swift in Sources */,
