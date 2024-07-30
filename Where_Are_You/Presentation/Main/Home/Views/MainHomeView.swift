@@ -30,17 +30,16 @@ class MainHomeView: UIView {
     func configureViewComponents() {
         backgroundColor = .white
         
-        addSubview(tableView)
-
         configureTableView()
     }
     
     func configureTableView() {
+        addSubview(tableView)
+        
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.register(FeedTableViewCell.self, forCellReuseIdentifier: FeedTableViewCell.identifier)
         tableView.estimatedRowHeight = 150
         tableView.rowHeight = UITableView.automaticDimension
-//        tableView.separatorInset.right = 15
         tableView.separatorStyle = .none
     }
     

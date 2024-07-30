@@ -44,6 +44,10 @@
 		997DC6552C3D231000EACA5F /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997DC6542C3D231000EACA5F /* Config.swift */; };
 		997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997DC6562C3D253000EACA5F /* UserDefaultManager.swift */; };
 		99938EE02C0C8B9D00239FA1 /* SearchPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99938EDF2C0C8B9D00239FA1 /* SearchPasswordViewController.swift */; };
+		99949F452C58788200AE0177 /* FriendFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F442C58788200AE0177 /* FriendFeedViewController.swift */; };
+		99949F472C587A5400AE0177 /* CustomTabMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F462C587A5400AE0177 /* CustomTabMenu.swift */; };
+		99949F492C587BA500AE0177 /* FriendsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F482C587BA500AE0177 /* FriendsListView.swift */; };
+		99949F4B2C587BAC00AE0177 /* FeedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F4A2C587BAC00AE0177 /* FeedListView.swift */; };
 		99B397832C0C3E9D00D7A109 /* CheckIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B397822C0C3E9D00D7A109 /* CheckIDView.swift */; };
 		99B397852C0C41D300D7A109 /* CheckIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B397842C0C41D300D7A109 /* CheckIDViewController.swift */; };
 		99C9B2292C0197CA008D7CBD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2282C0197CA008D7CBD /* User.swift */; };
@@ -163,6 +167,10 @@
 		997DC6542C3D231000EACA5F /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		997DC6562C3D253000EACA5F /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		99938EDF2C0C8B9D00239FA1 /* SearchPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPasswordViewController.swift; sourceTree = "<group>"; };
+		99949F442C58788200AE0177 /* FriendFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendFeedViewController.swift; sourceTree = "<group>"; };
+		99949F462C587A5400AE0177 /* CustomTabMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabMenu.swift; sourceTree = "<group>"; };
+		99949F482C587BA500AE0177 /* FriendsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListView.swift; sourceTree = "<group>"; };
+		99949F4A2C587BAC00AE0177 /* FeedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListView.swift; sourceTree = "<group>"; };
 		99B397822C0C3E9D00D7A109 /* CheckIDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIDView.swift; sourceTree = "<group>"; };
 		99B397842C0C41D300D7A109 /* CheckIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIDViewController.swift; sourceTree = "<group>"; };
 		99C9B2282C0197CA008D7CBD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -410,6 +418,67 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
+		99949F3E2C58739300AE0177 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		99949F3F2C58739C00AE0177 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		99949F402C5873A400AE0177 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		99949F412C5873A900AE0177 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		99949F422C5873AE00AE0177 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				99949F442C58788200AE0177 /* FriendFeedViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		99949F432C5873B500AE0177 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				99949F4C2C58816300AE0177 /* Friends */,
+				99949F4D2C58816900AE0177 /* Feeds */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		99949F4C2C58816300AE0177 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				99949F482C587BA500AE0177 /* FriendsListView.swift */,
+			);
+			path = Friends;
+			sourceTree = "<group>";
+		};
+		99949F4D2C58816900AE0177 /* Feeds */ = {
+			isa = PBXGroup;
+			children = (
+				99949F4A2C587BAC00AE0177 /* FeedListView.swift */,
+			);
+			path = Feeds;
+			sourceTree = "<group>";
+		};
 		99C9B2222C01973C008D7CBD /* Domain */ = {
 			isa = PBXGroup;
 			children = (
@@ -518,23 +587,29 @@
 				99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */,
 				99D8FBAD2C3B64040062AF10 /* Home */,
 				99CC5E6C2C52122E00A0509A /* Schedule */,
-				99CC5E6B2C52122500A0509A /* Friends */,
+				99CC5E6B2C52122500A0509A /* FriendFeed */,
 				995E3E592C507BBA006B4480 /* Mypage */,
 				99CC5E6D2C521DE900A0509A /* Notification */,
 			);
 			path = Main;
 			sourceTree = "<group>";
 		};
-		99CC5E6B2C52122500A0509A /* Friends */ = {
+		99CC5E6B2C52122500A0509A /* FriendFeed */ = {
 			isa = PBXGroup;
 			children = (
+				99949F432C5873B500AE0177 /* Views */,
+				99949F422C5873AE00AE0177 /* ViewControllers */,
+				99949F412C5873A900AE0177 /* ViewModels */,
 			);
-			path = Friends;
+			path = FriendFeed;
 			sourceTree = "<group>";
 		};
 		99CC5E6C2C52122E00A0509A /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
+				99949F402C5873A400AE0177 /* Views */,
+				99949F3F2C58739C00AE0177 /* ViewControllers */,
+				99949F3E2C58739300AE0177 /* ViewModels */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -544,7 +619,7 @@
 			children = (
 				99CC5E6E2C521E0200A0509A /* Views */,
 				99CC5E6F2C521E0600A0509A /* ViewControllers */,
-				99CC5E702C521E0B00A0509A /* Viewmodels */,
+				99CC5E702C521E0B00A0509A /* ViewModels */,
 			);
 			path = Notification;
 			sourceTree = "<group>";
@@ -563,11 +638,11 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		99CC5E702C521E0B00A0509A /* Viewmodels */ = {
+		99CC5E702C521E0B00A0509A /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Viewmodels;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		99D11EB22C07836C006BE265 /* Entities */ = {
@@ -667,6 +742,7 @@
 				99D11EB02C06F56F006BE265 /* CustomButton.swift */,
 				99D8FBBF2C3BA2180062AF10 /* CustomLabel.swift */,
 				99D8FBC12C3BA25B0062AF10 /* CustomTextField.swift */,
+				99949F462C587A5400AE0177 /* CustomTabMenu.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -934,6 +1010,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99949F4B2C587BAC00AE0177 /* FeedListView.swift in Sources */,
 				995358472C00C555005BF799 /* Where_Are_You.xcdatamodeld in Sources */,
 				9950C65B2C10B0F5003155A7 /* SignUpFormViewController.swift in Sources */,
 				99FBA5562C453BDD002EEEC7 /* FeedTableViewController.swift in Sources */,
@@ -955,6 +1032,7 @@
 				9911F9842C3F5AA600D0FDC9 /* BannerView.swift in Sources */,
 				99C9B2422C01CE4C008D7CBD /* AccountLoginViewModel.swift in Sources */,
 				99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */,
+				99949F472C587A5400AE0177 /* CustomTabMenu.swift in Sources */,
 				9911F9882C3F63D500D0FDC9 /* Feed.swift in Sources */,
 				990F579F2C27F86A00F6E1AD /* CheckUserIDAvailabilityUseCase.swift in Sources */,
 				99D8FBB92C3BA1CD0062AF10 /* MainTabBarController.swift in Sources */,
@@ -966,6 +1044,7 @@
 				990BDE532C40CF1E00A7FB5D /* ScheduleCell.swift in Sources */,
 				9911F98C2C3F908E00D0FDC9 /* FeedTableView.swift in Sources */,
 				99C9B2292C0197CA008D7CBD /* User.swift in Sources */,
+				99949F452C58788200AE0177 /* FriendFeedViewController.swift in Sources */,
 				997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */,
 				9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */,
 				99E8BC452C2D26CF00536B95 /* VerifyCodeUseCase.swift in Sources */,
@@ -973,6 +1052,7 @@
 				990F57912C27ECDC00F6E1AD /* SignUpUseCase.swift in Sources */,
 				99EC78D22C11E437007C4415 /* FinishResetPasswordViewController.swift in Sources */,
 				99EC78D02C11E20F007C4415 /* FinishResetPasswordView.swift in Sources */,
+				99949F492C587BA500AE0177 /* FriendsListView.swift in Sources */,
 				99F9FADE2C0B6187005B36B9 /* FindIDViewController.swift in Sources */,
 				99CE189D2C4CDEC300FD6393 /* Schedule.swift in Sources */,
 				99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */,

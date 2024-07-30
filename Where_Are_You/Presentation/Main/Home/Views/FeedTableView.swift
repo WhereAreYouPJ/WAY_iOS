@@ -80,7 +80,6 @@ class FeedTableView: UIView {
         
         tableView.snp.makeConstraints { make in
             make.top.equalTo(headerView.snp.bottom)
-//            make.leading.trailing.equalToSuperview().inset(15)
             make.leading.trailing.bottom.equalToSuperview()
         }
         
