@@ -10,48 +10,81 @@ import UIKit
 
 class FriendFeedViewController: UIViewController {
     
-    private let segmentControl: UISegmentedControl = {
+    private lazy var segmentControl: UISegmentedControl = {
         let sc = UISegmentedControl(items: ["친구", "피드"])
         sc.selectedSegmentIndex = 0
         sc.addTarget(self, action: #selector(handleSegmentChange), for: .valueChanged)
         return sc
     }()
     
-    private let friendsListView = FriendsListView()
-    private let feedListView = FeedListView()
+    private let friendsViewController = FriendsListViewController()
+//    private let feedsViewController = FeedsViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNavigationBar()
+//        setupConstraints()
         setupViews()
+        handleSegmentChange()
     }
     
     private func setupNavigationBar() {
-        navigationItem.titleView = segmentControl
-        let notificationButton = UIBarButtonItem(image: UIImage(named: "icon-bell-notification"), style: .plain, target: self, action: #selector(handleNotification))
-        let addButton = UIBarButtonItem(image: UIImage(named: "icon-add"), style: .plain, target: self, action: #selector(handleAdd))
-        navigationItem.rightBarButtonItems = [notificationButton, addButton]
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
+        let notificationButton = UIBarButtonItem(image: UIImage(named: "icon-notification"), style: .plain, target: self, action: #selector(handleNotification))
+        let addButton = UIBarButtonItem(image: UIImage(named: "icon-plus"), style: .plain, target: self, action: #selector(handleAdd))
+//        navigationItem.rightBarButtonItems = [notificationButton, addButton]
     }
     
     private func setupViews() {
-        view.addSubview(friendsListView)
-        friendsListView.frame = view.bounds
+        view.backgroundColor = .white
         
-        view.addSubview(feedListView)
-        feedListView.frame = view.bounds
-        feedListView.isHidden = true
+        addChild(friendsViewController)
+        view.addSubview(friendsViewController.view)
+        friendsViewController.didMove(toParent: self)
+        
+        friendsViewController.view.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(50)
+            make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+//        addChild(feedsViewController)
+//        view.addSubview(feedsViewController.view)
+//        feedsViewController.didMove(toParent: self)
+    }
+    
+    private func setupConstraints() {
+        
+        
+        
+//        feedsViewController.view.snp.makeConstraints { make in
+//            make.top.equalToSuperview().offset(8)
+//            make.leading.trailing.bottom.equalToSuperview()
+//        }
     }
     
     @objc private func handleSegmentChange() {
         if segmentControl.selectedSegmentIndex == 0 {
-            friendsListView.isHidden = false
-            feedListView.isHidden = true
+            showFriendsView()
         } else {
-            friendsListView.isHidden = true
-            feedListView.isHidden = false
+            showFriendsView()
+
+//            showFeedsView()
         }
     }
+    
+    private func showFriendsView() {
+        friendsViewController.view.isHidden = false
+//        feedsViewController.view.isHidden = true
+        navigationItem.rightBarButtonItems?.last?.isHidden = false // Show the add button
+        navigationItem.rightBarButtonItems?.first?.isHidden = false // Show the notification button
+    }
+    
+//    private func showFeedsView() {
+//        friendsViewController.view.isHidden = true
+//        feedsViewController.view.isHidden = false
+//        navigationItem.rightBarButtonItems?.last?.isHidden = false // Show the add button
+//        navigationItem.rightBarButtonItems?.first?.isHidden = true // Hide the notification button
+//    }
     
     @objc private func handleNotification() {
         // 알림 페이지로 이동

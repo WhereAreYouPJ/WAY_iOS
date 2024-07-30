@@ -39,8 +39,9 @@ class ProfileView: UIView {
         profileImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(12)
             make.centerY.equalToSuperview()
-            make.left.equalToSuperview().inset(20)
-            make.width.height.equalTo(self)
+            make.leading.equalToSuperview().inset(20)
+            make.width.equalToSuperview().multipliedBy(0.15)
+            make.height.equalTo(profileImageView.snp.width)
         }
         
         userNameLabel.snp.makeConstraints { make in

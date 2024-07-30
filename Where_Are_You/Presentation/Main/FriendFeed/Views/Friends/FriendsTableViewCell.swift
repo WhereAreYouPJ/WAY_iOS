@@ -46,6 +46,8 @@ class FriendsTableViewCell: UITableViewCell {
             make.leading.equalToSuperview().inset(20)
             make.top.equalToSuperview().inset(6)
             make.centerY.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.133)
+            make.height.equalTo(profileImageView.snp.width)
         }
         
         nameLabel.snp.makeConstraints { make in

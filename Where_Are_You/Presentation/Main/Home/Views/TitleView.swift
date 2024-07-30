@@ -21,7 +21,7 @@ class TitleView: UIView {
     
     let notificationButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "icon_bell_notification"), for: .normal)
+        button.setImage(UIImage(named: "icon-notification"), for: .normal)
         return button
     }()
     
