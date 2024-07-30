@@ -5,4 +5,10 @@
 //  Created by 오정석 on 30/7/2024.
 //
 
-import Foundation
+import UIKit
+import SnapKit
+
+class FavoritesTableView: UITableView {
+    // MARK: - Properties
+
+}
