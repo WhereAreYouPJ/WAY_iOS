@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class FriendsListView: UIView {
     // MARK: - Properties
@@ -17,6 +18,9 @@ class FriendsListView: UIView {
     let favoritesTableView = FavoritesTableView()
     let friendsTableView = FriendsTableView()
     
+    private var favoritesTableViewHeightConstraint: Constraint?
+    private var friendsTableViewHeightConstraint: Constraint?
+
     // MARK: - Lifecycle
     
     override init(frame: CGRect) {
@@ -49,22 +53,33 @@ class FriendsListView: UIView {
         }
         
         contentView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-            make.width.equalToSuperview() // 가로 스크롤 방지
+            make.edges.equalTo(scrollView.contentLayoutGuide)
+            make.width.equalTo(scrollView.frameLayoutGuide) // 가로 스크롤 방지
         }
         
         profileView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(self.snp.width).multipliedBy(0.213)
         }
         
         favoritesTableView.snp.makeConstraints { make in
             make.top.equalTo(profileView.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview()
+            favoritesTableViewHeightConstraint = make.height.equalTo(0).constraint // 초기 높이를 0으로 설정
         }
         
         friendsTableView.snp.makeConstraints { make in
-            make.top.equalTo(favoritesTableView.snp.bottom).offset(7)
+            make.top.equalTo(favoritesTableView.snp.bottom).offset(19)
             make.leading.trailing.bottom.equalToSuperview()
+            friendsTableViewHeightConstraint = make.height.equalTo(0).constraint // 초기 높이를 0으로 설정
         }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        // 동적 높이 계산 후 제약 조건 업데이트
+        favoritesTableViewHeightConstraint?.update(offset: favoritesTableView.tableView.contentSize.height)
+        friendsTableViewHeightConstraint?.update(offset: friendsTableView.tableView.contentSize.height)
     }
 }

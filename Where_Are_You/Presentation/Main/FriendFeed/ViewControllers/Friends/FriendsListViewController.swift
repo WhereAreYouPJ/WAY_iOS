@@ -35,6 +35,7 @@ class FriendsListViewController: UIViewController {
             DispatchQueue.main.async {
                 self.friendsListView.favoritesTableView.tableView.reloadData()
                 self.friendsListView.friendsTableView.tableView.reloadData()
+                self.friendsListView.layoutSubviews()
             }
         }
     }
@@ -67,5 +68,9 @@ extension FriendsListViewController: UITableViewDelegate, UITableViewDataSource 
             cell.nameLabel.text = friends.name
             return cell
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UIScreen.main.bounds.width * 0.165
     }
 }

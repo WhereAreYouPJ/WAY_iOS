@@ -18,13 +18,12 @@ class FriendFeedViewController: UIViewController {
     }()
     
     private let friendsViewController = FriendsListViewController()
-//    private let feedsViewController = FeedsViewController()
+    //    private let feedsViewController = FeedsViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNavigationBar()
-//        setupConstraints()
         setupViews()
         handleSegmentChange()
     }
@@ -33,7 +32,7 @@ class FriendFeedViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
         let notificationButton = UIBarButtonItem(image: UIImage(named: "icon-notification"), style: .plain, target: self, action: #selector(handleNotification))
         let addButton = UIBarButtonItem(image: UIImage(named: "icon-plus"), style: .plain, target: self, action: #selector(handleAdd))
-//        navigationItem.rightBarButtonItems = [notificationButton, addButton]
+                navigationItem.rightBarButtonItems = [notificationButton, addButton]
     }
     
     private func setupViews() {
@@ -44,22 +43,17 @@ class FriendFeedViewController: UIViewController {
         friendsViewController.didMove(toParent: self)
         
         friendsViewController.view.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(50)
+            make.top.equalToSuperview().inset(15)
             make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
-//        addChild(feedsViewController)
-//        view.addSubview(feedsViewController.view)
-//        feedsViewController.didMove(toParent: self)
-    }
-    
-    private func setupConstraints() {
+        //        addChild(feedsViewController)
+        //        view.addSubview(feedsViewController.view)
+        //        feedsViewController.didMove(toParent: self)
         
-        
-        
-//        feedsViewController.view.snp.makeConstraints { make in
-//            make.top.equalToSuperview().offset(8)
-//            make.leading.trailing.bottom.equalToSuperview()
-//        }
+        //        feedsViewController.view.snp.makeConstraints { make in
+        //            make.top.equalToSuperview().offset(8)
+        //            make.leading.trailing.bottom.equalToSuperview()
+        //        }
     }
     
     @objc private func handleSegmentChange() {
@@ -67,24 +61,24 @@ class FriendFeedViewController: UIViewController {
             showFriendsView()
         } else {
             showFriendsView()
-
-//            showFeedsView()
+            
+            //            showFeedsView()
         }
     }
     
     private func showFriendsView() {
         friendsViewController.view.isHidden = false
-//        feedsViewController.view.isHidden = true
+        //        feedsViewController.view.isHidden = true
         navigationItem.rightBarButtonItems?.last?.isHidden = false // Show the add button
         navigationItem.rightBarButtonItems?.first?.isHidden = false // Show the notification button
     }
     
-//    private func showFeedsView() {
-//        friendsViewController.view.isHidden = true
-//        feedsViewController.view.isHidden = false
-//        navigationItem.rightBarButtonItems?.last?.isHidden = false // Show the add button
-//        navigationItem.rightBarButtonItems?.first?.isHidden = true // Hide the notification button
-//    }
+    //    private func showFeedsView() {
+    //        friendsViewController.view.isHidden = true
+    //        feedsViewController.view.isHidden = false
+    //        navigationItem.rightBarButtonItems?.last?.isHidden = false // Show the add button
+    //        navigationItem.rightBarButtonItems?.first?.isHidden = true // Hide the notification button
+    //    }
     
     @objc private func handleNotification() {
         // 알림 페이지로 이동

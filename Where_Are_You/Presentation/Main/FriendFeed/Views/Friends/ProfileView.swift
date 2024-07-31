@@ -37,7 +37,6 @@ class ProfileView: UIView {
     
     private func setupConstraints() {
         profileImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(12)
             make.centerY.equalToSuperview()
             make.leading.equalToSuperview().inset(20)
             make.width.equalToSuperview().multipliedBy(0.15)
