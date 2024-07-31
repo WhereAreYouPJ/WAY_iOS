@@ -18,9 +18,12 @@ class FriendsListView: UIView {
     let favoritesTableView = FavoritesTableView()
     let friendsTableView = FriendsTableView()
     
-    private var favoritesTableViewHeightConstraint: Constraint?
-    private var friendsTableViewHeightConstraint: Constraint?
+    private let separatorLine1 = UIView()
+    private let separatorLine2 = UIView()
 
+    var favoritesTableViewHeightConstraint: Constraint?
+    var friendsTableViewHeightConstraint: Constraint?
+    
     // MARK: - Lifecycle
     
     override init(frame: CGRect) {
@@ -39,11 +42,16 @@ class FriendsListView: UIView {
     private func configureViewComponents() {
         backgroundColor = .white
         
+        separatorLine1.backgroundColor = .color221
+        separatorLine2.backgroundColor = .color221
+        
         addSubview(scrollView)
         scrollView.addSubview(contentView)
         
         contentView.addSubview(profileView)
+        contentView.addSubview(separatorLine1)
         contentView.addSubview(favoritesTableView)
+        contentView.addSubview(separatorLine2)
         contentView.addSubview(friendsTableView)
     }
     
@@ -62,14 +70,26 @@ class FriendsListView: UIView {
             make.height.equalTo(self.snp.width).multipliedBy(0.213)
         }
         
+        separatorLine1.snp.makeConstraints { make in
+            make.top.equalTo(profileView.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        
         favoritesTableView.snp.makeConstraints { make in
-            make.top.equalTo(profileView.snp.bottom).offset(10)
+            make.top.equalTo(separatorLine1.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview()
             favoritesTableViewHeightConstraint = make.height.equalTo(0).constraint // 초기 높이를 0으로 설정
         }
         
+        separatorLine2.snp.makeConstraints { make in
+            make.top.equalTo(favoritesTableView.snp.bottom).offset(12)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        
         friendsTableView.snp.makeConstraints { make in
-            make.top.equalTo(favoritesTableView.snp.bottom).offset(19)
+            make.top.equalTo(separatorLine2.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
             friendsTableViewHeightConstraint = make.height.equalTo(0).constraint // 초기 높이를 0으로 설정
         }
@@ -81,5 +101,7 @@ class FriendsListView: UIView {
         // 동적 높이 계산 후 제약 조건 업데이트
         favoritesTableViewHeightConstraint?.update(offset: favoritesTableView.tableView.contentSize.height)
         friendsTableViewHeightConstraint?.update(offset: friendsTableView.tableView.contentSize.height)
+        
+        layoutIfNeeded()
     }
 }

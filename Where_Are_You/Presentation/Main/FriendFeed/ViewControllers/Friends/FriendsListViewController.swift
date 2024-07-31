@@ -23,6 +23,13 @@ class FriendsListViewController: UIViewController {
         fetchData()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // 동적 높이 계산 후 제약 조건 업데이트
+        updateTableViewHeights()
+    }
+    
     private func setupTableView() {
         friendsListView.favoritesTableView.tableView.delegate = self
         friendsListView.favoritesTableView.tableView.dataSource = self
@@ -35,9 +42,14 @@ class FriendsListViewController: UIViewController {
             DispatchQueue.main.async {
                 self.friendsListView.favoritesTableView.tableView.reloadData()
                 self.friendsListView.friendsTableView.tableView.reloadData()
-                self.friendsListView.layoutSubviews()
+                self.updateTableViewHeights()
             }
         }
+    }
+    
+    private func updateTableViewHeights() {
+        friendsListView.favoritesTableViewHeightConstraint?.update(offset: friendsListView.favoritesTableView.tableView.contentSize.height)
+        friendsListView.friendsTableViewHeightConstraint?.update(offset: friendsListView.friendsTableView.tableView.contentSize.height)
     }
 }
 
@@ -67,6 +79,14 @@ extension FriendsListViewController: UITableViewDelegate, UITableViewDataSource 
             cell.profileImageView.image = UIImage(named: friends.profileImage)
             cell.nameLabel.text = friends.name
             return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if tableView == friendsListView.favoritesTableView.tableView {
+            return "즐겨찾기" + "  \(viewModel.favorites.count)"
+        } else {
+            return "친구" + "  \(viewModel.friends.count)"
         }
     }
     

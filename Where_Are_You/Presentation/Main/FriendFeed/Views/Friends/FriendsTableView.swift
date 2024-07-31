@@ -13,7 +13,7 @@ class FriendsTableView: UIView {
     let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(FriendsTableViewCell.self, forCellReuseIdentifier: FriendsTableViewCell.identifier)
-        tableView.separatorStyle = .singleLine
+        tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
         return tableView
     }()
