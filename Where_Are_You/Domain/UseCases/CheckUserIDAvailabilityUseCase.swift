@@ -12,13 +12,13 @@ protocol CheckUserIDAvailabilityUseCase {
 }
 
 class CheckUserIDAvailabilityUseCaseImpl: CheckUserIDAvailabilityUseCase {
-    private let userRepository: AuthRepositoryProtocol
+    private let authRepository: AuthRepositoryProtocol
     
-    init(userRepository: AuthRepositoryProtocol) {
-        self.userRepository = userRepository
+    init(authRepository: AuthRepositoryProtocol) {
+        self.authRepository = authRepository
     }
     
     func execute(userId: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        userRepository.checkUserIDAvailability(userId: userId, completion: completion)
+        authRepository.checkUserIDAvailability(userId: userId, completion: completion)
     }
 }

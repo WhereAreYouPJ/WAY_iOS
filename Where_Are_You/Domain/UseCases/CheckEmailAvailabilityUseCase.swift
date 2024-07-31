@@ -12,13 +12,13 @@ protocol CheckEmailAvailabilityUseCase {
 }
 
 class CheckEmailAvailabilityUseCaseImpl: CheckEmailAvailabilityUseCase {
-    private let userRepository: AuthRepositoryProtocol
+    private let authRepository: AuthRepositoryProtocol
     
-    init(userRepository: AuthRepositoryProtocol) {
-        self.userRepository = userRepository
+    init(authRepository: AuthRepositoryProtocol) {
+        self.authRepository = authRepository
     }
     
     func execute(email: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        userRepository.checkEmailAvailability(email: email, completion: completion)
+        authRepository.checkEmailAvailability(email: email, completion: completion)
     }
 }

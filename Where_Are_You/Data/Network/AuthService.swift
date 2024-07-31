@@ -34,31 +34,7 @@ protocol AuthServiceProtocol {
     func verifyEmailCode(identifier: String, code: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void)
     func findUserID(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void)
     func resetPassword(userId: String, password: String, checkPassword: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func login(userId: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
-}
-
-enum VerificationType {
-    case userId
-    case email
-    
-    var endpoint: String {
-        switch self {
-        case .email:
-            return "/member/email/send"
-        case .userId:
-            return "/member/email/senduserId"
-        }
-    }
-    
-    var verifyEndpoint: String {
-        switch self {
-        case .email:
-            return "/member/email/verify"
-        case .userId:
-            return "/member/email/verifyPassword"
-        }
-        
-    }
+    func login(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 // MARK: - APIService
@@ -200,15 +176,15 @@ class AuthService: AuthServiceProtocol {
     
     // MARK: - login
     
-    func login(userId: String, password: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        let parameters: [String: String] = ["userId": userId, "password": password]
+    func login(email: String, password: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+        let parameters: [String: String] = ["email": email, "password": password]
         requestAPI(endpoint: "/member/login",
                    method: .post,
                    parameters: parameters,
                    responseType: GenericResponse<LoginResponse>.self) { result in
             switch result {
             case .success(let response):
-                // 로그인 성공 시 UserDefaults에 데이터 저장 (임시로 추후에 Keychain, oAuth로 바꿀 것)
+                // TODO: AccessToken, RefreshToken 저장하기 email, password는 생각하기
                 UserDefaultsManager.shared.saveAccessToken(response.data.accessToken)
                 UserDefaultsManager.shared.saveRefreshToken(response.data.refreshToken)
                 UserDefaultsManager.shared.saveMemberSeq(response.data.memberSeq)

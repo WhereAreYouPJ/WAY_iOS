@@ -13,13 +13,13 @@ protocol VerifyCodeUseCase {
 
 class VerifyCodeUseCaseImpl: VerifyCodeUseCase {
     
-    private let userRepository: AuthRepository
+    private let authRepository: AuthRepositoryProtocol
     
-    init(userRepository: AuthRepository) {
-        self.userRepository = userRepository
+    init(authRepository: AuthRepositoryProtocol) {
+        self.authRepository = authRepository
     }
     
     func execute(identifier: String, code: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void) {
-        userRepository.verifyEmailCode(identifier: identifier, code: code, type: type, completion: completion)
+        authRepository.verifyEmailCode(identifier: identifier, code: code, type: type, completion: completion)
     }
 }

@@ -11,7 +11,8 @@ class AccountLoginController: UIViewController {
     // MARK: - Properties
     let accountLoginView = AccountLoginView()
     private var viewModel: AccountLoginViewModel!
-    private var userIdEnter: Bool = false
+    
+    private var userEmailEnter: Bool = false
     private var passwordEnter: Bool = false
     
     // MARK: - Lifecycle
@@ -34,14 +35,14 @@ class AccountLoginController: UIViewController {
         accountLoginView.findAccountButton.button.addTarget(self, action: #selector(findAccountButtonTapped), for: .touchUpInside)
         accountLoginView.signupButton.addTarget(self, action: #selector(registerAccountButtonTapped), for: .touchUpInside)
         
-        accountLoginView.idTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        accountLoginView.emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         accountLoginView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     func setupViewModel() {
         let authService = AuthService()
         let authRepository = AuthRepository(authService: authService)
-        let accountLoginUseCase = AccountLoginUseCaseImpl(repository: authRepository)
+        let accountLoginUseCase = AccountLoginUseCaseImpl(authrepository: authRepository)
         viewModel = AccountLoginViewModel(accountLoginUseCase: accountLoginUseCase)
     }
     
@@ -58,7 +59,7 @@ class AccountLoginController: UIViewController {
         // 로그인 실패
         viewModel.onLoginFailure = { [weak self] message, isAvailable in
             // 로그인 실패
-            self?.updateStatus(label: self?.accountLoginView.idErrorLabel, message: message, isAvailable: isAvailable, textField: self?.accountLoginView.idTextField)
+            self?.updateStatus(label: self?.accountLoginView.emailErrorLabel, message: message, isAvailable: isAvailable, textField: self?.accountLoginView.emailTextField)
         }
     }
     
@@ -69,32 +70,15 @@ class AccountLoginController: UIViewController {
     
     // viewmodel에 로그인하기 버튼 활성화 비활성화 로직 추가하기
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        guard let userId = accountLoginView.idTextField.text,
-              let password = accountLoginView.passwordTextField.text else { return }
-        
-        switch textField {
-        case accountLoginView.idTextField:
-            if userId.isEmpty {
-                self.userIdEnter = false
-            } else {
-                self.userIdEnter = true
-            }
-        case accountLoginView.passwordTextField:
-            if password.isEmpty {
-                self.passwordEnter = false
-            } else {
-                self.passwordEnter = true
-            }
-        default:
-            break
-        }
+        accountLoginView.updateLoginButtonState()
     }
     
     @objc func loginButtonTapped() {
-        guard let userId = accountLoginView.idTextField.text, !userId.isEmpty,
+        guard let email = accountLoginView.emailTextField.text, !email.isEmpty,
               let password = accountLoginView.passwordTextField.text, !password.isEmpty else { return }
         
-        viewModel.login(userId: userId, password: password)
+        // TODO: API수정후 userId를 email로 바꾸기
+//        viewModel.login(email: email, password: password)
     }
     
     @objc func findAccountButtonTapped() {

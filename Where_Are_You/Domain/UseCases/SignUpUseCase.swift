@@ -12,13 +12,13 @@ protocol SignUpUseCase {
 }
 
 class SignUpUseCaseImpl: SignUpUseCase {
-    private let userRepository: AuthRepositoryProtocol
+    private let authRepository: AuthRepositoryProtocol
     
-    init(userRepository: AuthRepositoryProtocol) {
-        self.userRepository = userRepository
+    init(authRepository: AuthRepositoryProtocol) {
+        self.authRepository = authRepository
     }
     
     func execute(request: AuthCredentials, completion: @escaping (Result<Void, any Error>) -> Void) {
-        userRepository.signUp(request: request, completion: completion)
+        authRepository.signUp(request: request, completion: completion)
     }
 }

@@ -12,13 +12,13 @@ protocol SendVerificationCodeUseCase {
 }
 
 class SendVerificationCodeUseCaseImpl: SendVerificationCodeUseCase {
-    private let userRepository: AuthRepositoryProtocol
+    private let authRepository: AuthRepositoryProtocol
     
-    init(userRepository: AuthRepositoryProtocol) {
-        self.userRepository = userRepository
+    init(authRepository: AuthRepositoryProtocol) {
+        self.authRepository = authRepository
     }
     
     func execute(identifier: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void) {
-        userRepository.sendVerificationCode(identifier: identifier, type: type, completion: completion)
+        authRepository.sendVerificationCode(identifier: identifier, type: type, completion: completion)
     }
 }
