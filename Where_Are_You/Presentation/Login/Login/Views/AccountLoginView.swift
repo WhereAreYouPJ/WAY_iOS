@@ -19,7 +19,6 @@ class AccountLoginView: UIView {
     
     let emailErrorLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .warningColor
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
         label.adjustsFontForContentSizeCategory = true
         return label
@@ -28,14 +27,6 @@ class AccountLoginView: UIView {
     private let passwordLabel = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: 12)
     
     let passwordTextField = Utilities().inputContainerTextField(withPlaceholder: "비밀번호를 입력해주세요.", fontSize: textFieldFontSize)
-    
-    let passwordErrorLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .warningColor
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
-        label.adjustsFontForContentSizeCategory = true
-        return label
-    }()
     
     let loginButton = CustomButton(title: "로그인하기", backgroundColor: .color171, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
     
@@ -57,7 +48,7 @@ class AccountLoginView: UIView {
         let idStack = UIStackView(arrangedSubviews: [emailLabel, emailTextField, emailErrorLabel])
         idStack.axis = .vertical
         
-        let passwordStack = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField, passwordErrorLabel])
+        let passwordStack = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField])
         passwordStack.axis = .vertical
         
         let stack = UIStackView(arrangedSubviews: [idStack, passwordStack])

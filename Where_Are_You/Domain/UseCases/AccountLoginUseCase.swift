@@ -8,7 +8,7 @@
 import Foundation
 
 protocol AccountLoginUseCase {
-    func execute(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func execute(request: LoginBody, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class AccountLoginUseCaseImpl: AccountLoginUseCase {
@@ -18,9 +18,8 @@ class AccountLoginUseCaseImpl: AccountLoginUseCase {
         self.memberRepository = memberRepository
     }
 
-    func execute(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        let loginBody = LoginBody(email: email, password: password)
-        memberRepository.login(request: loginBody, completion: completion)
+    func execute(request: LoginBody, completion: @escaping (Result<Void, Error>) -> Void) {
+        memberRepository.login(request: request, completion: completion)
     }
 }
 

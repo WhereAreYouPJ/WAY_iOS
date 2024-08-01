@@ -18,8 +18,8 @@ class AccountLoginViewModel {
         self.accountLoginUseCase = accountLoginUseCase
     }
     
-    func login(userId: String, password: String) {
-        accountLoginUseCase.execute(userId: userId, password: password) { result in
+    func login(email: String, password: String) {
+        accountLoginUseCase.execute(request: LoginBody(email: email, password: password)) { result in
             switch result {
             case .success:
                 self.onLoginSuccess?()

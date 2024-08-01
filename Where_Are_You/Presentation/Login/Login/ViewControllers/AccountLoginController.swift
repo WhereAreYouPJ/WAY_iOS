@@ -40,16 +40,13 @@ class AccountLoginController: UIViewController {
     }
     
     func setupViewModel() {
-        let authService = AuthService()
-        let authRepository = AuthRepository(authService: authService)
-        let accountLoginUseCase = AccountLoginUseCaseImpl(authRepository: authRepository)
-        viewModel = AccountLoginViewModel(accountLoginUseCase: accountLoginUseCase)
+        let memberService = MemberService()
+        let memberRepository = MemberRepository(memberService: memberService)
+        viewModel = AccountLoginViewModel(accountLoginUseCase: AccountLoginUseCaseImpl(memberRepository: memberRepository))
     }
     
     func setupBindings() {
-        // 로그인 성공
         viewModel.onLoginSuccess = { [weak self] in
-            // 메인 화면 이동
             let controller = MainTabBarController()
             let nav = UINavigationController(rootViewController: controller)
             nav.modalPresentationStyle = .fullScreen
@@ -59,7 +56,10 @@ class AccountLoginController: UIViewController {
         // 로그인 실패
         viewModel.onLoginFailure = { [weak self] message, isAvailable in
             // 로그인 실패
-            self?.updateStatus(label: self?.accountLoginView.emailErrorLabel, message: message, isAvailable: isAvailable, textField: self?.accountLoginView.emailTextField)
+            self?.updateStatus(label: self?.accountLoginView.emailErrorLabel,
+                               message: message,
+                               isAvailable: isAvailable,
+                               textField: self?.accountLoginView.emailTextField)
         }
     }
     
@@ -77,8 +77,7 @@ class AccountLoginController: UIViewController {
         guard let email = accountLoginView.emailTextField.text, !email.isEmpty,
               let password = accountLoginView.passwordTextField.text, !password.isEmpty else { return }
         
-        // TODO: API수정후 userId를 email로 바꾸기
-//        viewModel.login(email: email, password: password)
+        viewModel.login(email: email, password: password)
     }
     
     @objc func findAccountButtonTapped() {
@@ -97,7 +96,7 @@ class AccountLoginController: UIViewController {
     
     private func updateStatus(label: UILabel?, message: String, isAvailable: Bool, textField: UITextField?) {
         label?.text = message
-        label?.textColor = isAvailable ? .brandColor : .warningColor
+        label?.textColor = isAvailable ? .brandColor : .warningTextColor
         textField?.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
     }
 }

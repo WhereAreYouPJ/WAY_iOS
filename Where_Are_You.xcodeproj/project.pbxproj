@@ -604,7 +604,6 @@
 			children = (
 				99D8FBBE2C3BA1FB0062AF10 /* Customs */,
 				99C9B2312C01A45C008D7CBD /* Extensions.swift */,
-				997DC6562C3D253000EACA5F /* UserDefaultManager.swift */,
 				99C9B2472C01D2B7008D7CBD /* Utilities.swift */,
 				99149FEA2C4F97C300136097 /* ValidationHelper.swift */,
 				99149FEC2C4F97EA00136097 /* TimeHelper.swift */,
@@ -871,6 +870,7 @@
 		99EC20A02C0D8E030018904D /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				997DC6562C3D253000EACA5F /* UserDefaultManager.swift */,
 				990F57992C27EEF400F6E1AD /* MemberRepository.swift */,
 			);
 			path = Repositories;
