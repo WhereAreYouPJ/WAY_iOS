@@ -7,23 +7,25 @@
 
 import Alamofire
 
-// MARK: - APIServiceProtocol
+// MARK: - AuthServiceProtocol
 
-protocol AuthServiceProtocol {
+protocol MemberServiceProtocol {
     func signUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void)
-    func resetPassword(email: String, password: String, checkPassword: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func checkEmailAvailability(email: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func sendVerificationCode(identifier: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void)
-    func verifyEmailCode(identifier: String, code: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void)
-    func findUserID(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void)
+    func resetPassword(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void)
     
-    func login(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func logout(request: LogoutBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func login(request: LoginBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func emailVerify(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func emailVerifyPassword(request: EmailVerifyPasswordBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func emailSend(request: EmailSendBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func search(request: SearchParameters, completion: @escaping (Result<Void, Error>) -> Void)
+    func details(request: DetailsParameters, completion: @escaping (Result<Void, Error>) -> Void)
+    func checkEmail(request: CheckEmailParameters, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
-// MARK: - APIService
+// MARK: - AuthService
 
-class AuthService: AuthServiceProtocol {
+class MemberService: MemberServiceProtocol {
     
     private let baseURL = Config.baseURL
     private let session: Session
@@ -31,6 +33,45 @@ class AuthService: AuthServiceProtocol {
     init(session: Session = .default) {
         self.session = session
     }
+    
+    func resetPassword(request: ResetPasswordBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+        <#code#>
+    }
+    
+    func logout(request: LogoutBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+        <#code#>
+    }
+    
+    func login(request: LoginBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+        <#code#>
+    }
+    
+    func emailVerify(request: EmailVerifyBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+        <#code#>
+    }
+    
+    func emailVerifyPassword(request: EmailVerifyPasswordBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+        <#code#>
+    }
+    
+    func emailSend(request: EmailSendBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+        <#code#>
+    }
+    
+    func search(request: SearchParameters, completion: @escaping (Result<Void, any Error>) -> Void) {
+        <#code#>
+    }
+    
+    func details(request: DetailsParameters, completion: @escaping (Result<Void, any Error>) -> Void) {
+        <#code#>
+    }
+    
+    func checkEmail(request: CheckEmailParameters, completion: @escaping (Result<Void, any Error>) -> Void) {
+        <#code#>
+    }
+    
+    
+    
     
     // MARK: - Helper
     
