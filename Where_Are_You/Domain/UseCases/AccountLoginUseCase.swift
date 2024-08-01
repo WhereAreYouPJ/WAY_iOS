@@ -12,13 +12,15 @@ protocol AccountLoginUseCase {
 }
 
 class AccountLoginUseCaseImpl: AccountLoginUseCase {
-    private let authRepository: AuthRepositoryProtocol
+    private let memberRepository: MemberRepositoryProtocol
 
-    init(authRepository: AuthRepositoryProtocol) {
-        self.authRepository = authRepository
+    init(memberRepository: MemberRepositoryProtocol) {
+        self.memberRepository = memberRepository
     }
 
     func execute(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        authRepository.login(email: email, password: password, completion: completion)
+        let loginBody = LoginBody(email: email, password: password)
+        memberRepository.login(request: loginBody, completion: completion)
     }
 }
+

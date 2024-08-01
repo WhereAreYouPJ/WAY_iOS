@@ -8,17 +8,17 @@
 import Foundation
 
 protocol ResetPasswordUseCase {
-    func execute(email: String, password: String, checkPassword: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func execute(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class ResetPasswordUseCaseImpl: ResetPasswordUseCase {
-    private let authRepository: AuthRepositoryProtocol
-    
-    init(authRepository: AuthRepositoryProtocol) {
-        self.authRepository = authRepository
+    private let memberRepository: MemberRepositoryProtocol
+
+    init(memberRepository: MemberRepositoryProtocol) {
+        self.memberRepository = memberRepository
     }
-    
-    func execute(email: String, password: String, checkPassword: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        authRepository.resetPassword(email: email, password: password, checkPassword: checkPassword, completion: completion)
+
+    func execute(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void) {
+        memberRepository.resetPassword(request: request, completion: completion)
     }
 }
