@@ -28,7 +28,18 @@ protocol MemberServiceProtocol {
 
 class MemberService: MemberServiceProtocol {
     
-    private let provider = MoyaProvider<AuthAPI>()
+    // MARK: - Properties
+    
+    private var provider = MoyaProvider<AuthAPI>()
+    
+    init() {
+        let tokenPlugin = AuthTokenPlugin(tokenClosure: {
+            return UserDefaultsManager.shared.getAccessToken()
+        })
+        self.provider = MoyaProvider<AuthAPI>(plugins: [tokenPlugin])
+    }
+    
+    // MARK: - APIService
     
     func signUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void) {
         provider.request(.signUp(request: request)) { result in
@@ -90,6 +101,8 @@ class MemberService: MemberServiceProtocol {
         }
     }
     
+    // MARK: - HandleResponse
+    
     private func handleResponse<T>(_ result: Result<Moya.Response, MoyaError>, completion: @escaping (Result<T, Error>) -> Void) where T: Decodable {
         switch result {
         case .success(let response):
@@ -117,4 +130,29 @@ class MemberService: MemberServiceProtocol {
             completion(.failure(error))
         }
     }
+    
+    //    // MARK: - HandleLoginResponse
+    //
+    //    private func handleLoginResponse(_ result: Result<Moya.Response, MoyaError>, completion: @escaping (Result<Void, Error>) -> Void) {
+    //        switch result {
+    //        case .success(let response):
+    //            do {
+    //                let filteredResponse = try response.filterSuccessfulStatusCodes()
+    //                let decodedResponse = try JSONDecoder().decode(GenericResponse<LoginResponse>.self, from: filteredResponse.data)
+    //                let loginData = decodedResponse.data
+    //
+    //                // 토큰을 UserDefaults에 저장
+    //                UserDefaultsManager.shared.saveAccessToken(loginData.accessToken)
+    //                UserDefaultsManager.shared.saveRefreshToken(loginData.refreshToken)
+    //                UserDefaultsManager.shared.saveMemberSeq(loginData.memberSeq)
+    //                UserDefaultsManager.shared.saveMemberCode(loginData.memberCode)
+    //
+    //                completion(.success(()))
+    //            } catch let error {
+    //                completion(.failure(error))
+    //            }
+    //        case .failure(let error):
+    //            completion(.failure(error))
+    //        }
+    //    }
 }

@@ -10,7 +10,7 @@
 		1CFDF5866B2F09FBDCBFE6DB /* Pods_Where_Are_You_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E05660871E31DAF17D0F5C8 /* Pods_Where_Are_You_Tests.framework */; };
 		990BDE532C40CF1E00A7FB5D /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990BDE522C40CF1E00A7FB5D /* ScheduleCell.swift */; };
 		990F57912C27ECDC00F6E1AD /* SignUpUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57902C27ECDC00F6E1AD /* SignUpUseCase.swift */; };
-		990F579A2C27EEF400F6E1AD /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57992C27EEF400F6E1AD /* AuthRepository.swift */; };
+		990F579A2C27EEF400F6E1AD /* MemberRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57992C27EEF400F6E1AD /* MemberRepository.swift */; };
 		990F579F2C27F86A00F6E1AD /* CheckUserIDAvailabilityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F579E2C27F86A00F6E1AD /* CheckUserIDAvailabilityUseCase.swift */; };
 		990F57A32C27F9FE00F6E1AD /* CheckEmailAvailabilityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57A22C27F9FE00F6E1AD /* CheckEmailAvailabilityUseCase.swift */; };
 		990F57B22C282C5900F6E1AD /* SendVerificationCodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57B12C282C5900F6E1AD /* SendVerificationCodeUseCase.swift */; };
@@ -34,7 +34,8 @@
 		992F57D42C5B28E900219C6B /* MemberSearchParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57D32C5B28E900219C6B /* MemberSearchParameters.swift */; };
 		992F57D62C5B28FC00219C6B /* MemberDetailsParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57D52C5B28FC00219C6B /* MemberDetailsParameters.swift */; };
 		992F57D82C5B290900219C6B /* CheckEmailParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57D72C5B290900219C6B /* CheckEmailParameters.swift */; };
-		992F57DB2C5B2A1D00219C6B /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57DA2C5B2A1D00219C6B /* AuthAPI.swift */; };
+		992F57DB2C5B2A1D00219C6B /* MemberAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57DA2C5B2A1D00219C6B /* MemberAPI.swift */; };
+		992F57DD2C5B56E200219C6B /* AutoTokenPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57DC2C5B56E200219C6B /* AutoTokenPlugin.swift */; };
 		9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C64D2C102FB6003155A7 /* TermsAgreementView.swift */; };
 		9950C6572C1040FD003155A7 /* TermsAgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C6562C1040FD003155A7 /* TermsAgreementViewController.swift */; };
 		9950C6592C10B0DF003155A7 /* SignUpFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C6582C10B0DF003155A7 /* SignUpFormView.swift */; };
@@ -98,7 +99,7 @@
 		99D8FBC22C3BA25B0062AF10 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8FBC12C3BA25B0062AF10 /* CustomTextField.swift */; };
 		99DA18B92C4E132A00D5CDA6 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA18B82C4E132A00D5CDA6 /* TitleView.swift */; };
 		99DA18BB2C4E13D100D5CDA6 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA18BA2C4E13D100D5CDA6 /* HeaderView.swift */; };
-		99E755512C22E66F0016A0A6 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E755502C22E66F0016A0A6 /* AuthService.swift */; };
+		99E755512C22E66F0016A0A6 /* MemberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E755502C22E66F0016A0A6 /* MemberService.swift */; };
 		99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */; };
 		99E8BC452C2D26CF00536B95 /* VerifyCodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E8BC442C2D26CF00536B95 /* VerifyCodeUseCase.swift */; };
 		99EC20AB2C0D9D9D0018904D /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20AA2C0D9D9D0018904D /* SignUpViewModel.swift */; };
@@ -150,7 +151,7 @@
 		5E05660871E31DAF17D0F5C8 /* Pods_Where_Are_You_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		990BDE522C40CF1E00A7FB5D /* ScheduleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCell.swift; sourceTree = "<group>"; };
 		990F57902C27ECDC00F6E1AD /* SignUpUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUseCase.swift; sourceTree = "<group>"; };
-		990F57992C27EEF400F6E1AD /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
+		990F57992C27EEF400F6E1AD /* MemberRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberRepository.swift; sourceTree = "<group>"; };
 		990F579E2C27F86A00F6E1AD /* CheckUserIDAvailabilityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUserIDAvailabilityUseCase.swift; sourceTree = "<group>"; };
 		990F57A22C27F9FE00F6E1AD /* CheckEmailAvailabilityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailAvailabilityUseCase.swift; sourceTree = "<group>"; };
 		990F57B12C282C5900F6E1AD /* SendVerificationCodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendVerificationCodeUseCase.swift; sourceTree = "<group>"; };
@@ -174,7 +175,8 @@
 		992F57D32C5B28E900219C6B /* MemberSearchParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSearchParameters.swift; sourceTree = "<group>"; };
 		992F57D52C5B28FC00219C6B /* MemberDetailsParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDetailsParameters.swift; sourceTree = "<group>"; };
 		992F57D72C5B290900219C6B /* CheckEmailParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailParameters.swift; sourceTree = "<group>"; };
-		992F57DA2C5B2A1D00219C6B /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
+		992F57DA2C5B2A1D00219C6B /* MemberAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberAPI.swift; sourceTree = "<group>"; };
+		992F57DC2C5B56E200219C6B /* AutoTokenPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoTokenPlugin.swift; sourceTree = "<group>"; };
 		9950C64D2C102FB6003155A7 /* TermsAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAgreementView.swift; sourceTree = "<group>"; };
 		9950C6562C1040FD003155A7 /* TermsAgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAgreementViewController.swift; sourceTree = "<group>"; };
 		9950C6582C10B0DF003155A7 /* SignUpFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFormView.swift; sourceTree = "<group>"; };
@@ -240,7 +242,7 @@
 		99D8FBC12C3BA25B0062AF10 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		99DA18B82C4E132A00D5CDA6 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		99DA18BA2C4E13D100D5CDA6 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
-		99E755502C22E66F0016A0A6 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		99E755502C22E66F0016A0A6 /* MemberService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberService.swift; sourceTree = "<group>"; };
 		99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
 		99E8BC442C2D26CF00536B95 /* VerifyCodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCodeUseCase.swift; sourceTree = "<group>"; };
 		99EC20AA2C0D9D9D0018904D /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
@@ -355,8 +357,9 @@
 		9950C64F2C103031003155A7 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				992F57DA2C5B2A1D00219C6B /* AuthAPI.swift */,
-				99E755502C22E66F0016A0A6 /* AuthService.swift */,
+				992F57DA2C5B2A1D00219C6B /* MemberAPI.swift */,
+				99E755502C22E66F0016A0A6 /* MemberService.swift */,
+				992F57DC2C5B56E200219C6B /* AutoTokenPlugin.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -862,7 +865,7 @@
 		99EC20A02C0D8E030018904D /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				990F57992C27EEF400F6E1AD /* AuthRepository.swift */,
+				990F57992C27EEF400F6E1AD /* MemberRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -1121,7 +1124,7 @@
 				99D8FBB52C3B9F9F0062AF10 /* MainHomeView.swift in Sources */,
 				995358412C00C555005BF799 /* LoginViewController.swift in Sources */,
 				99CEAD4A2C539743006B3D41 /* SplashViewController.swift in Sources */,
-				99E755512C22E66F0016A0A6 /* AuthService.swift in Sources */,
+				99E755512C22E66F0016A0A6 /* MemberService.swift in Sources */,
 				99D8FBC22C3BA25B0062AF10 /* CustomTextField.swift in Sources */,
 				99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */,
 				99F78F1E2C09C98D004C0C72 /* CommonSearchAuthView.swift in Sources */,
@@ -1163,7 +1166,7 @@
 				99CE189D2C4CDEC300FD6393 /* Schedule.swift in Sources */,
 				99949F4F2C58890C00AE0177 /* ProfileView.swift in Sources */,
 				99949F532C58A67400AE0177 /* FriendsTableView.swift in Sources */,
-				992F57DB2C5B2A1D00219C6B /* AuthAPI.swift in Sources */,
+				992F57DB2C5B2A1D00219C6B /* MemberAPI.swift in Sources */,
 				99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */,
 				992F57D02C5B28C400219C6B /* EmailVerifyPasswordBody.swift in Sources */,
 				995E3E5E2C508039006B4480 /* MyPageViewController.swift in Sources */,
@@ -1190,6 +1193,7 @@
 				997DC6552C3D231000EACA5F /* Config.swift in Sources */,
 				99F78F1C2C09BB8F004C0C72 /* SearchAccountController.swift in Sources */,
 				99D8FBC02C3BA2180062AF10 /* CustomLabel.swift in Sources */,
+				992F57DD2C5B56E200219C6B /* AutoTokenPlugin.swift in Sources */,
 				995E3E5B2C507FE6006B4480 /* MyPageView.swift in Sources */,
 				9953583F2C00C555005BF799 /* SceneDelegate.swift in Sources */,
 				990F57B22C282C5900F6E1AD /* SendVerificationCodeUseCase.swift in Sources */,
@@ -1205,7 +1209,7 @@
 				99DA18B92C4E132A00D5CDA6 /* TitleView.swift in Sources */,
 				99EC78D62C11E8A3007C4415 /* FinishRegisterViewController.swift in Sources */,
 				99C9B2322C01A45C008D7CBD /* Extensions.swift in Sources */,
-				990F579A2C27EEF400F6E1AD /* AuthRepository.swift in Sources */,
+				990F579A2C27EEF400F6E1AD /* MemberRepository.swift in Sources */,
 				99DA18BB2C4E13D100D5CDA6 /* HeaderView.swift in Sources */,
 				99C9B2502C0229CF008D7CBD /* AccountLoginView.swift in Sources */,
 			);

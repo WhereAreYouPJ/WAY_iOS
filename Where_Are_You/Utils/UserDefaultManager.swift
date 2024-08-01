@@ -9,46 +9,55 @@ import Foundation
 
 class UserDefaultsManager {
     static let shared = UserDefaultsManager()
-    
-    private init() {}
-    
     private let accessTokenKey = "accessToken"
     private let refreshTokenKey = "refreshToken"
     private let memberSeqKey = "memberSeq"
     private let memberCode = "memberCode"
     
+    private init() {}
+    
+    // MARK: - AccessToken
+
     func saveAccessToken(_ token: String) {
         UserDefaults.standard.set(token, forKey: accessTokenKey)
-    }
-    
-    func saveRefreshToken(_ token: String) {
-        UserDefaults.standard.set(token, forKey: refreshTokenKey)
-    }
-    
-    func saveMemberSeq(_ seq: Int) {
-        UserDefaults.standard.set(seq, forKey: memberSeqKey)
-    }
-    
-    func saveMemberCode(_ code: String) {
-        UserDefaults.standard.set(code, forKey: memberCode)
     }
     
     func getAccessToken() -> String? {
         return UserDefaults.standard.string(forKey: accessTokenKey)
     }
     
+    // MARK: - RefreshToken
+
+    func saveRefreshToken(_ token: String) {
+        UserDefaults.standard.set(token, forKey: refreshTokenKey)
+    }
+    
     func getRefreshToken() -> String? {
         return UserDefaults.standard.string(forKey: refreshTokenKey)
     }
     
-    func getMemberSeq() -> Int? {
+    // MARK: - MemberSeq
+
+    func saveMemberSeq(_ seq: Int) {
+        UserDefaults.standard.set(seq, forKey: memberSeqKey)
+    }
+    
+    func getMemberSeq() -> Int {
         return UserDefaults.standard.integer(forKey: memberSeqKey)
+    }
+    
+    // MARK: - MemberCode
+
+    func saveMemberCode(_ code: String) {
+        UserDefaults.standard.set(code, forKey: memberCode)
     }
     
     func getMemberCode() -> String? {
         return UserDefaults.standard.string(forKey: memberCode)
     }
     
+    // MARK: - ClearData
+
     func clearData() {
         UserDefaults.standard.removeObject(forKey: accessTokenKey)
         UserDefaults.standard.removeObject(forKey: refreshTokenKey)
