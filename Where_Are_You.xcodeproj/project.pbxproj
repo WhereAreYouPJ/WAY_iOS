@@ -108,8 +108,8 @@
 		99FBA5542C453B6D002EEEC7 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5532C453B6D002EEEC7 /* ScheduleViewModel.swift */; };
 		99FBA5562C453BDD002EEEC7 /* FeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5552C453BDD002EEEC7 /* FeedTableViewController.swift */; };
 		99FBA5582C453C05002EEEC7 /* FeedTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5572C453C05002EEEC7 /* FeedTableViewModel.swift */; };
-		D51DC6D42C5B7DA800E6FA2A /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DC6D32C5B7DA800E6FA2A /* CalendarView.swift */; };
-		D51DC6D62C5B7E0500E6FA2A /* CreateScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DC6D52C5B7E0500E6FA2A /* CreateScheduleView.swift */; };
+		D5B79A162C5B83CD004EDDF2 /* CreateScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B79A152C5B83CD004EDDF2 /* CreateScheduleView.swift */; };
+		D5B79A1A2C5B83F6004EDDF2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B79A192C5B83F6004EDDF2 /* CalendarView.swift */; };
 		D79EFAD9E5409233E5338E46 /* Pods_Where_Are_You.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */; };
 /* End PBXBuildFile section */
 
@@ -245,8 +245,8 @@
 		99FBA5572C453C05002EEEC7 /* FeedTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableViewModel.swift; sourceTree = "<group>"; };
 		A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5015275FE458D5F6450041 /* Pods-Where_Are_You.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You.release.xcconfig"; path = "Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You.release.xcconfig"; sourceTree = "<group>"; };
-		D51DC6D32C5B7DA800E6FA2A /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CalendarView.swift; path = Where_Are_You/Utils/CalendarView.swift; sourceTree = SOURCE_ROOT; };
-		D51DC6D52C5B7E0500E6FA2A /* CreateScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateScheduleView.swift; path = Where_Are_You/Utils/CreateScheduleView.swift; sourceTree = SOURCE_ROOT; };
+		D5B79A152C5B83CD004EDDF2 /* CreateScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateScheduleView.swift; path = Where_Are_You/Presentation/Login/Login/CreateScheduleView.swift; sourceTree = SOURCE_ROOT; };
+		D5B79A192C5B83F6004EDDF2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CalendarView.swift; path = Where_Are_You/Presentation/Login/Login/CalendarView.swift; sourceTree = SOURCE_ROOT; };
 		EF2914052EE4B6C83BE57C93 /* Pods-Where_Are_You_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -438,29 +438,6 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
-		99949F3E2C58739300AE0177 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		99949F3F2C58739C00AE0177 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		99949F402C5873A400AE0177 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				D51DC6D32C5B7DA800E6FA2A /* CalendarView.swift */,
-				D51DC6D52C5B7E0500E6FA2A /* CreateScheduleView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		99949F412C5873A900AE0177 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -629,12 +606,12 @@
 		99CC5E6A2C5211ED00A0509A /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */,
-				99D8FBAD2C3B64040062AF10 /* Home */,
-				99CC5E6C2C52122E00A0509A /* Schedule */,
 				99CC5E6B2C52122500A0509A /* FriendFeed */,
+				99D8FBAD2C3B64040062AF10 /* Home */,
+				99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */,
 				995E3E592C507BBA006B4480 /* Mypage */,
 				99CC5E6D2C521DE900A0509A /* Notification */,
+				D5B79A112C5B8368004EDDF2 /* Schedule */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -647,16 +624,6 @@
 				99949F412C5873A900AE0177 /* ViewModels */,
 			);
 			path = FriendFeed;
-			sourceTree = "<group>";
-		};
-		99CC5E6C2C52122E00A0509A /* Schedule */ = {
-			isa = PBXGroup;
-			children = (
-				99949F402C5873A400AE0177 /* Views */,
-				99949F3F2C58739C00AE0177 /* ViewControllers */,
-				99949F3E2C58739300AE0177 /* ViewModels */,
-			);
-			path = Schedule;
 			sourceTree = "<group>";
 		};
 		99CC5E6D2C521DE900A0509A /* Notification */ = {
@@ -842,6 +809,39 @@
 				5E05660871E31DAF17D0F5C8 /* Pods_Where_Are_You_Tests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D5B79A112C5B8368004EDDF2 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				D5B79A122C5B838B004EDDF2 /* Views */,
+				D5B79A132C5B839C004EDDF2 /* ViewControllers */,
+				D5B79A142C5B83A4004EDDF2 /* ViewModels */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		D5B79A122C5B838B004EDDF2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D5B79A152C5B83CD004EDDF2 /* CreateScheduleView.swift */,
+				D5B79A192C5B83F6004EDDF2 /* CalendarView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D5B79A132C5B839C004EDDF2 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		D5B79A142C5B83A4004EDDF2 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1058,6 +1058,7 @@
 			files = (
 				99949F4B2C587BAC00AE0177 /* FeedListView.swift in Sources */,
 				995358472C00C555005BF799 /* Where_Are_You.xcdatamodeld in Sources */,
+				D5B79A1A2C5B83F6004EDDF2 /* CalendarView.swift in Sources */,
 				9950C65B2C10B0F5003155A7 /* SignUpFormViewController.swift in Sources */,
 				99FBA5562C453BDD002EEEC7 /* FeedTableViewController.swift in Sources */,
 				99FBA5502C45394E002EEEC7 /* BannerViewModel.swift in Sources */,
@@ -1073,6 +1074,7 @@
 				99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */,
 				99F78F1E2C09C98D004C0C72 /* CommonSearchAuthView.swift in Sources */,
 				99FBA5522C453B43002EEEC7 /* ScheduleViewController.swift in Sources */,
+				D5B79A162C5B83CD004EDDF2 /* CreateScheduleView.swift in Sources */,
 				9950C65D2C10B9BB003155A7 /* ResetPasswordView.swift in Sources */,
 				990F57A32C27F9FE00F6E1AD /* CheckEmailAvailabilityUseCase.swift in Sources */,
 				9953583D2C00C555005BF799 /* AppDelegate.swift in Sources */,
@@ -1080,7 +1082,6 @@
 				99C9B2422C01CE4C008D7CBD /* AccountLoginViewModel.swift in Sources */,
 				99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */,
 				99949F472C587A5400AE0177 /* CustomTabMenu.swift in Sources */,
-				D51DC6D42C5B7DA800E6FA2A /* CalendarView.swift in Sources */,
 				9911F9882C3F63D500D0FDC9 /* Feed.swift in Sources */,
 				99949F592C58B81A00AE0177 /* FriendsViewModel.swift in Sources */,
 				990F579F2C27F86A00F6E1AD /* CheckUserIDAvailabilityUseCase.swift in Sources */,
@@ -1115,7 +1116,6 @@
 				9967C1542C566F2F00927277 /* NetworkAlert.swift in Sources */,
 				99EC78CE2C11DBA5007C4415 /* ResetPasswordViewController.swift in Sources */,
 				99B397832C0C3E9D00D7A109 /* CheckIDView.swift in Sources */,
-				D51DC6D62C5B7E0500E6FA2A /* CreateScheduleView.swift in Sources */,
 				99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */,
 				99FBA5542C453B6D002EEEC7 /* ScheduleViewModel.swift in Sources */,
 				99949F552C58A72B00AE0177 /* FriendsTableViewCell.swift in Sources */,
@@ -1374,7 +1374,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8CKPNKA3V9;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				MARKETING_VERSION = 1.0;
@@ -1395,7 +1395,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8CKPNKA3V9;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				MARKETING_VERSION = 1.0;

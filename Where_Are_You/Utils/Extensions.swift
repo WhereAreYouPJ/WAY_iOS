@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 // MARK: - 로그인 확인을 위한 UserDefaults 확장
 
@@ -61,6 +62,15 @@ extension UIColor {
     static let color234 = UIColor.rgb(red: 234, green: 234, blue: 234)
     static let color240 = UIColor.rgb(red: 240, green: 240, blue: 240)
     static let color242 = UIColor.rgb(red: 242, green: 242, blue: 242)
+}
+
+// MARK: - Color
+extension Color {
+    static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
+        return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
+    }
+
+    static let color240 = Color.rgb(red: 240, green: 240, blue: 240)
 }
 
 // MARK: - UIFont

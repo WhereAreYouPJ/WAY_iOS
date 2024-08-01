@@ -8,8 +8,19 @@
 import SwiftUI
 
 struct CalendarView: View {
+    @State private var showModal = false
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Button {
+                self.showModal = true
+            } label: {
+                Text("일정 추가")
+            }
+            .sheet(isPresented: self.$showModal, content: {
+                CreateScheduleView()
+            })
+        }
     }
 }
 
