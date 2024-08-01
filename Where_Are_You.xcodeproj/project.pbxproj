@@ -23,6 +23,7 @@
 		99149FEB2C4F97C300136097 /* ValidationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99149FEA2C4F97C300136097 /* ValidationHelper.swift */; };
 		99149FED2C4F97EA00136097 /* TimeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99149FEC2C4F97EA00136097 /* TimeHelper.swift */; };
 		992F1EC62C37ED400042CB1A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 992F1EC52C37ED400042CB1A /* .gitignore */; };
+		992F57C22C5B1E8900219C6B /* AuthCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57C12C5B1E8900219C6B /* AuthCredentials.swift */; };
 		9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C64D2C102FB6003155A7 /* TermsAgreementView.swift */; };
 		9950C6572C1040FD003155A7 /* TermsAgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C6562C1040FD003155A7 /* TermsAgreementViewController.swift */; };
 		9950C6592C10B0DF003155A7 /* SignUpFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C6582C10B0DF003155A7 /* SignUpFormView.swift */; };
@@ -151,6 +152,7 @@
 		99149FEA2C4F97C300136097 /* ValidationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationHelper.swift; sourceTree = "<group>"; };
 		99149FEC2C4F97EA00136097 /* TimeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeHelper.swift; sourceTree = "<group>"; };
 		992F1EC52C37ED400042CB1A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		992F57C12C5B1E8900219C6B /* AuthCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCredentials.swift; sourceTree = "<group>"; };
 		9950C64D2C102FB6003155A7 /* TermsAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAgreementView.swift; sourceTree = "<group>"; };
 		9950C6562C1040FD003155A7 /* TermsAgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAgreementViewController.swift; sourceTree = "<group>"; };
 		9950C6582C10B0DF003155A7 /* SignUpFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFormView.swift; sourceTree = "<group>"; };
@@ -278,10 +280,19 @@
 		990F57942C27EE3600F6E1AD /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				992F57C32C5B1EBE00219C6B /* Auth_Request_Body */,
 				99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */,
 				997DC6562C3D253000EACA5F /* UserDefaultManager.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		992F57C32C5B1EBE00219C6B /* Auth_Request_Body */ = {
+			isa = PBXGroup;
+			children = (
+				992F57C12C5B1E8900219C6B /* AuthCredentials.swift */,
+			);
+			path = Auth_Request_Body;
 			sourceTree = "<group>";
 		};
 		9950C64C2C102E18003155A7 /* SingUp */ = {
@@ -787,13 +798,13 @@
 		99EC209F2C0D8DEC0018904D /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				990F57902C27ECDC00F6E1AD /* SignUpUseCase.swift */,
+				99CA4F272C33B72C007C027C /* ResetPasswordUseCase.swift */,
 				990F579E2C27F86A00F6E1AD /* CheckUserIDAvailabilityUseCase.swift */,
 				990F57A22C27F9FE00F6E1AD /* CheckEmailAvailabilityUseCase.swift */,
 				990F57B12C282C5900F6E1AD /* SendVerificationCodeUseCase.swift */,
 				99E8BC442C2D26CF00536B95 /* VerifyCodeUseCase.swift */,
-				990F57902C27ECDC00F6E1AD /* SignUpUseCase.swift */,
 				997746A42C329D68004FB0DF /* FindUserIDUseCase.swift */,
-				99CA4F272C33B72C007C027C /* ResetPasswordUseCase.swift */,
 				9979622C2C3E6B2200E95CA6 /* AccountLoginUseCase.swift */,
 			);
 			path = UseCases;
@@ -1063,6 +1074,7 @@
 				99D8FBC22C3BA25B0062AF10 /* CustomTextField.swift in Sources */,
 				99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */,
 				99F78F1E2C09C98D004C0C72 /* CommonSearchAuthView.swift in Sources */,
+				992F57C22C5B1E8900219C6B /* AuthCredentials.swift in Sources */,
 				99FBA5522C453B43002EEEC7 /* ScheduleViewController.swift in Sources */,
 				9950C65D2C10B9BB003155A7 /* ResetPasswordView.swift in Sources */,
 				990F57A32C27F9FE00F6E1AD /* CheckEmailAvailabilityUseCase.swift in Sources */,

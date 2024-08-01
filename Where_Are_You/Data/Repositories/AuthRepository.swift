@@ -8,13 +8,14 @@
 import Alamofire
 
 protocol AuthRepositoryProtocol {
-    func signUp(request: AuthCredentials, completion: @escaping (Result<Void, Error>) -> Void)
+    func signUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func resetPassword(email: String, password: String, checkPassword: String, completion: @escaping (Result<Void, Error>) -> Void)
     func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, Error>) -> Void)
     func checkEmailAvailability(email: String, completion: @escaping (Result<Void, Error>) -> Void)
     func sendVerificationCode(identifier: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void)
     func verifyEmailCode(identifier: String, code: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void)
     func findUserID(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void)
-    func resetPassword(userId: String, password: String, checkPassword: String, completion: @escaping (Result<Void, Error>) -> Void)
+    
     func login(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
@@ -25,8 +26,12 @@ class AuthRepository: AuthRepositoryProtocol {
         self.authService = authService
     }
     
-    func signUp(request: AuthCredentials, completion: @escaping (Result<Void, Error>) -> Void) {
+    func signUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void) {
         authService.signUp(request: request, completion: completion)
+    }
+    
+    func resetPassword(email: String, password: String, checkPassword: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+        authService.resetPassword(email: email, password: password, checkPassword: checkPassword, completion: completion)
     }
     
     func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -47,10 +52,6 @@ class AuthRepository: AuthRepositoryProtocol {
     
     func findUserID(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void) {
         authService.findUserID(email: email, code: code, completion: completion)
-    }
-    
-    func resetPassword(userId: String, password: String, checkPassword: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        authService.resetPassword(userId: userId, password: password, checkPassword: checkPassword, completion: completion)
     }
     
     func login(email: String, password: String, completion: @escaping (Result<Void, any Error>) -> Void) {

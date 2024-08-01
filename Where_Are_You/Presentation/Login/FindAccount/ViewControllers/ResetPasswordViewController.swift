@@ -32,9 +32,9 @@ class ResetPasswordViewController: UIViewController {
     
     func setupViewmodel() {
         let authService = AuthService()
-        let userRepository = AuthRepository(authService: authService)
+        let authRepository = AuthRepository(authService: authService)
         viewModel = ResetPasswordViewModel(
-            resetPasswordUseCase: ResetPasswordUseCaseImpl(userRepository: userRepository)
+            resetPasswordUseCase: ResetPasswordUseCaseImpl(authRepository: authRepository)
         )
     }
     

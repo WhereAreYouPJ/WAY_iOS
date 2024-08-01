@@ -42,13 +42,13 @@ class SignUpFormViewController: UIViewController {
     
     private func setupViewModel() {
         let authService = AuthService()
-        let userRepository = AuthRepository(authService: authService)
+        let authRepository = AuthRepository(authService: authService)
         viewModel = SignUpViewModel(
-            signUpUseCase: SignUpUseCaseImpl(userRepository: userRepository),
-            checkUserIDAvailabilityUseCase: CheckUserIDAvailabilityUseCaseImpl(userRepository: userRepository),
-            checkEmailAvailabilityUseCase: CheckEmailAvailabilityUseCaseImpl(userRepository: userRepository),
-            sendVerificationCodeUseCase: SendVerificationCodeUseCaseImpl(userRepository: userRepository),
-            verifyCodeUseCase: VerifyCodeUseCaseImpl(userRepository: userRepository)
+            signUpUseCase: SignUpUseCaseImpl(authRepository: authRepository),
+            checkUserIDAvailabilityUseCase: CheckUserIDAvailabilityUseCaseImpl(authRepository: authRepository),
+            checkEmailAvailabilityUseCase: CheckEmailAvailabilityUseCaseImpl(authRepository: authRepository),
+            sendVerificationCodeUseCase: SendVerificationCodeUseCaseImpl(authRepository: authRepository),
+            verifyCodeUseCase: VerifyCodeUseCaseImpl(authRepository: authRepository)
         )
     }
     

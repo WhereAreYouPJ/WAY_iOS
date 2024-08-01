@@ -7,33 +7,17 @@
 
 import Alamofire
 
-// MARK: - AuthCredentials
-
-struct AuthCredentials: Codable {
-    var userName: String?
-    var userId: String?
-    var password: String?
-    var email: String?
-    
-    func toParameters() -> [String: Any]? {
-        guard let data = try? JSONEncoder().encode(self),
-              let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
-            return nil
-        }
-        return json
-    }
-}
-
 // MARK: - APIServiceProtocol
 
 protocol AuthServiceProtocol {
-    func signUp(request: AuthCredentials, completion: @escaping (Result<Void, Error>) -> Void)
+    func signUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func resetPassword(email: String, password: String, checkPassword: String, completion: @escaping (Result<Void, Error>) -> Void)
     func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, Error>) -> Void)
     func checkEmailAvailability(email: String, completion: @escaping (Result<Void, Error>) -> Void)
     func sendVerificationCode(identifier: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void)
     func verifyEmailCode(identifier: String, code: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void)
     func findUserID(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void)
-    func resetPassword(userId: String, password: String, checkPassword: String, completion: @escaping (Result<Void, Error>) -> Void)
+    
     func login(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
@@ -86,12 +70,24 @@ class AuthService: AuthServiceProtocol {
     
     // MARK: - signUp
     
-    func signUp(request: AuthCredentials, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func signUp(request: SignUpBody, completion: @escaping (Result<Void, any Error>) -> Void) {
         guard let parameters = request.toParameters() else {
             completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid parameters"])))
             return
         }
         requestAPI(endpoint: "/member",
+                   method: .post,
+                   parameters: parameters,
+                   responseType: EmptyResponse.self) { result in
+            completion(result.map { _ in () })
+        }
+    }
+    
+    // MARK: - resetPassword
+    
+    func resetPassword(email: String, password: String, checkPassword: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+        let parameters: [String: String] = ["email": email, "password": password, "checkPassword": checkPassword]
+        requestAPI(endpoint: "/member/resetPassword",
                    method: .post,
                    parameters: parameters,
                    responseType: EmptyResponse.self) { result in
@@ -159,18 +155,6 @@ class AuthService: AuthServiceProtocol {
                    parameters: parameters,
                    responseType: GenericResponse<FindIDResponse>.self) { result in
             completion(result.map { $0.data.userId })
-        }
-    }
-    
-    // MARK: - resetPassword
-    
-    func resetPassword(userId: String, password: String, checkPassword: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        let parameters: [String: String] = ["userId": userId, "password": password, "checkPassword": checkPassword]
-        requestAPI(endpoint: "/member/resetPassword",
-                   method: .post,
-                   parameters: parameters,
-                   responseType: EmptyResponse.self) { result in
-            completion(result.map { _ in () })
         }
     }
     

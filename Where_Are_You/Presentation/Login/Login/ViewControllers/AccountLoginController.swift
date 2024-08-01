@@ -42,7 +42,7 @@ class AccountLoginController: UIViewController {
     func setupViewModel() {
         let authService = AuthService()
         let authRepository = AuthRepository(authService: authService)
-        let accountLoginUseCase = AccountLoginUseCaseImpl(authrepository: authRepository)
+        let accountLoginUseCase = AccountLoginUseCaseImpl(authRepository: authRepository)
         viewModel = AccountLoginViewModel(accountLoginUseCase: accountLoginUseCase)
     }
     

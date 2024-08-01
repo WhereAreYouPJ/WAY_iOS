@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SignUpUseCase {
-    func execute(request: AuthCredentials, completion: @escaping (Result<Void, Error>) -> Void)
+    func execute(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class SignUpUseCaseImpl: SignUpUseCase {
@@ -18,7 +18,7 @@ class SignUpUseCaseImpl: SignUpUseCase {
         self.authRepository = authRepository
     }
     
-    func execute(request: AuthCredentials, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func execute(request: SignUpBody, completion: @escaping (Result<Void, any Error>) -> Void) {
         authRepository.signUp(request: request, completion: completion)
     }
 }

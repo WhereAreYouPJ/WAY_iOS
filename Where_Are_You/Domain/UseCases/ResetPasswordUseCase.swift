@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ResetPasswordUseCase {
-    func execute(userId: String, password: String, checkPassword: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func execute(email: String, password: String, checkPassword: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class ResetPasswordUseCaseImpl: ResetPasswordUseCase {
@@ -18,7 +18,7 @@ class ResetPasswordUseCaseImpl: ResetPasswordUseCase {
         self.authRepository = authRepository
     }
     
-    func execute(userId: String, password: String, checkPassword: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        authRepository.resetPassword(userId: userId, password: password, checkPassword: checkPassword, completion: completion)
+    func execute(email: String, password: String, checkPassword: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+        authRepository.resetPassword(email: email, password: password, checkPassword: checkPassword, completion: completion)
     }
 }
