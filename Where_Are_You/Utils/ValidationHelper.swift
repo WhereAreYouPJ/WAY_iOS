@@ -7,9 +7,10 @@
 
 import Foundation
 
-// MARK: - ValidationHelper (형식 조건 확인)
+// MARK: - ValidationHelper (입력 형식 조건 확인)
 
 class ValidationHelper {
+    // TODO: 아이디 조건말고 이름 조건으로 변경하기
     static func isValidUserID(_ userID: String) -> Bool {
         let idRegex = "^[a-z][a-z0-9]{4,11}$"
         let userIDPred = NSPredicate(format: "SELF MATCHES %@", idRegex)

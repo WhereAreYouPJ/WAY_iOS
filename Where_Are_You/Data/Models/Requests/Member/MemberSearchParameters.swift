@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct SearchParameters: ParameterConvertible {
+struct MemberSearchParameters: ParameterConvertible {
     let memberCode: String
 }

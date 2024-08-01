@@ -9,21 +9,14 @@ import Moya
 
 enum AuthAPI {
     case signUp(request: SignUpBody)
-    // 비밀번호 재설정 API
     case resetPassword(request: ResetPasswordBody)
     case logout(request: LogoutBody)
     case login(request: LoginBody)
-    // 인증코드 검증 API
     case emailVerify(requst: EmailVerifyBody)
-    // 비밀번호 재설정 인증코드 API
     case emailVerifyPassword(request: EmailVerifyPasswordBody)
-    // 인증 메일 전송 API
     case emailSend(request: EmailSendBody)
-    // 회원 검색 API(by membercode)
-    case search(request: SearchParameters)
-    // 회원 상세 정보 API(by memberSeq)
-    case details(request: DetailsParameters)
-    // 이메일 중복 체크 API
+    case memberSearch(request: MemberSearchParameters)
+    case memberDetails(request: MemberDetailsParameters)
     case checkEmail(request: CheckEmailParameters)
 }
 
@@ -48,12 +41,21 @@ extension AuthAPI: TargetType {
             return "/member/email/verifyPassword"
         case .emailSend:
             return "/member/email/send"
-        case .search:
+        case .memberSearch:
             return "/member/search"
-        case .details:
+        case .memberDetails:
             return "/member/details"
         case .checkEmail:
             return "/member/checkEmail"
+        }
+    }
+    
+    var method: Moya.Method {
+        switch self {
+        case .signUp, .resetPassword, .logout, .login, .emailVerify, .emailVerifyPassword, .emailSend:
+            return .post
+        case .memberSearch, .memberDetails, .checkEmail:
+            return .get
         }
     }
     
@@ -73,9 +75,9 @@ extension AuthAPI: TargetType {
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .emailSend(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .search(let request):
+        case .memberSearch(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .details(let request):
+        case .memberDetails(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .checkEmail(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)

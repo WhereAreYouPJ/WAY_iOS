@@ -15,6 +15,7 @@ class UserDefaultsManager {
     private let accessTokenKey = "accessToken"
     private let refreshTokenKey = "refreshToken"
     private let memberSeqKey = "memberSeq"
+    private let memberCode = "memberCode"
     
     func saveAccessToken(_ token: String) {
         UserDefaults.standard.set(token, forKey: accessTokenKey)
@@ -28,6 +29,10 @@ class UserDefaultsManager {
         UserDefaults.standard.set(seq, forKey: memberSeqKey)
     }
     
+    func saveMemberCode(_ code: String) {
+        UserDefaults.standard.set(code, forKey: memberCode)
+    }
+    
     func getAccessToken() -> String? {
         return UserDefaults.standard.string(forKey: accessTokenKey)
     }
@@ -38,6 +43,10 @@ class UserDefaultsManager {
     
     func getMemberSeq() -> Int? {
         return UserDefaults.standard.integer(forKey: memberSeqKey)
+    }
+    
+    func getMemberCode() -> String? {
+        return UserDefaults.standard.string(forKey: memberCode)
     }
     
     func clearData() {

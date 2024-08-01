@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct DetailsParameters: ParameterConvertible {
+struct MemberDetailsParameters: ParameterConvertible {
     let memberSeq: Int
 }

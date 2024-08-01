@@ -6,6 +6,7 @@
 //
 
 import Alamofire
+import Moya
 
 // MARK: - AuthServiceProtocol
 
@@ -14,209 +15,106 @@ protocol MemberServiceProtocol {
     func resetPassword(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void)
     
     func logout(request: LogoutBody, completion: @escaping (Result<Void, Error>) -> Void)
-    func login(request: LoginBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func login(request: LoginBody, completion: @escaping (Result<GenericResponse<LoginResponse>, Error>) -> Void)
     func emailVerify(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
     func emailVerifyPassword(request: EmailVerifyPasswordBody, completion: @escaping (Result<Void, Error>) -> Void)
     func emailSend(request: EmailSendBody, completion: @escaping (Result<Void, Error>) -> Void)
-    func search(request: SearchParameters, completion: @escaping (Result<Void, Error>) -> Void)
-    func details(request: DetailsParameters, completion: @escaping (Result<Void, Error>) -> Void)
-    func checkEmail(request: CheckEmailParameters, completion: @escaping (Result<Void, Error>) -> Void)
+    func memberSearch(request: MemberSearchParameters, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void)
+    func memberDetails(request: MemberDetailsParameters, completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void)
+    func checkEmail(request: CheckEmailParameters, completion: @escaping (Result<GenericResponse<CheckEmailResponse>, Error>) -> Void)
 }
 
 // MARK: - AuthService
 
 class MemberService: MemberServiceProtocol {
     
-    private let baseURL = Config.baseURL
-    private let session: Session
+    private let provider = MoyaProvider<AuthAPI>()
     
-    init(session: Session = .default) {
-        self.session = session
-    }
-    
-    func resetPassword(request: ResetPasswordBody, completion: @escaping (Result<Void, any Error>) -> Void) {
-        <#code#>
-    }
-    
-    func logout(request: LogoutBody, completion: @escaping (Result<Void, any Error>) -> Void) {
-        <#code#>
-    }
-    
-    func login(request: LoginBody, completion: @escaping (Result<Void, any Error>) -> Void) {
-        <#code#>
-    }
-    
-    func emailVerify(request: EmailVerifyBody, completion: @escaping (Result<Void, any Error>) -> Void) {
-        <#code#>
-    }
-    
-    func emailVerifyPassword(request: EmailVerifyPasswordBody, completion: @escaping (Result<Void, any Error>) -> Void) {
-        <#code#>
-    }
-    
-    func emailSend(request: EmailSendBody, completion: @escaping (Result<Void, any Error>) -> Void) {
-        <#code#>
-    }
-    
-    func search(request: SearchParameters, completion: @escaping (Result<Void, any Error>) -> Void) {
-        <#code#>
-    }
-    
-    func details(request: DetailsParameters, completion: @escaping (Result<Void, any Error>) -> Void) {
-        <#code#>
-    }
-    
-    func checkEmail(request: CheckEmailParameters, completion: @escaping (Result<Void, any Error>) -> Void) {
-        <#code#>
-    }
-    
-    
-    
-    
-    // MARK: - Helper
-    
-    private func requestAPI<T: Decodable>(endpoint: String,
-                                          method: HTTPMethod,
-                                          parameters: Parameters?,
-                                          responseType: T.Type,
-                                          expectedErrorCodes: [Int: String] = [:],
-                                          completion: @escaping (Result<T, Error>) -> Void) {
-        let url = baseURL + endpoint
-        
-        var encoding: ParameterEncoding = JSONEncoding.default
-        if method == .get {
-            encoding = URLEncoding.default
-        }
-        
-        AF.request(url,
-                   method: method,
-                   parameters: parameters,
-                   encoding: encoding)
-            .validate(statusCode: 200..<300)
-            .responseDecodable(of: responseType) { response in
-                switch response.result {
-                case .success(let data):
-                    completion(.success(data))
-                case .failure(let error):
-                    if let afError = error.asAFError,
-                       let customErrorMessage = expectedErrorCodes[afError.responseCode ?? -1] {
-                        let customError = NSError(domain: "", code: afError.responseCode ?? -1, userInfo: [NSLocalizedDescriptionKey: customErrorMessage])
-                        completion(.failure(customError))
-                    } else {
-                        completion(.failure(error))
-                    }
-                }
-            }
-    }
-    
-    // MARK: - signUp
-    
-    func signUp(request: SignUpBody, completion: @escaping (Result<Void, any Error>) -> Void) {
-        guard let parameters = request.toParameters() else {
-            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid parameters"])))
-            return
-        }
-        requestAPI(endpoint: "/member",
-                   method: .post,
-                   parameters: parameters,
-                   responseType: EmptyResponse.self) { result in
-            completion(result.map { _ in () })
+    func signUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void) {
+        provider.request(.signUp(request: request)) { result in
+            self.handleResponse(result, completion: completion)
         }
     }
     
-    // MARK: - resetPassword
-    
-    func resetPassword(email: String, password: String, checkPassword: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        let parameters: [String: String] = ["email": email, "password": password, "checkPassword": checkPassword]
-        requestAPI(endpoint: "/member/resetPassword",
-                   method: .post,
-                   parameters: parameters,
-                   responseType: EmptyResponse.self) { result in
-            completion(result.map { _ in () })
+    func resetPassword(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void) {
+        provider.request(.resetPassword(request: request)) { result in
+            self.handleResponse(result, completion: completion)
         }
     }
     
-    // MARK: - checkUserIDAvailability
-    
-    func checkUserIDAvailability(userId: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        let parameters: [String: Any] = ["userId": userId]
-        requestAPI(endpoint: "/member/checkId",
-                   method: .get,
-                   parameters: parameters,
-                   responseType: EmptyResponse.self,
-                   expectedErrorCodes: [409: "중복된 아이디 입니다."]) { result in
-            completion(result.map { _ in () })
+    func logout(request: LogoutBody, completion: @escaping (Result<Void, Error>) -> Void) {
+        provider.request(.logout(request: request)) { result in
+            self.handleResponse(result, completion: completion)
         }
     }
     
-    // MARK: - checkEmailAvailability
-    
-    func checkEmailAvailability(email: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        let parameters: [String: Any] = ["email": email]
-        requestAPI(endpoint: "/member/checkEmail",
-                   method: .get,
-                   parameters: parameters,
-                   responseType: EmptyResponse.self,
-                   expectedErrorCodes: [409: "중복된 이메일 입니다."]) { result in
-            completion(result.map { _ in () })
+    func login(request: LoginBody, completion: @escaping (Result<GenericResponse<LoginResponse>, Error>) -> Void) {
+        provider.request(.login(request: request)) { result in
+            self.handleResponse(result, completion: completion)
         }
     }
     
-    // MARK: - sendEmailVerificationCode
-    
-    func sendVerificationCode(identifier: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void) {
-        let parameters: [String: Any] = [type == .email ? "email" : "userId": identifier]
-        requestAPI(endpoint: type.endpoint,
-                   method: .post,
-                   parameters: parameters,
-                   responseType: EmptyResponse.self) { result in
-            completion(result.map { _ in () })
+    func emailVerify(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void) {
+        provider.request(.emailVerify(requst: request)) { result in
+            self.handleResponse(result, completion: completion)
         }
     }
     
-    // MARK: - verifyEmailCode
-    
-    func verifyEmailCode(identifier: String, code: String, type: VerificationType, completion: @escaping (Result<Void, Error>) -> Void) {
-        let parameters: [String: String] = ["email": identifier, "code": code]
-        requestAPI(endpoint: "/member/email/verify",
-                   method: .post,
-                   parameters: parameters,
-                   responseType: EmptyResponse.self,
-                   expectedErrorCodes: [400: "인증코드가 알맞지 않습니다."]) { result in
-            completion(result.map { _ in () })
+    func emailVerifyPassword(request: EmailVerifyPasswordBody, completion: @escaping (Result<Void, Error>) -> Void) {
+        provider.request(.emailVerifyPassword(request: request)) { result in
+            self.handleResponse(result, completion: completion)
         }
     }
     
-    // MARK: - findUserID
-    
-    func findUserID(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let parameters: [String: Any] = ["email": email, "code": code]
-        requestAPI(endpoint: "/member/findId",
-                   method: .post,
-                   parameters: parameters,
-                   responseType: GenericResponse<FindIDResponse>.self) { result in
-            completion(result.map { $0.data.userId })
+    func emailSend(request: EmailSendBody, completion: @escaping (Result<Void, Error>) -> Void) {
+        provider.request(.emailSend(request: request)) { result in
+            self.handleResponse(result, completion: completion)
         }
     }
     
-    // MARK: - login
+    func memberSearch(request: MemberSearchParameters, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void) {
+        provider.request(.memberSearch(request: request)) { result in
+            self.handleResponse(result, completion: completion)
+        }
+    }
     
-    func login(email: String, password: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        let parameters: [String: String] = ["email": email, "password": password]
-        requestAPI(endpoint: "/member/login",
-                   method: .post,
-                   parameters: parameters,
-                   responseType: GenericResponse<LoginResponse>.self) { result in
-            switch result {
-            case .success(let response):
-                // TODO: AccessToken, RefreshToken 저장하기 email, password는 생각하기
-                UserDefaultsManager.shared.saveAccessToken(response.data.accessToken)
-                UserDefaultsManager.shared.saveRefreshToken(response.data.refreshToken)
-                UserDefaultsManager.shared.saveMemberSeq(response.data.memberSeq)
-                completion(.success(()))
-            case .failure(let error):
+    func memberDetails(request: MemberDetailsParameters, completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void) {
+        provider.request(.memberDetails(request: request)) { result in
+            self.handleResponse(result, completion: completion)
+        }
+    }
+    
+    func checkEmail(request: CheckEmailParameters, completion: @escaping (Result<GenericResponse<CheckEmailResponse>, Error>) -> Void) {
+        provider.request(.checkEmail(request: request)) { result in
+            self.handleResponse(result, completion: completion)
+        }
+    }
+    
+    private func handleResponse<T>(_ result: Result<Moya.Response, MoyaError>, completion: @escaping (Result<T, Error>) -> Void) where T: Decodable {
+        switch result {
+        case .success(let response):
+            do {
+                let data = try response.map(T.self)
+                completion(.success(data))
+            } catch let error {
                 completion(.failure(error))
             }
+        case .failure(let error):
+            completion(.failure(error))
+        }
+    }
+    
+    private func handleResponse(_ result: Result<Moya.Response, MoyaError>, completion: @escaping (Result<Void, Error>) -> Void) {
+        switch result {
+        case .success(let response):
+            do {
+                let _ = try response.filterSuccessfulStatusCodes()
+                completion(.success(()))
+            } catch let error {
+                completion(.failure(error))
+            }
+        case .failure(let error):
+            completion(.failure(error))
         }
     }
 }
