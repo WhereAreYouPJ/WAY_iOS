@@ -108,6 +108,8 @@
 		99FBA5542C453B6D002EEEC7 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5532C453B6D002EEEC7 /* ScheduleViewModel.swift */; };
 		99FBA5562C453BDD002EEEC7 /* FeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5552C453BDD002EEEC7 /* FeedTableViewController.swift */; };
 		99FBA5582C453C05002EEEC7 /* FeedTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5572C453C05002EEEC7 /* FeedTableViewModel.swift */; };
+		D51DC6D42C5B7DA800E6FA2A /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DC6D32C5B7DA800E6FA2A /* CalendarView.swift */; };
+		D51DC6D62C5B7E0500E6FA2A /* CreateScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DC6D52C5B7E0500E6FA2A /* CreateScheduleView.swift */; };
 		D79EFAD9E5409233E5338E46 /* Pods_Where_Are_You.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */; };
 /* End PBXBuildFile section */
 
@@ -243,6 +245,8 @@
 		99FBA5572C453C05002EEEC7 /* FeedTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableViewModel.swift; sourceTree = "<group>"; };
 		A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5015275FE458D5F6450041 /* Pods-Where_Are_You.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You.release.xcconfig"; path = "Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You.release.xcconfig"; sourceTree = "<group>"; };
+		D51DC6D32C5B7DA800E6FA2A /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CalendarView.swift; path = Where_Are_You/Utils/CalendarView.swift; sourceTree = SOURCE_ROOT; };
+		D51DC6D52C5B7E0500E6FA2A /* CreateScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateScheduleView.swift; path = Where_Are_You/Utils/CreateScheduleView.swift; sourceTree = SOURCE_ROOT; };
 		EF2914052EE4B6C83BE57C93 /* Pods-Where_Are_You_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -451,6 +455,8 @@
 		99949F402C5873A400AE0177 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D51DC6D32C5B7DA800E6FA2A /* CalendarView.swift */,
+				D51DC6D52C5B7E0500E6FA2A /* CreateScheduleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1074,6 +1080,7 @@
 				99C9B2422C01CE4C008D7CBD /* AccountLoginViewModel.swift in Sources */,
 				99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */,
 				99949F472C587A5400AE0177 /* CustomTabMenu.swift in Sources */,
+				D51DC6D42C5B7DA800E6FA2A /* CalendarView.swift in Sources */,
 				9911F9882C3F63D500D0FDC9 /* Feed.swift in Sources */,
 				99949F592C58B81A00AE0177 /* FriendsViewModel.swift in Sources */,
 				990F579F2C27F86A00F6E1AD /* CheckUserIDAvailabilityUseCase.swift in Sources */,
@@ -1108,6 +1115,7 @@
 				9967C1542C566F2F00927277 /* NetworkAlert.swift in Sources */,
 				99EC78CE2C11DBA5007C4415 /* ResetPasswordViewController.swift in Sources */,
 				99B397832C0C3E9D00D7A109 /* CheckIDView.swift in Sources */,
+				D51DC6D62C5B7E0500E6FA2A /* CreateScheduleView.swift in Sources */,
 				99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */,
 				99FBA5542C453B6D002EEEC7 /* ScheduleViewModel.swift in Sources */,
 				99949F552C58A72B00AE0177 /* FriendsTableViewCell.swift in Sources */,
