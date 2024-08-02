@@ -7,25 +7,23 @@
 
 import Foundation
 
-class FindIDViewModel {
+class AcoountSearchViewModel {
     
     // MARK: - Properties
-    private let sendVerificationCodeUseCase: SendVerificationCodeUseCase
-    private let findUserIDUseCase: FindUserIDUseCase
-    private let verifyCodeUseCase: VerifyCodeUseCase
+    private let emailSendUseCase: EmailSendUseCase
+    private let emailVerifyUseCase: EmailVerifyUseCase
     
     private let timerHelper = TimerHelper()
     
-    var email: String = ""
-    var userId: String = ""
+    private var email: String = ""
     
     // Output
     var onRequestCodeSuccess: ((String) -> Void)?
     var onRequestCodeFailure: ((String) -> Void)?
     var onVerifyCodeSuccess: ((String) -> Void)?
     var onVerifyCodeFailure: ((String) -> Void)?
-    var onFindIDSuccess: ((String) -> Void)?
-    var onFindIDFailure: ((String) -> Void)?
+    var onAccountSearchSuccess: (() -> Void)?
+    var onAccountSearchFailure: (() -> Void)?
     
     var onUpdateTimer: ((String) -> Void)?
     
@@ -34,59 +32,56 @@ class FindIDViewModel {
     
     // MARK: - LifeCycle
     
-    init(sendVerificationCodeUseCase: SendVerificationCodeUseCase,
-         findUserIDUseCase: FindUserIDUseCase,
-         verifyCodeUseCase: VerifyCodeUseCase) {
-        self.sendVerificationCodeUseCase = sendVerificationCodeUseCase
-        self.findUserIDUseCase = findUserIDUseCase
-        self.verifyCodeUseCase = verifyCodeUseCase
+    init(emailSendUseCase: EmailSendUseCase,
+         emailVerifyUseCase: EmailVerifyUseCase) {
+        self.emailSendUseCase = emailSendUseCase
+        self.emailVerifyUseCase = emailVerifyUseCase
     }
     
     // MARK: - Helpers
     
-    func sendEmailVerificationCode(email: String) {
+    func requestEmailCode(email: String) {
         guard ValidationHelper.isValidEmail(email) else {
             onRequestCodeFailure?("이메일 형식에 알맞지 않습니다.")
             return
         }
         
-        sendVerificationCodeUseCase.execute(identifier: email, type: .email) { [weak self] result in
+        emailSendUseCase.execute(request: EmailSendBody(email: email)) { [weak self] result in
             switch result {
             case .success:
                 self?.onRequestCodeSuccess?("인증코드가 전송되었습니다.")
                 self?.email = email
                 self?.startTimer()
             case .failure(let error):
-                self?.onRequestCodeFailure?(error.localizedDescription)
+                self?.onRequestCodeFailure?("입력한 이메일 주소를 다시 확인해주세요.")
             }
         }
     }
     
-    // 수정해야하는 부분(userid 받을수 있게 response 수정 해야함)
     func verifyEmailCode(inputCode: String) {
         if timerHelper.timerCount == 0 {
-            self.onVerifyCodeFailure?("인증코드 시간 지남")
+            self.onVerifyCodeFailure?("이메일 재인증 요청이 필요합니다.")
         } else {
-            verifyCodeUseCase.execute(identifier: email, code: inputCode, type: .email) { result in
+            emailVerifyUseCase.execute(request: EmailVerifyBody(email: email, code: inputCode)) { result in
                 switch result {
                 case .success:
-                    self.onVerifyCodeSuccess?("인증성공")
+                    self.onVerifyCodeSuccess?("인증코드가 확인되었습니다.")
                 case .failure(let error):
-                    self.onVerifyCodeFailure?(error.localizedDescription)
+                    self.onVerifyCodeFailure?("인증코드가 알맞지 않습니다.")
                 }
             }
         }
     }
     
     func okayToMove() {
-        if !userId.isEmpty {
-            onFindIDSuccess?(userId)
+        if !email.isEmpty {
+            // TODO: 추후에 어떤 방식으로 회원가입을 했는지 확인하는 API추가해서 그 정보를 다음페이지로 넘기기
+            onAccountSearchSuccess?()
         } else {
-            onFindIDFailure?("이메일 혹은 인증코드를 다시 한번 확인해 주세요")
+            onAccountSearchFailure?()
         }
     }
     
-    // 타이머 시작
     private func startTimer() {
         timerCount = 300
         timer?.invalidate()

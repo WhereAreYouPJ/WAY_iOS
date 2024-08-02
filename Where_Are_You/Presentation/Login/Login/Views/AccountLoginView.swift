@@ -15,6 +15,7 @@ class AccountLoginView: UIView {
     
     private let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이메일 주소", textColor: .color51, fontSize: 12)
     
+    // TODO: 커스텀 텍스트필드로 수정이 가능한지 체크하기
     let emailTextField = Utilities().inputContainerTextField(withPlaceholder: "이메일을 입력해주세요.", fontSize: textFieldFontSize)
     
     let emailErrorLabel: UILabel = {

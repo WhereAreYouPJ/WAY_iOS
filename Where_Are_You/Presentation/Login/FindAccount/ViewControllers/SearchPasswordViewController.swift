@@ -12,7 +12,7 @@ class SearchPasswordViewController: UIViewController {
     
     // MARK: - Properties
     
-    let searchPasswordView = SearchAuthView()
+    let searchPasswordView = AccountSearchView()
     private var viewModel: UserIdEmailVerificaitonViewModel!
     
     // MARK: - Lifecycle

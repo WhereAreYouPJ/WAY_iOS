@@ -11,9 +11,11 @@ import SnapKit
 class CheckIDView: UIView {
     // MARK: - Properties
     
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "회원님의 아이디를 확인해주세요", textColor: .color34, fontSize: 22)
+    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "회원님의 가입정보를 확인해주세요", textColor: .color34, fontSize: 22)
     
-    private let idLabel = CustomLabel(UILabel_NotoSans: .medium, text: "회원님의 아이디는", textColor: .color34, fontSize: 14)
+    private let idLabel = CustomLabel(UILabel_NotoSans: .medium, text: "회원님의 가입정보와 일치하는 이메일 주소는", textColor: .color34, fontSize: 14)
+    
+//    let accountImage
     
     lazy var idDescriptionLabel = CustomLabel(UILabel_NotoSans: .bold, text: "", textColor: .letterBrandColor, fontSize: 18)
     

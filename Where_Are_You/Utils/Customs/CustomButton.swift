@@ -51,51 +51,51 @@ class BottomButtonView: UIView {
 }
 
 // MARK: - CustomButton in SearchAccountOptionsView
-class CustomButtonFindAccount: UIButton {
-    
-    private let arrowImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "chevron.right")
-        imageView.tintColor = .color17
-        return imageView
-    }()
-    
-    init(title: String, description: String) {
-        super.init(frame: .zero)
-        setupView(title: title, description: description)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupView(title: String, description: String) {
-        layer.borderColor = UIColor.color118.cgColor
-        layer.borderWidth = 1
-        layer.cornerRadius = 7
-        backgroundColor = .white
-        
-        let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: title, textColor: .color34, fontSize: 14)
-        let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: description, textColor: .color102, fontSize: descriptionFontSize)
-        
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel])
-        stackView.axis = .vertical
-        stackView.isUserInteractionEnabled = false
-        
-        addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.left.top.equalToSuperview().offset(9)
-            make.centerY.equalToSuperview()
-            make.width.equalTo(272)
-        }
-        
-        addSubview(arrowImageView)
-        arrowImageView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.right.equalToSuperview().inset(12)
-        }
-    }
-}
+//class CustomButtonFindAccount: UIButton {
+//    
+//    private let arrowImageView: UIImageView = {
+//        let imageView = UIImageView()
+//        imageView.image = UIImage(systemName: "chevron.right")
+//        imageView.tintColor = .color17
+//        return imageView
+//    }()
+//    
+//    init(title: String, description: String) {
+//        super.init(frame: .zero)
+//        setupView(title: title, description: description)
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//    
+//    private func setupView(title: String, description: String) {
+//        layer.borderColor = UIColor.color118.cgColor
+//        layer.borderWidth = 1
+//        layer.cornerRadius = 7
+//        backgroundColor = .white
+//        
+//        let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: title, textColor: .color34, fontSize: 14)
+//        let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: description, textColor: .color102, fontSize: descriptionFontSize)
+//        
+//        let stackView = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel])
+//        stackView.axis = .vertical
+//        stackView.isUserInteractionEnabled = false
+//        
+//        addSubview(stackView)
+//        stackView.snp.makeConstraints { make in
+//            make.left.top.equalToSuperview().offset(9)
+//            make.centerY.equalToSuperview()
+//            make.width.equalTo(272)
+//        }
+//        
+//        addSubview(arrowImageView)
+//        arrowImageView.snp.makeConstraints { make in
+//            make.centerY.equalToSuperview()
+//            make.right.equalToSuperview().inset(12)
+//        }
+//    }
+//}
 
 // MARK: - Box Button
 class CustomButton: UIButton {

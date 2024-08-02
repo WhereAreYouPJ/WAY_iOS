@@ -42,7 +42,7 @@ class Utilities {
     func inputContainerTextField(withPlaceholder placeholder: String, fontSize: CGFloat) -> CustomTextField {
         let tf = CustomTextField()
         tf.adjustsFontForContentSizeCategory = true
-        tf.textColor = .color34
+        tf.textColor = .color102
         tf.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: fontSize))
         tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.color102])
         return tf
