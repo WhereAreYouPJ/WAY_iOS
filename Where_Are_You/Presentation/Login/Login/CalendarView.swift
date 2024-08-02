@@ -19,6 +19,7 @@ struct CalendarView: View {
             }
             .sheet(isPresented: self.$showModal, content: {
                 CreateScheduleView()
+                    .interactiveDismissDisabled()
             })
         }
     }

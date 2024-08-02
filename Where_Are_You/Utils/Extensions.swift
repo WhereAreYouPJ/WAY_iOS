@@ -64,15 +64,6 @@ extension UIColor {
     static let color242 = UIColor.rgb(red: 242, green: 242, blue: 242)
 }
 
-// MARK: - Color
-extension Color {
-    static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
-        return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
-    }
-
-    static let color240 = Color.rgb(red: 240, green: 240, blue: 240)
-}
-
 // MARK: - UIFont
 
 extension UIFont {
@@ -110,5 +101,19 @@ extension UIFont {
         }
         
         return UIFont(name: "\(weightString)", size: fontSize) ?? .systemFont(ofSize: fontSize, weight: weight)
+    }
+}
+
+extension Font {
+    static func pretendard(NotoSans weight: Font.Weight, fontSize: CGFloat) -> Font {
+        let uiFontWeight: UIFont.Weight
+        switch weight {
+        case .regular: uiFontWeight = .regular
+        case .bold: uiFontWeight = .bold
+        case .light: uiFontWeight = .light
+        case .medium: uiFontWeight = .medium
+        default: uiFontWeight = .regular
+        }
+        return Font(UIFont.pretendard(NotoSans: uiFontWeight, fontSize: fontSize))
     }
 }
