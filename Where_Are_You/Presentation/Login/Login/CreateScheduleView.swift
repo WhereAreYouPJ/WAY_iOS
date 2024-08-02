@@ -10,42 +10,54 @@ import SwiftUI
 struct CreateScheduleView: View {
     @Environment(\.dismiss) private var dismiss
     
-    @State private var scheduleName = ""
-    @State private var duringAllday = true
-    @State private var startDate = Date()
-    @State private var endDate = Date()
+    @State private var title = ""
+    @State private var isAllDay = true
+    @State private var startTime = Date()
+    @State private var endTime = Date()
     @State private var place = ""
-    @State private var friends = ["김민정", "임창균", "박지성", "김민지"]
+    @State private var friends = ["김민정", "임창균", "조승연", "김민지"]
     @State private var memo = ""
+    
+    init() {
+        let calendar = Calendar.current
+        let now = Date()
+        let components = calendar.dateComponents([.year, .month, .day, .hour], from: now)
+        let startOfHour = calendar.date(from: components)!
+        
+        _startTime = State(initialValue: startOfHour)
+        _endTime = State(initialValue: calendar.date(byAdding: .hour, value: 1, to: startOfHour)!)
+    }
     
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, content: {
-                TextField("일정명을 입력해주세요.", text: $scheduleName)
+                TextField("일정명을 입력해주세요.", text: $title)
                 Divider()
                     .padding(.bottom, 16)
                 
-                Toggle(isOn: $duringAllday, label: {
+                Toggle(isOn: $isAllDay, label: {
                     Text("하루 종일")
                 })
                 
-                HStack {
-                    Image("icon-information")
-                    Text("위치 확인하기 기능이 제공되지 않습니다.")
-                    //                    .font(.system(.footnote))
-                        .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 12)))
-                        .foregroundStyle(.red)
+                if isAllDay {
+                    HStack {
+                        Image("icon-information")
+                        Text("위치 확인하기 기능이 제공되지 않습니다.")
+                            .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 12)))
+                            .foregroundStyle(.red)
+                    }
+                    .transition(.opacity.combined(with: .move(edge: .top)))
                 }
                 Divider()
                 
-                DatePicker("시작", selection: $startDate, displayedComponents: [.date, .hourAndMinute])
+                DatePicker("시작", selection: $startTime, displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
                 Divider()
                 
-                DatePicker("종료", selection: $endDate, in: startDate..., displayedComponents: [.date, .hourAndMinute])
+                DatePicker("종료", selection: $endTime, in: startTime..., displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
                 Divider()
                     .padding(.bottom, 20)
                 
-                Text("위치 추가")
+                Text("위치추가")
                 Divider()
                 
                 HStack {
@@ -58,15 +70,21 @@ struct CreateScheduleView: View {
                     }
                 }
                 
-                HStack {
-                    Text("서울대")
-                        .padding(EdgeInsets(top: 4, leading: 14, bottom: 4, trailing: 14))
-                        .background(
-                            RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/, style: /*@START_MENU_TOKEN@*/.continuous/*@END_MENU_TOKEN@*/)
-                                .fill(Color(.color240))
-                        )
+                ScrollView(.horizontal) {
+                    HStack {
+                        let favPlaces = ["서울대", "여의도공원", "올림픽체조경기장", "재즈바", "신도림", "망원한강공원"]
+                        ForEach(favPlaces, id: \.self) { place in
+                            Text(place)
+                                .padding(EdgeInsets(top: 4, leading: 14, bottom: 4, trailing: 14))
+                                .background(
+                                    RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/, style: /*@START_MENU_TOKEN@*/.continuous/*@END_MENU_TOKEN@*/)
+                                        .fill(Color(.color240))
+                                )
+                        }
+                        
+                    }
+                    .padding(.bottom, 20)
                 }
-                .padding(.bottom, 20)
                 
                 Text("친구추가")
                 Divider()
@@ -136,11 +154,14 @@ struct CreateScheduleView: View {
                     Button("취소", role: .cancel) {
                         dismiss()
                     }
+                    .foregroundStyle(Color.red)
                 }
                 ToolbarItem(placement: .primaryAction) {
-                    Button("확인") {
+                    Button("추가") {
                         dismiss()
                     }
+                    .foregroundStyle(title.isEmpty ? Color.gray : Color.red)
+                    .disabled(title.isEmpty)
                 }
             }
             .navigationTitle("일정 추가")
