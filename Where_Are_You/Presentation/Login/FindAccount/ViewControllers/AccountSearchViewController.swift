@@ -18,7 +18,8 @@ class AccountSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = accountSearchView
-        configureNavigationBar(title: "아이디 찾기", backButtonAction: #selector(backButtonTapped))
+        configureNavigationBar(title: "계정 찾기", backButtonAction: #selector(backButtonTapped))
+
         setupViewModel()
         setupBindings()
         setupActions()
@@ -41,7 +42,9 @@ class AccountSearchViewController: UIViewController {
                 self?.accountSearchView.emailErrorLabel.text = message
                 self?.accountSearchView.emailErrorLabel.textColor = .brandColor
                 self?.accountSearchView.authStack.isHidden = false
-                self?.accountSearchView.requestAuthButton.configuration?.attributedTitle = AttributedString("인증요청 완료")
+                self?.accountSearchView.requestAuthButton.updateTitle("인증요청 완료")
+                self?.accountSearchView.requestAuthButton.updateBackgroundColor(.color171)
+                self?.accountSearchView.requestAuthButton.isEnabled = false
             }
         }
         
@@ -58,6 +61,10 @@ class AccountSearchViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.accountSearchView.authNumberErrorLabel.text = message
                 self?.accountSearchView.authNumberErrorLabel.textColor = .brandColor
+                self?.accountSearchView.authNumberCheckButton.updateBackgroundColor(.color171)
+                self?.accountSearchView.authNumberCheckButton.isEnabled = false
+                self?.accountSearchView.bottomButtonView.button.isEnabled = true
+                self?.accountSearchView.bottomButtonView.button.updateBackgroundColor(.brandColor)
             }
         }
         
@@ -71,12 +78,12 @@ class AccountSearchViewController: UIViewController {
         
         // TODO: 이메일 계정 검색하는 API물어본 뒤에 수정하기
         // 아이디 찾기 성공
-        viewModel.onAccountSearchSuccess = { [weak self] in
+        viewModel.onAccountSearchSuccess = { [weak self] email in
             DispatchQueue.main.async {
-//                let controller = CheckIDViewController(userId: userId)
-//                let nav = UINavigationController(rootViewController: controller)
-//                nav.modalPresentationStyle = .fullScreen
-//                self?.present(nav, animated: true, completion: nil)
+                let controller = CheckIDViewController(email: email)
+                let nav = UINavigationController(rootViewController: controller)
+                nav.modalPresentationStyle = .fullScreen
+                self?.present(nav, animated: true, completion: nil)
             }
         }
         
@@ -106,7 +113,7 @@ class AccountSearchViewController: UIViewController {
     
     @objc private func findUserId() {
         let code = accountSearchView.authNumberTextField.text ?? ""
-        viewModel.verifyEmailCode(inputCode: code)
+        viewModel.verifyEmailCode(code: code)
     }
     
     @objc func confirmButtonTapped() {

@@ -7,79 +7,93 @@
 
 import UIKit
 
-class ResetPasswordViewController: UIViewController {
+class PasswordResetViewController: UIViewController {
     // MARK: - Properties
     
-    let resetPasswordView = ResetPasswordView()
+    private let passwordResetView = PasswordResetView()
     private var viewModel: ResetPasswordViewModel!
     
-    var userId: String = ""
+    private var isPasswordValidate: Bool = false
+    private var isPasswordCheck: Bool = false
+    
+    private var email: String = ""
     
     // MARK: - Lifecycle
+    init(email: String) {
+        self.email = email
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupActions()
         setupViewmodel()
         setupBindings()
-        
     }
     
-    func setupUI() {
-        view = resetPasswordView
-        configureNavigationBar(title: "비밀번호 찾기", backButtonAction: #selector(backButtonTapped))
+    // MARK: - Helpers
+
+    private func setupUI() {
+        view = passwordResetView
+        configureNavigationBar(title: "비밀번호 재설정", backButtonAction: #selector(backButtonTapped))
+        passwordResetView.bottomButtonView.button.isEnabled = false
+        passwordResetView.bottomButtonView.button.backgroundColor = .color171
     }
     
-    func setupViewmodel() {
-        let authService = AuthService()
-        let authRepository = AuthRepository(authService: authService)
+    private func setupViewmodel() {
+        let memberService = MemberService()
+        let memberRepository = MemberRepository(memberService: memberService)
         viewModel = ResetPasswordViewModel(
-            resetPasswordUseCase: ResetPasswordUseCaseImpl(authRepository: authRepository)
+            resetPasswordUseCase: ResetPasswordUseCaseImpl(memberRepository: memberRepository)
         )
     }
     
-    func setupBindings() {
-        
-        viewModel.onCheckPasswordForm = { [weak self] message, isAvailable in
-            self?.resetPasswordView.resetPasswordDescription.text = message
-            self?.resetPasswordView.resetPasswordTextField.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
+    private func setupBindings() {
+        viewModel.onPasswordValidation = { [weak self] result in
+            DispatchQueue.main.async {
+                self?.isPasswordValidate = result
+                self?.passwordResetView.resetPasswordDescription.text = "영문 대문자, 소문자로 시작하는 6~20자의 영문 대문자, 소문자, 숫자를 포함해 입력해주세요."
+                self?.updateResetButtonState()
+            }
         }
         
-        viewModel.onCheckSamePassword = { [weak self] message, isAvailable in
-            self?.resetPasswordView.checkPasswordDescription.text = message
-            self?.resetPasswordView.checkPasswordTextField.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
+        viewModel.onPasswordCheck = { [weak self] result in
+            DispatchQueue.main.async {
+                self?.isPasswordCheck = result
+                self?.passwordResetView.checkPasswordDescription.text = "비밀번호가 일치하지 않습니다."
+                self?.updateResetButtonState()
+            }
         }
         
         viewModel.onResetPasswordSuccess = { [weak self] in
-            let controller = FinishResetPasswordViewController()
+            let controller = PasswordFinishResetViewController()
             let nav = UINavigationController(rootViewController: controller)
             nav.modalPresentationStyle = .fullScreen
             self?.present(nav, animated: true, completion: nil)
         }
-        
-        viewModel.onResetPasswordFailure = { [weak self] message in
-            self?.showAlert(title: "비밀번호 재설정 실패", message: message)
-        }
     }
-    // MARK: - Helpers
 
-    func setupActions() {
-        resetPasswordView.bottomButtonView.button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
-        resetPasswordView.resetPasswordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        resetPasswordView.checkPasswordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+    private func setupActions() {
+        passwordResetView.resetPasswordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        passwordResetView.checkPasswordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        passwordResetView.bottomButtonView.button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Selectors
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        guard let pw = resetPasswordView.resetPasswordTextField.text,
-              let checkpw = resetPasswordView.checkPasswordTextField.text else { return }
+        guard let pw = passwordResetView.resetPasswordTextField.text,
+              let checkpw = passwordResetView.checkPasswordTextField.text else { return }
         
         switch textField {
-        case resetPasswordView.resetPasswordTextField:
-            viewModel.password = pw
+        case passwordResetView.resetPasswordTextField:
             viewModel.checkPasswordForm(pw: pw)
-        case resetPasswordView.checkPasswordTextField:
+        case passwordResetView.checkPasswordTextField:
             viewModel.checkSamePassword(pw: pw, checkpw: checkpw)
         default:
             break
@@ -91,14 +105,18 @@ class ResetPasswordViewController: UIViewController {
     }
     
     @objc func confirmButtonTapped() {
-        guard let pw = resetPasswordView.resetPasswordTextField.text,
-              let checkpw = resetPasswordView.checkPasswordTextField.text else { return }
-        viewModel.resetPassword(userId: userId, password: pw, checkPassword: checkpw)
+        guard let pw = passwordResetView.resetPasswordTextField.text,
+              let checkpw = passwordResetView.checkPasswordTextField.text else { return }
+        viewModel.resetPassword(email: email, password: pw, checkPassword: checkpw)
     }
     
-    private func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alertController, animated: true)
+    private func updateResetButtonState() {
+        if isPasswordValidate && isPasswordCheck {
+            passwordResetView.bottomButtonView.button.backgroundColor = .brandColor
+            passwordResetView.bottomButtonView.button.isEnabled = true
+        } else {
+            passwordResetView.bottomButtonView.button.backgroundColor = .color171
+            passwordResetView.bottomButtonView.button.isEnabled = false
+        }
     }
 }

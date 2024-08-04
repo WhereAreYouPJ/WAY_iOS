@@ -8,31 +8,48 @@
 import UIKit
 import SnapKit
 
-class ResetPasswordView: UIView {
+class PasswordResetView: UIView {
     // MARK: - Properties
     
     private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "회원님의 비밀번호를 재설정해주세요", textColor: .color34, fontSize: 22)
     
     private let passwordLabel = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: 12)
     
-    let resetPasswordTextField = Utilities().inputContainerTextField(withPlaceholder: "새 비밀번호", fontSize: textFieldFontSize)
+    let resetPasswordTextField = Utilities().inputContainerTextField(withPlaceholder: "비밀번호", fontSize: textFieldFontSize)
     
     let resetPasswordDescription: UILabel = {
         let label = UILabel()
-        label.textColor = .warningColor
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
         label.adjustsFontForContentSizeCategory = true
         return label
+    }()
+    
+    private lazy var resetStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [passwordLabel, resetPasswordTextField, resetPasswordDescription])
+        resetStack.axis = .vertical
+        return stackView
     }()
     
     let checkPasswordTextField = Utilities().inputContainerTextField(withPlaceholder: "비밀번호 확인", fontSize: textFieldFontSize)
     
     let checkPasswordDescription: UILabel = {
         let label = UILabel()
-        label.textColor = .warningColor
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
         label.adjustsFontForContentSizeCategory = true
         return label
+    }()
+    
+    private lazy var checkStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [checkPasswordTextField, checkPasswordDescription])
+        stackView.axis = .vertical
+        return stackView
+    }()
+    
+    private lazy var stack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [resetStack, checkStack])
+        stackView.spacing = 10
+        stackView.axis = .vertical
+        return stackView
     }()
     
     let bottomButtonView = BottomButtonView(title: "확인")
@@ -41,7 +58,8 @@ class ResetPasswordView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
-        constraints()
+        configureViewComponents()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -49,39 +67,31 @@ class ResetPasswordView: UIView {
     }
     
     // MARK: - Helpers
-    func constraints() {
+    private func configureViewComponents() {
         resetPasswordTextField.isSecureTextEntry = true
         checkPasswordTextField.isSecureTextEntry = true
         
         addSubview(titleLabel)
+        addSubview(stack)
+        addSubview(bottomButtonView)
+    }
+    
+    private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(34)
-            make.left.equalToSuperview().offset(15)
+            make.leading.equalToSuperview().offset(15)
             make.width.equalToSuperview().multipliedBy(0.533)
-            make.height.equalTo(titleLabel.snp.width).multipliedBy(0.36)
         }
         
-        let resetStack = UIStackView(arrangedSubviews: [passwordLabel, resetPasswordTextField, resetPasswordDescription])
-        resetStack.axis = .vertical
-        
-        let checkStack = UIStackView(arrangedSubviews: [checkPasswordTextField, checkPasswordDescription])
-        checkStack.axis = .vertical
-        
-        let stack = UIStackView(arrangedSubviews: [resetStack, checkStack])
-        stack.spacing = 10
-        stack.axis = .vertical
-        
-        addSubview(stack)
         stack.snp.makeConstraints { make in
-            make.left.equalTo(titleLabel)
+            make.leading.equalTo(titleLabel)
             make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(30)
         }
         
-        addSubview(bottomButtonView)
         bottomButtonView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.left.equalToSuperview()
+            make.leading.equalToSuperview()
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
     }

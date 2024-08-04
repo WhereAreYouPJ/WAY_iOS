@@ -30,13 +30,13 @@ class MemberService: MemberServiceProtocol {
     
     // MARK: - Properties
     
-    private var provider = MoyaProvider<AuthAPI>()
+    private var provider = MoyaProvider<MemberAPI>()
     
     init() {
         let tokenPlugin = AuthTokenPlugin(tokenClosure: {
             return UserDefaultsManager.shared.getAccessToken()
         })
-        self.provider = MoyaProvider<AuthAPI>(plugins: [tokenPlugin])
+        self.provider = MoyaProvider<MemberAPI>(plugins: [tokenPlugin])
     }
     
     // MARK: - APIService
@@ -131,7 +131,7 @@ class MemberService: MemberServiceProtocol {
         }
     }
     
-    //    // MARK: - HandleLoginResponse
+        // MARK: - HandleLoginResponse
     //
     //    private func handleLoginResponse(_ result: Result<Moya.Response, MoyaError>, completion: @escaping (Result<Void, Error>) -> Void) {
     //        switch result {

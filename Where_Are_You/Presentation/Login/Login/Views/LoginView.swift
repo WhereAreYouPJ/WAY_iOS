@@ -79,8 +79,8 @@ class LoginView: UIView {
             make.top.equalTo(loginStack.snp.bottom).offset(20)
         }
         
-        setupLine(relatedView: separatorLabel, anchor: .left, height: 1, width: 100)
-        setupLine(relatedView: separatorLabel, anchor: .right, height: 1, width: 100)
+        setupLine(relatedView: separatorLabel, anchor: .leading, height: 1, width: 100)
+        setupLine(relatedView: separatorLabel, anchor: .trailing, height: 1, width: 100)
         
         let buttonStack = UIStackView(arrangedSubviews: [signupButton, findAccountButton, inquiryButton])
         buttonStack.spacing = 8
@@ -92,8 +92,8 @@ class LoginView: UIView {
             make.top.equalTo(separatorLabel.snp.bottom).offset(16)
         }
         
-        setupLine(relatedView: findAccountButton, anchor: .left, height: 14, width: 1)
-        setupLine(relatedView: findAccountButton, anchor: .right, height: 14, width: 1)
+        setupLine(relatedView: findAccountButton, anchor: .leading, height: 14, width: 1)
+        setupLine(relatedView: findAccountButton, anchor: .trailing, height: 14, width: 1)
     }
     
     required init?(coder: NSCoder) {
@@ -105,15 +105,15 @@ class LoginView: UIView {
     // 분리선 오토레이아웃
     private func setupLine(relatedView: UIView, anchor: NSLayoutConstraint.Attribute, height: CGFloat, width: CGFloat) {
         let view = UIView()
-        view.backgroundColor = .color234
+        view.backgroundColor = .color235
         
         addSubview(view)
         view.snp.makeConstraints { make in
             make.centerY.equalTo(relatedView)
-            if anchor == .right {
-                make.left.equalTo(relatedView.snp.right).offset(4)
+            if anchor == .trailing {
+                make.leading.equalTo(relatedView.snp.trailing).offset(4)
             } else {
-                make.right.equalTo(relatedView.snp.left).offset(-4)
+                make.trailing.equalTo(relatedView.snp.leading).offset(-4)
             }
             make.width.equalTo(width)
             make.height.equalTo(height)

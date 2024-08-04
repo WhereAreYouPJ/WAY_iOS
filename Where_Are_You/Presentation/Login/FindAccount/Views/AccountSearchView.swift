@@ -87,35 +87,40 @@ class AccountSearchView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
-        setupUI()
+        configureViewComponents()
+        setupConstraints()
         authStack.isHidden = true
+        bottomButtonView.button.updateBackgroundColor(.color171)
+        bottomButtonView.button.isEnabled = false
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupUI() {
+    private func configureViewComponents() {
         addSubview(titleLabel)
         authNumberTextField.addSubview(timer)
         addSubview(stack)
         addSubview(bottomButtonView)
-        
+    }
+    
+    private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(34)
-            make.left.equalToSuperview().offset(15)
+            make.leading.equalToSuperview().offset(15)
             make.width.equalToSuperview().multipliedBy(0.763)
         }
         
         timer.snp.makeConstraints { make in
             make.centerY.equalTo(authNumberTextField)
-            make.right.equalTo(authNumberTextField.snp.right).inset(11)
+            make.trailing.equalTo(authNumberTextField.snp.trailing).inset(11)
         }
         
         stack.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(30)
             make.centerX.equalToSuperview()
-            make.left.equalTo(titleLabel)
+            make.leading.equalTo(titleLabel)
         }
         
         requestAuthButton.snp.makeConstraints { make in
@@ -128,7 +133,7 @@ class AccountSearchView: UIView {
         
         bottomButtonView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.left.equalToSuperview()
+            make.leading.equalToSuperview()
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
     }

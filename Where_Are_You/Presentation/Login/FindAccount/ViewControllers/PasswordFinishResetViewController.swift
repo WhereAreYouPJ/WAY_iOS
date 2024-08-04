@@ -7,15 +7,15 @@
 
 import UIKit
 
-class FinishResetPasswordViewController: UIViewController {
+class PasswordFinishResetViewController: UIViewController {
     
-    let finisView = FinishResetPasswordView()
+    let passwordFinishResetView = PasswordFinishResetView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view = finisView
+        self.view = passwordFinishResetView
         
-        configureNavigationBar(title: "비밀번호 찾기")
+        configureNavigationBar(title: "비밀번호 재설정")
         buttonActions()
     }
     
@@ -31,7 +31,7 @@ class FinishResetPasswordViewController: UIViewController {
     // MARK: - Helpers
 
     func buttonActions() {
-        finisView.bottomButtonView.button.addTarget(self, action: #selector(goToLogin), for: .touchUpInside)
+        passwordFinishResetView.bottomButtonView.button.addTarget(self, action: #selector(goToLogin), for: .touchUpInside)
     }
     
 }

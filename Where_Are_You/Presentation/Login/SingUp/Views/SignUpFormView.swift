@@ -13,7 +13,7 @@ class SignUpFormView: UIView {
     
     private let progressBar: UIView = {
         let view = UIView()
-        view.backgroundColor = .color234
+        view.backgroundColor = .color235
         return view
     }()
     
@@ -27,22 +27,85 @@ class SignUpFormView: UIView {
     
     private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "아래 내용을 작성해주세요", textColor: .color34, fontSize: 22)
     
-    let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이름", textColor: .color51, fontSize: descriptionFontSize)
+    private let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이름", textColor: .color51, fontSize: descriptionFontSize)
     
     let userNameTextField = Utilities().inputContainerTextField(withPlaceholder: "이름", fontSize: textFieldFontSize)
     
-    let userIDLabel = CustomLabel(UILabel_NotoSans: .medium, text: "아이디", textColor: .color51, fontSize: descriptionFontSize)
-    
-    let userIDTextField = Utilities().inputContainerTextField(withPlaceholder: "아이디", fontSize: textFieldFontSize)
-    
-    let userIDCheckButton = CustomButton(title: "중복확인", backgroundColor: .brandColor, titleColor: .white, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
-    
-    let userIDErrorLabel: UILabel = {
+    let userNameErrorLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
         label.adjustsFontForContentSizeCategory = true
         return label
+    }()
+    
+    // 이름 + 이름tf
+    lazy var usernameStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [userNameLabel, userNameTextField, userNameErrorLabel])
+        stackView.axis = .vertical
+        return stackView
+    }()
+    
+    private let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이메일", textColor: .color51, fontSize: descriptionFontSize)
+    
+    let emailTextField = Utilities().inputContainerTextField(withPlaceholder: "이메일", fontSize: textFieldFontSize)
+    
+    let emailCheckButton = CustomButton(title: "인증요청", backgroundColor: .brandColor, titleColor: .white, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
+    
+    let emailErrorLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
+        label.adjustsFontForContentSizeCategory = true
+        return label
+    }()
+    
+    // 이메일 + 이메일tf + 이메일 중복버튼 + description
+    lazy var emailCheckStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [emailTextField, emailCheckButton])
+        stackView.axis = .horizontal
+        stackView.spacing = 4
+        return stackView
+    }()
+    
+    lazy var emailStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [emailLabel, emailCheckStack, emailErrorLabel])
+        stackView.axis = .vertical
+        return stackView
+    }()
+    
+    let authCodeTextField = Utilities().inputContainerTextField(withPlaceholder: "인증코드", fontSize: textFieldFontSize)
+    
+    let timer: UILabel = {
+        let label = UILabel()
+        label.textColor = .warningColor
+        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
+        label.adjustsFontForContentSizeCategory = true
+        return label
+    }()
+    
+    let authCheckButton = CustomButton(title: "확인", backgroundColor: .brandColor, titleColor: .white, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
+    
+    // 인증코드tf + 인증코드 확인버튼 + description
+    lazy var authCheckStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [authCodeTextField, authCheckButton])
+        stackView.axis = .horizontal
+        stackView.spacing = 4
+        return stackView
+    }()
+    
+    let authCodeErrorLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
+        label.adjustsFontForContentSizeCategory = true
+        return label
+    }()
+    
+    lazy var authStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [authCheckStack, authCodeErrorLabel])
+        stackView.axis = .vertical
+        return stackView
     }()
     
     let passwordLabel = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: descriptionFontSize)
@@ -67,40 +130,24 @@ class SignUpFormView: UIView {
         return label
     }()
     
-    let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이메일", textColor: .color51, fontSize: descriptionFontSize)
-    
-    let emailTextField = Utilities().inputContainerTextField(withPlaceholder: "이메일", fontSize: textFieldFontSize)
-    
-    let emailCheckButton = CustomButton(title: "인증요청", backgroundColor: .brandColor, titleColor: .white, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
-    
-    let emailErrorLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
-        label.adjustsFontForContentSizeCategory = true
-        return label
+    // 비밀번호 + 비밀번호tf + description + 비밀번호 일치tf + description
+    lazy var passwordEnterStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField, passwordErrorLabel])
+        stackView.axis = .vertical
+        return stackView
     }()
     
-    let authCodeTextField = Utilities().inputContainerTextField(withPlaceholder: "인증코드", fontSize: textFieldFontSize)
-    
-    let authCheckButton = CustomButton(title: "확인", backgroundColor: .brandColor, titleColor: .white, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
-    
-    var authStack = UIStackView()
-    
-    let authCodeErrorLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
-        label.adjustsFontForContentSizeCategory = true
-        return label
+    lazy var passwordCheckStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [checkPasswordTextField, checkPasswordErrorLabel])
+        stackView.axis = .vertical
+        return stackView
     }()
     
-    var timer: UILabel = {
-        let label = UILabel()
-        label.textColor = .warningColor
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
-        label.adjustsFontForContentSizeCategory = true
-        return label
+    lazy var stack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [usernameStack, emailStack, authStack, passwordEnterStack, passwordCheckStack])
+        stackView.axis = .vertical
+        stackView.spacing = 10
+        return stackView
     }()
     
     let bottomButtonView = BottomButtonView(title: "시작하기")
@@ -111,120 +158,76 @@ class SignUpFormView: UIView {
         super.init(frame: frame)
         backgroundColor = .white
         
-        constraints()
-        setupAuthStack()
+        configureViewComponents()
+        setupConstraints()
         authStack.isHidden = true
         passwordTextField.isSecureTextEntry = true
         checkPasswordTextField.isSecureTextEntry = true
+        bottomButtonView.button.isEnabled = false
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func constraints() {
+    private func configureViewComponents() {
         addSubview(progressBar)
+        progressBar.addSubview(colorBar)
+        addSubview(titleLabel)
+        addSubview(bottomButtonView)
+        addSubview(stack)
+        emailCheckStack.addSubview(emailCheckButton)
+        authStack.addSubview(authCheckStack)
+        authCheckStack.addSubview(authCheckButton)
+        authCodeTextField.addSubview(timer)
+    }
+    
+    private func setupConstraints() {
         progressBar.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.left.equalToSuperview()
+            make.leading.equalToSuperview()
             make.centerX.equalToSuperview()
             make.height.equalTo(4)
         }
         
-        progressBar.addSubview(colorBar)
         colorBar.snp.makeConstraints { make in
-            make.left.equalToSuperview()
+            make.leading.equalToSuperview()
             make.height.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.666)
         }
         
-        addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(progressBar).offset(26)
-            make.left.equalToSuperview().offset(20)
+            make.top.equalTo(progressBar).offset(30)
+            make.leading.equalToSuperview().offset(15)
         }
         
-        addSubview(bottomButtonView)
-        bottomButtonView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.left.equalToSuperview()
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+        emailCheckButton.snp.makeConstraints { make in
+            make.width.equalToSuperview().multipliedBy(0.29)
         }
-    }
-    
-    func setupAuthStack() {
-        // 이름 + 이름tf
-        let usernameStack = UIStackView(arrangedSubviews: [userNameLabel, userNameTextField])
-        usernameStack.axis = .vertical
         
-        // 아이디 + 아이디tf + 중복확인 + description
-        let idCheckStack = UIStackView(arrangedSubviews: [userIDTextField, userIDCheckButton])
-        idCheckStack.axis = .horizontal
-        idCheckStack.spacing = 4
+        authCheckStack.snp.makeConstraints { make in
+            make.width.equalTo(emailCheckStack)
+        }
+
+        authCheckButton.snp.makeConstraints { make in
+            make.width.equalTo(emailCheckButton)
+        }
         
-        let idStack = UIStackView(arrangedSubviews: [userIDLabel, idCheckStack, userIDErrorLabel])
-        idStack.axis = .vertical
+        timer.snp.makeConstraints { make in
+            make.centerY.equalTo(authCodeTextField)
+            make.trailing.equalTo(authCodeTextField.snp.trailing).inset(11)
+        }
         
-        // 비밀번호 + 비밀번호tf + description + 비밀번호 일치tf + description
-        let passwordEnterStack = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField, passwordErrorLabel])
-        passwordEnterStack.axis = .vertical
-        
-        let passwordCheckStack = UIStackView(arrangedSubviews: [checkPasswordTextField, checkPasswordErrorLabel])
-        passwordCheckStack.axis = .vertical
-        
-        // 이메일 + 이메일tf + 이메일 중복버튼 + description
-        let emailCheckStack = UIStackView(arrangedSubviews: [emailTextField, emailCheckButton])
-        emailCheckStack.axis = .horizontal
-        emailCheckStack.spacing = 4
-        
-        let emailStack = UIStackView(arrangedSubviews: [emailLabel, emailCheckStack, emailErrorLabel])
-        emailStack.axis = .vertical
-        
-        // 인증코드tf + 인증코드 확인버튼 + description
-        let authCheckStack = UIStackView(arrangedSubviews: [authCodeTextField, authCheckButton])
-        authCheckStack.axis = .horizontal
-        authCheckStack.spacing = 4
-        
-        authStack = UIStackView(arrangedSubviews: [authCheckStack, authCodeErrorLabel])
-        authStack.axis = .vertical
-        
-        let stack = UIStackView(arrangedSubviews: [usernameStack, idStack, passwordEnterStack, passwordCheckStack, emailStack, authStack])
-        stack.axis = .vertical
-        stack.spacing = 10
-        
-        // stack constraints
-        addSubview(stack)
         stack.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(30)
-            make.left.equalTo(titleLabel)
-            make.centerX.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(15)
             make.bottom.lessThanOrEqualTo(bottomButtonView.snp.top).offset(-20)
         }
         
-        idCheckStack.addSubview(userIDCheckButton)
-        userIDCheckButton.snp.makeConstraints { make in
-            make.width.equalTo(stack.snp.width).multipliedBy(0.29)
-        }
-        
-        emailCheckStack.addSubview(emailCheckButton)
-        emailCheckButton.snp.makeConstraints { make in
-            make.width.equalTo(userIDCheckButton)
-        }
-        
-        authStack.addSubview(authCheckStack)
-        authCheckStack.snp.makeConstraints { make in
-            make.width.equalTo(idCheckStack)
-        }
-        
-        authCheckStack.addSubview(authCheckButton)
-        authCheckButton.snp.makeConstraints { make in
-            make.width.equalTo(userIDCheckButton)
-        }
-        
-        authCheckStack.addSubview(timer)
-        timer.snp.makeConstraints { make in
-            make.centerY.equalTo(authCheckStack)
-            make.right.equalTo(authCodeTextField.snp.right).inset(11)
+        bottomButtonView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
     }
 }

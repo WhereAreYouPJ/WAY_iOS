@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class FinishResetPasswordView: UIView {
+class PasswordFinishResetView: UIView {
     // MARK: - Properties
     
     let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "비밀번호 재설정이 완료되었습니다", textColor: .color34, fontSize: 22)
@@ -21,33 +21,35 @@ class FinishResetPasswordView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
-        constraints()
+        configureViewComponents()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func constraints() {
+    private func configureViewComponents() {
         addSubview(titleLabel)
+        addSubview(descriptionLabel)
+        addSubview(bottomButtonView)
+    }
+    
+    private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(38)
-            make.left.equalToSuperview().offset(15)
+            make.leading.equalToSuperview().offset(15)
             make.width.equalToSuperview().multipliedBy(0.477)
-            make.height.equalTo(titleLabel.snp.width).multipliedBy(0.402)
         }
         
-        addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(26)
-            make.left.equalToSuperview().offset(15)
+            make.leading.equalToSuperview().inset(15)
         }
         
-        addSubview(bottomButtonView)
         bottomButtonView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.left.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
     }

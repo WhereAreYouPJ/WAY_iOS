@@ -22,4 +22,3 @@ class AccountLoginUseCaseImpl: AccountLoginUseCase {
         memberRepository.login(request: request, completion: completion)
     }
 }
-

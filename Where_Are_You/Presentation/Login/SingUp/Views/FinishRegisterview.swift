@@ -38,7 +38,7 @@ class FinishRegisterview: UIView {
         addSubview(progressBar)
         progressBar.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.left.equalToSuperview()
+            make.leading.equalToSuperview()
             make.centerX.equalToSuperview()
             make.height.equalTo(4)
         }
@@ -46,7 +46,7 @@ class FinishRegisterview: UIView {
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(progressBar).offset(30)
-            make.left.equalToSuperview().offset(15)
+            make.leading.equalToSuperview().offset(15)
             make.width.equalToSuperview().multipliedBy(0.477)
             make.height.equalTo(titleLabel.snp.width).multipliedBy(0.402)
         }
@@ -55,13 +55,13 @@ class FinishRegisterview: UIView {
         descriptionLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(26)
-            make.left.equalTo(titleLabel)
+            make.leading.equalTo(titleLabel)
         }
         
         addSubview(bottomButtonView)
         bottomButtonView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.left.equalToSuperview()    
+            make.leading.equalToSuperview()    
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
     }

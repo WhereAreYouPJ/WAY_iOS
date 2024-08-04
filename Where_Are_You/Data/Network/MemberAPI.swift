@@ -1,5 +1,5 @@
 //
-//  AuthAPI.swift
+//  MemberAPI.swift
 //  Where_Are_You
 //
 //  Created by 오정석 on 1/8/2024.
@@ -7,7 +7,7 @@
 
 import Moya
 
-enum AuthAPI {
+enum MemberAPI {
     case signUp(request: SignUpBody)
     case resetPassword(request: ResetPasswordBody)
     case logout(request: LogoutBody)
@@ -20,7 +20,7 @@ enum AuthAPI {
     case checkEmail(request: CheckEmailParameters)
 }
 
-extension AuthAPI: TargetType {
+extension MemberAPI: TargetType {
     var baseURL: URL {
         return URL(string: Config.baseURL)!
     }
@@ -80,11 +80,11 @@ extension AuthAPI: TargetType {
         case .memberDetails(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .checkEmail(let request):
-            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+            return .requestParameters(parameters: ["email": request.email], encoding: URLEncoding.queryString)
         }
     }
     
-    var headers: [String : String]? {
+    var headers: [String: String]? {
         return ["Content-Type": "application/json"]
     }
     

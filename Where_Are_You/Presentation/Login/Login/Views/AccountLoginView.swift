@@ -43,7 +43,7 @@ class AccountLoginView: UIView {
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(34)
-            make.left.equalToSuperview().offset(21)
+            make.leading.equalToSuperview().offset(21)
         }
         
         let idStack = UIStackView(arrangedSubviews: [emailLabel, emailTextField, emailErrorLabel])
@@ -60,14 +60,14 @@ class AccountLoginView: UIView {
         stack.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(30)
-            make.left.equalToSuperview().offset(21)
+            make.leading.equalToSuperview().offset(21)
         }
         
         addSubview(loginButton)
         loginButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(stack.snp.bottom).offset(30)
-            make.left.equalTo(stack.snp.left)
+            make.leading.equalTo(stack.snp.leading)
             make.height.equalTo(loginButton.snp.width).multipliedBy(0.145)
         }
         
@@ -95,10 +95,10 @@ class AccountLoginView: UIView {
         let isPasswordEntered = !(passwordTextField.text?.isEmpty ?? true)
         
         if isUserIdEntered && isPasswordEntered {
-            loginButton.backgroundColor = .brandColor
+            loginButton.updateBackgroundColor(.brandColor)
             loginButton.isEnabled = true
         } else {
-            loginButton.backgroundColor = .color171
+            loginButton.updateBackgroundColor(.color171)
             loginButton.isEnabled = false
         }
     }

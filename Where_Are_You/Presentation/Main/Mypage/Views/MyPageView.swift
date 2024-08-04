@@ -96,7 +96,7 @@ class MyPageView: UIView {
         button.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.left.equalToSuperview().inset(14)
+            make.leading.equalToSuperview().inset(14)
         }
         
         let imageView = UIImageView()
@@ -105,7 +105,7 @@ class MyPageView: UIView {
         imageView.snp.makeConstraints { make in
             make.height.width.equalTo(22)
             make.centerY.equalToSuperview()
-            make.right.equalToSuperview().inset(13)
+            make.trailing.equalToSuperview().inset(13)
         }
         return button
     }()
@@ -160,7 +160,7 @@ class MyPageView: UIView {
         // 편집 버튼
         imageEditButton.snp.makeConstraints { make in
             make.width.height.equalTo(24)
-            make.right.equalTo(profileImageView.snp.right).offset(6)
+            make.trailing.equalTo(profileImageView.snp.trailing).offset(6)
             make.bottom.equalTo(profileImageView.snp.bottom)
         }
         
@@ -179,7 +179,7 @@ class MyPageView: UIView {
         
         userNameEditButton.snp.makeConstraints { make in
             make.centerY.equalTo(userNameLabel)
-            make.left.equalTo(userNameLabel.snp.right)
+            make.leading.equalTo(userNameLabel.snp.trailing)
         }
         
         // 유저코드
@@ -248,7 +248,7 @@ class MyPageView: UIView {
         button.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.left.equalToSuperview().offset(12)
+            make.leading.equalToSuperview().offset(12)
         }
         button.snp.makeConstraints { make in
             make.height.equalTo(45)

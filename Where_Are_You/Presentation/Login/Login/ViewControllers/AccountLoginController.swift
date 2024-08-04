@@ -28,6 +28,7 @@ class AccountLoginController: UIViewController {
     func setupUI() {
         self.view = accountLoginView
         configureNavigationBar(title: "로그인", backButtonAction: #selector(backButtonTapped))
+        accountLoginView.passwordTextField.isSecureTextEntry = true
     }
     
     func setupActions() {
@@ -81,7 +82,7 @@ class AccountLoginController: UIViewController {
     }
     
     @objc func findAccountButtonTapped() {
-        let controller = SearchAccountController()
+        let controller = AccountSearchViewController()
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true, completion: nil)

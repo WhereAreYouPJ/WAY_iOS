@@ -8,35 +8,61 @@
 import UIKit
 import SnapKit
 
-class CheckIDView: UIView {
+class AccountCheckView: UIView {
     // MARK: - Properties
     
     private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "회원님의 가입정보를 확인해주세요", textColor: .color34, fontSize: 22)
     
-    private let idLabel = CustomLabel(UILabel_NotoSans: .medium, text: "회원님의 가입정보와 일치하는 이메일 주소는", textColor: .color34, fontSize: 14)
+    private let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "회원님의 가입정보와 일치하는 이메일 주소는", textColor: .color34, fontSize: 14)
     
-//    let accountImage
+    let accountImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "icon-account")
+        return imageView
+    }()
     
-    lazy var idDescriptionLabel = CustomLabel(UILabel_NotoSans: .bold, text: "", textColor: .letterBrandColor, fontSize: 18)
+    var emailDescriptionLabel = CustomLabel(UILabel_NotoSans: .bold, text: "", textColor: .letterBrandColor, fontSize: 18)
     
-    private let idLabel2 = CustomLabel(UILabel_NotoSans: .medium, text: "입니다.", textColor: .color34, fontSize: 14)
+    private let emailLabel2 = CustomLabel(UILabel_NotoSans: .medium, text: "입니다.", textColor: .color34, fontSize: 14)
     
-    let separatorView = UIView()
+    private lazy var emailDescriptionStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [accountImage, emailDescriptionLabel, emailLabel2])
+        stackView.axis = .horizontal
+        return stackView
+    }()
+    
+    private let separatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .color231
+        return view
+    }()
     
     private let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: "로그인 또는 비밀번호 찾기 버튼을 눌러주세요.", textColor: .color102, fontSize: 14)
     
-    lazy var loginButton = CustomButton(title: "로그인하기", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
+    let loginButton = CustomButton(title: "로그인하기", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
     
-    lazy var searchPasswordButton = CustomButton(title: "비밀번호 찾기", backgroundColor: .white, titleColor: .letterBrandColor, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
+    let searchPasswordButton: UIButton = {
+        let button = CustomButton(title: "비밀번호 재설정", backgroundColor: .white, titleColor: .letterBrandColor, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
+        button.layer.borderColor = UIColor.brandColor.cgColor
+        button.layer.borderWidth = 1
+        return button
+    }()
+    
+    private lazy var buttonStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [loginButton, searchPasswordButton])
+        stackView.spacing = 10
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
         
-        setupTitle()
-        setupDescription()
-        setupButtons()
+        configureViewComponents()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -44,61 +70,54 @@ class CheckIDView: UIView {
     }
     
     // MARK: - Helpers
-    func setupTitle() {
+    private func configureViewComponents() {
         addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(34)
-            make.left.equalToSuperview().offset(15)
-            make.width.equalToSuperview().multipliedBy(0.48)
-        }
+        addSubview(emailLabel)
+        addSubview(emailDescriptionStack)
+        addSubview(separatorView)
+        addSubview(descriptionLabel)
+        addSubview(buttonStack)
     }
     
-    func setupDescription() {
-        let idDescriptionStack = UIStackView(arrangedSubviews: [idDescriptionLabel, idLabel2])
-        idDescriptionStack.axis = .horizontal
-        
-        let stack = UIStackView(arrangedSubviews: [idLabel, idDescriptionStack])
-        stack.axis = .vertical
-        
-        addSubview(stack)
-        stack.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(41)
-            make.left.equalToSuperview().offset(15)
+    private func setupConstraints() {
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(34)
+            make.leading.equalToSuperview().offset(15)
+            make.width.equalToSuperview().multipliedBy(0.48)
         }
         
-        addSubview(separatorView)
-        separatorView.backgroundColor = .color234
+        emailLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(41)
+            make.leading.equalToSuperview().inset(15)
+        }
+        
+        emailDescriptionStack.snp.makeConstraints { make in
+            make.top.equalTo(emailLabel.snp.bottom)
+            make.leading.equalTo(emailLabel.snp.leading)
+        }
+        
+        accountImage.snp.makeConstraints { make in
+            make.height.width.equalTo(40)
+        }
+        
         separatorView.snp.makeConstraints { make in
             make.height.equalTo(1)
             make.centerX.equalToSuperview()
-            make.left.right.equalTo(stack)
-            make.top.equalTo(stack.snp.bottom).offset(6)
+            make.leading.trailing.equalToSuperview().inset(15)
+            make.top.equalTo(emailDescriptionStack.snp.bottom).offset(6)
         }
         
-        addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { make in
             make.top.equalTo(separatorView.snp.bottom).offset(12)
-            make.left.equalTo(stack)
+            make.leading.equalToSuperview().inset(15)
         }
-    }
-    
-    func setupButtons() {
-        let buttonStack = UIStackView(arrangedSubviews: [loginButton, searchPasswordButton])
-        buttonStack.spacing = 10
-        buttonStack.axis = .vertical
-        buttonStack.distribution = .fillEqually
-        
-        searchPasswordButton.layer.borderColor = UIColor.brandColor.cgColor
-        searchPasswordButton.layer.borderWidth = 1
         
         loginButton.snp.makeConstraints { make in
             make.height.equalTo(buttonStack.snp.width).multipliedBy(0.14)
         }
         
-        addSubview(buttonStack)
         buttonStack.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.left.equalToSuperview().offset(15)
+            make.leading.trailing.equalToSuperview().inset(15)
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(24)
         }
     }

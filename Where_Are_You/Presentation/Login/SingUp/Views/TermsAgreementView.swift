@@ -14,7 +14,7 @@ class TermsAgreementView: UIView {
     
     private let progressBar: UIView = {
         let view = UIView()
-        view.backgroundColor = .color234
+        view.backgroundColor = .color235
         return view
     }()
     
@@ -26,8 +26,9 @@ class TermsAgreementView: UIView {
         return view
     }()
     
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "회원가입에 필요한 약관에 동의해주세요", textColor: .color34, fontSize: 22)
+    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "회원가입에 필요한\n약관에 동의해주세요", textColor: .color34, fontSize: 22)
     
+    // TODO: 추후에 agreeView를 이미지 말고 실제로 만들어야함
     private let agreeView: UIView = {
         let view = UIView()
         let imageview = UIImageView()
@@ -35,8 +36,7 @@ class TermsAgreementView: UIView {
         view.addSubview(imageview)
         imageview.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.left.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.leading.bottom.equalToSuperview()
         }
         return view
     }()
@@ -47,48 +47,51 @@ class TermsAgreementView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
-        
-        constraints()
+        configureViewComponents()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func constraints() {
+    private func configureViewComponents() {
         addSubview(progressBar)
+        progressBar.addSubview(colorBar)
+        addSubview(titleLabel)
+        addSubview(agreeView)
+        agreeView.addSubview(bottomButtonView)
+    }
+    
+    private func setupConstraints() {
         progressBar.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.left.equalToSuperview()
+            make.leading.equalToSuperview()
             make.centerX.equalToSuperview()
             make.height.equalTo(4)
         }
         
-        progressBar.addSubview(colorBar)
         colorBar.snp.makeConstraints { make in
-            make.left.equalToSuperview()
+            make.leading.equalToSuperview()
             make.height.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.333)
         }
         
-        addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(progressBar.snp.bottom).offset(26)
-            make.left.equalToSuperview().offset(20)
+            make.leading.equalToSuperview().offset(20)
             make.width.equalTo(200)
         }
         
-        addSubview(agreeView)
         agreeView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
-            make.left.equalToSuperview()
+            make.leading.equalToSuperview()
         }
         
-        agreeView.addSubview(bottomButtonView)
         bottomButtonView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.left.equalToSuperview()
+            make.leading.equalToSuperview()
             make.bottom.equalTo(agreeView.snp.bottom)
         }
     }

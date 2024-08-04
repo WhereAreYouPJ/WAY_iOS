@@ -10,12 +10,12 @@ import SnapKit
 
 class CheckIDViewController: UIViewController {
     // MARK: - Propeties
-    let checkIDView = CheckIDView()
-    var userId: String = ""
+    let accountCheckView = AccountCheckView()
+    var email: String = ""
     
     // MARK: - Lifecycle
-    init(userId: String) {
-        self.userId = userId
+    init(email: String) {
+        self.email = email
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -25,20 +25,20 @@ class CheckIDViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view = checkIDView
+        self.view = accountCheckView
         setupUI()
         buttonActions()
     }
     // MARK: - Helpers
     
     func setupUI() {
-        configureNavigationBar(title: "아이디 찾기", showBackButton: false)
-        checkIDView.idDescriptionLabel.text = userId
+        configureNavigationBar(title: "계정 찾기", showBackButton: false)
+        accountCheckView.emailDescriptionLabel.text = email
     }
     
     func buttonActions() {
-        checkIDView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
-        checkIDView.searchPasswordButton.addTarget(self, action: #selector(searchPasswordButtonTapped), for: .touchUpInside)
+        accountCheckView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        accountCheckView.searchPasswordButton.addTarget(self, action: #selector(searchPasswordButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Selectors
@@ -51,10 +51,9 @@ class CheckIDViewController: UIViewController {
     }
     
     @objc func searchPasswordButtonTapped() {
-        let controller = SearchPasswordViewController()
+        let controller = PasswordResetViewController(email: email)
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true, completion: nil)
-        
     }
 }
