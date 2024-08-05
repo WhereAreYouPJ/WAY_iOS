@@ -63,6 +63,7 @@ class AccountSearchViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.accountSearchView.authNumberErrorLabel.text = message
                 self?.accountSearchView.authNumberErrorLabel.textColor = .brandColor
+                self?.accountSearchView.authNumberCheckButton.updateTitle("인증 완료")
                 self?.accountSearchView.authNumberCheckButton.updateBackgroundColor(.color171)
                 self?.accountSearchView.authNumberCheckButton.isEnabled = false
                 self?.accountSearchView.bottomButtonView.button.isEnabled = true

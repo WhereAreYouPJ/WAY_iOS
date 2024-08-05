@@ -96,6 +96,11 @@ class SignUpFormViewController: UIViewController {
         viewModel.onEmailVerifyCodeMessage = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
                 self?.updateStatus(label: self?.signUpView.authCodeErrorLabel, message: message, isAvailable: isAvailable, textField: self?.signUpView.authCodeTextField)
+                if isAvailable == true {
+                    self?.signUpView.authCheckButton.updateTitle("인증 완료")
+                    self?.signUpView.authCheckButton.updateBackgroundColor(.color171)
+                    self?.signUpView.authCheckButton.isEnabled = isAvailable
+                }
             }
         }
         
@@ -103,7 +108,6 @@ class SignUpFormViewController: UIViewController {
         viewModel.onUpdateTimer = { [weak self] timeString in
             DispatchQueue.main.async {
                 self?.signUpView.timer.text = timeString
-                print("타이머 시작")
             }
         }
     }

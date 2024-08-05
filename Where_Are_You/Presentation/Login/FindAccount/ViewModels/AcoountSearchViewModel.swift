@@ -25,15 +25,16 @@ class AcoountSearchViewModel {
     
     var onUpdateTimer: ((String) -> Void)?
     
-    private var timer: Timer?
-    private var timerCount: Int = 300
-    
     // MARK: - LifeCycle
     
     init(emailSendUseCase: EmailSendUseCase,
          emailVerifyUseCase: EmailVerifyUseCase) {
         self.emailSendUseCase = emailSendUseCase
         self.emailVerifyUseCase = emailVerifyUseCase
+        
+        timerHelper.onUpdateTimer = { [weak self] timeString in
+            self?.onUpdateTimer?(timeString)
+        }
     }
     
     // MARK: - Helpers

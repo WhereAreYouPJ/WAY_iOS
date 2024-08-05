@@ -16,6 +16,8 @@ class SignUpViewModel {
     private let emailVerifyUseCase: EmailVerifyUseCase
     private let timerHelper = TimerHelper()
     
+    var onUpdateTimer: ((String) -> Void)?
+    
     // Input
     var signUpBody = SignUpBody() {
         didSet {
@@ -37,8 +39,6 @@ class SignUpViewModel {
     var onPasswordFormatMessage: ((String, Bool) -> Void)?
     var onCheckPasswordFormatMessage: ((String, Bool) -> Void)?
     
-    var onUpdateTimer: ((String) -> Void)?
-    
     // MARK: - LifeCycle
     
     init(accountSignUpUseCase: AccountSignUpUseCase,
@@ -49,6 +49,10 @@ class SignUpViewModel {
         self.checkEmailUseCase = checkEmailUseCase
         self.emailSendUseCase = emailSendUseCase
         self.emailVerifyUseCase = emailVerifyUseCase
+        
+        timerHelper.onUpdateTimer = { [weak self] timeString in
+            self?.onUpdateTimer?(timeString)
+        }
     }
     
     // MARK: - Helpers(로그인, 아이디, 이메일, 코드확인)
@@ -112,6 +116,7 @@ class SignUpViewModel {
             switch result {
             case .success(let data):
                 self.timerHelper.startTimer()
+                print("요청버튼 눌려서 타이머 시작")
                 self.sendEmailVerificationCode(email: data.email)
             case .failure(let error):
                 self.onEmailSendMessage?(error.localizedDescription, false)
