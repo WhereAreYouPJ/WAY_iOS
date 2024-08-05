@@ -108,8 +108,8 @@
 		99FBA5542C453B6D002EEEC7 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5532C453B6D002EEEC7 /* ScheduleViewModel.swift */; };
 		99FBA5562C453BDD002EEEC7 /* FeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5552C453BDD002EEEC7 /* FeedTableViewController.swift */; };
 		99FBA5582C453C05002EEEC7 /* FeedTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5572C453C05002EEEC7 /* FeedTableViewModel.swift */; };
-		D5B79A162C5B83CD004EDDF2 /* CreateScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B79A152C5B83CD004EDDF2 /* CreateScheduleView.swift */; };
-		D5B79A1A2C5B83F6004EDDF2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B79A192C5B83F6004EDDF2 /* CalendarView.swift */; };
+		D55DFC2F2C61021800EEEF51 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55DFC2E2C61021800EEEF51 /* CalendarView.swift */; };
+		D55DFC312C61022900EEEF51 /* CreateScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */; };
 		D79EFAD9E5409233E5338E46 /* Pods_Where_Are_You.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */; };
 /* End PBXBuildFile section */
 
@@ -246,8 +246,8 @@
 		A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5015275FE458D5F6450041 /* Pods-Where_Are_You.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You.release.xcconfig"; path = "Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You.release.xcconfig"; sourceTree = "<group>"; };
 		D53078812C5D3C9D0041BBB7 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		D5B79A152C5B83CD004EDDF2 /* CreateScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateScheduleView.swift; path = Where_Are_You/Presentation/Login/Login/CreateScheduleView.swift; sourceTree = SOURCE_ROOT; };
-		D5B79A192C5B83F6004EDDF2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CalendarView.swift; path = Where_Are_You/Presentation/Login/Login/CalendarView.swift; sourceTree = SOURCE_ROOT; };
+		D55DFC2E2C61021800EEEF51 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleView.swift; sourceTree = "<group>"; };
 		EF2914052EE4B6C83BE57C93 /* Pods-Where_Are_You_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -825,8 +825,8 @@
 		D5B79A122C5B838B004EDDF2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D5B79A152C5B83CD004EDDF2 /* CreateScheduleView.swift */,
-				D5B79A192C5B83F6004EDDF2 /* CalendarView.swift */,
+				D55DFC2E2C61021800EEEF51 /* CalendarView.swift */,
+				D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1060,7 +1060,6 @@
 			files = (
 				99949F4B2C587BAC00AE0177 /* FeedListView.swift in Sources */,
 				995358472C00C555005BF799 /* Where_Are_You.xcdatamodeld in Sources */,
-				D5B79A1A2C5B83F6004EDDF2 /* CalendarView.swift in Sources */,
 				9950C65B2C10B0F5003155A7 /* SignUpFormViewController.swift in Sources */,
 				99FBA5562C453BDD002EEEC7 /* FeedTableViewController.swift in Sources */,
 				99FBA5502C45394E002EEEC7 /* BannerViewModel.swift in Sources */,
@@ -1076,7 +1075,6 @@
 				99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */,
 				99F78F1E2C09C98D004C0C72 /* CommonSearchAuthView.swift in Sources */,
 				99FBA5522C453B43002EEEC7 /* ScheduleViewController.swift in Sources */,
-				D5B79A162C5B83CD004EDDF2 /* CreateScheduleView.swift in Sources */,
 				9950C65D2C10B9BB003155A7 /* ResetPasswordView.swift in Sources */,
 				990F57A32C27F9FE00F6E1AD /* CheckEmailAvailabilityUseCase.swift in Sources */,
 				9953583D2C00C555005BF799 /* AppDelegate.swift in Sources */,
@@ -1119,6 +1117,7 @@
 				99EC78CE2C11DBA5007C4415 /* ResetPasswordViewController.swift in Sources */,
 				99B397832C0C3E9D00D7A109 /* CheckIDView.swift in Sources */,
 				99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */,
+				D55DFC312C61022900EEEF51 /* CreateScheduleView.swift in Sources */,
 				99FBA5542C453B6D002EEEC7 /* ScheduleViewModel.swift in Sources */,
 				99949F552C58A72B00AE0177 /* FriendsTableViewCell.swift in Sources */,
 				99CA4F282C33B72C007C027C /* ResetPasswordUseCase.swift in Sources */,
@@ -1131,6 +1130,7 @@
 				99149FEB2C4F97C300136097 /* ValidationHelper.swift in Sources */,
 				9911F98A2C3F6B4100D0FDC9 /* BannerCollectionViewCell.swift in Sources */,
 				99C9B2522C022DE3008D7CBD /* AccountLoginController.swift in Sources */,
+				D55DFC2F2C61021800EEEF51 /* CalendarView.swift in Sources */,
 				997DC6552C3D231000EACA5F /* Config.swift in Sources */,
 				99F78F1C2C09BB8F004C0C72 /* SearchAccountController.swift in Sources */,
 				99D8FBC02C3BA2180062AF10 /* CustomLabel.swift in Sources */,

@@ -15,7 +15,7 @@ struct CreateScheduleView: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, content: {
-                PlaceholderTextField(text: $title, placeholder: "일정명을 입력해주세요.", placeholderColor: Color(.color118))
+                TextField("", text: $title, prompt: Text("메모를 작성해주세요.").foregroundColor(Color(.color118)))
                 Divider()
                     .padding(.bottom, 16)
                 
@@ -48,22 +48,6 @@ struct CreateScheduleView: View {
             }
             .navigationTitle("일정 추가")
             .navigationBarTitleDisplayMode(.inline)
-        }
-    }
-}
-
-struct PlaceholderTextField: View {
-    @Binding var text: String
-    var placeholder: String
-    var placeholderColor: Color
-
-    var body: some View {
-        ZStack(alignment: .leading) {
-            if text.isEmpty {
-                Text(placeholder)
-                    .foregroundColor(placeholderColor)
-            }
-            TextField("", text: $text)
         }
     }
 }
@@ -135,7 +119,7 @@ struct AddPlaceView: View {
                 Text("위치 추가")
                     .foregroundStyle(Color(.color118))
             } else {
-                
+                // TODO: 위치 추가 결과
             }
         }
         
@@ -222,29 +206,46 @@ struct SetColorView: View {
 
 struct MemoView: View {
     @State private var memo = ""
+    let maxLength = 10
     
     var body: some View {
-        Text("메모")
+        HStack {
+            Text("메모")
+            Spacer()
+            Text("\(memo.count)/\(maxLength)")
+                            .foregroundColor(memo.count == maxLength ? .red : .gray)
+        }
         Divider()
-        
-        TextEditor(text: $memo)
-            .overlay(alignment: .topLeading) {
-                HStack {
-                    Text("메모를 작성해주세요.")
-                        .foregroundStyle(memo.isEmpty ? Color(.color118) : .clear)
-                    .padding(4)
-                    
-                    Spacer()
-                    
-                    Text("메모를 작성해주세요.")
-                        .foregroundStyle(memo.isEmpty ? Color(.color118) : .clear)
-                    .padding(4)
-                }
+
+        ZStack(alignment: .topLeading) {
+            if memo.isEmpty {
+                Text("메모를 작성해주세요.")
+                    .foregroundStyle(memo.isEmpty ? Color(.color118) : .clear)
+                    .padding(10)
             }
-        .padding(4)
+            
+            TextEditor(text: $memo)
+                .modifier(MaxLengthModifier(text: $memo, maxLength: maxLength))
+                .padding(2)
+                .opacity(memo.isEmpty ? 0.25 : 1)
+        }
         .overlay(
             RoundedRectangle(cornerRadius: 6)
                 .stroke(Color(.color212))
         )
+    }
+}
+
+struct MaxLengthModifier: ViewModifier {
+    @Binding var text: String
+    let maxLength: Int
+
+    func body(content: Content) -> some View {
+        content
+            .onChange(of: text) { newValue in
+                if newValue.count > maxLength {
+                    text = String(newValue.prefix(maxLength))
+                }
+            }
     }
 }
