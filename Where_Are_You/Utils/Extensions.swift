@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 // MARK: - 로그인 확인을 위한 UserDefaults 확장
 
@@ -100,5 +101,19 @@ extension UIFont {
         }
         
         return UIFont(name: "\(weightString)", size: fontSize) ?? .systemFont(ofSize: fontSize, weight: weight)
+    }
+}
+
+extension Font {
+    static func pretendard(NotoSans weight: Font.Weight, fontSize: CGFloat) -> Font {
+        let uiFontWeight: UIFont.Weight
+        switch weight {
+        case .regular: uiFontWeight = .regular
+        case .bold: uiFontWeight = .bold
+        case .light: uiFontWeight = .light
+        case .medium: uiFontWeight = .medium
+        default: uiFontWeight = .regular
+        }
+        return Font(UIFont.pretendard(NotoSans: uiFontWeight, fontSize: fontSize))
     }
 }
