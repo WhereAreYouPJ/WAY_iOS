@@ -51,6 +51,7 @@ class CheckIDViewController: UIViewController {
     }
     
     @objc func searchPasswordButtonTapped() {
+        print("비밀번호 재설정 버튼 눌림")
         let controller = PasswordResetViewController(email: email)
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen

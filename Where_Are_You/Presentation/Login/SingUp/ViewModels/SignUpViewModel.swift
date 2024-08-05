@@ -116,7 +116,6 @@ class SignUpViewModel {
             switch result {
             case .success(let data):
                 self.timerHelper.startTimer()
-                print("요청버튼 눌려서 타이머 시작")
                 self.sendEmailVerificationCode(email: data.email)
             case .failure(let error):
                 self.onEmailSendMessage?(error.localizedDescription, false)

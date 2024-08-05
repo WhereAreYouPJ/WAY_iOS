@@ -54,18 +54,25 @@ class PasswordResetViewController: UIViewController {
     }
     
     private func setupBindings() {
-        viewModel.onPasswordValidation = { [weak self] result in
+        viewModel.onPasswordValidation = { [weak self] message, result in
             DispatchQueue.main.async {
                 self?.isPasswordValidate = result
-                self?.passwordResetView.resetPasswordDescription.text = "영문 대문자, 소문자로 시작하는 6~20자의 영문 대문자, 소문자, 숫자를 포함해 입력해주세요."
+                self?.passwordResetView.resetPasswordDescription.text = message
+                if result == false {
+                    self?.passwordResetView.resetPasswordDescription.textColor = .warningColor
+
+                }
                 self?.updateResetButtonState()
             }
         }
         
-        viewModel.onPasswordCheck = { [weak self] result in
+        viewModel.onPasswordCheck = { [weak self] message, result in
             DispatchQueue.main.async {
                 self?.isPasswordCheck = result
-                self?.passwordResetView.checkPasswordDescription.text = "비밀번호가 일치하지 않습니다."
+                self?.passwordResetView.checkPasswordDescription.text = message
+                if result == false {
+                    self?.passwordResetView.checkPasswordDescription.textColor = .warningColor
+                }
                 self?.updateResetButtonState()
             }
         }

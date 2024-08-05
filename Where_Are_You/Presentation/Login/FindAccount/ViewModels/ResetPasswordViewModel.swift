@@ -12,8 +12,8 @@ class ResetPasswordViewModel {
     // MARK: - Properties
     private let resetPasswordUseCase: ResetPasswordUseCase
     
-    var onPasswordValidation: ((Bool) -> Void)?
-    var onPasswordCheck: ((Bool) -> Void)?
+    var onPasswordValidation: ((String, Bool) -> Void)?
+    var onPasswordCheck: ((String, Bool) -> Void)?
     var onResetPasswordSuccess: (() -> Void)?
     
     // MARK: - Lifecycle
@@ -37,17 +37,17 @@ class ResetPasswordViewModel {
     
     func checkPasswordForm(pw: String) {
         if ValidationHelper.isValidPassword(pw) {
-            onPasswordValidation?(true)
+            onPasswordValidation?("", true)
         } else {
-            onPasswordValidation?(false)
+            onPasswordValidation?("영문 대문자, 소문자로 시작하는 6~20자의 영문 대문자, 소문자, 숫자를 포함해 입력해주세요.", false)
         }
     }
     
     func checkSamePassword(pw: String, checkpw: String) {
         if ValidationHelper.isPasswordSame(pw, checkpw: checkpw) {
-            onPasswordCheck?(true)
+            onPasswordCheck?("", true)
         } else {
-            onPasswordCheck?(false)
+            onPasswordCheck?("비밀번호가 일치하지 않습니다.", false)
         }
     }
 }

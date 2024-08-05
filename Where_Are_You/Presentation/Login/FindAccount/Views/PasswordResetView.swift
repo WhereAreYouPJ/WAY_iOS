@@ -26,7 +26,7 @@ class PasswordResetView: UIView {
     
     private lazy var resetStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [passwordLabel, resetPasswordTextField, resetPasswordDescription])
-        resetStack.axis = .vertical
+        stackView.axis = .vertical
         return stackView
     }()
     
