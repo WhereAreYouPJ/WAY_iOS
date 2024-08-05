@@ -29,6 +29,7 @@ class NetworkAlert: UIView {
         button.setTitle("닫기", for: .normal)
         button.titleLabel?.font = UIFont.pretendard(NotoSans: .medium, fontSize: 16)
         button.layer.cornerRadius = 6
+        button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.color118.cgColor
         button.backgroundColor = .white
         return button

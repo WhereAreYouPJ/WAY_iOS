@@ -22,6 +22,7 @@ class SignUpViewModel {
             updateSignUpButtonState()
         }
     }
+    
     var email: String = ""
     
     // Output
@@ -75,7 +76,7 @@ class SignUpViewModel {
             onUserNameValidationMessage?("", true)
             signUpBody.userName = userName
         } else {
-            onUserNameValidationMessage?("invalidUserNameMessage", false)
+            onUserNameValidationMessage?(invalidUserNameMessage, false)
             signUpBody.userName = nil
         }
     }
@@ -109,8 +110,9 @@ class SignUpViewModel {
         
         checkEmailUseCase.execute(request: CheckEmailParameters(email: email)) { result in
             switch result {
-            case .success:
-                self.sendEmailVerificationCode(email: email)
+            case .success(let data):
+                self.timerHelper.startTimer()
+                self.sendEmailVerificationCode(email: data.email)
             case .failure(let error):
                 self.onEmailSendMessage?(error.localizedDescription, false)
             }
@@ -124,7 +126,6 @@ class SignUpViewModel {
             case .success:
                 self.email = email
                 self.onEmailSendMessage?(sendEmailVerifyCodeSuccessMessage, true)
-                self.timerHelper.startTimer()
             case .failure(let error):
                 self.onEmailSendMessage?(error.localizedDescription, false)
             }
@@ -141,8 +142,8 @@ class SignUpViewModel {
                 case .success:
                     self.signUpBody.email = self.email
                     self.onEmailVerifyCodeMessage?(emailVerifySuccessMessage, true)
-                case .failure:
-                    self.onEmailVerifyCodeMessage?(emailVerifyFailureMessage, false)
+                case .failure(let error):
+                    self.onEmailVerifyCodeMessage?(error.localizedDescription, false)
                     self.signUpBody.email = nil
                 }
             }

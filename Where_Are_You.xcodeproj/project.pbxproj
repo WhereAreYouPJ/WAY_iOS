@@ -310,7 +310,10 @@
 			isa = PBXGroup;
 			children = (
 				992F57C12C5B1E8900219C6B /* ParameterConvertible.swift */,
+				99D780DA2C6055A0005A3F30 /* FriendRequest */,
+				99D780D92C605592005A3F30 /* Schedule */,
 				992F57C42C5B264400219C6B /* Member */,
+				99D780DB2C6055B6005A3F30 /* Feed */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -768,6 +771,27 @@
 				99EC20A02C0D8E030018904D /* Repositories */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		99D780D92C605592005A3F30 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		99D780DA2C6055A0005A3F30 /* FriendRequest */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FriendRequest;
+			sourceTree = "<group>";
+		};
+		99D780DB2C6055B6005A3F30 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Feed;
 			sourceTree = "<group>";
 		};
 		99D8FBAD2C3B64040062AF10 /* Home */ = {

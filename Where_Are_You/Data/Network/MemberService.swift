@@ -121,7 +121,7 @@ class MemberService: MemberServiceProtocol {
         switch result {
         case .success(let response):
             do {
-                let _ = try response.filterSuccessfulStatusCodes()
+                try response.filterSuccessfulStatusCodes()
                 completion(.success(()))
             } catch let error {
                 completion(.failure(error))
@@ -130,29 +130,4 @@ class MemberService: MemberServiceProtocol {
             completion(.failure(error))
         }
     }
-    
-        // MARK: - HandleLoginResponse
-    //
-    //    private func handleLoginResponse(_ result: Result<Moya.Response, MoyaError>, completion: @escaping (Result<Void, Error>) -> Void) {
-    //        switch result {
-    //        case .success(let response):
-    //            do {
-    //                let filteredResponse = try response.filterSuccessfulStatusCodes()
-    //                let decodedResponse = try JSONDecoder().decode(GenericResponse<LoginResponse>.self, from: filteredResponse.data)
-    //                let loginData = decodedResponse.data
-    //
-    //                // 토큰을 UserDefaults에 저장
-    //                UserDefaultsManager.shared.saveAccessToken(loginData.accessToken)
-    //                UserDefaultsManager.shared.saveRefreshToken(loginData.refreshToken)
-    //                UserDefaultsManager.shared.saveMemberSeq(loginData.memberSeq)
-    //                UserDefaultsManager.shared.saveMemberCode(loginData.memberCode)
-    //
-    //                completion(.success(()))
-    //            } catch let error {
-    //                completion(.failure(error))
-    //            }
-    //        case .failure(let error):
-    //            completion(.failure(error))
-    //        }
-    //    }
 }

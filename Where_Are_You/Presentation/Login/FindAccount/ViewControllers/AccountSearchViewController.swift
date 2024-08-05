@@ -76,7 +76,6 @@ class AccountSearchViewController: UIViewController {
             }
         }
         
-        // TODO: 이메일 계정 검색하는 API물어본 뒤에 수정하기
         // 아이디 찾기 성공
         viewModel.onAccountSearchSuccess = { [weak self] email in
             DispatchQueue.main.async {

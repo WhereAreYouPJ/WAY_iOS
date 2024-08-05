@@ -17,9 +17,9 @@ class SignUpFormViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupActions()
         setupViewModel()
         setupBindings()
+        setupActions()
     }
     
     // MARK: - Helpers
@@ -104,6 +104,7 @@ class SignUpFormViewController: UIViewController {
         viewModel.onUpdateTimer = { [weak self] timeString in
             DispatchQueue.main.async {
                 self?.signUpView.timer.text = timeString
+                print("타이머 시작")
             }
         }
     }
@@ -117,9 +118,8 @@ class SignUpFormViewController: UIViewController {
         
         switch textField {
         case signUpView.userNameTextField:
-            viewModel.signUpBody.userName = userName
+            viewModel.checkUserNameValidation(userName: userName)
         case signUpView.passwordTextField:
-            viewModel.signUpBody.password = pw
             viewModel.checkPasswordAvailability(password: pw)
         case signUpView.checkPasswordTextField:
             viewModel.checkSamePassword(password: pw, checkPassword: checkpw)

@@ -205,17 +205,17 @@ class SignUpFormView: UIView {
             make.width.equalToSuperview().multipliedBy(0.29)
         }
         
+        timer.snp.makeConstraints { make in
+            make.centerY.equalTo(authCodeTextField)
+            make.trailing.equalTo(authCodeTextField.snp.trailing).inset(11)
+        }
+        
         authCheckStack.snp.makeConstraints { make in
             make.width.equalTo(emailCheckStack)
         }
 
         authCheckButton.snp.makeConstraints { make in
             make.width.equalTo(emailCheckButton)
-        }
-        
-        timer.snp.makeConstraints { make in
-            make.centerY.equalTo(authCodeTextField)
-            make.trailing.equalTo(authCodeTextField.snp.trailing).inset(11)
         }
         
         stack.snp.makeConstraints { make in
