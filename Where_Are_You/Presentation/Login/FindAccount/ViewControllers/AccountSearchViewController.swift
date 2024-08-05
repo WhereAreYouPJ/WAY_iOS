@@ -33,7 +33,8 @@ class AccountSearchViewController: UIViewController {
         let memberRepository = MemberRepository(memberService: memberService)
         viewModel = AcoountSearchViewModel(
             emailSendUseCase: EmailSendUseCaseImpl(memberRepository: memberRepository),
-            emailVerifyUseCase: EmailVerifyUseCaseImpl(memberRepository: memberRepository)
+            emailVerifyUseCase: EmailVerifyUseCaseImpl(memberRepository: memberRepository),
+            checkEmailUseCase: CheckEmailUseCaseImpl(memberRepository: memberRepository)
         )
     }
     
@@ -110,7 +111,7 @@ class AccountSearchViewController: UIViewController {
     
     @objc private func requestAuthCodeTapped() {
         let email = accountSearchView.emailTextField.text ?? ""
-        viewModel.requestEmailCode(email: email)
+        viewModel.checkEmailAvailability(email: email)
     }
     
     @objc private func findUserId() {

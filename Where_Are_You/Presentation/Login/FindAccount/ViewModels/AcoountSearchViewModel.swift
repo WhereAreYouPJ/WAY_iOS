@@ -12,6 +12,7 @@ class AcoountSearchViewModel {
     // MARK: - Properties
     private let emailSendUseCase: EmailSendUseCase
     private let emailVerifyUseCase: EmailVerifyUseCase
+    private let checkEmailUseCase: CheckEmailUseCase
     private let timerHelper = TimerHelper()
     private var email: String = ""
     
@@ -28,9 +29,11 @@ class AcoountSearchViewModel {
     // MARK: - LifeCycle
     
     init(emailSendUseCase: EmailSendUseCase,
-         emailVerifyUseCase: EmailVerifyUseCase) {
+         emailVerifyUseCase: EmailVerifyUseCase,
+         checkEmailUseCase: CheckEmailUseCase) {
         self.emailSendUseCase = emailSendUseCase
         self.emailVerifyUseCase = emailVerifyUseCase
+        self.checkEmailUseCase = checkEmailUseCase
         
         timerHelper.onUpdateTimer = { [weak self] timeString in
             self?.onUpdateTimer?(timeString)
@@ -39,12 +42,25 @@ class AcoountSearchViewModel {
     
     // MARK: - Helpers
     
-    func requestEmailCode(email: String) {
+    // 이메일 중복체크
+    func checkEmailAvailability(email: String) {
         guard ValidationHelper.isValidEmail(email) else {
-            onRequestCodeFailure?("이메일 형식에 알맞지 않습니다.")
+            onRequestCodeFailure?(invalidEmailMessage)
             return
         }
         
+        checkEmailUseCase.execute(request: CheckEmailParameters(email: email)) { result in
+            switch result {
+            case .success:
+                self.onRequestCodeFailure?("입력한 이메일 주소를 다시 확인해주세요.")
+            case .failure:
+                self.timerHelper.startTimer()
+                self.requestEmailCode(email: email)
+            }
+        }
+    }
+    
+    func requestEmailCode(email: String) {
         emailSendUseCase.execute(request: EmailSendBody(email: email)) { [weak self] result in
             switch result {
             case .success:

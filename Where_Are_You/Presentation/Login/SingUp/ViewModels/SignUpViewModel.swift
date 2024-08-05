@@ -117,8 +117,8 @@ class SignUpViewModel {
             case .success(let data):
                 self.timerHelper.startTimer()
                 self.sendEmailVerificationCode(email: data.email)
-            case .failure(let error):
-                self.onEmailSendMessage?(error.localizedDescription, false)
+            case .failure:
+                self.onEmailSendMessage?("중복된 이메일입니다.", false)
             }
         }
     }
