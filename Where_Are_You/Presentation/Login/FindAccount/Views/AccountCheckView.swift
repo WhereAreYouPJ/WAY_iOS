@@ -11,7 +11,7 @@ import SnapKit
 class AccountCheckView: UIView {
     // MARK: - Properties
     
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "회원님의 가입정보를 확인해주세요", textColor: .color34, fontSize: 22)
+    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "회원님의 가입정보를 \n확인해주세요", textColor: .color34, fontSize: 22)
     
     private let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "회원님의 가입정보와 일치하는 이메일 주소는", textColor: .color34, fontSize: 14)
     
@@ -83,7 +83,7 @@ class AccountCheckView: UIView {
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(34)
             make.leading.equalToSuperview().offset(15)
-            make.width.equalToSuperview().multipliedBy(0.48)
+//            make.width.equalToSuperview().multipliedBy(0.48)
         }
         
         emailLabel.snp.makeConstraints { make in

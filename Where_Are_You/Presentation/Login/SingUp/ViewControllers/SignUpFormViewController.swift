@@ -34,13 +34,12 @@ class SignUpFormViewController: UIViewController {
             emailVerifyUseCase: EmailVerifyUseCaseImpl(memberRepository: memberRepository))
     }
     
-    func setupUI() {
+    private func setupUI() {
         view = signUpView
-        signUpView.bottomButtonView.button.updateBackgroundColor(.color171)
         configureNavigationBar(title: "회원가입", backButtonAction: #selector(backButtonTapped))
     }
     
-    func setupActions() {
+    private func setupActions() {
         signUpView.bottomButtonView.button.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
         signUpView.emailCheckButton.addTarget(self, action: #selector(authRequestButtonTapped), for: .touchUpInside)
         signUpView.authCheckButton.addTarget(self, action: #selector(authCheckButtonTapped), for: .touchUpInside)

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SnapKit
 
 class AccountSearchViewController: UIViewController {
     // MARK: - Properties
@@ -17,15 +16,18 @@ class AccountSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view = accountSearchView
-        configureNavigationBar(title: "계정 찾기", backButtonAction: #selector(backButtonTapped))
-
+        setupUI()
         setupViewModel()
         setupBindings()
         setupActions()
     }
     
     // MARK: - Helpers
+    private func setupUI() {
+        self.view = accountSearchView
+        configureNavigationBar(title: "계정 찾기", backButtonAction: #selector(backButtonTapped))
+    }
+    
     private func setupViewModel() {
         let memberService = MemberService()
         let memberRepository = MemberRepository(memberService: memberService)

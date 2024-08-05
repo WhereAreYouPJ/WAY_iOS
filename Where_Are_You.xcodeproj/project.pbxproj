@@ -91,6 +91,10 @@
 		99CEAD4A2C539743006B3D41 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CEAD492C539743006B3D41 /* SplashViewController.swift */; };
 		99CEAD4C2C5397B1006B3D41 /* DeviceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CEAD4B2C5397B1006B3D41 /* DeviceConfig.swift */; };
 		99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D11EB02C06F56F006BE265 /* CustomButton.swift */; };
+		99D780DE2C6066FA005A3F30 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D780DD2C6066FA005A3F30 /* LoginResponse.swift */; };
+		99D780E02C60670E005A3F30 /* MemberSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D780DF2C60670E005A3F30 /* MemberSearchResponse.swift */; };
+		99D780E22C606726005A3F30 /* MemberDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D780E12C606726005A3F30 /* MemberDetailsResponse.swift */; };
+		99D780E42C606735005A3F30 /* CheckEmailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D780E32C606735005A3F30 /* CheckEmailResponse.swift */; };
 		99D8FBB52C3B9F9F0062AF10 /* MainHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8FBB42C3B9F9F0062AF10 /* MainHomeView.swift */; };
 		99D8FBB92C3BA1CD0062AF10 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */; };
 		99D8FBBB2C3BA1D90062AF10 /* MainHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8FBBA2C3BA1D90062AF10 /* MainHomeViewController.swift */; };
@@ -232,6 +236,10 @@
 		99CEAD492C539743006B3D41 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		99CEAD4B2C5397B1006B3D41 /* DeviceConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceConfig.swift; sourceTree = "<group>"; };
 		99D11EB02C06F56F006BE265 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		99D780DD2C6066FA005A3F30 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
+		99D780DF2C60670E005A3F30 /* MemberSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSearchResponse.swift; sourceTree = "<group>"; };
+		99D780E12C606726005A3F30 /* MemberDetailsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDetailsResponse.swift; sourceTree = "<group>"; };
+		99D780E32C606735005A3F30 /* CheckEmailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailResponse.swift; sourceTree = "<group>"; };
 		99D8FBB42C3B9F9F0062AF10 /* MainHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHomeView.swift; sourceTree = "<group>"; };
 		99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		99D8FBBA2C3BA1D90062AF10 /* MainHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHomeViewController.swift; sourceTree = "<group>"; };
@@ -339,6 +347,7 @@
 			isa = PBXGroup;
 			children = (
 				99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */,
+				99D780DC2C6066EB005A3F30 /* Member */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -794,6 +803,17 @@
 			path = Feed;
 			sourceTree = "<group>";
 		};
+		99D780DC2C6066EB005A3F30 /* Member */ = {
+			isa = PBXGroup;
+			children = (
+				99D780DD2C6066FA005A3F30 /* LoginResponse.swift */,
+				99D780DF2C60670E005A3F30 /* MemberSearchResponse.swift */,
+				99D780E12C606726005A3F30 /* MemberDetailsResponse.swift */,
+				99D780E32C606735005A3F30 /* CheckEmailResponse.swift */,
+			);
+			path = Member;
+			sourceTree = "<group>";
+		};
 		99D8FBAD2C3B64040062AF10 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -1146,6 +1166,7 @@
 				99D8FBC22C3BA25B0062AF10 /* CustomTextField.swift in Sources */,
 				99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */,
 				99F78F1E2C09C98D004C0C72 /* AccountSearchView.swift in Sources */,
+				99D780E02C60670E005A3F30 /* MemberSearchResponse.swift in Sources */,
 				992F57C22C5B1E8900219C6B /* ParameterConvertible.swift in Sources */,
 				992F57D42C5B28E900219C6B /* MemberSearchParameters.swift in Sources */,
 				99FBA5522C453B43002EEEC7 /* ScheduleViewController.swift in Sources */,
@@ -1168,6 +1189,7 @@
 				990BDE532C40CF1E00A7FB5D /* ScheduleCell.swift in Sources */,
 				9911F98C2C3F908E00D0FDC9 /* FeedTableView.swift in Sources */,
 				99C9B2292C0197CA008D7CBD /* User.swift in Sources */,
+				99D780DE2C6066FA005A3F30 /* LoginResponse.swift in Sources */,
 				99949F452C58788200AE0177 /* FriendFeedViewController.swift in Sources */,
 				997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */,
 				9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */,
@@ -1213,6 +1235,8 @@
 				995E3E5B2C507FE6006B4480 /* MyPageView.swift in Sources */,
 				9953583F2C00C555005BF799 /* SceneDelegate.swift in Sources */,
 				990F57B22C282C5900F6E1AD /* EmailSendUseCase.swift in Sources */,
+				99D780E22C606726005A3F30 /* MemberDetailsResponse.swift in Sources */,
+				99D780E42C606735005A3F30 /* CheckEmailResponse.swift in Sources */,
 				9950C6592C10B0DF003155A7 /* SignUpFormView.swift in Sources */,
 				99FBA5582C453C05002EEEC7 /* FeedTableViewModel.swift in Sources */,
 				99949F512C588B6200AE0177 /* FavoritesTableView.swift in Sources */,

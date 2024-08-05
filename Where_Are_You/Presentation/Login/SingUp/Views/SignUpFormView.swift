@@ -86,7 +86,7 @@ class SignUpFormView: UIView {
     
     let authCheckButton = CustomButton(title: "확인", backgroundColor: .brandColor, titleColor: .white, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
     
-    // 인증코드tf + 인증코드 확인버튼 + description
+    // 인증코드tf + 인증코드 확인버튼
     lazy var authCheckStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [authCodeTextField, authCheckButton])
         stackView.axis = .horizontal
@@ -163,6 +163,7 @@ class SignUpFormView: UIView {
         authStack.isHidden = true
         passwordTextField.isSecureTextEntry = true
         checkPasswordTextField.isSecureTextEntry = true
+        bottomButtonView.button.updateBackgroundColor(.color171)
         bottomButtonView.button.isEnabled = false
     }
     
@@ -176,9 +177,6 @@ class SignUpFormView: UIView {
         addSubview(titleLabel)
         addSubview(bottomButtonView)
         addSubview(stack)
-        emailCheckStack.addSubview(emailCheckButton)
-        authStack.addSubview(authCheckStack)
-        authCheckStack.addSubview(authCheckButton)
         authCodeTextField.addSubview(timer)
     }
     

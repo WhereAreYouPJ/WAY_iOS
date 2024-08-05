@@ -38,7 +38,6 @@ extension UIColor {
     }
     
     static let brandColor = UIColor.rgb(red: 123, green: 80, blue: 255)
-    static let launchColor = UIColor.rgb(red: 103, green: 55, blue: 248)
     static let letterBrandColor = UIColor.rgb(red: 98, green: 54, blue: 233)
     static let lightpurple = UIColor.rgb(red: 146, green: 134, blue: 255)
     static let warningColor = UIColor.rgb(red: 225, green: 49, blue: 49)
