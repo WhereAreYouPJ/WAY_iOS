@@ -16,7 +16,7 @@ class HomeFeedView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 12
-        layout.minimumInteritemSpacing = 12
+//        layout.minimumInteritemSpacing = 12
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         return cv
     }()

@@ -11,6 +11,7 @@ class MainHomeViewController: UIViewController {
     // MARK: - Properties
     
     private var mainHomeView = MainHomeView()
+    private var mainHomeViewModel: MainHomeViewModel!
     private var bannerViewController: BannerViewController!
     private var scheduleViewController: ScheduleViewController!
     private var feedTableViewController: HomeFeedViewController!
@@ -22,16 +23,13 @@ class MainHomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = mainHomeView
-        
+        mainHomeViewModel = MainHomeViewModel()
         setupViewControllers()
         setupBindings()
         buttonActions()
         setupNavigationBar()
         
-        // 각각의 뷰모델이 데이터를 가져오도록 설정
-        bannerViewController.viewModel.fetchBannerImages()
-        scheduleViewController.viewModel.fetchSchedules()
-        feedTableViewController.viewModel.fetchFeeds()
+        mainHomeViewModel.loadData()
     }
     
     // MARK: - Helpers
@@ -54,9 +52,6 @@ class MainHomeViewController: UIViewController {
         scheduleViewController = ScheduleViewController()
         feedTableViewController = HomeFeedViewController()
         
-        // 서브뷰 컨트롤러의 뷰 모델 초기화 확인
-        feedTableViewController.viewModel = FeedViewModel() // viewModel 초기화
-        
         // 서브뷰 컨트롤러를 자식 컨트롤러로 추가
         addChild(bannerViewController)
         addChild(scheduleViewController)
@@ -67,31 +62,51 @@ class MainHomeViewController: UIViewController {
         scheduleViewController.didMove(toParent: self)
         feedTableViewController.didMove(toParent: self)
         
+        // 각 서브 뷰 컨트롤러의 뷰를 메인 뷰에 추가
+        mainHomeView.addSubview(bannerViewController.view)
+        mainHomeView.addSubview(scheduleViewController.view)
+        mainHomeView.addSubview(feedTableViewController.view)
+        
+        // 레이아웃 설정
         bannerViewController.view.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(mainHomeView.bannerView)
+            make.leading.trailing.equalTo(mainHomeView.bannerView)
+            make.height.equalTo(mainHomeView.bannerView.snp.height)
         }
         
         scheduleViewController.view.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(mainHomeView.scheduleView)
+            make.leading.trailing.equalTo(mainHomeView.scheduleView)
+            make.height.equalTo(mainHomeView.scheduleView.snp.height)
+        }
+        
+        feedTableViewController.view.snp.makeConstraints { make in
+            make.top.equalTo(mainHomeView.homeFeedView)
+            make.leading.trailing.equalTo(mainHomeView.homeFeedView)
+            make.height.equalTo(mainHomeView.homeFeedView.snp.height)
         }
     }
     
     private func setupBindings() {
-        bannerViewController.viewModel.onBannerDataFetched = { [weak self] in
+        mainHomeViewModel.onBannerDataFetched = { [weak self] in
             DispatchQueue.main.async {
-//                self?.mainHomeView.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+                guard let bannerImages = self?.mainHomeViewModel.getBannerImages() else {
+                    print("배너 이미지 로드 실패")
+                    return
+                }
+                self?.bannerViewController.viewModel.setBanners(bannerImages)
             }
         }
         
-        scheduleViewController.viewModel.onScheduleDataFetched = { [weak self] in
+        mainHomeViewModel.onScheduleDataFetched = { [weak self] in
             DispatchQueue.main.async {
-//                self?.mainHomeView.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+                self?.scheduleViewController.viewModel.setSchedules(self?.mainHomeViewModel.getSchedules() ?? [])
             }
         }
         
-        feedTableViewController.viewModel.onFeedsDataFetched = { [weak self] in
+        mainHomeViewModel.onFeedsDataFetched = { [weak self] in
             DispatchQueue.main.async {
-//                self?.mainHomeView.tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+                self?.feedTableViewController.viewModel.setFeeds(self?.mainHomeViewModel.getFeeds() ?? [])
             }
         }
     }

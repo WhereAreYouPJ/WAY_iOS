@@ -27,7 +27,7 @@ class SplashViewController: UIViewController {
             })
             networkAlert.showAlert(on: self)
         } else {
-            let vc = LoginViewController()
+            let vc = MainTabBarController()
             vc.modalTransitionStyle = .crossDissolve
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)

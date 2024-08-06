@@ -11,11 +11,8 @@ import SnapKit
 class MainHomeView: UIView {
     // MARK: - Properties
     let bannerView = BannerView()
-    
     let scheduleView = ScheduleView()
-    
     let reminderLabel = CustomLabel(UILabel_NotoSans: .medium, text: "함께한 추억을 확인해보세요!", textColor: .color34, fontSize: 20)
-    
     let homeFeedView = HomeFeedView()
     
     // MARK: - Lifecycle
@@ -33,6 +30,7 @@ class MainHomeView: UIView {
     // MARK: - Helpers
     
     private func configureViewComponents() {
+        backgroundColor = .white
         addSubview(bannerView)
         addSubview(scheduleView)
         addSubview(reminderLabel)
@@ -41,9 +39,9 @@ class MainHomeView: UIView {
     
     private func setupConstraints() {
         bannerView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(13)
+            make.top.equalTo(self.safeAreaLayoutGuide.snp.top).inset(13)
             make.leading.trailing.equalToSuperview().inset(15)
-            make.height.equalTo(bannerView.snp.width).multipliedBy(0.55)
+            make.height.equalTo(self.snp.width).multipliedBy(0.507)
         }
         
         scheduleView.snp.makeConstraints { make in
@@ -60,6 +58,8 @@ class MainHomeView: UIView {
         homeFeedView.snp.makeConstraints { make in
             make.top.equalTo(reminderLabel.snp.bottom).offset(20)
             // leading, trailing 설정 해야함
+            make.leading.trailing.equalToSuperview().inset(15)
+            make.height.equalTo(170)
         }
     }
 }

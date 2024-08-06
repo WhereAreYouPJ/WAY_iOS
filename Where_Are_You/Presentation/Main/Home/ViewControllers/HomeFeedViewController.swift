@@ -25,7 +25,6 @@ class HomeFeedViewController: UIViewController {
         viewModel = FeedViewModel()
         setupBindings()
         setupCollectionView()
-        viewModel.fetchFeeds()
     }
     
     // MARK: - Helpers
@@ -34,6 +33,7 @@ class HomeFeedViewController: UIViewController {
         viewModel.onFeedsDataFetched = { [weak self] in
             DispatchQueue.main.async {
                 self?.feedView.feeds = self?.viewModel.getFeeds() ?? []
+                self?.feedView.collectionView.reloadData()
             }
         }
     }
@@ -42,6 +42,7 @@ class HomeFeedViewController: UIViewController {
         feedView.collectionView.dataSource = self
         feedView.collectionView.delegate = self
         feedView.collectionView.register(HomeFeedCollectionViewCell.self, forCellWithReuseIdentifier: HomeFeedCollectionViewCell.identifier)
+        feedView.collectionView.register(MoreFeedCollectionViewCell.self, forCellWithReuseIdentifier: MoreFeedCollectionViewCell.identifier)
     }
 }
 
@@ -49,15 +50,40 @@ class HomeFeedViewController: UIViewController {
 
 extension HomeFeedViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.getFeeds().count
+        let count = viewModel.getFeeds().count
+        return viewModel.shouldShowMoreFeedsCell() ? count + 1 : count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeFeedCollectionViewCell.identifier, for: indexPath) as? HomeFeedCollectionViewCell else {
-            return UICollectionViewCell()
+        let feedCount = viewModel.getFeeds().count
+        if indexPath.item < feedCount {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeFeedCollectionViewCell.identifier, for: indexPath) as? HomeFeedCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            let feed = viewModel.getFeeds()[indexPath.item]
+            cell.configure(with: feed)
+            return cell
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoreFeedCollectionViewCell.identifier, for: indexPath) as? MoreFeedCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            cell.delegate = self
+            return cell
         }
-        let feed = viewModel.getFeeds()[indexPath.item]
-        cell.configure(with: feed)
-        return cell
+    }
+}
+
+private func configureMoreFeedCell(for indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionViewCell {
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoreFeedCollectionViewCell.identifier, for: indexPath) as? MoreFeedCollectionViewCell else {
+        return UICollectionViewCell()
+    }
+    return cell
+}
+
+extension HomeFeedViewController: MoreFeedCollectionViewCellDelegate {
+    func didTapMoreButton() {
+        // 전체 피드 뷰 컨트롤러로 이동
+        let feedsViewController = FeedsViewController()
+        navigationController?.pushViewController(feedsViewController, animated: true)
     }
 }

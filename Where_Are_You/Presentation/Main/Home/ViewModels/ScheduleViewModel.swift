@@ -14,20 +14,25 @@ class ScheduleViewModel {
     private var currentIndex = 0
     
     // MARK: - Helpers
-    
-    func fetchSchedules() {
-        // API통신으로 데이터 받기
-        // 받은 데이터 schedules에 업데이트하기
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        self.schedules = [
-            Schedule(date: dateFormatter.date(from: "2025-12-31")!, title: "96조 여의도 한강공원 모임"),
-            Schedule(date: dateFormatter.date(from: "2024-10-10")!, title: "96조 워크숍")
-        ]
-        onScheduleDataFetched?()
-        startAutoScroll()
-    }
+    // 데이터 설정 메서드
+        func setSchedules(_ schedules: [Schedule]) {
+            self.schedules = schedules
+            onScheduleDataFetched?()
+            startAutoScroll()
+        }
+//    func fetchSchedules() {
+//        // API통신으로 데이터 받기
+//        // 받은 데이터 schedules에 업데이트하기
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "yyyy-MM-dd"
+//        
+//        self.schedules = [
+//            Schedule(date: dateFormatter.date(from: "2025-12-31")!, title: "96조 여의도 한강공원 모임"),
+//            Schedule(date: dateFormatter.date(from: "2024-10-10")!, title: "96조 워크숍")
+//        ]
+//        onScheduleDataFetched?()
+//        startAutoScroll()
+//    }
     
     func getSchedules() -> [Schedule] {
         return schedules
