@@ -17,6 +17,14 @@ class MoreFeedCollectionViewCell: UICollectionViewCell {
 
     static let identifier = "MoreFeedCollectionViewCell"
     
+    let borderView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 16
+        view.layer.borderColor = UIColor.color212.cgColor
+        view.layer.borderWidth = 1
+        return view
+    }()
+    
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 14
@@ -35,9 +43,9 @@ class MoreFeedCollectionViewCell: UICollectionViewCell {
     
     let moreFeedButton: UIButton = {
         let button = UIButton()
-        button.titleLabel?.text = "더 보기"
+        button.setTitleColor(.letterBrandColor, for: .normal)
+        button.setTitle("더 보기", for: .normal)
         button.titleLabel?.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
-        button.titleLabel?.textColor = .letterBrandColor
         return button
     }()
     
@@ -62,12 +70,20 @@ class MoreFeedCollectionViewCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 16
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor.color212.cgColor
-        contentView.addSubview(profileImageView)
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(moreFeedButton)
+        contentView.addSubview(borderView)
+        borderView.addSubview(profileImageView)
+        borderView.addSubview(titleLabel)
+        borderView.addSubview(moreFeedButton)
     }
     
     private func setupConstraints() {
+        
+        borderView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.top.equalToSuperview().inset(5)
+            make.leading.equalToSuperview().inset(28)
+        }
+        
         profileImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(16)
             make.centerX.equalToSuperview()

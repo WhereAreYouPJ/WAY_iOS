@@ -73,17 +73,24 @@ extension HomeFeedViewController: UICollectionViewDataSource, UICollectionViewDe
     }
 }
 
-private func configureMoreFeedCell(for indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionViewCell {
-    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoreFeedCollectionViewCell.identifier, for: indexPath) as? MoreFeedCollectionViewCell else {
-        return UICollectionViewCell()
+extension HomeFeedViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
     }
-    return cell
 }
 
 extension HomeFeedViewController: MoreFeedCollectionViewCellDelegate {
     func didTapMoreButton() {
-        // 전체 피드 뷰 컨트롤러로 이동
+        // 더보기 버튼 눌러서 전체 피드 뷰 컨트롤러로 이동
         let feedsViewController = FeedsViewController()
         navigationController?.pushViewController(feedsViewController, animated: true)
     }
 }
+
+
+//private func configureMoreFeedCell(for indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionViewCell {
+//    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoreFeedCollectionViewCell.identifier, for: indexPath) as? MoreFeedCollectionViewCell else {
+//        return UICollectionViewCell()
+//    }
+//    return cell
+//}

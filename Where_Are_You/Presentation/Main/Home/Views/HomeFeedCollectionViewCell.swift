@@ -44,6 +44,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
         label.textColor = .color118
+        label.lineBreakMode = .byCharWrapping
         label.numberOfLines = 4
         return label
     }()

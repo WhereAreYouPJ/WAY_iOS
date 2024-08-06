@@ -29,7 +29,7 @@ class BannerCollectionViewCell: UICollectionViewCell {
             make.edges.equalToSuperview()
         }
         
-        contentView.layer.cornerRadius = 12
+//        contentView.layer.cornerRadius = 12
         contentView.layer.masksToBounds = true
     }
     

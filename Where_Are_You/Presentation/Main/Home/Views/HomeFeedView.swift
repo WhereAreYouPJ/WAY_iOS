@@ -13,11 +13,11 @@ class HomeFeedView: UIView {
     // MARK: - Properties
     
     var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
+        let layout = SnappingFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 12
-//        layout.minimumInteritemSpacing = 12
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.showsHorizontalScrollIndicator = false
+        cv.decelerationRate = .fast
         return cv
     }()
     
@@ -61,7 +61,7 @@ class HomeFeedView: UIView {
             make.edges.equalToSuperview()
         }
         
-        collectionView.register(HomeFeedCollectionViewCell.self, forCellWithReuseIdentifier: HomeFeedCollectionViewCell.identifier)
+//        collectionView.register(HomeFeedCollectionViewCell.self, forCellWithReuseIdentifier: HomeFeedCollectionViewCell.identifier)
     }
     
     private func updateFeeds() {

@@ -57,6 +57,7 @@
 		9967C1542C566F2F00927277 /* NetworkAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9967C1532C566F2F00927277 /* NetworkAlert.swift */; };
 		9974EA1C2C61A23E00826793 /* .gitattributes in Resources */ = {isa = PBXBuildFile; fileRef = 9974EA1B2C61A23E00826793 /* .gitattributes */; };
 		9974EA1E2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974EA1D2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift */; };
+		9974EA202C62196500826793 /* SnappingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974EA1F2C62196500826793 /* SnappingFlowLayout.swift */; };
 		9979622D2C3E6B2200E95CA6 /* AccountLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979622C2C3E6B2200E95CA6 /* AccountLoginUseCase.swift */; };
 		997DC6552C3D231000EACA5F /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997DC6542C3D231000EACA5F /* Config.swift */; };
 		997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997DC6562C3D253000EACA5F /* UserDefaultManager.swift */; };
@@ -203,6 +204,7 @@
 		9967C1532C566F2F00927277 /* NetworkAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAlert.swift; sourceTree = "<group>"; };
 		9974EA1B2C61A23E00826793 /* .gitattributes */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitattributes; sourceTree = "<group>"; };
 		9974EA1D2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreFeedCollectionViewCell.swift; sourceTree = "<group>"; };
+		9974EA1F2C62196500826793 /* SnappingFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnappingFlowLayout.swift; sourceTree = "<group>"; };
 		9979622C2C3E6B2200E95CA6 /* AccountLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLoginUseCase.swift; sourceTree = "<group>"; };
 		997DC6542C3D231000EACA5F /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		997DC6562C3D253000EACA5F /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
@@ -611,6 +613,7 @@
 				99C9B2472C01D2B7008D7CBD /* Utilities.swift */,
 				99149FEA2C4F97C300136097 /* ValidationHelper.swift */,
 				99149FEC2C4F97EA00136097 /* TimeHelper.swift */,
+				9974EA1F2C62196500826793 /* SnappingFlowLayout.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1196,6 +1199,7 @@
 				99C9B2292C0197CA008D7CBD /* User.swift in Sources */,
 				99D780DE2C6066FA005A3F30 /* LoginResponse.swift in Sources */,
 				99949F452C58788200AE0177 /* FriendFeedViewController.swift in Sources */,
+				9974EA202C62196500826793 /* SnappingFlowLayout.swift in Sources */,
 				997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */,
 				9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */,
 				992F57D22C5B28D600219C6B /* EmailSendBody.swift in Sources */,

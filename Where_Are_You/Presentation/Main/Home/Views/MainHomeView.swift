@@ -57,9 +57,8 @@ class MainHomeView: UIView {
         
         homeFeedView.snp.makeConstraints { make in
             make.top.equalTo(reminderLabel.snp.bottom).offset(20)
-            // leading, trailing 설정 해야함
             make.leading.trailing.equalToSuperview().inset(15)
-            make.height.equalTo(170)
+            make.height.equalTo(self.snp.width).multipliedBy(0.453)
         }
     }
 }

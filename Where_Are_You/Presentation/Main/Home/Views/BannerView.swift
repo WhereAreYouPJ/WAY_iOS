@@ -47,6 +47,12 @@ class BannerView: UIView {
     // MARK: - Helpers
     
     private func setupViews() {
+        layer.cornerRadius = 16
+        layer.borderWidth = 1.5
+        layer.borderColor = UIColor.color221.cgColor
+        backgroundColor = .white
+        clipsToBounds = true
+        
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: BannerCollectionViewCell.identifier)
