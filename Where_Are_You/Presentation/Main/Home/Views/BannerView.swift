@@ -12,8 +12,16 @@ class BannerView: UIView {
     
     // MARK: - Properties
     
-    var collectionView: UICollectionView
+    var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        return cv
+    }()
+    
     let pageControl = UIPageControl()
+    
     var pageNumberLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -28,10 +36,6 @@ class BannerView: UIView {
     // MARK: - Lifecycle
     
     override init(frame: CGRect) {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         super.init(frame: .zero)
         setupViews()
     }

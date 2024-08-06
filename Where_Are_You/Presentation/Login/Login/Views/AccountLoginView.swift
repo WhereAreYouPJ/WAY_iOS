@@ -15,7 +15,7 @@ class AccountLoginView: UIView {
     
     private let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이메일 주소", textColor: .color51, fontSize: 12)
     
-    let emailTextField = Utilities().inputContainerTextField(withPlaceholder: "이메일을 입력해주세요.", fontSize: textFieldFontSize)
+    let emailTextField = Utilities.inputContainerTextField(withPlaceholder: "이메일을 입력해주세요.", fontSize: textFieldFontSize)
     
     let emailErrorLabel: UILabel = {
         let label = UILabel()
@@ -26,13 +26,13 @@ class AccountLoginView: UIView {
     
     private let passwordLabel = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: 12)
     
-    let passwordTextField = Utilities().inputContainerTextField(withPlaceholder: "비밀번호를 입력해주세요.", fontSize: textFieldFontSize)
+    let passwordTextField = Utilities.inputContainerTextField(withPlaceholder: "비밀번호를 입력해주세요.", fontSize: textFieldFontSize)
     
     let loginButton = CustomButton(title: "로그인하기", backgroundColor: .color171, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
     
     let findAccountButton = CustomButtonView(text: "계정찾기", weight: .medium, textColor: .color102, fontSize: 14)
     
-    let signupButton = Utilities().attributedButton("계정이 없으신가요?", "  가입하기")
+    let signupButton = Utilities.attributedButton("계정이 없으신가요?", "  가입하기")
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {

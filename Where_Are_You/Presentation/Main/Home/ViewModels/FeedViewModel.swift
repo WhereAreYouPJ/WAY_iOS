@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class FeedTableViewModel {
+class FeedViewModel {
     var onFeedsDataFetched: (() -> Void)?
     private var feeds: [Feed] = []
     
@@ -24,6 +24,10 @@ class FeedTableViewModel {
     }
     
     func getFeeds() -> [Feed] {
-        return feeds
+        return Array(feeds.prefix(10))
+    }
+    
+    func shouldShowMoreFeedsCell() -> Bool {
+        return feeds.count > 10
     }
 }

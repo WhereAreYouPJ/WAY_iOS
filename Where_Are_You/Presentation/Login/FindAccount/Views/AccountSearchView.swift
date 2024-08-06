@@ -16,7 +16,7 @@ class AccountSearchView: UIView {
     
     private let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이메일 주소", textColor: .color51, fontSize: 12)
     
-    let emailTextField = Utilities().inputContainerTextField(withPlaceholder: "이메일", fontSize: textFieldFontSize)
+    let emailTextField = Utilities.inputContainerTextField(withPlaceholder: "이메일", fontSize: textFieldFontSize)
     
     let requestAuthButton = CustomButton(title: "인증요청", backgroundColor: .brandColor, titleColor: .white, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
     
@@ -40,7 +40,7 @@ class AccountSearchView: UIView {
         return stackView
     }()
     
-    let authNumberTextField = Utilities().inputContainerTextField(withPlaceholder: "인증코드 입력", fontSize: textFieldFontSize)
+    let authNumberTextField = Utilities.inputContainerTextField(withPlaceholder: "인증코드 입력", fontSize: textFieldFontSize)
     
     let timer: UILabel = {
         let label = UILabel()

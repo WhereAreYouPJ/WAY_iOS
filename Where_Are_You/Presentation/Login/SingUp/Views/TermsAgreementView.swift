@@ -28,7 +28,6 @@ class TermsAgreementView: UIView {
     
     private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "회원가입에 필요한\n약관에 동의해주세요", textColor: .color34, fontSize: 22)
     
-    // TODO: 추후에 agreeView를 이미지 말고 실제로 만들어야함
     private let agreeView: UIView = {
         let view = UIView()
         let imageview = UIImageView()

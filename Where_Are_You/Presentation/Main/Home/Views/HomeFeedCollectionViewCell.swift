@@ -8,16 +8,16 @@
 import UIKit
 import SnapKit
 
-class FeedTableViewCell: UITableViewCell {
+class HomeFeedCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
 
-    static let identifier = "FeedTableViewCell"
+    static let identifier = "HomeFeedCollectionViewCell"
     
     private let profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.layer.cornerRadius = 20
+        iv.layer.cornerRadius = 14
         return iv
     }()
     
@@ -36,27 +36,20 @@ class FeedTableViewCell: UITableViewCell {
     private lazy var titleStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [profileImageView, textStackView])
         stackView.axis = .horizontal
-        stackView.spacing = 4
+        stackView.spacing = 5
         return stackView
     }()
     
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
-        label.textColor = .color153
-        label.numberOfLines = 3
-        label.lineBreakMode = .byTruncatingTail
+        label.textColor = .color118
+        label.numberOfLines = 4
         return label
     }()
     
-    private let separatorLine: UIView = {
-        let view = UIView()
-        view.backgroundColor = .color221
-        return view
-    }()
-    
     private lazy var mainStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [titleStackView, descriptionLabel, separatorLine])
+        let stackView = UIStackView(arrangedSubviews: [titleStackView, descriptionLabel])
         stackView.axis = .vertical
         stackView.spacing = 10
         return stackView
@@ -64,9 +57,10 @@ class FeedTableViewCell: UITableViewCell {
     
     // MARK: - Lifecycle
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupViews()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        configureViewComponents()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -75,22 +69,26 @@ class FeedTableViewCell: UITableViewCell {
     
     // MARK: - Helpers
 
-    private func setupViews() {
+    private func configureViewComponents() {
+        contentView.layer.cornerRadius = 16
+        contentView.layer.borderWidth = 1
+        contentView.layer.borderColor = UIColor.color212.cgColor
         contentView.addSubview(mainStack)
-        
-        // 프로필 이미지 크기
-        profileImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(contentView.snp.width).multipliedBy(0.15)
-        }
-
+    }
+    
+    private func setupConstraints() {
         mainStack.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(10)
-            make.leading.trailing.equalToSuperview().inset(15)
-            make.bottom.equalToSuperview()
+            make.center.equalToSuperview()
+            make.top.leading.equalToSuperview().inset(12)
         }
         
-        separatorLine.snp.makeConstraints { make in
-            make.height.equalTo(1)
+        profileImageView.snp.makeConstraints { make in
+            make.width.equalTo(textStackView.snp.height)
+//            make.width.height.equalTo(contentView.snp.width).multipliedBy(0.15)
+        }
+        
+        descriptionLabel.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
         }
     }
     
