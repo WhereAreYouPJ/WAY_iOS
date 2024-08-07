@@ -28,6 +28,8 @@ class MoreFeedCollectionViewCell: UICollectionViewCell {
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 14
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         imageView.image = UIImage(named: "exampleProfileImage")
         return imageView
     }()
@@ -67,9 +69,6 @@ class MoreFeedCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureViewComponents() {
-        contentView.layer.cornerRadius = 16
-        contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor.color212.cgColor
         contentView.addSubview(borderView)
         borderView.addSubview(profileImageView)
         borderView.addSubview(titleLabel)

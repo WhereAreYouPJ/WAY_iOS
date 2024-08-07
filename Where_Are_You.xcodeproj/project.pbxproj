@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		1CFDF5866B2F09FBDCBFE6DB /* Pods_Where_Are_You_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E05660871E31DAF17D0F5C8 /* Pods_Where_Are_You_Tests.framework */; };
 		990902112C5F239A00BC3F20 /* CommonDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990902102C5F239A00BC3F20 /* CommonDescription.swift */; };
-		990BDE532C40CF1E00A7FB5D /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990BDE522C40CF1E00A7FB5D /* ScheduleCell.swift */; };
+		990BDE532C40CF1E00A7FB5D /* DDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990BDE522C40CF1E00A7FB5D /* DDayCell.swift */; };
 		990F57912C27ECDC00F6E1AD /* AccountSignUpUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57902C27ECDC00F6E1AD /* AccountSignUpUseCase.swift */; };
 		990F579A2C27EEF400F6E1AD /* MemberRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57992C27EEF400F6E1AD /* MemberRepository.swift */; };
 		990F57A32C27F9FE00F6E1AD /* MemberDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57A22C27F9FE00F6E1AD /* MemberDetailsUseCase.swift */; };
 		990F57B22C282C5900F6E1AD /* EmailSendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57B12C282C5900F6E1AD /* EmailSendUseCase.swift */; };
 		9911F9842C3F5AA600D0FDC9 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F9832C3F5AA600D0FDC9 /* BannerView.swift */; };
-		9911F9862C3F5E6F00D0FDC9 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F9852C3F5E6F00D0FDC9 /* ScheduleView.swift */; };
+		9911F9862C3F5E6F00D0FDC9 /* DDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F9852C3F5E6F00D0FDC9 /* DDayView.swift */; };
 		9911F9882C3F63D500D0FDC9 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F9872C3F63D500D0FDC9 /* Feed.swift */; };
 		9911F98A2C3F6B4100D0FDC9 /* BannerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F9892C3F6B4100D0FDC9 /* BannerCollectionViewCell.swift */; };
 		9911F98C2C3F908E00D0FDC9 /* HomeFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F98B2C3F908E00D0FDC9 /* HomeFeedView.swift */; };
@@ -120,8 +120,8 @@
 		99F9FADE2C0B6187005B36B9 /* AccountSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9FADD2C0B6187005B36B9 /* AccountSearchViewController.swift */; };
 		99FBA54E2C453924002EEEC7 /* BannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA54D2C453924002EEEC7 /* BannerViewController.swift */; };
 		99FBA5502C45394E002EEEC7 /* BannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA54F2C45394E002EEEC7 /* BannerViewModel.swift */; };
-		99FBA5522C453B43002EEEC7 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5512C453B43002EEEC7 /* ScheduleViewController.swift */; };
-		99FBA5542C453B6D002EEEC7 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5532C453B6D002EEEC7 /* ScheduleViewModel.swift */; };
+		99FBA5522C453B43002EEEC7 /* DDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5512C453B43002EEEC7 /* DDayViewController.swift */; };
+		99FBA5542C453B6D002EEEC7 /* DDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5532C453B6D002EEEC7 /* DDayViewModel.swift */; };
 		99FBA5562C453BDD002EEEC7 /* HomeFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5552C453BDD002EEEC7 /* HomeFeedViewController.swift */; };
 		99FBA5582C453C05002EEEC7 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5572C453C05002EEEC7 /* FeedViewModel.swift */; };
 		D79EFAD9E5409233E5338E46 /* Pods_Where_Are_You.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */; };
@@ -154,13 +154,13 @@
 		20C7F106D8DFB49B151D8073 /* Pods-Where_Are_You_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You_Tests.release.xcconfig"; path = "Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		5E05660871E31DAF17D0F5C8 /* Pods_Where_Are_You_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		990902102C5F239A00BC3F20 /* CommonDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonDescription.swift; sourceTree = "<group>"; };
-		990BDE522C40CF1E00A7FB5D /* ScheduleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCell.swift; sourceTree = "<group>"; };
+		990BDE522C40CF1E00A7FB5D /* DDayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDayCell.swift; sourceTree = "<group>"; };
 		990F57902C27ECDC00F6E1AD /* AccountSignUpUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSignUpUseCase.swift; sourceTree = "<group>"; };
 		990F57992C27EEF400F6E1AD /* MemberRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberRepository.swift; sourceTree = "<group>"; };
 		990F57A22C27F9FE00F6E1AD /* MemberDetailsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDetailsUseCase.swift; sourceTree = "<group>"; };
 		990F57B12C282C5900F6E1AD /* EmailSendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSendUseCase.swift; sourceTree = "<group>"; };
 		9911F9832C3F5AA600D0FDC9 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
-		9911F9852C3F5E6F00D0FDC9 /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
+		9911F9852C3F5E6F00D0FDC9 /* DDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDayView.swift; sourceTree = "<group>"; };
 		9911F9872C3F63D500D0FDC9 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		9911F9892C3F6B4100D0FDC9 /* BannerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCollectionViewCell.swift; sourceTree = "<group>"; };
 		9911F98B2C3F908E00D0FDC9 /* HomeFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeedView.swift; sourceTree = "<group>"; };
@@ -269,8 +269,8 @@
 		99F9FADD2C0B6187005B36B9 /* AccountSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSearchViewController.swift; sourceTree = "<group>"; };
 		99FBA54D2C453924002EEEC7 /* BannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewController.swift; sourceTree = "<group>"; };
 		99FBA54F2C45394E002EEEC7 /* BannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewModel.swift; sourceTree = "<group>"; };
-		99FBA5512C453B43002EEEC7 /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
-		99FBA5532C453B6D002EEEC7 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
+		99FBA5512C453B43002EEEC7 /* DDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDayViewController.swift; sourceTree = "<group>"; };
+		99FBA5532C453B6D002EEEC7 /* DDayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDayViewModel.swift; sourceTree = "<group>"; };
 		99FBA5552C453BDD002EEEC7 /* HomeFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeedViewController.swift; sourceTree = "<group>"; };
 		99FBA5572C453C05002EEEC7 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -682,8 +682,8 @@
 				99D8FBB42C3B9F9F0062AF10 /* MainHomeView.swift */,
 				9911F9892C3F6B4100D0FDC9 /* BannerCollectionViewCell.swift */,
 				9911F9832C3F5AA600D0FDC9 /* BannerView.swift */,
-				990BDE522C40CF1E00A7FB5D /* ScheduleCell.swift */,
-				9911F9852C3F5E6F00D0FDC9 /* ScheduleView.swift */,
+				990BDE522C40CF1E00A7FB5D /* DDayCell.swift */,
+				9911F9852C3F5E6F00D0FDC9 /* DDayView.swift */,
 				9911F98D2C3F913100D0FDC9 /* HomeFeedCollectionViewCell.swift */,
 				9974EA1D2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift */,
 				9911F98B2C3F908E00D0FDC9 /* HomeFeedView.swift */,
@@ -835,7 +835,7 @@
 			children = (
 				99D8FBBA2C3BA1D90062AF10 /* MainHomeViewController.swift */,
 				99FBA54D2C453924002EEEC7 /* BannerViewController.swift */,
-				99FBA5512C453B43002EEEC7 /* ScheduleViewController.swift */,
+				99FBA5512C453B43002EEEC7 /* DDayViewController.swift */,
 				99FBA5552C453BDD002EEEC7 /* HomeFeedViewController.swift */,
 			);
 			path = ViewControllers;
@@ -871,7 +871,7 @@
 			children = (
 				99D8FBBC2C3BA1E60062AF10 /* MainHomeViewModel.swift */,
 				99FBA54F2C45394E002EEEC7 /* BannerViewModel.swift */,
-				99FBA5532C453B6D002EEEC7 /* ScheduleViewModel.swift */,
+				99FBA5532C453B6D002EEEC7 /* DDayViewModel.swift */,
 				99FBA5572C453C05002EEEC7 /* FeedViewModel.swift */,
 			);
 			path = ViewModels;
@@ -1177,7 +1177,7 @@
 				99D780E02C60670E005A3F30 /* MemberSearchResponse.swift in Sources */,
 				992F57C22C5B1E8900219C6B /* ParameterConvertible.swift in Sources */,
 				992F57D42C5B28E900219C6B /* MemberSearchParameters.swift in Sources */,
-				99FBA5522C453B43002EEEC7 /* ScheduleViewController.swift in Sources */,
+				99FBA5522C453B43002EEEC7 /* DDayViewController.swift in Sources */,
 				9950C65D2C10B9BB003155A7 /* PasswordResetView.swift in Sources */,
 				990F57A32C27F9FE00F6E1AD /* MemberDetailsUseCase.swift in Sources */,
 				9953583D2C00C555005BF799 /* AppDelegate.swift in Sources */,
@@ -1191,10 +1191,10 @@
 				9911F9882C3F63D500D0FDC9 /* Feed.swift in Sources */,
 				99949F592C58B81A00AE0177 /* FriendsViewModel.swift in Sources */,
 				99D8FBB92C3BA1CD0062AF10 /* MainTabBarController.swift in Sources */,
-				9911F9862C3F5E6F00D0FDC9 /* ScheduleView.swift in Sources */,
+				9911F9862C3F5E6F00D0FDC9 /* DDayView.swift in Sources */,
 				99B397852C0C41D300D7A109 /* AccountCheckViewController.swift in Sources */,
 				9979622D2C3E6B2200E95CA6 /* AccountLoginUseCase.swift in Sources */,
-				990BDE532C40CF1E00A7FB5D /* ScheduleCell.swift in Sources */,
+				990BDE532C40CF1E00A7FB5D /* DDayCell.swift in Sources */,
 				9911F98C2C3F908E00D0FDC9 /* HomeFeedView.swift in Sources */,
 				99C9B2292C0197CA008D7CBD /* User.swift in Sources */,
 				99D780DE2C6066FA005A3F30 /* LoginResponse.swift in Sources */,
@@ -1227,7 +1227,7 @@
 				99EC78CE2C11DBA5007C4415 /* PasswordResetViewController.swift in Sources */,
 				99B397832C0C3E9D00D7A109 /* AccountCheckView.swift in Sources */,
 				99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */,
-				99FBA5542C453B6D002EEEC7 /* ScheduleViewModel.swift in Sources */,
+				99FBA5542C453B6D002EEEC7 /* DDayViewModel.swift in Sources */,
 				99949F552C58A72B00AE0177 /* FriendsTableViewCell.swift in Sources */,
 				99CA4F282C33B72C007C027C /* ResetPasswordUseCase.swift in Sources */,
 				99149FED2C4F97EA00136097 /* TimeHelper.swift in Sources */,

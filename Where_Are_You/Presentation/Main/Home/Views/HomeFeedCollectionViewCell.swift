@@ -44,6 +44,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
         label.textColor = .color118
+        label.adjustsFontForContentSizeCategory = true
         label.lineBreakMode = .byCharWrapping
         label.numberOfLines = 4
         return label
@@ -85,7 +86,6 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         
         profileImageView.snp.makeConstraints { make in
             make.width.equalTo(textStackView.snp.height)
-//            make.width.height.equalTo(contentView.snp.width).multipliedBy(0.15)
         }
         
         descriptionLabel.snp.makeConstraints { make in

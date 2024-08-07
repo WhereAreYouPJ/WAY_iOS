@@ -23,6 +23,6 @@ class FeedViewModel {
     }
     
     func shouldShowMoreFeedsCell() -> Bool {
-        return feeds.count > 10
+        return feeds.count > 9
     }
 }

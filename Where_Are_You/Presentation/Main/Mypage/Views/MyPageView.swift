@@ -148,13 +148,13 @@ class MyPageView: UIView {
         // 유저프로필
         profileBackgroundView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(self.snp.width).multipliedBy(0.747)
+            make.height.equalToSuperview().multipliedBy(0.4)
         }
         
         profileImageView.snp.makeConstraints { make in
             make.top.equalTo(profileBackgroundView.snp.top).inset(90)
             make.centerX.equalToSuperview()
-            make.height.width.equalTo(self.snp.width).multipliedBy(0.266)
+            make.height.width.equalTo(profileBackgroundView.snp.height).multipliedBy(0.357)
         }
         
         // 편집 버튼
@@ -203,13 +203,15 @@ class MyPageView: UIView {
         supportStackView.snp.makeConstraints { make in
             make.top.equalTo(manageStackView.snp.bottom).offset(12)
             make.leading.trailing.equalToSuperview().inset(17)
+//            make.bottom.equalTo(logoutDeleteStackView.snp.top).inset(34)
         }
         
         // 로그아웃, 회원탈퇴 버튼
         logoutDeleteStackView.snp.makeConstraints { make in
             make.bottom.equalTo(safeAreaLayoutGuide).inset(20)
-            make.leading.trailing.equalToSuperview().inset(120)
-            make.height.equalTo(logoutDeleteStackView.snp.width).multipliedBy(0.206)
+//            make.top.equalTo(supportStackView.snp.bottom).offset(34)
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.363)
         }
         
         separatorview.snp.makeConstraints { make in
@@ -229,6 +231,7 @@ class MyPageView: UIView {
         stackView.layer.cornerRadius = 14
         stackView.clipsToBounds = true
         stackView.backgroundColor = .white
+        stackView.distribution = .fillEqually
         
         buttonTitles.forEach { title in
             let button = createButton(withTitle: title)
@@ -242,16 +245,26 @@ class MyPageView: UIView {
         return stackView
     }
     
+//    let myDetailManageButton: UIButton = {
+//        let button = UIButton()
+//        let label = CustomLabel(UILabel_NotoSans: .medium, text: "내 정보 관리", textColor: .color34, fontSize: 16)
+//        label.adjustsFontForContentSizeCategory = true
+//        button.addSubview(label)
+//        label.snp.makeConstraints { make in
+//            make.top.bottom.equalToSuperview().inset(7)
+//            make.leading.equalToSuperview().inset(12)
+//        }
+//        return button
+//    }()
+    
     private func createButton(withTitle title: String) -> UIButton {
         let button = UIButton()
         let label = CustomLabel(UILabel_NotoSans: .medium, text: title, textColor: .color34, fontSize: 16)
         button.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(12)
-        }
-        button.snp.makeConstraints { make in
-            make.height.equalTo(45)
+            make.leading.equalToSuperview().inset(12)
+            make.top.equalToSuperview().inset(7)
         }
         return button
     }

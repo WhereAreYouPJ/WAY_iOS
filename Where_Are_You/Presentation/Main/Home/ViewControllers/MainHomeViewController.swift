@@ -13,7 +13,7 @@ class MainHomeViewController: UIViewController {
     private var mainHomeView = MainHomeView()
     private var mainHomeViewModel: MainHomeViewModel!
     private var bannerViewController: BannerViewController!
-    private var scheduleViewController: ScheduleViewController!
+    private var dDayViewController: DDayViewController!
     private var feedTableViewController: HomeFeedViewController!
     
     private let titleView = TitleView()
@@ -49,22 +49,22 @@ class MainHomeViewController: UIViewController {
     private func setupViewControllers() {
         // 서브뷰 컨트롤러 초기화
         bannerViewController = BannerViewController()
-        scheduleViewController = ScheduleViewController()
+        dDayViewController = DDayViewController()
         feedTableViewController = HomeFeedViewController()
         
         // 서브뷰 컨트롤러를 자식 컨트롤러로 추가
         addChild(bannerViewController)
-        addChild(scheduleViewController)
+        addChild(dDayViewController)
         addChild(feedTableViewController)
         
         // 서브뷰 컨트롤러의 뷰가 부모 컨트롤러에 추가되었음을 알림
         bannerViewController.didMove(toParent: self)
-        scheduleViewController.didMove(toParent: self)
+        dDayViewController.didMove(toParent: self)
         feedTableViewController.didMove(toParent: self)
         
         // 각 서브 뷰 컨트롤러의 뷰를 메인 뷰에 추가
         mainHomeView.addSubview(bannerViewController.view)
-        mainHomeView.addSubview(scheduleViewController.view)
+        mainHomeView.addSubview(dDayViewController.view)
         mainHomeView.addSubview(feedTableViewController.view)
         
         // 레이아웃 설정
@@ -74,10 +74,10 @@ class MainHomeViewController: UIViewController {
             make.height.equalTo(mainHomeView.bannerView.snp.height)
         }
         
-        scheduleViewController.view.snp.makeConstraints { make in
-            make.top.equalTo(mainHomeView.scheduleView)
-            make.leading.trailing.equalTo(mainHomeView.scheduleView)
-            make.height.equalTo(mainHomeView.scheduleView.snp.height)
+        dDayViewController.view.snp.makeConstraints { make in
+            make.top.equalTo(mainHomeView.dDayView)
+            make.leading.trailing.equalTo(mainHomeView.dDayView)
+            make.height.equalTo(mainHomeView.dDayView.snp.height)
         }
         
         feedTableViewController.view.snp.makeConstraints { make in
@@ -98,9 +98,9 @@ class MainHomeViewController: UIViewController {
             }
         }
         
-        mainHomeViewModel.onScheduleDataFetched = { [weak self] in
+        mainHomeViewModel.onDDayDataFetched = { [weak self] in
             DispatchQueue.main.async {
-                self?.scheduleViewController.viewModel.setSchedules(self?.mainHomeViewModel.getSchedules() ?? [])
+                self?.dDayViewController.viewModel.setDDays(self?.mainHomeViewModel.getDDays() ?? [])
             }
         }
         

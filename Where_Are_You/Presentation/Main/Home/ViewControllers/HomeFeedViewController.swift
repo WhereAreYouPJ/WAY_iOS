@@ -75,7 +75,7 @@ extension HomeFeedViewController: UICollectionViewDataSource, UICollectionViewDe
 
 extension HomeFeedViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
+        return CGSize(width: feedView.frame.width - 30, height: collectionView.frame.height)
     }
 }
 
@@ -86,11 +86,3 @@ extension HomeFeedViewController: MoreFeedCollectionViewCellDelegate {
         navigationController?.pushViewController(feedsViewController, animated: true)
     }
 }
-
-
-//private func configureMoreFeedCell(for indexPath: IndexPath, in collectionView: UICollectionView) -> UICollectionViewCell {
-//    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoreFeedCollectionViewCell.identifier, for: indexPath) as? MoreFeedCollectionViewCell else {
-//        return UICollectionViewCell()
-//    }
-//    return cell
-//}

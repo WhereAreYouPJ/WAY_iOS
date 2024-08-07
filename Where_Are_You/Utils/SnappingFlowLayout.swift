@@ -11,11 +11,9 @@ class SnappingFlowLayout: UICollectionViewFlowLayout {
     override func prepare() {
         super.prepare()
         if let collectionView = collectionView {
-            // 각 셀의 크기를 설정합니다. 여기서 collectionView.frame.width - 12는 양쪽 간격을 고려한 것입니다.
-            itemSize = CGSize(width: collectionView.frame.width - 12, height: collectionView.frame.height)
-            minimumLineSpacing = 6 // 셀 사이의 간격을 12로 설정
-            minimumInteritemSpacing = 0
-            sectionInset = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 6) // 섹션의 시작과 끝에 간격 추가
+            minimumLineSpacing = 12 // 셀 사이의 간격을 12로 설정
+//            minimumInteritemSpacing = 0
+            sectionInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15) // 섹션의 시작과 끝에 간격 추가
         }
     }
     

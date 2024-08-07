@@ -1,5 +1,5 @@
 //
-//  ScheduleViewCell.swift
+//  DDAyCell.swift
 //  Where_Are_You
 //
 //  Created by 오정석 on 12/7/2024.
@@ -8,10 +8,10 @@
 import UIKit
 import SnapKit
 
-class ScheduleCell: UICollectionViewCell {
+class DDAyCell: UICollectionViewCell {
     // MARK: - Properties
 
-    static let identifier = "ScheduleCell"
+    static let identifier = "DDAyCell"
     
     private let dDayLabel: UILabel = {
         let label = UILabel()
@@ -68,13 +68,13 @@ class ScheduleCell: UICollectionViewCell {
         }
     }
     
-    func configure(with schedule: Schedule?) {
-        if let schedule = schedule {
+    func configure(with dDay: DDay?) {
+        if let dDay = dDay {
             dDayLabel.isHidden = false
             titleLabel.isHidden = false
             emptyLabel.isHidden = true
-            dDayLabel.text = "D - \(schedule.dDay)"
-            titleLabel.text = schedule.title
+            dDayLabel.text = "D - \(dDay.dDay)"
+            titleLabel.text = dDay.title
         } else {
             dDayLabel.isHidden = true
             titleLabel.isHidden = true

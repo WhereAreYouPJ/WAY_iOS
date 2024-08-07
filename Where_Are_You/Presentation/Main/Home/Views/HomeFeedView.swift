@@ -58,7 +58,8 @@ class HomeFeedView: UIView {
         addSubview(collectionView)
         
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview()/*.inset(15)*/
         }
         
 //        collectionView.register(HomeFeedCollectionViewCell.self, forCellWithReuseIdentifier: HomeFeedCollectionViewCell.identifier)

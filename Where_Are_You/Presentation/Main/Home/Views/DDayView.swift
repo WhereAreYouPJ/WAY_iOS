@@ -1,5 +1,5 @@
 //
-//  ScheduleView.swift
+//  DDayView.swift
 //  Where_Are_You
 //
 //  Created by 오정석 on 11/7/2024.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class ScheduleView: UIView {
+class DDayView: UIView {
     // MARK: - Properties
     
     var collectionView: UICollectionView
@@ -40,7 +40,7 @@ class ScheduleView: UIView {
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.isScrollEnabled = false // 스크롤 비활성화
-        collectionView.register(ScheduleCell.self, forCellWithReuseIdentifier: ScheduleCell.identifier)
+        collectionView.register(DDAyCell.self, forCellWithReuseIdentifier: DDAyCell.identifier)
         
         addSubview(containerView)
         containerView.addSubview(collectionView)
