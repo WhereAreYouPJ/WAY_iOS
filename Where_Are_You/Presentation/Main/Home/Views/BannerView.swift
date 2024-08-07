@@ -12,8 +12,16 @@ class BannerView: UIView {
     
     // MARK: - Properties
     
-    var collectionView: UICollectionView
+    var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        return cv
+    }()
+    
     let pageControl = UIPageControl()
+    
     var pageNumberLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -28,10 +36,6 @@ class BannerView: UIView {
     // MARK: - Lifecycle
     
     override init(frame: CGRect) {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         super.init(frame: .zero)
         setupViews()
     }
@@ -43,6 +47,12 @@ class BannerView: UIView {
     // MARK: - Helpers
     
     private func setupViews() {
+        layer.cornerRadius = 16
+        layer.borderWidth = 1.5
+        layer.borderColor = UIColor.color221.cgColor
+        backgroundColor = .white
+        clipsToBounds = true
+        
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: BannerCollectionViewCell.identifier)
@@ -61,7 +71,7 @@ class BannerView: UIView {
         }
         
         pageNumberLabel.snp.makeConstraints { make in
-            make.bottom.right.equalToSuperview().offset(-12)
+            make.bottom.trailing.equalToSuperview().offset(-12)
             make.width.equalTo(42)
             make.height.equalTo(17)
         }

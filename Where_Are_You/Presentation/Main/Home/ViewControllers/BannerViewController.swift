@@ -24,7 +24,6 @@ class BannerViewController: UIViewController {
         viewModel = BannerViewModel()
         setupBindings()
         setupCollectionView()
-        viewModel.fetchBannerImages()
         
         NotificationCenter.default.addObserver(self, selector: #selector(scrollToBannerIndex(_:)), name: .scrollToBannerIndex, object: nil)
     }
@@ -58,6 +57,11 @@ class BannerViewController: UIViewController {
         bannerView.pageNumberLabel.text = "\(currentPage) / \(totalPages)"
     }
     
+    // 배너 이미지를 업데이트하는 메서드 추가
+    func updateBannerImages(_ images: [UIImage]) {
+        viewModel.setBanners(images)
+    }
+    
     // MARK: - Selectors
     
     @objc private func scrollToBannerIndex(_ notification: Notification) {
@@ -83,12 +87,22 @@ extension BannerViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCollectionViewCell.identifier, for: indexPath) as? BannerCollectionViewCell else {
-            fatalError("Unable to dequeue BannerCollectionViewCell")
-        }
-        let images = viewModel.getBannerImages()
-        let correctedIndex = (indexPath.item - 1 + images.count) % images.count
-        cell.configure(with: images[correctedIndex])
-        return cell
+                fatalError("Unable to dequeue BannerCollectionViewCell")
+            }
+            
+            let images = viewModel.getBannerImages()
+            
+            // 배열이 비어있는 경우를 처리합니다.
+            if images.isEmpty {
+                // 예를 들어, 빈 셀에 대한 기본 이미지를 설정하거나 처리할 수 있습니다.
+                cell.configure(with: UIImage()) // 빈 이미지 또는 기본 이미지
+                return cell
+            }
+            
+            let correctedIndex = (indexPath.item - 1 + images.count) % images.count
+            cell.configure(with: images[correctedIndex])
+            
+            return cell
     }
 }
 

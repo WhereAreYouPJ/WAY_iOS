@@ -8,17 +8,17 @@
 import Foundation
 
 protocol AccountLoginUseCase {
-    func execute(userId: String, password: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func execute(request: LoginBody, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class AccountLoginUseCaseImpl: AccountLoginUseCase {
-    private let repository: AuthRepository
+    private let memberRepository: MemberRepositoryProtocol
 
-    init(repository: AuthRepository) {
-        self.repository = repository
+    init(memberRepository: MemberRepositoryProtocol) {
+        self.memberRepository = memberRepository
     }
 
-    func execute(userId: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        repository.login(userId: userId, password: password, completion: completion)
+    func execute(request: LoginBody, completion: @escaping (Result<Void, Error>) -> Void) {
+        memberRepository.login(request: request, completion: completion)
     }
 }

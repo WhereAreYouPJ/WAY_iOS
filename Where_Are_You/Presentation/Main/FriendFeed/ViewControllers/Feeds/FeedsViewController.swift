@@ -16,10 +16,4 @@ class FeedsViewController: UIViewController {
         view = friendsListView
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-//        setupTableView()
-//        fetchData()
-    }
-    
 }

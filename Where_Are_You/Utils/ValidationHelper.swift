@@ -7,13 +7,13 @@
 
 import Foundation
 
-// MARK: - ValidationHelper (형식 조건 확인)
+// MARK: - ValidationHelper (입력 형식 조건 확인)
 
 class ValidationHelper {
-    static func isValidUserID(_ userID: String) -> Bool {
-        let idRegex = "^[a-z][a-z0-9]{4,11}$"
-        let userIDPred = NSPredicate(format: "SELF MATCHES %@", idRegex)
-        return userIDPred.evaluate(with: userID)
+    static func isValidUserName(_ userName: String) -> Bool {
+        let nameRegex = "^[가-힣a-zA-Z\\d@$!%*?&]{1,}$"
+        let userNamePred = NSPredicate(format: "SELF MATCHES %@", nameRegex)
+        return userNamePred.evaluate(with: userName)
     }
 
     static func isValidPassword(_ pw: String) -> Bool {

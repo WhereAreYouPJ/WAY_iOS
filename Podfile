@@ -8,6 +8,7 @@ target 'Where_Are_You' do
 	pod 'SwiftLint'
 	pod 'SnapKit'
 	pod 'KeychainAccess'
+	pod 'Moya'
 
 
 	target 'Where_Are_You_Tests' do
