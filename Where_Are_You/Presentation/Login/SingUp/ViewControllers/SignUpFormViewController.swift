@@ -17,39 +17,36 @@ class SignUpFormViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupActions()
         setupViewModel()
         setupBindings()
+        setupActions()
     }
     
     // MARK: - Helpers
     
-    func setupUI() {
+    private func setupViewModel() {
+        let memberService = MemberService()
+        let memberRepository = MemberRepository(memberService: memberService)
+        viewModel = SignUpViewModel(
+            accountSignUpUseCase: AccountSignUpUseCaseImpl(memberRepository: memberRepository),
+            checkEmailUseCase: CheckEmailUseCaseImpl(memberRepository: memberRepository),
+            emailSendUseCase: EmailSendUseCaseImpl(memberRepository: memberRepository),
+            emailVerifyUseCase: EmailVerifyUseCaseImpl(memberRepository: memberRepository))
+    }
+    
+    private func setupUI() {
         view = signUpView
         configureNavigationBar(title: "회원가입", backButtonAction: #selector(backButtonTapped))
     }
     
-    func setupActions() {
+    private func setupActions() {
         signUpView.bottomButtonView.button.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
-        signUpView.userIDCheckButton.addTarget(self, action: #selector(duplicateCheckButtonTapped), for: .touchUpInside)
         signUpView.emailCheckButton.addTarget(self, action: #selector(authRequestButtonTapped), for: .touchUpInside)
         signUpView.authCheckButton.addTarget(self, action: #selector(authCheckButtonTapped), for: .touchUpInside)
         
         signUpView.userNameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingDidEnd)
         signUpView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         signUpView.checkPasswordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-    }
-    
-    private func setupViewModel() {
-        let authService = AuthService()
-        let userRepository = AuthRepository(authService: authService)
-        viewModel = SignUpViewModel(
-            signUpUseCase: SignUpUseCaseImpl(userRepository: userRepository),
-            checkUserIDAvailabilityUseCase: CheckUserIDAvailabilityUseCaseImpl(userRepository: userRepository),
-            checkEmailAvailabilityUseCase: CheckEmailAvailabilityUseCaseImpl(userRepository: userRepository),
-            sendVerificationCodeUseCase: SendVerificationCodeUseCaseImpl(userRepository: userRepository),
-            verifyCodeUseCase: VerifyCodeUseCaseImpl(userRepository: userRepository)
-        )
     }
     
     private func setupBindings() {
@@ -59,49 +56,62 @@ class SignUpFormViewController: UIViewController {
             }
         }
         
-        viewModel.onSignUpFailure = { [weak self] message in
+        viewModel.onSignUpButtonState = { [weak self] isAvailable in
             DispatchQueue.main.async {
-                self?.showAlert(title: "회원가입 실패", message: message)
+                self?.signUpView.bottomButtonView.button.isEnabled = isAvailable
+                self?.signUpView.bottomButtonView.button.backgroundColor = isAvailable ? .brandColor : .color171
             }
         }
         
-        viewModel.onUserIDAvailabilityChecked = { [weak self] message, isAvailable in
+        viewModel.onUserNameValidationMessage = { [weak self] message, isAvailabe in
             DispatchQueue.main.async {
-                self?.updateStatus(label: self?.signUpView.userIDErrorLabel, message: message, isAvailable: isAvailable, textField: nil)
+                self?.updateStatus(label: self?.signUpView.userNameErrorLabel, message: message, isAvailable: isAvailabe, textField: self?.signUpView.userNameTextField)
             }
         }
         
-        viewModel.onPasswordFormatError = { [weak self] message, isAvailable in
+        viewModel.onPasswordFormatMessage = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
                 self?.updateStatus(label: self?.signUpView.passwordErrorLabel, message: message, isAvailable: isAvailable, textField: self?.signUpView.passwordTextField)
             }
         }
         
-        viewModel.onCheckPasswordFormatError = { [weak self] message, isAvailable in
+        viewModel.onCheckPasswordFormatMessage = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
                 self?.updateStatus(label: self?.signUpView.checkPasswordErrorLabel, message: message, isAvailable: isAvailable, textField: self?.signUpView.checkPasswordTextField)
             }
         }
         
-        viewModel.onEmailVerificationCodeSent = { [weak self] message, isAvailable in
+        viewModel.onEmailSendMessage = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
                 self?.updateStatus(label: self?.signUpView.emailErrorLabel, message: message, isAvailable: isAvailable, textField: nil)
                 self?.signUpView.authStack.isHidden = !isAvailable
+                if isAvailable == true {
+                    self?.signUpView.emailCheckButton.updateTitle("인증요청 완료")
+                    self?.signUpView.emailCheckButton.updateBackgroundColor(.color171)
+                    self?.signUpView.emailCheckButton.isEnabled = isAvailable
+                }
             }
         }
         
-        viewModel.onEmailVerificationCodeVerified = { [weak self] message, isAvailable in
+        viewModel.onEmailVerifyCodeMessage = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
                 self?.updateStatus(label: self?.signUpView.authCodeErrorLabel, message: message, isAvailable: isAvailable, textField: self?.signUpView.authCodeTextField)
+                if isAvailable == true {
+                    self?.signUpView.authCheckButton.updateTitle("인증 완료")
+                    self?.signUpView.authCheckButton.updateBackgroundColor(.color171)
+                    self?.signUpView.authCheckButton.isEnabled = isAvailable
+                }
             }
         }
         
+        // 타이머 업데이트
         viewModel.onUpdateTimer = { [weak self] timeString in
             DispatchQueue.main.async {
                 self?.signUpView.timer.text = timeString
             }
         }
     }
+    
     // MARK: - Selectors
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
@@ -111,12 +121,10 @@ class SignUpFormViewController: UIViewController {
         
         switch textField {
         case signUpView.userNameTextField:
-            viewModel.authCredentials.userName = userName
+            viewModel.checkUserNameValidation(userName: userName)
         case signUpView.passwordTextField:
-            viewModel.password = pw
             viewModel.checkPasswordAvailability(password: pw)
         case signUpView.checkPasswordTextField:
-            viewModel.confirmPassword = checkpw
             viewModel.checkSamePassword(password: pw, checkPassword: checkpw)
         default:
             break
@@ -125,10 +133,6 @@ class SignUpFormViewController: UIViewController {
     
     @objc func backButtonTapped() {
         dismiss(animated: true)
-    }
-    
-    @objc private func duplicateCheckButtonTapped() {
-        viewModel.checkUserIDAvailability(userId: signUpView.userIDTextField.text ?? "")
     }
     
     @objc func authRequestButtonTapped() {
@@ -148,12 +152,6 @@ class SignUpFormViewController: UIViewController {
     private func navigateToNextScreen() {
         let controller = FinishRegisterViewController()
         navigationController?.pushViewController(controller, animated: true)
-    }
-    
-    private func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alertController, animated: true)
     }
     
     private func updateStatus(label: UILabel?, message: String, isAvailable: Bool, textField: UITextField?) {

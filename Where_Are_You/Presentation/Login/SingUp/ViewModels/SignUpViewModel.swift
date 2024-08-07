@@ -10,59 +10,48 @@ import Foundation
 class SignUpViewModel {
     
     // MARK: - Properties
-    private let signUpUseCase: SignUpUseCase
-    private let checkUserIDAvailabilityUseCase: CheckUserIDAvailabilityUseCase
-    private let checkEmailAvailabilityUseCase: CheckEmailAvailabilityUseCase
-    private let sendVerificationCodeUseCase: SendVerificationCodeUseCase
-    private let verifyCodeUseCase: VerifyCodeUseCase
+    private let accountSignUpUseCase: AccountSignUpUseCase
+    private let checkEmailUseCase: CheckEmailUseCase
+    private let emailSendUseCase: EmailSendUseCase
+    private let emailVerifyUseCase: EmailVerifyUseCase
     private let timerHelper = TimerHelper()
-    var authCredentials = AuthCredentials()
+    
+    var onUpdateTimer: ((String) -> Void)?
     
     // Input
-    var password: String = ""
-    var confirmPassword: String = ""
+    var signUpBody = SignUpBody() {
+        didSet {
+            updateSignUpButtonState()
+        }
+    }
+    
     var email: String = ""
     
     // Output
     var onSignUpSuccess: (() -> Void)?
-    var onSignUpFailure: ((String) -> Void)?
+    var onSignUpButtonState: ((Bool) -> Void)?
     
-    var onUserIDAvailabilityChecked: ((String, Bool) -> Void)?
-    var onPasswordFormatError: ((String, Bool) -> Void)?
-    var onCheckPasswordFormatError: ((String, Bool) -> Void)?
-    var onEmailVerificationCodeSent: ((String, Bool) -> Void)?
-    var onEmailVerificationCodeVerified: ((String, Bool) -> Void)?
+    var onUserNameValidationMessage: ((String, Bool) -> Void)?
     
-    var onUpdateTimer: ((String) -> Void)?
+    var onEmailSendMessage: ((String, Bool) -> Void)?
+    var onEmailVerifyCodeMessage: ((String, Bool) -> Void)?
     
-    // 에러 description
-    private let invalidUserIDMessage = "영문 소문자와 숫자만 사용하여, 영문 소문자로 시작하는 5~12자의 아이디를 입력해주세요"
-    private let invalidPasswordMessage = "영문 대문자, 소문자로 시작하는 6~20자의 영문 대문자, 소문자, 숫자를 포함해 입력해주세요"
-    private let invalidEmailMessage = "유효하지 않은 이메일 형식입니다."
-    private let duplicateUserIDMessage = "중복된 아이디입니다."
-    private let duplicateEmailMessage = "중복된 이메일 입니다."
-    private let emailVerificationExpiredMessage = "이메일 재인증 요청이 필요합니다."
-    private let emailVerificationSuccessMessage = "인증코드가 확인되었습니다."
+    var onPasswordFormatMessage: ((String, Bool) -> Void)?
+    var onCheckPasswordFormatMessage: ((String, Bool) -> Void)?
     
     // MARK: - LifeCycle
     
-    init(signUpUseCase: SignUpUseCase,
-         checkUserIDAvailabilityUseCase: CheckUserIDAvailabilityUseCase,
-         checkEmailAvailabilityUseCase: CheckEmailAvailabilityUseCase,
-         sendVerificationCodeUseCase: SendVerificationCodeUseCase,
-         verifyCodeUseCase: VerifyCodeUseCase) {
-        self.signUpUseCase = signUpUseCase
-        self.checkUserIDAvailabilityUseCase = checkUserIDAvailabilityUseCase
-        self.checkEmailAvailabilityUseCase = checkEmailAvailabilityUseCase
-        self.sendVerificationCodeUseCase = sendVerificationCodeUseCase
-        self.verifyCodeUseCase = verifyCodeUseCase
+    init(accountSignUpUseCase: AccountSignUpUseCase,
+         checkEmailUseCase: CheckEmailUseCase,
+         emailSendUseCase: EmailSendUseCase,
+         emailVerifyUseCase: EmailVerifyUseCase) {
+        self.accountSignUpUseCase = accountSignUpUseCase
+        self.checkEmailUseCase = checkEmailUseCase
+        self.emailSendUseCase = emailSendUseCase
+        self.emailVerifyUseCase = emailVerifyUseCase
         
         timerHelper.onUpdateTimer = { [weak self] timeString in
             self?.onUpdateTimer?(timeString)
-        }
-        
-        timerHelper.onTimerExpired = { [weak self]  in
-            self?.onEmailVerificationCodeVerified?("이메일 재인증 요청이 필요합니다.", false)
         }
     }
     
@@ -70,90 +59,79 @@ class SignUpViewModel {
     
     // 회원가입
     func signUp() {
-        guard validateSignUpInputs() else { return }
-        
-        authCredentials.password = confirmPassword
-        signUpUseCase.execute(request: authCredentials) { result in
+        accountSignUpUseCase.execute(request: signUpBody) { result in
             switch result {
             case .success:
                 self.onSignUpSuccess?()
-            case .failure(let error):
-                self.onSignUpFailure?(error.localizedDescription)
+            case .failure:
+                break
             }
         }
     }
     
-    // 아이디 중복 체크
-    func checkUserIDAvailability(userId: String) {
-        guard ValidationHelper.isValidUserID(userId) else {
-            onUserIDAvailabilityChecked?(invalidUserIDMessage, false)
-            return
-        }
-        
-        checkUserIDAvailabilityUseCase.execute(userId: userId) { result in
-            switch result {
-            case .success:
-                self.onUserIDAvailabilityChecked?("사용가능한 아이디입니다.", true)
-                self.authCredentials.userId = userId
-            case .failure(let error):
-                if let nsError = error as NSError?, nsError.code == 409 {
-                    self.onUserIDAvailabilityChecked?(self.duplicateUserIDMessage, false)
-                } else {
-                    self.onUserIDAvailabilityChecked?(error.localizedDescription, false)
-                }
-            }
+    private func updateSignUpButtonState() {
+        let isButtonEnabled = signUpBody.userName != nil && signUpBody.email != nil && signUpBody.password != nil
+        onSignUpButtonState?(isButtonEnabled)
+    }
+    
+    // 이름 형식 체크
+    func checkUserNameValidation(userName: String) {
+        if ValidationHelper.isValidUserName(userName) {
+            onUserNameValidationMessage?("", true)
+            signUpBody.userName = userName
+        } else {
+            onUserNameValidationMessage?(invalidUserNameMessage, false)
+            signUpBody.userName = nil
         }
     }
     
     // 비밀번호 형식 체크
     func checkPasswordAvailability(password: String) {
         if ValidationHelper.isValidPassword(password) {
-            onPasswordFormatError?("사용가능한 비밀번호입니다.", true)
+            onPasswordFormatMessage?("", true)
         } else {
-            onPasswordFormatError?(invalidPasswordMessage, false)
+            onPasswordFormatMessage?(invalidPasswordMessage, false)
         }
     }
     
     // 비밀번호 일치체크
     func checkSamePassword(password: String, checkPassword: String) {
         if ValidationHelper.isPasswordSame(password, checkpw: checkPassword) {
-            onCheckPasswordFormatError?("비밀번호가 일치힙니다.", true)
+            onCheckPasswordFormatMessage?("", true)
+            signUpBody.password = checkPassword
         } else {
-            onCheckPasswordFormatError?("비밀번호가 일치하지 않습니다.", false)
+            onCheckPasswordFormatMessage?("비밀번호가 일치하지 않습니다.", false)
+            signUpBody.password = nil
         }
     }
     
     // 이메일 중복체크
     func checkEmailAvailability(email: String) {
         guard ValidationHelper.isValidEmail(email) else {
-            onEmailVerificationCodeSent?(invalidEmailMessage, false)
+            onEmailSendMessage?(invalidEmailMessage, false)
             return
         }
         
-        checkEmailAvailabilityUseCase.execute(email: email) { result in
+        checkEmailUseCase.execute(request: CheckEmailParameters(email: email)) { result in
             switch result {
-            case .success:
-                self.sendEmailVerificationCode(email: email)
-            case .failure(let error):
-                if let nsError = error as NSError?, nsError.code == 409 {
-                    self.onEmailVerificationCodeSent?(self.duplicateEmailMessage, false)
-                } else {
-                    self.onEmailVerificationCodeSent?(error.localizedDescription, false)
-                }
+            case .success(let data):
+                self.timerHelper.startTimer()
+                self.sendEmailVerificationCode(email: data.email)
+            case .failure:
+                self.onEmailSendMessage?("중복된 이메일입니다.", false)
             }
         }
     }
     
     // 인증코드 전송
     func sendEmailVerificationCode(email: String) {
-        sendVerificationCodeUseCase.execute(identifier: email, type: .email) { result in
+        emailSendUseCase.execute(request: EmailSendBody(email: email)) { result in
             switch result {
             case .success:
-                self.onEmailVerificationCodeSent?("인증코드가 전송되었습니다.", true)
                 self.email = email
-                self.timerHelper.startTimer()
+                self.onEmailSendMessage?(sendEmailVerifyCodeSuccessMessage, true)
             case .failure(let error):
-                self.onEmailVerificationCodeVerified?(error.localizedDescription, false)
+                self.onEmailSendMessage?(error.localizedDescription, false)
             }
         }
     }
@@ -161,48 +139,18 @@ class SignUpViewModel {
     // 인증코드 확인
     func verifyEmailCode(inputCode: String) {
         if timerHelper.timerCount == 0 {
-            self.onEmailVerificationCodeVerified?(emailVerificationExpiredMessage, false)
+            self.onEmailVerifyCodeMessage?(emailVerifyExpiredMessage, false)
         } else {
-            verifyCodeUseCase.execute(identifier: email, code: inputCode, type: .email) { result in
+            emailVerifyUseCase.execute(request: EmailVerifyBody(email: email, code: inputCode)) { result in
                 switch result {
                 case .success:
-                    self.authCredentials.email = self.email
-                    self.onEmailVerificationCodeVerified?(self.emailVerificationSuccessMessage, true)
+                    self.signUpBody.email = self.email
+                    self.onEmailVerifyCodeMessage?(emailVerifySuccessMessage, true)
                 case .failure(let error):
-                    self.onEmailVerificationCodeVerified?(error.localizedDescription, false)
+                    self.onEmailVerifyCodeMessage?(error.localizedDescription, false)
+                    self.signUpBody.email = nil
                 }
             }
         }
-    }
-    
-    // MARK: - Validation Helpers
-    
-    private func validateSignUpInputs() -> Bool {
-        guard let username = authCredentials.userName, !username.isEmpty else {
-            onSignUpFailure?("이름을 확인해주세요.")
-            return false
-        }
-        
-        guard let userId = authCredentials.userId, !userId.isEmpty else {
-            onSignUpFailure?("아이디를 확인해주세요.")
-            return false
-        }
-        
-        guard let email = authCredentials.email, !email.isEmpty else {
-            onSignUpFailure?("이메일을 확인해주세요.")
-            return false
-        }
-        
-        guard ValidationHelper.isValidPassword(password) else {
-            onSignUpFailure?("비밀번호를 확인해주세요.")
-            return false
-        }
-        
-        guard password == confirmPassword else {
-            onSignUpFailure?("비밀번호가 일치하지 않습니다.")
-            return false
-        }
-        
-        return true
     }
 }

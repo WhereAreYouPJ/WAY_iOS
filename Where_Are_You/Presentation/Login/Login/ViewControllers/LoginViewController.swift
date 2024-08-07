@@ -54,7 +54,7 @@ class LoginViewController: UIViewController {
     }
     
     @objc func findAccountButtonTapped() {
-        let controller = SearchAccountController()
+        let controller = AccountSearchViewController()
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true, completion: nil)

@@ -18,14 +18,9 @@ class BannerViewModel {
     
     // MARK: - Helpers
     
-    func fetchBannerImages() {
-        // Fetch banner images from the API
-        // Update bannerImages array
-        self.bannerImages = [
-            UIImage(named: "exampleBanner")!,
-            UIImage(named: "exampleBanner")!,
-            UIImage(named: "exampleBanner")!
-        ]
+    // 데이터 설정 메서드
+    func setBanners(_ banners: [UIImage]) {
+        self.bannerImages = banners
         onBannerDataFetched?()
         startAutoScroll()
     }

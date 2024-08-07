@@ -12,13 +12,13 @@ protocol FindUserIDUseCase {
 }
 
 class FindUserIDUseCaseImpl: FindUserIDUseCase {
-    private let userRepository: AuthRepositoryProtocol
+    private let authRepository: AuthRepositoryProtocol
     
-    init(userRepository: AuthRepositoryProtocol) {
-        self.userRepository = userRepository
+    init(authRepository: AuthRepositoryProtocol) {
+        self.authRepository = authRepository
     }
     
     func execute(email: String, code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        userRepository.findUserID(email: email, code: code, completion: completion)
+        authRepository.findUserID(email: email, code: code, completion: completion)
     }
 }

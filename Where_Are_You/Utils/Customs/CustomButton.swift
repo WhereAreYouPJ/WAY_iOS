@@ -35,7 +35,7 @@ class BottomButtonView: UIView {
         border.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.centerX.equalToSuperview()
-            make.left.equalToSuperview()
+            make.leading.equalToSuperview()
             make.height.equalTo(1)
         }
         
@@ -43,56 +43,9 @@ class BottomButtonView: UIView {
         button.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(border.snp.bottom).offset(12)
-            make.left.equalToSuperview().offset(15)
+            make.leading.equalToSuperview().offset(15)
             make.height.equalTo(self.snp.width).multipliedBy(0.145)
             make.bottom.equalToSuperview().inset(24)
-        }
-    }
-}
-
-// MARK: - CustomButton in SearchAccountOptionsView
-class CustomButtonFindAccount: UIButton {
-    
-    private let arrowImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "chevron.right")
-        imageView.tintColor = .color17
-        return imageView
-    }()
-    
-    init(title: String, description: String) {
-        super.init(frame: .zero)
-        setupView(title: title, description: description)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupView(title: String, description: String) {
-        layer.borderColor = UIColor.color118.cgColor
-        layer.borderWidth = 1
-        layer.cornerRadius = 7
-        backgroundColor = .white
-        
-        let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: title, textColor: .color34, fontSize: 14)
-        let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: description, textColor: .color102, fontSize: descriptionFontSize)
-        
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel])
-        stackView.axis = .vertical
-        stackView.isUserInteractionEnabled = false
-        
-        addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.left.top.equalToSuperview().offset(9)
-            make.centerY.equalToSuperview()
-            make.width.equalTo(272)
-        }
-        
-        addSubview(arrowImageView)
-        arrowImageView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.right.equalToSuperview().inset(12)
         }
     }
 }
@@ -100,31 +53,61 @@ class CustomButtonFindAccount: UIButton {
 // MARK: - Box Button
 class CustomButton: UIButton {
     
-    init(title: String, backgroundColor: UIColor, titleColor: UIColor, font: UIFont, image: UIImage? = nil) {
+    // MARK: - Properties
+    private var buttonTitle: String
+    private var buttonBackgroundColor: UIColor
+    private var buttonTitleColor: UIColor
+    private var buttonFont: UIFont
+    
+    // MARK: - Initializer
+    init(title: String, backgroundColor: UIColor, titleColor: UIColor, font: UIFont) {
+        self.buttonTitle = title
+        self.buttonBackgroundColor = backgroundColor
+        self.buttonTitleColor = titleColor
+        self.buttonFont = font
         super.init(frame: .zero)
-        setupButton(title: title, backgroundColor: backgroundColor, titleColor: titleColor, font: font, image: image)
+        setupButton()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupButton(title: String, backgroundColor: UIColor, titleColor: UIColor, font: UIFont, image: UIImage?) {
-        var configuration = UIButton.Configuration.filled()
-        configuration.baseBackgroundColor = backgroundColor
-        configuration.baseForegroundColor = titleColor
-        configuration.image = image
-        configuration.imagePadding = 8
-        configuration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
-        configuration.cornerStyle = .medium
+    // MARK: - Setup Button
+    private func setupButton() {
+        setTitle(buttonTitle, for: .normal)
+        setTitleColor(buttonTitleColor, for: .normal)
+        backgroundColor = buttonBackgroundColor
+        titleLabel?.font = buttonFont
         
-        var attributedTitle = AttributedString(title)
-        attributedTitle.font = font
-        attributedTitle.foregroundColor = titleColor
-        configuration.attributedTitle = attributedTitle
+        // 중앙 정렬
+        contentHorizontalAlignment = .center
+        contentVerticalAlignment = .center
         
-        self.configuration = configuration
-        self.clipsToBounds = true
+        // 버튼 모서리 둥글게
+        layer.cornerRadius = 6
+        clipsToBounds = true
+    }
+    
+    // MARK: - Public Methods
+    func updateTitle(_ title: String) {
+        self.buttonTitle = title
+        setTitle(buttonTitle, for: .normal)
+    }
+    
+    func updateBackgroundColor(_ color: UIColor) {
+        self.buttonBackgroundColor = color
+        backgroundColor = color
+    }
+    
+    func updateTitleColor(_ color: UIColor) {
+        self.buttonTitleColor = color
+        setTitleColor(buttonTitleColor, for: .normal)
+    }
+    
+    func updateFont(_ font: UIFont) {
+        self.buttonFont = font
+        titleLabel?.font = font
     }
 }
 
@@ -156,3 +139,49 @@ class CustomButtonView: UIView {
         }
     }
 }
+// MARK: - CustomButton in SearchAccountOptionsView
+// class CustomButtonFindAccount: UIButton {
+//
+//    private let arrowImageView: UIImageView = {
+//        let imageView = UIImageView()
+//        imageView.image = UIImage(systemName: "chevron.right")
+//        imageView.tintColor = .color17
+//        return imageView
+//    }()
+//
+//    init(title: String, description: String) {
+//        super.init(frame: .zero)
+//        setupView(title: title, description: description)
+//    }
+//
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//
+//    private func setupView(title: String, description: String) {
+//        layer.borderColor = UIColor.color118.cgColor
+//        layer.borderWidth = 1
+//        layer.cornerRadius = 7
+//        backgroundColor = .white
+//
+//        let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: title, textColor: .color34, fontSize: 14)
+//        let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: description, textColor: .color102, fontSize: descriptionFontSize)
+//
+//        let stackView = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel])
+//        stackView.axis = .vertical
+//        stackView.isUserInteractionEnabled = false
+//
+//        addSubview(stackView)
+//        stackView.snp.makeConstraints { make in
+//            make.left.top.equalToSuperview().offset(9)
+//            make.centerY.equalToSuperview()
+//            make.width.equalTo(272)
+//        }
+//
+//        addSubview(arrowImageView)
+//        arrowImageView.snp.makeConstraints { make in
+//            make.centerY.equalToSuperview()
+//            make.right.equalToSuperview().inset(12)
+//        }
+//    }
+// }

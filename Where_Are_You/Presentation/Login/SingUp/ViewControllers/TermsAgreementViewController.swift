@@ -8,9 +8,7 @@
 import UIKit
 
 class TermsAgreementViewController: UIViewController {
-    
     // MARK: - Properties
-
     private let termsAgreementView = TermsAgreementView()
     
     // MARK: - Lifecycle
@@ -20,7 +18,6 @@ class TermsAgreementViewController: UIViewController {
         self.view = termsAgreementView
         
         configureNavigationBar(title: "회원가입", backButtonAction: #selector(backButtonTapped))
-        
         buttonActions()
     }
     

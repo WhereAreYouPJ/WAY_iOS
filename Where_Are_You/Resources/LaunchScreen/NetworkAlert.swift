@@ -29,6 +29,7 @@ class NetworkAlert: UIView {
         button.setTitle("닫기", for: .normal)
         button.titleLabel?.font = UIFont.pretendard(NotoSans: .medium, fontSize: 16)
         button.layer.cornerRadius = 6
+        button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.color118.cgColor
         button.backgroundColor = .white
         return button
@@ -83,18 +84,18 @@ class NetworkAlert: UIView {
     
     private func setupConstraints() {
         errorImage.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(18)
+            make.top.equalToSuperview().inset(18)
             make.centerX.equalToSuperview()
         }
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(errorImage.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview().offset(39.5)
+            make.leading.trailing.equalToSuperview().inset(39.5)
         }
         
         buttonStack.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(20)
-            make.leading.trailing.equalToSuperview().offset(14)
+            make.leading.trailing.equalToSuperview().inset(14)
         }
     }
     

@@ -44,7 +44,7 @@ class ProfileView: UIView {
         }
         
         userNameLabel.snp.makeConstraints { make in
-            make.left.equalTo(profileImageView.snp.right).offset(6)
+            make.leading.equalTo(profileImageView.snp.trailing).offset(6)
             make.centerY.equalToSuperview()
         }
     }
