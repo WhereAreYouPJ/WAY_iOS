@@ -11,7 +11,7 @@ struct CreateScheduleView: View {
     @Environment(\.dismiss) private var dismiss
     
     @State private var title = ""
-
+    
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, content: {
@@ -20,7 +20,7 @@ struct CreateScheduleView: View {
                     .padding(.bottom, 16)
                 
                 DateAndTimeView()
-
+                
                 AddPlaceView()
                 
                 AddFriendsView()
@@ -92,7 +92,7 @@ struct DateAndTimeView: View {
         }
         Divider()
         
-        // TODO: 시각 hh(두 글자)로 포맷팅 필요
+        // TODO: 시각 hh(두 글자)로 포맷팅 필요, wheel 모달 창 띄우기
         DatePicker("시작", selection: $startTime, displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
             .environment(\.locale, Locale(identifier: "ko_KR"))
             .environment(\.calendar, Calendar(identifier: .gregorian))
@@ -213,33 +213,37 @@ struct MemoView: View {
             Text("메모")
             Spacer()
             Text("\(memo.count)/\(maxLength)")
-                            .foregroundColor(memo.count == maxLength ? .red : .gray)
+                .foregroundColor(memo.count == maxLength ? .red : .gray)
         }
         Divider()
-
-        ZStack(alignment: .topLeading) {
-            if memo.isEmpty {
-                Text("메모를 작성해주세요.")
-                    .foregroundStyle(memo.isEmpty ? Color(.color118) : .clear)
-                    .padding(10)
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                ZStack(alignment: .topLeading) {
+                    if memo.isEmpty {
+                        Text("메모를 작성해주세요.")
+                            .foregroundStyle(memo.isEmpty ? Color(.color118) : .clear)
+                            .padding(10)
+                    }
+                    
+                    TextEditor(text: $memo)
+                        .modifier(MaxLengthModifier(text: $memo, maxLength: maxLength))
+                        .frame(height: geometry.size.height) // 상단 HStack의 높이를 고려하여 조정
+                        .padding(2)
+                        .opacity(memo.isEmpty ? 0.1 : 1)
+                }
+                .overlay(
+                    RoundedRectangle(cornerRadius: 6)
+                        .stroke(Color(.color212))
+                )
             }
-            
-            TextEditor(text: $memo)
-                .modifier(MaxLengthModifier(text: $memo, maxLength: maxLength))
-                .padding(2)
-                .opacity(memo.isEmpty ? 0.25 : 1)
         }
-        .overlay(
-            RoundedRectangle(cornerRadius: 6)
-                .stroke(Color(.color212))
-        )
     }
 }
 
 struct MaxLengthModifier: ViewModifier {
     @Binding var text: String
     let maxLength: Int
-
+    
     func body(content: Content) -> some View {
         content
             .onChange(of: text) { newValue in

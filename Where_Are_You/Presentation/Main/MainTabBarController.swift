@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 class MainTabBarController: UITabBarController {
     
@@ -31,7 +32,7 @@ class MainTabBarController: UITabBarController {
         
         // 각 뷰 컨트롤러를 초기화하고 설정
         let mainVC = createNavController(viewController: MainHomeViewController(), title: "홈", imageName: "icon-home", selectedImageName: "icon-home-filled")
-        let scheduleVC = createNavController(viewController: UIViewController(), title: "일정", imageName: "icon-schedule", selectedImageName: "icon-schedule-filled")
+        let scheduleVC = createNavController(viewController: UIHostingController(rootView: CalendarView()), title: "일정", imageName: "icon-schedule", selectedImageName: "icon-schedule-filled")
         let friendsVC = createNavController(viewController: FriendFeedViewController(), title: "친구", imageName: "icon-friends", selectedImageName: "icon-friends-filled")
         let myPageVC = createNavController(viewController: MyPageViewController(), title: "마이페이지", imageName: "icon-mypage", selectedImageName: "icon-mypage-filled")
         
