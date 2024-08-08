@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct CreateScheduleView: View {
+    @StateObject var viewModel = CreateScheduleViewModel()
     @Environment(\.dismiss) private var dismiss
-    
     @State private var title = ""
     
     var body: some View {
@@ -50,10 +50,6 @@ struct CreateScheduleView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
     }
-}
-
-#Preview {
-    CreateScheduleView()
 }
 
 struct DateAndTimeView: View {
@@ -108,6 +104,7 @@ struct DateAndTimeView: View {
 
 struct AddPlaceView: View {
     @State private var place = ""
+    @State private var showSearchPlaceView = false
     
     var body: some View {
         Text("위치추가")
@@ -118,9 +115,16 @@ struct AddPlaceView: View {
             if place.isEmpty {
                 Text("위치 추가")
                     .foregroundStyle(Color(.color118))
+                    .onTapGesture {
+                        // 위치 추가 text를 누르면 SearchPlaceView로 이동
+                        showSearchPlaceView = true
+                    }
             } else {
                 // TODO: 위치 추가 결과
             }
+        }
+        .navigationDestination(isPresented: $showSearchPlaceView) {
+            SearchPlaceView()
         }
         
         ScrollView(.horizontal) {
@@ -252,4 +256,8 @@ struct MaxLengthModifier: ViewModifier {
                 }
             }
     }
+}
+
+#Preview {
+    CreateScheduleView()
 }

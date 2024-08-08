@@ -1,21 +1,22 @@
 //
-//  DDay.swift
+//  Schedule.swift
 //  Where_Are_You
 //
-//  Created by 오정석 on 21/7/2024.
+//  Created by juhee on 09.08.24.
 //
 
 import Foundation
 
-struct DDay {
-    let date: Date
+struct Schedule: Codable {
     let title: String
-    
-    var dDay: Int {
-        let calendar = Calendar.current
-        let startOfToday = calendar.startOfDay(for: Date())
-        let startOfEventDay = calendar.startOfDay(for: date)
-        let components = calendar.dateComponents([.day], from: startOfToday, to: startOfEventDay)
-        return components.day ?? 0
-    }
+    let startTime: String
+    let endTime: String
+    let location: String
+    let streetName: String
+    let x: Double
+    let y: Double
+    let color: String
+    let memo: String
+    let invitedMemberSeqs: [String]
+    let createMemberSeq: Int
 }
