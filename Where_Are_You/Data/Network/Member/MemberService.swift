@@ -29,7 +29,6 @@ protocol MemberServiceProtocol {
 class MemberService: MemberServiceProtocol {
     
     // MARK: - Properties
-    
     private var provider = MoyaProvider<MemberAPI>()
     
     init() {
@@ -40,7 +39,6 @@ class MemberService: MemberServiceProtocol {
     }
     
     // MARK: - APIService
-    
     func signUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void) {
         provider.request(.signUp(request: request)) { result in
             self.handleResponse(result, completion: completion)

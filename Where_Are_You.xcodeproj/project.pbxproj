@@ -80,6 +80,14 @@
 		99C1403C2C6496B400A706B6 /* FeedsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C1403B2C6496B400A706B6 /* FeedsTableViewCell.swift */; };
 		99C1403E2C6496BC00A706B6 /* NoFeedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C1403D2C6496BC00A706B6 /* NoFeedsView.swift */; };
 		99C140422C64A01A00A706B6 /* AddFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C140412C64A01A00A706B6 /* AddFeedView.swift */; };
+		99C68E3F2C64B11D00DEC1F1 /* CreateFeedBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E3E2C64B11D00DEC1F1 /* CreateFeedBody.swift */; };
+		99C68E412C64B21F00DEC1F1 /* UpdateFeedBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E402C64B21F00DEC1F1 /* UpdateFeedBody.swift */; };
+		99C68E432C64B28400DEC1F1 /* FeedAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E422C64B28400DEC1F1 /* FeedAPI.swift */; };
+		99C68E482C64B43900DEC1F1 /* FeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E472C64B43900DEC1F1 /* FeedService.swift */; };
+		99C68E4A2C64B4A000DEC1F1 /* FeedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E492C64B4A000DEC1F1 /* FeedResponse.swift */; };
+		99C68E4C2C64B83D00DEC1F1 /* FeedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E4B2C64B83D00DEC1F1 /* FeedRepository.swift */; };
+		99C68E502C64B96500DEC1F1 /* CreateFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E4F2C64B96500DEC1F1 /* CreateFeedUseCase.swift */; };
+		99C68E522C64B96E00DEC1F1 /* UpdateFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E512C64B96E00DEC1F1 /* UpdateFeedUseCase.swift */; };
 		99C9B2292C0197CA008D7CBD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2282C0197CA008D7CBD /* User.swift */; };
 		99C9B22C2C019C67008D7CBD /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B22B2C019C67008D7CBD /* LoginView.swift */; };
 		99C9B2322C01A45C008D7CBD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2312C01A45C008D7CBD /* Extensions.swift */; };
@@ -234,6 +242,14 @@
 		99C1403B2C6496B400A706B6 /* FeedsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsTableViewCell.swift; sourceTree = "<group>"; };
 		99C1403D2C6496BC00A706B6 /* NoFeedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoFeedsView.swift; sourceTree = "<group>"; };
 		99C140412C64A01A00A706B6 /* AddFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeedView.swift; sourceTree = "<group>"; };
+		99C68E3E2C64B11D00DEC1F1 /* CreateFeedBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFeedBody.swift; sourceTree = "<group>"; };
+		99C68E402C64B21F00DEC1F1 /* UpdateFeedBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFeedBody.swift; sourceTree = "<group>"; };
+		99C68E422C64B28400DEC1F1 /* FeedAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAPI.swift; sourceTree = "<group>"; };
+		99C68E472C64B43900DEC1F1 /* FeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedService.swift; sourceTree = "<group>"; };
+		99C68E492C64B4A000DEC1F1 /* FeedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedResponse.swift; sourceTree = "<group>"; };
+		99C68E4B2C64B83D00DEC1F1 /* FeedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRepository.swift; sourceTree = "<group>"; };
+		99C68E4F2C64B96500DEC1F1 /* CreateFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFeedUseCase.swift; sourceTree = "<group>"; };
+		99C68E512C64B96E00DEC1F1 /* UpdateFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFeedUseCase.swift; sourceTree = "<group>"; };
 		99C9B2282C0197CA008D7CBD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		99C9B22B2C019C67008D7CBD /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		99C9B2312C01A45C008D7CBD /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -337,9 +353,9 @@
 			isa = PBXGroup;
 			children = (
 				992F57C12C5B1E8900219C6B /* ParameterConvertible.swift */,
+				992F57C42C5B264400219C6B /* Member */,
 				99D780DA2C6055A0005A3F30 /* FriendRequest */,
 				99D780D92C605592005A3F30 /* Schedule */,
-				992F57C42C5B264400219C6B /* Member */,
 				99D780DB2C6055B6005A3F30 /* Feed */,
 			);
 			path = Requests;
@@ -367,6 +383,7 @@
 			children = (
 				99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */,
 				99D780DC2C6066EB005A3F30 /* Member */,
+				99C68E442C64B3FC00DEC1F1 /* Feed */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -384,9 +401,9 @@
 		9950C64F2C103031003155A7 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				992F57DA2C5B2A1D00219C6B /* MemberAPI.swift */,
-				99E755502C22E66F0016A0A6 /* MemberService.swift */,
 				992F57DC2C5B56E200219C6B /* AutoTokenPlugin.swift */,
+				99C68E452C64B41900DEC1F1 /* Member */,
+				99C68E462C64B42300DEC1F1 /* Feed */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -583,6 +600,57 @@
 				99949F5E2C58BBAD00AE0177 /* FeedsViewController.swift */,
 			);
 			path = Feeds;
+			sourceTree = "<group>";
+		};
+		99C68E442C64B3FC00DEC1F1 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				99C68E492C64B4A000DEC1F1 /* FeedResponse.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		99C68E452C64B41900DEC1F1 /* Member */ = {
+			isa = PBXGroup;
+			children = (
+				992F57DA2C5B2A1D00219C6B /* MemberAPI.swift */,
+				99E755502C22E66F0016A0A6 /* MemberService.swift */,
+			);
+			path = Member;
+			sourceTree = "<group>";
+		};
+		99C68E462C64B42300DEC1F1 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				99C68E422C64B28400DEC1F1 /* FeedAPI.swift */,
+				99C68E472C64B43900DEC1F1 /* FeedService.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		99C68E4D2C64B93600DEC1F1 /* Member */ = {
+			isa = PBXGroup;
+			children = (
+				990F57902C27ECDC00F6E1AD /* AccountSignUpUseCase.swift */,
+				99CA4F272C33B72C007C027C /* ResetPasswordUseCase.swift */,
+				992F57DE2C5B614A00219C6B /* LogoutUseCase.swift */,
+				9979622C2C3E6B2200E95CA6 /* AccountLoginUseCase.swift */,
+				99E8BC442C2D26CF00536B95 /* EmailVerifyUseCase.swift */,
+				990F57B12C282C5900F6E1AD /* EmailSendUseCase.swift */,
+				992F57E22C5B618D00219C6B /* MemberSearchUseCase.swift */,
+				990F57A22C27F9FE00F6E1AD /* MemberDetailsUseCase.swift */,
+				992F57E42C5B623F00219C6B /* CheckEmailUseCase.swift */,
+			);
+			path = Member;
+			sourceTree = "<group>";
+		};
+		99C68E4E2C64B93C00DEC1F1 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				99C68E4F2C64B96500DEC1F1 /* CreateFeedUseCase.swift */,
+				99C68E512C64B96E00DEC1F1 /* UpdateFeedUseCase.swift */,
+			);
+			path = Feed;
 			sourceTree = "<group>";
 		};
 		99C9B2222C01973C008D7CBD /* Domain */ = {
@@ -794,6 +862,8 @@
 		99D780DB2C6055B6005A3F30 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				99C68E3E2C64B11D00DEC1F1 /* CreateFeedBody.swift */,
+				99C68E402C64B21F00DEC1F1 /* UpdateFeedBody.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -881,15 +951,8 @@
 		99EC209F2C0D8DEC0018904D /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				990F57902C27ECDC00F6E1AD /* AccountSignUpUseCase.swift */,
-				99CA4F272C33B72C007C027C /* ResetPasswordUseCase.swift */,
-				992F57DE2C5B614A00219C6B /* LogoutUseCase.swift */,
-				9979622C2C3E6B2200E95CA6 /* AccountLoginUseCase.swift */,
-				99E8BC442C2D26CF00536B95 /* EmailVerifyUseCase.swift */,
-				990F57B12C282C5900F6E1AD /* EmailSendUseCase.swift */,
-				992F57E22C5B618D00219C6B /* MemberSearchUseCase.swift */,
-				990F57A22C27F9FE00F6E1AD /* MemberDetailsUseCase.swift */,
-				992F57E42C5B623F00219C6B /* CheckEmailUseCase.swift */,
+				99C68E4D2C64B93600DEC1F1 /* Member */,
+				99C68E4E2C64B93C00DEC1F1 /* Feed */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -899,6 +962,7 @@
 			children = (
 				997DC6562C3D253000EACA5F /* UserDefaultManager.swift */,
 				990F57992C27EEF400F6E1AD /* MemberRepository.swift */,
+				99C68E4B2C64B83D00DEC1F1 /* FeedRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -1230,7 +1294,10 @@
 				99C9B2292C0197CA008D7CBD /* User.swift in Sources */,
 				99D780DE2C6066FA005A3F30 /* LoginResponse.swift in Sources */,
 				99949F452C58788200AE0177 /* FriendFeedViewController.swift in Sources */,
+				99C68E412C64B21F00DEC1F1 /* UpdateFeedBody.swift in Sources */,
+				99C68E432C64B28400DEC1F1 /* FeedAPI.swift in Sources */,
 				9974EA202C62196500826793 /* SnappingFlowLayout.swift in Sources */,
+				99C68E502C64B96500DEC1F1 /* CreateFeedUseCase.swift in Sources */,
 				997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */,
 				9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */,
 				992F57D22C5B28D600219C6B /* EmailSendBody.swift in Sources */,
@@ -1245,10 +1312,12 @@
 				99CE189D2C4CDEC300FD6393 /* Schedule.swift in Sources */,
 				99949F4F2C58890C00AE0177 /* ProfileView.swift in Sources */,
 				99C1403E2C6496BC00A706B6 /* NoFeedsView.swift in Sources */,
+				99C68E522C64B96E00DEC1F1 /* UpdateFeedUseCase.swift in Sources */,
 				99949F532C58A67400AE0177 /* FriendsTableView.swift in Sources */,
 				990902112C5F239A00BC3F20 /* CommonDescription.swift in Sources */,
 				992F57DB2C5B2A1D00219C6B /* MemberAPI.swift in Sources */,
 				99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */,
+				99C68E4A2C64B4A000DEC1F1 /* FeedResponse.swift in Sources */,
 				992F57D02C5B28C400219C6B /* EmailVerifyPasswordBody.swift in Sources */,
 				995E3E5E2C508039006B4480 /* MyPageViewController.swift in Sources */,
 				99CEAD4C2C5397B1006B3D41 /* DeviceConfig.swift in Sources */,
@@ -1265,6 +1334,7 @@
 				99CA4F282C33B72C007C027C /* ResetPasswordUseCase.swift in Sources */,
 				99149FED2C4F97EA00136097 /* TimeHelper.swift in Sources */,
 				9967C1522C56467D00927277 /* CustomAlert.swift in Sources */,
+				99C68E482C64B43900DEC1F1 /* FeedService.swift in Sources */,
 				99949F572C58B1CE00AE0177 /* FriendsListViewController.swift in Sources */,
 				99149FEB2C4F97C300136097 /* ValidationHelper.swift in Sources */,
 				992F57D62C5B28FC00219C6B /* MemberDetailsParameters.swift in Sources */,
@@ -1274,6 +1344,7 @@
 				99D8FBC02C3BA2180062AF10 /* CustomLabel.swift in Sources */,
 				992F57DD2C5B56E200219C6B /* AutoTokenPlugin.swift in Sources */,
 				992F57E32C5B618D00219C6B /* MemberSearchUseCase.swift in Sources */,
+				99C68E3F2C64B11D00DEC1F1 /* CreateFeedBody.swift in Sources */,
 				995E3E5B2C507FE6006B4480 /* MyPageView.swift in Sources */,
 				9953583F2C00C555005BF799 /* SceneDelegate.swift in Sources */,
 				990F57B22C282C5900F6E1AD /* EmailSendUseCase.swift in Sources */,
@@ -1290,6 +1361,7 @@
 				99EC20AD2C0D9DB50018904D /* AcoountSearchViewModel.swift in Sources */,
 				99CA4F262C33B704007C027C /* ResetPasswordViewModel.swift in Sources */,
 				99DA18B92C4E132A00D5CDA6 /* TitleView.swift in Sources */,
+				99C68E4C2C64B83D00DEC1F1 /* FeedRepository.swift in Sources */,
 				99EC78D62C11E8A3007C4415 /* FinishRegisterViewController.swift in Sources */,
 				99C9B2322C01A45C008D7CBD /* Extensions.swift in Sources */,
 				990F579A2C27EEF400F6E1AD /* MemberRepository.swift in Sources */,
