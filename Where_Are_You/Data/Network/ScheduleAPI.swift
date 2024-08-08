@@ -26,18 +26,18 @@ extension ScheduleAPI: TargetType {
         switch self {
         case .postSchedule:
             return "/schedule"
-        case .getSchedule(request: let request):
-            <#code#>
-        case .putSchedule(request: let request):
-            <#code#>
-        case .deleteSchedule(request: let request):
-            <#code#>
-        case .postEcceptSchedule(requst: let requst):
-            <#code#>
-        case .getMonthSchedule(request: let request):
-            <#code#>
-        case .getDate(request: let request):
-            <#code#>
+        case .getSchedule:
+            return "/schedule"
+        case .putSchedule:
+            return "/schedule"
+        case .deleteSchedule:
+            return "/schedule"
+        case .postEcceptSchedule:
+            return "/schedule/accept-schedule"
+        case .getMonthSchedule:
+            return "/schedule/month-schedule"
+        case .getDate:
+            return "/schedule/date"
         }
     }
     
@@ -47,9 +47,9 @@ extension ScheduleAPI: TargetType {
             return .post
         case .getSchedule, .getMonthSchedule, .getDate:
             return .get
-        case .putSchedule(request: let request):
+        case .putSchedule:
             return .put
-        case .deleteSchedule(request: let request):
+        case .deleteSchedule:
             return .delete
         }
     }
@@ -59,17 +59,17 @@ extension ScheduleAPI: TargetType {
         case .postSchedule(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .getSchedule(request: let request):
-            <#code#>
+            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .putSchedule(request: let request):
-            <#code#>
+            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .deleteSchedule(request: let request):
-            <#code#>
-        case .postEcceptSchedule(requst: let requst):
-            <#code#>
+            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+        case .postEcceptSchedule(requst: let request):
+            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .getMonthSchedule(request: let request):
-            <#code#>
+            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .getDate(request: let request):
-            <#code#>
+            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         }
     }
     

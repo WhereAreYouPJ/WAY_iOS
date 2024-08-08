@@ -6,17 +6,32 @@
 //
 
 import SwiftUI
+import Moya
 
 class CreateScheduleViewModel: ObservableObject {
-    enum OutputEvent {
-        case success, error
-    }
+    private let provider = MoyaProvider<ScheduleAPI>()
     
-    @Published var schedule: Schedule? = nil
-    @Published var outputEvent: OutputEvent? = nil
-    @Published var responseCreation: String? = nil
+    @Published var isSuccess = false
+    @Published var errorMessage = ""
     
-    func postSchedule() {
-        
+    func postSchedule(schedule: Schedule) {
+        provider.request(.postSchedule(request: CreateScheduleBody.init(title: schedule.title, startTime: schedule.startTime, endTime: schedule.endTime, location: schedule.location, streetName: schedule.streetName, x: schedule.x, y: schedule.y, color: schedule.color, memo: schedule.memo, invitedMemberSeqs: schedule.invitedMemberSeqs, createMemberSeq: schedule.createMemberSeq))) { response in
+            switch response {
+            case .success(let result):
+                if result.statusCode == 200 {
+                    DispatchQueue.main.async {
+                        self.isSuccess = true
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.errorMessage = "서버 오류: \(result.statusCode)"
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.errorMessage = "요청 실패: \(error.localizedDescription)"
+                }
+            }
+        }
     }
 }

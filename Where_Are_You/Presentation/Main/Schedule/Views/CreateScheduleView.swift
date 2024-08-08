@@ -8,20 +8,39 @@
 import SwiftUI
 
 struct CreateScheduleView: View {
-    @StateObject var viewModel = CreateScheduleViewModel()
+    @StateObject var viewModel: CreateScheduleViewModel
+    @State private var schedule = Schedule()
+    @State private var isAllDay = false
+    @State private var startTime = Date()
+    @State private var endTime = Date()
     @Environment(\.dismiss) private var dismiss
-    @State private var title = ""
+    
+    private let dateFormatter: DateFormatter
+    
+    init() {
+        let calendar = Calendar.current
+        let now = Date()
+        let components = calendar.dateComponents([.year, .month, .day, .hour], from: now)
+        let startOfHour = calendar.date(from: components)!
+        
+        _viewModel = StateObject(wrappedValue: CreateScheduleViewModel())
+        _startTime = State(initialValue: startOfHour)
+        _endTime = State(initialValue: calendar.date(byAdding: .hour, value: 1, to: startOfHour)!)
+        
+        dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd a hh:mm"
+    }
     
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, content: {
-                TextField("", text: $title, prompt: Text("메모를 작성해주세요.").foregroundColor(Color(.color118)))
+                TextField("", text: $schedule.title, prompt: Text("메모를 작성해주세요.").foregroundColor(Color(.color118)))
                 Divider()
                     .padding(.bottom, 16)
                 
-                DateAndTimeView()
+                DateAndTimeView(isAllDay: $isAllDay, startTime: $startTime, endTime: $endTime)
                 
-                AddPlaceView()
+                AddPlaceView(location: $schedule.location, streetName: $schedule.streetName, x: $schedule.x, y: $schedule.y)
                 
                 AddFriendsView()
                 
@@ -40,10 +59,11 @@ struct CreateScheduleView: View {
                 }
                 ToolbarItem(placement: .primaryAction) {
                     Button("추가") {
+                        viewModel.postSchedule(schedule: schedule)
                         dismiss()
                     }
-                    .foregroundStyle(title.isEmpty ? Color.gray : Color.red)
-                    .disabled(title.isEmpty)
+                    .foregroundStyle(schedule.title.isEmpty ? Color.gray : Color.red)
+                    .disabled(schedule.title.isEmpty)
                 }
             }
             .navigationTitle("일정 추가")
@@ -53,24 +73,9 @@ struct CreateScheduleView: View {
 }
 
 struct DateAndTimeView: View {
-    @State private var isAllDay = true
-    @State private var startTime = Date()
-    @State private var endTime = Date()
-    
-    private let dateFormatter: DateFormatter
-    
-    init() {
-        let calendar = Calendar.current
-        let now = Date()
-        let components = calendar.dateComponents([.year, .month, .day, .hour], from: now)
-        let startOfHour = calendar.date(from: components)!
-        
-        _startTime = State(initialValue: startOfHour)
-        _endTime = State(initialValue: calendar.date(byAdding: .hour, value: 1, to: startOfHour)!)
-        
-        dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy.MM.dd a hh:mm"
-    }
+    @Binding var isAllDay: Bool
+    @Binding var startTime: Date
+    @Binding var endTime: Date
     
     var body: some View {
         Toggle(isOn: $isAllDay, label: {
@@ -103,7 +108,10 @@ struct DateAndTimeView: View {
 }
 
 struct AddPlaceView: View {
-    @State private var place = ""
+    @Binding var location: String
+    @Binding var streetName: String
+    @Binding var x: Double
+    @Binding var y: Double
     @State private var showSearchPlaceView = false
     
     var body: some View {
@@ -112,11 +120,11 @@ struct AddPlaceView: View {
         
         HStack {
             Image("icon-place")
-            if place.isEmpty {
+            if location.isEmpty {
                 Text("위치 추가")
                     .foregroundStyle(Color(.color118))
                     .onTapGesture {
-                        // 위치 추가 text를 누르면 SearchPlaceView로 이동
+                        // TODO: 위치 추가 text를 누르면 SearchPlaceView로 이동
                         showSearchPlaceView = true
                     }
             } else {
@@ -137,6 +145,10 @@ struct AddPlaceView: View {
                             RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/, style: /*@START_MENU_TOKEN@*/.continuous/*@END_MENU_TOKEN@*/)
                                 .fill(Color(.color240))
                         )
+                        .onTapGesture {
+                            location = place
+                            // Note: You might want to update streetName, x, and y here as well
+                        }
                 }
                 
             }

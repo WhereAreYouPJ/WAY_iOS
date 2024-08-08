@@ -8,15 +8,15 @@
 import Foundation
 
 struct Schedule: Codable {
-    let title: String
-    let startTime: String
-    let endTime: String
-    let location: String
-    let streetName: String
-    let x: Double
-    let y: Double
-    let color: String
-    let memo: String
-    let invitedMemberSeqs: [String]
-    let createMemberSeq: Int
+    var title: String = ""
+    var startTime: String = ""
+    var endTime: String = ""
+    var location: String = ""
+    var streetName: String = ""
+    var x: Double = 0
+    var y: Double = 0
+    var color: String = ""
+    var memo: String = ""
+    var invitedMemberSeqs: [String] = []
+    var createMemberSeq: Int = 0
 }
