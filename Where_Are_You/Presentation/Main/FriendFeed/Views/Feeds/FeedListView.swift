@@ -9,7 +9,7 @@ import UIKit
 
 class FeedListView: UIView {
     
-    private let tableView = UITableView()
+    private let tableView = FeedsTableView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
