@@ -761,9 +761,9 @@
 		99CC5E6A2C5211ED00A0509A /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */,
 				99CC5E6B2C52122500A0509A /* FriendFeed */,
 				99D8FBAD2C3B64040062AF10 /* Home */,
-				99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */,
 				995E3E592C507BBA006B4480 /* Mypage */,
 				99CC5E6D2C521DE900A0509A /* Notification */,
 				D5B79A112C5B8368004EDDF2 /* Schedule */,
