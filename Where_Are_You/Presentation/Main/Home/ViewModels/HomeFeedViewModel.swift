@@ -1,14 +1,13 @@
 //
-//  FeedTableViewModel.swift
+//  HomeFeedViewModel.swift
 //  Where_Are_You
 //
 //  Created by 오정석 on 15/7/2024.
 //
 
-import Foundation
 import UIKit
 
-class FeedViewModel {
+class HomeFeedViewModel {
     var onFeedsDataFetched: (() -> Void)?
     private var feeds: [Feed] = []
     

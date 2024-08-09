@@ -10,10 +10,10 @@ import SnapKit
 
 class FeedsViewController: UIViewController {
     
-    private let friendsListView = FriendsListView()
+    private let feedsView = FeedsView()
     
     override func loadView() {
-        view = friendsListView
+        view = feedsView
     }
     
 }

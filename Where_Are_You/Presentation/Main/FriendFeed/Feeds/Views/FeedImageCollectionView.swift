@@ -27,6 +27,7 @@ class FeedImageCollectionView: UIView {
         label.textAlignment = .center
         label.textColor = .color223
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 12)
+        label.adjustsFontSizeToFitWidth = true
         label.backgroundColor = UIColor.color29.withAlphaComponent(0.4)
         return label
     }()
@@ -35,7 +36,8 @@ class FeedImageCollectionView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        setupViews()
+        configureViewComponents()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -43,8 +45,7 @@ class FeedImageCollectionView: UIView {
     }
     
     // MARK: - Helpers
-    
-    private func setupViews() {
+    private func configureViewComponents() {
         layer.cornerRadius = LayoutAdapter.shared.scale(value: 16)
         clipsToBounds = true
         
@@ -55,20 +56,22 @@ class FeedImageCollectionView: UIView {
         addSubview(collectionView)
         addSubview(pageControl)
         addSubview(pageNumberLabel)
-        
+    }
+    
+    private func setupConstraints() {
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
         pageControl.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(-15)
+            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
             make.centerX.equalToSuperview()
         }
         
         pageNumberLabel.snp.makeConstraints { make in
-            make.bottom.trailing.equalToSuperview().offset(-12)
-            make.width.equalTo(42)
-            make.height.equalTo(17)
+            make.bottom.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 14))
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 44))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 23))
         }
     }
 }

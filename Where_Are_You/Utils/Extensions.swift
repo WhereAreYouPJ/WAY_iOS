@@ -66,6 +66,7 @@ extension UIColor {
     static let color235 = UIColor.rgb(red: 235, green: 235, blue: 235)
     static let color240 = UIColor.rgb(red: 240, green: 240, blue: 240)
     static let color242 = UIColor.rgb(red: 242, green: 242, blue: 242)
+    static let color249 = UIColor.rgb(red: 249, green: 249, blue: 249)
 }
 
 // MARK: - UIFont

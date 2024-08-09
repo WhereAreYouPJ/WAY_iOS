@@ -14,6 +14,7 @@
 		990DE7662C65E924007B78C9 /* FeedImageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990DE7652C65E924007B78C9 /* FeedImageCollectionView.swift */; };
 		990DE7682C65EAEB007B78C9 /* FeedImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990DE7672C65EAEB007B78C9 /* FeedImageCollectionViewCell.swift */; };
 		990DE76A2C65EBB0007B78C9 /* FeedImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990DE7692C65EBB0007B78C9 /* FeedImageViewController.swift */; };
+		990DE76C2C65FFB1007B78C9 /* FeedImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990DE76B2C65FFB1007B78C9 /* FeedImageViewModel.swift */; };
 		990F57912C27ECDC00F6E1AD /* AccountSignUpUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57902C27ECDC00F6E1AD /* AccountSignUpUseCase.swift */; };
 		990F579A2C27EEF400F6E1AD /* MemberRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57992C27EEF400F6E1AD /* MemberRepository.swift */; };
 		990F57A32C27F9FE00F6E1AD /* MemberDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57A22C27F9FE00F6E1AD /* MemberDetailsUseCase.swift */; };
@@ -68,7 +69,6 @@
 		99949F452C58788200AE0177 /* FriendFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F442C58788200AE0177 /* FriendFeedViewController.swift */; };
 		99949F472C587A5400AE0177 /* CustomTabMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F462C587A5400AE0177 /* CustomTabMenu.swift */; };
 		99949F492C587BA500AE0177 /* FriendsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F482C587BA500AE0177 /* FriendsListView.swift */; };
-		99949F4B2C587BAC00AE0177 /* FeedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F4A2C587BAC00AE0177 /* FeedListView.swift */; };
 		99949F4F2C58890C00AE0177 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F4E2C58890C00AE0177 /* ProfileView.swift */; };
 		99949F512C588B6200AE0177 /* FavoritesTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F502C588B6200AE0177 /* FavoritesTableView.swift */; };
 		99949F532C58A67400AE0177 /* FriendsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F522C58A67400AE0177 /* FriendsTableView.swift */; };
@@ -80,7 +80,7 @@
 		99B397832C0C3E9D00D7A109 /* AccountCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B397822C0C3E9D00D7A109 /* AccountCheckView.swift */; };
 		99B397852C0C41D300D7A109 /* AccountCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B397842C0C41D300D7A109 /* AccountCheckViewController.swift */; };
 		99C140382C64943F00A706B6 /* LayoutAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C140372C64943F00A706B6 /* LayoutAdapter.swift */; };
-		99C1403A2C6494F000A706B6 /* FeedsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C140392C6494F000A706B6 /* FeedsTableView.swift */; };
+		99C1403A2C6494F000A706B6 /* FeedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C140392C6494F000A706B6 /* FeedsView.swift */; };
 		99C1403C2C6496B400A706B6 /* FeedsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C1403B2C6496B400A706B6 /* FeedsTableViewCell.swift */; };
 		99C1403E2C6496BC00A706B6 /* NoFeedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C1403D2C6496BC00A706B6 /* NoFeedsView.swift */; };
 		99C140422C64A01A00A706B6 /* AddFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C140412C64A01A00A706B6 /* AddFeedView.swift */; };
@@ -140,7 +140,7 @@
 		99FBA5522C453B43002EEEC7 /* DDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5512C453B43002EEEC7 /* DDayViewController.swift */; };
 		99FBA5542C453B6D002EEEC7 /* DDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5532C453B6D002EEEC7 /* DDayViewModel.swift */; };
 		99FBA5562C453BDD002EEEC7 /* HomeFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5552C453BDD002EEEC7 /* HomeFeedViewController.swift */; };
-		99FBA5582C453C05002EEEC7 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5572C453C05002EEEC7 /* FeedViewModel.swift */; };
+		99FBA5582C453C05002EEEC7 /* HomeFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5572C453C05002EEEC7 /* HomeFeedViewModel.swift */; };
 		D5B79A162C5B83CD004EDDF2 /* CreateScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B79A152C5B83CD004EDDF2 /* CreateScheduleView.swift */; };
 		D5B79A1A2C5B83F6004EDDF2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B79A192C5B83F6004EDDF2 /* CalendarView.swift */; };
 		D79EFAD9E5409233E5338E46 /* Pods_Where_Are_You.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */; };
@@ -178,6 +178,7 @@
 		990DE7652C65E924007B78C9 /* FeedImageCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageCollectionView.swift; sourceTree = "<group>"; };
 		990DE7672C65EAEB007B78C9 /* FeedImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		990DE7692C65EBB0007B78C9 /* FeedImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageViewController.swift; sourceTree = "<group>"; };
+		990DE76B2C65FFB1007B78C9 /* FeedImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageViewModel.swift; sourceTree = "<group>"; };
 		990F57902C27ECDC00F6E1AD /* AccountSignUpUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSignUpUseCase.swift; sourceTree = "<group>"; };
 		990F57992C27EEF400F6E1AD /* MemberRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberRepository.swift; sourceTree = "<group>"; };
 		990F57A22C27F9FE00F6E1AD /* MemberDetailsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDetailsUseCase.swift; sourceTree = "<group>"; };
@@ -234,7 +235,6 @@
 		99949F442C58788200AE0177 /* FriendFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendFeedViewController.swift; sourceTree = "<group>"; };
 		99949F462C587A5400AE0177 /* CustomTabMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabMenu.swift; sourceTree = "<group>"; };
 		99949F482C587BA500AE0177 /* FriendsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListView.swift; sourceTree = "<group>"; };
-		99949F4A2C587BAC00AE0177 /* FeedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListView.swift; sourceTree = "<group>"; };
 		99949F4E2C58890C00AE0177 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		99949F502C588B6200AE0177 /* FavoritesTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableView.swift; sourceTree = "<group>"; };
 		99949F522C58A67400AE0177 /* FriendsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableView.swift; sourceTree = "<group>"; };
@@ -246,7 +246,7 @@
 		99B397822C0C3E9D00D7A109 /* AccountCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCheckView.swift; sourceTree = "<group>"; };
 		99B397842C0C41D300D7A109 /* AccountCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCheckViewController.swift; sourceTree = "<group>"; };
 		99C140372C64943F00A706B6 /* LayoutAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutAdapter.swift; sourceTree = "<group>"; };
-		99C140392C6494F000A706B6 /* FeedsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsTableView.swift; sourceTree = "<group>"; };
+		99C140392C6494F000A706B6 /* FeedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsView.swift; sourceTree = "<group>"; };
 		99C1403B2C6496B400A706B6 /* FeedsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsTableViewCell.swift; sourceTree = "<group>"; };
 		99C1403D2C6496BC00A706B6 /* NoFeedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoFeedsView.swift; sourceTree = "<group>"; };
 		99C140412C64A01A00A706B6 /* AddFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeedView.swift; sourceTree = "<group>"; };
@@ -308,7 +308,7 @@
 		99FBA5512C453B43002EEEC7 /* DDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDayViewController.swift; sourceTree = "<group>"; };
 		99FBA5532C453B6D002EEEC7 /* DDayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDayViewModel.swift; sourceTree = "<group>"; };
 		99FBA5552C453BDD002EEEC7 /* HomeFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeedViewController.swift; sourceTree = "<group>"; };
-		99FBA5572C453C05002EEEC7 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
+		99FBA5572C453C05002EEEC7 /* HomeFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeedViewModel.swift; sourceTree = "<group>"; };
 		A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5015275FE458D5F6450041 /* Pods-Where_Are_You.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You.release.xcconfig"; path = "Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You.release.xcconfig"; sourceTree = "<group>"; };
 		D53078812C5D3C9D0041BBB7 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -346,6 +346,85 @@
 				20C7F106D8DFB49B151D8073 /* Pods-Where_Are_You_Tests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		990DE76D2C660A56007B78C9 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				990DE76F2C660A64007B78C9 /* Views */,
+				990DE7702C660A67007B78C9 /* Viewcontrollers */,
+				990DE7712C660A6D007B78C9 /* ViewModels */,
+			);
+			path = Friends;
+			sourceTree = "<group>";
+		};
+		990DE76E2C660A5A007B78C9 /* Feeds */ = {
+			isa = PBXGroup;
+			children = (
+				990DE7742C660A94007B78C9 /* Views */,
+				990DE7732C660A8F007B78C9 /* ViewControllers */,
+				990DE7722C660A89007B78C9 /* ViewModels */,
+			);
+			path = Feeds;
+			sourceTree = "<group>";
+		};
+		990DE76F2C660A64007B78C9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				99949F4E2C58890C00AE0177 /* ProfileView.swift */,
+				99949F542C58A72B00AE0177 /* FriendsTableViewCell.swift */,
+				99949F502C588B6200AE0177 /* FavoritesTableView.swift */,
+				99949F522C58A67400AE0177 /* FriendsTableView.swift */,
+				99949F482C587BA500AE0177 /* FriendsListView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		990DE7702C660A67007B78C9 /* Viewcontrollers */ = {
+			isa = PBXGroup;
+			children = (
+				99949F562C58B1CE00AE0177 /* FriendsListViewController.swift */,
+			);
+			path = Viewcontrollers;
+			sourceTree = "<group>";
+		};
+		990DE7712C660A6D007B78C9 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				99949F582C58B81A00AE0177 /* FriendsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		990DE7722C660A89007B78C9 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				990DE76B2C65FFB1007B78C9 /* FeedImageViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		990DE7732C660A8F007B78C9 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				99949F5E2C58BBAD00AE0177 /* FeedsViewController.swift */,
+				990DE7692C65EBB0007B78C9 /* FeedImageViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		990DE7742C660A94007B78C9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				99C1403D2C6496BC00A706B6 /* NoFeedsView.swift */,
+				990DE7632C65E767007B78C9 /* FeedDetailBoxView.swift */,
+				990DE7672C65EAEB007B78C9 /* FeedImageCollectionViewCell.swift */,
+				990DE7652C65E924007B78C9 /* FeedImageCollectionView.swift */,
+				99C1403B2C6496B400A706B6 /* FeedsTableViewCell.swift */,
+				99C140392C6494F000A706B6 /* FeedsView.swift */,
+				99C140412C64A01A00A706B6 /* AddFeedView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		990F57942C27EE3600F6E1AD /* Models */ = {
@@ -543,77 +622,6 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
-		99949F412C5873A900AE0177 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				99949F582C58B81A00AE0177 /* FriendsViewModel.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		99949F422C5873AE00AE0177 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				99949F442C58788200AE0177 /* FriendFeedViewController.swift */,
-				99949F5C2C58BB8100AE0177 /* Friends */,
-				99949F5D2C58BB9500AE0177 /* Feeds */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		99949F432C5873B500AE0177 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				99949F4C2C58816300AE0177 /* Friends */,
-				99949F4D2C58816900AE0177 /* Feeds */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		99949F4C2C58816300AE0177 /* Friends */ = {
-			isa = PBXGroup;
-			children = (
-				99949F4E2C58890C00AE0177 /* ProfileView.swift */,
-				99949F542C58A72B00AE0177 /* FriendsTableViewCell.swift */,
-				99949F502C588B6200AE0177 /* FavoritesTableView.swift */,
-				99949F522C58A67400AE0177 /* FriendsTableView.swift */,
-				99949F482C587BA500AE0177 /* FriendsListView.swift */,
-			);
-			path = Friends;
-			sourceTree = "<group>";
-		};
-		99949F4D2C58816900AE0177 /* Feeds */ = {
-			isa = PBXGroup;
-			children = (
-				99C1403D2C6496BC00A706B6 /* NoFeedsView.swift */,
-				990DE7632C65E767007B78C9 /* FeedDetailBoxView.swift */,
-				990DE7672C65EAEB007B78C9 /* FeedImageCollectionViewCell.swift */,
-				990DE7652C65E924007B78C9 /* FeedImageCollectionView.swift */,
-				99C1403B2C6496B400A706B6 /* FeedsTableViewCell.swift */,
-				99C140392C6494F000A706B6 /* FeedsTableView.swift */,
-				99949F4A2C587BAC00AE0177 /* FeedListView.swift */,
-				99C140412C64A01A00A706B6 /* AddFeedView.swift */,
-			);
-			path = Feeds;
-			sourceTree = "<group>";
-		};
-		99949F5C2C58BB8100AE0177 /* Friends */ = {
-			isa = PBXGroup;
-			children = (
-				99949F562C58B1CE00AE0177 /* FriendsListViewController.swift */,
-			);
-			path = Friends;
-			sourceTree = "<group>";
-		};
-		99949F5D2C58BB9500AE0177 /* Feeds */ = {
-			isa = PBXGroup;
-			children = (
-				99949F5E2C58BBAD00AE0177 /* FeedsViewController.swift */,
-				990DE7692C65EBB0007B78C9 /* FeedImageViewController.swift */,
-			);
-			path = Feeds;
-			sourceTree = "<group>";
-		};
 		99C68E442C64B3FC00DEC1F1 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
@@ -786,9 +794,9 @@
 		99CC5E6B2C52122500A0509A /* FriendFeed */ = {
 			isa = PBXGroup;
 			children = (
-				99949F432C5873B500AE0177 /* Views */,
-				99949F422C5873AE00AE0177 /* ViewControllers */,
-				99949F412C5873A900AE0177 /* ViewModels */,
+				99949F442C58788200AE0177 /* FriendFeedViewController.swift */,
+				990DE76E2C660A5A007B78C9 /* Feeds */,
+				990DE76D2C660A56007B78C9 /* Friends */,
 			);
 			path = FriendFeed;
 			sourceTree = "<group>";
@@ -943,7 +951,7 @@
 				99D8FBBC2C3BA1E60062AF10 /* MainHomeViewModel.swift */,
 				99FBA54F2C45394E002EEEC7 /* BannerViewModel.swift */,
 				99FBA5532C453B6D002EEEC7 /* DDayViewModel.swift */,
-				99FBA5572C453C05002EEEC7 /* FeedViewModel.swift */,
+				99FBA5572C453C05002EEEC7 /* HomeFeedViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1254,7 +1262,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99949F4B2C587BAC00AE0177 /* FeedListView.swift in Sources */,
 				99C140422C64A01A00A706B6 /* AddFeedView.swift in Sources */,
 				995358472C00C555005BF799 /* Where_Are_You.xcdatamodeld in Sources */,
 				D5B79A1A2C5B83F6004EDDF2 /* CalendarView.swift in Sources */,
@@ -1289,6 +1296,7 @@
 				9950C65D2C10B9BB003155A7 /* PasswordResetView.swift in Sources */,
 				990F57A32C27F9FE00F6E1AD /* MemberDetailsUseCase.swift in Sources */,
 				9953583D2C00C555005BF799 /* AppDelegate.swift in Sources */,
+				990DE76C2C65FFB1007B78C9 /* FeedImageViewModel.swift in Sources */,
 				992F57DF2C5B614A00219C6B /* LogoutUseCase.swift in Sources */,
 				992F57E52C5B623F00219C6B /* CheckEmailUseCase.swift in Sources */,
 				9911F9842C3F5AA600D0FDC9 /* BannerView.swift in Sources */,
@@ -1337,7 +1345,7 @@
 				99949F5B2C58B85E00AE0177 /* Friend.swift in Sources */,
 				99FBA54E2C453924002EEEC7 /* BannerViewController.swift in Sources */,
 				990DE7682C65EAEB007B78C9 /* FeedImageCollectionViewCell.swift in Sources */,
-				99C1403A2C6494F000A706B6 /* FeedsTableView.swift in Sources */,
+				99C1403A2C6494F000A706B6 /* FeedsView.swift in Sources */,
 				990DE7662C65E924007B78C9 /* FeedImageCollectionView.swift in Sources */,
 				99CC5E642C51EFAB00A0509A /* MyPageViewModel.swift in Sources */,
 				9967C1542C566F2F00927277 /* NetworkAlert.swift in Sources */,
@@ -1367,7 +1375,7 @@
 				99D780E22C606726005A3F30 /* MemberDetailsResponse.swift in Sources */,
 				99D780E42C606735005A3F30 /* CheckEmailResponse.swift in Sources */,
 				9950C6592C10B0DF003155A7 /* SignUpFormView.swift in Sources */,
-				99FBA5582C453C05002EEEC7 /* FeedViewModel.swift in Sources */,
+				99FBA5582C453C05002EEEC7 /* HomeFeedViewModel.swift in Sources */,
 				99949F512C588B6200AE0177 /* FavoritesTableView.swift in Sources */,
 				992F57CE2C5B28A800219C6B /* EmailVerifyBody.swift in Sources */,
 				99C1403C2C6496B400A706B6 /* FeedsTableViewCell.swift in Sources */,

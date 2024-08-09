@@ -12,7 +12,7 @@ class HomeFeedViewController: UIViewController {
     // MARK: - Properties
     
     let feedView = HomeFeedView()
-    var viewModel: FeedViewModel!
+    var viewModel: HomeFeedViewModel!
     
     // MARK: - Lifecycle
     
@@ -22,7 +22,7 @@ class HomeFeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = FeedViewModel()
+        viewModel = HomeFeedViewModel()
         setupBindings()
         setupCollectionView()
     }

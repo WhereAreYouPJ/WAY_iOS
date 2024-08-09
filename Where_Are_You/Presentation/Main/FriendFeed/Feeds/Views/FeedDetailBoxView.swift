@@ -14,7 +14,7 @@ class FeedDetailBoxView: UIView {
         let view = UIView()
         view.layer.cornerRadius = LayoutAdapter.shared.scale(value: 14)
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.color221.cgColor
+        view.layer.borderColor = UIColor.brandColor.cgColor
         return view
     }()
     
@@ -38,11 +38,18 @@ class FeedDetailBoxView: UIView {
     
     lazy var profileStack = createStackView(subviews: [profileImage, titleStack], axis: .horizontal, spacing: 0)
     
+    let feedFixButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "icon-3dots"), for: .normal)
+        return button
+    }()
+    
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureViewComponents()
         setupConstraints()
+        feedFixButton.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -54,6 +61,7 @@ class FeedDetailBoxView: UIView {
     private func configureViewComponents() {
         addSubview(detailBox)
         detailBox.addSubview(profileStack)
+        profileStack.addSubview(feedFixButton)
     }
     
     private func setupConstraints() {
@@ -63,6 +71,12 @@ class FeedDetailBoxView: UIView {
         
         profileImage.snp.makeConstraints { make in
             make.height.width.equalTo(LayoutAdapter.shared.scale(value: 50))
+        }
+        
+        feedFixButton.snp.makeConstraints { make in
+            make.trailing.bottom.equalToSuperview()
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 30))
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 24))
         }
     }
     

@@ -10,7 +10,6 @@ import SnapKit
 
 class MainHomeView: UIView {
     // MARK: - Properties
-    let scrollView = UIScrollView()
     let bannerView = BannerView()
     let dDayView = DDayView()
     let reminderLabel = CustomLabel(UILabel_NotoSans: .medium, text: "함께한 추억을 확인해보세요!", textColor: .color34, fontSize: 20)
