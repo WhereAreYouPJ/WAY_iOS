@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 
 class FriendFeedViewController: UIViewController {
-    
+    // MARK: - Properties
+    private let friendsViewController = FriendsListViewController()
+    private let feedsViewController = FeedsViewController()
     
     let friend: UIImage = {
         let image = UIImage()
@@ -78,9 +80,8 @@ class FriendFeedViewController: UIViewController {
         return stackView
     }()
     
-    private let friendsViewController = FriendsListViewController()
-    private let feedsViewController = FeedsViewController()
-    
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -89,6 +90,8 @@ class FriendFeedViewController: UIViewController {
         handleSegmentChange()
     }
     
+    // MARK: - Helpers
+
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
         
@@ -104,7 +107,7 @@ class FriendFeedViewController: UIViewController {
         friendsViewController.didMove(toParent: self)
         friendsViewController.view.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(15)
-            make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.bottom.equalToSuperview()
         }
         
         addChild(feedsViewController)

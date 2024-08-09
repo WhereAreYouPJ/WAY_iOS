@@ -47,6 +47,7 @@ extension UIColor {
     static let alertActionButtonColor = UIColor.rgb(red: 224, green: 158, blue: 255)
     
     static let color17 = UIColor.rgb(red: 17, green: 17, blue: 17)
+    static let color29 = UIColor.rgb(red: 29, green: 29, blue: 29)
     static let color34 = UIColor.rgb(red: 34, green: 34, blue: 34)
     static let color51 = UIColor.rgb(red: 51, green: 51, blue: 51)
     static let color68 = UIColor.rgb(red: 68, green: 68, blue: 68)
@@ -60,6 +61,7 @@ extension UIColor {
     static let color191 = UIColor.rgb(red: 191, green: 191, blue: 191)
     static let color212 = UIColor.rgb(red: 212, green: 212, blue: 212)
     static let color221 = UIColor.rgb(red: 221, green: 221, blue: 221)
+    static let color223 = UIColor.rgb(red: 223, green: 223, blue: 223)
     static let color231 = UIColor.rgb(red: 231, green: 231, blue: 231)
     static let color235 = UIColor.rgb(red: 235, green: 235, blue: 235)
     static let color240 = UIColor.rgb(red: 240, green: 240, blue: 240)

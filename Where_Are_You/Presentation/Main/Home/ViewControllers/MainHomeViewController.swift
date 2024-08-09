@@ -14,7 +14,7 @@ class MainHomeViewController: UIViewController {
     private var mainHomeViewModel: MainHomeViewModel!
     private var bannerViewController: BannerViewController!
     private var dDayViewController: DDayViewController!
-    private var feedTableViewController: HomeFeedViewController!
+    private var homeFeedViewController: HomeFeedViewController!
     
     private let titleView = TitleView()
     
@@ -50,22 +50,22 @@ class MainHomeViewController: UIViewController {
         // 서브뷰 컨트롤러 초기화
         bannerViewController = BannerViewController()
         dDayViewController = DDayViewController()
-        feedTableViewController = HomeFeedViewController()
+        homeFeedViewController = HomeFeedViewController()
         
         // 서브뷰 컨트롤러를 자식 컨트롤러로 추가
         addChild(bannerViewController)
         addChild(dDayViewController)
-        addChild(feedTableViewController)
+        addChild(homeFeedViewController)
         
         // 서브뷰 컨트롤러의 뷰가 부모 컨트롤러에 추가되었음을 알림
         bannerViewController.didMove(toParent: self)
         dDayViewController.didMove(toParent: self)
-        feedTableViewController.didMove(toParent: self)
+        homeFeedViewController.didMove(toParent: self)
         
         // 각 서브 뷰 컨트롤러의 뷰를 메인 뷰에 추가
         mainHomeView.addSubview(bannerViewController.view)
         mainHomeView.addSubview(dDayViewController.view)
-        mainHomeView.addSubview(feedTableViewController.view)
+        mainHomeView.addSubview(homeFeedViewController.view)
         
         // 레이아웃 설정
         bannerViewController.view.snp.makeConstraints { make in
@@ -80,7 +80,7 @@ class MainHomeViewController: UIViewController {
             make.height.equalTo(mainHomeView.dDayView.snp.height)
         }
         
-        feedTableViewController.view.snp.makeConstraints { make in
+        homeFeedViewController.view.snp.makeConstraints { make in
             make.top.equalTo(mainHomeView.homeFeedView)
             make.leading.trailing.equalTo(mainHomeView.homeFeedView)
             make.height.equalTo(mainHomeView.homeFeedView.snp.height)
@@ -106,7 +106,7 @@ class MainHomeViewController: UIViewController {
         
         mainHomeViewModel.onFeedsDataFetched = { [weak self] in
             DispatchQueue.main.async {
-                self?.feedTableViewController.viewModel.setFeeds(self?.mainHomeViewModel.getFeeds() ?? [])
+                self?.homeFeedViewController.viewModel.setFeeds(self?.mainHomeViewModel.getFeeds() ?? [])
             }
         }
     }

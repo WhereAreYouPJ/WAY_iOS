@@ -1,17 +1,16 @@
 //
-//  BannerCollectionViewCell.swift
+//  FeedImageCollectionViewCell.swift
 //  Where_Are_You
 //
-//  Created by 오정석 on 11/7/2024.
+//  Created by 오정석 on 9/8/2024.
 //
 
 import UIKit
-import SnapKit
 
-class BannerCollectionViewCell: UICollectionViewCell {
+class FeedImageCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
 
-    static let identifier = "BannerCollectionViewCell"
+    static let identifier = "FeedImageCollectionViewCell"
     
     private let imageView: UIImageView = {
         let iv = UIImageView()
