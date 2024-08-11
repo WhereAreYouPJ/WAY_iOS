@@ -1,14 +1,17 @@
 //
-//  FeedImageViewModel.swift
+//  FeedDetailViewModel.swift
 //  Where_Are_You
 //
-//  Created by 오정석 on 9/8/2024.
+//  Created by 오정석 on 11/8/2024.
 //
 
 import UIKit
 
-class FeedImageViewModel {
+class FeedDetailViewModel {
+    var onFeedsDataFetched: (() -> Void)?
     var onFeedImageDataFetched: (() -> Void)?
+    
+    private var feeds: [Feed] = []
     private var feedImages: [UIImage] = []
     private var timer: Timer?
     private(set) var currentIndex = 0
@@ -28,6 +31,17 @@ class FeedImageViewModel {
     // currentIndex를 업데이트하는 메서드 추가
     func updateCurrentIndex(to newIndex: Int) {
         currentIndex = newIndex
+    }
+    
+    
+    // 데이터 설정 메서드
+    func setFeeds(_ feeds: [Feed]) {
+        self.feeds = feeds
+        onFeedsDataFetched?()
+    }
+    
+    func getFeeds() -> [Feed] {
+        return feeds
     }
     
     // MARK: - Selectors

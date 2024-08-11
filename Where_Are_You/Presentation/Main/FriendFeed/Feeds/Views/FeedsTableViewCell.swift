@@ -21,7 +21,7 @@ class FeedsTableViewCell: UITableViewCell {
         return button
     }()
     let descriptionLabel: UILabel = {
-        let label = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color34, fontSize: 14)
+        let label = CustomLabel(UILabel_NotoSans: .medium, text: "asdasdasd", textColor: .color34, fontSize: 14)
         label.numberOfLines = 3
         label.lineBreakMode = .byTruncatingHead
         return label
