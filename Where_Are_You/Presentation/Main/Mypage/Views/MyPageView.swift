@@ -14,7 +14,7 @@ class MyPageView: UIView {
     private let profileBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .brandColor
-        view.layer.cornerRadius = 18
+        view.layer.cornerRadius = LayoutAdapter.shared.scale(value: 18)
         view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         view.clipsToBounds = true
         return view
@@ -22,7 +22,7 @@ class MyPageView: UIView {
     
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.layer.cornerRadius = 34.44
+        imageView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 34.44)
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.image = UIImage(named: "exampleProfileImage")
@@ -32,7 +32,7 @@ class MyPageView: UIView {
     let imageEditButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "icon-Camera_Rotate"), for: .normal)
-        button.layer.cornerRadius = 10
+        button.layer.cornerRadius = LayoutAdapter.shared.scale(value: 10)
         return button
     }()
     
@@ -48,7 +48,7 @@ class MyPageView: UIView {
     let userCodeBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.layer.cornerRadius = 14
+        view.layer.cornerRadius = LayoutAdapter.shared.scale(value: 14)
         view.clipsToBounds = true
         return view
     }()
@@ -84,9 +84,9 @@ class MyPageView: UIView {
     let moveToGallery: UIButton = {
         let button = UIButton()
         button.backgroundColor = .popupButtonColor
-        button.layer.cornerRadius = 10
+        button.layer.cornerRadius = LayoutAdapter.shared.scale(value: 10)
         button.clipsToBounds = true
-        button.isHidden = true // Initially hidden
+        button.isHidden = true
         
         let label = UILabel()
         label.text = "사진 보관함"
@@ -96,16 +96,16 @@ class MyPageView: UIView {
         button.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().inset(14)
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 14))
         }
         
         let imageView = UIImageView()
         imageView.image = UIImage(named: "icon-Gallery")
         button.addSubview(imageView)
         imageView.snp.makeConstraints { make in
-            make.height.width.equalTo(22)
+            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 22))
             make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().inset(13)
+            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 13))
         }
         return button
     }()
@@ -148,26 +148,25 @@ class MyPageView: UIView {
         // 유저프로필
         profileBackgroundView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.4)
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 280))
         }
         
         profileImageView.snp.makeConstraints { make in
-            make.top.equalTo(profileBackgroundView.snp.top).inset(90)
-            make.centerX.equalToSuperview()
-            make.height.width.equalTo(profileBackgroundView.snp.height).multipliedBy(0.357)
+            make.center.equalToSuperview()
+            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 100))
         }
         
         // 편집 버튼
         imageEditButton.snp.makeConstraints { make in
-            make.width.height.equalTo(24)
-            make.trailing.equalTo(profileImageView.snp.trailing).offset(6)
+            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 24))
+            make.trailing.equalTo(profileImageView.snp.trailing).offset(LayoutAdapter.shared.scale(value: 6))
             make.bottom.equalTo(profileImageView.snp.bottom)
         }
         
         // 추가 옵션 뷰
         moveToGallery.snp.makeConstraints { make in
             make.centerX.equalTo(profileImageView)
-            make.top.equalTo(profileImageView.snp.bottom).offset(13)
+            make.top.equalTo(profileImageView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 13))
             make.width.equalTo(190)
             make.height.equalTo(38)
         }
@@ -185,8 +184,8 @@ class MyPageView: UIView {
         // 유저코드
         userCodeBackgroundView.snp.makeConstraints { make in
             make.centerY.equalTo(profileBackgroundView.snp.bottom)
-            make.height.equalTo(profileBackgroundView.snp.height).multipliedBy(0.203)
-            make.leading.trailing.equalToSuperview().inset(17)
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 57))
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 17))
         }
         
         userCodeLabel.snp.makeConstraints { make in
@@ -195,23 +194,22 @@ class MyPageView: UIView {
         
         // 내정보관리, 위치 즐겨찾기, 피드책갈피, 피드보관함
         manageStackView.snp.makeConstraints { make in
-            make.top.equalTo(userCodeBackgroundView.snp.bottom).offset(14)
-            make.leading.trailing.equalToSuperview().inset(17)
+            make.top.equalTo(userCodeBackgroundView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 14))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 192))
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 17))
         }
         
         // 공지사항, 1:1이용문의
         supportStackView.snp.makeConstraints { make in
-            make.top.equalTo(manageStackView.snp.bottom).offset(12)
-            make.leading.trailing.equalToSuperview().inset(17)
-//            make.bottom.equalTo(logoutDeleteStackView.snp.top).inset(34)
+            make.top.equalTo(manageStackView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 12))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 102))
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 17))
         }
         
         // 로그아웃, 회원탈퇴 버튼
         logoutDeleteStackView.snp.makeConstraints { make in
-            make.bottom.equalTo(safeAreaLayoutGuide).inset(20)
-//            make.top.equalTo(supportStackView.snp.bottom).offset(34)
+            make.bottom.equalTo(safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 20))
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.363)
         }
         
         separatorview.snp.makeConstraints { make in
@@ -228,15 +226,14 @@ class MyPageView: UIView {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 1
-        stackView.layer.cornerRadius = 14
+        stackView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 14)
         stackView.clipsToBounds = true
         stackView.backgroundColor = .white
-        stackView.distribution = .fillEqually
-        
+        stackView.distribution = .fillProportionally
+
         buttonTitles.forEach { title in
             let button = createButton(withTitle: title)
             stackView.addArrangedSubview(button)
-            
             if title != buttonTitles.last {
                 let separator = createSeparator()
                 stackView.addArrangedSubview(separator)
@@ -245,26 +242,13 @@ class MyPageView: UIView {
         return stackView
     }
     
-//    let myDetailManageButton: UIButton = {
-//        let button = UIButton()
-//        let label = CustomLabel(UILabel_NotoSans: .medium, text: "내 정보 관리", textColor: .color34, fontSize: 16)
-//        label.adjustsFontForContentSizeCategory = true
-//        button.addSubview(label)
-//        label.snp.makeConstraints { make in
-//            make.top.bottom.equalToSuperview().inset(7)
-//            make.leading.equalToSuperview().inset(12)
-//        }
-//        return button
-//    }()
-    
     private func createButton(withTitle title: String) -> UIButton {
         let button = UIButton()
         let label = CustomLabel(UILabel_NotoSans: .medium, text: title, textColor: .color34, fontSize: 16)
         button.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().inset(12)
-            make.top.equalToSuperview().inset(7)
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 12))
         }
         return button
     }
@@ -279,7 +263,7 @@ class MyPageView: UIView {
     }
     
     // MARK: - stackview button actions
-    
+    // TODO: 추후 버튼 액션들 수정해야함
     func setButtonActions(target: Any?, action: Selector) {
         manageStackView.arrangedSubviews.forEach {
             if let button = $0 as? UIButton {

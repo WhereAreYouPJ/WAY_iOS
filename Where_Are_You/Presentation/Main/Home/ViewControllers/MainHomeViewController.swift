@@ -22,7 +22,12 @@ class MainHomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view = mainHomeView
+        view.addSubview(mainHomeView)
+        mainHomeView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+        
         mainHomeViewModel = MainHomeViewModel()
         setupViewControllers()
         setupBindings()

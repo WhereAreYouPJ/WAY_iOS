@@ -10,9 +10,6 @@ import UIKit
 
 class MainTabBarController: UITabBarController {
     
-    // 탭바 height 커스터 마이징
-    let tabbarHeight: CGFloat = 100
-    
     // 로그인 했는지 안했는지 확인
     func authenticatieUserAndConfigureUI() {
         if UserDefaults.standard.isLoggedIn == false {
@@ -48,14 +45,6 @@ class MainTabBarController: UITabBarController {
         addTabBarSeparator()
     }
     
-    // 탭바 높이
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        var tabFrame = self.tabBar.frame
-        tabFrame.size.height = tabbarHeight
-        self.tabBar.frame = tabFrame
-    }
-    
     // 뷰 컨트롤러를 네비게이션 컨트롤러로 감싸고 탭바 아이템을 설정하는 함수
     private func createNavController(viewController: UIViewController, title: String, imageName: String, selectedImageName: String) -> UINavigationController {
         let navController = UINavigationController(rootViewController: viewController)
@@ -64,8 +53,6 @@ class MainTabBarController: UITabBarController {
             image: UIImage(named: imageName)?.withRenderingMode(.alwaysOriginal),
             selectedImage: UIImage(named: selectedImageName)?.withRenderingMode(.alwaysOriginal)
         )
-        tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -10) // 타이틀을 아래로 이동
-        tabBarItem.imageInsets = UIEdgeInsets(top: -5, left: 0, bottom: -5, right: 0) // 이미지를 위로 이동
         viewController.tabBarItem = tabBarItem
         return navController
     }

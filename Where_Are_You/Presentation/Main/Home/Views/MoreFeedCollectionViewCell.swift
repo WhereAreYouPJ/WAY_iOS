@@ -19,7 +19,7 @@ class MoreFeedCollectionViewCell: UICollectionViewCell {
     
     let borderView: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = 16
+        view.layer.cornerRadius = LayoutAdapter.shared.scale(value: 16)
         view.layer.borderColor = UIColor.color212.cgColor
         view.layer.borderWidth = 1
         return view
@@ -27,7 +27,7 @@ class MoreFeedCollectionViewCell: UICollectionViewCell {
     
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.layer.cornerRadius = 14
+        imageView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 14)
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.image = UIImage(named: "exampleProfileImage")

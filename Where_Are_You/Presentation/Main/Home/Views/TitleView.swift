@@ -10,6 +10,7 @@ import UIKit
 class TitleView: UIView {
     // MARK: - Properties
 
+    // TODO: 로고 수정
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(Ttangsbudae: .bold, fontSize: 20))

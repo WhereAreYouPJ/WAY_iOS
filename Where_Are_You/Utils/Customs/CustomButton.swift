@@ -124,7 +124,6 @@ class CustomButtonView: UIView {
         button.titleLabel?.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: weight, fontSize: fontSize))
         button.setTitleColor(textColor, for: .normal)
         button.titleLabel?.adjustsFontForContentSizeCategory = true
-        
         setupUI()
     }
     
