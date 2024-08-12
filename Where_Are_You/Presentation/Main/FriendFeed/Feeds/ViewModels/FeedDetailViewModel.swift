@@ -17,11 +17,11 @@ class FeedDetailViewModel {
     // MARK: - Helpers
     
     // 서버에서 피드 데이터를 가져오는 메서드
-    func fetchFeeds(completion: @escaping (Result<[ReadFeedResponse], Error>) -> Void) {
+    func fetchFeeds(completion: @escaping (Result<[FeedResponse], Error>) -> Void) {
         // 실제 네트워크 요청을 통해 데이터를 가져오는 예제를 대신하여 모의 데이터를 사용합니다.
         let feedResponses = [
-            ReadFeedResponse(profileImage: "base64String1", date: "2024-08-12T02:25:28.272Z", location: "Seoul", title: "Title 1", feedImages: ["base64String2"], description: "Description 1"),
-            ReadFeedResponse(profileImage: "base64String3", date: "2024-08-13T04:30:00.000Z", location: "Busan", title: "Title 2", feedImages: [], description: nil)
+            FeedResponse(profileImage: "base64String1", date: "2024-08-12T02:25:28.272Z", location: "Seoul", title: "Title 1", feedImages: ["base64String2"], description: "Description 1"),
+            FeedResponse(profileImage: "base64String3", date: "2024-08-13T04:30:00.000Z", location: "Busan", title: "Title 2", feedImages: [], description: nil)
         ]
         
         // 데이터를 성공적으로 가져온 경우
@@ -42,7 +42,7 @@ class FeedDetailViewModel {
         }
     }
     
-    private func convertToFeed(from response: ReadFeedResponse) -> Feed {
+    private func convertToFeed(from response: FeedResponse) -> Feed {
         let profileImage = response.profileImage.flatMap { ImageUtility.decodeBase64StringToImage($0) }
         
         let dateFormatter = ISO8601DateFormatter()

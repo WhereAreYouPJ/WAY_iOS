@@ -53,7 +53,7 @@ class NoFeedsView: UIView {
     private func setupConstraints() {
         borderView.snp.makeConstraints { make in
             make.height.equalTo(LayoutAdapter.shared.scale(value: 214))
-            make.top.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 156))
+            make.top.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 134))
             make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 22))
         }
         

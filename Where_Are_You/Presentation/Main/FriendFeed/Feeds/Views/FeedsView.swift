@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class FeedsView: UIView {
     // MARK: - Properties

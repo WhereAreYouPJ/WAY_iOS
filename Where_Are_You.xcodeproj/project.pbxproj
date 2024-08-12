@@ -86,7 +86,6 @@
 		99C68E412C64B21F00DEC1F1 /* UpdateFeedBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E402C64B21F00DEC1F1 /* UpdateFeedBody.swift */; };
 		99C68E432C64B28400DEC1F1 /* FeedAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E422C64B28400DEC1F1 /* FeedAPI.swift */; };
 		99C68E482C64B43900DEC1F1 /* FeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E472C64B43900DEC1F1 /* FeedService.swift */; };
-		99C68E4A2C64B4A000DEC1F1 /* FeedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E492C64B4A000DEC1F1 /* FeedResponse.swift */; };
 		99C68E4C2C64B83D00DEC1F1 /* FeedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E4B2C64B83D00DEC1F1 /* FeedRepository.swift */; };
 		99C68E502C64B96500DEC1F1 /* CreateFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E4F2C64B96500DEC1F1 /* CreateFeedUseCase.swift */; };
 		99C68E522C64B96E00DEC1F1 /* UpdateFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E512C64B96E00DEC1F1 /* UpdateFeedUseCase.swift */; };
@@ -123,7 +122,7 @@
 		99DA18B92C4E132A00D5CDA6 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA18B82C4E132A00D5CDA6 /* TitleView.swift */; };
 		99E755512C22E66F0016A0A6 /* MemberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E755502C22E66F0016A0A6 /* MemberService.swift */; };
 		99E7BA592C69A5D500F79C96 /* ImageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E7BA582C69A5D500F79C96 /* ImageUtility.swift */; };
-		99E7BA5B2C69A9B400F79C96 /* ReadFeedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E7BA5A2C69A9B400F79C96 /* ReadFeedResponse.swift */; };
+		99E7BA5B2C69A9B400F79C96 /* FeedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E7BA5A2C69A9B400F79C96 /* FeedResponse.swift */; };
 		99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */; };
 		99E8BC452C2D26CF00536B95 /* EmailVerifyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E8BC442C2D26CF00536B95 /* EmailVerifyUseCase.swift */; };
 		99EC20AB2C0D9D9D0018904D /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20AA2C0D9D9D0018904D /* SignUpViewModel.swift */; };
@@ -253,7 +252,6 @@
 		99C68E402C64B21F00DEC1F1 /* UpdateFeedBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFeedBody.swift; sourceTree = "<group>"; };
 		99C68E422C64B28400DEC1F1 /* FeedAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAPI.swift; sourceTree = "<group>"; };
 		99C68E472C64B43900DEC1F1 /* FeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedService.swift; sourceTree = "<group>"; };
-		99C68E492C64B4A000DEC1F1 /* FeedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedResponse.swift; sourceTree = "<group>"; };
 		99C68E4B2C64B83D00DEC1F1 /* FeedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRepository.swift; sourceTree = "<group>"; };
 		99C68E4F2C64B96500DEC1F1 /* CreateFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFeedUseCase.swift; sourceTree = "<group>"; };
 		99C68E512C64B96E00DEC1F1 /* UpdateFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFeedUseCase.swift; sourceTree = "<group>"; };
@@ -290,7 +288,7 @@
 		99DA18B82C4E132A00D5CDA6 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		99E755502C22E66F0016A0A6 /* MemberService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberService.swift; sourceTree = "<group>"; };
 		99E7BA582C69A5D500F79C96 /* ImageUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtility.swift; sourceTree = "<group>"; };
-		99E7BA5A2C69A9B400F79C96 /* ReadFeedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFeedResponse.swift; sourceTree = "<group>"; };
+		99E7BA5A2C69A9B400F79C96 /* FeedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedResponse.swift; sourceTree = "<group>"; };
 		99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
 		99E8BC442C2D26CF00536B95 /* EmailVerifyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerifyUseCase.swift; sourceTree = "<group>"; };
 		99EC20AA2C0D9D9D0018904D /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
@@ -626,8 +624,7 @@
 		99C68E442C64B3FC00DEC1F1 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				99C68E492C64B4A000DEC1F1 /* FeedResponse.swift */,
-				99E7BA5A2C69A9B400F79C96 /* ReadFeedResponse.swift */,
+				99E7BA5A2C69A9B400F79C96 /* FeedResponse.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -1322,7 +1319,7 @@
 				99C68E502C64B96500DEC1F1 /* CreateFeedUseCase.swift in Sources */,
 				997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */,
 				9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */,
-				99E7BA5B2C69A9B400F79C96 /* ReadFeedResponse.swift in Sources */,
+				99E7BA5B2C69A9B400F79C96 /* FeedResponse.swift in Sources */,
 				992F57D22C5B28D600219C6B /* EmailSendBody.swift in Sources */,
 				99E8BC452C2D26CF00536B95 /* EmailVerifyUseCase.swift in Sources */,
 				99D8FBBD2C3BA1E60062AF10 /* MainHomeViewModel.swift in Sources */,
@@ -1341,7 +1338,6 @@
 				990902112C5F239A00BC3F20 /* CommonDescription.swift in Sources */,
 				992F57DB2C5B2A1D00219C6B /* MemberAPI.swift in Sources */,
 				99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */,
-				99C68E4A2C64B4A000DEC1F1 /* FeedResponse.swift in Sources */,
 				992F57D02C5B28C400219C6B /* EmailVerifyPasswordBody.swift in Sources */,
 				995E3E5E2C508039006B4480 /* MyPageViewController.swift in Sources */,
 				99CEAD4C2C5397B1006B3D41 /* DeviceConfig.swift in Sources */,

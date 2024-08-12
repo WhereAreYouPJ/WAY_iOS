@@ -11,28 +11,54 @@ import SwiftUI
 class FeedsViewController: UIViewController {
     // MARK: - Properties
     private let feedsView = FeedsView()
+    private let noFeedsView = NoFeedsView()
     var viewModel: FeedDetailViewModel!
     
     // MARK: - Lifecycle
     override func loadView() {
-        view = feedsView
         viewModel = FeedDetailViewModel()
+        view = UIView()
+        view.addSubview(feedsView)
+        view.addSubview(noFeedsView)
         setupBindings()
         setupTableView()
+        updateViewVisibility()
+        configureConstraints()
     }
     
     // MARK: - Helpers
+    
+    private func configureConstraints() {
+        noFeedsView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.leading.trailing.equalToSuperview()
+        }
+        
+        feedsView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.leading.trailing.equalToSuperview()
+        }
+    }
+    
     private func setupBindings() {
-//        viewModel.onFeedImageDataFetched = { [weak self] in
-////            self?.feedsView.feeds = self?.viewModel.getFeeds() ?? []
-//            self?.feedsView.feedsTableView.reloadData()
-//        }
+        viewModel.onFeedsDataFetched = { [weak self] in
+            self?.updateViewVisibility()
+        }
     }
     
     private func setupTableView() {
         feedsView.feedsTableView.delegate = self
         feedsView.feedsTableView.dataSource = self
         feedsView.feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
+    }
+    
+    private func updateViewVisibility() {
+        let hasFeeds = !viewModel.feeds.isEmpty
+        feedsView.isHidden = !hasFeeds
+        noFeedsView.isHidden = hasFeeds
+        if hasFeeds {
+            feedsView.feedsTableView.reloadData()
+        }
     }
 }
 
@@ -46,11 +72,9 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         let feed = viewModel.feeds[indexPath.row]
-        if feed.feedImages == nil {
-            cell.feedImageView.isHidden = true
-        } else if feed.description == nil {
-            cell.descriptionLabel.isHidden = true
-        }
+        
+        cell.feedImageView.isHidden = feed.feedImages == nil
+        cell.descriptionLabel.isHidden = feed.description == nil
         cell.detailBox.titleLabel.text = feed.title
         cell.detailBox.dateLabel.text = feed.date?.description
         cell.detailBox.locationLabel.text = feed.location
@@ -59,28 +83,3 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 }
-
-//struct PreView: PreviewProvider {
-//    static var previews: some View {
-//        FeedsViewController().toPreview()
-//    }
-//}
-//
-//#if DEBUG
-//extension UIViewController {
-//    private struct Preview: UIViewControllerRepresentable {
-//            let viewController: UIViewController
-//
-//            func makeUIViewController(context: Context) -> UIViewController {
-//                return viewController
-//            }
-//
-//            func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-//            }
-//        }
-//
-//        func toPreview() -> some View {
-//            Preview(viewController: self)
-//        }
-//}
-//#endif
