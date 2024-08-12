@@ -18,7 +18,7 @@ class FeedDetailBoxView: UIView {
         return view
     }()
     
-    let profileImage: UIImageView = {
+    var profileImage: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 14)
         imageView.clipsToBounds = true
@@ -26,11 +26,11 @@ class FeedDetailBoxView: UIView {
         return imageView
     }()
     
-    let dateLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color153, fontSize: 14)
+    var dateLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color153, fontSize: 14)
     
-    let locationLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color153, fontSize: 14)
+    var locationLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color153, fontSize: 14)
     
-    let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color34, fontSize: 16)
+    var titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color34, fontSize: 16)
     
     lazy var dateLocationStack = createStackView(subviews: [dateLabel, locationLabel], axis: .horizontal, spacing: 0)
     

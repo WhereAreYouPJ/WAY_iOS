@@ -13,12 +13,6 @@ class FeedsView: UIView {
     let scrollView = UIScrollView()
     let feedsTableView = UITableView()
     
-//    var feeds: [Feed] = [] {
-//        didSet {
-//            updateFeeds()
-//        }
-//    }
-    
     // MARK: - Lifecycle
     
     override init(frame: CGRect) {
@@ -49,12 +43,4 @@ class FeedsView: UIView {
             make.top.bottom.equalToSuperview()
         }
     }
-    
-//    private func updateFeeds() {
-//        if feeds.contains(where: { feeds in
-//            return feeds.profileImage.isEmpty
-//        }) {
-//            
-//        }
-//    }
 }

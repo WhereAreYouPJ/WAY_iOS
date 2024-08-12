@@ -9,11 +9,9 @@ import UIKit
 
 class FeedDetailViewModel {
     var onFeedsDataFetched: (() -> Void)?
-    var onFeedImageDataFetched: (() -> Void)?
     
-    private var feeds: [Feed] = []
+    var feeds: [Feed] = []
     private var feedImages: [UIImage] = []
-    private var timer: Timer?
     private(set) var currentIndex = 0
     
     // MARK: - Helpers
@@ -21,7 +19,6 @@ class FeedDetailViewModel {
     // 데이터 설정 메서드
     func setFeedImages(_ banners: [UIImage]) {
         self.feedImages = banners
-        onFeedImageDataFetched?()
     }
     
     func getFeedImages() -> [UIImage] {

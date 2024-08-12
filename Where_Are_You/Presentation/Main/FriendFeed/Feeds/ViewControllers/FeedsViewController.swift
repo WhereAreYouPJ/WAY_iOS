@@ -23,10 +23,10 @@ class FeedsViewController: UIViewController {
     
     // MARK: - Helpers
     private func setupBindings() {
-        viewModel.onFeedImageDataFetched = { [weak self] in
-//            self?.feedsView.feeds = self?.viewModel.getFeeds() ?? []
-            self?.feedsView.feedsTableView.reloadData()
-        }
+//        viewModel.onFeedImageDataFetched = { [weak self] in
+////            self?.feedsView.feeds = self?.viewModel.getFeeds() ?? []
+//            self?.feedsView.feedsTableView.reloadData()
+//        }
     }
     
     private func setupTableView() {
@@ -45,7 +45,18 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedsTableViewCell.identifier, for: indexPath) as? FeedsTableViewCell else {
             return UITableViewCell()
         }
-        // homefeedviewcontroller을 참고해서 configure func을 feedtableviewcell에 넣을지 말지 결정하기
+        let feed = viewModel.feeds[indexPath.row]
+        if feed.feedImage == nil {
+            cell.feedImageView.isHidden = true
+        } else if feed.description == nil {
+            cell.descriptionLabel.isHidden = true
+        }
+        cell.detailBox.titleLabel.text = feed.title
+        cell.detailBox.dateLabel.text = feed.date?.description
+        cell.detailBox.locationLabel.text = feed.location
+        cell.detailBox.profileImage.image = feed.profileImage
+        
+        return cell
     }
 }
 
