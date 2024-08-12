@@ -8,8 +8,8 @@
 import Foundation
 
 protocol FeedRepositoryProtocol {
-    func createFeed(request: CreateFeedBody, completion: @escaping (Result<GenericResponse<FeedResponse>, Error>) -> Void)
-    func updateFeed(request: UpdateFeedBody, completion: @escaping (Result<GenericResponse<FeedResponse>, Error>) -> Void)
+    func createFeed(request: CreateFeedBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func updateFeed(request: UpdateFeedBody, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class FeedRepository: FeedRepositoryProtocol {
@@ -19,11 +19,11 @@ class FeedRepository: FeedRepositoryProtocol {
         self.feedService = feedService
     }
     
-    func createFeed(request: CreateFeedBody, completion: @escaping (Result<GenericResponse<FeedResponse>, any Error>) -> Void) {
+    func createFeed(request: CreateFeedBody, completion: @escaping (Result<Void, any Error>) -> Void) {
         feedService.createFeed(request: request, completion: completion)
     }
     
-    func updateFeed(request: UpdateFeedBody, completion: @escaping (Result<GenericResponse<FeedResponse>, any Error>) -> Void) {
+    func updateFeed(request: UpdateFeedBody, completion: @escaping (Result<Void, any Error>) -> Void) {
         feedService.updateFeed(request: request, completion: completion)
     }
 }

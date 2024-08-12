@@ -38,7 +38,7 @@ class FeedsViewController: UIViewController {
 
 extension FeedsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.getFeeds().count
+        return viewModel.feeds.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -46,7 +46,7 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         let feed = viewModel.feeds[indexPath.row]
-        if feed.feedImage == nil {
+        if feed.feedImages == nil {
             cell.feedImageView.isHidden = true
         } else if feed.description == nil {
             cell.descriptionLabel.isHidden = true

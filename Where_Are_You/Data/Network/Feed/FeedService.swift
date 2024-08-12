@@ -9,8 +9,8 @@ import Alamofire
 import Moya
 
 protocol FeedServiceProtocol {
-    func createFeed(request: CreateFeedBody, completion: @escaping (Result<GenericResponse<FeedResponse>, Error>) -> Void)
-    func updateFeed(request: UpdateFeedBody, completion: @escaping (Result<GenericResponse<FeedResponse>, Error>) -> Void)
+    func createFeed(request: CreateFeedBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func updateFeed(request: UpdateFeedBody, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class FeedService: FeedServiceProtocol {
@@ -25,28 +25,26 @@ class FeedService: FeedServiceProtocol {
         self.provider = MoyaProvider<FeedAPI>(plugins: [tokenPlugin])
     }
     
-    func createFeed(request: CreateFeedBody, completion: @escaping (Result<GenericResponse<FeedResponse>, Error>) -> Void) {
+    func createFeed(request: CreateFeedBody, completion: @escaping (Result<Void, Error>) -> Void) {
         provider.request(.createFeed(request: request)) { [weak self] result in
             self?.handleResponse(result, completion: completion)
         }
     }
     
-    func updateFeed(request: UpdateFeedBody, completion: @escaping (Result<GenericResponse<FeedResponse>, any Error>) -> Void) {
+    func updateFeed(request: UpdateFeedBody, completion: @escaping (Result<Void, any Error>) -> Void) {
         provider.request(.updateFeed(request: request)) { [weak self] result in
             self?.handleResponse(result, completion: completion)
         }
     }
     
     // MARK: - Helpers
-
-    private func handleResponse<T: Decodable>(_ result: Result<Response, MoyaError>, completion: @escaping (Result<T, Error>) -> Void) {
+    private func handleResponse(_ result: Result<Moya.Response, MoyaError>, completion: @escaping (Result<Void, Error>) -> Void) {
         switch result {
         case .success(let response):
             do {
-                let filteredResponse = try response.filterSuccessfulStatusCodes()
-                let decodedData = try JSONDecoder().decode(T.self, from: filteredResponse.data)
-                completion(.success(decodedData))
-            } catch {
+                try response.filterSuccessfulStatusCodes()
+                completion(.success(()))
+            } catch let error {
                 completion(.failure(error))
             }
         case .failure(let error):

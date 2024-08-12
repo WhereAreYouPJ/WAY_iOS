@@ -12,5 +12,5 @@ struct CreateFeedBody: ParameterConvertible {
     let creatorSeq: Int
     let title: String
     let content: String
-    let images: [String]
+    var images: [String]
 }

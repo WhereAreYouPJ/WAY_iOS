@@ -5,10 +5,10 @@
 //  Created by 오정석 on 8/8/2024.
 //
 
-import Foundation
+import UIKit
 
 protocol UpdateFeedUseCase {
-    func execute(request: UpdateFeedBody, completion: @escaping (Result<FeedResponse, Error>) -> Void)
+    func execute(request: UpdateFeedBody, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class UpdateFeedUseCaseImpl: UpdateFeedUseCase {
@@ -18,14 +18,7 @@ class UpdateFeedUseCaseImpl: UpdateFeedUseCase {
         self.feedRepository = feedRepository
     }
 
-    func execute(request: UpdateFeedBody, completion: @escaping (Result<FeedResponse, Error>) -> Void) {
-        feedRepository.updateFeed(request: request) { result in
-            switch result {
-            case .success(let response):
-                completion(.success(response.data))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func execute(request: UpdateFeedBody, completion: @escaping (Result<Void, Error>) -> Void) {
+        feedRepository.updateFeed(request: request, completion: completion)
     }
 }
