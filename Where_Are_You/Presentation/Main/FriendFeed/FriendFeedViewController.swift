@@ -25,9 +25,6 @@ class FriendFeedViewController: UIViewController {
     
     private let segmentControl: UISegmentedControl = {
         let sc = UISegmentedControl()
-        sc.snp.makeConstraints { make in
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 26))
-        }
         sc.insertSegment(withTitle: "친구", at: 0, animated: true)
         sc.insertSegment(withTitle: "피드", at: 1, animated: true)
         sc.selectedSegmentIndex = 0
@@ -88,13 +85,16 @@ class FriendFeedViewController: UIViewController {
         setupNavigationBar()
         setupViews()
         handleSegmentChange()
+        
+        segmentControl.snp.makeConstraints { make in
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 36)).priority(.required)
+        }
     }
     
     // MARK: - Helpers
 
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonStack)
         segmentControl.addTarget(self, action: #selector(handleSegmentChange), for: .valueChanged)
     }

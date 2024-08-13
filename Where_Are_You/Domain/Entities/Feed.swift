@@ -8,11 +8,11 @@
 import UIKit
 
 struct Feed {
-    let profileImage: UIImage? // 추후 string으로 바꿔야함
-    let date: Date?
+    var profileImage: UIImage 
+    let date: String?
     let location: String
     let title: String
     
-    let feedImages: [UIImage]?
+    var feedImages: [UIImage]?
     let description: String?
 }

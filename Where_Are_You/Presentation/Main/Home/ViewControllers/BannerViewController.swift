@@ -13,14 +13,10 @@ class BannerViewController: UIViewController {
     let bannerView = BannerView()
     var viewModel: BannerViewModel!
     
-    // MARK: - Lifecycle
-
-    override func loadView() {
-        view = bannerView
-    }
-    
+    // MARK: - Lifecycle  
     override func viewDidLoad() {
         super.viewDidLoad()
+        view = bannerView
         viewModel = BannerViewModel()
         setupBindings()
         setupCollectionView()

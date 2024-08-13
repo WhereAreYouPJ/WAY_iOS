@@ -13,22 +13,23 @@ class FeedsViewController: UIViewController {
     private let feedsView = FeedsView()
     private let noFeedsView = NoFeedsView()
     var viewModel: FeedDetailViewModel!
+    private var feedImagesViewController: FeedImagesViewController!
     
     // MARK: - Lifecycle
     override func loadView() {
         viewModel = FeedDetailViewModel()
-        view = UIView()
-        view.addSubview(feedsView)
-        view.addSubview(noFeedsView)
+        
+        setupViews()
         setupBindings()
         setupTableView()
         updateViewVisibility()
-        configureConstraints()
     }
     
     // MARK: - Helpers
-    
-    private func configureConstraints() {
+    private func setupViews() {
+        view.addSubview(feedsView)
+        view.addSubview(noFeedsView)
+        
         noFeedsView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.bottom.leading.trailing.equalToSuperview()
@@ -46,19 +47,28 @@ class FeedsViewController: UIViewController {
         }
     }
     
-    private func setupTableView() {
-        feedsView.feedsTableView.delegate = self
-        feedsView.feedsTableView.dataSource = self
-        feedsView.feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
-    }
-    
     private func updateViewVisibility() {
         let hasFeeds = !viewModel.feeds.isEmpty
         feedsView.isHidden = !hasFeeds
         noFeedsView.isHidden = hasFeeds
-        if hasFeeds {
-            feedsView.feedsTableView.reloadData()
+        feedsView.feedsTableView.reloadData()
+    }
+    
+    private func addFeedImagesViewController() {
+        feedImagesViewController = FeedImagesViewController()
+        addChild(feedImagesViewController)
+        view.addSubview(feedImagesViewController.view)
+        feedImagesViewController.didMove(toParent: self)
+        
+        feedImagesViewController.view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
+    }
+    
+    private func setupTableView() {
+        feedsView.feedsTableView.delegate = self
+        feedsView.feedsTableView.dataSource = self
+        feedsView.feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
     }
 }
 
@@ -73,12 +83,7 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource {
         }
         let feed = viewModel.feeds[indexPath.row]
         
-        cell.feedImageView.isHidden = feed.feedImages == nil
-        cell.descriptionLabel.isHidden = feed.description == nil
-        cell.detailBox.titleLabel.text = feed.title
-        cell.detailBox.dateLabel.text = feed.date?.description
-        cell.detailBox.locationLabel.text = feed.location
-        cell.detailBox.profileImage.image = feed.profileImage
+        cell.configure(with: feed)
         
         return cell
     }

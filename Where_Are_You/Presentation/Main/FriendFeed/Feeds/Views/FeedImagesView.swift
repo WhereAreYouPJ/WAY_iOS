@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FeedImageCollectionView: UIView {
+class FeedImagesView: UIView {
     // MARK: - Properties
     
     var collectionView: UICollectionView = {

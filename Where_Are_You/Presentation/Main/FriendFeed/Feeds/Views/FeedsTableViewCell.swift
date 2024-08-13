@@ -13,7 +13,7 @@ class FeedsTableViewCell: UITableViewCell {
     static let identifier = "FeedsTableViewCell"
     
     let detailBox = FeedDetailBoxView()
-    let feedImageView = FeedImageCollectionView()
+    let feedImageView = FeedImagesView()
     let bookMarkButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "bookmark"), for: .normal)
@@ -73,5 +73,9 @@ class FeedsTableViewCell: UITableViewCell {
             make.top.equalTo(bookMarkButton.snp.bottom).offset(LayoutAdapter.shared.scale(value: 6))
             make.leading.trailing.bottom.equalToSuperview()
         }
+    }
+    
+    func configure(with feed: Feed) {
+        feedImageViewController.viewModel.setFeedImages(feed.images)
     }
 }
