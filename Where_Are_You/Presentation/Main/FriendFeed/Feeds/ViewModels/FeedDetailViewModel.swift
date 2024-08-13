@@ -42,13 +42,13 @@ class FeedDetailViewModel {
                               date: "2024-08-12T02:25:28.272Z",
                               location: "Seoul",
                               title: "Beautiful Seoul",
-                              feedImages: [UIImage(named: "exampleFeedImage")!],
+                              feedImages: [UIImage(named: "exampleFeedImage") ?? UIImage()],
                               description: "A great view of Seoul."),
                          Feed(profileImage: UIImage(named: "exampleProfileImage") ?? UIImage(),
                               date: "2024-08-12T02:25:28.272Z",
                               location: "Seoul",
                               title: "Beautiful Seoul",
-                              feedImages: [UIImage(named: "exampleFeedImage")!],
+                              feedImages: [UIImage(named: "exampleFeedImage") ?? UIImage()],
                               description: "A great view of Seoul.")]
         self.feeds = mockFeeds
         updateFeedImagesForCurrentIndex()
@@ -69,7 +69,7 @@ class FeedDetailViewModel {
     func updateImageIndex(to index: Int) {
         currentImageIndex = index
     }
-    
+}
     //    func fetchFeeds(completion: @escaping (Result<[FeedResponse], Error>) -> Void) {
     //        // 실제 네트워크 요청을 통해 데이터를 가져오는 예제를 대신하여 모의 데이터를 사용합니다.
     //        let feedResponses = [
@@ -105,4 +105,4 @@ class FeedDetailViewModel {
     //
     //        return Feed(profileImage: profileImage, date: date, location: response.location, title: response.title, feedImages: feedImages, description: response.description)
     //    }
-}
+

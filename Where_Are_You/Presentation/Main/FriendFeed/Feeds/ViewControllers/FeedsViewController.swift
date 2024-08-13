@@ -10,37 +10,21 @@ import SwiftUI
 
 class FeedsViewController: UIViewController {
     // MARK: - Properties
-    private let feedsView = FeedsView()
-    private let noFeedsView = NoFeedsView()
+    private var feedsView: FeedsView?
+    private var noFeedsView: NoFeedsView?
     var viewModel: FeedDetailViewModel!
     private var feedImagesViewController: FeedImagesViewController!
     
     // MARK: - Lifecycle
-    override func loadView() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
         viewModel = FeedDetailViewModel()
-        
-        setupViews()
         setupBindings()
-        setupTableView()
         updateViewVisibility()
+        viewModel.fetchFeeds()
     }
     
     // MARK: - Helpers
-    private func setupViews() {
-        view.addSubview(feedsView)
-        view.addSubview(noFeedsView)
-        
-        noFeedsView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.leading.trailing.equalToSuperview()
-        }
-        
-        feedsView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.leading.trailing.equalToSuperview()
-        }
-    }
-    
     private func setupBindings() {
         viewModel.onFeedsDataFetched = { [weak self] in
             self?.updateViewVisibility()
@@ -49,9 +33,41 @@ class FeedsViewController: UIViewController {
     
     private func updateViewVisibility() {
         let hasFeeds = !viewModel.feeds.isEmpty
-        feedsView.isHidden = !hasFeeds
-        noFeedsView.isHidden = hasFeeds
-        feedsView.feedsTableView.reloadData()
+        
+        // 기존 뷰 제거
+        feedsView?.removeFromSuperview()
+        noFeedsView?.removeFromSuperview()
+        
+        // 피드 데이터에 따라 적절한 뷰 추가
+        if hasFeeds {
+            addFeedsView()
+        } else {
+            addNoFeedsView()
+        }
+    }
+    
+    private func addFeedsView() {
+        feedsView = FeedsView()
+        view.addSubview(feedsView!)
+        
+        feedsView!.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        // 테이블 뷰 설정
+        feedsView!.feedsTableView.delegate = self
+        feedsView!.feedsTableView.dataSource = self
+        feedsView!.feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
+        feedsView!.feedsTableView.reloadData()
+    }
+    
+    private func addNoFeedsView() {
+        noFeedsView = NoFeedsView()
+        view.addSubview(noFeedsView!)
+        
+        noFeedsView!.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
     }
     
     private func addFeedImagesViewController() {
@@ -63,12 +79,6 @@ class FeedsViewController: UIViewController {
         feedImagesViewController.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-    }
-    
-    private func setupTableView() {
-        feedsView.feedsTableView.delegate = self
-        feedsView.feedsTableView.dataSource = self
-        feedsView.feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
     }
 }
 
@@ -82,9 +92,7 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         let feed = viewModel.feeds[indexPath.row]
-        
         cell.configure(with: feed)
-        
         return cell
     }
 }

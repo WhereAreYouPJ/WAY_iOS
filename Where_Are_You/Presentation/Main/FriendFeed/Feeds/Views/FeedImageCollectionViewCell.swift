@@ -37,6 +37,11 @@ class FeedImageCollectionViewCell: UICollectionViewCell {
     // MARK: - Helpers
 
     func configure(with image: UIImage) {
-        imageView.image = image
+        if image == nil {
+            imageView.isHidden = true
+        } else {
+            imageView.isHidden = false
+            imageView.image = image
+        }
     }
 }

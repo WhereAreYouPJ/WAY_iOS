@@ -17,7 +17,7 @@ class FeedImagesViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(feedImagesView)
+        view = feedImagesView
         viewModel = FeedDetailViewModel()
         
         setupBindings()
@@ -26,11 +26,11 @@ class FeedImagesViewController: UIViewController {
     
     // MARK: - Helpers
     private func setupBindings() {
-        viewModel.onFeedImagesUpdated = { [weak self] images in
-            DispatchQueue.main.async {
-                
-            }
-        }
+//        viewModel.onFeedImagesUpdated = { [weak self] images in
+//            DispatchQueue.main.async {
+//                
+//            }
+//        }
         
         // 페이지 인덱스 변경에 대한 바인딩
         viewModel.onCurrentImageIndexChanged = { [weak self] index in
@@ -47,6 +47,7 @@ class FeedImagesViewController: UIViewController {
     private func setupCollectionView() {
         feedImagesView.collectionView.dataSource = self
         feedImagesView.collectionView.delegate = self
+        feedImagesView.collectionView.register(FeedImageCollectionViewCell.self, forCellWithReuseIdentifier: FeedImageCollectionViewCell.identifier)
     }
     
     func updateImages(_ newImages: [UIImage]) {

@@ -76,6 +76,16 @@ class FeedsTableViewCell: UITableViewCell {
     }
     
     func configure(with feed: Feed) {
-        feedImageViewController.viewModel.setFeedImages(feed.images)
+        if feed.description == nil {
+            self.descriptionLabel.isHidden = true
+        } else {
+            descriptionLabel.isHidden = false
+            descriptionLabel.text = feed.description
+        }
+        
+        detailBox.profileImage.image = feed.profileImage
+        detailBox.dateLabel.text = feed.date
+        detailBox.locationLabel.text = feed.location
+        detailBox.titleLabel.text = feed.title
     }
 }
