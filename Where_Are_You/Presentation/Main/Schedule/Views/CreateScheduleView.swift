@@ -9,11 +9,13 @@ import SwiftUI
 
 struct CreateScheduleView: View {
     @StateObject var viewModel: CreateScheduleViewModel
+    @Environment(\.dismiss) private var dismiss
+    @State private var path = NavigationPath()
+    
     @State private var schedule = Schedule()
     @State private var isAllDay = false
     @State private var startTime = Date()
     @State private var endTime = Date()
-    @Environment(\.dismiss) private var dismiss
     
     private let dateFormatter: DateFormatter
     
@@ -32,7 +34,7 @@ struct CreateScheduleView: View {
     }
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             VStack(alignment: .leading, content: {
                 TextField("", text: $schedule.title, prompt: Text("메모를 작성해주세요.").foregroundColor(Color(.color118)))
                 Divider()
@@ -40,7 +42,7 @@ struct CreateScheduleView: View {
                 
                 DateAndTimeView(isAllDay: $isAllDay, startTime: $startTime, endTime: $endTime)
                 
-                AddPlaceView(location: $schedule.location, streetName: $schedule.streetName, x: $schedule.x, y: $schedule.y)
+                AddPlaceView(location: $schedule.location, streetName: $schedule.streetName, x: $schedule.x, y: $schedule.y, path: $path)
                 
                 AddFriendsView()
                 
@@ -68,6 +70,11 @@ struct CreateScheduleView: View {
             }
             .navigationTitle("일정 추가")
             .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(for: String.self) { route in
+                if route == "searchPlace" {
+                    SearchPlaceView(location: $schedule.location, streetName: $schedule.streetName, x: $schedule.x, y: $schedule.y, path: $path)
+                }
+            }
         }
     }
 }
@@ -112,11 +119,12 @@ struct AddPlaceView: View {
     @Binding var streetName: String
     @Binding var x: Double
     @Binding var y: Double
-    @State private var showSearchPlaceView = false
+    @Binding var path: NavigationPath
     
     var body: some View {
         Text("위치추가")
         Divider()
+        
         
         HStack {
             Image("icon-place")
@@ -124,15 +132,12 @@ struct AddPlaceView: View {
                 Text("위치 추가")
                     .foregroundStyle(Color(.color118))
                     .onTapGesture {
-                        // TODO: 위치 추가 text를 누르면 SearchPlaceView로 이동
-                        showSearchPlaceView = true
+                        path.append("searchPlace")
                     }
             } else {
-                // TODO: 위치 추가 결과
+                Text(location)
+                    .foregroundStyle(Color.primary)
             }
-        }
-        .navigationDestination(isPresented: $showSearchPlaceView) {
-            SearchPlaceView()
         }
         
         ScrollView(.horizontal) {
