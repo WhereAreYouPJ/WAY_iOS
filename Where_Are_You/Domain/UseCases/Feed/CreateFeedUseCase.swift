@@ -18,6 +18,7 @@ class CreateFeedUseCaseImpl: CreateFeedUseCase {
         self.feedRepository = feedRepository
     }
 
+    // TODO: request를 사용자가 입력한 데이터를 여기서 가공하게 수정하기
     func execute(request: CreateFeedBody, completion: @escaping (Result<Void, Error>) -> Void) {
         feedRepository.createFeed(request: request, completion: completion)
     }

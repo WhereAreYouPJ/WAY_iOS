@@ -131,4 +131,11 @@ extension UIImage {
         draw(in: CGRect(origin: .zero, size: canvasSize))
         return UIGraphicsGetImageFromCurrentImageContext()
     }
+    
+    func toBase64() -> String? {
+        guard let imageData = self.jpegData(compressionQuality: 1.0) else {
+            return nil
+        }
+        return imageData.base64EncodedString()
+    }
 }

@@ -25,8 +25,8 @@ class FriendFeedViewController: UIViewController {
     
     private let segmentControl: UISegmentedControl = {
         let sc = UISegmentedControl()
-        sc.insertSegment(withTitle: "친구", at: 0, animated: true)
-        sc.insertSegment(withTitle: "피드", at: 1, animated: true)
+        sc.insertSegment(withTitle: "피드", at: 0, animated: true)
+        sc.insertSegment(withTitle: "친구", at: 1, animated: true)
         sc.selectedSegmentIndex = 0
         
         sc.setTitleTextAttributes([

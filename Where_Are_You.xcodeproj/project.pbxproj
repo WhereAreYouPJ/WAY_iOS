@@ -142,6 +142,8 @@
 		99FBA5542C453B6D002EEEC7 /* DDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5532C453B6D002EEEC7 /* DDayViewModel.swift */; };
 		99FBA5562C453BDD002EEEC7 /* HomeFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5552C453BDD002EEEC7 /* HomeFeedViewController.swift */; };
 		99FBA5582C453C05002EEEC7 /* HomeFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5572C453C05002EEEC7 /* HomeFeedViewModel.swift */; };
+		99FDD0BD2C6DF72700B15026 /* MultipartFormDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */; };
+		99FDD0BF2C6DF99400B15026 /* ReadFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FDD0BE2C6DF99400B15026 /* ReadFeedUseCase.swift */; };
 		D5B79A162C5B83CD004EDDF2 /* CreateScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B79A152C5B83CD004EDDF2 /* CreateScheduleView.swift */; };
 		D5B79A1A2C5B83F6004EDDF2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B79A192C5B83F6004EDDF2 /* CalendarView.swift */; };
 		D79EFAD9E5409233E5338E46 /* Pods_Where_Are_You.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */; };
@@ -311,6 +313,8 @@
 		99FBA5532C453B6D002EEEC7 /* DDayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDayViewModel.swift; sourceTree = "<group>"; };
 		99FBA5552C453BDD002EEEC7 /* HomeFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeedViewController.swift; sourceTree = "<group>"; };
 		99FBA5572C453C05002EEEC7 /* HomeFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeedViewModel.swift; sourceTree = "<group>"; };
+		99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartFormDataHelper.swift; sourceTree = "<group>"; };
+		99FDD0BE2C6DF99400B15026 /* ReadFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFeedUseCase.swift; sourceTree = "<group>"; };
 		A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5015275FE458D5F6450041 /* Pods-Where_Are_You.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You.release.xcconfig"; path = "Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You.release.xcconfig"; sourceTree = "<group>"; };
 		D53078812C5D3C9D0041BBB7 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -671,6 +675,7 @@
 			children = (
 				99C68E4F2C64B96500DEC1F1 /* CreateFeedUseCase.swift */,
 				99C68E512C64B96E00DEC1F1 /* UpdateFeedUseCase.swift */,
+				99FDD0BE2C6DF99400B15026 /* ReadFeedUseCase.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -704,6 +709,7 @@
 				9974EA1F2C62196500826793 /* SnappingFlowLayout.swift */,
 				99C140372C64943F00A706B6 /* LayoutAdapter.swift */,
 				99E7BA582C69A5D500F79C96 /* ImageUtility.swift */,
+				99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1275,6 +1281,7 @@
 				99C9B22C2C019C67008D7CBD /* LoginView.swift in Sources */,
 				99949F5F2C58BBAD00AE0177 /* FeedsViewController.swift in Sources */,
 				9950C6572C1040FD003155A7 /* TermsAgreementViewController.swift in Sources */,
+				99FDD0BF2C6DF99400B15026 /* ReadFeedUseCase.swift in Sources */,
 				99D8FBBB2C3BA1D90062AF10 /* MainHomeViewController.swift in Sources */,
 				992F57CA2C5B26E700219C6B /* LogoutBody.swift in Sources */,
 				99D8FBB52C3B9F9F0062AF10 /* MainHomeView.swift in Sources */,
@@ -1340,6 +1347,7 @@
 				99949F532C58A67400AE0177 /* FriendsTableView.swift in Sources */,
 				990902112C5F239A00BC3F20 /* CommonDescription.swift in Sources */,
 				992F57DB2C5B2A1D00219C6B /* MemberAPI.swift in Sources */,
+				99FDD0BD2C6DF72700B15026 /* MultipartFormDataHelper.swift in Sources */,
 				99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */,
 				992F57D02C5B28C400219C6B /* EmailVerifyPasswordBody.swift in Sources */,
 				995E3E5E2C508039006B4480 /* MyPageViewController.swift in Sources */,

@@ -28,6 +28,8 @@ class MyPageViewController: UIViewController {
         myPageView.imageEditButton.addTarget(self, action: #selector(editImage), for: .touchUpInside)
         myPageView.moveToGallery.addTarget(self, action: #selector(moveToGallery), for: .touchUpInside)
         myPageView.userNameEditButton.addTarget(self, action: #selector(editUserName), for: .touchUpInside)
+        
+        myPageView.userCodeLabel.text = UserDefaultsManager.shared.getMemberCode()
     }
     
     @objc private func buttonTapped(_ sender: UIButton) {

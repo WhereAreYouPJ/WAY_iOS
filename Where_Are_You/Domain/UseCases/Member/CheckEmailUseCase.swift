@@ -19,6 +19,9 @@ class CheckEmailUseCaseImpl: CheckEmailUseCase {
     }
 
     func execute(request: CheckEmailParameters, completion: @escaping (Result<CheckEmailResponse, Error>) -> Void) {
+//        guard ValidationHelper.isValidEmail(request.email) else {
+//            completion(.failure())
+//        }
         memberRepository.checkEmail(request: request) { result in
             switch result {
             case .success(let response):
