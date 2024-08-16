@@ -8,20 +8,41 @@
 import SwiftUI
 
 struct CreateScheduleView: View {
+    @StateObject var viewModel: CreateScheduleViewModel
     @Environment(\.dismiss) private var dismiss
+    @State private var path = NavigationPath()
     
-    @State private var title = ""
-
+    @State private var schedule = Schedule()
+    @State private var isAllDay = true
+    @State private var startTime = Date()
+    @State private var endTime = Date()
+    
+    private let dateFormatter: DateFormatter
+    
+    init() {
+        let calendar = Calendar.current
+        let now = Date()
+        let components = calendar.dateComponents([.year, .month, .day, .hour], from: now)
+        let startOfHour = calendar.date(from: components)!
+        
+        _viewModel = StateObject(wrappedValue: CreateScheduleViewModel())
+        _startTime = State(initialValue: startOfHour)
+        _endTime = State(initialValue: calendar.date(byAdding: .hour, value: 1, to: startOfHour)!)
+        
+        dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd a hh:mm"
+    }
+    
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             VStack(alignment: .leading, content: {
-                PlaceholderTextField(text: $title, placeholder: "일정명을 입력해주세요.", placeholderColor: Color(.color118))
+                TextField("", text: $schedule.title, prompt: Text("메모를 작성해주세요.").foregroundColor(Color(.color118)))
                 Divider()
                     .padding(.bottom, 16)
                 
-                DateAndTimeView()
-
-                AddPlaceView()
+                DateAndTimeView(isAllDay: $isAllDay, startTime: $startTime, endTime: $endTime)
+                
+                AddPlaceView(location: $schedule.location, streetName: $schedule.streetName, x: $schedule.x, y: $schedule.y, path: $path)
                 
                 AddFriendsView()
                 
@@ -40,57 +61,28 @@ struct CreateScheduleView: View {
                 }
                 ToolbarItem(placement: .primaryAction) {
                     Button("추가") {
+                        viewModel.postSchedule(schedule: schedule)
                         dismiss()
                     }
-                    .foregroundStyle(title.isEmpty ? Color.gray : Color.red)
-                    .disabled(title.isEmpty)
+                    .foregroundStyle(schedule.title.isEmpty ? Color.gray : Color.red)
+                    .disabled(schedule.title.isEmpty)
                 }
             }
             .navigationTitle("일정 추가")
             .navigationBarTitleDisplayMode(.inline)
-        }
-    }
-}
-
-struct PlaceholderTextField: View {
-    @Binding var text: String
-    var placeholder: String
-    var placeholderColor: Color
-
-    var body: some View {
-        ZStack(alignment: .leading) {
-            if text.isEmpty {
-                Text(placeholder)
-                    .foregroundColor(placeholderColor)
+            .navigationDestination(for: String.self) { route in
+                if route == "searchPlace" {
+                    SearchPlaceView(location: $schedule.location, streetName: $schedule.streetName, x: $schedule.x, y: $schedule.y, path: $path)
+                }
             }
-            TextField("", text: $text)
         }
     }
-}
-
-#Preview {
-    CreateScheduleView()
 }
 
 struct DateAndTimeView: View {
-    @State private var isAllDay = true
-    @State private var startTime = Date()
-    @State private var endTime = Date()
-    
-    private let dateFormatter: DateFormatter
-    
-    init() {
-        let calendar = Calendar.current
-        let now = Date()
-        let components = calendar.dateComponents([.year, .month, .day, .hour], from: now)
-        let startOfHour = calendar.date(from: components)!
-        
-        _startTime = State(initialValue: startOfHour)
-        _endTime = State(initialValue: calendar.date(byAdding: .hour, value: 1, to: startOfHour)!)
-        
-        dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy.MM.dd a hh:mm"
-    }
+    @Binding var isAllDay: Bool
+    @Binding var startTime: Date
+    @Binding var endTime: Date
     
     var body: some View {
         Toggle(isOn: $isAllDay, label: {
@@ -108,7 +100,7 @@ struct DateAndTimeView: View {
         }
         Divider()
         
-        // TODO: 시각 hh(두 글자)로 포맷팅 필요
+        // TODO: 시각 hh(두 글자)로 포맷팅 필요, wheel 모달 창 띄우기
         DatePicker("시작", selection: $startTime, displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
             .environment(\.locale, Locale(identifier: "ko_KR"))
             .environment(\.calendar, Calendar(identifier: .gregorian))
@@ -123,19 +115,28 @@ struct DateAndTimeView: View {
 }
 
 struct AddPlaceView: View {
-    @State private var place = ""
+    @Binding var location: String
+    @Binding var streetName: String
+    @Binding var x: Double
+    @Binding var y: Double
+    @Binding var path: NavigationPath
     
     var body: some View {
         Text("위치추가")
         Divider()
         
+        
         HStack {
             Image("icon-place")
-            if place.isEmpty {
+            if location.isEmpty {
                 Text("위치 추가")
                     .foregroundStyle(Color(.color118))
+                    .onTapGesture {
+                        path.append("searchPlace")
+                    }
             } else {
-                
+                Text(location)
+                    .foregroundStyle(Color.primary)
             }
         }
         
@@ -149,6 +150,10 @@ struct AddPlaceView: View {
                             RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/, style: /*@START_MENU_TOKEN@*/.continuous/*@END_MENU_TOKEN@*/)
                                 .fill(Color(.color240))
                         )
+                        .onTapGesture {
+                            location = place
+                            // Note: You might want to update streetName, x, and y here as well
+                        }
                 }
                 
             }
@@ -158,7 +163,7 @@ struct AddPlaceView: View {
 }
 
 struct AddFriendsView: View {
-    @State private var friends = ["김민정", "임창균", "조승연", "김민지"]
+    @State private var friends: [String] = [] // dump: "김민정", "임창균", "조승연", "김민지"
     
     var body: some View {
         Text("친구추가")
@@ -172,10 +177,13 @@ struct AddFriendsView: View {
                     .foregroundStyle(Color(.color118))
             } else {
                 let count = friends.count
-                ForEach(0..<2, id: \.self) { idx in
-                    Text(friends[idx] + ", ")
+                ForEach(0..<min(3, count), id: \.self) { idx in
+                    if idx < count - 1 {
+                        Text(friends[idx] + ", ")
+                    } else {
+                        Text(friends[idx])
+                    }
                 }
-                Text(friends[2])
                 
                 if count > 3 {
                     Text("외 " + String(count - 3) + "명")
@@ -222,29 +230,54 @@ struct SetColorView: View {
 
 struct MemoView: View {
     @State private var memo = ""
+    let maxLength = 10
     
     var body: some View {
-        Text("메모")
+        HStack {
+            Text("메모")
+            Spacer()
+            Text("\(memo.count)/\(maxLength)")
+                .foregroundColor(memo.count == maxLength ? .red : .gray)
+        }
         Divider()
-        
-        TextEditor(text: $memo)
-            .overlay(alignment: .topLeading) {
-                HStack {
-                    Text("메모를 작성해주세요.")
-                        .foregroundStyle(memo.isEmpty ? Color(.color118) : .clear)
-                    .padding(4)
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                ZStack(alignment: .topLeading) {
+                    if memo.isEmpty {
+                        Text("메모를 작성해주세요.")
+                            .foregroundStyle(memo.isEmpty ? Color(.color118) : .clear)
+                            .padding(10)
+                    }
                     
-                    Spacer()
-                    
-                    Text("메모를 작성해주세요.")
-                        .foregroundStyle(memo.isEmpty ? Color(.color118) : .clear)
-                    .padding(4)
+                    TextEditor(text: $memo)
+                        .modifier(MaxLengthModifier(text: $memo, maxLength: maxLength))
+                        .frame(height: geometry.size.height) // 상단 HStack의 높이를 고려하여 조정
+                        .padding(2)
+                        .opacity(memo.isEmpty ? 0.1 : 1)
+                }
+                .overlay(
+                    RoundedRectangle(cornerRadius: 6)
+                        .stroke(Color(.color212))
+                )
+            }
+        }
+    }
+}
+
+struct MaxLengthModifier: ViewModifier {
+    @Binding var text: String
+    let maxLength: Int
+    
+    func body(content: Content) -> some View {
+        content
+            .onChange(of: text) { newValue in
+                if newValue.count > maxLength {
+                    text = String(newValue.prefix(maxLength))
                 }
             }
-        .padding(4)
-        .overlay(
-            RoundedRectangle(cornerRadius: 6)
-                .stroke(Color(.color212))
-        )
     }
+}
+
+#Preview {
+    CreateScheduleView()
 }

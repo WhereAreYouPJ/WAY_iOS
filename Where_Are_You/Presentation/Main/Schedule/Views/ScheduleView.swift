@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CalendarView: View {
+struct ScheduleView: View {
     @State private var showModal = false
     
     var body: some View {
@@ -26,5 +26,5 @@ struct CalendarView: View {
 }
 
 #Preview {
-    CalendarView()
+    ScheduleView()
 }
