@@ -5,11 +5,11 @@
 //  Created by 오정석 on 25/5/2024.
 //
 
-import Foundation
+import UIKit
 
-struct User: Codable {
+struct User {
     var userName: String?
     var userId: String?
-    var profileImage: String?
+    var profileImage: UIImage?
     var memberSeq: Int?
 }

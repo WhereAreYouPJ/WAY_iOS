@@ -56,6 +56,16 @@ class UserDefaultsManager {
         return UserDefaults.standard.string(forKey: memberCode)
     }
     
+    // MARK: - IsLoggedIn
+
+    func saveIsLoggedIn(_ loggedIn: Bool) {
+        UserDefaults.standard.set(loggedIn, forKey: "isLoggedIn")
+    }
+
+    func isLoggedIn() -> Bool {
+        return UserDefaults.standard.bool(forKey: "isLoggedIn")
+    }
+    
     // MARK: - ClearData
 
     func clearData() {

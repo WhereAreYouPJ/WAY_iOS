@@ -10,13 +10,10 @@ import SnapKit
 
 class LoginView: UIView {
     // MARK: - Properties
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(Ttangsbudae: .bold, fontSize: 36))
-        label.adjustsFontForContentSizeCategory = true
-        label.text = "지금 어디?"
-        label.textColor = .letterBrandColor
-        return label
+    private let titleLabel: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "logo-short")
+        return imageView
     }()
     
     private let subtitleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "위치기반 일정관리 플랫폼", textColor: .color68, fontSize: 14)
@@ -24,19 +21,35 @@ class LoginView: UIView {
     let kakaoLogin: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "kakaoLogin"), for: .normal)
+        button.layer.cornerRadius = LayoutAdapter.shared.scale(value: 6)
         return button
     }()
     
     let appleLogin: UIButton = {
         let button = UIButton()
+        button.backgroundColor = .brandColor
         button.setImage(UIImage(named: "appleLogin"), for: .normal)
+        button.layer.cornerRadius = LayoutAdapter.shared.scale(value: 6)
         return button
     }()
     
     let accountLogin: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "accountLogin"), for: .normal)
+        button.setTitle("이메일 로그인", for: .normal)
+        button.setTitleColor(.letterBrandColor, for: .normal)
+        button.titleLabel?.font = UIFont.pretendard(NotoSans: .bold, fontSize: 14)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.brandColor.cgColor
+        button.layer.cornerRadius = LayoutAdapter.shared.scale(value: 6)
         return button
+    }()
+    
+    private lazy var loginStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [kakaoLogin, appleLogin, accountLogin])
+        stackView.axis = .vertical
+        stackView.spacing = 10
+        stackView.distribution = .fillEqually
+        return stackView
     }()
     
     let separatorLabel = CustomLabel(UILabel_NotoSans: .medium, text: "또는", textColor: .color102, fontSize: 14)
@@ -45,6 +58,13 @@ class LoginView: UIView {
     let findAccountButton = CustomButtonView(text: "계정찾기", weight: .medium, textColor: .color102, fontSize: 14)
     let inquiryButton = CustomButtonView(text: "문의하기", weight: .medium, textColor: .color102, fontSize: 14)
    
+    private lazy var buttonStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [signupButton, findAccountButton, inquiryButton])
+        stackView.spacing = 8
+        stackView.axis = .horizontal
+        return stackView
+    }()
+    
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -53,7 +73,7 @@ class LoginView: UIView {
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(safeAreaLayoutGuide).offset(150)
+            make.top.equalTo(safeAreaLayoutGuide).offset(LayoutAdapter.shared.scale(value: 150))
         }
         
         addSubview(subtitleLabel)
@@ -61,11 +81,6 @@ class LoginView: UIView {
             make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom)
         }
-        
-        let loginStack = UIStackView(arrangedSubviews: [kakaoLogin, appleLogin, accountLogin])
-        loginStack.axis = .vertical
-        loginStack.spacing = 10
-        loginStack.distribution = .fillEqually
         
         addSubview(loginStack)
         loginStack.snp.makeConstraints { make in
@@ -79,12 +94,8 @@ class LoginView: UIView {
             make.top.equalTo(loginStack.snp.bottom).offset(20)
         }
         
-        setupLine(relatedView: separatorLabel, anchor: .leading, height: 1, width: 100)
-        setupLine(relatedView: separatorLabel, anchor: .trailing, height: 1, width: 100)
-        
-        let buttonStack = UIStackView(arrangedSubviews: [signupButton, findAccountButton, inquiryButton])
-        buttonStack.spacing = 8
-        buttonStack.axis = .horizontal
+        setupLine(relatedView: separatorLabel, anchor: .leading, height: 1, width: LayoutAdapter.shared.scale(value: 100))
+        setupLine(relatedView: separatorLabel, anchor: .trailing, height: 1, width: LayoutAdapter.shared.scale(value: 100))
         
         addSubview(buttonStack)
         buttonStack.snp.makeConstraints { make in

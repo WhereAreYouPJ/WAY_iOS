@@ -14,7 +14,7 @@ class MainHomeViewController: UIViewController {
     private var mainHomeViewModel: MainHomeViewModel!
     private var bannerViewController: BannerViewController!
     private var dDayViewController: DDayViewController!
-    private var feedTableViewController: HomeFeedViewController!
+    private var homeFeedViewController: HomeFeedViewController!
     
     private let titleView = TitleView()
     
@@ -22,12 +22,16 @@ class MainHomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view = mainHomeView
+        view.addSubview(mainHomeView)
+        mainHomeView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
         mainHomeViewModel = MainHomeViewModel()
+        setupNavigationBar()
         setupViewControllers()
         setupBindings()
         buttonActions()
-        setupNavigationBar()
         
         mainHomeViewModel.loadData()
     }
@@ -47,54 +51,19 @@ class MainHomeViewController: UIViewController {
     }
     
     private func setupViewControllers() {
-        // 서브뷰 컨트롤러 초기화
         bannerViewController = BannerViewController()
         dDayViewController = DDayViewController()
-        feedTableViewController = HomeFeedViewController()
+        homeFeedViewController = HomeFeedViewController()
         
-        // 서브뷰 컨트롤러를 자식 컨트롤러로 추가
-        addChild(bannerViewController)
-        addChild(dDayViewController)
-        addChild(feedTableViewController)
-        
-        // 서브뷰 컨트롤러의 뷰가 부모 컨트롤러에 추가되었음을 알림
-        bannerViewController.didMove(toParent: self)
-        dDayViewController.didMove(toParent: self)
-        feedTableViewController.didMove(toParent: self)
-        
-        // 각 서브 뷰 컨트롤러의 뷰를 메인 뷰에 추가
-        mainHomeView.addSubview(bannerViewController.view)
-        mainHomeView.addSubview(dDayViewController.view)
-        mainHomeView.addSubview(feedTableViewController.view)
-        
-        // 레이아웃 설정
-        bannerViewController.view.snp.makeConstraints { make in
-            make.top.equalTo(mainHomeView.bannerView)
-            make.leading.trailing.equalTo(mainHomeView.bannerView)
-            make.height.equalTo(mainHomeView.bannerView.snp.height)
-        }
-        
-        dDayViewController.view.snp.makeConstraints { make in
-            make.top.equalTo(mainHomeView.dDayView)
-            make.leading.trailing.equalTo(mainHomeView.dDayView)
-            make.height.equalTo(mainHomeView.dDayView.snp.height)
-        }
-        
-        feedTableViewController.view.snp.makeConstraints { make in
-            make.top.equalTo(mainHomeView.homeFeedView)
-            make.leading.trailing.equalTo(mainHomeView.homeFeedView)
-            make.height.equalTo(mainHomeView.homeFeedView.snp.height)
-        }
+        addAndLayoutChildViewController(bannerViewController, toView: mainHomeView.bannerView)
+        addAndLayoutChildViewController(dDayViewController, toView: mainHomeView.dDayView)
+        addAndLayoutChildViewController(homeFeedViewController, toView: mainHomeView.homeFeedView)
     }
     
     private func setupBindings() {
         mainHomeViewModel.onBannerDataFetched = { [weak self] in
             DispatchQueue.main.async {
-                guard let bannerImages = self?.mainHomeViewModel.getBannerImages() else {
-                    print("배너 이미지 로드 실패")
-                    return
-                }
-                self?.bannerViewController.viewModel.setBanners(bannerImages)
+                self?.bannerViewController.viewModel.setBanners(self?.mainHomeViewModel.getBannerImages() ?? [])
             }
         }
         
@@ -106,7 +75,7 @@ class MainHomeViewController: UIViewController {
         
         mainHomeViewModel.onFeedsDataFetched = { [weak self] in
             DispatchQueue.main.async {
-                self?.feedTableViewController.viewModel.setFeeds(self?.mainHomeViewModel.getFeeds() ?? [])
+                self?.homeFeedViewController.viewModel.setFeeds(self?.mainHomeViewModel.getFeeds() ?? [])
             }
         }
     }
@@ -116,6 +85,16 @@ class MainHomeViewController: UIViewController {
         titleView.profileButton.addTarget(self, action: #selector(moveToMyPage), for: .touchUpInside)
     }
     
+    private func addAndLayoutChildViewController(_ child: UIViewController, toView containerView: UIView) {
+        addChild(child)
+        containerView.addSubview(child.view)
+        child.didMove(toParent: self)
+        child.view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    // MARK: - Selectors
     @objc private func moveToNotification() {
         // 알림 페이지로 이동
     }

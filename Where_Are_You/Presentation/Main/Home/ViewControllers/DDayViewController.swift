@@ -9,18 +9,13 @@ import UIKit
 
 class DDayViewController: UIViewController {
     // MARK: - Properties
-    
     let dDayView = DDayView()
     var viewModel: DDayViewModel!
     
     // MARK: - Lifecycle
-    
-    override func loadView() {
-        view = dDayView
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view = dDayView
         viewModel = DDayViewModel()
         setupBindings()
         setupCollectionView()

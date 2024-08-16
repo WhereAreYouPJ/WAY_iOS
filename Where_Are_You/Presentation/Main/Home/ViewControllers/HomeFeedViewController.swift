@@ -10,19 +10,14 @@ import UIKit
 class HomeFeedViewController: UIViewController {
     
     // MARK: - Properties
-    
     let feedView = HomeFeedView()
-    var viewModel: FeedViewModel!
+    var viewModel: HomeFeedViewModel!
     
     // MARK: - Lifecycle
-    
-    override func loadView() {
-        view = feedView
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = FeedViewModel()
+        view = feedView
+        viewModel = HomeFeedViewModel()
         setupBindings()
         setupCollectionView()
     }

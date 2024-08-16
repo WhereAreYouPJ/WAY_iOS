@@ -34,7 +34,7 @@ class DDayView: UIView {
         let containerView = UIView()
         containerView.layer.borderColor = UIColor.color118.cgColor
         containerView.layer.borderWidth = 1
-        containerView.layer.cornerRadius = 10
+        containerView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 10)
         containerView.clipsToBounds = true
         
         collectionView.isPagingEnabled = true

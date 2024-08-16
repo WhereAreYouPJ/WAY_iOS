@@ -8,8 +8,19 @@
 import UIKit
 
 struct Feed {
-    let profileImage: UIImage // 추후 string으로 바꿔야함
+    var profileImage: UIImage 
+    let date: String?
     let location: String
     let title: String
-    let description: String
+    
+    var feedImages: [UIImage]?
+    let description: String?
+}
+
+struct CreateFeed {
+    let scheduleSeq: Int
+    let creatorSeq: Int
+    let title: String
+    let content: String
+    var images: [UIImage]?
 }

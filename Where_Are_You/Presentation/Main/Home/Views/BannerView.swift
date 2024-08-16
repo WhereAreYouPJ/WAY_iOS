@@ -72,8 +72,8 @@ class BannerView: UIView {
         
         pageNumberLabel.snp.makeConstraints { make in
             make.bottom.trailing.equalToSuperview().offset(-12)
-            make.width.equalTo(42)
-            make.height.equalTo(17)
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 42))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 17))
         }
     }
 }

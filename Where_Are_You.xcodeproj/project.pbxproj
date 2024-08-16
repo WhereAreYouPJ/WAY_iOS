@@ -10,10 +10,17 @@
 		1CFDF5866B2F09FBDCBFE6DB /* Pods_Where_Are_You_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E05660871E31DAF17D0F5C8 /* Pods_Where_Are_You_Tests.framework */; };
 		990902112C5F239A00BC3F20 /* CommonDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990902102C5F239A00BC3F20 /* CommonDescription.swift */; };
 		990BDE532C40CF1E00A7FB5D /* DDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990BDE522C40CF1E00A7FB5D /* DDayCell.swift */; };
+		990DE7642C65E767007B78C9 /* FeedDetailBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990DE7632C65E767007B78C9 /* FeedDetailBoxView.swift */; };
+		990DE7662C65E924007B78C9 /* FeedImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990DE7652C65E924007B78C9 /* FeedImagesView.swift */; };
+		990DE7682C65EAEB007B78C9 /* FeedImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990DE7672C65EAEB007B78C9 /* FeedImageCollectionViewCell.swift */; };
 		990F57912C27ECDC00F6E1AD /* AccountSignUpUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57902C27ECDC00F6E1AD /* AccountSignUpUseCase.swift */; };
 		990F579A2C27EEF400F6E1AD /* MemberRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57992C27EEF400F6E1AD /* MemberRepository.swift */; };
 		990F57A32C27F9FE00F6E1AD /* MemberDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57A22C27F9FE00F6E1AD /* MemberDetailsUseCase.swift */; };
 		990F57B22C282C5900F6E1AD /* EmailSendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57B12C282C5900F6E1AD /* EmailSendUseCase.swift */; };
+		99107E9F2C6EDAE2007D129F /* ValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99107E9E2C6EDAE2007D129F /* ValidationError.swift */; };
+		99107EA12C6F2C94007D129F /* SaveFeedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99107EA02C6F2C94007D129F /* SaveFeedResponse.swift */; };
+		99107EA32C6F3E42007D129F /* DDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99107EA22C6F3E42007D129F /* DDay.swift */; };
+		99107EA52C6F3E4A007D129F /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99107EA42C6F3E4A007D129F /* Place.swift */; };
 		9911F9842C3F5AA600D0FDC9 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F9832C3F5AA600D0FDC9 /* BannerView.swift */; };
 		9911F9862C3F5E6F00D0FDC9 /* DDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F9852C3F5E6F00D0FDC9 /* DDayView.swift */; };
 		9911F9882C3F63D500D0FDC9 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F9872C3F63D500D0FDC9 /* Feed.swift */; };
@@ -61,9 +68,7 @@
 		997DC6552C3D231000EACA5F /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997DC6542C3D231000EACA5F /* Config.swift */; };
 		997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997DC6562C3D253000EACA5F /* UserDefaultManager.swift */; };
 		99949F452C58788200AE0177 /* FriendFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F442C58788200AE0177 /* FriendFeedViewController.swift */; };
-		99949F472C587A5400AE0177 /* CustomTabMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F462C587A5400AE0177 /* CustomTabMenu.swift */; };
 		99949F492C587BA500AE0177 /* FriendsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F482C587BA500AE0177 /* FriendsListView.swift */; };
-		99949F4B2C587BAC00AE0177 /* FeedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F4A2C587BAC00AE0177 /* FeedListView.swift */; };
 		99949F4F2C58890C00AE0177 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F4E2C58890C00AE0177 /* ProfileView.swift */; };
 		99949F512C588B6200AE0177 /* FavoritesTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F502C588B6200AE0177 /* FavoritesTableView.swift */; };
 		99949F532C58A67400AE0177 /* FriendsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F522C58A67400AE0177 /* FriendsTableView.swift */; };
@@ -74,6 +79,18 @@
 		99949F5F2C58BBAD00AE0177 /* FeedsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F5E2C58BBAD00AE0177 /* FeedsViewController.swift */; };
 		99B397832C0C3E9D00D7A109 /* AccountCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B397822C0C3E9D00D7A109 /* AccountCheckView.swift */; };
 		99B397852C0C41D300D7A109 /* AccountCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B397842C0C41D300D7A109 /* AccountCheckViewController.swift */; };
+		99C140382C64943F00A706B6 /* LayoutAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C140372C64943F00A706B6 /* LayoutAdapter.swift */; };
+		99C1403A2C6494F000A706B6 /* FeedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C140392C6494F000A706B6 /* FeedsView.swift */; };
+		99C1403C2C6496B400A706B6 /* FeedsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C1403B2C6496B400A706B6 /* FeedsTableViewCell.swift */; };
+		99C1403E2C6496BC00A706B6 /* NoFeedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C1403D2C6496BC00A706B6 /* NoFeedsView.swift */; };
+		99C140422C64A01A00A706B6 /* AddFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C140412C64A01A00A706B6 /* AddFeedView.swift */; };
+		99C68E3F2C64B11D00DEC1F1 /* SaveFeedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E3E2C64B11D00DEC1F1 /* SaveFeedRequest.swift */; };
+		99C68E412C64B21F00DEC1F1 /* ModifyFeedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E402C64B21F00DEC1F1 /* ModifyFeedRequest.swift */; };
+		99C68E432C64B28400DEC1F1 /* FeedAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E422C64B28400DEC1F1 /* FeedAPI.swift */; };
+		99C68E482C64B43900DEC1F1 /* FeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E472C64B43900DEC1F1 /* FeedService.swift */; };
+		99C68E4C2C64B83D00DEC1F1 /* FeedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E4B2C64B83D00DEC1F1 /* FeedRepository.swift */; };
+		99C68E502C64B96500DEC1F1 /* SaveFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E4F2C64B96500DEC1F1 /* SaveFeedUseCase.swift */; };
+		99C68E522C64B96E00DEC1F1 /* ModifyFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E512C64B96E00DEC1F1 /* ModifyFeedUseCase.swift */; };
 		99C9B2292C0197CA008D7CBD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2282C0197CA008D7CBD /* User.swift */; };
 		99C9B22C2C019C67008D7CBD /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B22B2C019C67008D7CBD /* LoginView.swift */; };
 		99C9B2322C01A45C008D7CBD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2312C01A45C008D7CBD /* Extensions.swift */; };
@@ -89,10 +106,11 @@
 		99CA4F262C33B704007C027C /* ResetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CA4F252C33B704007C027C /* ResetPasswordViewModel.swift */; };
 		99CA4F282C33B72C007C027C /* ResetPasswordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CA4F272C33B72C007C027C /* ResetPasswordUseCase.swift */; };
 		99CC5E642C51EFAB00A0509A /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CC5E632C51EFAB00A0509A /* MyPageViewModel.swift */; };
-		99CE189D2C4CDEC300FD6393 /* DDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CE189C2C4CDEC300FD6393 /* DDay.swift */; };
 		99CEAD4A2C539743006B3D41 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CEAD492C539743006B3D41 /* SplashViewController.swift */; };
 		99CEAD4C2C5397B1006B3D41 /* DeviceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CEAD4B2C5397B1006B3D41 /* DeviceConfig.swift */; };
 		99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D11EB02C06F56F006BE265 /* CustomButton.swift */; };
+		99D23FF42C6889BA00CFD4F0 /* FeedDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D23FF32C6889BA00CFD4F0 /* FeedDetailViewModel.swift */; };
+		99D373902C6ADF030093F386 /* FeedImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D3738F2C6ADF030093F386 /* FeedImagesViewController.swift */; };
 		99D780DE2C6066FA005A3F30 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D780DD2C6066FA005A3F30 /* LoginResponse.swift */; };
 		99D780E02C60670E005A3F30 /* MemberSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D780DF2C60670E005A3F30 /* MemberSearchResponse.swift */; };
 		99D780E22C606726005A3F30 /* MemberDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D780E12C606726005A3F30 /* MemberDetailsResponse.swift */; };
@@ -105,6 +123,7 @@
 		99D8FBC22C3BA25B0062AF10 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8FBC12C3BA25B0062AF10 /* CustomTextField.swift */; };
 		99DA18B92C4E132A00D5CDA6 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA18B82C4E132A00D5CDA6 /* TitleView.swift */; };
 		99E755512C22E66F0016A0A6 /* MemberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E755502C22E66F0016A0A6 /* MemberService.swift */; };
+		99E7BA592C69A5D500F79C96 /* ImageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E7BA582C69A5D500F79C96 /* ImageUtility.swift */; };
 		99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */; };
 		99E8BC452C2D26CF00536B95 /* EmailVerifyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E8BC442C2D26CF00536B95 /* EmailVerifyUseCase.swift */; };
 		99EC20AB2C0D9D9D0018904D /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20AA2C0D9D9D0018904D /* SignUpViewModel.swift */; };
@@ -122,9 +141,10 @@
 		99FBA5522C453B43002EEEC7 /* DDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5512C453B43002EEEC7 /* DDayViewController.swift */; };
 		99FBA5542C453B6D002EEEC7 /* DDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5532C453B6D002EEEC7 /* DDayViewModel.swift */; };
 		99FBA5562C453BDD002EEEC7 /* HomeFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5552C453BDD002EEEC7 /* HomeFeedViewController.swift */; };
-		99FBA5582C453C05002EEEC7 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5572C453C05002EEEC7 /* FeedViewModel.swift */; };
+		99FBA5582C453C05002EEEC7 /* HomeFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5572C453C05002EEEC7 /* HomeFeedViewModel.swift */; };
+		99FDD0BD2C6DF72700B15026 /* MultipartFormDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */; };
+		99FDD0BF2C6DF99400B15026 /* ReadFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FDD0BE2C6DF99400B15026 /* ReadFeedUseCase.swift */; };
 		D5496DD22C6B69570056C196 /* PlaceMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5496DD12C6B69570056C196 /* PlaceMapView.swift */; };
-		D5496DD42C6B6D710056C196 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5496DD32C6B6D710056C196 /* Place.swift */; };
 		D549C8452C6366A400DDAD5A /* .gitattributes in Resources */ = {isa = PBXBuildFile; fileRef = D549C8442C6366A400DDAD5A /* .gitattributes */; };
 		D54C040A2C6516CB009CC419 /* CreateScheduleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54C04092C6516CB009CC419 /* CreateScheduleBody.swift */; };
 		D54C040C2C651832009CC419 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54C040B2C651832009CC419 /* Schedule.swift */; };
@@ -133,6 +153,7 @@
 		D55DFC312C61022900EEEF51 /* CreateScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */; };
 		D58EC0692C633217001BC030 /* SearchPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58EC0682C633217001BC030 /* SearchPlaceView.swift */; };
 		D59E17522C6F3024007D8D4B /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59E17512C6F3024007D8D4B /* DataController.swift */; };
+		D5B79A162C5B83CD004EDDF2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D5E3D7D82C63BF730041B28D /* CreateScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */; };
 		D79EFAD9E5409233E5338E46 /* Pods_Where_Are_You.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */; };
 /* End PBXBuildFile section */
@@ -165,10 +186,17 @@
 		5E05660871E31DAF17D0F5C8 /* Pods_Where_Are_You_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		990902102C5F239A00BC3F20 /* CommonDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonDescription.swift; sourceTree = "<group>"; };
 		990BDE522C40CF1E00A7FB5D /* DDayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDayCell.swift; sourceTree = "<group>"; };
+		990DE7632C65E767007B78C9 /* FeedDetailBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailBoxView.swift; sourceTree = "<group>"; };
+		990DE7652C65E924007B78C9 /* FeedImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImagesView.swift; sourceTree = "<group>"; };
+		990DE7672C65EAEB007B78C9 /* FeedImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		990F57902C27ECDC00F6E1AD /* AccountSignUpUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSignUpUseCase.swift; sourceTree = "<group>"; };
 		990F57992C27EEF400F6E1AD /* MemberRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberRepository.swift; sourceTree = "<group>"; };
 		990F57A22C27F9FE00F6E1AD /* MemberDetailsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDetailsUseCase.swift; sourceTree = "<group>"; };
 		990F57B12C282C5900F6E1AD /* EmailSendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSendUseCase.swift; sourceTree = "<group>"; };
+		99107E9E2C6EDAE2007D129F /* ValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationError.swift; sourceTree = "<group>"; };
+		99107EA02C6F2C94007D129F /* SaveFeedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFeedResponse.swift; sourceTree = "<group>"; };
+		99107EA22C6F3E42007D129F /* DDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDay.swift; sourceTree = "<group>"; };
+		99107EA42C6F3E4A007D129F /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		9911F9832C3F5AA600D0FDC9 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		9911F9852C3F5E6F00D0FDC9 /* DDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDayView.swift; sourceTree = "<group>"; };
 		9911F9872C3F63D500D0FDC9 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
@@ -218,9 +246,7 @@
 		997DC6542C3D231000EACA5F /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		997DC6562C3D253000EACA5F /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		99949F442C58788200AE0177 /* FriendFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendFeedViewController.swift; sourceTree = "<group>"; };
-		99949F462C587A5400AE0177 /* CustomTabMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabMenu.swift; sourceTree = "<group>"; };
 		99949F482C587BA500AE0177 /* FriendsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListView.swift; sourceTree = "<group>"; };
-		99949F4A2C587BAC00AE0177 /* FeedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListView.swift; sourceTree = "<group>"; };
 		99949F4E2C58890C00AE0177 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		99949F502C588B6200AE0177 /* FavoritesTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableView.swift; sourceTree = "<group>"; };
 		99949F522C58A67400AE0177 /* FriendsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableView.swift; sourceTree = "<group>"; };
@@ -231,6 +257,18 @@
 		99949F5E2C58BBAD00AE0177 /* FeedsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsViewController.swift; sourceTree = "<group>"; };
 		99B397822C0C3E9D00D7A109 /* AccountCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCheckView.swift; sourceTree = "<group>"; };
 		99B397842C0C41D300D7A109 /* AccountCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCheckViewController.swift; sourceTree = "<group>"; };
+		99C140372C64943F00A706B6 /* LayoutAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutAdapter.swift; sourceTree = "<group>"; };
+		99C140392C6494F000A706B6 /* FeedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsView.swift; sourceTree = "<group>"; };
+		99C1403B2C6496B400A706B6 /* FeedsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsTableViewCell.swift; sourceTree = "<group>"; };
+		99C1403D2C6496BC00A706B6 /* NoFeedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoFeedsView.swift; sourceTree = "<group>"; };
+		99C140412C64A01A00A706B6 /* AddFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeedView.swift; sourceTree = "<group>"; };
+		99C68E3E2C64B11D00DEC1F1 /* SaveFeedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFeedRequest.swift; sourceTree = "<group>"; };
+		99C68E402C64B21F00DEC1F1 /* ModifyFeedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyFeedRequest.swift; sourceTree = "<group>"; };
+		99C68E422C64B28400DEC1F1 /* FeedAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAPI.swift; sourceTree = "<group>"; };
+		99C68E472C64B43900DEC1F1 /* FeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedService.swift; sourceTree = "<group>"; };
+		99C68E4B2C64B83D00DEC1F1 /* FeedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRepository.swift; sourceTree = "<group>"; };
+		99C68E4F2C64B96500DEC1F1 /* SaveFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFeedUseCase.swift; sourceTree = "<group>"; };
+		99C68E512C64B96E00DEC1F1 /* ModifyFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyFeedUseCase.swift; sourceTree = "<group>"; };
 		99C9B2282C0197CA008D7CBD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		99C9B22B2C019C67008D7CBD /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		99C9B2312C01A45C008D7CBD /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -246,10 +284,11 @@
 		99CA4F252C33B704007C027C /* ResetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewModel.swift; sourceTree = "<group>"; };
 		99CA4F272C33B72C007C027C /* ResetPasswordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordUseCase.swift; sourceTree = "<group>"; };
 		99CC5E632C51EFAB00A0509A /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
-		99CE189C2C4CDEC300FD6393 /* DDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDay.swift; sourceTree = "<group>"; };
 		99CEAD492C539743006B3D41 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		99CEAD4B2C5397B1006B3D41 /* DeviceConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceConfig.swift; sourceTree = "<group>"; };
 		99D11EB02C06F56F006BE265 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		99D23FF32C6889BA00CFD4F0 /* FeedDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModel.swift; sourceTree = "<group>"; };
+		99D3738F2C6ADF030093F386 /* FeedImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImagesViewController.swift; sourceTree = "<group>"; };
 		99D780DD2C6066FA005A3F30 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		99D780DF2C60670E005A3F30 /* MemberSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSearchResponse.swift; sourceTree = "<group>"; };
 		99D780E12C606726005A3F30 /* MemberDetailsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDetailsResponse.swift; sourceTree = "<group>"; };
@@ -262,6 +301,7 @@
 		99D8FBC12C3BA25B0062AF10 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		99DA18B82C4E132A00D5CDA6 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		99E755502C22E66F0016A0A6 /* MemberService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberService.swift; sourceTree = "<group>"; };
+		99E7BA582C69A5D500F79C96 /* ImageUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtility.swift; sourceTree = "<group>"; };
 		99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
 		99E8BC442C2D26CF00536B95 /* EmailVerifyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerifyUseCase.swift; sourceTree = "<group>"; };
 		99EC20AA2C0D9D9D0018904D /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
@@ -281,12 +321,13 @@
 		99FBA5512C453B43002EEEC7 /* DDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDayViewController.swift; sourceTree = "<group>"; };
 		99FBA5532C453B6D002EEEC7 /* DDayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDayViewModel.swift; sourceTree = "<group>"; };
 		99FBA5552C453BDD002EEEC7 /* HomeFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeedViewController.swift; sourceTree = "<group>"; };
-		99FBA5572C453C05002EEEC7 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
+		99FBA5572C453C05002EEEC7 /* HomeFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeedViewModel.swift; sourceTree = "<group>"; };
+		99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartFormDataHelper.swift; sourceTree = "<group>"; };
+		99FDD0BE2C6DF99400B15026 /* ReadFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFeedUseCase.swift; sourceTree = "<group>"; };
 		A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5015275FE458D5F6450041 /* Pods-Where_Are_You.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You.release.xcconfig"; path = "Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You.release.xcconfig"; sourceTree = "<group>"; };
 		D53078812C5D3C9D0041BBB7 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		D5496DD12C6B69570056C196 /* PlaceMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceMapView.swift; sourceTree = "<group>"; };
-		D5496DD32C6B6D710056C196 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		D549C8442C6366A400DDAD5A /* .gitattributes */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitattributes; sourceTree = "<group>"; };
 		D54C04092C6516CB009CC419 /* CreateScheduleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleBody.swift; sourceTree = "<group>"; };
 		D54C040B2C651832009CC419 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
@@ -330,6 +371,85 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		990DE76D2C660A56007B78C9 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				990DE76F2C660A64007B78C9 /* Views */,
+				990DE7702C660A67007B78C9 /* Viewcontrollers */,
+				990DE7712C660A6D007B78C9 /* ViewModels */,
+			);
+			path = Friends;
+			sourceTree = "<group>";
+		};
+		990DE76E2C660A5A007B78C9 /* Feeds */ = {
+			isa = PBXGroup;
+			children = (
+				990DE7742C660A94007B78C9 /* Views */,
+				990DE7732C660A8F007B78C9 /* ViewControllers */,
+				990DE7722C660A89007B78C9 /* ViewModels */,
+			);
+			path = Feeds;
+			sourceTree = "<group>";
+		};
+		990DE76F2C660A64007B78C9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				99949F4E2C58890C00AE0177 /* ProfileView.swift */,
+				99949F542C58A72B00AE0177 /* FriendsTableViewCell.swift */,
+				99949F502C588B6200AE0177 /* FavoritesTableView.swift */,
+				99949F522C58A67400AE0177 /* FriendsTableView.swift */,
+				99949F482C587BA500AE0177 /* FriendsListView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		990DE7702C660A67007B78C9 /* Viewcontrollers */ = {
+			isa = PBXGroup;
+			children = (
+				99949F562C58B1CE00AE0177 /* FriendsListViewController.swift */,
+			);
+			path = Viewcontrollers;
+			sourceTree = "<group>";
+		};
+		990DE7712C660A6D007B78C9 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				99949F582C58B81A00AE0177 /* FriendsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		990DE7722C660A89007B78C9 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				99D23FF32C6889BA00CFD4F0 /* FeedDetailViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		990DE7732C660A8F007B78C9 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				99949F5E2C58BBAD00AE0177 /* FeedsViewController.swift */,
+				99D3738F2C6ADF030093F386 /* FeedImagesViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		990DE7742C660A94007B78C9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				99C1403D2C6496BC00A706B6 /* NoFeedsView.swift */,
+				990DE7632C65E767007B78C9 /* FeedDetailBoxView.swift */,
+				990DE7672C65EAEB007B78C9 /* FeedImageCollectionViewCell.swift */,
+				990DE7652C65E924007B78C9 /* FeedImagesView.swift */,
+				99C1403B2C6496B400A706B6 /* FeedsTableViewCell.swift */,
+				99C140392C6494F000A706B6 /* FeedsView.swift */,
+				99C140412C64A01A00A706B6 /* AddFeedView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		990F57942C27EE3600F6E1AD /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -343,9 +463,9 @@
 			isa = PBXGroup;
 			children = (
 				992F57C12C5B1E8900219C6B /* ParameterConvertible.swift */,
+				992F57C42C5B264400219C6B /* Member */,
 				99D780DA2C6055A0005A3F30 /* FriendRequest */,
 				99D780D92C605592005A3F30 /* Schedule */,
-				992F57C42C5B264400219C6B /* Member */,
 				99D780DB2C6055B6005A3F30 /* Feed */,
 			);
 			path = Requests;
@@ -373,6 +493,7 @@
 			children = (
 				99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */,
 				99D780DC2C6066EB005A3F30 /* Member */,
+				99C68E442C64B3FC00DEC1F1 /* Feed */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -390,9 +511,9 @@
 		9950C64F2C103031003155A7 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				992F57DA2C5B2A1D00219C6B /* MemberAPI.swift */,
-				99E755502C22E66F0016A0A6 /* MemberService.swift */,
 				992F57DC2C5B56E200219C6B /* AutoTokenPlugin.swift */,
+				99C68E452C64B41900DEC1F1 /* Member */,
+				99C68E462C64B42300DEC1F1 /* Feed */,
 				D54C040D2C651B8A009CC419 /* ScheduleAPI.swift */,
 			);
 			path = Network;
@@ -525,67 +646,56 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
-		99949F412C5873A900AE0177 /* ViewModels */ = {
+		99C68E442C64B3FC00DEC1F1 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				99949F582C58B81A00AE0177 /* FriendsViewModel.swift */,
+				99107EA02C6F2C94007D129F /* SaveFeedResponse.swift */,
 			);
-			path = ViewModels;
+			path = Feed;
 			sourceTree = "<group>";
 		};
-		99949F422C5873AE00AE0177 /* ViewControllers */ = {
+		99C68E452C64B41900DEC1F1 /* Member */ = {
 			isa = PBXGroup;
 			children = (
-				99949F442C58788200AE0177 /* FriendFeedViewController.swift */,
-				99949F5C2C58BB8100AE0177 /* Friends */,
-				99949F5D2C58BB9500AE0177 /* Feeds */,
+				992F57DA2C5B2A1D00219C6B /* MemberAPI.swift */,
+				99E755502C22E66F0016A0A6 /* MemberService.swift */,
 			);
-			path = ViewControllers;
+			path = Member;
 			sourceTree = "<group>";
 		};
-		99949F432C5873B500AE0177 /* Views */ = {
+		99C68E462C64B42300DEC1F1 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				99949F4C2C58816300AE0177 /* Friends */,
-				99949F4D2C58816900AE0177 /* Feeds */,
+				99C68E422C64B28400DEC1F1 /* FeedAPI.swift */,
+				99C68E472C64B43900DEC1F1 /* FeedService.swift */,
 			);
-			path = Views;
+			path = Feed;
 			sourceTree = "<group>";
 		};
-		99949F4C2C58816300AE0177 /* Friends */ = {
+		99C68E4D2C64B93600DEC1F1 /* Member */ = {
 			isa = PBXGroup;
 			children = (
-				99949F4E2C58890C00AE0177 /* ProfileView.swift */,
-				99949F542C58A72B00AE0177 /* FriendsTableViewCell.swift */,
-				99949F502C588B6200AE0177 /* FavoritesTableView.swift */,
-				99949F522C58A67400AE0177 /* FriendsTableView.swift */,
-				99949F482C587BA500AE0177 /* FriendsListView.swift */,
+				990F57902C27ECDC00F6E1AD /* AccountSignUpUseCase.swift */,
+				99CA4F272C33B72C007C027C /* ResetPasswordUseCase.swift */,
+				992F57DE2C5B614A00219C6B /* LogoutUseCase.swift */,
+				9979622C2C3E6B2200E95CA6 /* AccountLoginUseCase.swift */,
+				99E8BC442C2D26CF00536B95 /* EmailVerifyUseCase.swift */,
+				990F57B12C282C5900F6E1AD /* EmailSendUseCase.swift */,
+				992F57E22C5B618D00219C6B /* MemberSearchUseCase.swift */,
+				990F57A22C27F9FE00F6E1AD /* MemberDetailsUseCase.swift */,
+				992F57E42C5B623F00219C6B /* CheckEmailUseCase.swift */,
 			);
-			path = Friends;
+			path = Member;
 			sourceTree = "<group>";
 		};
-		99949F4D2C58816900AE0177 /* Feeds */ = {
+		99C68E4E2C64B93C00DEC1F1 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				99949F4A2C587BAC00AE0177 /* FeedListView.swift */,
+				99C68E4F2C64B96500DEC1F1 /* SaveFeedUseCase.swift */,
+				99C68E512C64B96E00DEC1F1 /* ModifyFeedUseCase.swift */,
+				99FDD0BE2C6DF99400B15026 /* ReadFeedUseCase.swift */,
 			);
-			path = Feeds;
-			sourceTree = "<group>";
-		};
-		99949F5C2C58BB8100AE0177 /* Friends */ = {
-			isa = PBXGroup;
-			children = (
-				99949F562C58B1CE00AE0177 /* FriendsListViewController.swift */,
-			);
-			path = Friends;
-			sourceTree = "<group>";
-		};
-		99949F5D2C58BB9500AE0177 /* Feeds */ = {
-			isa = PBXGroup;
-			children = (
-				99949F5E2C58BBAD00AE0177 /* FeedsViewController.swift */,
-			);
-			path = Feeds;
+			path = Feed;
 			sourceTree = "<group>";
 		};
 		99C9B2222C01973C008D7CBD /* Domain */ = {
@@ -611,11 +721,15 @@
 			children = (
 				D59E17502C6F3015007D8D4B /* CoreData */,
 				99D8FBBE2C3BA1FB0062AF10 /* Customs */,
+				99107E9E2C6EDAE2007D129F /* ValidationError.swift */,
 				99C9B2312C01A45C008D7CBD /* Extensions.swift */,
 				99C9B2472C01D2B7008D7CBD /* Utilities.swift */,
 				99149FEA2C4F97C300136097 /* ValidationHelper.swift */,
 				99149FEC2C4F97EA00136097 /* TimeHelper.swift */,
 				9974EA1F2C62196500826793 /* SnappingFlowLayout.swift */,
+				99C140372C64943F00A706B6 /* LayoutAdapter.swift */,
+				99E7BA582C69A5D500F79C96 /* ImageUtility.swift */,
+				99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -696,9 +810,9 @@
 		99CC5E6A2C5211ED00A0509A /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */,
 				99CC5E6B2C52122500A0509A /* FriendFeed */,
 				99D8FBAD2C3B64040062AF10 /* Home */,
-				99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */,
 				995E3E592C507BBA006B4480 /* Mypage */,
 				99CC5E6D2C521DE900A0509A /* Notification */,
 				D5B79A112C5B8368004EDDF2 /* Schedule */,
@@ -709,9 +823,9 @@
 		99CC5E6B2C52122500A0509A /* FriendFeed */ = {
 			isa = PBXGroup;
 			children = (
-				99949F432C5873B500AE0177 /* Views */,
-				99949F422C5873AE00AE0177 /* ViewControllers */,
-				99949F412C5873A900AE0177 /* ViewModels */,
+				99949F442C58788200AE0177 /* FriendFeedViewController.swift */,
+				990DE76E2C660A5A007B78C9 /* Feeds */,
+				990DE76D2C660A56007B78C9 /* Friends */,
 			);
 			path = FriendFeed;
 			sourceTree = "<group>";
@@ -752,10 +866,10 @@
 			children = (
 				99C9B2282C0197CA008D7CBD /* User.swift */,
 				9911F9872C3F63D500D0FDC9 /* Feed.swift */,
-				99CE189C2C4CDEC300FD6393 /* DDay.swift */,
 				99949F5A2C58B85E00AE0177 /* Friend.swift */,
 				D54C040B2C651832009CC419 /* Schedule.swift */,
-				D5496DD32C6B6D710056C196 /* Place.swift */,
+				99107EA22C6F3E42007D129F /* DDay.swift */,
+				99107EA42C6F3E4A007D129F /* Place.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -799,6 +913,8 @@
 		99D780DB2C6055B6005A3F30 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				99C68E3E2C64B11D00DEC1F1 /* SaveFeedRequest.swift */,
+				99C68E402C64B21F00DEC1F1 /* ModifyFeedRequest.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -866,7 +982,7 @@
 				99D8FBBC2C3BA1E60062AF10 /* MainHomeViewModel.swift */,
 				99FBA54F2C45394E002EEEC7 /* BannerViewModel.swift */,
 				99FBA5532C453B6D002EEEC7 /* DDayViewModel.swift */,
-				99FBA5572C453C05002EEEC7 /* FeedViewModel.swift */,
+				99FBA5572C453C05002EEEC7 /* HomeFeedViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -878,7 +994,6 @@
 				99D11EB02C06F56F006BE265 /* CustomButton.swift */,
 				99D8FBBF2C3BA2180062AF10 /* CustomLabel.swift */,
 				99D8FBC12C3BA25B0062AF10 /* CustomTextField.swift */,
-				99949F462C587A5400AE0177 /* CustomTabMenu.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -886,15 +1001,8 @@
 		99EC209F2C0D8DEC0018904D /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				990F57902C27ECDC00F6E1AD /* AccountSignUpUseCase.swift */,
-				99CA4F272C33B72C007C027C /* ResetPasswordUseCase.swift */,
-				992F57DE2C5B614A00219C6B /* LogoutUseCase.swift */,
-				9979622C2C3E6B2200E95CA6 /* AccountLoginUseCase.swift */,
-				99E8BC442C2D26CF00536B95 /* EmailVerifyUseCase.swift */,
-				990F57B12C282C5900F6E1AD /* EmailSendUseCase.swift */,
-				992F57E22C5B618D00219C6B /* MemberSearchUseCase.swift */,
-				990F57A22C27F9FE00F6E1AD /* MemberDetailsUseCase.swift */,
-				992F57E42C5B623F00219C6B /* CheckEmailUseCase.swift */,
+				99C68E4D2C64B93600DEC1F1 /* Member */,
+				99C68E4E2C64B93C00DEC1F1 /* Feed */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -904,6 +1012,7 @@
 			children = (
 				997DC6562C3D253000EACA5F /* UserDefaultManager.swift */,
 				990F57992C27EEF400F6E1AD /* MemberRepository.swift */,
+				99C68E4B2C64B83D00DEC1F1 /* FeedRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -1195,7 +1304,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99949F4B2C587BAC00AE0177 /* FeedListView.swift in Sources */,
+				99C140422C64A01A00A706B6 /* AddFeedView.swift in Sources */,
 				995358472C00C555005BF799 /* Where_Are_You.xcdatamodeld in Sources */,
 				9950C65B2C10B0F5003155A7 /* SignUpFormViewController.swift in Sources */,
 				D59E17522C6F3024007D8D4B /* DataController.swift in Sources */,
@@ -1205,9 +1314,11 @@
 				99C9B22C2C019C67008D7CBD /* LoginView.swift in Sources */,
 				99949F5F2C58BBAD00AE0177 /* FeedsViewController.swift in Sources */,
 				9950C6572C1040FD003155A7 /* TermsAgreementViewController.swift in Sources */,
+				99FDD0BF2C6DF99400B15026 /* ReadFeedUseCase.swift in Sources */,
 				99D8FBBB2C3BA1D90062AF10 /* MainHomeViewController.swift in Sources */,
 				992F57CA2C5B26E700219C6B /* LogoutBody.swift in Sources */,
 				99D8FBB52C3B9F9F0062AF10 /* MainHomeView.swift in Sources */,
+				99C140382C64943F00A706B6 /* LayoutAdapter.swift in Sources */,
 				995358412C00C555005BF799 /* LoginViewController.swift in Sources */,
 				99CEAD4A2C539743006B3D41 /* SplashViewController.swift in Sources */,
 				99E755512C22E66F0016A0A6 /* MemberService.swift in Sources */,
@@ -1222,6 +1333,9 @@
 				9950C65D2C10B9BB003155A7 /* PasswordResetView.swift in Sources */,
 				990F57A32C27F9FE00F6E1AD /* MemberDetailsUseCase.swift in Sources */,
 				99F78F1E2C09C98D004C0C72 /* AccountSearchView.swift in Sources */,
+				99107E9F2C6EDAE2007D129F /* ValidationError.swift in Sources */,
+				99FBA5522C453B43002EEEC7 /* DDayViewController.swift in Sources */,
+				D5B79A162C5B83CD004EDDF2 /* (null) in Sources */,
 				99FBA5522C453B43002EEEC7 /* DDayViewController.swift in Sources */,
 				9950C65D2C10B9BB003155A7 /* PasswordResetView.swift in Sources */,
 				990F57A32C27F9FE00F6E1AD /* MemberDetailsUseCase.swift in Sources */,
@@ -1230,9 +1344,9 @@
 				992F57E52C5B623F00219C6B /* CheckEmailUseCase.swift in Sources */,
 				9911F9842C3F5AA600D0FDC9 /* BannerView.swift in Sources */,
 				99C9B2422C01CE4C008D7CBD /* AccountLoginViewModel.swift in Sources */,
+				99107EA12C6F2C94007D129F /* SaveFeedResponse.swift in Sources */,
 				99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */,
 				992F57D82C5B290900219C6B /* CheckEmailParameters.swift in Sources */,
-				99949F472C587A5400AE0177 /* CustomTabMenu.swift in Sources */,
 				9911F9882C3F63D500D0FDC9 /* Feed.swift in Sources */,
 				99949F592C58B81A00AE0177 /* FriendsViewModel.swift in Sources */,
 				99D8FBB92C3BA1CD0062AF10 /* MainTabBarController.swift in Sources */,
@@ -1244,12 +1358,14 @@
 				99C9B2292C0197CA008D7CBD /* User.swift in Sources */,
 				99D780DE2C6066FA005A3F30 /* LoginResponse.swift in Sources */,
 				99949F452C58788200AE0177 /* FriendFeedViewController.swift in Sources */,
+				99C68E412C64B21F00DEC1F1 /* ModifyFeedRequest.swift in Sources */,
+				99C68E432C64B28400DEC1F1 /* FeedAPI.swift in Sources */,
 				9974EA202C62196500826793 /* SnappingFlowLayout.swift in Sources */,
+				99C68E502C64B96500DEC1F1 /* SaveFeedUseCase.swift in Sources */,
 				997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */,
 				9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */,
 				992F57D22C5B28D600219C6B /* EmailSendBody.swift in Sources */,
 				99E8BC452C2D26CF00536B95 /* EmailVerifyUseCase.swift in Sources */,
-				D5496DD42C6B6D710056C196 /* Place.swift in Sources */,
 				99D8FBBD2C3BA1E60062AF10 /* MainHomeViewModel.swift in Sources */,
 				992F57C62C5B265600219C6B /* SingUpBody.swift in Sources */,
 				990F57912C27ECDC00F6E1AD /* AccountSignUpUseCase.swift in Sources */,
@@ -1257,19 +1373,26 @@
 				99EC78D02C11E20F007C4415 /* PasswordFinishResetView.swift in Sources */,
 				99949F492C587BA500AE0177 /* FriendsListView.swift in Sources */,
 				99F9FADE2C0B6187005B36B9 /* AccountSearchViewController.swift in Sources */,
-				99CE189D2C4CDEC300FD6393 /* DDay.swift in Sources */,
 				99949F4F2C58890C00AE0177 /* ProfileView.swift in Sources */,
+				99E7BA592C69A5D500F79C96 /* ImageUtility.swift in Sources */,
+				99C1403E2C6496BC00A706B6 /* NoFeedsView.swift in Sources */,
+				99C68E522C64B96E00DEC1F1 /* ModifyFeedUseCase.swift in Sources */,
 				D54C040A2C6516CB009CC419 /* CreateScheduleBody.swift in Sources */,
 				99949F532C58A67400AE0177 /* FriendsTableView.swift in Sources */,
 				990902112C5F239A00BC3F20 /* CommonDescription.swift in Sources */,
 				992F57DB2C5B2A1D00219C6B /* MemberAPI.swift in Sources */,
+				99FDD0BD2C6DF72700B15026 /* MultipartFormDataHelper.swift in Sources */,
 				99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */,
 				992F57D02C5B28C400219C6B /* EmailVerifyPasswordBody.swift in Sources */,
 				D54C040C2C651832009CC419 /* Schedule.swift in Sources */,
 				995E3E5E2C508039006B4480 /* MyPageViewController.swift in Sources */,
 				99CEAD4C2C5397B1006B3D41 /* DeviceConfig.swift in Sources */,
 				99949F5B2C58B85E00AE0177 /* Friend.swift in Sources */,
+				99D373902C6ADF030093F386 /* FeedImagesViewController.swift in Sources */,
 				99FBA54E2C453924002EEEC7 /* BannerViewController.swift in Sources */,
+				990DE7682C65EAEB007B78C9 /* FeedImageCollectionViewCell.swift in Sources */,
+				99C1403A2C6494F000A706B6 /* FeedsView.swift in Sources */,
+				990DE7662C65E924007B78C9 /* FeedImagesView.swift in Sources */,
 				99CC5E642C51EFAB00A0509A /* MyPageViewModel.swift in Sources */,
 				9967C1542C566F2F00927277 /* NetworkAlert.swift in Sources */,
 				99EC78CE2C11DBA5007C4415 /* PasswordResetViewController.swift in Sources */,
@@ -1287,32 +1410,40 @@
 				99149FED2C4F97EA00136097 /* TimeHelper.swift in Sources */,
 				D54C040E2C651B8A009CC419 /* ScheduleAPI.swift in Sources */,
 				9967C1522C56467D00927277 /* CustomAlert.swift in Sources */,
+				99C68E482C64B43900DEC1F1 /* FeedService.swift in Sources */,
 				99949F572C58B1CE00AE0177 /* FriendsListViewController.swift in Sources */,
 				99149FEB2C4F97C300136097 /* ValidationHelper.swift in Sources */,
 				992F57D62C5B28FC00219C6B /* MemberDetailsParameters.swift in Sources */,
 				D5E3D7D82C63BF730041B28D /* CreateScheduleViewModel.swift in Sources */,
 				9911F98A2C3F6B4100D0FDC9 /* BannerCollectionViewCell.swift in Sources */,
+				990DE7642C65E767007B78C9 /* FeedDetailBoxView.swift in Sources */,
 				99C9B2522C022DE3008D7CBD /* AccountLoginController.swift in Sources */,
 				D55DFC2F2C61021800EEEF51 /* ScheduleView.swift in Sources */,
 				997DC6552C3D231000EACA5F /* Config.swift in Sources */,
 				99D8FBC02C3BA2180062AF10 /* CustomLabel.swift in Sources */,
 				992F57DD2C5B56E200219C6B /* AutoTokenPlugin.swift in Sources */,
 				992F57E32C5B618D00219C6B /* MemberSearchUseCase.swift in Sources */,
+				99C68E3F2C64B11D00DEC1F1 /* SaveFeedRequest.swift in Sources */,
 				995E3E5B2C507FE6006B4480 /* MyPageView.swift in Sources */,
 				9953583F2C00C555005BF799 /* SceneDelegate.swift in Sources */,
 				990F57B22C282C5900F6E1AD /* EmailSendUseCase.swift in Sources */,
+				99107EA52C6F3E4A007D129F /* Place.swift in Sources */,
 				99D780E22C606726005A3F30 /* MemberDetailsResponse.swift in Sources */,
 				99D780E42C606735005A3F30 /* CheckEmailResponse.swift in Sources */,
 				9950C6592C10B0DF003155A7 /* SignUpFormView.swift in Sources */,
-				99FBA5582C453C05002EEEC7 /* FeedViewModel.swift in Sources */,
+				99FBA5582C453C05002EEEC7 /* HomeFeedViewModel.swift in Sources */,
 				99949F512C588B6200AE0177 /* FavoritesTableView.swift in Sources */,
 				992F57CE2C5B28A800219C6B /* EmailVerifyBody.swift in Sources */,
+				99C1403C2C6496B400A706B6 /* FeedsTableViewCell.swift in Sources */,
 				9911F98E2C3F913100D0FDC9 /* HomeFeedCollectionViewCell.swift in Sources */,
 				992F57C82C5B26D700219C6B /* ResetPasswordBody.swift in Sources */,
 				99EC20AB2C0D9D9D0018904D /* SignUpViewModel.swift in Sources */,
 				99EC20AD2C0D9DB50018904D /* AcoountSearchViewModel.swift in Sources */,
+				99107EA32C6F3E42007D129F /* DDay.swift in Sources */,
 				99CA4F262C33B704007C027C /* ResetPasswordViewModel.swift in Sources */,
+				99D23FF42C6889BA00CFD4F0 /* FeedDetailViewModel.swift in Sources */,
 				99DA18B92C4E132A00D5CDA6 /* TitleView.swift in Sources */,
+				99C68E4C2C64B83D00DEC1F1 /* FeedRepository.swift in Sources */,
 				99EC78D62C11E8A3007C4415 /* FinishRegisterViewController.swift in Sources */,
 				99C9B2322C01A45C008D7CBD /* Extensions.swift in Sources */,
 				990F579A2C27EEF400F6E1AD /* MemberRepository.swift in Sources */,

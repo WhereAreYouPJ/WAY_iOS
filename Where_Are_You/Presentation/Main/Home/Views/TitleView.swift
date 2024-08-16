@@ -10,13 +10,10 @@ import UIKit
 class TitleView: UIView {
     // MARK: - Properties
 
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(Ttangsbudae: .bold, fontSize: 20))
-        label.adjustsFontForContentSizeCategory = true
-        label.text = "지금 어디?"
-        label.textColor = .letterBrandColor
-        return label
+    let titleLabel: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "Home-Logo")
+        return imageView
     }()
     
     let notificationButton: UIButton = {
