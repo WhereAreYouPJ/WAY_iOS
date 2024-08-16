@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "exampleBanner.jpeg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "#logo 굵기 -3.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
