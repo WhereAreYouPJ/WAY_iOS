@@ -132,6 +132,7 @@
 		D55DFC2F2C61021800EEEF51 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55DFC2E2C61021800EEEF51 /* ScheduleView.swift */; };
 		D55DFC312C61022900EEEF51 /* CreateScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */; };
 		D58EC0692C633217001BC030 /* SearchPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58EC0682C633217001BC030 /* SearchPlaceView.swift */; };
+		D59E17522C6F3024007D8D4B /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59E17512C6F3024007D8D4B /* DataController.swift */; };
 		D5E3D7D82C63BF730041B28D /* CreateScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */; };
 		D79EFAD9E5409233E5338E46 /* Pods_Where_Are_You.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */; };
 /* End PBXBuildFile section */
@@ -293,6 +294,7 @@
 		D55DFC2E2C61021800EEEF51 /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
 		D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleView.swift; sourceTree = "<group>"; };
 		D58EC0682C633217001BC030 /* SearchPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceView.swift; sourceTree = "<group>"; };
+		D59E17512C6F3024007D8D4B /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleViewModel.swift; sourceTree = "<group>"; };
 		EF2914052EE4B6C83BE57C93 /* Pods-Where_Are_You_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -607,6 +609,7 @@
 		99C9B2262C019748008D7CBD /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D59E17502C6F3015007D8D4B /* CoreData */,
 				99D8FBBE2C3BA1FB0062AF10 /* Customs */,
 				99C9B2312C01A45C008D7CBD /* Extensions.swift */,
 				99C9B2472C01D2B7008D7CBD /* Utilities.swift */,
@@ -764,7 +767,6 @@
 				99C9B22D2C019E16008D7CBD /* Fonts */,
 				9953584D2C00C558005BF799 /* Info.plist */,
 				995358482C00C558005BF799 /* Assets.xcassets */,
-				995358452C00C555005BF799 /* Where_Are_You.xcdatamodeld */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -932,6 +934,15 @@
 				5E05660871E31DAF17D0F5C8 /* Pods_Where_Are_You_Tests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D59E17502C6F3015007D8D4B /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				995358452C00C555005BF799 /* Where_Are_You.xcdatamodeld */,
+				D59E17512C6F3024007D8D4B /* DataController.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		D5B79A112C5B8368004EDDF2 /* Schedule */ = {
@@ -1187,6 +1198,7 @@
 				99949F4B2C587BAC00AE0177 /* FeedListView.swift in Sources */,
 				995358472C00C555005BF799 /* Where_Are_You.xcdatamodeld in Sources */,
 				9950C65B2C10B0F5003155A7 /* SignUpFormViewController.swift in Sources */,
+				D59E17522C6F3024007D8D4B /* DataController.swift in Sources */,
 				992F57CC2C5B270300219C6B /* LoginBody.swift in Sources */,
 				99FBA5562C453BDD002EEEC7 /* HomeFeedViewController.swift in Sources */,
 				99FBA5502C45394E002EEEC7 /* BannerViewModel.swift in Sources */,

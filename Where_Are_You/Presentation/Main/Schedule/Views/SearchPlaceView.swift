@@ -17,7 +17,6 @@ struct SearchPlaceView: View {
     @Binding var path: NavigationPath
     
     @State private var selectedPlace: Place?
-    @State private var showPlaceMapView = false
     
     let places: [Place] = [
         .init(name: "서울대입구", coordinate: CLLocationCoordinate2D(latitude: 37.4808, longitude: 126.9526), address: ""),
@@ -71,14 +70,14 @@ struct SearchPlaceView: View {
                 Text(place.name)
                     .onTapGesture {
                         selectedPlace = place
-                        showPlaceMapView = true
+                        path.append("placeMap")
                     }
             }
         }
         .navigationTitle("장소 검색")
         .navigationBarTitleDisplayMode(.inline)
-        .fullScreenCover(isPresented: $showPlaceMapView) {
-            if let place = selectedPlace {
+        .navigationDestination(for: String.self) { route in
+            if route == "placeMap", let place = selectedPlace {
                 PlaceMapView(place: place, location: $location, streetName: $streetName, x: $x, y: $y, path: $path)
             }
         }

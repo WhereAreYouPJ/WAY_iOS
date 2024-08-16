@@ -13,7 +13,7 @@ struct CreateScheduleView: View {
     @State private var path = NavigationPath()
     
     @State private var schedule = Schedule()
-    @State private var isAllDay = false
+    @State private var isAllDay = true
     @State private var startTime = Date()
     @State private var endTime = Date()
     
@@ -163,7 +163,7 @@ struct AddPlaceView: View {
 }
 
 struct AddFriendsView: View {
-    @State private var friends = ["김민정", "임창균", "조승연", "김민지"]
+    @State private var friends: [String] = [] // dump: "김민정", "임창균", "조승연", "김민지"
     
     var body: some View {
         Text("친구추가")
@@ -177,10 +177,13 @@ struct AddFriendsView: View {
                     .foregroundStyle(Color(.color118))
             } else {
                 let count = friends.count
-                ForEach(0..<2, id: \.self) { idx in
-                    Text(friends[idx] + ", ")
+                ForEach(0..<min(3, count), id: \.self) { idx in
+                    if idx < count - 1 {
+                        Text(friends[idx] + ", ")
+                    } else {
+                        Text(friends[idx])
+                    }
                 }
-                Text(friends[2])
                 
                 if count > 3 {
                     Text("외 " + String(count - 3) + "명")
