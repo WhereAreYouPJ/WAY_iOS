@@ -17,6 +17,7 @@
 		990F579A2C27EEF400F6E1AD /* MemberRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57992C27EEF400F6E1AD /* MemberRepository.swift */; };
 		990F57A32C27F9FE00F6E1AD /* MemberDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57A22C27F9FE00F6E1AD /* MemberDetailsUseCase.swift */; };
 		990F57B22C282C5900F6E1AD /* EmailSendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57B12C282C5900F6E1AD /* EmailSendUseCase.swift */; };
+		99107E9F2C6EDAE2007D129F /* ValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99107E9E2C6EDAE2007D129F /* ValidationError.swift */; };
 		9911F9842C3F5AA600D0FDC9 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F9832C3F5AA600D0FDC9 /* BannerView.swift */; };
 		9911F9862C3F5E6F00D0FDC9 /* DDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F9852C3F5E6F00D0FDC9 /* DDayView.swift */; };
 		9911F9882C3F63D500D0FDC9 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F9872C3F63D500D0FDC9 /* Feed.swift */; };
@@ -65,7 +66,6 @@
 		997DC6552C3D231000EACA5F /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997DC6542C3D231000EACA5F /* Config.swift */; };
 		997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997DC6562C3D253000EACA5F /* UserDefaultManager.swift */; };
 		99949F452C58788200AE0177 /* FriendFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F442C58788200AE0177 /* FriendFeedViewController.swift */; };
-		99949F472C587A5400AE0177 /* CustomTabMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F462C587A5400AE0177 /* CustomTabMenu.swift */; };
 		99949F492C587BA500AE0177 /* FriendsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F482C587BA500AE0177 /* FriendsListView.swift */; };
 		99949F4F2C58890C00AE0177 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F4E2C58890C00AE0177 /* ProfileView.swift */; };
 		99949F512C588B6200AE0177 /* FavoritesTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F502C588B6200AE0177 /* FavoritesTableView.swift */; };
@@ -184,6 +184,7 @@
 		990F57992C27EEF400F6E1AD /* MemberRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberRepository.swift; sourceTree = "<group>"; };
 		990F57A22C27F9FE00F6E1AD /* MemberDetailsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDetailsUseCase.swift; sourceTree = "<group>"; };
 		990F57B12C282C5900F6E1AD /* EmailSendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSendUseCase.swift; sourceTree = "<group>"; };
+		99107E9E2C6EDAE2007D129F /* ValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationError.swift; sourceTree = "<group>"; };
 		9911F9832C3F5AA600D0FDC9 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		9911F9852C3F5E6F00D0FDC9 /* DDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDayView.swift; sourceTree = "<group>"; };
 		9911F9872C3F63D500D0FDC9 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
@@ -234,7 +235,6 @@
 		997DC6542C3D231000EACA5F /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		997DC6562C3D253000EACA5F /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		99949F442C58788200AE0177 /* FriendFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendFeedViewController.swift; sourceTree = "<group>"; };
-		99949F462C587A5400AE0177 /* CustomTabMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabMenu.swift; sourceTree = "<group>"; };
 		99949F482C587BA500AE0177 /* FriendsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListView.swift; sourceTree = "<group>"; };
 		99949F4E2C58890C00AE0177 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		99949F502C588B6200AE0177 /* FavoritesTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableView.swift; sourceTree = "<group>"; };
@@ -702,6 +702,7 @@
 			isa = PBXGroup;
 			children = (
 				99D8FBBE2C3BA1FB0062AF10 /* Customs */,
+				99107E9E2C6EDAE2007D129F /* ValidationError.swift */,
 				99C9B2312C01A45C008D7CBD /* Extensions.swift */,
 				99C9B2472C01D2B7008D7CBD /* Utilities.swift */,
 				99149FEA2C4F97C300136097 /* ValidationHelper.swift */,
@@ -972,7 +973,6 @@
 				99D11EB02C06F56F006BE265 /* CustomButton.swift */,
 				99D8FBBF2C3BA2180062AF10 /* CustomLabel.swift */,
 				99D8FBC12C3BA25B0062AF10 /* CustomTextField.swift */,
-				99949F462C587A5400AE0177 /* CustomTabMenu.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -1300,6 +1300,7 @@
 				9950C65D2C10B9BB003155A7 /* PasswordResetView.swift in Sources */,
 				990F57A32C27F9FE00F6E1AD /* MemberDetailsUseCase.swift in Sources */,
 				99F78F1E2C09C98D004C0C72 /* AccountSearchView.swift in Sources */,
+				99107E9F2C6EDAE2007D129F /* ValidationError.swift in Sources */,
 				99FBA5522C453B43002EEEC7 /* DDayViewController.swift in Sources */,
 				D5B79A162C5B83CD004EDDF2 /* CreateScheduleView.swift in Sources */,
 				9950C65D2C10B9BB003155A7 /* PasswordResetView.swift in Sources */,
@@ -1311,7 +1312,6 @@
 				99C9B2422C01CE4C008D7CBD /* AccountLoginViewModel.swift in Sources */,
 				99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */,
 				992F57D82C5B290900219C6B /* CheckEmailParameters.swift in Sources */,
-				99949F472C587A5400AE0177 /* CustomTabMenu.swift in Sources */,
 				9911F9882C3F63D500D0FDC9 /* Feed.swift in Sources */,
 				99949F592C58B81A00AE0177 /* FriendsViewModel.swift in Sources */,
 				99D8FBB92C3BA1CD0062AF10 /* MainTabBarController.swift in Sources */,

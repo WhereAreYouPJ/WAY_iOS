@@ -8,22 +8,6 @@
 import UIKit
 import SwiftUI
 
-// MARK: - 로그인 확인을 위한 UserDefaults 확장
-
-extension UserDefaults {
-    private enum Keys {
-        static let isLoggedIn = "isLoggedIn"
-    }
-    
-    var isLoggedIn: Bool {
-        get {
-            return bool(forKey: Keys.isLoggedIn)
-        }
-        set {
-            set(newValue, forKey: Keys.isLoggedIn)
-        }
-    }
-}
 
 // MARK: - UIViewController
 extension UIViewController {

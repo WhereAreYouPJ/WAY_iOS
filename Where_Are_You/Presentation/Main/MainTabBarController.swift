@@ -10,22 +10,22 @@ import UIKit
 
 class MainTabBarController: UITabBarController {
     
-    // 로그인 했는지 안했는지 확인
-    func authenticatieUserAndConfigureUI() {
-        if UserDefaults.standard.isLoggedIn == false {
-            DispatchQueue.main.async {
-                let nav = UINavigationController(rootViewController: LoginViewController())
-                nav.modalPresentationStyle = .fullScreen
-                self.present(nav, animated: true, completion: nil)
-            }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        authenticateUserAndConfigureUI()
+    }
+    
+    func authenticateUserAndConfigureUI() {
+        if UserDefaultsManager.shared.isLoggedIn() {
+            // 로그인 되어있으면 MainTabBarController를 표시
+            configureMainInterface()
         } else {
-            // 로그인 화면
+            // 로그인 되어있지 않으면 로그인 화면으로 이동
+            showLoginScreen()
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    private func configureMainInterface() {
         // 각 뷰 컨트롤러를 초기화하고 설정
         let mainVC = createNavController(viewController: MainHomeViewController(), title: "홈", imageName: "icon-home", selectedImageName: "icon-home-filled")
         let scheduleVC = createNavController(viewController: UIViewController(), title: "일정", imageName: "icon-schedule", selectedImageName: "icon-schedule-filled")
@@ -43,6 +43,12 @@ class MainTabBarController: UITabBarController {
         navigationController?.navigationBar.isHidden = true
         // 탭바의 분리선 추가
         addTabBarSeparator()
+    }
+    
+    private func showLoginScreen() {
+        let loginVC = LoginViewController()
+        loginVC.modalPresentationStyle = .fullScreen
+        present(loginVC, animated: true, completion: nil)
     }
     
     // 뷰 컨트롤러를 네비게이션 컨트롤러로 감싸고 탭바 아이템을 설정하는 함수

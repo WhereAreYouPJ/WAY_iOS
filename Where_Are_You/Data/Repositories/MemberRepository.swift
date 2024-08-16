@@ -49,6 +49,7 @@ class MemberRepository: MemberRepositoryProtocol {
                 UserDefaultsManager.shared.saveRefreshToken(loginData.refreshToken)
                 UserDefaultsManager.shared.saveMemberSeq(loginData.memberSeq)
                 UserDefaultsManager.shared.saveMemberCode(loginData.memberCode)
+                UserDefaultsManager.shared.saveIsLoggedIn(true)
                 completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))

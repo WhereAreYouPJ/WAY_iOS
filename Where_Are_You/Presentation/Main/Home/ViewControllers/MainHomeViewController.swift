@@ -27,12 +27,11 @@ class MainHomeViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.trailing.bottom.equalToSuperview()
         }
-        
         mainHomeViewModel = MainHomeViewModel()
+        setupNavigationBar()
         setupViewControllers()
         setupBindings()
         buttonActions()
-        setupNavigationBar()
         
         mainHomeViewModel.loadData()
     }
@@ -64,11 +63,7 @@ class MainHomeViewController: UIViewController {
     private func setupBindings() {
         mainHomeViewModel.onBannerDataFetched = { [weak self] in
             DispatchQueue.main.async {
-                guard let bannerImages = self?.mainHomeViewModel.getBannerImages() else {
-                    print("배너 이미지 로드 실패")
-                    return
-                }
-                self?.bannerViewController.viewModel.setBanners(bannerImages)
+                self?.bannerViewController.viewModel.setBanners(self?.mainHomeViewModel.getBannerImages() ?? [])
             }
         }
         

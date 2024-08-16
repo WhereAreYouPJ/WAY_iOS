@@ -28,8 +28,28 @@ class MyPageViewController: UIViewController {
         myPageView.imageEditButton.addTarget(self, action: #selector(editImage), for: .touchUpInside)
         myPageView.moveToGallery.addTarget(self, action: #selector(moveToGallery), for: .touchUpInside)
         myPageView.userNameEditButton.addTarget(self, action: #selector(editUserName), for: .touchUpInside)
+        myPageView.logoutButton.button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         
         myPageView.userCodeLabel.text = UserDefaultsManager.shared.getMemberCode()
+    }
+    
+    @objc func logoutButtonTapped() {
+        UserDefaultsManager.shared.clearData()
+        UserDefaultsManager.shared.saveIsLoggedIn(false)
+    }
+    
+    @objc private func editImage() {
+        // 프로필 이미지 수정
+        myPageView.moveToGallery.isHidden.toggle()
+    }
+    
+    @objc private func moveToGallery() {
+        // 갤러리 이동
+        print("갤러리 이동하기")
+    }
+    
+    @objc private func editUserName() {
+        // 유저이름 수정
     }
     
     @objc private func buttonTapped(_ sender: UIButton) {
@@ -55,20 +75,6 @@ class MyPageViewController: UIViewController {
         default:
             break
         }
-    }
-    
-    @objc private func editImage() {
-        // 프로필 이미지 수정
-        myPageView.moveToGallery.isHidden.toggle()
-    }
-    
-    @objc private func moveToGallery() {
-        // 갤러리 이동
-        print("갤러리 이동하기")
-    }
-    
-    @objc private func editUserName() {
-        // 유저이름 수정
     }
     
     @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {

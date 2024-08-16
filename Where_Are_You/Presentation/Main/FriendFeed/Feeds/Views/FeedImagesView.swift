@@ -52,7 +52,6 @@ class FeedImagesView: UIView {
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         
-        
         addSubview(collectionView)
         addSubview(pageControl)
         addSubview(pageNumberLabel)
