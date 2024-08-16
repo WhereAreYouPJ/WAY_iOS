@@ -16,3 +16,11 @@ struct Feed {
     var feedImages: [UIImage]?
     let description: String?
 }
+
+struct CreateFeed {
+    let scheduleSeq: Int
+    let creatorSeq: Int
+    let title: String
+    let content: String
+    var images: [UIImage]?
+}

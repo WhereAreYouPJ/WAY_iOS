@@ -105,4 +105,3 @@ class FeedDetailViewModel {
     //
     //        return Feed(profileImage: profileImage, date: date, location: response.location, title: response.title, feedImages: feedImages, description: response.description)
     //    }
-

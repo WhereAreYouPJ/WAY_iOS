@@ -9,8 +9,8 @@ import Alamofire
 import Moya
 
 protocol FeedServiceProtocol {
-    func createFeed(request: CreateFeedBody, completion: @escaping (Result<Void, Error>) -> Void)
-    func updateFeed(request: UpdateFeedBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func createFeed(request: SaveFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void)
+    func updateFeed(request: ModifyFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class FeedService: FeedServiceProtocol {
@@ -25,14 +25,14 @@ class FeedService: FeedServiceProtocol {
         self.provider = MoyaProvider<FeedAPI>(plugins: [tokenPlugin])
     }
     
-    func createFeed(request: CreateFeedBody, completion: @escaping (Result<Void, Error>) -> Void) {
-        provider.request(.createFeed(request: request)) { [weak self] result in
+    func createFeed(request: SaveFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void) {
+        provider.request(.createFeed(request: request, images: images)) { [weak self] result in
             self?.handleResponse(result, completion: completion)
         }
     }
     
-    func updateFeed(request: UpdateFeedBody, completion: @escaping (Result<Void, any Error>) -> Void) {
-        provider.request(.updateFeed(request: request)) { [weak self] result in
+    func updateFeed(request: ModifyFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, any Error>) -> Void) {
+        provider.request(.updateFeed(request: request, images: images)) { [weak self] result in
             self?.handleResponse(result, completion: completion)
         }
     }

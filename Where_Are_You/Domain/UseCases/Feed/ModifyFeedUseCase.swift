@@ -8,7 +8,7 @@
 import UIKit
 
 protocol UpdateFeedUseCase {
-    func execute(request: UpdateFeedBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func execute(request: ModifyFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class UpdateFeedUseCaseImpl: UpdateFeedUseCase {
@@ -18,7 +18,7 @@ class UpdateFeedUseCaseImpl: UpdateFeedUseCase {
         self.feedRepository = feedRepository
     }
 
-    func execute(request: UpdateFeedBody, completion: @escaping (Result<Void, Error>) -> Void) {
-        feedRepository.updateFeed(request: request, completion: completion)
+    func execute(request: ModifyFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void) {
+        feedRepository.updateFeed(request: request, images: images, completion: completion)
     }
 }

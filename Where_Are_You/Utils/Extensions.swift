@@ -8,7 +8,6 @@
 import UIKit
 import SwiftUI
 
-
 // MARK: - UIViewController
 extension UIViewController {
     func configureNavigationBar(title: String, backButtonAction: Selector? = nil, showBackButton: Bool = true) {
