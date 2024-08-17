@@ -65,7 +65,6 @@
 		9974EA1E2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974EA1D2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift */; };
 		9974EA202C62196500826793 /* SnappingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974EA1F2C62196500826793 /* SnappingFlowLayout.swift */; };
 		9979622D2C3E6B2200E95CA6 /* AccountLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979622C2C3E6B2200E95CA6 /* AccountLoginUseCase.swift */; };
-		997DC6552C3D231000EACA5F /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997DC6542C3D231000EACA5F /* Config.swift */; };
 		997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997DC6562C3D253000EACA5F /* UserDefaultManager.swift */; };
 		99949F452C58788200AE0177 /* FriendFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F442C58788200AE0177 /* FriendFeedViewController.swift */; };
 		99949F492C587BA500AE0177 /* FriendsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F482C587BA500AE0177 /* FriendsListView.swift */; };
@@ -154,6 +153,7 @@
 		D58EC0692C633217001BC030 /* SearchPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58EC0682C633217001BC030 /* SearchPlaceView.swift */; };
 		D59E17522C6F3024007D8D4B /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59E17512C6F3024007D8D4B /* DataController.swift */; };
 		D5B79A162C5B83CD004EDDF2 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		D5D24CDC2C70756D00EDADAF /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D24CDB2C70756D00EDADAF /* Config.swift */; };
 		D5E3D7D82C63BF730041B28D /* CreateScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */; };
 		D79EFAD9E5409233E5338E46 /* Pods_Where_Are_You.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */; };
 /* End PBXBuildFile section */
@@ -243,7 +243,6 @@
 		9974EA1D2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreFeedCollectionViewCell.swift; sourceTree = "<group>"; };
 		9974EA1F2C62196500826793 /* SnappingFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnappingFlowLayout.swift; sourceTree = "<group>"; };
 		9979622C2C3E6B2200E95CA6 /* AccountLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLoginUseCase.swift; sourceTree = "<group>"; };
-		997DC6542C3D231000EACA5F /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		997DC6562C3D253000EACA5F /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		99949F442C58788200AE0177 /* FriendFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendFeedViewController.swift; sourceTree = "<group>"; };
 		99949F482C587BA500AE0177 /* FriendsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListView.swift; sourceTree = "<group>"; };
@@ -336,6 +335,7 @@
 		D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleView.swift; sourceTree = "<group>"; };
 		D58EC0682C633217001BC030 /* SearchPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceView.swift; sourceTree = "<group>"; };
 		D59E17512C6F3024007D8D4B /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		D5D24CDB2C70756D00EDADAF /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleViewModel.swift; sourceTree = "<group>"; };
 		EF2914052EE4B6C83BE57C93 /* Pods-Where_Are_You_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -641,7 +641,7 @@
 			isa = PBXGroup;
 			children = (
 				99CEAD4B2C5397B1006B3D41 /* DeviceConfig.swift */,
-				997DC6542C3D231000EACA5F /* Config.swift */,
+				D5D24CDB2C70756D00EDADAF /* Config.swift */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -1333,6 +1333,7 @@
 				9950C65D2C10B9BB003155A7 /* PasswordResetView.swift in Sources */,
 				990F57A32C27F9FE00F6E1AD /* MemberDetailsUseCase.swift in Sources */,
 				99F78F1E2C09C98D004C0C72 /* AccountSearchView.swift in Sources */,
+				D5D24CDC2C70756D00EDADAF /* Config.swift in Sources */,
 				99107E9F2C6EDAE2007D129F /* ValidationError.swift in Sources */,
 				99FBA5522C453B43002EEEC7 /* DDayViewController.swift in Sources */,
 				D5B79A162C5B83CD004EDDF2 /* (null) in Sources */,
@@ -1419,7 +1420,6 @@
 				990DE7642C65E767007B78C9 /* FeedDetailBoxView.swift in Sources */,
 				99C9B2522C022DE3008D7CBD /* AccountLoginController.swift in Sources */,
 				D55DFC2F2C61021800EEEF51 /* ScheduleView.swift in Sources */,
-				997DC6552C3D231000EACA5F /* Config.swift in Sources */,
 				99D8FBC02C3BA2180062AF10 /* CustomLabel.swift in Sources */,
 				992F57DD2C5B56E200219C6B /* AutoTokenPlugin.swift in Sources */,
 				992F57E32C5B618D00219C6B /* MemberSearchUseCase.swift in Sources */,
@@ -1614,7 +1614,7 @@
 				DEVELOPMENT_TEAM = 8CKPNKA3V9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Where_Are_You/Resources/Info.plist";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Look around the map";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Look around the map";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1648,7 +1648,7 @@
 				DEVELOPMENT_TEAM = 8CKPNKA3V9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Where_Are_You/Resources/Info.plist";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Look around the map";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Look around the map";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
