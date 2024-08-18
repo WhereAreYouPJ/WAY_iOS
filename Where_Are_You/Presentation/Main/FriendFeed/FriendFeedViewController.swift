@@ -122,9 +122,9 @@ class FriendFeedViewController: UIViewController {
     
     @objc private func handleSegmentChange() {
         if segmentControl.selectedSegmentIndex == 0 {
-            showFriendsView()
-        } else {
             showFeedsView()
+        } else {
+            showFriendsView()
         }
     }
     
