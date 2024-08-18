@@ -26,6 +26,10 @@
 		9910B84A2C71B621005F7EEE /* FriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F542C58A72B00AE0177 /* FriendsTableViewCell.swift */; };
 		9910B84B2C71B62E005F7EEE /* PasswordResetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C65C2C10B9BB003155A7 /* PasswordResetView.swift */; };
 		9910B84C2C71B638005F7EEE /* DDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5532C453B6D002EEEC7 /* DDayViewModel.swift */; };
+		9910B84E2C71B7F6005F7EEE /* AddFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9910B84D2C71B7F6005F7EEE /* AddFeedViewController.swift */; };
+		9910B8502C71E5B5005F7EEE /* ScheduleDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9910B84F2C71E5B5005F7EEE /* ScheduleDropDownView.swift */; };
+		9910B8522C71EAA4005F7EEE /* ScheduleDropDownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9910B8512C71EAA4005F7EEE /* ScheduleDropDownCell.swift */; };
+		9910B8542C71F1AA005F7EEE /* UIKitPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9910B8532C71F1AA005F7EEE /* UIKitPreview.swift */; };
 		9911F9842C3F5AA600D0FDC9 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F9832C3F5AA600D0FDC9 /* BannerView.swift */; };
 		9911F9862C3F5E6F00D0FDC9 /* DDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F9852C3F5E6F00D0FDC9 /* DDayView.swift */; };
 		9911F9882C3F63D500D0FDC9 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F9872C3F63D500D0FDC9 /* Feed.swift */; };
@@ -196,6 +200,10 @@
 		99107EA02C6F2C94007D129F /* SaveFeedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFeedResponse.swift; sourceTree = "<group>"; };
 		99107EA22C6F3E42007D129F /* DDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDay.swift; sourceTree = "<group>"; };
 		99107EA42C6F3E4A007D129F /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		9910B84D2C71B7F6005F7EEE /* AddFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeedViewController.swift; sourceTree = "<group>"; };
+		9910B84F2C71E5B5005F7EEE /* ScheduleDropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDropDownView.swift; sourceTree = "<group>"; };
+		9910B8512C71EAA4005F7EEE /* ScheduleDropDownCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDropDownCell.swift; sourceTree = "<group>"; };
+		9910B8532C71F1AA005F7EEE /* UIKitPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitPreview.swift; sourceTree = "<group>"; };
 		9911F9832C3F5AA600D0FDC9 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		9911F9852C3F5E6F00D0FDC9 /* DDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDayView.swift; sourceTree = "<group>"; };
 		9911F9872C3F63D500D0FDC9 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
@@ -431,6 +439,7 @@
 			children = (
 				99949F5E2C58BBAD00AE0177 /* FeedsViewController.swift */,
 				99D3738F2C6ADF030093F386 /* FeedImagesViewController.swift */,
+				9910B84D2C71B7F6005F7EEE /* AddFeedViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -445,6 +454,8 @@
 				99C1403B2C6496B400A706B6 /* FeedsTableViewCell.swift */,
 				99C140392C6494F000A706B6 /* FeedsView.swift */,
 				99C140412C64A01A00A706B6 /* AddFeedView.swift */,
+				9910B84F2C71E5B5005F7EEE /* ScheduleDropDownView.swift */,
+				9910B8512C71EAA4005F7EEE /* ScheduleDropDownCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -709,6 +720,7 @@
 		99C9B2232C01973E008D7CBD /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				9910B8532C71F1AA005F7EEE /* UIKitPreview.swift */,
 				99CC5E652C5210FF00A0509A /* Login */,
 				99CC5E6A2C5211ED00A0509A /* Main */,
 			);
@@ -1305,6 +1317,7 @@
 			files = (
 				9910B84C2C71B638005F7EEE /* DDayViewModel.swift in Sources */,
 				9910B84B2C71B62E005F7EEE /* PasswordResetView.swift in Sources */,
+				9910B84E2C71B7F6005F7EEE /* AddFeedViewController.swift in Sources */,
 				9910B84A2C71B621005F7EEE /* FriendsTableViewCell.swift in Sources */,
 				9910B8492C71B617005F7EEE /* ResetPasswordUseCase.swift in Sources */,
 				9910B8482C71B5A4005F7EEE /* DDayViewController.swift in Sources */,
@@ -1319,6 +1332,7 @@
 				99C9B22C2C019C67008D7CBD /* LoginView.swift in Sources */,
 				99949F5F2C58BBAD00AE0177 /* FeedsViewController.swift in Sources */,
 				9950C6572C1040FD003155A7 /* TermsAgreementViewController.swift in Sources */,
+				9910B8522C71EAA4005F7EEE /* ScheduleDropDownCell.swift in Sources */,
 				99FDD0BF2C6DF99400B15026 /* ReadFeedUseCase.swift in Sources */,
 				99D8FBBB2C3BA1D90062AF10 /* MainHomeViewController.swift in Sources */,
 				992F57CA2C5B26E700219C6B /* LogoutBody.swift in Sources */,
@@ -1361,6 +1375,7 @@
 				997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */,
 				9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */,
 				992F57D22C5B28D600219C6B /* EmailSendBody.swift in Sources */,
+				9910B8542C71F1AA005F7EEE /* UIKitPreview.swift in Sources */,
 				99E8BC452C2D26CF00536B95 /* EmailVerifyUseCase.swift in Sources */,
 				99D8FBBD2C3BA1E60062AF10 /* MainHomeViewModel.swift in Sources */,
 				992F57C62C5B265600219C6B /* SingUpBody.swift in Sources */,
@@ -1372,6 +1387,7 @@
 				99949F4F2C58890C00AE0177 /* ProfileView.swift in Sources */,
 				99E7BA592C69A5D500F79C96 /* ImageUtility.swift in Sources */,
 				99C1403E2C6496BC00A706B6 /* NoFeedsView.swift in Sources */,
+				9910B8502C71E5B5005F7EEE /* ScheduleDropDownView.swift in Sources */,
 				99C68E522C64B96E00DEC1F1 /* ModifyFeedUseCase.swift in Sources */,
 				D54C040A2C6516CB009CC419 /* CreateScheduleBody.swift in Sources */,
 				99949F532C58A67400AE0177 /* FriendsTableView.swift in Sources */,

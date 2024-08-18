@@ -22,7 +22,8 @@ class MainTabBarController: UITabBarController {
             configureMainInterface()
         } else {
             // 로그인 되어있지 않으면 로그인 화면으로 이동
-            showLoginScreen()
+//            showLoginScreen()
+            configureMainInterface()
         }
     }
     

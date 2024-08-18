@@ -26,12 +26,6 @@ class FeedImagesViewController: UIViewController {
     
     // MARK: - Helpers
     private func setupBindings() {
-//        viewModel.onFeedImagesUpdated = { [weak self] images in
-//            DispatchQueue.main.async {
-//                
-//            }
-//        }
-        
         // 페이지 인덱스 변경에 대한 바인딩
         viewModel.onCurrentImageIndexChanged = { [weak self] index in
             guard let self = self, self.images.indices.contains(index) else { return }
