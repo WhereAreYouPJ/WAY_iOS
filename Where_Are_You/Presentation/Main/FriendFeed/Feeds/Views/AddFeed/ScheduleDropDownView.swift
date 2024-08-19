@@ -79,7 +79,6 @@ class ScheduleDropDownView: UIView {
     private func setupConstraints() {
         scheduleDropDownView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-//            make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
         }
         
         chooseScheduleLabel.snp.makeConstraints { make in
