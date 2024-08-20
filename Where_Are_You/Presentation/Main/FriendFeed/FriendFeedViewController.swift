@@ -81,10 +81,10 @@ class FriendFeedViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupNavigationBar()
         setupViews()
         handleSegmentChange()
+        buttonActions()
         
         segmentControl.snp.makeConstraints { make in
             make.height.equalTo(LayoutAdapter.shared.scale(value: 36)).priority(.required)
@@ -120,12 +120,10 @@ class FriendFeedViewController: UIViewController {
         }
     }
     
-    @objc private func handleSegmentChange() {
-        if segmentControl.selectedSegmentIndex == 0 {
-            showFeedsView()
-        } else {
-            showFriendsView()
-        }
+    private func buttonActions() {
+        searchFriendButton.addTarget(self, action: #selector(handleSearch), for: .touchUpInside)
+        notificationButton.addTarget(self, action: #selector(handleNotification), for: .touchUpInside)
+        addButton.addTarget(self, action: #selector(handleAdd), for: .touchUpInside)
     }
     
     private func showFriendsView() {
@@ -144,15 +142,33 @@ class FriendFeedViewController: UIViewController {
         addButton.isHidden = false
     }
     
+    // MARK: - Selectors
+
+    @objc private func handleSegmentChange() {
+        if segmentControl.selectedSegmentIndex == 0 {
+            showFeedsView()
+        } else {
+            showFriendsView()
+        }
+    }
+    
     @objc private func handleSearch() {
-        // 친구 찾기
+        print("친구 검색")
     }
     
     @objc private func handleNotification() {
-        // 알림 페이지로 이동
+        print("알림 페이지로 이동")
     }
     
     @objc private func handleAdd() {
-        // 추가 페이지로 이동
+        // 피드
+        if segmentControl.selectedSegmentIndex == 0 {
+            let controller = AddFeedViewController()
+            let nav = UINavigationController(rootViewController: controller)
+            nav.modalPresentationStyle = .fullScreen
+            present(nav, animated: true, completion: nil)
+        } else {
+            print("친구 추가 버튼 눌림")
+        }
     }
 }

@@ -29,7 +29,6 @@
 		9910B84E2C71B7F6005F7EEE /* AddFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9910B84D2C71B7F6005F7EEE /* AddFeedViewController.swift */; };
 		9910B8502C71E5B5005F7EEE /* ScheduleDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9910B84F2C71E5B5005F7EEE /* ScheduleDropDownView.swift */; };
 		9910B8522C71EAA4005F7EEE /* ScheduleDropDownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9910B8512C71EAA4005F7EEE /* ScheduleDropDownCell.swift */; };
-		9910B8542C71F1AA005F7EEE /* UIKitPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9910B8532C71F1AA005F7EEE /* UIKitPreview.swift */; };
 		9911F9842C3F5AA600D0FDC9 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F9832C3F5AA600D0FDC9 /* BannerView.swift */; };
 		9911F9862C3F5E6F00D0FDC9 /* DDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F9852C3F5E6F00D0FDC9 /* DDayView.swift */; };
 		9911F9882C3F63D500D0FDC9 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F9872C3F63D500D0FDC9 /* Feed.swift */; };
@@ -204,7 +203,6 @@
 		9910B84D2C71B7F6005F7EEE /* AddFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeedViewController.swift; sourceTree = "<group>"; };
 		9910B84F2C71E5B5005F7EEE /* ScheduleDropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDropDownView.swift; sourceTree = "<group>"; };
 		9910B8512C71EAA4005F7EEE /* ScheduleDropDownCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDropDownCell.swift; sourceTree = "<group>"; };
-		9910B8532C71F1AA005F7EEE /* UIKitPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitPreview.swift; sourceTree = "<group>"; };
 		9911F9832C3F5AA600D0FDC9 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		9911F9852C3F5E6F00D0FDC9 /* DDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDayView.swift; sourceTree = "<group>"; };
 		9911F9872C3F63D500D0FDC9 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
@@ -731,7 +729,6 @@
 		99C9B2232C01973E008D7CBD /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				9910B8532C71F1AA005F7EEE /* UIKitPreview.swift */,
 				99CC5E652C5210FF00A0509A /* Login */,
 				99CC5E6A2C5211ED00A0509A /* Main */,
 			);
@@ -1386,7 +1383,6 @@
 				997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */,
 				9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */,
 				992F57D22C5B28D600219C6B /* EmailSendBody.swift in Sources */,
-				9910B8542C71F1AA005F7EEE /* UIKitPreview.swift in Sources */,
 				99E8BC452C2D26CF00536B95 /* EmailVerifyUseCase.swift in Sources */,
 				99D8FBBD2C3BA1E60062AF10 /* MainHomeViewModel.swift in Sources */,
 				992F57C62C5B265600219C6B /* SingUpBody.swift in Sources */,

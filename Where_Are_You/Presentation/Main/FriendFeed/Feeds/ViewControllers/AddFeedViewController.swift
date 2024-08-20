@@ -18,7 +18,7 @@ class AddFeedViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(addFeedView)
+        view = addFeedView
         setupNavigationBar()
         buttonActions()
     }
@@ -38,7 +38,7 @@ class AddFeedViewController: UIViewController {
     // MARK: - Selectors
 
     @objc func backButtonTapped() {
-        
+        dismiss(animated: true)
     }
     
     @objc func dropDownButtonTapped() {

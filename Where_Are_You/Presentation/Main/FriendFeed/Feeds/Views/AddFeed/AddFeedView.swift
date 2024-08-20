@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class AddFeedView: UIView {
     // MARK: - Properties
@@ -27,14 +28,8 @@ class AddFeedView: UIView {
         return view
     }()
     
+    // TODO: TextView로 바꿔야함
     let contentTextField = Utilities.textField(withPlaceholder: "어떤 일이 있었나요?", fontSize: 14)
-    
-    lazy var feedStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [titleTextField, titleSeparator, imagesView, contentTextField])
-        stackView.axis = .vertical
-        stackView.spacing = 7
-        return stackView
-    }()
     
     // TODO: 버튼으로 변경하기
     let addImages: UIView = {
@@ -79,6 +74,8 @@ class AddFeedView: UIView {
         addSubview(titleSeparator)
         addSubview(imagesView)
         addSubview(contentTextField)
+//        addSubview(feedStack)
+        addSubview(addStackView)
         addSubview(addImages)
         addSubview(membersInfo)
     }
@@ -107,15 +104,19 @@ class AddFeedView: UIView {
         
         contentTextField.snp.makeConstraints { make in
             make.top.equalTo(imagesView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 7))
+            make.leading.trailing.equalTo(scheduleDropDownView)
+            make.height.greaterThanOrEqualTo(LayoutAdapter.shared.scale(value: 110))
         }
         
         addStackView.snp.makeConstraints { make in
             make.top.equalTo(contentTextField.snp.bottom).offset(LayoutAdapter.shared.scale(value: 28))
             make.leading.trailing.equalToSuperview()
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 92))
         }
         
-        addImages.snp.makeConstraints { make in
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 46))
-        }
+//        addImages.snp.makeConstraints { make in
+//            make.height.equalTo(LayoutAdapter.shared.scale(value: 46))
+//        }
     }
 }
+
