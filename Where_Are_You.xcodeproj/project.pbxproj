@@ -154,6 +154,7 @@
 		D59E17522C6F3024007D8D4B /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59E17512C6F3024007D8D4B /* DataController.swift */; };
 		D5B79A162C5B83CD004EDDF2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D5D24CDC2C70756D00EDADAF /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D24CDB2C70756D00EDADAF /* Config.swift */; };
+		D5DCBF342C7435E2003F0246 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DCBF332C7435E2003F0246 /* FriendsView.swift */; };
 		D5E3D7D82C63BF730041B28D /* CreateScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */; };
 		D79EFAD9E5409233E5338E46 /* Pods_Where_Are_You.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */; };
 /* End PBXBuildFile section */
@@ -336,6 +337,7 @@
 		D58EC0682C633217001BC030 /* SearchPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceView.swift; sourceTree = "<group>"; };
 		D59E17512C6F3024007D8D4B /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		D5D24CDB2C70756D00EDADAF /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		D5DCBF332C7435E2003F0246 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleViewModel.swift; sourceTree = "<group>"; };
 		EF2914052EE4B6C83BE57C93 /* Pods-Where_Are_You_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1071,6 +1073,7 @@
 				D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */,
 				D58EC0682C633217001BC030 /* SearchPlaceView.swift */,
 				D5496DD12C6B69570056C196 /* PlaceMapView.swift */,
+				D5DCBF332C7435E2003F0246 /* FriendsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1344,6 +1347,7 @@
 				992F57DF2C5B614A00219C6B /* LogoutUseCase.swift in Sources */,
 				992F57E52C5B623F00219C6B /* CheckEmailUseCase.swift in Sources */,
 				9911F9842C3F5AA600D0FDC9 /* BannerView.swift in Sources */,
+				D5DCBF342C7435E2003F0246 /* FriendsView.swift in Sources */,
 				99C9B2422C01CE4C008D7CBD /* AccountLoginViewModel.swift in Sources */,
 				99107EA12C6F2C94007D129F /* SaveFeedResponse.swift in Sources */,
 				99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */,

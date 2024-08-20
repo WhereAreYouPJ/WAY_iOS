@@ -82,7 +82,6 @@ struct SearchPlaceView: View {
                             HStack {
                                 Text(place.name)
                                     .padding(2)
-                                .foregroundStyle(Color(.color34))
                             }
                             Text(place.address)
                                 .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 14)))
@@ -104,6 +103,7 @@ struct SearchPlaceView: View {
         .navigationTitle("장소 검색")
         .navigationBarTitleDisplayMode(.inline)
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
+        .foregroundStyle(Color(.color34))
     }
 }
 
