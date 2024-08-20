@@ -9,6 +9,9 @@
 #           - AS PER https://guides.cocoapods.org/using/using-cocoapods.html NEVER IGNORE THE LOCK FILE
 Pods/
 
+# 커밋시 userinterfacestate가 커밋에 남아있는거 막음
+*.xcuserstate
+
 # Config.swift 파일 제외
 Config/Config.swift
 

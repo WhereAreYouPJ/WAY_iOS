@@ -29,7 +29,16 @@ class MultipartFormDataHelper {
            let jsonObject = try? JSONSerialization.jsonObject(with: parameters, options: []),
            let jsonDict = jsonObject as? [String: Any] {
             for (key, value) in jsonDict {
-                if let data = "\(value)".data(using: .utf8) {
+                let data: Data?
+                if let stringValue = value as? String {
+                    data = stringValue.data(using: .utf8)
+                } else if let intValue = value as? Int {
+                    data = String(intValue).data(using: .utf8)
+                } else {
+                    continue
+                }
+                
+                if let data = data {
                     let formData = MultipartFormData(provider: .data(data), name: key)
                     multipartData.append(formData)
                 }

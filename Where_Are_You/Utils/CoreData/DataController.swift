@@ -27,6 +27,4 @@ class DataController: ObservableObject {
             print("Data saving failed...")
         }
     }
-    
-    
 }
