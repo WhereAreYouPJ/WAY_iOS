@@ -5,14 +5,28 @@
 //  Created by juhee on 20.08.24.
 //
 
+// TODO: 1. 친구 목록 정렬, 2. 코드 가독성 개선
+
 import SwiftUI
 
 struct FriendsView: View {
-    @State private var favorites: [Friend] = []
-    @State private var friends: [Friend] = []
+    @State private var favorites: [Friend] = [Friend(profileImage: "exampleProfileImage", name: "김친구"),
+                                              Friend(profileImage: "exampleProfileImage", name: "이친구")]
+    @State private var friends: [Friend] = [Friend(profileImage: "exampleProfileImage", name: "박친구"),
+                                            Friend(profileImage: "exampleProfileImage", name: "최친구"),
+                                            Friend(profileImage: "exampleProfileImage", name: "정친구"),
+                                            Friend(profileImage: "exampleProfileImage", name: "김친구")]
     @State private var selectedFavorites: Set<UUID> = []
     @State private var selectedFriends: Set<UUID> = []
     @State private var searchText = ""
+    
+    var filteredFavorites: [Friend] {
+        if searchText.isEmpty {
+            return favorites
+        } else {
+            return favorites.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+        }
+    }
     
     var filteredFriends: [Friend] {
         if searchText.isEmpty {
@@ -22,8 +36,40 @@ struct FriendsView: View {
         }
     }
     
+    var selectedList: [Friend] {
+        favorites.filter { selectedFavorites.contains($0.id) } +
+        friends.filter { selectedFriends.contains($0.id) }
+    }
+    
     var body: some View {
         VStack {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(selectedList) { friend in
+                            SelectedFriendView(friend: friend, isOn: Binding(
+                                get: {
+                                    selectedFavorites.contains(friend.id) || selectedFriends.contains(friend.id)
+                                },
+                                set: { newValue in
+                                    if newValue {
+                                        // 선택 시, 해당 친구가 어느 그룹에 속하는지 확인하고 적절한 Set에 추가
+                                        if favorites.contains(where: { $0.id == friend.id }) {
+                                            selectedFavorites.insert(friend.id)
+                                        } else {
+                                            selectedFriends.insert(friend.id)
+                                        }
+                                    } else {
+                                        // 선택 해제 시, 양쪽 Set에서 모두 제거
+                                        selectedFavorites.remove(friend.id)
+                                        selectedFriends.remove(friend.id)
+                                    }
+                                }
+                            ))
+                        }
+                    }
+                }
+                .padding(.horizontal)
+
             TextField("검색", text: $searchText)
                 .padding(7)
                 .padding(.horizontal, 25)
@@ -41,7 +87,7 @@ struct FriendsView: View {
                                 self.searchText = ""
                             }) {
                                 Image(systemName: "multiply.circle.fill")
-                                    .foregroundColor(.gray)
+                                    .foregroundStyle(.gray)
                                     .padding(.trailing, 8)
                             }
                         }
@@ -54,12 +100,12 @@ struct FriendsView: View {
                     Divider()
                     HStack {
                         Text("즐겨찾기")
-                        Text("\(favorites.count)")
+                        Text("\(filteredFavorites.count)")
                         Spacer()
                     }
                     .padding(.vertical)
                     
-                    ForEach(favorites) { friend in
+                    ForEach(filteredFavorites) { friend in
                         FriendCell(friend: friend, isOn: Binding(
                             get: { selectedFavorites.contains(friend.id) },
                             set: { newValue in
@@ -76,12 +122,12 @@ struct FriendsView: View {
                         .padding(.top, 12)
                     HStack {
                         Text("친구")
-                        Text("\(friends.count)")
+                        Text("\(filteredFriends.count)")
                         Spacer()
                     }
                     .padding(.vertical)
                     
-                    ForEach(friends) { friend in
+                    ForEach(filteredFriends) { friend in
                         FriendCell(friend: friend, isOn: Binding(
                             get: { selectedFriends.contains(friend.id) },
                             set: { newValue in
@@ -96,9 +142,6 @@ struct FriendsView: View {
                 }
                 .padding()
             }
-            .onAppear {
-                loadFriends()
-            }
             
             Button {
                 
@@ -112,16 +155,6 @@ struct FriendsView: View {
             .padding()
             .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
         }
-        
-        
-    }
-    
-    private func loadFriends() {
-        favorites = [Friend(profileImage: "exampleProfileImage", name: "김친구"),
-                     Friend(profileImage: "exampleProfileImage", name: "이친구")]
-        friends = [Friend(profileImage: "exampleProfileImage", name: "박친구"),
-                   Friend(profileImage: "exampleProfileImage", name: "최친구"),
-                   Friend(profileImage: "exampleProfileImage", name: "저친구")]
     }
 }
 
@@ -136,16 +169,51 @@ struct CheckboxToggleStyle: ToggleStyle {
                 if configuration.isOn {
                     Image(systemName: "checkmark.circle.fill")
                         .imageScale(.large)
-                        .foregroundColor(Color(.brandColor))
+                        .foregroundStyle(Color(.brandColor))
                 } else {
                     Image(systemName: "circle")
                         .imageScale(.large)
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                 }
                 
                 configuration.label
             }
         })
+    }
+}
+
+struct SelectedFriendView: View {
+    let friend: Friend
+    @Binding var isOn: Bool
+    
+    var body: some View {
+        ZStack {
+            VStack {
+                Image(friend.profileImage)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: UIScreen.main.bounds.width * 0.12, height: UIScreen.main.bounds.width * 0.12)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                
+                Text(friend.name)
+                    .font(.caption)
+                    .lineLimit(1)
+            }
+            Button(action: {
+                isOn = false
+            }) {
+                ZStack {
+                    Image(systemName: "circle.fill")
+                        .foregroundColor(.white)
+                        .opacity(0.8)
+                        .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                    Image(systemName: "multiply")
+                        .foregroundColor(.gray)
+                }
+            }
+            .offset(x: 20, y: -28)
+        }
+        .padding(.top, 4)
     }
 }
 
