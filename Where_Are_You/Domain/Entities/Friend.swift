@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Friend {
+struct Friend: Identifiable {
+    var id = UUID()
     let profileImage: String
     let name: String
 }

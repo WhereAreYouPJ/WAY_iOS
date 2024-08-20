@@ -125,7 +125,6 @@ struct AddPlaceView: View {
         Text("위치추가")
         Divider()
         
-        
         HStack {
             Image("icon-place")
             if location.isEmpty {
