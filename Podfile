@@ -9,7 +9,6 @@ target 'Where_Are_You' do
 	pod 'SnapKit'
 	pod 'KeychainAccess'
 	pod 'Moya'
-	pod 'NMapsMap'
 
 
 	target 'Where_Are_You_Tests' do
