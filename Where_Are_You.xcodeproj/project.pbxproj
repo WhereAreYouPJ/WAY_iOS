@@ -35,6 +35,7 @@
 		9911F98A2C3F6B4100D0FDC9 /* BannerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F9892C3F6B4100D0FDC9 /* BannerCollectionViewCell.swift */; };
 		9911F98C2C3F908E00D0FDC9 /* HomeFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F98B2C3F908E00D0FDC9 /* HomeFeedView.swift */; };
 		9911F98E2C3F913100D0FDC9 /* HomeFeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911F98D2C3F913100D0FDC9 /* HomeFeedCollectionViewCell.swift */; };
+		9913A44D2C7583D400309DBF /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9913A44C2C7583D400309DBF /* CustomView.swift */; };
 		99149FEB2C4F97C300136097 /* ValidationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99149FEA2C4F97C300136097 /* ValidationHelper.swift */; };
 		99149FED2C4F97EA00136097 /* TimeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99149FEC2C4F97EA00136097 /* TimeHelper.swift */; };
 		992F1EC62C37ED400042CB1A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 992F1EC52C37ED400042CB1A /* .gitignore */; };
@@ -210,6 +211,7 @@
 		9911F9892C3F6B4100D0FDC9 /* BannerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCollectionViewCell.swift; sourceTree = "<group>"; };
 		9911F98B2C3F908E00D0FDC9 /* HomeFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeedView.swift; sourceTree = "<group>"; };
 		9911F98D2C3F913100D0FDC9 /* HomeFeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeedCollectionViewCell.swift; sourceTree = "<group>"; };
+		9913A44C2C7583D400309DBF /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		99149FEA2C4F97C300136097 /* ValidationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationHelper.swift; sourceTree = "<group>"; };
 		99149FEC2C4F97EA00136097 /* TimeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeHelper.swift; sourceTree = "<group>"; };
 		992F1EC52C37ED400042CB1A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -660,6 +662,7 @@
 		99B7BD752C72E69A00EC1C4F /* AddFeed */ = {
 			isa = PBXGroup;
 			children = (
+				9913A44C2C7583D400309DBF /* CustomView.swift */,
 				99C140412C64A01A00A706B6 /* AddFeedView.swift */,
 				9910B84F2C71E5B5005F7EEE /* ScheduleDropDownView.swift */,
 				9910B8512C71EAA4005F7EEE /* ScheduleDropDownCell.swift */,
@@ -1358,10 +1361,6 @@
 				99D780E02C60670E005A3F30 /* MemberSearchResponse.swift in Sources */,
 				992F57C22C5B1E8900219C6B /* ParameterConvertible.swift in Sources */,
 				992F57D42C5B28E900219C6B /* MemberSearchParameters.swift in Sources */,
-				99FBA5522C453B43002EEEC7 /* DDayViewController.swift in Sources */,
-				9950C65D2C10B9BB003155A7 /* PasswordResetView.swift in Sources */,
-				990F57A32C27F9FE00F6E1AD /* MemberDetailsUseCase.swift in Sources */,
-				99F78F1E2C09C98D004C0C72 /* AccountSearchView.swift in Sources */,
 				D5D24CDC2C70756D00EDADAF /* Config.swift in Sources */,
 				99107E9F2C6EDAE2007D129F /* ValidationError.swift in Sources */,
 				D5B79A162C5B83CD004EDDF2 /* (null) in Sources */,
@@ -1393,6 +1392,7 @@
 				9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */,
 				992F57D22C5B28D600219C6B /* EmailSendBody.swift in Sources */,
 				99E8BC452C2D26CF00536B95 /* EmailVerifyUseCase.swift in Sources */,
+				9913A44D2C7583D400309DBF /* CustomView.swift in Sources */,
 				99D8FBBD2C3BA1E60062AF10 /* MainHomeViewModel.swift in Sources */,
 				992F57C62C5B265600219C6B /* SingUpBody.swift in Sources */,
 				990F57912C27ECDC00F6E1AD /* AccountSignUpUseCase.swift in Sources */,

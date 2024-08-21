@@ -10,16 +10,12 @@ import SnapKit
 
 class AddFeedView: UIView {
     // MARK: - Properties
-
+    
     let scheduleDropDownView = ScheduleDropDownView()
     
     let titleTextField = Utilities.textField(withPlaceholder: "제목", fontSize: 16)
     
-    let titleSeparator: UIView = {
-        let view = UIView()
-        view.backgroundColor = .color221
-        return view
-    }()
+    lazy var titleSeparator = createSeparator()
     
     // TODO: 피드뷰에서 사용하는 콜렉션뷰 사용하기
     let imagesView: UIView = {
@@ -31,19 +27,17 @@ class AddFeedView: UIView {
     // TODO: TextView로 바꿔야함
     let contentTextField = Utilities.textField(withPlaceholder: "어떤 일이 있었나요?", fontSize: 14)
     
-    // TODO: 버튼으로 변경하기
-    let addImages: UIView = {
-        let view = UIView()
-        view.backgroundColor = .blue
-        return view
+    let addImages: UIButton = {
+        let button = UIButton()
+        let view = CustomView(image: "icon-Gallery", text: "사진 추가", textColor: .color102, separatorHidden: false)
+        button.addSubview(view)
+        view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        return button
     }()
     
-    // TODO: 멤버 정보 받아오고 없으면 hidden하기
-    let membersInfo: UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-        return view
-    }()
+    let membersInfo = CustomView(image: "icon-users", text: "김민정, 임창균, 이주헌 외 4명", textColor: .color34, separatorHidden: true)
     
     lazy var addStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [addImages, membersInfo])
@@ -53,13 +47,14 @@ class AddFeedView: UIView {
     }()
     
     // MARK: - Lifecycle
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
         configureViewComponents()
         setupConstraints()
         imagesView.isHidden = true
+        membersInfo.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -67,17 +62,14 @@ class AddFeedView: UIView {
     }
     
     // MARK: - Helpers
-
+    
     private func configureViewComponents() {
         addSubview(scheduleDropDownView)
         addSubview(titleTextField)
         addSubview(titleSeparator)
         addSubview(imagesView)
         addSubview(contentTextField)
-//        addSubview(feedStack)
         addSubview(addStackView)
-        addSubview(addImages)
-        addSubview(membersInfo)
     }
     
     private func setupConstraints() {
@@ -111,12 +103,19 @@ class AddFeedView: UIView {
         addStackView.snp.makeConstraints { make in
             make.top.equalTo(contentTextField.snp.bottom).offset(LayoutAdapter.shared.scale(value: 28))
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 92))
         }
         
-//        addImages.snp.makeConstraints { make in
-//            make.height.equalTo(LayoutAdapter.shared.scale(value: 46))
-//        }
+        addImages.snp.makeConstraints { make in
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 46))
+        }
+    }
+    
+    func createSeparator() -> UIView {
+        let view = UIView()
+        view.backgroundColor = .color221
+        view.snp.makeConstraints { make in
+            make.height.equalTo(1)
+        }
+        return view
     }
 }
-
