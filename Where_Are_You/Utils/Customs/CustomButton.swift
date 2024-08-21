@@ -23,6 +23,7 @@ class BottomButtonView: UIView {
     init(title: String) {
         self.button = CustomButton(title: title, backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
         super.init(frame: .zero)
+        backgroundColor = .white
         setupView(title: title)
     }
     
