@@ -17,7 +17,6 @@ class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         checkDeviceNetworkStatus()
-        
     }
     
     func checkDeviceNetworkStatus() {
@@ -27,10 +26,6 @@ class SplashViewController: UIViewController {
             })
             networkAlert.showAlert(on: self)
         } else {
-//            let vc = MainTabBarController()
-//            vc.modalTransitionStyle = .crossDissolve
-//            vc.modalPresentationStyle = .fullScreen
-//            self.present(vc, animated: true, completion: nil)
             navigateBasedOnLoginStatus()
         }
     }

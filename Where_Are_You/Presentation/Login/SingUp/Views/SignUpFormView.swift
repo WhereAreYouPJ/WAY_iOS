@@ -157,21 +157,24 @@ class SignUpFormView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
-        
         configureViewComponents()
         setupConstraints()
-        authStack.isHidden = true
-        passwordTextField.isSecureTextEntry = true
-        checkPasswordTextField.isSecureTextEntry = true
-        bottomButtonView.button.updateBackgroundColor(.color171)
-        bottomButtonView.button.isEnabled = false
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func configureViewComponents() {
+        authStack.isHidden = true
+        passwordTextField.isSecureTextEntry = true
+        checkPasswordTextField.isSecureTextEntry = true
+        bottomButtonView.button.updateBackgroundColor(.color171)
+        bottomButtonView.button.isEnabled = false
+        
+        emailTextField.keyboardType = .emailAddress
+        authCodeTextField.keyboardType = .numberPad
+        
         addSubview(progressBar)
         progressBar.addSubview(colorBar)
         addSubview(titleLabel)

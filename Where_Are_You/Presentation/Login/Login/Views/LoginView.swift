@@ -68,27 +68,41 @@ class LoginView: UIView {
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
+        configureViewComponents()
+        setupConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Helpers
+    
+    private func configureViewComponents() {
         backgroundColor = .white
-        
         addSubview(titleLabel)
+        addSubview(subtitleLabel)
+        addSubview(loginStack)
+        addSubview(separatorLabel)
+        addSubview(buttonStack)
+    }
+    
+    private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(safeAreaLayoutGuide).offset(LayoutAdapter.shared.scale(value: 150))
         }
         
-        addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom)
         }
         
-        addSubview(loginStack)
         loginStack.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(subtitleLabel.snp.bottom).offset(46)
         }
         
-        addSubview(separatorLabel)
         separatorLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(loginStack.snp.bottom).offset(20)
@@ -97,7 +111,6 @@ class LoginView: UIView {
         setupLine(relatedView: separatorLabel, anchor: .leading, height: 1, width: LayoutAdapter.shared.scale(value: 100))
         setupLine(relatedView: separatorLabel, anchor: .trailing, height: 1, width: LayoutAdapter.shared.scale(value: 100))
         
-        addSubview(buttonStack)
         buttonStack.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(separatorLabel.snp.bottom).offset(16)
@@ -106,12 +119,6 @@ class LoginView: UIView {
         setupLine(relatedView: findAccountButton, anchor: .leading, height: 14, width: 1)
         setupLine(relatedView: findAccountButton, anchor: .trailing, height: 14, width: 1)
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Helpers
     
     // 분리선 오토레이아웃
     private func setupLine(relatedView: UIView, anchor: NSLayoutConstraint.Attribute, height: CGFloat, width: CGFloat) {

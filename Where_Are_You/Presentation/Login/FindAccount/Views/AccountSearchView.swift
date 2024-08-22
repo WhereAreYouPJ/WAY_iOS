@@ -87,9 +87,6 @@ class AccountSearchView: UIView {
         backgroundColor = .white
         configureViewComponents()
         setupConstraints()
-        authStack.isHidden = true
-        bottomButtonView.button.updateBackgroundColor(.color171)
-        bottomButtonView.button.isEnabled = false
     }
     
     required init?(coder: NSCoder) {
@@ -97,6 +94,13 @@ class AccountSearchView: UIView {
     }
     
     private func configureViewComponents() {
+        authStack.isHidden = true
+        bottomButtonView.button.updateBackgroundColor(.color171)
+        bottomButtonView.button.isEnabled = false
+        
+        emailTextField.keyboardType = .emailAddress
+        authNumberTextField.keyboardType = .numberPad
+        
         addSubview(titleLabel)
         authNumberTextField.addSubview(timer)
         addSubview(stack)
