@@ -10,11 +10,11 @@ import SnapKit
 
 class AddFeedView: UIView {
     // MARK: - Properties
-
-    let scheduleDropDownView = ScheduleDropDownView()
+    let scrollView = UIScrollView()
+    let contentView = UIView()
     
+    let scheduleDropDown = ScheduleDropDown()
     let titleTextField = Utilities.textField(withPlaceholder: "제목", fontSize: 16)
-    
     let titleSeparator: UIView = {
         let view = UIView()
         view.backgroundColor = .color221
@@ -28,22 +28,25 @@ class AddFeedView: UIView {
         return view
     }()
     
-    // TODO: TextView로 바꿔야함
-    let contentTextField = Utilities.textField(withPlaceholder: "어떤 일이 있었나요?", fontSize: 14)
-    
-    // TODO: 버튼으로 변경하기
-    let addImages: UIView = {
-        let view = UIView()
-        view.backgroundColor = .blue
-        return view
+    let contentTextView: UITextView = {
+        let textView = UITextView()
+        textView.text = "어떤 일이 있었나요?"
+        textView.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
+        textView.textColor = .color118
+        return textView
     }()
     
-    // TODO: 멤버 정보 받아오고 없으면 hidden하기
-    let membersInfo: UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-        return view
+    let addImages: UIButton = {
+        let button = UIButton()
+        let view = CustomView(image: "icon-Gallery", text: "사진 추가", textColor: .color102, separatorHidden: false)
+        button.addSubview(view)
+        view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        return button
     }()
+    
+    let membersInfo = CustomView(image: "icon-users", text: "김민정, 임창균, 이주헌 외 4명", textColor: .color34, separatorHidden: true)
     
     lazy var addStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [addImages, membersInfo])
@@ -52,14 +55,17 @@ class AddFeedView: UIView {
         return stackView
     }()
     
+    let creatFeedButton = BottomButtonView(title: "게시하기")
+    
     // MARK: - Lifecycle
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
         configureViewComponents()
         setupConstraints()
         imagesView.isHidden = true
+        membersInfo.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -67,33 +73,45 @@ class AddFeedView: UIView {
     }
     
     // MARK: - Helpers
-
+    
     private func configureViewComponents() {
-        addSubview(scheduleDropDownView)
-        addSubview(titleTextField)
-        addSubview(titleSeparator)
-        addSubview(imagesView)
-        addSubview(contentTextField)
-//        addSubview(feedStack)
-        addSubview(addStackView)
-        addSubview(addImages)
-        addSubview(membersInfo)
+        addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        
+        contentView.addSubview(scheduleDropDown)
+        contentView.addSubview(titleTextField)
+        contentView.addSubview(titleSeparator)
+        contentView.addSubview(imagesView)
+        contentView.addSubview(contentTextView)
+        contentView.addSubview(addStackView)
+        
+        addSubview(creatFeedButton)
     }
     
     private func setupConstraints() {
-        scheduleDropDownView.snp.makeConstraints { make in
+        scrollView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(creatFeedButton.snp.top)
+        }
+        
+        contentView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView.contentLayoutGuide)
+            make.width.equalTo(scrollView.frameLayoutGuide)
+        }
+        
+        scheduleDropDown.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 13))
             make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
         }
         
         titleTextField.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 77))
-            make.leading.trailing.equalTo(scheduleDropDownView)
+            make.leading.trailing.equalTo(scheduleDropDown)
         }
         
         titleSeparator.snp.makeConstraints { make in
             make.top.equalTo(titleTextField.snp.bottom).offset(LayoutAdapter.shared.scale(value: 6))
-            make.leading.trailing.equalTo(scheduleDropDownView)
+            make.leading.trailing.equalTo(scheduleDropDown)
             make.height.equalTo(1)
         }
         
@@ -102,21 +120,24 @@ class AddFeedView: UIView {
             make.leading.trailing.equalToSuperview()
         }
         
-        contentTextField.snp.makeConstraints { make in
+        contentTextView.snp.makeConstraints { make in
             make.top.equalTo(imagesView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 7))
-            make.leading.trailing.equalTo(scheduleDropDownView)
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 23))
             make.height.greaterThanOrEqualTo(LayoutAdapter.shared.scale(value: 110))
         }
         
         addStackView.snp.makeConstraints { make in
-            make.top.equalTo(contentTextField.snp.bottom).offset(LayoutAdapter.shared.scale(value: 28))
+            make.top.equalTo(contentTextView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 28))
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 92))
+            make.bottom.equalToSuperview()
         }
         
-//        addImages.snp.makeConstraints { make in
-//            make.height.equalTo(LayoutAdapter.shared.scale(value: 46))
-//        }
+        addImages.snp.makeConstraints { make in
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 46))
+        }
+        
+        creatFeedButton.snp.makeConstraints { make in
+            make.bottom.leading.trailing.equalToSuperview()
+        }
     }
 }
-

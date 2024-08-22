@@ -24,9 +24,28 @@ class AccountLoginView: UIView {
         return label
     }()
     
+    lazy var idStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [emailLabel, emailTextField, emailErrorLabel])
+        stack.axis = .vertical
+        return stack
+    }()
+    
     private let passwordLabel = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: 12)
     
     let passwordTextField = Utilities.inputContainerTextField(withPlaceholder: "비밀번호를 입력해주세요.", fontSize: textFieldFontSize)
+    
+    lazy var passwordStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField])
+        stack.axis = .vertical
+        return stack
+    }()
+    
+    lazy var stack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [idStack, passwordStack])
+        stack.spacing = 10
+        stack.axis = .vertical
+        return stack
+    }()
     
     let loginButton = CustomButton(title: "로그인하기", backgroundColor: .color171, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
     
@@ -38,31 +57,38 @@ class AccountLoginView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
-        
+        configureViewComponents()
+        setupConstraints()
+        updateLoginButtonState()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Helpers
+
+    private func configureViewComponents() {
+        emailTextField.keyboardType = .emailAddress
         addSubview(titleLabel)
+        addSubview(stack)
+        addSubview(loginButton)
+        addSubview(findAccountButton)
+        addSubview(signupButton)
+    }
+    
+    private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(34)
             make.leading.equalToSuperview().offset(21)
         }
         
-        let idStack = UIStackView(arrangedSubviews: [emailLabel, emailTextField, emailErrorLabel])
-        idStack.axis = .vertical
-        
-        let passwordStack = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField])
-        passwordStack.axis = .vertical
-        
-        let stack = UIStackView(arrangedSubviews: [idStack, passwordStack])
-        stack.spacing = 10
-        stack.axis = .vertical
-        
-        addSubview(stack)
         stack.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(30)
             make.leading.equalToSuperview().offset(21)
         }
         
-        addSubview(loginButton)
         loginButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(stack.snp.bottom).offset(30)
@@ -70,23 +96,15 @@ class AccountLoginView: UIView {
             make.height.equalTo(loginButton.snp.width).multipliedBy(0.145)
         }
         
-        addSubview(findAccountButton)
         findAccountButton.snp.makeConstraints { make in
             make.top.equalTo(loginButton.snp.bottom).offset(26)
             make.centerX.equalToSuperview()
         }
         
-        addSubview(signupButton)
         signupButton.snp.makeConstraints { make in
             make.top.equalTo(findAccountButton.snp.bottom).offset(14)
             make.centerX.equalToSuperview()
         }
-        
-        updateLoginButtonState()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     func updateLoginButtonState() {

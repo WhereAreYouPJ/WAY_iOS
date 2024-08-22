@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ScheduleDropDownView: UIView {
+class ScheduleDropDown: UIView {
     // MARK: - Properties
 
     let scheduleDropDownView = UIButton()

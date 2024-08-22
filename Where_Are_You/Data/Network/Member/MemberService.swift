@@ -119,7 +119,7 @@ class MemberService: MemberServiceProtocol {
         switch result {
         case .success(let response):
             do {
-                try response.filterSuccessfulStatusCodes()
+                _ = try response.filterSuccessfulStatusCodes()
                 completion(.success(()))
             } catch let error {
                 completion(.failure(error))
