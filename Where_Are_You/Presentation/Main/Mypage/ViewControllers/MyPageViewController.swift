@@ -11,31 +11,59 @@ class MyPageViewController: UIViewController {
     // MARK: - Properties
     
     private let myPageView = MyPageView()
+    private var viewModel: MyPageViewModel!
     
     // MARK: - Lifecycle
-    
-    override func loadView() {
-        view = myPageView
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view = myPageView
+        setupViewModel()
+        setupActions()
+        setupBindings()
+        myPageView.userCodeLabel.text = UserDefaultsManager.shared.getMemberCode()
+    }
+    
+    // MARK: - Helpers
+    
+    private func setupViewModel() {
+        let memberService = MemberService()
+        let memberRepository = MemberRepository(memberService: memberService)
+        viewModel = MyPageViewModel(
+            logoutUseCase: LogoutUseCaseImpl(memberRepository: memberRepository)
+        )
+    }
+    
+    private func setupActions() {
         myPageView.setButtonActions(target: self, action: #selector(buttonTapped(_:)))
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
-        view.addGestureRecognizer(tapGesture)
-        
         myPageView.imageEditButton.addTarget(self, action: #selector(editImage), for: .touchUpInside)
         myPageView.moveToGallery.addTarget(self, action: #selector(moveToGallery), for: .touchUpInside)
         myPageView.userNameEditButton.addTarget(self, action: #selector(editUserName), for: .touchUpInside)
         myPageView.logoutButton.button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
-        
-        myPageView.userCodeLabel.text = UserDefaultsManager.shared.getMemberCode()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
+        view.addGestureRecognizer(tapGesture)
     }
     
+    private func setupBindings() {
+        viewModel.onLogoutSuccess = { [weak self] in
+            self?.navigateToLogin()
+        }
+    }
+    
+    private func navigateToLogin() {
+        let loginVC = LoginViewController()
+        let navController = UINavigationController(rootViewController: loginVC)
+        
+        // 윈도우에 접근하여 루트 뷰 컨트롤러 변경
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
+           let window = sceneDelegate.window {
+            window.rootViewController = navController
+            window.makeKeyAndVisible()
+        }
+    }
+    
+    // MARK: - Selectors
     @objc func logoutButtonTapped() {
-        UserDefaultsManager.shared.clearData()
-        UserDefaultsManager.shared.saveIsLoggedIn(false)
+        viewModel.logout()
     }
     
     @objc private func editImage() {

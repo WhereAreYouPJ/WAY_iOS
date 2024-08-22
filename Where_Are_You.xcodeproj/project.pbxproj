@@ -20,6 +20,7 @@
 		99107EA12C6F2C94007D129F /* SaveFeedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99107EA02C6F2C94007D129F /* SaveFeedResponse.swift */; };
 		99107EA32C6F3E42007D129F /* DDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99107EA22C6F3E42007D129F /* DDay.swift */; };
 		99107EA52C6F3E4A007D129F /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99107EA42C6F3E4A007D129F /* Place.swift */; };
+		9910B4322C76BE3000DBE375 /* AlbumService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9910B4312C76BE3000DBE375 /* AlbumService.swift */; };
 		9910B8472C71B59E005F7EEE /* AccountSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F78F1D2C09C98D004C0C72 /* AccountSearchView.swift */; };
 		9910B8482C71B5A4005F7EEE /* DDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5512C453B43002EEEC7 /* DDayViewController.swift */; };
 		9910B8492C71B617005F7EEE /* ResetPasswordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CA4F272C33B72C007C027C /* ResetPasswordUseCase.swift */; };
@@ -203,6 +204,7 @@
 		99107EA02C6F2C94007D129F /* SaveFeedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFeedResponse.swift; sourceTree = "<group>"; };
 		99107EA22C6F3E42007D129F /* DDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDay.swift; sourceTree = "<group>"; };
 		99107EA42C6F3E4A007D129F /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		9910B4312C76BE3000DBE375 /* AlbumService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumService.swift; sourceTree = "<group>"; };
 		9910B84D2C71B7F6005F7EEE /* AddFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeedViewController.swift; sourceTree = "<group>"; };
 		9910B84F2C71E5B5005F7EEE /* ScheduleDropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDropDownView.swift; sourceTree = "<group>"; };
 		9910B8512C71EAA4005F7EEE /* ScheduleDropDownCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDropDownCell.swift; sourceTree = "<group>"; };
@@ -472,6 +474,15 @@
 				992F57D92C5B294F00219C6B /* Responses */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		9910B4302C76BE2000DBE375 /* Photo */ = {
+			isa = PBXGroup;
+			children = (
+				9913A44E2C75CD0A00309DBF /* PhotoAuthService.swift */,
+				9910B4312C76BE3000DBE375 /* AlbumService.swift */,
+			);
+			path = Photo;
 			sourceTree = "<group>";
 		};
 		992F57C32C5B1EBE00219C6B /* Requests */ = {
@@ -745,6 +756,7 @@
 		99C9B2262C019748008D7CBD /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				9910B4302C76BE2000DBE375 /* Photo */,
 				D59E17502C6F3015007D8D4B /* CoreData */,
 				99D8FBBE2C3BA1FB0062AF10 /* Customs */,
 				99107E9E2C6EDAE2007D129F /* ValidationError.swift */,
@@ -756,7 +768,6 @@
 				99C140372C64943F00A706B6 /* LayoutAdapter.swift */,
 				99E7BA582C69A5D500F79C96 /* ImageUtility.swift */,
 				99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */,
-				9913A44E2C75CD0A00309DBF /* PhotoAuthService.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1358,6 +1369,7 @@
 				99C140382C64943F00A706B6 /* LayoutAdapter.swift in Sources */,
 				995358412C00C555005BF799 /* LoginViewController.swift in Sources */,
 				99CEAD4A2C539743006B3D41 /* SplashViewController.swift in Sources */,
+				9910B4322C76BE3000DBE375 /* AlbumService.swift in Sources */,
 				99E755512C22E66F0016A0A6 /* MemberService.swift in Sources */,
 				99D8FBC22C3BA25B0062AF10 /* CustomTextField.swift in Sources */,
 				99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */,

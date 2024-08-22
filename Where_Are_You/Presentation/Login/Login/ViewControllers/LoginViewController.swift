@@ -12,6 +12,11 @@ class LoginViewController: UIViewController {
     private let loginView = LoginView()
     
     // MARK: - Lifecycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = loginView

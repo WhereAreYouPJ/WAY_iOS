@@ -72,5 +72,6 @@ class UserDefaultsManager {
         UserDefaults.standard.removeObject(forKey: accessTokenKey)
         UserDefaults.standard.removeObject(forKey: refreshTokenKey)
         UserDefaults.standard.removeObject(forKey: memberSeqKey)
+        UserDefaults.standard.removeObject(forKey: memberCode)
     }
 }

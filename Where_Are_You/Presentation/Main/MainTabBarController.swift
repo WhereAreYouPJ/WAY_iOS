@@ -13,18 +13,7 @@ class MainTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        authenticateUserAndConfigureUI()
-    }
-    
-    func authenticateUserAndConfigureUI() {
-        if UserDefaultsManager.shared.isLoggedIn() {
-            // 로그인 되어있으면 MainTabBarController를 표시
-            configureMainInterface()
-        } else {
-            // 로그인 되어있지 않으면 로그인 화면으로 이동
-//            showLoginScreen()
-            configureMainInterface()
-        }
+        configureMainInterface()
     }
     
     private func configureMainInterface() {
@@ -45,12 +34,6 @@ class MainTabBarController: UITabBarController {
         navigationController?.navigationBar.isHidden = true
         // 탭바의 분리선 추가
         addTabBarSeparator()
-    }
-    
-    private func showLoginScreen() {
-        let loginVC = LoginViewController()
-        loginVC.modalPresentationStyle = .fullScreen
-        present(loginVC, animated: true, completion: nil)
     }
     
     // 뷰 컨트롤러를 네비게이션 컨트롤러로 감싸고 탭바 아이템을 설정하는 함수
