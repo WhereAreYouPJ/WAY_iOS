@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ScheduleView: View {
     @State private var showModal = false
+    @State private var showModal2 = false
     
     var body: some View {
         VStack {
@@ -21,6 +22,8 @@ struct ScheduleView: View {
                 CreateScheduleView()
                     .interactiveDismissDisabled()
             })
+            
+            
         }
     }
 }
