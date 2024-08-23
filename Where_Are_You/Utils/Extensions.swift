@@ -29,6 +29,7 @@ extension UIColor {
     static let popupButtonColor = UIColor.rgb(red: 81, green: 70, blue: 117)
     static let alertActionButtonColor = UIColor.rgb(red: 224, green: 158, blue: 255)
     
+    static let color5 = UIColor.rgb(red: 5, green: 5, blue: 5)
     static let color17 = UIColor.rgb(red: 17, green: 17, blue: 17)
     static let color29 = UIColor.rgb(red: 29, green: 29, blue: 29)
     static let color34 = UIColor.rgb(red: 34, green: 34, blue: 34)

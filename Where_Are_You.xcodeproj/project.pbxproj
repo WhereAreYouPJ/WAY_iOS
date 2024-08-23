@@ -756,7 +756,6 @@
 		99C9B2262C019748008D7CBD /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				9910B4302C76BE2000DBE375 /* Photo */,
 				D59E17502C6F3015007D8D4B /* CoreData */,
 				99D8FBBE2C3BA1FB0062AF10 /* Customs */,
 				99107E9E2C6EDAE2007D129F /* ValidationError.swift */,
@@ -926,6 +925,7 @@
 		99D5060B2C08A77900A6CF7B /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				9910B4302C76BE2000DBE375 /* Photo */,
 				990F57942C27EE3600F6E1AD /* Models */,
 				9950C64F2C103031003155A7 /* Network */,
 				99EC20A02C0D8E030018904D /* Repositories */,

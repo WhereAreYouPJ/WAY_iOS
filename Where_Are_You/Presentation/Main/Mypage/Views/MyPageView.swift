@@ -56,10 +56,10 @@ class MyPageView: UIView {
     let userCodeLabel = CustomLabel(UILabel_NotoSans: .medium, text: "qwer0865", textColor: .letterBrandColor, fontSize: 14)
     
     // 내정보관리, 위치 즐겨찾기, 피드책갈피, 피드보관함
-    private lazy var manageStackView: UIStackView = createStackView(buttonTitles: ["내 정보 관리", "위치 즐겨찾기", "피드 책갈피", "피드 보관함"])
+    private lazy var manageStackView: UIStackView = createStackView(buttonTitles: ["내 정보 관리", "위치 즐겨찾기", "피드 책갈피", "피드 보관함"], startingTag: 0)
     
     // 공지사항, 1:1이용문의
-    private lazy var supportStackView: UIStackView = createStackView(buttonTitles: ["공지사항", "1:1 이용문의"])
+    private lazy var supportStackView: UIStackView = createStackView(buttonTitles: ["공지사항", "1:1 이용문의"], startingTag: 4)
     
     // 로그아웃, 회원탈퇴
     let logoutButton = CustomButtonView(text: "로그아웃", weight: .medium, textColor: .color190, fontSize: 14)
@@ -222,7 +222,7 @@ class MyPageView: UIView {
     
     // MARK: - stackview func
     
-    private func createStackView(buttonTitles: [String]) -> UIStackView {
+    private func createStackView(buttonTitles: [String], startingTag: Int) -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 1
@@ -230,10 +230,15 @@ class MyPageView: UIView {
         stackView.clipsToBounds = true
         stackView.backgroundColor = .white
         stackView.distribution = .fillProportionally
-
-        buttonTitles.forEach { title in
+        
+        var buttonTag = startingTag
+        
+        for title in buttonTitles {
             let button = createButton(withTitle: title)
+            button.tag = buttonTag  // 버튼에 고유한 tag 값 할당
+            buttonTag += 1
             stackView.addArrangedSubview(button)
+            
             if title != buttonTitles.last {
                 let separator = createSeparator()
                 stackView.addArrangedSubview(separator)
@@ -263,7 +268,6 @@ class MyPageView: UIView {
     }
     
     // MARK: - stackview button actions
-    // TODO: 추후 버튼 액션들 수정해야함
     func setButtonActions(target: Any?, action: Selector) {
         manageStackView.arrangedSubviews.forEach {
             if let button = $0 as? UIButton {
