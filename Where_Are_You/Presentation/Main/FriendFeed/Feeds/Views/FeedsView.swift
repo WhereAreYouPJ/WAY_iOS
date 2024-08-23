@@ -12,6 +12,7 @@ class FeedsView: UIView {
     // MARK: - Properties
 
     let scrollView = UIScrollView()
+    let contentView = UIView()
     let feedsTableView = UITableView()
     
     // MARK: - Lifecycle
@@ -31,12 +32,18 @@ class FeedsView: UIView {
     private func configureViewComponents() {
         backgroundColor = .white
         addSubview(scrollView)
-        scrollView.addSubview(feedsTableView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(feedsTableView)
     }
     
     private func setupConstraints() {
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+        
+        contentView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView.contentLayoutGuide)
+            make.width.equalTo(scrollView.frameLayoutGuide)
         }
         
         feedsTableView.snp.makeConstraints { make in

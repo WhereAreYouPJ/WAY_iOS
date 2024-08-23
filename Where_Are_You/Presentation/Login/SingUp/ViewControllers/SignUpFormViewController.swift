@@ -83,7 +83,7 @@ class SignUpFormViewController: UIViewController {
         
         viewModel.onEmailSendMessage = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
-                self?.updateStatus(label: self?.signUpView.emailErrorLabel, message: message, isAvailable: isAvailable, textField: nil)
+                self?.updateStatus(label: self?.signUpView.emailErrorLabel, message: message, isAvailable: isAvailable, textField: self?.signUpView.emailTextField)
                 self?.signUpView.authStack.isHidden = !isAvailable
                 if isAvailable == true {
                     self?.signUpView.emailCheckButton.updateTitle("인증요청 완료")

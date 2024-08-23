@@ -38,6 +38,7 @@ class Utilities {
         viewController.navigationItem.title = title
     }
     
+    
     // TextField with layer and placeholder
     static func inputContainerTextField(withPlaceholder placeholder: String, fontSize: CGFloat) -> CustomTextField {
         let tf = CustomTextField()
