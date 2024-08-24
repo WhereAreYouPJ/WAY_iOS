@@ -8,75 +8,78 @@
 import SwiftUI
 
 struct CreateScheduleView: View {
-    @StateObject var viewModel: CreateScheduleViewModel
-    @Environment(\.dismiss) private var dismiss
-    @State private var path = NavigationPath()
+        @StateObject var viewModel: CreateScheduleViewModel
+        @Environment(\.dismiss) private var dismiss
+        @State private var path = NavigationPath()
     
-    @State private var schedule = Schedule()
-    @State private var isAllDay = true
-    @State private var startTime = Date()
-    @State private var endTime = Date()
+        @State private var schedule = Schedule()
+        @State private var isAllDay = true
+        @State private var startTime = Date()
+        @State private var endTime = Date()
     
-    private let dateFormatter: DateFormatter
+        private let dateFormatter: DateFormatter
     
-    init() {
-        let calendar = Calendar.current
-        let now = Date()
-        let components = calendar.dateComponents([.year, .month, .day, .hour], from: now)
-        let startOfHour = calendar.date(from: components)!
-        
-        _viewModel = StateObject(wrappedValue: CreateScheduleViewModel())
-        _startTime = State(initialValue: startOfHour)
-        _endTime = State(initialValue: calendar.date(byAdding: .hour, value: 1, to: startOfHour)!)
-        
-        dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy.MM.dd a hh:mm"
-    }
+        init() {
+            let calendar = Calendar.current
+            let now = Date()
+            let components = calendar.dateComponents([.year, .month, .day, .hour], from: now)
+            let startOfHour = calendar.date(from: components)!
     
-    var body: some View {
-        NavigationStack(path: $path) {
-            VStack(alignment: .leading, content: {
-                TextField("", text: $schedule.title, prompt: Text("메모를 작성해주세요.").foregroundColor(Color(.color118)))
-                Divider()
-                    .padding(.bottom, 16)
-                
-                DateAndTimeView(isAllDay: $isAllDay, startTime: $startTime, endTime: $endTime)
-                
-                AddPlaceView(location: $schedule.location, streetName: $schedule.streetName, x: $schedule.x, y: $schedule.y, path: $path)
-                
-                AddFriendsView()
-                
-                SetColorView()
-                
-                MemoView()
-            })
-            .padding(15)
-            .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("취소", role: .cancel) {
-                        dismiss()
+            _viewModel = StateObject(wrappedValue: CreateScheduleViewModel())
+            _startTime = State(initialValue: startOfHour)
+            _endTime = State(initialValue: calendar.date(byAdding: .hour, value: 1, to: startOfHour)!)
+    
+            dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy.MM.dd a hh:mm"
+        }
+    
+        var body: some View {
+            NavigationStack(path: $path) {
+                VStack(alignment: .leading, content: {
+                    TextField("", text: $schedule.title, prompt: Text("메모를 작성해주세요.").foregroundColor(Color(.color118)))
+                    Divider()
+                        .padding(.bottom, 16)
+    
+                    DateAndTimeView(isAllDay: $isAllDay, startTime: $startTime, endTime: $endTime)
+    
+                    AddPlaceView(location: $schedule.location, streetName: $schedule.streetName, x: $schedule.x, y: $schedule.y, path: $path)
+    
+                    AddFriendsView(path: $path)
+    
+                    SetColorView()
+    
+                    MemoView()
+                })
+                .padding(15)
+                .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("취소", role: .cancel) {
+                            dismiss()
+                        }
+                        .foregroundStyle(Color.red)
                     }
-                    .foregroundStyle(Color.red)
-                }
-                ToolbarItem(placement: .primaryAction) {
-                    Button("추가") {
-                        viewModel.postSchedule(schedule: schedule)
-                        dismiss()
+                    ToolbarItem(placement: .primaryAction) {
+                        Button("추가") {
+                            viewModel.postSchedule(schedule: schedule)
+                            dismiss()
+                        }
+                        .foregroundStyle(schedule.title.isEmpty ? Color.gray : Color.red)
+                        .disabled(schedule.title.isEmpty)
                     }
-                    .foregroundStyle(schedule.title.isEmpty ? Color.gray : Color.red)
-                    .disabled(schedule.title.isEmpty)
                 }
-            }
-            .navigationTitle("일정 추가")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(for: String.self) { route in
-                if route == "searchPlace" {
-                    SearchPlaceView(location: $schedule.location, streetName: $schedule.streetName, x: $schedule.x, y: $schedule.y, path: $path)
+                .navigationTitle("일정 추가")
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationDestination(for: String.self) { route in
+                    if route == "searchPlace" {
+                        SearchPlaceView(location: $schedule.location, streetName: $schedule.streetName, x: $schedule.x, y: $schedule.y, path: $path)
+                    } else if route == "friends" {
+                        FriendsView()
+                    }
                 }
             }
         }
-    }
+
 }
 
 struct DateAndTimeView: View {
@@ -163,17 +166,20 @@ struct AddPlaceView: View {
 
 struct AddFriendsView: View {
     @State private var friends: [String] = [] // dump: "김민정", "임창균", "조승연", "김민지"
+    @Binding var path: NavigationPath
     
     var body: some View {
         Text("친구추가")
         Divider()
         
-        // TODO: friends 배열 비어있을 때 처리 필요(현재 코드에서 배열 비워두면 오류 발생)
         HStack {
             Image("icon-friends")
             if friends.isEmpty {
                 Text("친구 추가")
                     .foregroundStyle(Color(.color118))
+                    .onTapGesture {
+                        path.append("friends")
+                    }
             } else {
                 let count = friends.count
                 ForEach(0..<min(3, count), id: \.self) { idx in
