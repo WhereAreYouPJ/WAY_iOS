@@ -103,7 +103,6 @@ struct DateAndTimeView: View {
         }
         Divider()
         
-        // TODO: 시각 hh(두 글자)로 포맷팅 필요, wheel 모달 창 띄우기
         DatePicker("시작", selection: $startTime, displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
             .environment(\.locale, Locale(identifier: "ko_KR"))
             .environment(\.calendar, Calendar(identifier: .gregorian))

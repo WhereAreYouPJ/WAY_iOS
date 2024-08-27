@@ -10,7 +10,7 @@ import SnapKit
 
 class FriendsListViewController: UIViewController {
     
-    private let friendsListView = FriendsListView()
+    private let friendsListView = FriendsListView2()
     private let viewModel = FriendsViewModel()
     
     override func loadView() {

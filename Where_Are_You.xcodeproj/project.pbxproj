@@ -159,6 +159,7 @@
 		D57B46E82C785F5400657C51 /* PlaceMapVCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57B46E72C785F5400657C51 /* PlaceMapVCWrapper.swift */; };
 		D57B46F72C786AFD00657C51 /* KakaoMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57B46F62C786AFD00657C51 /* KakaoMapView.swift */; };
 		D58EC0692C633217001BC030 /* SearchPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58EC0682C633217001BC030 /* SearchPlaceView.swift */; };
+		D592D8EF2C7DE3B100736D93 /* SearchFriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */; };
 		D59E17522C6F3024007D8D4B /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59E17512C6F3024007D8D4B /* DataController.swift */; };
 		D5B79A162C5B83CD004EDDF2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D5D24CDC2C70756D00EDADAF /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D24CDB2C70756D00EDADAF /* Config.swift */; };
@@ -352,6 +353,7 @@
 		D57B46E72C785F5400657C51 /* PlaceMapVCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlaceMapVCWrapper.swift; path = Where_Are_You/Presentation/Main/Schedule/Views/PlaceMapVCWrapper.swift; sourceTree = SOURCE_ROOT; };
 		D57B46F62C786AFD00657C51 /* KakaoMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapView.swift; sourceTree = "<group>"; };
 		D58EC0682C633217001BC030 /* SearchPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceView.swift; sourceTree = "<group>"; };
+		D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendsViewModel.swift; sourceTree = "<group>"; };
 		D59E17512C6F3024007D8D4B /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		D5D24CDB2C70756D00EDADAF /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		D5DCBF332C7435E2003F0246 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
@@ -1139,6 +1141,7 @@
 			isa = PBXGroup;
 			children = (
 				D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */,
+				D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1480,6 +1483,7 @@
 				99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */,
 				D55DFC312C61022900EEEF51 /* CreateScheduleView.swift in Sources */,
 				D58EC0692C633217001BC030 /* SearchPlaceView.swift in Sources */,
+				D592D8EF2C7DE3B100736D93 /* SearchFriendsViewModel.swift in Sources */,
 				D5496DD22C6B69570056C196 /* PlaceMapView.swift in Sources */,
 				99149FED2C4F97EA00136097 /* TimeHelper.swift in Sources */,
 				D54C040E2C651B8A009CC419 /* ScheduleAPI.swift in Sources */,

@@ -34,20 +34,6 @@ class CreateScheduleViewModel: ObservableObject {
         dateFormatter.dateFormat = "yyyy.MM.dd a hh:mm"
     }
     
-    func addFriend(_ friend: Friend) {
-        if !selectedFriends.contains(where: { $0.id == friend.id }) {
-            selectedFriends.append(friend)
-        }
-    }
-    
-    func removeFriend(_ friend: Friend) {
-        selectedFriends.removeAll { $0.id == friend.id }
-    }
-    
-    func updateFriends(_ friends: [Friend]) {
-        selectedFriends = friends
-    }
-    
     func postSchedule(schedule: Schedule) {
         provider.request(.postSchedule(request: CreateScheduleBody.init(title: schedule.title, startTime: schedule.startTime, endTime: schedule.endTime, location: schedule.location, streetName: schedule.streetName, x: schedule.x, y: schedule.y, color: schedule.color, memo: schedule.memo, invitedMemberSeqs: schedule.invitedMemberSeqs, createMemberSeq: schedule.createMemberSeq))) { response in
             switch response {
