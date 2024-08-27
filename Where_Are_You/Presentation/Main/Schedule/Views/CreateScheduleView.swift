@@ -37,6 +37,7 @@ struct CreateScheduleView: View {
             NavigationStack(path: $path) {
                 VStack(alignment: .leading, content: {
                     TextField("", text: $schedule.title, prompt: Text("메모를 작성해주세요.").foregroundColor(Color(.color118)))
+                    
                     Divider()
                         .padding(.bottom, 16)
     
@@ -101,16 +102,19 @@ struct DateAndTimeView: View {
             }
             .transition(.opacity.combined(with: .move(edge: .top)))
         }
+        
         Divider()
         
         DatePicker("시작", selection: $startTime, displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
             .environment(\.locale, Locale(identifier: "ko_KR"))
             .environment(\.calendar, Calendar(identifier: .gregorian))
+        
         Divider()
         
         DatePicker("종료", selection: $endTime, in: startTime..., displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
             .environment(\.locale, Locale(identifier: "ko_KR"))
             .environment(\.calendar, Calendar(identifier: .gregorian))
+        
         Divider()
             .padding(.bottom, 20)
     }
@@ -169,6 +173,7 @@ struct AddFriendsView: View {
 
     var body: some View {
         Text("친구추가")
+        
         Divider()
 
         HStack {
@@ -201,6 +206,7 @@ struct AddFriendsView: View {
 struct SetColorView: View {
     var body: some View {
         Text("일정컬러")
+        
         Divider()
         
         HStack {
@@ -239,7 +245,9 @@ struct MemoView: View {
     var body: some View {
         HStack {
             Text("메모")
+            
             Spacer()
+            
             Text("\(memo.count)/\(maxLength)")
                 .foregroundColor(memo.count == maxLength ? .red : .gray)
         }
