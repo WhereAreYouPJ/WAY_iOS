@@ -12,7 +12,6 @@ let textFieldFontSize: CGFloat = 14
 let descriptionFontSize: CGFloat = 12
 
 class Utilities {
-    
     // 네비게이션 바 생성
     static func createNavigationBar(for viewController: UIViewController, title: String, backButtonAction: Selector? = nil, showBackButton: Bool = true) {
         // 네비게이션 바의 외형을 설정
