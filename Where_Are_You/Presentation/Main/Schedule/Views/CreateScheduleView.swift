@@ -44,7 +44,7 @@ struct CreateScheduleView: View {
     
                     AddPlaceView(location: $schedule.location, streetName: $schedule.streetName, x: $schedule.x, y: $schedule.y, path: $path)
     
-                    AddFriendsView(path: $path)
+                    AddFriendsView(selectedFriends: $viewModel.selectedFriends, path: $path)
     
                     SetColorView()
     
@@ -74,7 +74,7 @@ struct CreateScheduleView: View {
                     if route == "searchPlace" {
                         SearchPlaceView(location: $schedule.location, streetName: $schedule.streetName, x: $schedule.x, y: $schedule.y, path: $path)
                     } else if route == "friends" {
-                        FriendsView()
+                        FriendsView(selectedFriends: $viewModel.selectedFriends)
                     }
                 }
             }
@@ -164,31 +164,31 @@ struct AddPlaceView: View {
 }
 
 struct AddFriendsView: View {
-    @State private var friends: [String] = [] // dump: "김민정", "임창균", "조승연", "김민지"
+    @Binding var selectedFriends: [Friend]
     @Binding var path: NavigationPath
-    
+
     var body: some View {
         Text("친구추가")
         Divider()
-        
+
         HStack {
             Image("icon-friends")
-            if friends.isEmpty {
+            if selectedFriends.isEmpty {
                 Text("친구 추가")
                     .foregroundStyle(Color(.color118))
                     .onTapGesture {
                         path.append("friends")
                     }
             } else {
-                let count = friends.count
+                let count = selectedFriends.count
                 ForEach(0..<min(3, count), id: \.self) { idx in
                     if idx < count - 1 {
-                        Text(friends[idx] + ", ")
+                        Text(selectedFriends[idx].name + ", ")
                     } else {
-                        Text(friends[idx])
+                        Text(selectedFriends[idx].name)
                     }
                 }
-                
+
                 if count > 3 {
                     Text("외 " + String(count - 3) + "명")
                 }

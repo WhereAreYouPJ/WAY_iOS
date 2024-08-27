@@ -14,12 +14,12 @@ class SearchFriendsViewModel: ObservableObject {
     @Published var selectedFavorites: Set<UUID> = []
     @Published var selectedFriends: Set<UUID> = []
     @Published var searchText: String = ""
-
+    
     init() {
         setupInitialData()
         setupBindings()
     }
-
+    
     private func setupInitialData() {
         favorites = [
             Friend(profileImage: "exampleProfileImage", name: "김친구"),
@@ -32,7 +32,7 @@ class SearchFriendsViewModel: ObservableObject {
             Friend(profileImage: "exampleProfileImage", name: "김친구")
         ]
     }
-
+    
     private func setupBindings() {
         $searchText
             .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
@@ -40,7 +40,7 @@ class SearchFriendsViewModel: ObservableObject {
                 self?.objectWillChange.send()
             }
     }
-
+    
     var filteredFavorites: [Friend] {
         if searchText.isEmpty {
             return favorites
@@ -48,7 +48,7 @@ class SearchFriendsViewModel: ObservableObject {
             return favorites.filter { $0.name.lowercased().contains(searchText.lowercased()) }
         }
     }
-
+    
     var filteredFriends: [Friend] {
         if searchText.isEmpty {
             return friends
@@ -56,12 +56,12 @@ class SearchFriendsViewModel: ObservableObject {
             return friends.filter { $0.name.lowercased().contains(searchText.lowercased()) }
         }
     }
-
+    
     var selectedList: [Friend] {
         favorites.filter { selectedFavorites.contains($0.id) } +
         friends.filter { selectedFriends.contains($0.id) }
     }
-
+    
     func toggleSelection(for friend: Friend) {
         if favorites.contains(where: { $0.id == friend.id }) {
             if selectedFavorites.contains(friend.id) {
@@ -77,25 +77,28 @@ class SearchFriendsViewModel: ObservableObject {
             }
         }
     }
-
+    
     func isSelected(friend: Friend) -> Bool {
         selectedFavorites.contains(friend.id) || selectedFriends.contains(friend.id)
     }
-
+    
     func removeFromSelection(friend: Friend) {
         selectedFavorites.remove(friend.id)
         selectedFriends.remove(friend.id)
     }
-
+    
     func clearSearch() {
         searchText = ""
     }
-
-    func confirmSelection() {
-        // TODO: Implement the action for confirming the selection
-        print("Selected favorites: \(selectedFavorites)")
-        print("Selected friends: \(selectedFriends)")
+    
+    func getSelectedFriends() -> [Friend] {
+        return favorites.filter { selectedFavorites.contains($0.id) } +
+        friends.filter { selectedFriends.contains($0.id) }
     }
-
-    // TODO: Implement sorting functionality for friends list
+    
+    func confirmSelection() -> [Friend] {
+        let selectedFriends = getSelectedFriends()
+        print("Selected friends: \(selectedFriends.map { $0.name })")
+        return selectedFriends
+    }
 }

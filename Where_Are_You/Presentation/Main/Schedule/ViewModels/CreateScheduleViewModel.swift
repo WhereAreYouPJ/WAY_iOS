@@ -34,6 +34,10 @@ class CreateScheduleViewModel: ObservableObject {
         dateFormatter.dateFormat = "yyyy.MM.dd a hh:mm"
     }
     
+    func updateSelectedFriends(_ friends: [Friend]) {
+        selectedFriends = friends
+    }
+    
     func postSchedule(schedule: Schedule) {
         provider.request(.postSchedule(request: CreateScheduleBody.init(title: schedule.title, startTime: schedule.startTime, endTime: schedule.endTime, location: schedule.location, streetName: schedule.streetName, x: schedule.x, y: schedule.y, color: schedule.color, memo: schedule.memo, invitedMemberSeqs: schedule.invitedMemberSeqs, createMemberSeq: schedule.createMemberSeq))) { response in
             switch response {
