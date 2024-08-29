@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class FriendsListView: UIView {
+class FriendsListView2: UIView { // 이름 변경됨
     // MARK: - Properties
     
     let scrollView = UIScrollView()

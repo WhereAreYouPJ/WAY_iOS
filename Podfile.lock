@@ -1,43 +1,103 @@
 PODS:
   - Alamofire (5.9.1)
+  - KakaoMapsSDK (2.10.4)
+  - KakaoSDK (2.22.5):
+    - KakaoSDKAuth (= 2.22.5)
+    - KakaoSDKCert (= 2.22.5)
+    - KakaoSDKCommon (= 2.22.5)
+    - KakaoSDKFriend (= 2.22.5)
+    - KakaoSDKNavi (= 2.22.5)
+    - KakaoSDKShare (= 2.22.5)
+    - KakaoSDKTalk (= 2.22.5)
+    - KakaoSDKTemplate (= 2.22.5)
+    - KakaoSDKUser (= 2.22.5)
+  - KakaoSDKAuth (2.22.5):
+    - KakaoSDKCommon (= 2.22.5)
+  - KakaoSDKCert (2.22.5):
+    - KakaoSDKCertCore (= 2.22.5)
+    - KakaoSDKUser (= 2.22.5)
+  - KakaoSDKCertCore (2.22.5)
+  - KakaoSDKCommon (2.22.5):
+    - KakaoSDKCommon/Common (= 2.22.5)
+    - KakaoSDKCommon/Network (= 2.22.5)
+  - KakaoSDKCommon/Common (2.22.5)
+  - KakaoSDKCommon/Network (2.22.5):
+    - Alamofire (~> 5.9.0)
+    - KakaoSDKCommon/Common (= 2.22.5)
+  - KakaoSDKFriend (2.22.5):
+    - KakaoSDKFriendCore (= 2.22.5)
+    - KakaoSDKUser (= 2.22.5)
+  - KakaoSDKFriendCore (2.22.5)
+  - KakaoSDKNavi (2.22.5):
+    - KakaoSDKCommon/Common (= 2.22.5)
+  - KakaoSDKShare (2.22.5):
+    - KakaoSDKCommon (= 2.22.5)
+    - KakaoSDKTemplate (= 2.22.5)
+  - KakaoSDKTalk (2.22.5):
+    - KakaoSDKTemplate (= 2.22.5)
+    - KakaoSDKUser (= 2.22.5)
+  - KakaoSDKTemplate (2.22.5):
+    - KakaoSDKCommon/Common (= 2.22.5)
+  - KakaoSDKUser (2.22.5):
+    - KakaoSDKAuth (= 2.22.5)
   - KeychainAccess (4.2.2)
   - Moya (15.0.0):
     - Moya/Core (= 15.0.0)
   - Moya/Core (15.0.0):
     - Alamofire (~> 5.0)
-  - NMapsGeometry (1.0.2)
-  - NMapsMap (3.19.0):
-    - NMapsGeometry
   - SnapKit (5.7.1)
-  - SwiftLint (0.56.1)
+  - SwiftLint (0.56.2)
 
 DEPENDENCIES:
   - Alamofire
+  - KakaoMapsSDK
+  - KakaoSDK
   - KeychainAccess
   - Moya
-  - NMapsMap
   - SnapKit
   - SwiftLint
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - Alamofire
+    - KakaoMapsSDK
+    - KakaoSDK
+    - KakaoSDKAuth
+    - KakaoSDKCert
+    - KakaoSDKCertCore
+    - KakaoSDKCommon
+    - KakaoSDKFriend
+    - KakaoSDKFriendCore
+    - KakaoSDKNavi
+    - KakaoSDKShare
+    - KakaoSDKTalk
+    - KakaoSDKTemplate
+    - KakaoSDKUser
     - KeychainAccess
     - Moya
-    - NMapsGeometry
-    - NMapsMap
     - SnapKit
     - SwiftLint
 
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
+  KakaoMapsSDK: 6ceb9740762945bcefb1cdb61123e48abf6e6a5d
+  KakaoSDK: 171957ff44eeefeef968896c4a0c313d5c64f49d
+  KakaoSDKAuth: 857224e06f78412cdf41a9e601a41d00b2d592ee
+  KakaoSDKCert: f32df398dc17453730f600e7330b80b2b4f6e5cf
+  KakaoSDKCertCore: 30b03fb53a5940ad8e2000950c58239628abe0e5
+  KakaoSDKCommon: 05078c15d1faa7e97728e26c518a992b5cffe93c
+  KakaoSDKFriend: 0dd0f3e46352e24cfcd27342bc55766e2fcbde38
+  KakaoSDKFriendCore: 7bf0ff782d9a9bd0a2eebe33878dc66e9de14993
+  KakaoSDKNavi: 2bff42ebebfb1a960f829a7cec1438de7215e410
+  KakaoSDKShare: fd25fe4569d2e0e8b58c26eabb6a8590a7078d40
+  KakaoSDKTalk: 524ae7c8cea2a7d5aedfbe572d3d4753e0991afb
+  KakaoSDKTemplate: add702fd8cd6c9dead7cbf0af731d8cadcf43057
+  KakaoSDKUser: b37905ae618cfc3f0310dbbb5236320d7335bcd2
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
-  NMapsGeometry: 4e02554fa9880ef02ed96b075dc84355d6352479
-  NMapsMap: 99c10429d93340780b6f88d3fc7c0a3850b43664
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
-  SwiftLint: c5fa0b7eece474d43d2178b581a1242a16267347
+  SwiftLint: bd7cfb914762ab5f0cbb632964849571db075706
 
-PODFILE CHECKSUM: 477c5c4e0d12f85eaa0767be5afe9cfb0fbb6b97
+PODFILE CHECKSUM: eae0b76be436058f27c8bfeb4b06328adcf3b592
 
 COCOAPODS: 1.15.2
