@@ -21,7 +21,7 @@ class BottomButtonView: UIView {
     var button: CustomButton
     
     init(title: String) {
-        self.button = CustomButton(title: title, backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
+        self.button = CustomButton(title: title, backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: LayoutAdapter.shared.scale(value: 18)))
         super.init(frame: .zero)
         backgroundColor = .white
         setupView(title: title)
@@ -43,10 +43,10 @@ class BottomButtonView: UIView {
         addSubview(button)
         button.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(border.snp.bottom).offset(12)
-            make.leading.equalToSuperview().offset(15)
-            make.height.equalTo(self.snp.width).multipliedBy(0.145)
-            make.bottom.equalToSuperview().inset(24)
+            make.top.equalTo(border.snp.bottom).offset(LayoutAdapter.shared.scale(value: 12))
+            make.leading.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 15))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
+            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
         }
     }
 }
@@ -86,7 +86,7 @@ class CustomButton: UIButton {
         contentVerticalAlignment = .center
         
         // 버튼 모서리 둥글게
-        layer.cornerRadius = 6
+        layer.cornerRadius = LayoutAdapter.shared.scale(value: 6)
         clipsToBounds = true
     }
     

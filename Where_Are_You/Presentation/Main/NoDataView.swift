@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NoFeedsView: UIView {
+class NoDataView: UIView {
     // MARK: - Properties
 
     private let borderView: UIView = {

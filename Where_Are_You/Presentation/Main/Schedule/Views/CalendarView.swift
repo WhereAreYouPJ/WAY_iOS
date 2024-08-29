@@ -29,7 +29,6 @@ struct CalendarView: View {
                 calendarGridView(in: geometry)
             }
             .padding(.horizontal, 10)
-            .padding(.top, 10)
             .frame(width: geometry.size.width, height: geometry.size.height)
         }
     }

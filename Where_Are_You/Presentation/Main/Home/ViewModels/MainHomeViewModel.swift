@@ -1,4 +1,10 @@
-import Foundation
+//
+//  MainHomeViewModel.swift
+//  Where_Are_You
+//
+//  Created by 오정석 on 15/7/2024.
+//
+
 import UIKit
 
 class MainHomeViewModel {

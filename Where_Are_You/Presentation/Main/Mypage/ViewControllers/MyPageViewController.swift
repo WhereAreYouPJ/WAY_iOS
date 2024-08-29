@@ -63,7 +63,15 @@ class MyPageViewController: UIViewController {
     
     // MARK: - Selectors
     @objc func logoutButtonTapped() {
-        viewModel.logout()
+        let alert = CustomAlert(
+            title: "로그아웃",
+            message: "로그아웃을 진행하시겠습니까?",
+            cancelTitle: "취소",
+            actionTitle: "학인"
+        ) { [weak self] in
+                self?.viewModel.logout()
+            }
+        alert.showAlert(on: self)
     }
     
     @objc private func editImage() {
