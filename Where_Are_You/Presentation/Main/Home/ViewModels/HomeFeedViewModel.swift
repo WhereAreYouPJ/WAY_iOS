@@ -5,7 +5,7 @@
 //  Created by 오정석 on 15/7/2024.
 //
 
-import UIKit
+import Foundation
 
 class HomeFeedViewModel {
     var onFeedsDataFetched: (() -> Void)?
