@@ -45,8 +45,7 @@ class BottomButtonView: UIView {
             make.centerX.equalToSuperview()
             make.top.equalTo(border.snp.bottom).offset(LayoutAdapter.shared.scale(value: 12))
             make.leading.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 15))
-            // TODO: height기준 찾아서 LayoutAdapter.shared.scale(value: <#T##CGFloat#>)로 수정하기
-            make.height.equalTo(self.snp.width).multipliedBy(0.145)
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
             make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
         }
     }

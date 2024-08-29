@@ -5,7 +5,6 @@
 //  Created by 오정석 on 15/7/2024.
 //
 
-import Foundation
 import UIKit
 
 class BannerViewModel {

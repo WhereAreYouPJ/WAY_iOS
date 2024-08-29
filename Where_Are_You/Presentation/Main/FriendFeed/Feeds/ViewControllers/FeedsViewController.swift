@@ -11,7 +11,7 @@ import SwiftUI
 class FeedsViewController: UIViewController {
     // MARK: - Properties
     private var feedsView: FeedsView?
-    private var noFeedsView: NoFeedsView?
+    private var noFeedsView: NoDataView?
     var viewModel: FeedDetailViewModel!
     private var feedImagesViewController: FeedImagesViewController!
     
@@ -62,7 +62,7 @@ class FeedsViewController: UIViewController {
     }
     
     private func addNoFeedsView() {
-        noFeedsView = NoFeedsView()
+        noFeedsView = NoDataView()
         view.addSubview(noFeedsView!)
         
         noFeedsView!.snp.makeConstraints { make in

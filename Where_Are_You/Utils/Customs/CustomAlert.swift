@@ -109,6 +109,7 @@ class CustomAlert: UIView {
     }
     
     @objc private func actionTapped() {
+        print("확인 버튼 눌림")
         self.action?()
         self.dismissAlert()
     }
