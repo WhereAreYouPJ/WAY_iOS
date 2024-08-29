@@ -7,27 +7,10 @@
 
 import SwiftUI
 
-//struct CalendarView: View {
-//    @State private var showModal = false
-//
-//    var body: some View {
-//        VStack {
-//            Button {
-//                self.showModal = true
-//            } label: {
-//                Text("일정 추가")
-//            }
-//            .sheet(isPresented: self.$showModal, content: {
-//                CreateScheduleView()
-//                    .interactiveDismissDisabled()
-//            })
-//        }
-//    }
-//}
-
 struct CalendarView: View {
     @State private var month: Date = Date()
     @State private var clickedCurrentMonthDates: Date?
+    @State private var showMenu = false
     @State private var showCreateSchedule = false
     
     init(
@@ -45,11 +28,13 @@ struct CalendarView: View {
                 weekdayView
                 calendarGridView(in: geometry)
             }
+            .padding(.horizontal, 10)
+            .padding(.top, 10)
             .frame(width: geometry.size.width, height: geometry.size.height)
         }
     }
     
-    // MARK: - 헤더 뷰
+    // MARK: 헤더
     private var headerView: some View {
         VStack {
             HStack {
@@ -61,27 +46,27 @@ struct CalendarView: View {
                     Image("icon-notification")
                 })
                 
-                Button(
-                    action: {
-                        self.showCreateSchedule = true
-                    },
-                    label: {
-                        Image("icon-plus")
-                            .font(.title)
-                            .foregroundColor(.black)
-                    }
-                )
-                .sheet(isPresented: self.$showCreateSchedule, content: {
-                    CreateScheduleView()
-                        .interactiveDismissDisabled()
-                })
+                Menu {
+                    Button(action: {self.showCreateSchedule = true}, label: {
+                        Text("일정 추가")
+                    })
+                    .foregroundStyle(.white)
+                    .background(Color(.color81))
+                } label: {
+                    Image("icon-plus")
+                }
+                
             }
             .padding(.horizontal, 10)
             .padding(.bottom, 30)
         }
+        .sheet(isPresented: self.$showCreateSchedule, content: {
+            CreateScheduleView()
+                .interactiveDismissDisabled()
+        })
     }
     
-    // MARK: - 연월 표시
+    // MARK: 연월 표시
     private var yearMonthView: some View {
         HStack(alignment: .center, spacing: 20) {
             Button(
@@ -111,82 +96,100 @@ struct CalendarView: View {
         }
     }
     
+    // MARK: 요일 표시
     private var weekdayView: some View {
-        HStack {
-            ForEach(Self.weekdaySymbols.indices, id: \.self) { symbol in
-                Text(Self.weekdaySymbols[symbol].uppercased())
-                    .foregroundColor(.gray)
-                    .frame(maxWidth: .infinity)
+        VStack {
+            HStack {
+                ForEach(Self.weekdaySymbols.indices, id: \.self) { index in
+                    Text(Self.weekdaySymbols[index].uppercased())
+                        .foregroundColor(weekdayColor(for: index))
+                        .frame(maxWidth: .infinity)
+                }
             }
+            
+            Divider()
         }
-        .padding(.bottom, 5)
+        .padding(.vertical, 5)
     }
     
-    // MARK: - 날짜 그리드 뷰
+    // MARK: 요일 색 지정
+    private func weekdayColor(for index: Int) -> Color {
+        switch index {
+        case 0: return .red  // 일요일
+        case 6: return .blue // 토요일
+        default: return .black
+        }
+    }
+    
+    // MARK: 날짜 그리드 뷰
     private func calendarGridView(in geometry: GeometryProxy) -> some View {
         let daysInMonth: Int = numberOfDays(in: month)
         let firstWeekday: Int = firstWeekdayOfMonth(in: month) - 1
         let lastDayOfMonthBefore = numberOfDays(in: previousMonth())
         let numberOfRows = Int(ceil(Double(daysInMonth + firstWeekday) / 7.0))
         let visibleDaysOfNextMonth = numberOfRows * 7 - (daysInMonth + firstWeekday)
-        
-        let availableHeight = geometry.size.height - 100 // Subtracting approximate header height
+
+        let availableHeight = geometry.size.height - 100
         let cellHeight = availableHeight / CGFloat(numberOfRows)
-        
+
         return LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 0) {
             ForEach(-firstWeekday ..< daysInMonth + visibleDaysOfNextMonth, id: \.self) { index in
                 Group {
                     if index > -1 && index < daysInMonth {
                         let date = getDate(for: index)
                         let day = Calendar.current.component(.day, from: date)
+                        let weekday = Calendar.current.component(.weekday, from: date)
                         let clicked = clickedCurrentMonthDates == date
                         let isToday = date.formattedCalendarDayDate == today.formattedCalendarDayDate
-                        
-                        CellView(day: day, clicked: clicked, isToday: isToday)
+
+                        CellView(day: day, clicked: clicked, isToday: isToday, isCurrentMonthDay: true, weekday: weekday)
+                            .onTapGesture {
+                                clickedCurrentMonthDates = date
+                            }
                     } else if let prevMonthDate = Calendar.current.date(
                         byAdding: .day,
                         value: index + lastDayOfMonthBefore,
                         to: previousMonth()
                     ) {
                         let day = Calendar.current.component(.day, from: prevMonthDate)
-                        
-                        CellView(day: day, isCurrentMonthDay: false)
+                        let weekday = Calendar.current.component(.weekday, from: prevMonthDate)
+
+                        CellView(day: day, isCurrentMonthDay: false, weekday: weekday)
                     }
                 }
                 .frame(height: cellHeight)
-                .onTapGesture {
-                    if 0 <= index && index < daysInMonth {
-                        let date = getDate(for: index)
-                        clickedCurrentMonthDates = date
-                    }
-                }
             }
         }
     }
 }
 
-// MARK: - 일자 셀 뷰
+// MARK: 일자 셀 뷰
 private struct CellView: View {
     private var day: Int
     private var clicked: Bool
     private var isToday: Bool
     private var isCurrentMonthDay: Bool
+    private var weekday: Int
     private var textColor: Color {
-        if clicked {
-            return Color.white
-        } else if isCurrentMonthDay {
-            return Color.black
+        if isToday {
+            return .white
+        } else if !isCurrentMonthDay {
+            return .gray
         } else {
-            return Color.gray
+            switch weekday {
+            case 1: return .red
+            case 7: return .blue
+            default: return .black
+            }
         }
     }
     private var backgroundColor: Color {
         if clicked {
             return Color(.brandColor)
         } else if isToday {
-            return Color(.color212)
+            return Color(.brandColor)
         } else {
-            return Color.white
+            return .white
         }
     }
     
@@ -194,32 +197,34 @@ private struct CellView: View {
         day: Int,
         clicked: Bool = false,
         isToday: Bool = false,
-        isCurrentMonthDay: Bool = true
+        isCurrentMonthDay: Bool = true,
+        weekday: Int
     ) {
         self.day = day
         self.clicked = clicked
         self.isToday = isToday
         self.isCurrentMonthDay = isCurrentMonthDay
+        self.weekday = weekday
     }
     
     fileprivate var body: some View {
         VStack {
-            Circle()
-                .fill(backgroundColor)
-                .overlay(Text(String(day)))
-                .foregroundColor(textColor)
-                .frame(width: 30, height: 30)
-            
-            Spacer()
-            
-            if clicked {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(.red)
-                    .frame(width: 10, height: 10)
-            } else {
-                Spacer()
-                    .frame(height: 10)
+            ZStack {
+                if isToday {
+                    Circle()
+                        .fill(backgroundColor)
+                        .frame(width: 30, height: 30)
+                } else if clicked {
+                    Circle()
+                        .stroke(backgroundColor, lineWidth: 1.5)
+                        .frame(width: 30, height: 30)
+                }
+                
+                Text(String(day))
+                    .foregroundColor(textColor)
+                    .frame(width: 30, height: 30)
             }
+            Spacer()
         }
     }
 }
