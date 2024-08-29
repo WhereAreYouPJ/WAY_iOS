@@ -93,6 +93,7 @@ class MyPageViewController: UIViewController {
         case 0:
             // Handle "내 정보 관리"
             print("내 정보 관리 tapped")
+            moveToDetailController(controller: MyDetailManageViewcontroller())
         case 1:
             // Handle "위치 즐겨찾기"
             print("위치 즐겨찾기 tapped")
@@ -111,6 +112,14 @@ class MyPageViewController: UIViewController {
         default:
             break
         }
+    }
+    
+    private func moveToDetailController(controller: UIViewController) {
+        // TODO: 추후에 view를 탭바 위에 뜨는걸로 바꾸어야 함
+        let controller = controller
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
     }
     
     @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {
