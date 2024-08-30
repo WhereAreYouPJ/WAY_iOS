@@ -92,7 +92,6 @@ class MyPageViewController: UIViewController {
         switch sender.tag {
         case 0:
             // Handle "내 정보 관리"
-            print("내 정보 관리 tapped")
             moveToDetailController(controller: MyDetailManageViewcontroller())
         case 1:
             // Handle "위치 즐겨찾기"

@@ -8,9 +8,6 @@
 import UIKit
 import SnapKit
 
-let textFieldFontSize: CGFloat = 14
-let descriptionFontSize: CGFloat = 12
-
 class Utilities {
     // 네비게이션 바 생성
     static func createNavigationBar(for viewController: UIViewController, title: String, backButtonAction: Selector? = nil, showBackButton: Bool = true) {
@@ -38,11 +35,11 @@ class Utilities {
     }
     
     // TextField with layer and placeholder
-    static func inputContainerTextField(withPlaceholder placeholder: String, fontSize: CGFloat) -> CustomTextField {
+    static func inputContainerTextField(withPlaceholder placeholder: String) -> CustomTextField {
         let tf = CustomTextField()
         tf.adjustsFontForContentSizeCategory = true
-        tf.textColor = .color102
-        tf.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: fontSize))
+        tf.textColor = .color34
+        tf.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14)))
         tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.color102])
         return tf
     }

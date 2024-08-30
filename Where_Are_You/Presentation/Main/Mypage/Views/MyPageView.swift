@@ -81,39 +81,14 @@ class MyPageView: UIView {
     }()
     
     // 추가 옵션 뷰
-    let moveToGallery: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .popupButtonColor
-        button.layer.cornerRadius = LayoutAdapter.shared.scale(value: 10)
-        button.clipsToBounds = true
-        button.isHidden = true
-        
-        let label = UILabel()
-        label.text = "사진 보관함"
-        label.textColor = .white
-        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
-        label.adjustsFontForContentSizeCategory = true
-        button.addSubview(label)
-        label.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 14))
-        }
-        
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "icon-Gallery")
-        button.addSubview(imageView)
-        imageView.snp.makeConstraints { make in
-            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 22))
-            make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 13))
-        }
-        return button
-    }()
+    let moveToGallery = CustomOptionButtonView(buttons: [("사진 보관함", UIImage(named: "icon-Gallery"))])
     
     // MARK: - Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        moveToGallery.isHidden = true
+        moveToGallery.isUserInteractionEnabled = true
         configureViewComponents()
         setupConstraints()
     }

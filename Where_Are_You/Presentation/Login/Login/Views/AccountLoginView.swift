@@ -15,7 +15,7 @@ class AccountLoginView: UIView {
     
     private let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이메일 주소", textColor: .color51, fontSize: 12)
     
-    let emailTextField = Utilities.inputContainerTextField(withPlaceholder: "이메일을 입력해주세요.", fontSize: textFieldFontSize)
+    let emailTextField = Utilities.inputContainerTextField(withPlaceholder: "이메일을 입력해주세요.")
     
     let emailErrorLabel: UILabel = {
         let label = UILabel()
@@ -32,7 +32,7 @@ class AccountLoginView: UIView {
     
     private let passwordLabel = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: 12)
     
-    let passwordTextField = Utilities.inputContainerTextField(withPlaceholder: "비밀번호를 입력해주세요.", fontSize: textFieldFontSize)
+    let passwordTextField = Utilities.inputContainerTextField(withPlaceholder: "비밀번호를 입력해주세요.")
     
     lazy var passwordStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField])
