@@ -1,42 +1,42 @@
+////
+////  FavoritesTableView.swift
+////  Where_Are_You
+////
+////  Created by 오정석 on 30/7/2024.
+////
 //
-//  FavoritesTableView.swift
-//  Where_Are_You
+//import UIKit
+//import SnapKit
 //
-//  Created by 오정석 on 30/7/2024.
+//class FavoritesTableView: UIView {
+//    // MARK: - Properties
 //
-
-import UIKit
-import SnapKit
-
-class FavoritesTableView: UIView {
-    // MARK: - Properties
-
-    let tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.register(FriendsTableViewCell.self, forCellReuseIdentifier: FriendsTableViewCell.identifier)
-        tableView.separatorStyle = .none
-        tableView.isScrollEnabled = false
-        return tableView
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        setupSubviews()
-        setupConstraints()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupSubviews() {
-        addSubview(tableView)
-    }
-    
-    private func setupConstraints() {
-        tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-    }
-}
+//    let tableView: UITableView = {
+//        let tableView = UITableView()
+//        tableView.register(FriendsTableViewCell.self, forCellReuseIdentifier: FriendsTableViewCell.identifier)
+//        tableView.separatorStyle = .none
+//        tableView.isScrollEnabled = false
+//        return tableView
+//    }()
+//    
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        
+//        setupSubviews()
+//        setupConstraints()
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//    
+//    private func setupSubviews() {
+//        addSubview(tableView)
+//    }
+//    
+//    private func setupConstraints() {
+//        tableView.snp.makeConstraints { make in
+//            make.edges.equalToSuperview()
+//        }
+//    }
+//}

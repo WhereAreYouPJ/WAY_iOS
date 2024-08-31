@@ -3,31 +3,26 @@ import MapKit
 
 struct SearchPlaceView: View {
     @Environment(\.presentationMode) var presentationMode
-    @Binding var location: String
-    @Binding var streetName: String
-    @Binding var x: Double
-    @Binding var y: Double
+    @Binding var place: Place?
     @Binding var path: NavigationPath
     
-    @State private var selectedPlace: Place?
+    @State private var searchText = ""
     
     let places: [Place] = [
-        .init(name: "서울대입구", coordinate: CLLocationCoordinate2D(latitude: 37.4808, longitude: 126.9526), address: "서울 종로구 세종대로 171"),
-        .init(name: "여의도공원", coordinate: CLLocationCoordinate2D(latitude: 37.5268, longitude: 126.9244), address: "서울 종로구 세종대로 172"),
-        .init(name: "올림픽체조경기장", coordinate: CLLocationCoordinate2D(latitude: 37.5221, longitude: 127.1259), address: "서울 종로구 세종대로 173"),
-        .init(name: "재즈바", coordinate: CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), address: "서울 종로구 세종대로 174"),
-        .init(name: "신도림", coordinate: CLLocationCoordinate2D(latitude: 37.5088, longitude: 126.8912), address: "서울 종로구 세종대로 175"),
-        .init(name: "망원한강공원", coordinate: CLLocationCoordinate2D(latitude: 37.5545, longitude: 126.8964), address: "서울 종로구 세종대로 176"),
-        .init(name: "부천시청", coordinate: CLLocationCoordinate2D(latitude: 37.5037, longitude: 126.7661), address: "서울 종로구 세종대로 177")
+        .init(location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526),
+        .init(location: "여의도공원", streetName: "서울 영등포구 여의공원로 68", x: 37.5268, y: 126.9244),
+        .init(location: "올림픽체조경기장", streetName: "서울 종로구 세종대로 173", x: 37.5221, y: 127.1259),
+        .init(location: "재즈바", streetName: "서울 종로구 세종대로 174", x: 37.5665, y: 126.9780),
+        .init(location: "신도림", streetName: "서울 종로구 세종대로 175", x: 37.5088, y: 126.8912),
+        .init(location: "망원한강공원", streetName: "서울 종로구 세종대로 176", x: 37.5545, y: 126.8964),
+        .init(location: "부천시청", streetName: "서울 종로구 세종대로 177", x: 37.5037, y: 126.7661)
     ]
-    
-    @State private var searchText = ""
     
     var filteredPlaces: [Place] {
         if searchText.isEmpty {
             return places
         } else {
-            return places.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+            return places.filter { $0.location.lowercased().contains(searchText.lowercased()) }
         }
     }
     
@@ -80,10 +75,10 @@ struct SearchPlaceView: View {
                         }
                         VStack(alignment: .leading) {
                             HStack {
-                                Text(place.name)
+                                Text(place.location)
                                     .padding(2)
                             }
-                            Text(place.address)
+                            Text(place.streetName)
                                 .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 14)))
                                 .foregroundStyle(Color(.color153))
                         }
@@ -92,8 +87,8 @@ struct SearchPlaceView: View {
                             .opacity(0.3)
                     }
                     
-                    NavigationLink(destination: PlaceMapView(place: place, location: $location, streetName: $streetName, x: $x, y: $y, path: $path)) {
-                        Text(place.name)
+                    NavigationLink(destination: PlaceMapView(place: $place, path: $path)) {
+                        Text(place.location)
                     }
                     .opacity(0.0)
                 }
@@ -108,5 +103,5 @@ struct SearchPlaceView: View {
 }
 
 #Preview {
-    SearchPlaceView(location: .constant(""), streetName: .constant(""), x: .constant(0.0), y: .constant(0.0), path: .constant(NavigationPath()))
+    SearchPlaceView(place: .constant(Place(location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526)), path: .constant(NavigationPath()))
 }

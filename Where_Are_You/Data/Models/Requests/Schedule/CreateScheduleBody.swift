@@ -9,14 +9,14 @@ import Foundation
 
 struct CreateScheduleBody: ParameterConvertible {
     let title: String?
-    let startTime: String?
-    let endTime: String?
+    let startTime: Date?
+    let endTime: Date?
     let location: String?
     let streetName: String?
     let x: Double?
     let y: Double?
     let color: String?
     let memo: String?
-    let invitedMemberSeqs: [String?]
+    let invitedMemberSeqs: [Int]?
     let createMemberSeq: Int?
 }

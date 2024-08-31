@@ -22,14 +22,14 @@ class SearchFriendsViewModel: ObservableObject {
     
     private func setupInitialData() {
         favorites = [
-            Friend(profileImage: "exampleProfileImage", name: "김친구"),
-            Friend(profileImage: "exampleProfileImage", name: "이친구")
+            Friend(memberSeq: 2, profileImage: "exampleProfileImage", name: "김친구"),
+            Friend(memberSeq: 3, profileImage: "exampleProfileImage", name: "이친구")
         ]
         friends = [
-            Friend(profileImage: "exampleProfileImage", name: "박친구"),
-            Friend(profileImage: "exampleProfileImage", name: "최친구"),
-            Friend(profileImage: "exampleProfileImage", name: "정친구"),
-            Friend(profileImage: "exampleProfileImage", name: "김친구")
+            Friend(memberSeq: 4, profileImage: "exampleProfileImage", name: "박친구"),
+            Friend(memberSeq: 5, profileImage: "exampleProfileImage", name: "최친구"),
+            Friend(memberSeq: 6, profileImage: "exampleProfileImage", name: "정친구"),
+            Friend(memberSeq: 7, profileImage: "exampleProfileImage", name: "김친구")
         ]
     }
     

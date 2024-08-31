@@ -164,8 +164,10 @@
 		D55DFC312C61022900EEEF51 /* CreateScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */; };
 		D57B46E82C785F5400657C51 /* PlaceMapVCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57B46E72C785F5400657C51 /* PlaceMapVCWrapper.swift */; };
 		D57B46F72C786AFD00657C51 /* KakaoMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57B46F62C786AFD00657C51 /* KakaoMapView.swift */; };
+		D585E2872C82F6C600C16A14 /* MonthScheduleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D585E2862C82F6C600C16A14 /* MonthScheduleResponse.swift */; };
 		D58EC0692C633217001BC030 /* SearchPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58EC0682C633217001BC030 /* SearchPlaceView.swift */; };
 		D592D8EF2C7DE3B100736D93 /* SearchFriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */; };
+		D593CCC82C82318F00A862FF /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D593CCC72C82318F00A862FF /* CalendarViewModel.swift */; };
 		D59E17522C6F3024007D8D4B /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59E17512C6F3024007D8D4B /* DataController.swift */; };
 		D5B79A162C5B83CD004EDDF2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D5D24CDC2C70756D00EDADAF /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D24CDB2C70756D00EDADAF /* Config.swift */; };
@@ -364,8 +366,10 @@
 		D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleView.swift; sourceTree = "<group>"; };
 		D57B46E72C785F5400657C51 /* PlaceMapVCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlaceMapVCWrapper.swift; path = Where_Are_You/Presentation/Main/Schedule/Views/PlaceMapVCWrapper.swift; sourceTree = SOURCE_ROOT; };
 		D57B46F62C786AFD00657C51 /* KakaoMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapView.swift; sourceTree = "<group>"; };
+		D585E2862C82F6C600C16A14 /* MonthScheduleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthScheduleResponse.swift; sourceTree = "<group>"; };
 		D58EC0682C633217001BC030 /* SearchPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceView.swift; sourceTree = "<group>"; };
 		D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendsViewModel.swift; sourceTree = "<group>"; };
+		D593CCC72C82318F00A862FF /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		D59E17512C6F3024007D8D4B /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		D5D24CDB2C70756D00EDADAF /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		D5DCBF332C7435E2003F0246 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
@@ -534,6 +538,7 @@
 		992F57D92C5B294F00219C6B /* Responses */ = {
 			isa = PBXGroup;
 			children = (
+				D585E2852C82F63500C16A14 /* Schedule */,
 				99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */,
 				99D780DC2C6066EB005A3F30 /* Member */,
 				99C68E442C64B3FC00DEC1F1 /* Feed */,
@@ -554,10 +559,10 @@
 		9950C64F2C103031003155A7 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				D585E2882C82F78600C16A14 /* Schedule */,
 				992F57DC2C5B56E200219C6B /* AutoTokenPlugin.swift */,
 				99C68E452C64B41900DEC1F1 /* Member */,
 				99C68E462C64B42300DEC1F1 /* Feed */,
-				D54C040D2C651B8A009CC419 /* ScheduleAPI.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1116,6 +1121,22 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
+		D585E2852C82F63500C16A14 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				D585E2862C82F6C600C16A14 /* MonthScheduleResponse.swift */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		D585E2882C82F78600C16A14 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				D54C040D2C651B8A009CC419 /* ScheduleAPI.swift */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
 		D59E17502C6F3015007D8D4B /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -1160,6 +1181,7 @@
 			children = (
 				D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */,
 				D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */,
+				D593CCC72C82318F00A862FF /* CalendarViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1447,6 +1469,7 @@
 				99107EA12C6F2C94007D129F /* SaveFeedResponse.swift in Sources */,
 				99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */,
 				992F57D82C5B290900219C6B /* CheckEmailParameters.swift in Sources */,
+				D585E2872C82F6C600C16A14 /* MonthScheduleResponse.swift in Sources */,
 				9911F9882C3F63D500D0FDC9 /* Feed.swift in Sources */,
 				99949F592C58B81A00AE0177 /* FriendsViewModel.swift in Sources */,
 				99D8FBB92C3BA1CD0062AF10 /* MainTabBarController.swift in Sources */,
@@ -1459,6 +1482,7 @@
 				99D780DE2C6066FA005A3F30 /* LoginResponse.swift in Sources */,
 				99949F452C58788200AE0177 /* FriendFeedViewController.swift in Sources */,
 				99C68E412C64B21F00DEC1F1 /* ModifyFeedRequest.swift in Sources */,
+				D593CCC82C82318F00A862FF /* CalendarViewModel.swift in Sources */,
 				995175002C7EF89B00E938DE /* LocationBookmarkView.swift in Sources */,
 				99C68E432C64B28400DEC1F1 /* FeedAPI.swift in Sources */,
 				9974EA202C62196500826793 /* SnappingFlowLayout.swift in Sources */,
