@@ -51,7 +51,12 @@ struct CreateScheduleView: View {
                 ToolbarItem(placement: .primaryAction) {
                     Button("추가") {
                         viewModel.postSchedule()
-                        dismiss()
+                        if viewModel.isSuccess {
+                            dismiss()
+                        } else {
+                            // TODO: 일정 생성 예외 처리 필요, 실패 경우 동작 구현
+                            dismiss()
+                        }
                     }
                     .foregroundStyle(viewModel.title.isEmpty ? Color.gray : Color.red)
                     .disabled(viewModel.title.isEmpty)
@@ -132,16 +137,24 @@ struct AddPlaceView: View {
         
         ScrollView(.horizontal) {
             HStack {
-                let favPlaces = ["서울대", "여의도공원", "올림픽체조경기장", "재즈바", "신도림", "망원한강공원"]
-                ForEach(favPlaces, id: \.self) { placeName in
-                    Text(placeName)
+                let favPlaces: [Place] = [
+                    .init(location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526),
+                    .init(location: "여의도공원", streetName: "서울 영등포구 여의공원로 68", x: 37.5268, y: 126.9244),
+                    .init(location: "올림픽체조경기장", streetName: "서울 종로구 세종대로 173", x: 37.5221, y: 127.1259),
+                    .init(location: "재즈바", streetName: "서울 종로구 세종대로 174", x: 37.5665, y: 126.9780),
+                    .init(location: "신도림", streetName: "서울 종로구 세종대로 175", x: 37.5088, y: 126.8912),
+                    .init(location: "망원한강공원", streetName: "서울 종로구 세종대로 176", x: 37.5545, y: 126.8964),
+                    .init(location: "부천시청", streetName: "서울 종로구 세종대로 177", x: 37.5037, y: 126.7661)
+                ]
+                ForEach(favPlaces) { favPlace in
+                    Text(favPlace.location)
                         .padding(EdgeInsets(top: 4, leading: 14, bottom: 4, trailing: 14))
                         .background(
                             RoundedRectangle(cornerRadius: 25.0, style: .continuous)
                                 .fill(Color(.color240))
                         )
                         .onTapGesture {
-                            place = Place(location: placeName, streetName: "", x: 0, y: 0)
+                            place = favPlace
                         }
                 }
             }
@@ -190,12 +203,12 @@ struct SetColorView: View {
     @Binding var color: String
     
     let colors: [(Color, String)] = [
-        (.colorRed, "Red"),
-        (.colorYellow, "Yellow"),
-        (.colorGreen, "Green"),
-        (.colorBlue, "Blue"),
-        (.colorViolet, "Violet"),
-        (.colorPink, "Pink")
+        (.colorRed, "red"),
+        (.colorYellow, "yellow"),
+        (.colorGreen, "green"),
+        (.colorBlue, "blue"),
+        (.colorViolet, "violet"),
+        (.colorPink, "pink")
     ]
     
     var body: some View {

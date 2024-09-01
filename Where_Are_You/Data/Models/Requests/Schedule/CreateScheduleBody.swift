@@ -9,8 +9,8 @@ import Foundation
 
 struct CreateScheduleBody: ParameterConvertible {
     let title: String?
-    let startTime: Date?
-    let endTime: Date?
+    let startTime: String?
+    let endTime: String?
     let location: String?
     let streetName: String?
     let x: Double?

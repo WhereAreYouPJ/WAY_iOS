@@ -30,13 +30,9 @@ struct PlaceMapView: View {
 //                }
 //                .edgesIgnoringSafeArea(.top)
 //                
-//                PlaceDetailsView(place: place, address: $address) {
-//                    location = place.location
-//                    x = place.coordinate.longitude
-//                    y = place.coordinate.latitude
-//                    streetName = address
-//                    path.removeLast(path.count)  // MARK: Clear the navigation stack
-//                }
+            PlaceDetailsView(place: $place) {
+                    path.removeLast(path.count)  // MARK: Clear the navigation stack
+                }
 //            }
 //            
 //            Button(action: {
@@ -83,40 +79,39 @@ struct PlaceMapView: View {
 //    }
 }
 
-//struct PlaceDetailsView: View {
-//    let place: Place
-//    @Binding var address: String
-//    let onConfirm: () -> Void
-//    
-//    var body: some View {
-//        VStack {
-//            HStack {
-//                VStack(alignment: .leading) {
-//                    Text(place.location)
-//                        .font(.title2)
-//                        .fontWeight(.bold)
-//                    
+struct PlaceDetailsView: View {
+    @Binding var place: Place?
+    let onConfirm: () -> Void
+    
+    var body: some View {
+        VStack {
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(place?.location ?? "")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    
 //                    Text(address.isEmpty ? "주소를 가져오는 중..." : address)
 //                        .font(.subheadline)
 //                        .foregroundColor(.secondary)
-//                }
-//                Spacer()
-//                Image("icon-bookmark")
-//            }
-//            
-//            Divider()
-//            Button(action: onConfirm) {
-//                Text("확인")
-//                    .frame(maxWidth: .infinity)
-//                    .padding()
-//                    .background(Color(.brandColor))
-//                    .foregroundColor(.white)
-//                    .cornerRadius(6)
-//            }
-//        }
-//        .padding(20)
-//    }
-//}
+                }
+                Spacer()
+                Image("icon-bookmark")
+            }
+            
+            Divider()
+            Button(action: onConfirm) {
+                Text("확인")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color(.brandColor))
+                    .foregroundColor(.white)
+                    .cornerRadius(6)
+            }
+        }
+        .padding(20)
+    }
+}
 //
 //#Preview {
 //    PlaceMapView(place: Place(location: "서울대입구", coordinate: CLLocationCoordinate2DMake(37.4808, 126.9526), streetName: "서울시 어쩌구 무슨대로"), location: .constant(""), streetName: .constant(""), x: .constant(0.0), y: .constant(0.0), path: .constant(NavigationPath()))

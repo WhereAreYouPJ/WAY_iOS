@@ -22,7 +22,6 @@ final class CreateScheduleViewModel: ObservableObject {
     private let provider = MoyaProvider<ScheduleAPI>()
     
     @Published var isSuccess = false
-    @Published var errorMessage = ""
     
     init() {
         let calendar = Calendar.current
@@ -35,30 +34,40 @@ final class CreateScheduleViewModel: ObservableObject {
         self.endTime = endOfHour // TODO: 23시 이후에 하루종일 토글 on 할 경우 시작일과 종료날이 달라지는 부분 수정 필요
         
         dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy.MM.dd'T'HH:mm:ss"
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
     }
     
-        func postSchedule() {
-            let invitedMemberSeqs = selectedFriends.map { $0.memberSeq }
-            let body = CreateScheduleBody(title: title, startTime: startTime, endTime: endTime, location: place?.location, streetName: place?.streetName, x: place?.x, y: place?.y, color: color, memo: memo, invitedMemberSeqs: invitedMemberSeqs, createMemberSeq: 1)
-    
-            provider.request(.postSchedule(request: body)) { response in
-                switch response {
-                case .success(let result):
-                    if result.statusCode == 200 {
-                        DispatchQueue.main.async {
-                            self.isSuccess = true
-                        }
-                    } else {
-                        DispatchQueue.main.async {
-                            self.errorMessage = "서버 오류: \(result.statusCode)"
-                        }
-                    }
-                case .failure(let error):
+    func postSchedule() {
+        let invitedMemberSeqs = selectedFriends.map { $0.memberSeq }
+        let body = CreateScheduleBody(title: title, startTime: dateFormatter.string(from: startTime), endTime: dateFormatter.string(from: endTime), location: place?.location, streetName: place?.streetName, x: place?.x, y: place?.y, color: color, memo: memo, invitedMemberSeqs: invitedMemberSeqs, createMemberSeq: 1)
+        
+        provider.request(.postSchedule(request: body)) { response in
+            switch response {
+            case .success(let result):
+                if result.statusCode == 200 {
                     DispatchQueue.main.async {
-                        self.errorMessage = "요청 실패: \(error.localizedDescription)"
+                        self.isSuccess = true
+                        print("post 성공! \nisSuccess: \(self.isSuccess)")
                     }
+                } else {
+                    DispatchQueue.main.async {
+                        do {
+                            if let json = try result.mapJSON() as? [String: Any],
+                               let detail = json["detail"] as? String {
+                                print("서버 오류: \(result.statusCode)\n상세 메시지: \(detail)\nbody: \(body)")
+                            } else {
+                                print("서버 오류: \(result.statusCode)\n응답 파싱 실패\nbody: \(body)")
+                            }
+                        } catch {
+                            print("서버 오류: \(result.statusCode)\nJSON 파싱 실패: \(error)\nbody: \(body)")
+                        }
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    print("요청 실패: \(error.localizedDescription)")
                 }
             }
         }
+    }
 }
