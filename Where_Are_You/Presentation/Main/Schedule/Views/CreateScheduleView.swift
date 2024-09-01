@@ -31,7 +31,7 @@ struct CreateScheduleView: View {
                 
                 DateAndTimeView(isAllDay: $viewModel.isAllDay, startTime: $viewModel.startTime, endTime: $viewModel.endTime)
                 
-                AddPlaceView(place: $viewModel.place, path: $path)
+                AddPlaceView(place: $viewModel.place, favPlaces: $viewModel.favPlaces, path: $path)
                 
                 AddFriendsView(selectedFriends: $viewModel.selectedFriends, path: $path)
                 
@@ -115,6 +115,7 @@ struct DateAndTimeView: View {
 
 struct AddPlaceView: View {
     @Binding var place: Place?
+    @Binding var favPlaces: [Place]
     @Binding var path: NavigationPath
     
     var body: some View {
@@ -137,28 +138,40 @@ struct AddPlaceView: View {
         
         ScrollView(.horizontal) {
             HStack {
-                let favPlaces: [Place] = [
-                    .init(location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526),
-                    .init(location: "여의도공원", streetName: "서울 영등포구 여의공원로 68", x: 37.5268, y: 126.9244),
-                    .init(location: "올림픽체조경기장", streetName: "서울 종로구 세종대로 173", x: 37.5221, y: 127.1259),
-                    .init(location: "재즈바", streetName: "서울 종로구 세종대로 174", x: 37.5665, y: 126.9780),
-                    .init(location: "신도림", streetName: "서울 종로구 세종대로 175", x: 37.5088, y: 126.8912),
-                    .init(location: "망원한강공원", streetName: "서울 종로구 세종대로 176", x: 37.5545, y: 126.8964),
-                    .init(location: "부천시청", streetName: "서울 종로구 세종대로 177", x: 37.5037, y: 126.7661)
-                ]
+                //                let favPlaces: [Place] = [
+                //                    .init(location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526),
+                //                    .init(location: "여의도공원", streetName: "서울 영등포구 여의공원로 68", x: 37.5268, y: 126.9244),
+                //                    .init(location: "올림픽체조경기장", streetName: "서울 종로구 세종대로 173", x: 37.5221, y: 127.1259),
+                //                    .init(location: "재즈바", streetName: "서울 종로구 세종대로 174", x: 37.5665, y: 126.9780),
+                //                    .init(location: "신도림", streetName: "서울 종로구 세종대로 175", x: 37.5088, y: 126.8912),
+                //                    .init(location: "망원한강공원", streetName: "서울 종로구 세종대로 176", x: 37.5545, y: 126.8964),
+                //                    .init(location: "부천시청", streetName: "서울 종로구 세종대로 177", x: 37.5037, y: 126.7661)
+                //                ]
                 ForEach(favPlaces) { favPlace in
-                    Text(favPlace.location)
-                        .padding(EdgeInsets(top: 4, leading: 14, bottom: 4, trailing: 14))
-                        .background(
-                            RoundedRectangle(cornerRadius: 25.0, style: .continuous)
-                                .fill(Color(.color240))
-                        )
-                        .onTapGesture {
-                            place = favPlace
-                        }
+                    FavoritePlaceCell(place: favPlace) {
+                        place = favPlace
+                    }
                 }
             }
             .padding(.bottom, 20)
+        }
+    }
+}
+
+
+struct FavoritePlaceCell: View {
+    let place: Place
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            Text(place.location)
+                .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(Color(.color240))
+                )
+                .foregroundColor(.primary)
         }
     }
 }
@@ -289,3 +302,4 @@ struct MaxLengthModifier: ViewModifier {
 #Preview {
     CreateScheduleView()
 }
+
