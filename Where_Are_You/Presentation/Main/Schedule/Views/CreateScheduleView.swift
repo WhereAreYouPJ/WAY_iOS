@@ -69,7 +69,7 @@ struct CreateScheduleView: View {
                 case .searchPlace:
                     SearchPlaceView(place: $viewModel.place, path: $path)
                 case .searchFriends:
-                    FriendsView(selectedFriends: $viewModel.selectedFriends)
+                    SearchFriendsView(selectedFriends: $viewModel.selectedFriends)
                 }
             }
         }

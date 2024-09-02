@@ -2,16 +2,13 @@
 //  FriendsView.swift
 //  Where_Are_You
 //
-//  Created by juhee on 20.08.24.
+//  Created by juhee on 02.09.24.
 //
-
-// TODO: 1. 친구 목록 정렬, 2. 코드 가독성 개선
 
 import SwiftUI
 
 struct FriendsView: View {
-    @StateObject private var viewModel = SearchFriendsViewModel()
-    @Binding var selectedFriends: [Friend]
+    @StateObject private var viewModel = FriendsViewModel()
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -31,19 +28,6 @@ struct FriendsView: View {
             SearchBarView(searchText: $viewModel.searchText, onClear: viewModel.clearSearch)
 
             FriendsListView(viewModel: viewModel)
-
-            Button(action: {
-                selectedFriends = viewModel.confirmSelection()
-                dismiss()
-            }) {
-                Text("확인")
-                    .frame(maxWidth: .infinity)
-            }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
-            .tint(Color(.brandColor))
-            .padding()
-            .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
         }
     }
 }
@@ -79,7 +63,7 @@ struct SearchBarView: View {
 }
 
 struct FriendsListView: View {
-    @ObservedObject var viewModel: SearchFriendsViewModel
+    @ObservedObject var viewModel: FriendsViewModel
     
     var body: some View {
         ScrollView {
@@ -120,65 +104,6 @@ struct FriendsListView: View {
     }
 }
 
-struct CheckboxToggleStyle: ToggleStyle {
-    @Environment(\.isEnabled) var isEnabled
-
-    func makeBody(configuration: Configuration) -> some View {
-        Button(action: {
-            configuration.isOn.toggle()
-        }, label: {
-            HStack {
-                if configuration.isOn {
-                    Image(systemName: "checkmark.circle.fill")
-                        .imageScale(.large)
-                        .foregroundStyle(Color(.brandColor))
-                } else {
-                    Image(systemName: "circle")
-                        .imageScale(.large)
-                        .foregroundStyle(.gray)
-                }
-
-                configuration.label
-            }
-        })
-    }
-}
-
-struct SelectedFriendsView: View {
-    let friend: Friend
-    @Binding var isOn: Bool
-
-    var body: some View {
-        ZStack {
-            VStack {
-                Image(friend.profileImage)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: UIScreen.main.bounds.width * 0.12, height: UIScreen.main.bounds.width * 0.12)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-
-                Text(friend.name)
-                    .font(.caption)
-                    .lineLimit(1)
-            }
-            Button(action: {
-                isOn = false
-            }) {
-                ZStack {
-                    Image(systemName: "circle.fill")
-                        .foregroundColor(.white)
-                        .opacity(0.8)
-                        .shadow(radius: 10)
-                    Image(systemName: "multiply")
-                        .foregroundColor(.gray)
-                }
-            }
-            .offset(x: 20, y: -28)
-        }
-        .padding(.top, 4)
-    }
-}
-
 struct FriendCell: View {
     let friend: Friend
     @Binding var isOn: Bool
@@ -206,13 +131,5 @@ struct FriendCell: View {
 }
 
 #Preview {
-    struct PreviewWrapper: View {
-        @State var selectedFriends: [Friend] = []
-        
-        var body: some View {
-            FriendsView(selectedFriends: $selectedFriends)
-        }
-    }
-    
-    return PreviewWrapper()
+    FriendsView()
 }
