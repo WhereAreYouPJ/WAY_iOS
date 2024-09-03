@@ -9,17 +9,19 @@ import UIKit
 
 class MyDetailManageView: UIView {
     // MARK: - Properties
-
+    let modifyButton = CustomOptionButtonView(title: "수정하기")
+//    let modifyButton = CustomOptionButtonView(buttons: [(title: "수정하기", image: nil)])
     let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이름", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
-    let userNameTextField = Utilities.inputContainerTextField(withPlaceholder: "김나라", fontSize: LayoutAdapter.shared.scale(value: 14))
+    let userNameTextField = Utilities.inputContainerTextField(withPlaceholder: "김나라")
     let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이메일 주소", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
-    let emailTextfield = Utilities.inputContainerTextField(withPlaceholder: "example@email.com", fontSize: LayoutAdapter.shared.scale(value: 14))
+    let emailTextfield = Utilities.inputContainerTextField(withPlaceholder: "example@email.com")
     let updateDetailButton = CustomButton(title: "수정하기", backgroundColor: .color171, titleColor: .white, font: UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 18)))
     
     // MARK: - Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .white
         configureViewComponents()
         setupConstraints()
     }
@@ -36,9 +38,18 @@ class MyDetailManageView: UIView {
         addSubview(emailLabel)
         addSubview(emailTextfield)
         addSubview(updateDetailButton)
+        addSubview(modifyButton)
+        modifyButton.isHidden = true
     }
     
-    private func setupConstraints() {
+    private func setupConstraints() {        
+        modifyButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
+            make.top.equalToSuperview()
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 38))
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 160))
+        }
+        
         userNameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 34))
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))

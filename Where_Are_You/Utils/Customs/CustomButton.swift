@@ -9,6 +9,132 @@ import UIKit
 import SnapKit
 import Foundation
 
+// MARK: - 추가 옵션뷰 버튼
+class CustomOptionButtonView: UIView {
+    
+    let button: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .popupButtonColor
+        button.layer.cornerRadius = LayoutAdapter.shared.scale(value: 10)
+        button.clipsToBounds = true
+        return button
+    }()
+    
+    // MARK: - Initializer
+    init(title: String, image: UIImage? = nil) {
+        super.init(frame: .zero)
+        addSubview(button)
+        button.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        createButton(title: title, image: image)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Setup Methods
+    
+    private func createButton(title: String, image: UIImage? = nil) -> UIButton {
+        let label = UILabel()
+        label.text = title
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: LayoutAdapter.shared.scale(value: 14), weight: .medium)
+        label.adjustsFontForContentSizeCategory = true
+        button.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 14))
+        }
+        
+        if let image = image {
+            let imageView = UIImageView()
+            imageView.image = image
+            button.addSubview(imageView)
+            imageView.snp.makeConstraints { make in
+                make.height.width.equalTo(LayoutAdapter.shared.scale(value: 22))
+                make.centerY.equalToSuperview()
+                make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 13))
+            }
+        }
+        return button
+    }
+}
+
+//class CustomOptionButtonView: UIView {
+//    // MARK: - Initializer
+//    init(buttons: [(title: String, image: UIImage?)] = []) {
+//        super.init(frame: .zero)
+//        setupStackView(with: buttons)
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//    
+//    // MARK: - Setup Methods
+//    
+//    private func setupStackView(with buttons: [(title: String, image: UIImage?)]) {
+//        let stackView = UIStackView()
+//        stackView.axis = .vertical
+//        stackView.spacing = 0
+//        stackView.distribution = .fillEqually
+//        addSubview(stackView)
+//        
+//        stackView.snp.makeConstraints { make in
+//            make.edges.equalToSuperview()
+//        }
+//        
+//        for (index, buttonInfo) in buttons.enumerated() {
+//            let button = createButton(title: buttonInfo.title, image: buttonInfo.image)
+//            stackView.addArrangedSubview(button)
+//            
+//            // 마지막 버튼이 아닌 경우에는 분리선을 추가합니다.
+//            if index != buttons.count - 1 {
+//                let separator = UIView()
+//                separator.backgroundColor = UIColor.rgb(red: 114, green: 98, blue: 168)
+//                stackView.addArrangedSubview(separator)
+//                separator.isUserInteractionEnabled = false
+//                separator.snp.makeConstraints { make in
+//                    make.height.equalTo(1)
+//                    make.width.equalToSuperview()
+//                }
+//            }
+//        }
+//    }
+//    
+//    private func createButton(title: String, image: UIImage? = nil) -> UIButton {
+//        let button = UIButton(type: .system)
+//        button.backgroundColor = .popupButtonColor
+//        button.layer.cornerRadius = LayoutAdapter.shared.scale(value: 10)
+//        button.clipsToBounds = true
+//        
+//        let label = UILabel()
+//        label.text = title
+//        label.textColor = .white
+//        label.font = UIFont.systemFont(ofSize: LayoutAdapter.shared.scale(value: 14), weight: .medium)
+//        label.adjustsFontForContentSizeCategory = true
+//        button.addSubview(label)
+//        label.snp.makeConstraints { make in
+//            make.centerY.equalToSuperview()
+//            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 14))
+//        }
+//        
+//        if let image = image {
+//            let imageView = UIImageView()
+//            imageView.image = image
+//            button.addSubview(imageView)
+//            imageView.snp.makeConstraints { make in
+//                make.height.width.equalTo(LayoutAdapter.shared.scale(value: 22))
+//                make.centerY.equalToSuperview()
+//                make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 13))
+//            }
+//        }
+//        return button
+//    }
+//}
+
 // MARK: - 자주 사용하는 하단의 inputcontainer 버튼 한개
 class BottomButtonView: UIView {
     
@@ -139,49 +265,3 @@ class CustomButtonView: UIView {
         }
     }
 }
-// MARK: - CustomButton in SearchAccountOptionsView
-// class CustomButtonFindAccount: UIButton {
-//
-//    private let arrowImageView: UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.image = UIImage(systemName: "chevron.right")
-//        imageView.tintColor = .color17
-//        return imageView
-//    }()
-//
-//    init(title: String, description: String) {
-//        super.init(frame: .zero)
-//        setupView(title: title, description: description)
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//
-//    private func setupView(title: String, description: String) {
-//        layer.borderColor = UIColor.color118.cgColor
-//        layer.borderWidth = 1
-//        layer.cornerRadius = 7
-//        backgroundColor = .white
-//
-//        let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: title, textColor: .color34, fontSize: 14)
-//        let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: description, textColor: .color102, fontSize: descriptionFontSize)
-//
-//        let stackView = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel])
-//        stackView.axis = .vertical
-//        stackView.isUserInteractionEnabled = false
-//
-//        addSubview(stackView)
-//        stackView.snp.makeConstraints { make in
-//            make.left.top.equalToSuperview().offset(9)
-//            make.centerY.equalToSuperview()
-//            make.width.equalTo(272)
-//        }
-//
-//        addSubview(arrowImageView)
-//        arrowImageView.snp.makeConstraints { make in
-//            make.centerY.equalToSuperview()
-//            make.right.equalToSuperview().inset(12)
-//        }
-//    }
-// }

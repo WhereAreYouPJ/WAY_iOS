@@ -17,7 +17,7 @@ class LocationBookmarkViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view = locationBookmarkView
+        updateViewVisibility()
         viewModel = LocationBookmarkViewModel()
         setupBindings()
         setupNavigationBar()
@@ -28,10 +28,11 @@ class LocationBookmarkViewController: UIViewController {
         // FeedsViewController보고 참고하기
         // 위치 즐겨찾기가 없는경우 noDataView가 뜨게 하고
         // 정보가 있는경우 bookMark가 뜨게 하면됨.
+        view = noDataView
     }
     
     private func setupNavigationBar() {
-        Utilities.createNavigationBar(for: self, title: "내 정보 관리", backButtonAction: #selector(backButtonTapped))
+        Utilities.createNavigationBar(for: self, title: "위치 즐겨찾기", backButtonAction: #selector(backButtonTapped))
     }
     
     private func setupBindings() {
