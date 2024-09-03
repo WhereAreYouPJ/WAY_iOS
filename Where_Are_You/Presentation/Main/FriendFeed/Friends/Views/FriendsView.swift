@@ -12,7 +12,7 @@ struct FriendsView: View {
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             SearchBarView(searchText: $viewModel.searchText, onClear: viewModel.clearSearch)
             
             ScrollView {
@@ -23,6 +23,7 @@ struct FriendsView: View {
                     }
                     
                     FriendsSectionView(title: "친구", count: viewModel.filteredFriends.count)
+                        .padding(.top, 8)
                     ForEach(viewModel.filteredFriends) { friend in
                         FriendCell(friend: friend)
                     }
@@ -38,14 +39,14 @@ struct FriendsSectionView: View {
     let count: Int
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             Divider()
             HStack {
                 Text(title)
                 Text("\(count)")
                 Spacer()
             }
-            .padding(.vertical)
+            .padding(.vertical, 8)
         }
     }
 }

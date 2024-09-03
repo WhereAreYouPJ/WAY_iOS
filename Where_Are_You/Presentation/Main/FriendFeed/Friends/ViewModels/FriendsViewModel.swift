@@ -18,14 +18,18 @@ class FriendsViewModel: ObservableObject {
     
     private func setupInitialData() {
         favorites = [
-            Friend(memberSeq: 2, profileImage: "exampleProfileImage", name: "김친구"),
-            Friend(memberSeq: 3, profileImage: "exampleProfileImage", name: "이친구")
+            Friend(memberSeq: 2, profileImage: "exampleProfileImage", name: "조승연"),
+            Friend(memberSeq: 3, profileImage: "exampleProfileImage", name: "김민정")
         ]
         friends = [
-            Friend(memberSeq: 4, profileImage: "exampleProfileImage", name: "박친구"),
-            Friend(memberSeq: 5, profileImage: "exampleProfileImage", name: "최친구"),
-            Friend(memberSeq: 6, profileImage: "exampleProfileImage", name: "정친구"),
-            Friend(memberSeq: 7, profileImage: "exampleProfileImage", name: "김친구")
+            Friend(memberSeq: 4, profileImage: "exampleProfileImage", name: "임창균"),
+            Friend(memberSeq: 5, profileImage: "exampleProfileImage", name: "이승협"),
+            Friend(memberSeq: 6, profileImage: "exampleProfileImage", name: "김민지"),
+            Friend(memberSeq: 7, profileImage: "exampleProfileImage", name: "조유리"),
+            Friend(memberSeq: 4, profileImage: "exampleProfileImage", name: "김민규"),
+            Friend(memberSeq: 5, profileImage: "exampleProfileImage", name: "최유리"),
+            Friend(memberSeq: 6, profileImage: "exampleProfileImage", name: "이채영"),
+            Friend(memberSeq: 7, profileImage: "exampleProfileImage", name: "최수빈")
         ]
     }
     
@@ -47,5 +51,9 @@ class FriendsViewModel: ObservableObject {
 
     func clearSearch() {
         searchText = ""
+    }
+    
+    func getFriendsList() {
+        
     }
 }

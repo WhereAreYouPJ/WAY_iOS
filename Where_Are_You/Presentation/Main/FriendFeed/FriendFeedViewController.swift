@@ -68,6 +68,7 @@ class FriendFeedViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationBar()
         setupUI()
         setupConstraints()
         setupActions()
@@ -122,6 +123,12 @@ class FriendFeedViewController: UIViewController {
         searchFriendButton.addTarget(self, action: #selector(handleSearch), for: .touchUpInside)
         notificationButton.addTarget(self, action: #selector(handleNotification), for: .touchUpInside)
         addButton.addTarget(self, action: #selector(handleAdd), for: .touchUpInside)
+    }
+
+    private func setupNavigationBar() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonStack)
+        segmentControl.addTarget(self, action: #selector(handleSegmentChange), for: .valueChanged)
     }
     
     // MARK: - Helpers

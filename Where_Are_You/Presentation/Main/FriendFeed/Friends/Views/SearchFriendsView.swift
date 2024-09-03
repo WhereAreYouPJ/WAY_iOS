@@ -61,7 +61,7 @@ struct SearchFriendsView: View {
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
             .tint(Color(.brandColor))
-            .padding()
+            .padding(.horizontal)
             .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
         }
     }
