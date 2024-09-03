@@ -36,13 +36,13 @@ class MyPageViewController: UIViewController {
     private func setupActions() {
         myPageView.setButtonActions(target: self, action: #selector(buttonTapped(_:)))
         myPageView.imageEditButton.addTarget(self, action: #selector(editImage), for: .touchUpInside)
-        myPageView.moveToGallery.addTarget(self, action: #selector(moveToGallery), for: .touchUpInside)
+        myPageView.moveToGallery.button.addTarget(self, action: #selector(moveToGallery), for: .touchUpInside)
         myPageView.userNameEditButton.addTarget(self, action: #selector(editUserName), for: .touchUpInside)
         myPageView.logoutButton.button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
         view.addGestureRecognizer(tapGesture)
     }
-    
+   
     private func setupBindings() {
         viewModel.onLogoutSuccess = { [weak self] in
             self?.navigateToLogin()
@@ -92,7 +92,7 @@ class MyPageViewController: UIViewController {
         switch sender.tag {
         case 0:
             // Handle "내 정보 관리"
-            print("내 정보 관리 tapped")
+            moveToDetailController(controller: MyDetailManageViewcontroller())
         case 1:
             // Handle "위치 즐겨찾기"
             print("위치 즐겨찾기 tapped")
@@ -111,6 +111,14 @@ class MyPageViewController: UIViewController {
         default:
             break
         }
+    }
+    
+    private func moveToDetailController(controller: UIViewController) {
+        // TODO: 추후에 view를 탭바 위에 뜨는걸로 바꾸어야 함
+        let controller = controller
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
     }
     
     @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {

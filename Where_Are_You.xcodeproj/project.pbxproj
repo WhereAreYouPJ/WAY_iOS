@@ -78,6 +78,7 @@
 		9967C1542C566F2F00927277 /* NetworkAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9967C1532C566F2F00927277 /* NetworkAlert.swift */; };
 		9974EA1E2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974EA1D2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift */; };
 		9974EA202C62196500826793 /* SnappingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974EA1F2C62196500826793 /* SnappingFlowLayout.swift */; };
+		9975A35B2C8055C100A0FF5C /* MemberDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57A22C27F9FE00F6E1AD /* MemberDetailsUseCase.swift */; };
 		9979622D2C3E6B2200E95CA6 /* AccountLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979622C2C3E6B2200E95CA6 /* AccountLoginUseCase.swift */; };
 		997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997DC6562C3D253000EACA5F /* UserDefaultManager.swift */; };
 		9985AB972C786D0400D1442E /* MyDetailManageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985AB962C786D0400D1442E /* MyDetailManageView.swift */; };
@@ -1457,6 +1458,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9975A35B2C8055C100A0FF5C /* MemberDetailsUseCase.swift in Sources */,
 				9910B84C2C71B638005F7EEE /* DDayViewModel.swift in Sources */,
 				9910B84B2C71B62E005F7EEE /* PasswordResetView.swift in Sources */,
 				9913A44F2C75CD0A00309DBF /* PhotoAuthService.swift in Sources */,
