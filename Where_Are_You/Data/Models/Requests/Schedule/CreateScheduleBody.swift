@@ -17,6 +17,6 @@ struct CreateScheduleBody: ParameterConvertible {
     let y: Double?
     let color: String?
     let memo: String?
-    let invitedMemberSeqs: [String?]
+    let invitedMemberSeqs: [Int]?
     let createMemberSeq: Int?
 }

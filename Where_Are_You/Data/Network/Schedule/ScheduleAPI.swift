@@ -5,6 +5,7 @@
 //  Created by juhee on 09.08.24.
 //
 
+import Foundation
 import Moya
 
 enum ScheduleAPI {
