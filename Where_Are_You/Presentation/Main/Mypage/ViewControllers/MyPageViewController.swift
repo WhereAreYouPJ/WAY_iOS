@@ -36,13 +36,13 @@ class MyPageViewController: UIViewController {
     private func setupActions() {
         myPageView.setButtonActions(target: self, action: #selector(buttonTapped(_:)))
         myPageView.imageEditButton.addTarget(self, action: #selector(editImage), for: .touchUpInside)
-        myPageView.moveToGallery.addTarget(self, action: #selector(moveToGallery), for: .touchUpInside)
+        myPageView.moveToGallery.button.addTarget(self, action: #selector(moveToGallery), for: .touchUpInside)
         myPageView.userNameEditButton.addTarget(self, action: #selector(editUserName), for: .touchUpInside)
         myPageView.logoutButton.button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
         view.addGestureRecognizer(tapGesture)
     }
-    
+   
     private func setupBindings() {
         viewModel.onLogoutSuccess = { [weak self] in
             self?.navigateToLogin()

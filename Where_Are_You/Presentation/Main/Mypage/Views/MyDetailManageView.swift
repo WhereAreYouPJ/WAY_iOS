@@ -9,7 +9,8 @@ import UIKit
 
 class MyDetailManageView: UIView {
     // MARK: - Properties
-    let modifyButton = CustomOptionButtonView(buttons: [(title: "수정하기", image: nil)])
+    let modifyButton = CustomOptionButtonView(title: "수정하기")
+//    let modifyButton = CustomOptionButtonView(buttons: [(title: "수정하기", image: nil)])
     let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이름", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
     let userNameTextField = Utilities.inputContainerTextField(withPlaceholder: "김나라")
     let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이메일 주소", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
@@ -41,7 +42,7 @@ class MyDetailManageView: UIView {
         modifyButton.isHidden = true
     }
     
-    private func setupConstraints() {
+    private func setupConstraints() {        
         modifyButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
             make.top.equalToSuperview()

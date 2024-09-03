@@ -81,7 +81,8 @@ class MyPageView: UIView {
     }()
     
     // 추가 옵션 뷰
-    let moveToGallery = CustomOptionButtonView(buttons: [("사진 보관함", UIImage(named: "icon-Gallery"))])
+    let moveToGallery = CustomOptionButtonView(title: "사진 보관함", image: UIImage(named: "icon-Gallery"))
+//    let moveToGallery = CustomOptionButtonView(buttons: [("사진 보관함", UIImage(named: "icon-Gallery"))])
     
     // MARK: - Lifecycle
     

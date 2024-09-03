@@ -52,11 +52,11 @@ class MyDetailManageViewcontroller: UIViewController {
     
     private func buttonActions() {
         addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
-        mydetailManageView.modifyButton.addTarget(self, action: #selector(modifyButtonTapped), for: .touchUpInside)
+        mydetailManageView.modifyButton.button.addTarget(self, action: #selector(modifyButtonTapped), for: .touchUpInside)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
         view.addGestureRecognizer(tapGesture)
     }
-    
+   
     private func configureInitialState() {
         // 초기에는 수정이 불가능한 상태로 설정
         mydetailManageView.userNameTextField.textColor = .color102
@@ -67,7 +67,6 @@ class MyDetailManageViewcontroller: UIViewController {
         addButton.isHidden = false
     }
     
-    // TODO: 유저 정보가 표시가 안되는거 확인해보기.
     private func setupBindings() {
         viewModel.onGetMemberSuccess = { userName, email in
             self.setMemberDetail(userName: userName, email: email)
@@ -92,9 +91,8 @@ class MyDetailManageViewcontroller: UIViewController {
     }
     
     @objc func modifyButtonTapped() {
-        print("수정하기 버튼 눌림")
         isEditingMode.toggle()  // 수정 모드 토글
-        print(isEditingMode)
+        mydetailManageView.modifyButton.isHidden = true
         
         // 수정 모드에 따라 UI 업데이트
         if isEditingMode {
