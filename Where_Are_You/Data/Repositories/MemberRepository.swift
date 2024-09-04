@@ -8,24 +8,28 @@
 import Alamofire
 
 protocol MemberRepositoryProtocol {
+    func modifyUserName(userName: String, completion: @escaping (Result<Void, Error>) -> Void)
     func signUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void)
     func resetPassword(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void)
-    func logout(request: LogoutBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func logout(completion: @escaping (Result<Void, Error>) -> Void)
     func login(request: LoginBody, completion: @escaping (Result<Void, Error>) -> Void)
     func emailVerify(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
     func emailVerifyPassword(request: EmailVerifyPasswordBody, completion: @escaping (Result<Void, Error>) -> Void)
     func emailSend(request: EmailSendBody, completion: @escaping (Result<Void, Error>) -> Void)
     func memberSearch(request: MemberSearchParameters, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void)
-    func memberDetails(request: MemberDetailsParameters, completion: @escaping (Result<MemberDetailsResponse, Error>) -> Void)
+    func memberDetails(completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void)
     func checkEmail(request: CheckEmailParameters, completion: @escaping (Result<GenericResponse<CheckEmailResponse>, Error>) -> Void)
 }
 
 class MemberRepository: MemberRepositoryProtocol {
-    
     private let memberService: MemberServiceProtocol
     
     init(memberService: MemberServiceProtocol) {
         self.memberService = memberService
+    }
+    
+    func modifyUserName(userName: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        memberService.modifyUserName(userName: userName, completion: completion)
     }
     
     func signUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -36,8 +40,8 @@ class MemberRepository: MemberRepositoryProtocol {
         memberService.resetPassword(request: request, completion: completion)
     }
     
-    func logout(request: LogoutBody, completion: @escaping (Result<Void, Error>) -> Void) {
-        memberService.logout(request: request) { result in
+    func logout(completion: @escaping (Result<Void, Error>) -> Void) {
+        memberService.logout { result in
             switch result {
             case .success:
                 UserDefaultsManager.shared.clearData()
@@ -82,15 +86,8 @@ class MemberRepository: MemberRepositoryProtocol {
         memberService.memberSearch(request: request, completion: completion)
     }
     
-    func memberDetails(request: MemberDetailsParameters, completion: @escaping (Result<MemberDetailsResponse, Error>) -> Void) {
-        memberService.memberDetails(request: request) { result in
-            switch result {
-            case .success(let response):
-                completion(.success(response.data))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func memberDetails(completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void) {
+        memberService.memberDetails(completion: completion)
     }
     
     func checkEmail(request: CheckEmailParameters, completion: @escaping (Result<GenericResponse<CheckEmailResponse>, Error>) -> Void) {

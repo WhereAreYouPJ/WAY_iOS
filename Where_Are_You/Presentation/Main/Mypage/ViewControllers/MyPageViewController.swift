@@ -9,9 +9,10 @@ import UIKit
 
 class MyPageViewController: UIViewController {
     // MARK: - Properties
-    
     private let myPageView = MyPageView()
     private var viewModel: MyPageViewModel!
+    private var userName: String?
+    private var email: String?
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -20,7 +21,9 @@ class MyPageViewController: UIViewController {
         setupViewModel()
         setupActions()
         setupBindings()
+        
         myPageView.userCodeLabel.text = UserDefaultsManager.shared.getMemberCode()
+        viewModel.memberDetails()
     }
     
     // MARK: - Helpers
@@ -29,7 +32,8 @@ class MyPageViewController: UIViewController {
         let memberService = MemberService()
         let memberRepository = MemberRepository(memberService: memberService)
         viewModel = MyPageViewModel(
-            logoutUseCase: LogoutUseCaseImpl(memberRepository: memberRepository)
+            logoutUseCase: LogoutUseCaseImpl(memberRepository: memberRepository),
+            memberDetailsUseCase: MemberDetailsUseCaseImpl(memberRepository: memberRepository)
         )
     }
     
@@ -37,7 +41,6 @@ class MyPageViewController: UIViewController {
         myPageView.setButtonActions(target: self, action: #selector(buttonTapped(_:)))
         myPageView.imageEditButton.addTarget(self, action: #selector(editImage), for: .touchUpInside)
         myPageView.moveToGallery.button.addTarget(self, action: #selector(moveToGallery), for: .touchUpInside)
-        myPageView.userNameEditButton.addTarget(self, action: #selector(editUserName), for: .touchUpInside)
         myPageView.logoutButton.button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
         view.addGestureRecognizer(tapGesture)
@@ -45,15 +48,23 @@ class MyPageViewController: UIViewController {
    
     private func setupBindings() {
         viewModel.onLogoutSuccess = { [weak self] in
-            self?.navigateToLogin()
+            DispatchQueue.main.async {
+                self?.navigateToLogin()
+            }
+        }
+        
+        viewModel.onGetMemberSuccess = { [weak self] memberDetails in
+            DispatchQueue.main.async {
+                self?.myPageView.userNameLabel.text = memberDetails.userName
+                self?.userName = memberDetails.userName
+                self?.email = memberDetails.email
+            }
         }
     }
     
     private func navigateToLogin() {
         let loginVC = LoginViewController()
         let navController = UINavigationController(rootViewController: loginVC)
-        
-        // 윈도우에 접근하여 루트 뷰 컨트롤러 변경
         if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
            let window = sceneDelegate.window {
             window.rootViewController = navController
@@ -75,7 +86,6 @@ class MyPageViewController: UIViewController {
     }
     
     @objc private func editImage() {
-        // 프로필 이미지 수정
         myPageView.moveToGallery.isHidden.toggle()
     }
     
@@ -84,15 +94,11 @@ class MyPageViewController: UIViewController {
         print("갤러리 이동하기")
     }
     
-    @objc private func editUserName() {
-        // 유저이름 수정
-    }
-    
     @objc private func buttonTapped(_ sender: UIButton) {
         switch sender.tag {
         case 0:
             // Handle "내 정보 관리"
-            moveToDetailController(controller: MyDetailManageViewcontroller())
+            moveToDetailController(controller: MyDetailManageViewcontroller(userName: userName, email: email))
         case 1:
             // Handle "위치 즐겨찾기"
             print("위치 즐겨찾기 tapped")

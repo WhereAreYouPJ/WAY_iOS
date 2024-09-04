@@ -8,14 +8,34 @@
 import Foundation
 
 class MyDetailManageViewModel {
-    private let memberDetailsUseCase: MemberDetailsUseCase
+    private let modifyUserNameUseCase: ModifyUserNameUseCase
     
-    var onChangeNameSuccess: ((String, String) -> Void)?
+    var onChangeNameSuccess: (() -> Void)?
     var onChangeNameFailure: ((String) -> Void)?
+    var onUserNameValidationMessage: ((Bool) -> Void)?
 
-    init(memberDetailsUseCase: MemberDetailsUseCase) {
-        self.memberDetailsUseCase = memberDetailsUseCase
+    init(modifyUserNameUseCase: ModifyUserNameUseCase) {
+        self.modifyUserNameUseCase = modifyUserNameUseCase
     }
     
-
+    // 이름 형식 체크
+    func checkUserNameValidation(userName: String) {
+        if ValidationHelper.isValidUserName(userName) {
+            onUserNameValidationMessage?(true)
+        } else {
+            onUserNameValidationMessage?(false)
+        }
+    }
+    
+    // 수정하기
+    func modifyUserName(userName: String) {
+        modifyUserNameUseCase.execute(userName: userName) { result in
+            switch result {
+            case .success:
+                self.onChangeNameSuccess?()
+            case .failure(let error):
+                self.onChangeNameFailure?(error.localizedDescription)
+            }
+        }
+    }
 }

@@ -36,13 +36,7 @@ class MyPageView: UIView {
         return button
     }()
     
-    let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "유저 이름", textColor: .white, fontSize: 20)
-    
-    let userNameEditButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "icon-NameEdit"), for: .normal)
-        return button
-    }()
+    let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .white, fontSize: 20)
     
     // 유저코드(친추용)
     let userCodeBackgroundView: UIView = {
@@ -106,7 +100,6 @@ class MyPageView: UIView {
         profileBackgroundView.addSubview(profileImageView)
         profileBackgroundView.addSubview(userNameLabel)
         profileBackgroundView.addSubview(imageEditButton)
-        profileBackgroundView.addSubview(userNameEditButton)
         profileBackgroundView.addSubview(moveToGallery)
         
         addSubview(userCodeBackgroundView)
@@ -151,10 +144,6 @@ class MyPageView: UIView {
             make.centerX.equalToSuperview()
         }
         
-        userNameEditButton.snp.makeConstraints { make in
-            make.centerY.equalTo(userNameLabel)
-            make.leading.equalTo(userNameLabel.snp.trailing)
-        }
         
         // 유저코드
         userCodeBackgroundView.snp.makeConstraints { make in

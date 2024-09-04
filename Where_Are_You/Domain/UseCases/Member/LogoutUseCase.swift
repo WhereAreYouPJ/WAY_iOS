@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LogoutUseCase {
-    func execute(request: LogoutBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func execute(completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class LogoutUseCaseImpl: LogoutUseCase {
@@ -18,7 +18,7 @@ class LogoutUseCaseImpl: LogoutUseCase {
         self.memberRepository = memberRepository
     }
 
-    func execute(request: LogoutBody, completion: @escaping (Result<Void, Error>) -> Void) {
-        memberRepository.logout(request: request, completion: completion)
+    func execute(completion: @escaping (Result<Void, Error>) -> Void) {
+        memberRepository.logout(completion: completion)
     }
 }

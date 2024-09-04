@@ -10,10 +10,8 @@ import Foundation
 class MyPageViewModel {
     private let logoutUseCase: LogoutUseCase
     private let memberDetailsUseCase: MemberDetailsUseCase
-    let memberSeq = UserDefaultsManager.shared.getMemberSeq()
-
+    
     var onGetMemberSuccess: ((MemberDetailsResponse) -> Void)?
-    var onGetMemberFailure: ((String) -> Void)?
     var onLogoutSuccess: (() -> Void)?
 
     init(logoutUseCase: LogoutUseCase, memberDetailsUseCase: MemberDetailsUseCase) {
@@ -22,7 +20,7 @@ class MyPageViewModel {
     }
     
     func logout() {
-        logoutUseCase.execute(request: LogoutBody(memberSeq: memberSeq)) { result in
+        logoutUseCase.execute { result in
             switch result {
             case .success:
                 self.onLogoutSuccess?()
@@ -32,14 +30,13 @@ class MyPageViewModel {
         }
     }
     
-    func getMemberDetail() {
-        memberDetailsUseCase.execute(request: MemberDetailsParameters(memberSeq: memberSeq)) { result in
+    func memberDetails() {
+        memberDetailsUseCase.execute { result in
             switch result {
             case .success(let data):
-                print(data)
                 self.onGetMemberSuccess?(data)
             case .failure(let error):
-                self.onGetMemberFailure?(error.localizedDescription)
+                print("\(error.localizedDescription)")
             }
         }
     }
