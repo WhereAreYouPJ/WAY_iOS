@@ -21,8 +21,8 @@ class MemberDetailsUseCaseImpl: MemberDetailsUseCase {
     func execute(request: MemberDetailsParameters, completion: @escaping (Result<MemberDetailsResponse, Error>) -> Void) {
         memberRepository.memberDetails(request: request) { result in
             switch result {
-            case .success(let response):
-                completion(.success(response.data))
+            case .success(let data):
+                completion(.success(data))
             case .failure(let error):
                 completion(.failure(error))
             }

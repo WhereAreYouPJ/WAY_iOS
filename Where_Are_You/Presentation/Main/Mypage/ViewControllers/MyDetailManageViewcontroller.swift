@@ -26,6 +26,7 @@ class MyDetailManageViewcontroller: UIViewController {
     var viewModel: MyDetailManageViewModel!
     
     // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view = mydetailManageView
@@ -68,9 +69,7 @@ class MyDetailManageViewcontroller: UIViewController {
     }
     
     private func setupBindings() {
-        viewModel.onGetMemberSuccess = { userName, email in
-            self.setMemberDetail(userName: userName, email: email)
-        }
+        
     }
     
     private func setMemberDetail(userName: String, email: String) {

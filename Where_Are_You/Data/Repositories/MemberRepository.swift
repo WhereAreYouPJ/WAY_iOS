@@ -16,7 +16,7 @@ protocol MemberRepositoryProtocol {
     func emailVerifyPassword(request: EmailVerifyPasswordBody, completion: @escaping (Result<Void, Error>) -> Void)
     func emailSend(request: EmailSendBody, completion: @escaping (Result<Void, Error>) -> Void)
     func memberSearch(request: MemberSearchParameters, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void)
-    func memberDetails(request: MemberDetailsParameters, completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void)
+    func memberDetails(request: MemberDetailsParameters, completion: @escaping (Result<MemberDetailsResponse, Error>) -> Void)
     func checkEmail(request: CheckEmailParameters, completion: @escaping (Result<GenericResponse<CheckEmailResponse>, Error>) -> Void)
 }
 
@@ -82,8 +82,15 @@ class MemberRepository: MemberRepositoryProtocol {
         memberService.memberSearch(request: request, completion: completion)
     }
     
-    func memberDetails(request: MemberDetailsParameters, completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void) {
-        memberService.memberDetails(request: request, completion: completion)
+    func memberDetails(request: MemberDetailsParameters, completion: @escaping (Result<MemberDetailsResponse, Error>) -> Void) {
+        memberService.memberDetails(request: request) { result in
+            switch result {
+            case .success(let response):
+                completion(.success(response.data))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
     
     func checkEmail(request: CheckEmailParameters, completion: @escaping (Result<GenericResponse<CheckEmailResponse>, Error>) -> Void) {
