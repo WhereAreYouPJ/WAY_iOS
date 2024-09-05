@@ -165,8 +165,7 @@
 		D54C040E2C651B8A009CC419 /* ScheduleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54C040D2C651B8A009CC419 /* ScheduleAPI.swift */; };
 		D55DFC2F2C61021800EEEF51 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55DFC2E2C61021800EEEF51 /* CalendarView.swift */; };
 		D55DFC312C61022900EEEF51 /* CreateScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */; };
-		D57B46E82C785F5400657C51 /* PlaceMapVCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57B46E72C785F5400657C51 /* PlaceMapVCWrapper.swift */; };
-		D57B46F72C786AFD00657C51 /* KakaoMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57B46F62C786AFD00657C51 /* KakaoMapView.swift */; };
+		D57B46F72C786AFD00657C51 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57B46F62C786AFD00657C51 /* MapView.swift */; };
 		D585E2872C82F6C600C16A14 /* MonthScheduleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D585E2862C82F6C600C16A14 /* MonthScheduleResponse.swift */; };
 		D58EC0692C633217001BC030 /* SearchPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58EC0682C633217001BC030 /* SearchPlaceView.swift */; };
 		D592D8EF2C7DE3B100736D93 /* SearchFriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */; };
@@ -371,8 +370,7 @@
 		D54C040D2C651B8A009CC419 /* ScheduleAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleAPI.swift; sourceTree = "<group>"; };
 		D55DFC2E2C61021800EEEF51 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleView.swift; sourceTree = "<group>"; };
-		D57B46E72C785F5400657C51 /* PlaceMapVCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlaceMapVCWrapper.swift; path = Where_Are_You/Presentation/Main/Schedule/Views/PlaceMapVCWrapper.swift; sourceTree = SOURCE_ROOT; };
-		D57B46F62C786AFD00657C51 /* KakaoMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMapView.swift; sourceTree = "<group>"; };
+		D57B46F62C786AFD00657C51 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		D585E2862C82F6C600C16A14 /* MonthScheduleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthScheduleResponse.swift; sourceTree = "<group>"; };
 		D58EC0682C633217001BC030 /* SearchPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceView.swift; sourceTree = "<group>"; };
 		D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendsViewModel.swift; sourceTree = "<group>"; };
@@ -886,7 +884,7 @@
 		99CC5E6A2C5211ED00A0509A /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				D57B46ED2C78630A00657C51 /* Map */,
+				D57B46ED2C78630A00657C51 /* Location */,
 				99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */,
 				99C1403D2C6496BC00A706B6 /* NoDataView.swift */,
 				99CC5E6B2C52122500A0509A /* FriendFeed */,
@@ -1140,12 +1138,12 @@
 			path = Location;
 			sourceTree = "<group>";
 		};
-		D57B46ED2C78630A00657C51 /* Map */ = {
+		D57B46ED2C78630A00657C51 /* Location */ = {
 			isa = PBXGroup;
 			children = (
-				D57B46F62C786AFD00657C51 /* KakaoMapView.swift */,
+				D57B46F62C786AFD00657C51 /* MapView.swift */,
 			);
-			path = Map;
+			path = Location;
 			sourceTree = "<group>";
 		};
 		D585E2852C82F63500C16A14 /* Schedule */ = {
@@ -1197,7 +1195,6 @@
 		D5B79A132C5B839C004EDDF2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				D57B46E72C785F5400657C51 /* PlaceMapVCWrapper.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1298,7 +1295,6 @@
 			);
 			mainGroup = 995358302C00C555005BF799;
 			packageReferences = (
-				D517211F2C75D441003E0CC1 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */,
 			);
 			productRefGroup = 9953583A2C00C555005BF799 /* Products */;
 			projectDirPath = "";
@@ -1601,10 +1597,9 @@
 				99949F512C588B6200AE0177 /* FavoritesTableView.swift in Sources */,
 				992F57CE2C5B28A800219C6B /* EmailVerifyBody.swift in Sources */,
 				99C1403C2C6496B400A706B6 /* FeedsTableViewCell.swift in Sources */,
-				D57B46F72C786AFD00657C51 /* KakaoMapView.swift in Sources */,
+				D57B46F72C786AFD00657C51 /* MapView.swift in Sources */,
 				9911F98E2C3F913100D0FDC9 /* HomeFeedCollectionViewCell.swift in Sources */,
 				992F57C82C5B26D700219C6B /* ResetPasswordBody.swift in Sources */,
-				D57B46E82C785F5400657C51 /* PlaceMapVCWrapper.swift in Sources */,
 				99EC20AB2C0D9D9D0018904D /* SignUpViewModel.swift in Sources */,
 				99EC20AD2C0D9DB50018904D /* AcoountSearchViewModel.swift in Sources */,
 				99107EA32C6F3E42007D129F /* DDay.swift in Sources */,
@@ -1784,7 +1779,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Where_Are_You/Resources/Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 접근 권한";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Look around the map";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "내 위치 확인을 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "앨범 접근 권한";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1820,7 +1815,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Where_Are_You/Resources/Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 접근 권한";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Look around the map";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "내 위치 확인을 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "앨범 접근 권한";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1925,17 +1920,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		D517211F2C75D441003E0CC1 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.10.5;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCVersionGroup section */
 		995358452C00C555005BF799 /* Where_Are_You.xcdatamodeld */ = {

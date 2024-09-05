@@ -112,6 +112,11 @@ struct PlaceDetailsView: View {
         .padding(20)
     }
 }
+
+//#Preview {
+//    PlaceMapView(place: Place(location: "서울대입구", streetName: "", x: .constant(0), y: .constant(0)), path: .constant(NavigationPath()))
+//}
+
 //
 //#Preview {
 //    PlaceMapView(place: Place(location: "서울대입구", coordinate: CLLocationCoordinate2DMake(37.4808, 126.9526), streetName: "서울시 어쩌구 무슨대로"), location: .constant(""), streetName: .constant(""), x: .constant(0.0), y: .constant(0.0), path: .constant(NavigationPath()))
