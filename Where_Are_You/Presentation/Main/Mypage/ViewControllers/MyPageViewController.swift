@@ -15,6 +15,18 @@ class MyPageViewController: UIViewController {
     private var email: String?
     
     // MARK: - Lifecycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // 네비게이션 바 숨기기
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // 다음 화면으로 이동할 때 네비게이션 바 다시 표시
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view = myPageView
@@ -120,11 +132,8 @@ class MyPageViewController: UIViewController {
     }
     
     private func moveToDetailController(controller: UIViewController) {
-        // TODO: 추후에 view를 탭바 위에 뜨는걸로 바꾸어야 함
         let controller = controller
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {

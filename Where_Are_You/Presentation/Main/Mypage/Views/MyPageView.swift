@@ -144,7 +144,6 @@ class MyPageView: UIView {
             make.centerX.equalToSuperview()
         }
         
-        
         // 유저코드
         userCodeBackgroundView.snp.makeConstraints { make in
             make.centerY.equalTo(profileBackgroundView.snp.bottom)
