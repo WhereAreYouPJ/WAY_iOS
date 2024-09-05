@@ -71,21 +71,35 @@ class MyDetailManageViewcontroller: UIViewController {
         view.addGestureRecognizer(tapGesture)
     }
    
+    // 초기 설정
     private func configureInitialState() {
-        // 초기에는 수정이 불가능한 상태로 설정
-        mydetailManageView.userNameTextField.text = userName
-        mydetailManageView.userNameTextField.textColor = .color102
-        mydetailManageView.userNameTextField.isUserInteractionEnabled = false
-        mydetailManageView.emailTextfield.text = email
-        mydetailManageView.emailTextfield.textColor = .color102
-        mydetailManageView.emailTextfield.isUserInteractionEnabled = false
-        mydetailManageView.updateDetailButton.isHidden = true
-        addButton.isHidden = false
+        if isEditingMode {
+            mydetailManageView.userNameTextField.isUserInteractionEnabled = true
+            mydetailManageView.userNameTextField.textColor = .color34
+            mydetailManageView.emailTextfield.isUserInteractionEnabled = false
+            mydetailManageView.emailLabel.textColor = .color153
+            mydetailManageView.emailTextfield.textColor = .color153
+            mydetailManageView.updateDetailButton.isHidden = false
+            addButton.isHidden = true
+        } else {
+            mydetailManageView.userNameTextField.text = userName
+            mydetailManageView.userNameTextField.textColor = .color102
+            mydetailManageView.userNameTextField.isUserInteractionEnabled = false
+            mydetailManageView.emailTextfield.text = email
+            mydetailManageView.emailTextfield.textColor = .color102
+            mydetailManageView.emailTextfield.isUserInteractionEnabled = false
+            mydetailManageView.updateDetailButton.isHidden = true
+            addButton.isHidden = false
+        }
     }
     
     private func setupBindings() {
-        viewModel.onChangeNameSuccess = { [weak self] in
-            // TODO: 여기에 화면을 이동하는지 토스트 메시지만 띄우는지 확인하고 추가하기
+        viewModel.onChangeNameSuccess = { [weak self] userName in
+            DispatchQueue.main.async {
+                self?.isEditingMode = false
+                self?.userName = userName
+                self?.configureInitialState()
+            }
         }
         
         viewModel.onUserNameValidationMessage = { [weak self] isAvailable in
@@ -96,11 +110,10 @@ class MyDetailManageViewcontroller: UIViewController {
     }
     
     // MARK: - Selectors
-    
     @objc private func backButtonTapped() {
-        // 네비게이션 바 뒤로가기 버튼
-        isEditingMode = false
-        dismiss(animated: true)
+        dismiss(animated: true) {
+            NotificationCenter.default.post(name: .userNameDidChange, object: nil)
+        }
     }
     
     @objc private func addButtonTapped() {
@@ -108,23 +121,9 @@ class MyDetailManageViewcontroller: UIViewController {
     }
     
     @objc private func modifyButtonTapped() {
-        isEditingMode.toggle()  // 수정 모드 토글
+        isEditingMode.toggle()
         mydetailManageView.modifyButton.isHidden = true
-        
-        // 수정 모드에 따라 UI 업데이트
-        if isEditingMode {
-            mydetailManageView.userNameTextField.isUserInteractionEnabled = true
-            mydetailManageView.userNameTextField.textColor = .color34
-            mydetailManageView.emailTextfield.isUserInteractionEnabled = false
-            mydetailManageView.emailLabel.textColor = .color153
-            mydetailManageView.emailTextfield.textColor = .color153
-            mydetailManageView.updateDetailButton.isHidden = false
-            addButton.isHidden = true
-        } else {
-            configureInitialState()
-        }
-        
-        self.view.layoutIfNeeded()
+        configureInitialState()
     }
     
     @objc private func updateDetailButtonTapped() {
@@ -144,10 +143,15 @@ class MyDetailManageViewcontroller: UIViewController {
         }
     }
     
+    // 이름 조건 확인 -> 상태 변경
     private func updateStatus(label: UILabel?, isAvailable: Bool, textField: UITextField?) {
         label?.isHidden = isAvailable
         textField?.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
         mydetailManageView.updateDetailButton.isEnabled = isAvailable
         mydetailManageView.updateDetailButton.backgroundColor = isAvailable ? .brandColor : .color171
     }
+}
+
+extension NSNotification.Name {
+    static let userNameDidChange = NSNotification.Name("userNameDidChange")
 }

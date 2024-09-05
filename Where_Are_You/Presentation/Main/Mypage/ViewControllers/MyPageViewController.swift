@@ -24,10 +24,10 @@ class MyPageViewController: UIViewController {
         
         myPageView.userCodeLabel.text = UserDefaultsManager.shared.getMemberCode()
         viewModel.memberDetails()
+        NotificationCenter.default.addObserver(self, selector: #selector(userNameDidChange), name: .userNameDidChange, object: nil)
     }
     
     // MARK: - Helpers
-    
     private func setupViewModel() {
         let memberService = MemberService()
         let memberRepository = MemberRepository(memberService: memberService)
@@ -132,5 +132,14 @@ class MyPageViewController: UIViewController {
         if !myPageView.moveToGallery.frame.contains(location) && !myPageView.imageEditButton.frame.contains(location) {
             myPageView.moveToGallery.isHidden = true
         }
+    }
+    
+    @objc private func userNameDidChange() {
+        // 유저 정보를 다시 불러오기
+        viewModel.memberDetails()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }

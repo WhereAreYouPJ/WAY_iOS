@@ -10,7 +10,7 @@ import Foundation
 class MyDetailManageViewModel {
     private let modifyUserNameUseCase: ModifyUserNameUseCase
     
-    var onChangeNameSuccess: (() -> Void)?
+    var onChangeNameSuccess: ((String) -> Void)?
     var onChangeNameFailure: ((String) -> Void)?
     var onUserNameValidationMessage: ((Bool) -> Void)?
 
@@ -32,7 +32,7 @@ class MyDetailManageViewModel {
         modifyUserNameUseCase.execute(userName: userName) { result in
             switch result {
             case .success:
-                self.onChangeNameSuccess?()
+                self.onChangeNameSuccess?(userName)
             case .failure(let error):
                 self.onChangeNameFailure?(error.localizedDescription)
             }
