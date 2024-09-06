@@ -67,7 +67,7 @@ struct CreateScheduleView: View {
             .navigationDestination(for: Route.self) { route in
                 switch route {
                 case .searchPlace:
-                    SearchPlaceView(place: $viewModel.place, path: $path)
+                    SearchPlaceView(selectedLocation: $viewModel.place, path: $path)
                 case .searchFriends:
                     SearchFriendsView(selectedFriends: $viewModel.selectedFriends)
                 }
@@ -114,8 +114,8 @@ struct DateAndTimeView: View {
 }
 
 struct AddPlaceView: View {
-    @Binding var place: Place?
-    @Binding var favPlaces: [Place]
+    @Binding var place: Location?
+    @Binding var favPlaces: [Location]
     @Binding var path: NavigationPath
     
     var body: some View {
@@ -160,7 +160,7 @@ struct AddPlaceView: View {
 
 
 struct FavoritePlaceCell: View {
-    let place: Place
+    let place: Location
     let action: () -> Void
     
     var body: some View {

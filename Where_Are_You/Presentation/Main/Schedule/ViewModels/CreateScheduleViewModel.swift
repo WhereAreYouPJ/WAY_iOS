@@ -14,8 +14,8 @@ final class CreateScheduleViewModel: ObservableObject {
     @Published var startTime: Date
     @Published var endTime: Date
     @Published var selectedFriends: [Friend] = []
-    @Published var place: Place?
-    @Published var favPlaces: [Place] = []
+    @Published var place: Location?
+    @Published var favPlaces: [Location] = []
     @Published var color: String = "red"
     @Published var memo: String = ""
     
@@ -53,7 +53,7 @@ final class CreateScheduleViewModel: ObservableObject {
                         
                         DispatchQueue.main.async {
                             self.favPlaces = genericResponse.data.map { location in
-                                Place(location: location.location,
+                                Location(location: location.location,
                                       streetName: location.streetName,
                                       x: 0, // 서버 응답에 x, y 좌표가 없으므로 임시로 0을 설정
                                       y: 0)

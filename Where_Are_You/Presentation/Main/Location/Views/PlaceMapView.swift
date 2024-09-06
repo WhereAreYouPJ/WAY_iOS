@@ -10,7 +10,7 @@ import MapKit
 
 struct PlaceMapView: View {
     @Environment(\.presentationMode) var presentationMode
-    @Binding var place: Place?
+    @Binding var place: Location?
     @Binding var path: NavigationPath
     
 //    init(place: Place) {
@@ -80,7 +80,7 @@ struct PlaceMapView: View {
 }
 
 struct PlaceDetailsView: View {
-    @Binding var place: Place?
+    @Binding var place: Location?
     let onConfirm: () -> Void
     
     var body: some View {

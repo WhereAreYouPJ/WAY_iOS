@@ -12,7 +12,7 @@ struct Schedule: Identifiable {
     var title: String
     var startTime: Date?
     var endTime: Date?
-    var place: Place?
+    var place: Location?
     var color: String?
     var memo: String?
     var invitedMember: [Friend]?
