@@ -68,7 +68,6 @@
 		9953583D2C00C555005BF799 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9953583C2C00C555005BF799 /* AppDelegate.swift */; };
 		9953583F2C00C555005BF799 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9953583E2C00C555005BF799 /* SceneDelegate.swift */; };
 		995358412C00C555005BF799 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995358402C00C555005BF799 /* LoginViewController.swift */; };
-		995358472C00C555005BF799 /* Where_Are_You.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 995358452C00C555005BF799 /* Where_Are_You.xcdatamodeld */; };
 		995358492C00C558005BF799 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 995358482C00C558005BF799 /* Assets.xcassets */; };
 		9953584C2C00C558005BF799 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 9953584B2C00C558005BF799 /* Base */; };
 		995358552C00DB0A005BF799 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 995358542C00DB0A005BF799 /* .swiftlint.yml */; };
@@ -172,7 +171,6 @@
 		D58EC0692C633217001BC030 /* SearchPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58EC0682C633217001BC030 /* SearchPlaceView.swift */; };
 		D592D8EF2C7DE3B100736D93 /* SearchFriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */; };
 		D593CCC82C82318F00A862FF /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D593CCC72C82318F00A862FF /* CalendarViewModel.swift */; };
-		D59E17522C6F3024007D8D4B /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59E17512C6F3024007D8D4B /* DataController.swift */; };
 		D5B79A162C5B83CD004EDDF2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D5D24CDC2C70756D00EDADAF /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D24CDB2C70756D00EDADAF /* Config.swift */; };
 		D5D807ED2C85F60B008F7882 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D807EC2C85F60B008F7882 /* FriendsView.swift */; };
@@ -265,7 +263,6 @@
 		9953583C2C00C555005BF799 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9953583E2C00C555005BF799 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		995358402C00C555005BF799 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		995358462C00C555005BF799 /* Where_Are_You.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Where_Are_You.xcdatamodel; sourceTree = "<group>"; };
 		995358482C00C558005BF799 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9953584B2C00C558005BF799 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9953584D2C00C558005BF799 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -379,7 +376,6 @@
 		D58EC0682C633217001BC030 /* SearchPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceView.swift; sourceTree = "<group>"; };
 		D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendsViewModel.swift; sourceTree = "<group>"; };
 		D593CCC72C82318F00A862FF /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
-		D59E17512C6F3024007D8D4B /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		D5D24CDB2C70756D00EDADAF /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		D5D807EC2C85F60B008F7882 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		D5D807F12C860931008F7882 /* CommonFriensView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFriensView.swift; sourceTree = "<group>"; };
@@ -791,7 +787,6 @@
 		99C9B2262C019748008D7CBD /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				D59E17502C6F3015007D8D4B /* CoreData */,
 				99D8FBBE2C3BA1FB0062AF10 /* Customs */,
 				99107E9E2C6EDAE2007D129F /* ValidationError.swift */,
 				99C9B2312C01A45C008D7CBD /* Extensions.swift */,
@@ -1186,15 +1181,6 @@
 			path = Schedule;
 			sourceTree = "<group>";
 		};
-		D59E17502C6F3015007D8D4B /* CoreData */ = {
-			isa = PBXGroup;
-			children = (
-				995358452C00C555005BF799 /* Where_Are_You.xcdatamodeld */,
-				D59E17512C6F3024007D8D4B /* DataController.swift */,
-			);
-			path = CoreData;
-			sourceTree = "<group>";
-		};
 		D5B79A112C5B8368004EDDF2 /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
@@ -1488,10 +1474,8 @@
 				9910B8482C71B5A4005F7EEE /* DDayViewController.swift in Sources */,
 				9910B8472C71B59E005F7EEE /* AccountSearchView.swift in Sources */,
 				99C140422C64A01A00A706B6 /* AddFeedView.swift in Sources */,
-				995358472C00C555005BF799 /* Where_Are_You.xcdatamodeld in Sources */,
 				995174FE2C7EF89100E938DE /* LocationBookmarkViewController.swift in Sources */,
 				9950C65B2C10B0F5003155A7 /* SignUpFormViewController.swift in Sources */,
-				D59E17522C6F3024007D8D4B /* DataController.swift in Sources */,
 				992F57CC2C5B270300219C6B /* LoginBody.swift in Sources */,
 				99FBA5562C453BDD002EEEC7 /* HomeFeedViewController.swift in Sources */,
 				99FBA5502C45394E002EEEC7 /* BannerViewModel.swift in Sources */,
@@ -1944,19 +1928,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		995358452C00C555005BF799 /* Where_Are_You.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				995358462C00C555005BF799 /* Where_Are_You.xcdatamodel */,
-			);
-			currentVersion = 995358462C00C555005BF799 /* Where_Are_You.xcdatamodel */;
-			path = Where_Are_You.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 995358312C00C555005BF799 /* Project object */;
 }

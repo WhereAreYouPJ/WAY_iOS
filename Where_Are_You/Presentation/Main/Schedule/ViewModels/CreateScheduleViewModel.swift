@@ -14,7 +14,7 @@ final class CreateScheduleViewModel: ObservableObject {
     @Published var startTime: Date
     @Published var endTime: Date
     @Published var selectedFriends: [Friend] = []
-    @Published var place: Location?
+    @Published var place: Location = Location(location: "", streetName: "", x: 0, y: 0)
     @Published var favPlaces: [Location] = []
     @Published var color: String = "red"
     @Published var memo: String = ""
@@ -79,7 +79,7 @@ final class CreateScheduleViewModel: ObservableObject {
     func postSchedule() {
         let provider = MoyaProvider<ScheduleAPI>()
         let invitedMemberSeqs = selectedFriends.map { $0.memberSeq }
-        let body = CreateScheduleBody(title: title, startTime: dateFormatter.string(from: startTime), endTime: dateFormatter.string(from: endTime), location: place?.location, streetName: place?.streetName, x: place?.x, y: place?.y, color: color, memo: memo, invitedMemberSeqs: invitedMemberSeqs, createMemberSeq: 1)
+        let body = CreateScheduleBody(title: title, startTime: dateFormatter.string(from: startTime), endTime: dateFormatter.string(from: endTime), location: place.location, streetName: place.streetName, x: place.x, y: place.y, color: color, memo: memo, invitedMemberSeqs: invitedMemberSeqs, createMemberSeq: 1)
         
         provider.request(.postSchedule(request: body)) { response in
             switch response {

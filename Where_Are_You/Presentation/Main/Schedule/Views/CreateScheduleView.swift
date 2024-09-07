@@ -114,7 +114,7 @@ struct DateAndTimeView: View {
 }
 
 struct AddPlaceView: View {
-    @Binding var place: Location?
+    @Binding var place: Location
     @Binding var favPlaces: [Location]
     @Binding var path: NavigationPath
     
@@ -124,15 +124,16 @@ struct AddPlaceView: View {
         
         HStack {
             Image("icon-place")
-            if let place = place {
-                Text(place.location)
-                    .foregroundStyle(Color.primary)
-            } else {
+            if place.location == "" {
                 Text("위치 추가")
                     .foregroundStyle(Color(.color118))
                     .onTapGesture {
                         path.append(Route.searchPlace)
                     }
+                
+            } else {
+                Text(place.location)
+                    .foregroundStyle(Color.primary)
             }
         }
         

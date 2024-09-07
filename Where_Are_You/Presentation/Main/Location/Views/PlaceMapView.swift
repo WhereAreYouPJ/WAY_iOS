@@ -10,90 +10,29 @@ import MapKit
 
 struct PlaceMapView: View {
     @Environment(\.presentationMode) var presentationMode
-    @Binding var place: Location?
+    @Binding var location: Location
     @Binding var path: NavigationPath
     
-//    init(place: Place) {
-//        self.place = place
-//        
-//        _region = State(initialValue: MKCoordinateRegion(
-//            center: place.coordinate,
-//            span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-//        ))
-//    }
-//    
     var body: some View {
         ZStack(alignment: .topLeading) {
-//            VStack(spacing: 0) {
-//                Map(coordinateRegion: $region, annotationItems: [place]) { place in
-//                    MapMarker(coordinate: place.coordinate, tint: .red)
-//                }
-//                .edgesIgnoringSafeArea(.top)
-//                
-            PlaceDetailsView(place: $place) {
-                    path.removeLast(path.count)  // MARK: Clear the navigation stack
-                }
-//            }
-//            
-//            Button(action: {
-//                presentationMode.wrappedValue.dismiss()
-//            }) {
-//                Image(systemName: "chevron.left")
-//                    .foregroundColor(.black)
-//                    .padding()
-//                    .background(Color.white.opacity(0.8))
-//                    .clipShape(RoundedRectangle(cornerRadius: 4))
-//            }
-//            .padding(20)
+            PlaceDetailsView(location: $location) {
+                path.removeLast(path.count)  // MARK: Clear the navigation stack
+            }
         }
-//        .navigationBarHidden(true)
-//        .onAppear {
-//            fetchAddress()
-//        }
     }
-//    
-//    private func fetchAddress() {
-//        let geocoder = CLGeocoder()
-//        let location = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
-//        
-//        geocoder.reverseGeocodeLocation(location) { placemarks, error in
-//            if let error = error {
-//                print("Reverse geocoding error: \(error.localizedDescription)")
-//                return
-//            }
-//            
-//            if let placemark = placemarks?.first {
-//                let addressComponents = [
-//                    placemark.thoroughfare,
-//                    placemark.subThoroughfare,
-//                    placemark.locality,
-//                    placemark.subLocality,
-//                    placemark.administrativeArea,
-//                    placemark.postalCode,
-//                    placemark.country
-//                ].compactMap { $0 }
-//                
-//                address = addressComponents.joined(separator: " ")
-//            }
-//        }
-//    }
 }
 
 struct PlaceDetailsView: View {
-    @Binding var place: Location?
+    @Binding var location: Location
     let onConfirm: () -> Void
     
     var body: some View {
         VStack {
             HStack {
                 VStack(alignment: .leading) {
-                    Text(place?.location ?? "")
+                    Text(location.location)
                         .font(.title2)
                         .fontWeight(.bold)
-                    
-//                    Text(address.isEmpty ? "주소를 가져오는 중..." : address)
-//                        .font(.subheadline)
-//                        .foregroundColor(.secondary)
                 }
                 Spacer()
                 Image("icon-bookmark")
@@ -113,11 +52,6 @@ struct PlaceDetailsView: View {
     }
 }
 
-//#Preview {
-//    PlaceMapView(place: Place(location: "서울대입구", streetName: "", x: .constant(0), y: .constant(0)), path: .constant(NavigationPath()))
-//}
-
-//
-//#Preview {
-//    PlaceMapView(place: Place(location: "서울대입구", coordinate: CLLocationCoordinate2DMake(37.4808, 126.9526), streetName: "서울시 어쩌구 무슨대로"), location: .constant(""), streetName: .constant(""), x: .constant(0.0), y: .constant(0.0), path: .constant(NavigationPath()))
-//}
+#Preview {
+    PlaceMapView(location: .constant(Location(location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526)), path: .constant(NavigationPath()))
+}
