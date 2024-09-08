@@ -13,6 +13,8 @@ struct CalendarView: View {
     @State private var showMenu = false
     @State private var showCreateSchedule = false
     
+    @State var isShownMapView = false
+    
     init(
         month: Date = Date(),
         clickedCurrentMonthDates: Date? = nil
@@ -51,10 +53,17 @@ struct CalendarView: View {
                     })
                     .foregroundStyle(.white)
                     .background(Color(.color81))
+                    
+                    Button(action: {
+                        self.isShownMapView = true
+                    }, label: {
+                        Text("지도")
+                    })
+                    .foregroundStyle(.white)
+                    .background(Color(.color81))
                 } label: {
                     Image("icon-plus")
                 }
-                
             }
             .padding(.horizontal, 10)
             .padding(.bottom, 30)
@@ -62,6 +71,9 @@ struct CalendarView: View {
         .sheet(isPresented: self.$showCreateSchedule, content: {
             CreateScheduleView()
                 .interactiveDismissDisabled()
+        })
+        .fullScreenCover(isPresented: self.$isShownMapView, content: { // 맵뷰 테스트용
+            MapView()
         })
     }
     
@@ -127,10 +139,10 @@ struct CalendarView: View {
         let lastDayOfMonthBefore = numberOfDays(in: previousMonth())
         let numberOfRows = Int(ceil(Double(daysInMonth + firstWeekday) / 7.0))
         let visibleDaysOfNextMonth = numberOfRows * 7 - (daysInMonth + firstWeekday)
-
+        
         let availableHeight = geometry.size.height - 100
         let cellHeight = availableHeight / CGFloat(numberOfRows)
-
+        
         return LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 0) {
             ForEach(-firstWeekday ..< daysInMonth + visibleDaysOfNextMonth, id: \.self) { index in
                 Group {
@@ -140,7 +152,7 @@ struct CalendarView: View {
                         let weekday = Calendar.current.component(.weekday, from: date)
                         let clicked = clickedCurrentMonthDates == date
                         let isToday = date.formattedCalendarDayDate == today.formattedCalendarDayDate
-
+                        
                         CellView(day: day, clicked: clicked, isToday: isToday, isCurrentMonthDay: true, weekday: weekday)
                             .onTapGesture {
                                 clickedCurrentMonthDates = date
@@ -152,7 +164,7 @@ struct CalendarView: View {
                     ) {
                         let day = Calendar.current.component(.day, from: prevMonthDate)
                         let weekday = Calendar.current.component(.weekday, from: prevMonthDate)
-
+                        
                         CellView(day: day, isCurrentMonthDay: false, weekday: weekday)
                     }
                 }

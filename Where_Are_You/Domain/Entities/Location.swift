@@ -8,7 +8,7 @@
 import Foundation
 import MapKit
 
-struct Place: Identifiable {
+struct Location: Identifiable, Codable, Hashable {
     var id = UUID()
     var location: String
     var streetName: String

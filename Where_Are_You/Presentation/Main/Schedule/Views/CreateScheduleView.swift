@@ -10,6 +10,7 @@ import SwiftUI
 enum Route: Hashable {
     case searchPlace
     case searchFriends
+    case confirmLocation(Location)
 }
 
 struct CreateScheduleView: View {
@@ -67,9 +68,12 @@ struct CreateScheduleView: View {
             .navigationDestination(for: Route.self) { route in
                 switch route {
                 case .searchPlace:
-                    SearchPlaceView(place: $viewModel.place, path: $path)
+                    SearchLocationView(selectedLocation: $viewModel.place, path: $path)
                 case .searchFriends:
                     SearchFriendsView(selectedFriends: $viewModel.selectedFriends)
+                case .confirmLocation(let location):
+                    ConfirmLocationView(location: $viewModel.place, path: $path)
+                    
                 }
             }
         }
@@ -114,8 +118,8 @@ struct DateAndTimeView: View {
 }
 
 struct AddPlaceView: View {
-    @Binding var place: Place?
-    @Binding var favPlaces: [Place]
+    @Binding var place: Location
+    @Binding var favPlaces: [Location]
     @Binding var path: NavigationPath
     
     var body: some View {
@@ -124,15 +128,16 @@ struct AddPlaceView: View {
         
         HStack {
             Image("icon-place")
-            if let place = place {
-                Text(place.location)
-                    .foregroundStyle(Color.primary)
-            } else {
+            if place.location == "" {
                 Text("위치 추가")
                     .foregroundStyle(Color(.color118))
                     .onTapGesture {
                         path.append(Route.searchPlace)
                     }
+                
+            } else {
+                Text(place.location)
+                    .foregroundStyle(Color.primary)
             }
         }
         
@@ -160,7 +165,7 @@ struct AddPlaceView: View {
 
 
 struct FavoritePlaceCell: View {
-    let place: Place
+    let place: Location
     let action: () -> Void
     
     var body: some View {
