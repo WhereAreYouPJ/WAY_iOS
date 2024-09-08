@@ -10,6 +10,7 @@ import SwiftUI
 enum Route: Hashable {
     case searchPlace
     case searchFriends
+    case confirmLocation(Location)
 }
 
 struct CreateScheduleView: View {
@@ -67,9 +68,12 @@ struct CreateScheduleView: View {
             .navigationDestination(for: Route.self) { route in
                 switch route {
                 case .searchPlace:
-                    SearchPlaceView(selectedLocation: $viewModel.place, path: $path)
+                    SearchLocationView(selectedLocation: $viewModel.place, path: $path)
                 case .searchFriends:
                     SearchFriendsView(selectedFriends: $viewModel.selectedFriends)
+                case .confirmLocation(let location):
+                    ConfirmLocationView(location: $viewModel.place, path: $path)
+                    
                 }
             }
         }

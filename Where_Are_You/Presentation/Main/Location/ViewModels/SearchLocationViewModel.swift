@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class SearchPlaceViewModel: ObservableObject {
+class SearchLocationViewModel: ObservableObject {
     @Published var searchText = ""
     @Published var searchResults: [Location] = []
     @Published var recentSearches: [Location] = []
@@ -18,15 +18,6 @@ class SearchPlaceViewModel: ObservableObject {
     
     init() {
         loadRecentSearches()
-//      recentSearches = [
-//        .init(from: Document(addressName: "서울대입구", roadAddressName: "서울 종로구 세종대로 171", x: "37.4808", y: "126.9526")),
-//        .init(from: Document(addressName: "여의도공원", roadAddressName: "서울 영등포구 여의공원로 68", x: "37.5268", y: "126.9244")),
-//        .init(from: Document(addressName: "올림픽체조경기장", roadAddressName: "서울 종로구 세종대로 173", x: "37.5221", y: "127.1259")),
-//        .init(from: Document(addressName: "재즈바", roadAddressName: "서울 종로구 세종대로 174", x: "37.5665", y: "126.9780")),
-//        .init(from: Document(addressName: "신도림", roadAddressName: "서울 종로구 세종대로 175", x: "37.5088", y: "126.8912")),
-//        .init(from: Document(addressName: "망원한강공원", roadAddressName: "서울 종로구 세종대로 176", x: "37.5545", y: "126.8964")),
-//        .init(from: Document(addressName: "부천시청", roadAddressName: "서울 종로구 세종대로 177", x: "37.5037", y: "126.7661"))
-//      ]
         
         $searchText
             .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
@@ -69,18 +60,13 @@ class SearchPlaceViewModel: ObservableObject {
     }
     
     func addToRecentSearches(_ location: Location) {
-        if !recentSearches.contains(where: { $0.id == location.id }) {
+        if !recentSearches.contains(where: { $0.streetName == location.streetName && $0.location == location.location }) {
             recentSearches.insert(location, at: 0)
-            if recentSearches.count > 5 {
+            if recentSearches.count > 20 {
                 recentSearches.removeLast()
             }
             saveRecentSearches()
         }
-    }
-    
-    func clearRecentSearches() {
-        recentSearches.removeAll()
-        saveRecentSearches()
     }
     
     private func loadRecentSearches() {
@@ -94,5 +80,15 @@ class SearchPlaceViewModel: ObservableObject {
         if let encoded = try? JSONEncoder().encode(recentSearches) {
             UserDefaults.standard.set(encoded, forKey: "RecentSearches")
         }
+    }
+    
+    func deleteRecentSearch(location: Location) {
+        recentSearches.removeLast()
+        saveRecentSearches()
+    }
+    
+    func clearRecentSearches() {
+        recentSearches.removeAll()
+        saveRecentSearches()
     }
 }

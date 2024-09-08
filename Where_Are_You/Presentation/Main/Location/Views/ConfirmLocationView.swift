@@ -8,38 +8,38 @@
 import SwiftUI
 import MapKit
 
-struct PlaceMapView: View {
+struct ConfirmLocationView: View {
     @Environment(\.presentationMode) var presentationMode
     @Binding var location: Location
     @Binding var path: NavigationPath
     
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            PlaceDetailsView(location: $location) {
-                path.removeLast(path.count)  // MARK: Clear the navigation stack
-            }
+        VStack {
+            MapView()
+            
+            Spacer()
+            
+            locationDetailsView()
         }
     }
-}
-
-struct PlaceDetailsView: View {
-    @Binding var location: Location
-    let onConfirm: () -> Void
     
-    var body: some View {
+    private func locationDetailsView() -> some View {
         VStack {
             HStack {
                 VStack(alignment: .leading) {
                     Text(location.location)
                         .font(.title2)
                         .fontWeight(.bold)
+                    Text(location.streetName)
                 }
                 Spacer()
                 Image("icon-bookmark")
             }
             
             Divider()
-            Button(action: onConfirm) {
+            Button(action: {
+                path.removeLast(path.count)  // 네비게이션 스택을 초기화하여 CreateScheduleView로 돌아갑니다.
+            }) {
                 Text("확인")
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -48,10 +48,11 @@ struct PlaceDetailsView: View {
                     .cornerRadius(6)
             }
         }
-        .padding(20)
+        .padding(.horizontal, 20)
+        .padding(.vertical, 10)
     }
 }
 
 #Preview {
-    PlaceMapView(location: .constant(Location(location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526)), path: .constant(NavigationPath()))
+    ConfirmLocationView(location: .constant(Location(location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526)), path: .constant(NavigationPath()))
 }

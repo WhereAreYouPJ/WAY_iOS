@@ -7,11 +7,13 @@
 
 import SwiftUI
 
-struct SearchPlaceView: View {
-    @StateObject private var viewModel = SearchPlaceViewModel()
+struct SearchLocationView: View {
+    @StateObject private var viewModel = SearchLocationViewModel()
     @Binding var selectedLocation: Location
     @Binding var path: NavigationPath
     @Environment(\.presentationMode) var presentationMode
+    
+    @State var showRecentSearch = true
     
     var body: some View {
         VStack {
@@ -77,6 +79,9 @@ struct SearchPlaceView: View {
         .navigationBarTitleDisplayMode(.inline)
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
         .foregroundStyle(Color(.color34))
+        .onChange(of: viewModel.searchText) { _, newValue in
+            showRecentSearch = (viewModel.searchText == "")
+        }
     }
     
     private func locationRow(location: Location) -> some View {
@@ -97,23 +102,23 @@ struct SearchPlaceView: View {
                         .foregroundStyle(Color(.color153))
                 }
                 Spacer()
-                Image("icon-delete")
-                    .opacity(0.3)
+                if showRecentSearch {
+                    Image("icon-delete")
+                        .opacity(0.3)
+                        .onTapGesture {
+                            viewModel.deleteRecentSearch(location: location)
+                        }
+                }
             }
-            
-            NavigationLink(destination: PlaceMapView(location: $selectedLocation, path: $path)) {
-                EmptyView()
-            }
-            .opacity(0.0)
         }
         .onTapGesture {
             selectedLocation = location
             viewModel.addToRecentSearches(location)
-            path.append(location)
+            path.append(Route.confirmLocation(location))
         }
     }
 }
 
 #Preview {
-    SearchPlaceView(selectedLocation: .constant(Location(location: "", streetName: "", x: 0, y: 0)), path: .constant(NavigationPath()))
+    SearchLocationView(selectedLocation: .constant(Location(location: "", streetName: "", x: 0, y: 0)), path: .constant(NavigationPath()))
 }
