@@ -8,6 +8,7 @@
 import Moya
 
 enum MemberAPI {
+    case modifyUserName(memberSeq: Int, userName: String)
     case signUp(request: SignUpBody)
     case resetPassword(request: ResetPasswordBody)
     case logout(request: LogoutBody)
@@ -16,7 +17,7 @@ enum MemberAPI {
     case emailVerifyPassword(request: EmailVerifyPasswordBody)
     case emailSend(request: EmailSendBody)
     case memberSearch(request: MemberSearchParameters)
-    case memberDetails(request: MemberDetailsParameters)
+    case memberDetails(memberSeq: Int)
     case checkEmail(request: CheckEmailParameters)
 }
 
@@ -27,6 +28,8 @@ extension MemberAPI: TargetType {
     
     var path: String {
         switch self {
+        case .modifyUserName:
+            return "/member/modify/userName"
         case .signUp:
             return "/member"
         case .resetPassword:
@@ -52,6 +55,8 @@ extension MemberAPI: TargetType {
     
     var method: Moya.Method {
         switch self {
+        case .modifyUserName:
+            return .put
         case .signUp, .resetPassword, .logout, .login, .emailVerify, .emailVerifyPassword, .emailSend:
             return .post
         case .memberSearch, .memberDetails, .checkEmail:
@@ -61,6 +66,8 @@ extension MemberAPI: TargetType {
     
     var task: Task {
         switch self {
+        case .modifyUserName(let memberSeq, let userName):
+            return .requestParameters(parameters: ["memberSeq": memberSeq, "userName": userName], encoding: JSONEncoding.default)
         case .signUp(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .resetPassword(let request):
@@ -77,8 +84,8 @@ extension MemberAPI: TargetType {
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .memberSearch(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .memberDetails(let request):
-            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+        case .memberDetails(let memberSeq):
+            return .requestParameters(parameters: ["memberSeq": memberSeq], encoding: URLEncoding.queryString)
         case .checkEmail(let request):
             return .requestParameters(parameters: ["email": request.email], encoding: URLEncoding.queryString)
         }

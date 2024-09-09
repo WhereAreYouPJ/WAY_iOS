@@ -11,25 +11,29 @@ import Moya
 // MARK: - AuthServiceProtocol
 
 protocol MemberServiceProtocol {
+    func modifyUserName(userName: String, completion: @escaping (Result<Void, Error>) -> Void)
     func signUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void)
     func resetPassword(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void)
     
-    func logout(request: LogoutBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func logout(completion: @escaping (Result<Void, Error>) -> Void)
     func login(request: LoginBody, completion: @escaping (Result<GenericResponse<LoginResponse>, Error>) -> Void)
     func emailVerify(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
     func emailVerifyPassword(request: EmailVerifyPasswordBody, completion: @escaping (Result<Void, Error>) -> Void)
     func emailSend(request: EmailSendBody, completion: @escaping (Result<Void, Error>) -> Void)
     func memberSearch(request: MemberSearchParameters, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void)
-    func memberDetails(request: MemberDetailsParameters, completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void)
+    func memberDetails(completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void)
     func checkEmail(request: CheckEmailParameters, completion: @escaping (Result<GenericResponse<CheckEmailResponse>, Error>) -> Void)
 }
 
 // MARK: - AuthService
 
 class MemberService: MemberServiceProtocol {
-    
     // MARK: - Properties
     private var provider = MoyaProvider<MemberAPI>()
+    
+    private var memberSeq: Int {
+        return UserDefaultsManager.shared.getMemberSeq()
+    }
     
     init() {
         let tokenPlugin = AuthTokenPlugin(tokenClosure: {
@@ -39,6 +43,12 @@ class MemberService: MemberServiceProtocol {
     }
     
     // MARK: - APIService
+    func modifyUserName(userName: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+        provider.request(.modifyUserName(memberSeq: memberSeq, userName: userName)) { result in
+            self.handleResponse(result, completion: completion)
+        }
+    }
+    
     func signUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void) {
         provider.request(.signUp(request: request)) { result in
             self.handleResponse(result, completion: completion)
@@ -51,7 +61,8 @@ class MemberService: MemberServiceProtocol {
         }
     }
     
-    func logout(request: LogoutBody, completion: @escaping (Result<Void, Error>) -> Void) {
+    func logout(completion: @escaping (Result<Void, Error>) -> Void) {
+        let request = LogoutBody(memberSeq: memberSeq)
         provider.request(.logout(request: request)) { result in
             self.handleResponse(result, completion: completion)
         }
@@ -87,8 +98,8 @@ class MemberService: MemberServiceProtocol {
         }
     }
     
-    func memberDetails(request: MemberDetailsParameters, completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void) {
-        provider.request(.memberDetails(request: request)) { result in
+    func memberDetails(completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void) {
+        provider.request(.memberDetails(memberSeq: memberSeq)) { result in
             self.handleResponse(result, completion: completion)
         }
     }
@@ -105,6 +116,11 @@ class MemberService: MemberServiceProtocol {
         switch result {
         case .success(let response):
             do {
+                // TODO: 앱 개발 완료후 지우기(받는 데이터 정보 확인용)
+                if let json = try? response.mapJSON() {
+                    print("Response JSON: \(json)")
+                }
+                
                 let data = try response.map(T.self)
                 completion(.success(data))
             } catch let error {

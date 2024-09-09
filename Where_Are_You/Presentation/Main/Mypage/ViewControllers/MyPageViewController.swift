@@ -9,27 +9,43 @@ import UIKit
 
 class MyPageViewController: UIViewController {
     // MARK: - Properties
-    
     private let myPageView = MyPageView()
     private var viewModel: MyPageViewModel!
+    private var userName: String?
+    private var email: String?
     
     // MARK: - Lifecycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // 네비게이션 바 숨기기
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // 다음 화면으로 이동할 때 네비게이션 바 다시 표시
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view = myPageView
         setupViewModel()
         setupActions()
         setupBindings()
+        
         myPageView.userCodeLabel.text = UserDefaultsManager.shared.getMemberCode()
+        viewModel.memberDetails()
+        NotificationCenter.default.addObserver(self, selector: #selector(userNameDidChange), name: .userNameDidChange, object: nil)
     }
     
     // MARK: - Helpers
-    
     private func setupViewModel() {
         let memberService = MemberService()
         let memberRepository = MemberRepository(memberService: memberService)
         viewModel = MyPageViewModel(
-            logoutUseCase: LogoutUseCaseImpl(memberRepository: memberRepository)
+            logoutUseCase: LogoutUseCaseImpl(memberRepository: memberRepository),
+            memberDetailsUseCase: MemberDetailsUseCaseImpl(memberRepository: memberRepository)
         )
     }
     
@@ -37,7 +53,6 @@ class MyPageViewController: UIViewController {
         myPageView.setButtonActions(target: self, action: #selector(buttonTapped(_:)))
         myPageView.imageEditButton.addTarget(self, action: #selector(editImage), for: .touchUpInside)
         myPageView.moveToGallery.button.addTarget(self, action: #selector(moveToGallery), for: .touchUpInside)
-        myPageView.userNameEditButton.addTarget(self, action: #selector(editUserName), for: .touchUpInside)
         myPageView.logoutButton.button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
         view.addGestureRecognizer(tapGesture)
@@ -45,15 +60,23 @@ class MyPageViewController: UIViewController {
    
     private func setupBindings() {
         viewModel.onLogoutSuccess = { [weak self] in
-            self?.navigateToLogin()
+            DispatchQueue.main.async {
+                self?.navigateToLogin()
+            }
+        }
+        
+        viewModel.onGetMemberSuccess = { [weak self] memberDetails in
+            DispatchQueue.main.async {
+                self?.myPageView.userNameLabel.text = memberDetails.userName
+                self?.userName = memberDetails.userName
+                self?.email = memberDetails.email
+            }
         }
     }
     
     private func navigateToLogin() {
         let loginVC = LoginViewController()
         let navController = UINavigationController(rootViewController: loginVC)
-        
-        // 윈도우에 접근하여 루트 뷰 컨트롤러 변경
         if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
            let window = sceneDelegate.window {
             window.rootViewController = navController
@@ -75,7 +98,6 @@ class MyPageViewController: UIViewController {
     }
     
     @objc private func editImage() {
-        // 프로필 이미지 수정
         myPageView.moveToGallery.isHidden.toggle()
     }
     
@@ -84,15 +106,11 @@ class MyPageViewController: UIViewController {
         print("갤러리 이동하기")
     }
     
-    @objc private func editUserName() {
-        // 유저이름 수정
-    }
-    
     @objc private func buttonTapped(_ sender: UIButton) {
         switch sender.tag {
         case 0:
             // Handle "내 정보 관리"
-            moveToDetailController(controller: MyDetailManageViewcontroller())
+            moveToDetailController(controller: MyDetailManageViewcontroller(userName: userName, email: email))
         case 1:
             // Handle "위치 즐겨찾기"
             print("위치 즐겨찾기 tapped")
@@ -114,11 +132,7 @@ class MyPageViewController: UIViewController {
     }
     
     private func moveToDetailController(controller: UIViewController) {
-        // TODO: 추후에 view를 탭바 위에 뜨는걸로 바꾸어야 함
-        let controller = controller
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {
@@ -126,5 +140,14 @@ class MyPageViewController: UIViewController {
         if !myPageView.moveToGallery.frame.contains(location) && !myPageView.imageEditButton.frame.contains(location) {
             myPageView.moveToGallery.isHidden = true
         }
+    }
+    
+    @objc private func userNameDidChange() {
+        // 유저 정보를 다시 불러오기
+        viewModel.memberDetails()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }

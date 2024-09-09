@@ -27,7 +27,9 @@ class FeedsViewController: UIViewController {
     // MARK: - Helpers
     private func setupBindings() {
         viewModel.onFeedsDataFetched = { [weak self] in
-            self?.updateViewVisibility()
+            DispatchQueue.main.async {
+                self?.updateViewVisibility()
+            }
         }
     }
     
