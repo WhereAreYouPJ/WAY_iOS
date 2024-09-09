@@ -132,7 +132,6 @@ class MyPageViewController: UIViewController {
     }
     
     private func moveToDetailController(controller: UIViewController) {
-        let controller = controller
         navigationController?.pushViewController(controller, animated: true)
     }
     
