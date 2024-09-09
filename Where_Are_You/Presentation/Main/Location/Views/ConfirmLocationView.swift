@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import MapKit
 
 struct ConfirmLocationView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -15,7 +14,7 @@ struct ConfirmLocationView: View {
     
     var body: some View {
         VStack {
-            MapView()
+            MapView(location: $location)
             
             Spacer()
             

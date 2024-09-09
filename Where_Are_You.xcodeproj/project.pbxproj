@@ -163,7 +163,6 @@
 		D54C040A2C6516CB009CC419 /* CreateScheduleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54C04092C6516CB009CC419 /* CreateScheduleBody.swift */; };
 		D54C040C2C651832009CC419 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54C040B2C651832009CC419 /* Schedule.swift */; };
 		D54C040E2C651B8A009CC419 /* ScheduleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54C040D2C651B8A009CC419 /* ScheduleAPI.swift */; };
-		D558735A2C8DFDA100E3A35E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55873592C8DFDA100E3A35E /* MapViewController.swift */; };
 		D55DFC2F2C61021800EEEF51 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55DFC2E2C61021800EEEF51 /* CalendarView.swift */; };
 		D55DFC312C61022900EEEF51 /* CreateScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */; };
 		D57AC3B12C8B6336006AE7D7 /* KakaoLocalResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57AC3B02C8B6336006AE7D7 /* KakaoLocalResponse.swift */; };
@@ -369,7 +368,6 @@
 		D54C04092C6516CB009CC419 /* CreateScheduleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleBody.swift; sourceTree = "<group>"; };
 		D54C040B2C651832009CC419 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		D54C040D2C651B8A009CC419 /* ScheduleAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleAPI.swift; sourceTree = "<group>"; };
-		D55873592C8DFDA100E3A35E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D55DFC2E2C61021800EEEF51 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleView.swift; sourceTree = "<group>"; };
 		D57AC3B02C8B6336006AE7D7 /* KakaoLocalResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLocalResponse.swift; sourceTree = "<group>"; };
@@ -1158,18 +1156,9 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		D55873582C8DFD8C00E3A35E /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				D55873592C8DFDA100E3A35E /* MapViewController.swift */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
 		D57B46ED2C78630A00657C51 /* Location */ = {
 			isa = PBXGroup;
 			children = (
-				D55873582C8DFD8C00E3A35E /* ViewControllers */,
 				D53620962C8AE2B20017B279 /* Views */,
 				D53620972C8AE2BB0017B279 /* ViewModels */,
 			);
@@ -1588,7 +1577,6 @@
 				D5496DD22C6B69570056C196 /* ConfirmLocationView.swift in Sources */,
 				99149FED2C4F97EA00136097 /* TimeHelper.swift in Sources */,
 				D57AC3B12C8B6336006AE7D7 /* KakaoLocalResponse.swift in Sources */,
-				D558735A2C8DFDA100E3A35E /* MapViewController.swift in Sources */,
 				D54C040E2C651B8A009CC419 /* ScheduleAPI.swift in Sources */,
 				9967C1522C56467D00927277 /* CustomAlert.swift in Sources */,
 				99C68E482C64B43900DEC1F1 /* FeedService.swift in Sources */,

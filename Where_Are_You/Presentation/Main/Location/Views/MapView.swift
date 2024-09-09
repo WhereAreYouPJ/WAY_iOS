@@ -1,18 +1,12 @@
-//
-//  KakaoMapView.swift
-//  Where_Are_You
-//
-//  Created by juhee on 23.08.24.
-//
-
 import SwiftUI
 import KakaoMapsSDK
 
 struct MapView: View {
     @State var draw: Bool = false // 뷰의 appear 상태를 전달하기 위한 변수.
+    @Binding var location: Location
     
     var body: some View {
-        KakaoMapView(draw: $draw)
+        KakaoMapView(draw: $draw, location: $location)
             .onAppear(perform: {
                 self.draw = true
             })
@@ -23,6 +17,7 @@ struct MapView: View {
 
 struct KakaoMapView: UIViewRepresentable {
     @Binding var draw: Bool
+    @Binding var location: Location
     
     /// UIView를 상속한 KMViewContainer를 생성한다.
     /// 뷰 생성과 함께 KMControllerDelegate를 구현한 Coordinator를 생성하고, 엔진을 생성 및 초기화한다.
@@ -30,11 +25,6 @@ struct KakaoMapView: UIViewRepresentable {
         let view: KMViewContainer = KMViewContainer()
         view.sizeToFit()
         context.coordinator.createController(view)
-        DispatchQueue.main.async() {
-            context.coordinator.controller?.prepareEngine()
-            print("makeUIView - Engine prepared!")
-        }
-        
         return view
     }
     
@@ -43,8 +33,11 @@ struct KakaoMapView: UIViewRepresentable {
     /// draw가 false로 설정되면 렌더링을 멈추고 엔진을 stop한다.
     func updateUIView(_ uiView: KMViewContainer, context: Self.Context) {
         if draw {
-            context.coordinator.controller?.activateEngine()
-            print("updateUIView - Engine activated!")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                context.coordinator.controller?.prepareEngine()
+                context.coordinator.controller?.activateEngine()
+                print("updateUIView - Engine prepared and activated!")
+            }
         } else {
             context.coordinator.controller?.resetEngine()
         }
@@ -52,7 +45,7 @@ struct KakaoMapView: UIViewRepresentable {
     
     /// Coordinator 생성
     func makeCoordinator() -> KakaoMapCoordinator {
-        return KakaoMapCoordinator()
+        return KakaoMapCoordinator(location: location)
     }
     
     /// Cleans up the presented `UIView` (and coordinator) in anticipation of their removal.
@@ -63,10 +56,11 @@ struct KakaoMapView: UIViewRepresentable {
     /// Coordinator 구현. KMControllerDelegate를 adopt한다.
     class KakaoMapCoordinator: NSObject, MapControllerDelegate {
         var controller: KMController?
-        var first: Bool
+        var location: Location
+        var first: Bool = true
         
-        override init() {
-            first = true
+        init(location: Location) {
+            self.location = location
             super.init()
         }
         
@@ -81,7 +75,7 @@ struct KakaoMapView: UIViewRepresentable {
         // 엔진 생성 및 초기화 이후, 렌더링 준비가 완료되면 아래 addViews를 호출한다.
         // 원하는 뷰를 생성한다.
         func addViews() {
-            let defaultPosition: MapPoint = MapPoint(longitude: 127.108678, latitude: 37.402001)
+            let defaultPosition: MapPoint = MapPoint(longitude: location.y, latitude: location.x)
             let mapviewInfo: MapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition)
             
             controller?.addView(mapviewInfo)
@@ -102,8 +96,6 @@ struct KakaoMapView: UIViewRepresentable {
         
         func authenticationSucceeded() {
             print("auth succeed!!")
-            print(controller?.isEnginePrepared)
-            print(controller?.isEngineActive)
             if let controller = controller,
                !controller.isEngineActive {
                 controller.activateEngine()
@@ -118,11 +110,15 @@ struct KakaoMapView: UIViewRepresentable {
         
         // KMViewContainer 리사이징 될 때 호출.
         func containerDidResized(_ size: CGSize) {
-            let mapView: KakaoMap? = controller?.getView("mapview") as? KakaoMap
-            mapView?.viewRect = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: size)
+            guard let mapView = controller?.getView("mapview") as? KakaoMap else { return }
+            mapView.viewRect = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: size)
             if first {
-                let cameraUpdate: CameraUpdate = CameraUpdate.make(target: MapPoint(longitude: 127.108678, latitude: 37.402001), zoomLevel: 10, mapView: mapView!)
-                mapView?.moveCamera(cameraUpdate)
+                let cameraUpdate = CameraUpdate.make(
+                    target: MapPoint(longitude: location.y, latitude: location.x),
+                    zoomLevel: 15,
+                    mapView: mapView
+                )
+                mapView.moveCamera(cameraUpdate)
                 first = false
             }
         }
@@ -140,11 +136,8 @@ struct KakaoMapView: UIViewRepresentable {
             guard let view = controller?.getView("mapview") as? KakaoMap else { return }
             let manager = view.getLabelManager()
             
-            let noti1 = PoiBadge(badgeID: "badge1", image: UIImage(named: "bookmark"), offset: CGPoint(x: 0.9, y: 0.1), zOrder: 0)
-            let iconStyle1 = PoiIconStyle(symbol: UIImage(named: "icon-bookmark-filled"), anchorPoint: CGPoint(x: 0.0, y: 0.5), badges: [noti1])
-            
-            let noti2 = PoiBadge(badgeID: "badge2", image: UIImage(named: "noti2.png"), offset: CGPoint(x: 0.9, y: 0.1), zOrder: 0)
-            let iconStyle2 = PoiIconStyle(symbol: UIImage(named: "bookmark"), anchorPoint: CGPoint(x: 0.0, y: 0.5), badges: [noti2])
+            let iconStyle1 = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.0))
+            let iconStyle2 = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.0))
             
             let poiStyle = PoiStyle(styleID: "PerLevelStyle", styles: [
                 PerLevelPoiStyle(iconStyle: iconStyle1, level: 5),
@@ -161,18 +154,13 @@ struct KakaoMapView: UIViewRepresentable {
             let poiOption = PoiOptions(styleID: "PerLevelStyle")
             poiOption.rank = 0
             
-            if let poi1 = layer.addPoi(option: poiOption, at: MapPoint(longitude: 127.108678, latitude: 37.402001)) {
-                if let badgeImage = UIImage(named: "icon-map-pin") {
-                    let badge = PoiBadge(badgeID: "badge1", image: badgeImage, offset: CGPoint(x: 0, y: 0), zOrder: 1)
-                    poi1.addBadge(badge)
-                }
+            if let poi1 = layer.addPoi(option: poiOption, at: MapPoint(longitude: location.y, latitude: location.x)) {
                 poi1.show()
-                poi1.showBadge(badgeID: "noti")
             }
         }
     }
 }
 
 #Preview {
-    MapView()
+    MapView(location: .constant(Location(location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526)))
 }

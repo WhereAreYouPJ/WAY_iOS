@@ -72,9 +72,6 @@ struct CalendarView: View {
             CreateScheduleView()
                 .interactiveDismissDisabled()
         })
-        .fullScreenCover(isPresented: self.$isShownMapView, content: { // 맵뷰 테스트용
-            MapView()
-        })
     }
     
     // MARK: 연월 표시
