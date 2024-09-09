@@ -10,11 +10,18 @@ import UIKit
 class MyDetailManageView: UIView {
     // MARK: - Properties
     let modifyButton = CustomOptionButtonView(title: "수정하기")
-//    let modifyButton = CustomOptionButtonView(buttons: [(title: "수정하기", image: nil)])
     let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이름", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
-    let userNameTextField = Utilities.inputContainerTextField(withPlaceholder: "김나라")
+    let userNameTextField = Utilities.inputContainerTextField(withPlaceholder: "")
+    let userNameErrorLabel = CustomLabel(UILabel_NotoSans: .medium, text: "최소 1자 이상 입력해 주세요.", textColor: .warningColor, fontSize: LayoutAdapter.shared.scale(value: 12))
+    
+    lazy var userNameStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [userNameTextField, userNameErrorLabel])
+        stackView.axis = .vertical
+        return stackView
+    }()
+    
     let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이메일 주소", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
-    let emailTextfield = Utilities.inputContainerTextField(withPlaceholder: "example@email.com")
+    let emailTextfield = Utilities.inputContainerTextField(withPlaceholder: "")
     let updateDetailButton = CustomButton(title: "수정하기", backgroundColor: .color171, titleColor: .white, font: UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 18)))
     
     // MARK: - Lifecycle
@@ -34,11 +41,12 @@ class MyDetailManageView: UIView {
 
     private func configureViewComponents() {
         addSubview(userNameLabel)
-        addSubview(userNameTextField)
+        addSubview(userNameStack)
         addSubview(emailLabel)
         addSubview(emailTextfield)
         addSubview(updateDetailButton)
         addSubview(modifyButton)
+        userNameErrorLabel.isHidden = true
         modifyButton.isHidden = true
     }
     
@@ -55,14 +63,17 @@ class MyDetailManageView: UIView {
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
         }
         
-        userNameTextField.snp.makeConstraints { make in
+        userNameStack.snp.makeConstraints { make in
             make.top.equalTo(userNameLabel.snp.bottom)
             make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
+        }
+        
+        userNameTextField.snp.makeConstraints { make in
             make.height.equalTo(LayoutAdapter.shared.scale(value: 44))
         }
         
         emailLabel.snp.makeConstraints { make in
-            make.top.equalTo(userNameTextField.snp.bottom).offset(LayoutAdapter.shared.scale(value: 10))
+            make.top.equalTo(userNameStack.snp.bottom).offset(LayoutAdapter.shared.scale(value: 10))
             make.leading.equalTo(userNameLabel)
         }
         

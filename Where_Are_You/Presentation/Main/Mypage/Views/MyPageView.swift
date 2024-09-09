@@ -36,13 +36,7 @@ class MyPageView: UIView {
         return button
     }()
     
-    let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "유저 이름", textColor: .white, fontSize: 20)
-    
-    let userNameEditButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "icon-NameEdit"), for: .normal)
-        return button
-    }()
+    let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .white, fontSize: 20)
     
     // 유저코드(친추용)
     let userCodeBackgroundView: UIView = {
@@ -82,7 +76,6 @@ class MyPageView: UIView {
     
     // 추가 옵션 뷰
     let moveToGallery = CustomOptionButtonView(title: "사진 보관함", image: UIImage(named: "icon-Gallery"))
-//    let moveToGallery = CustomOptionButtonView(buttons: [("사진 보관함", UIImage(named: "icon-Gallery"))])
     
     // MARK: - Lifecycle
     
@@ -107,7 +100,6 @@ class MyPageView: UIView {
         profileBackgroundView.addSubview(profileImageView)
         profileBackgroundView.addSubview(userNameLabel)
         profileBackgroundView.addSubview(imageEditButton)
-        profileBackgroundView.addSubview(userNameEditButton)
         profileBackgroundView.addSubview(moveToGallery)
         
         addSubview(userCodeBackgroundView)
@@ -150,11 +142,6 @@ class MyPageView: UIView {
         userNameLabel.snp.makeConstraints { make in
             make.top.equalTo(profileImageView.snp.bottom).offset(6)
             make.centerX.equalToSuperview()
-        }
-        
-        userNameEditButton.snp.makeConstraints { make in
-            make.centerY.equalTo(userNameLabel)
-            make.leading.equalTo(userNameLabel.snp.trailing)
         }
         
         // 유저코드

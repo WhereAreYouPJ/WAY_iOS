@@ -9,20 +9,34 @@ import Foundation
 
 class MyPageViewModel {
     private let logoutUseCase: LogoutUseCase
+    private let memberDetailsUseCase: MemberDetailsUseCase
     
+    var onGetMemberSuccess: ((MemberDetailsResponse) -> Void)?
     var onLogoutSuccess: (() -> Void)?
 
-    init(logoutUseCase: LogoutUseCase) {
+    init(logoutUseCase: LogoutUseCase, memberDetailsUseCase: MemberDetailsUseCase) {
         self.logoutUseCase = logoutUseCase
+        self.memberDetailsUseCase = memberDetailsUseCase
     }
     
     func logout() {
-        let memberSeq = UserDefaultsManager.shared.getMemberSeq()
-        logoutUseCase.execute(request: LogoutBody(memberSeq: memberSeq)) { result in
-            if case .success = result {
+        logoutUseCase.execute { result in
+            switch result {
+            case .success:
                 self.onLogoutSuccess?()
-            } else {
-                print("로그아웃 실패: \(result)")
+            case .failure(let error):
+                print("\(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func memberDetails() {
+        memberDetailsUseCase.execute { result in
+            switch result {
+            case .success(let data):
+                self.onGetMemberSuccess?(data)
+            case .failure(let error):
+                print("\(error.localizedDescription)")
             }
         }
     }

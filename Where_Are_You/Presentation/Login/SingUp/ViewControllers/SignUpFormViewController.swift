@@ -63,9 +63,9 @@ class SignUpFormViewController: UIViewController {
             }
         }
         
-        viewModel.onUserNameValidationMessage = { [weak self] message, isAvailabe in
+        viewModel.onUserNameValidationMessage = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
-                self?.updateStatus(label: self?.signUpView.userNameErrorLabel, message: message, isAvailable: isAvailabe, textField: self?.signUpView.userNameTextField)
+                self?.updateStatus(label: self?.signUpView.userNameErrorLabel, message: message, isAvailable: isAvailable, textField: self?.signUpView.userNameTextField)
             }
         }
         

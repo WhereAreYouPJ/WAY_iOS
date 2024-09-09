@@ -8,23 +8,33 @@
 import Foundation
 
 class MyDetailManageViewModel {
-    private let memberDetailsUseCase: MemberDetailsUseCase
+    private let modifyUserNameUseCase: ModifyUserNameUseCase
     
-    var onGetMemberSuccess: ((String, String) -> Void)?
-    var onGetMemberFailure: ((String) -> Void)?
+    var onChangeNameSuccess: ((String) -> Void)?
+    var onChangeNameFailure: ((String) -> Void)?
+    var onUserNameValidationMessage: ((Bool) -> Void)?
 
-    init(memberDetailsUseCase: MemberDetailsUseCase) {
-        self.memberDetailsUseCase = memberDetailsUseCase
+    init(modifyUserNameUseCase: ModifyUserNameUseCase) {
+        self.modifyUserNameUseCase = modifyUserNameUseCase
     }
     
-    func getMemberDetail() {
-        let memberSeq = UserDefaultsManager.shared.getMemberSeq()
-        memberDetailsUseCase.execute(request: MemberDetailsParameters(memberSeq: memberSeq)) { result in
+    // 이름 형식 체크
+    func checkUserNameValidation(userName: String) {
+        if ValidationHelper.isValidUserName(userName) {
+            onUserNameValidationMessage?(true)
+        } else {
+            onUserNameValidationMessage?(false)
+        }
+    }
+    
+    // 수정하기
+    func modifyUserName(userName: String) {
+        modifyUserNameUseCase.execute(userName: userName) { result in
             switch result {
-            case .success(let data):
-                self.onGetMemberSuccess?(data.userName, data.email)
+            case .success:
+                self.onChangeNameSuccess?(userName)
             case .failure(let error):
-                self.onGetMemberFailure?(error.localizedDescription)
+                self.onChangeNameFailure?(error.localizedDescription)
             }
         }
     }

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MemberDetailsUseCase {
-    func execute(request: MemberDetailsParameters, completion: @escaping (Result<MemberDetailsResponse, Error>) -> Void)
+    func execute(completion: @escaping (Result<MemberDetailsResponse, Error>) -> Void)
 }
 
 class MemberDetailsUseCaseImpl: MemberDetailsUseCase {
@@ -18,8 +18,8 @@ class MemberDetailsUseCaseImpl: MemberDetailsUseCase {
         self.memberRepository = memberRepository
     }
     
-    func execute(request: MemberDetailsParameters, completion: @escaping (Result<MemberDetailsResponse, Error>) -> Void) {
-        memberRepository.memberDetails(request: request) { result in
+    func execute(completion: @escaping (Result<MemberDetailsResponse, Error>) -> Void) {
+        memberRepository.memberDetails { result in
             switch result {
             case .success(let response):
                 completion(.success(response.data))
