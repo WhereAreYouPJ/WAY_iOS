@@ -10,7 +10,7 @@ struct MapView: View {
             .onAppear(perform: {
                 self.draw = true
             })
-            .onDisappear(perform: { self.draw = false   })
+            .onDisappear(perform: { self.draw = false })
             .ignoresSafeArea()
     }
 }
@@ -33,10 +33,19 @@ struct KakaoMapView: UIViewRepresentable {
     /// draw가 false로 설정되면 렌더링을 멈추고 엔진을 stop한다.
     func updateUIView(_ uiView: KMViewContainer, context: Self.Context) {
         if draw {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                context.coordinator.controller?.prepareEngine()
-                context.coordinator.controller?.activateEngine()
-                print("updateUIView - Engine prepared and activated!")
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
+                guard let controller = context.coordinator.controller else {
+                    print("Controller is nil in updateUIView")
+                    return
+                }
+                
+                if !controller.isEnginePrepared {
+                    controller.prepareEngine()
+                }
+                
+                if !controller.isEngineActive {
+                    controller.activateEngine()
+                }
             }
         } else {
             context.coordinator.controller?.resetEngine()
@@ -56,34 +65,50 @@ struct KakaoMapView: UIViewRepresentable {
     /// Coordinator 구현. KMControllerDelegate를 adopt한다.
     class KakaoMapCoordinator: NSObject, MapControllerDelegate {
         var controller: KMController?
-        var location: Location
+        var container: KMViewContainer?
+        var location: Location?
         var first: Bool = true
         
-        init(location: Location) {
+        init(location: Location?) {
             self.location = location
             super.init()
         }
         
         // KMController 객체 생성 및 event delegate 지정
         func createController(_ view: KMViewContainer) {
+            container = view
             controller = KMController(viewContainer: view)
             controller?.delegate = self
         }
         
-        // KMControllerDelegate Protocol method구현
-        
         // 엔진 생성 및 초기화 이후, 렌더링 준비가 완료되면 아래 addViews를 호출한다.
         // 원하는 뷰를 생성한다.
         func addViews() {
-            let defaultPosition: MapPoint = MapPoint(longitude: location.y, latitude: location.x)
+            let defaultPosition: MapPoint
+            if let location {
+                defaultPosition = MapPoint(longitude: location.x, latitude: location.y)
+            } else {
+                defaultPosition = MapPoint(longitude: 126.978365, latitude: 37.566691)
+            }
             let mapviewInfo: MapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition)
             
-            controller?.addView(mapviewInfo)
+            guard let controller else {
+                print("Controller is nil in addViews")
+                return
+            }
+            
+            controller.addView(mapviewInfo)
         }
         
         // addView 성공 이벤트 delegate. 추가적으로 수행할 작업을 진행한다.
         func addViewSucceeded(_ viewName: String, viewInfoName: String) {
-            print("View added successfully")
+            print("addViewSucceeded called for \(viewName), \(viewInfoName)")
+            guard let view = controller?.getView(viewName) else {
+                print("view not found in addViewSucceeded")
+                return
+            }
+            view.viewRect = container?.bounds ?? .zero
+            
             createLabelLayer()
             createPoiStyle()
             createPois()
@@ -108,24 +133,17 @@ struct KakaoMapView: UIViewRepresentable {
             print(desc)
         }
         
-        // KMViewContainer 리사이징 될 때 호출.
-        func containerDidResized(_ size: CGSize) {
-            guard let mapView = controller?.getView("mapview") as? KakaoMap else { return }
-            mapView.viewRect = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: size)
-            if first {
-                let cameraUpdate = CameraUpdate.make(
-                    target: MapPoint(longitude: location.y, latitude: location.x),
-                    zoomLevel: 15,
-                    mapView: mapView
-                )
-                mapView.moveCamera(cameraUpdate)
-                first = false
-            }
-        }
-        
         // Poi생성을 위한 LabelLayer 생성
         func createLabelLayer() {
-            guard let view = controller?.getView("mapview") as? KakaoMap else { return }
+            guard let controller else {
+                print("Controller is nil in createLabelLayer")
+                return
+            }
+            
+            guard let view = controller.getView("mapview") as? KakaoMap else {
+                print("view is nil or not KakaoMap type in createLabelLayer")
+                return
+            }
             let manager = view.getLabelManager()
             let layerOption = LabelLayerOptions(layerID: "PoiLayer", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 0)
             let _ = manager.addLabelLayer(option: layerOption)
@@ -133,7 +151,10 @@ struct KakaoMapView: UIViewRepresentable {
         
         // Poi 표시 스타일 생성
         func createPoiStyle() {
-            guard let view = controller?.getView("mapview") as? KakaoMap else { return }
+            guard let view = controller?.getView("mapview") as? KakaoMap else {
+                print("view is nil in createPoiStyle")
+                return
+            }
             let manager = view.getLabelManager()
             
             let iconStyle1 = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.0))
@@ -147,15 +168,50 @@ struct KakaoMapView: UIViewRepresentable {
         }
         
         func createPois() {
-            guard let view = controller?.getView("mapview") as? KakaoMap else { return }
+            guard let view = controller?.getView("mapview") as? KakaoMap else {
+                print("view is nil in createPois")
+                return
+            }
             let manager = view.getLabelManager()
-            guard let layer = manager.getLabelLayer(layerID: "PoiLayer") else { return }
+            let layer = manager.getLabelLayer(layerID: "PoiLayer")
             
             let poiOption = PoiOptions(styleID: "PerLevelStyle")
             poiOption.rank = 0
             
-            if let poi1 = layer.addPoi(option: poiOption, at: MapPoint(longitude: location.y, latitude: location.x)) {
-                poi1.show()
+            let poi1: Poi?
+            if let location {
+                poi1 = layer?.addPoi(
+                    option: poiOption,
+                    at: MapPoint(longitude: location.x, latitude: location.y)
+                )
+                print("location on")
+            } else {
+                poi1 = layer?.addPoi(option: poiOption, at: MapPoint(longitude: 126.978365, latitude: 37.566691))
+                print("default location")
+            }
+            
+            guard let poi1 else {
+                print("Failed to create POI")
+                return
+            }
+            
+            poi1.show()
+        }
+        
+        // KMViewContainer 리사이징 될 때 호출.
+        func containerDidResized(_ size: CGSize) {
+            guard let mapView = controller?.getView("mapview") as? KakaoMap else {
+                print("mapView not found in containerDidResized")
+                return
+            }
+            mapView.viewRect = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: size)
+            if first {
+                let cameraUpdate = CameraUpdate.make(
+                    target: MapPoint(longitude: 126.978365, latitude: 37.566691),
+                    mapView: mapView
+                )
+                mapView.moveCamera(cameraUpdate)
+                first = false
             }
         }
     }
