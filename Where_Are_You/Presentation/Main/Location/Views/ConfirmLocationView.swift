@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ConfirmLocationView: View {
+    @StateObject var viewModel = ConfirmLocationViewModel()
     @Environment(\.presentationMode) var presentationMode
     @Binding var location: Location
     @Binding var path: NavigationPath
@@ -20,6 +21,12 @@ struct ConfirmLocationView: View {
             
             locationDetailsView()
         }
+        .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
+        .onAppear {
+            viewModel.isFavoriteLocation(location: location) { isFavorite in
+                viewModel.isFavorite = isFavorite
+            }
+        }
     }
     
     private func locationDetailsView() -> some View {
@@ -27,19 +34,29 @@ struct ConfirmLocationView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text(location.location)
-                        .font(.title2)
-                        .fontWeight(.bold)
+                        .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 20)))
+                        .foregroundColor(Color(.color68))
                     Text(location.streetName)
+                        .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 14)))
+                        .foregroundColor(Color(.color153))
                 }
                 Spacer()
-                Image("icon-bookmark")
+                
+                Button(action: {
+                    viewModel.toggleFavorite(location: location)
+                }) {
+                    Image(viewModel.isFavorite ? "icon-bookmark-filled" : "icon-bookmark")
+                }
             }
             
             Divider()
+                .padding(.top, 16)
+            
             Button(action: {
-                path.removeLast(path.count)  // 네비게이션 스택을 초기화하여 CreateScheduleView로 돌아갑니다.
+                path.removeLast(path.count)
             }) {
                 Text("확인")
+                    .font(Font(UIFont.pretendard(NotoSans: .semibold, fontSize: 18)))
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color(.brandColor))
@@ -53,5 +70,5 @@ struct ConfirmLocationView: View {
 }
 
 #Preview {
-    ConfirmLocationView(location: .constant(Location(location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526)), path: .constant(NavigationPath()))
+    ConfirmLocationView(location: .constant(Location(sequence: 0, location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526)), path: .constant(NavigationPath()))
 }

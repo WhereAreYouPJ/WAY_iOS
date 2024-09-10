@@ -32,7 +32,7 @@ struct CreateScheduleView: View {
                 
                 DateAndTimeView(isAllDay: $viewModel.isAllDay, startTime: $viewModel.startTime, endTime: $viewModel.endTime)
                 
-                AddPlaceView(place: $viewModel.place, favPlaces: $viewModel.favPlaces, path: $path)
+                AddPlaceView(viewModel: viewModel, path: $path)
                 
                 AddFriendsView(selectedFriends: $viewModel.selectedFriends, path: $path)
                 
@@ -73,9 +73,15 @@ struct CreateScheduleView: View {
                     SearchFriendsView(selectedFriends: $viewModel.selectedFriends)
                 case .confirmLocation(let location):
                     ConfirmLocationView(location: $viewModel.place, path: $path)
+                        .onDisappear {
+                            viewModel.getFavoriteLocation()
+                        }
                     
                 }
             }
+        }
+        .onAppear {
+            viewModel.getFavoriteLocation()
         }
     }
 }
@@ -118,8 +124,7 @@ struct DateAndTimeView: View {
 }
 
 struct AddPlaceView: View {
-    @Binding var place: Location
-    @Binding var favPlaces: [Location]
+    @ObservedObject var viewModel: CreateScheduleViewModel
     @Binding var path: NavigationPath
     
     var body: some View {
@@ -128,7 +133,7 @@ struct AddPlaceView: View {
         
         HStack {
             Image("icon-place")
-            if place.location == "" {
+            if viewModel.place.location == "" {
                 Text("위치 추가")
                     .foregroundStyle(Color(.color118))
                     .onTapGesture {
@@ -136,19 +141,21 @@ struct AddPlaceView: View {
                     }
                 
             } else {
-                Text(place.location)
+                Text(viewModel.place.location)
                     .foregroundStyle(Color.primary)
                     .onTapGesture {
-                        path.append(Route.confirmLocation(place))
+                        path.append(Route.confirmLocation(viewModel.place))
                     }
             }
         }
         
         ScrollView(.horizontal) {
             HStack {
-                ForEach(favPlaces) { favPlace in
+                ForEach(viewModel.favPlaces) { favPlace in
                     FavoritePlaceCell(place: favPlace) {
-                        place = favPlace
+                        viewModel.geocodeSelectedLocation(favPlace) { geocodedLocation in
+                            viewModel.place = geocodedLocation
+                        }
                     }
                 }
             }

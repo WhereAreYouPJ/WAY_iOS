@@ -218,5 +218,5 @@ struct KakaoMapView: UIViewRepresentable {
 }
 
 #Preview {
-    MapView(location: .constant(Location(location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526)))
+    MapView(location: .constant(Location(sequence: 0, location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526)))
 }

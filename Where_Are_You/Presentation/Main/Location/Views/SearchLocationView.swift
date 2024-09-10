@@ -120,5 +120,5 @@ struct SearchLocationView: View {
 }
 
 #Preview {
-    SearchLocationView(selectedLocation: .constant(Location(location: "", streetName: "", x: 0, y: 0)), path: .constant(NavigationPath()))
+    SearchLocationView(selectedLocation: .constant(Location(sequence: 0, location: "", streetName: "", x: 0, y: 0)), path: .constant(NavigationPath()))
 }
