@@ -43,7 +43,14 @@ struct ConfirmLocationView: View {
                 Spacer()
                 
                 Button(action: {
-                    viewModel.toggleFavorite(location: location)
+                    viewModel.toggleFavorite(location: location) { success in
+                        if success {
+                            // Toggle was successful, update UI if needed
+                        } else {
+                            // Handle error
+                            print("즐겨찾기 토글 실패")
+                        }
+                    }
                 }) {
                     Image(viewModel.isFavorite ? "icon-bookmark-filled" : "icon-bookmark")
                 }
