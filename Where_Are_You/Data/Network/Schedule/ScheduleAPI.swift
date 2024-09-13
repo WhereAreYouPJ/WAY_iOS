@@ -13,9 +13,10 @@ enum ScheduleAPI {
     case getSchedule(request: CreateScheduleBody)
     case putSchedule(request: CreateScheduleBody)
     case deleteSchedule(request: CreateScheduleBody)
-    case postEcceptSchedule(requst: CreateScheduleBody)
+    case postEcceptSchedule(request: CreateScheduleBody)
     case getMonthSchedule(request: CreateScheduleBody)
     case getDate(request: CreateScheduleBody)
+    case getDDaySchedule(memberSeq: Int)
 }
 
 extension ScheduleAPI: TargetType {
@@ -39,6 +40,8 @@ extension ScheduleAPI: TargetType {
             return "/schedule/month-schedule"
         case .getDate:
             return "/schedule/date"
+        case .getDDaySchedule:
+            return "/schedule/dday-schedule"
         }
     }
     
@@ -46,7 +49,7 @@ extension ScheduleAPI: TargetType {
         switch self {
         case .postSchedule, .postEcceptSchedule:
             return .post
-        case .getSchedule, .getMonthSchedule, .getDate:
+        case .getSchedule, .getMonthSchedule, .getDate, .getDDaySchedule:
             return .get
         case .putSchedule:
             return .put
@@ -65,12 +68,14 @@ extension ScheduleAPI: TargetType {
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .deleteSchedule(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .postEcceptSchedule(requst: let request):
+        case .postEcceptSchedule(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .getMonthSchedule(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .getDate(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+        case .getDDaySchedule(let memberSeq):
+            return .requestParameters(parameters: ["memberSeq": memberSeq], encoding: URLEncoding.queryString)
         }
     }
     
