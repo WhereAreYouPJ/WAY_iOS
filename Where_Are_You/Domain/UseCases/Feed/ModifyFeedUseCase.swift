@@ -19,6 +19,6 @@ class UpdateFeedUseCaseImpl: UpdateFeedUseCase {
     }
 
     func execute(request: ModifyFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void) {
-        feedRepository.updateFeed(request: request, images: images, completion: completion)
+        feedRepository.putFeed(request: request, images: images, completion: completion)
     }
 }

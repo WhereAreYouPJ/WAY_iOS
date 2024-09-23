@@ -19,6 +19,6 @@ class SaveFeedUseCaseImpl: SaveFeedUseCase {
     }
 
     func execute(request: SaveFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void) {
-        feedRepository.createFeed(request: request, images: images, completion: completion)
+        feedRepository.postFeed(request: request, images: images, completion: completion)
     }
 }

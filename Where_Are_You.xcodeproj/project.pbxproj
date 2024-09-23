@@ -90,6 +90,7 @@
 		99949F592C58B81A00AE0177 /* FriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F582C58B81A00AE0177 /* FriendsViewModel.swift */; };
 		99949F5B2C58B85E00AE0177 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F5A2C58B85E00AE0177 /* Friend.swift */; };
 		99949F5F2C58BBAD00AE0177 /* FeedsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F5E2C58BBAD00AE0177 /* FeedsViewController.swift */; };
+		99A7D7E42C999897002BCD21 /* LocationBookMarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A7D7E32C999897002BCD21 /* LocationBookMarkCell.swift */; };
 		99B397832C0C3E9D00D7A109 /* AccountCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B397822C0C3E9D00D7A109 /* AccountCheckView.swift */; };
 		99B397852C0C41D300D7A109 /* AccountCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B397842C0C41D300D7A109 /* AccountCheckViewController.swift */; };
 		99B7BD742C72E68E00EC1C4F /* AddFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B7BD732C72E68E00EC1C4F /* AddFeedViewModel.swift */; };
@@ -292,6 +293,7 @@
 		99949F582C58B81A00AE0177 /* FriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewModel.swift; sourceTree = "<group>"; };
 		99949F5A2C58B85E00AE0177 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		99949F5E2C58BBAD00AE0177 /* FeedsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsViewController.swift; sourceTree = "<group>"; };
+		99A7D7E32C999897002BCD21 /* LocationBookMarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationBookMarkCell.swift; sourceTree = "<group>"; };
 		99B397822C0C3E9D00D7A109 /* AccountCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCheckView.swift; sourceTree = "<group>"; };
 		99B397842C0C41D300D7A109 /* AccountCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCheckViewController.swift; sourceTree = "<group>"; };
 		99B7BD732C72E68E00EC1C4F /* AddFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeedViewModel.swift; sourceTree = "<group>"; };
@@ -808,17 +810,17 @@
 			isa = PBXGroup;
 			children = (
 				997DC6562C3D253000EACA5F /* UserDefaultManager.swift */,
-				99D8FBBE2C3BA1FB0062AF10 /* Customs */,
-				99107E9E2C6EDAE2007D129F /* ValidationError.swift */,
+				99C140372C64943F00A706B6 /* LayoutAdapter.swift */,
+				99C6D29D2C90379F009C0CF8 /* APIResponseHandler.swift */,
 				99C9B2312C01A45C008D7CBD /* Extensions.swift */,
 				99C9B2472C01D2B7008D7CBD /* Utilities.swift */,
+				99D8FBBE2C3BA1FB0062AF10 /* Customs */,
+				99107E9E2C6EDAE2007D129F /* ValidationError.swift */,
 				99149FEA2C4F97C300136097 /* ValidationHelper.swift */,
 				99149FEC2C4F97EA00136097 /* TimeHelper.swift */,
 				9974EA1F2C62196500826793 /* SnappingFlowLayout.swift */,
-				99C140372C64943F00A706B6 /* LayoutAdapter.swift */,
 				99E7BA582C69A5D500F79C96 /* ImageUtility.swift */,
 				99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */,
-				99C6D29D2C90379F009C0CF8 /* APIResponseHandler.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -862,6 +864,7 @@
 				995E3E5A2C507FE6006B4480 /* MyPageView.swift */,
 				9985AB962C786D0400D1442E /* MyDetailManageView.swift */,
 				995174FF2C7EF89B00E938DE /* LocationBookmarkView.swift */,
+				99A7D7E32C999897002BCD21 /* LocationBookMarkCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1632,6 +1635,7 @@
 				992F57E32C5B618D00219C6B /* MemberSearchUseCase.swift in Sources */,
 				99C68E3F2C64B11D00DEC1F1 /* SaveFeedRequest.swift in Sources */,
 				995E3E5B2C507FE6006B4480 /* MyPageView.swift in Sources */,
+				99A7D7E42C999897002BCD21 /* LocationBookMarkCell.swift in Sources */,
 				D51AC99C2C849AB400D0AD2E /* LocationAPI.swift in Sources */,
 				9953583F2C00C555005BF799 /* SceneDelegate.swift in Sources */,
 				990F57B22C282C5900F6E1AD /* EmailSendUseCase.swift in Sources */,
