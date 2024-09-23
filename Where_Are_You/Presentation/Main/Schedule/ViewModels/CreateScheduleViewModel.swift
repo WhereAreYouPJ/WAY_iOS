@@ -10,9 +10,6 @@ import Moya
 import CoreLocation
 
 final class CreateScheduleViewModel: ObservableObject {
-    let provider = MoyaProvider<LocationAPI>()
-    private let geocoder = CLGeocoder()
-    
     @Published var title: String = ""
     @Published var isAllDay: Bool = true
     @Published var startTime: Date
@@ -23,7 +20,11 @@ final class CreateScheduleViewModel: ObservableObject {
     @Published var color: String = "red"
     @Published var memo: String = ""
     @Published var isSuccess = false
-    private let dateFormatter: DateFormatter
+    
+    let provider = MoyaProvider<LocationAPI>()
+    let geocoder = CLGeocoder()
+    let dateFormatter: DateFormatter
+    let memberSeq = UserDefaultsManager.shared.getMemberSeq()
     
     init() {
         let calendar = Calendar.current
@@ -62,16 +63,12 @@ final class CreateScheduleViewModel: ObservableObject {
     }
     
     func getFavoriteLocation() {
-        let memberSeq = 1 // TODO: 실제 사용 시에는 현재 로그인한 사용자의 memberSeq를 사용
-        
-        provider.request(.getLocation(memberSeq: memberSeq)) { result in
-            switch result {
-            case .success(let response):
-                if response.statusCode == 200 {
+        provider.request(.getLocation(memberSeq: memberSeq)) { response in
+            switch response {
+            case .success(let result):
+                if result.statusCode == 200 {
                     do {
-                        let decoder = JSONDecoder()
-                        let genericResponse = try decoder.decode(GenericResponse<GetFavLocationResponse>.self, from: response.data)
-                        
+                        let genericResponse = try result.map(GenericResponse<GetFavLocationResponse>.self)
                         DispatchQueue.main.async {
                             self.favPlaces = genericResponse.data.map { location in
                                 Location(
@@ -84,47 +81,10 @@ final class CreateScheduleViewModel: ObservableObject {
                             print("즐겨찾기 위치 로드 성공: \(self.favPlaces.count)개의 위치를 받았습니다.")
                         }
                     } catch {
-                        print("JSON 디코딩 실패: \(error.localizedDescription)")
+                        print("JSON 파싱 실패: \(error)")
                     }
                 } else {
-                    print("서버 오류: \(response.statusCode)")
-                    if let json = try? response.mapJSON() as? [String: Any],
-                       let detail = json["detail"] as? String {
-                        print("상세 메시지: \(detail)")
-                    }
-                }
-            case .failure(let error):
-                print("요청 실패: \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    func postSchedule() {
-        let provider = MoyaProvider<ScheduleAPI>()
-        let invitedMemberSeqs = selectedFriends.map { $0.memberSeq }
-        let body = CreateScheduleBody(title: title, startTime: dateFormatter.string(from: startTime), endTime: dateFormatter.string(from: endTime), location: place.location, streetName: place.streetName, x: place.x, y: place.y, color: color, memo: memo, invitedMemberSeqs: invitedMemberSeqs, createMemberSeq: 1)
-        
-        provider.request(.postSchedule(request: body)) { response in
-            switch response {
-            case .success(let result):
-                if result.statusCode == 200 {
-                    DispatchQueue.main.async {
-                        self.isSuccess = true
-                        print("post 성공! \nisSuccess: \(self.isSuccess)")
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        do {
-                            if let json = try result.mapJSON() as? [String: Any],
-                               let detail = json["detail"] as? String {
-                                print("서버 오류: \(result.statusCode)\n상세 메시지: \(detail)\nbody: \(body)")
-                            } else {
-                                print("서버 오류: \(result.statusCode)\n응답 파싱 실패\nbody: \(body)")
-                            }
-                        } catch {
-                            print("서버 오류: \(result.statusCode)\nJSON 파싱 실패: \(error)\nbody: \(body)")
-                        }
-                    }
+                    handleErrorResponse(result, endpoint: "즐겨찾기 위치 조회", params: ["memberSeq": self.memberSeq])
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
@@ -132,5 +92,61 @@ final class CreateScheduleViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    func postSchedule() {
+        let provider = MoyaProvider<ScheduleAPI>()
+        let invitedMemberSeqs = selectedFriends.map { $0.memberSeq }
+        let body = CreateScheduleBody(title: title, startTime: dateFormatter.string(from: startTime), endTime: dateFormatter.string(from: endTime), location: place.location, streetName: place.streetName, x: place.x, y: place.y, color: color, memo: memo, allDay: isAllDay, invitedMemberSeqs: invitedMemberSeqs, createMemberSeq: memberSeq)
+        
+        provider.request(.postSchedule(request: body)) { response in
+            switch response {
+            case .success(let result):
+                if result.statusCode == 200 {
+                    do {
+                        let genericResponse = try result.map(GenericResponse<[String: Int]>.self)
+                        if let scheduleSeq = genericResponse.data["scheduleSeq"] {
+                            DispatchQueue.main.async {
+                                self.isSuccess = true
+                                print("post 성공!")
+                                print("Member Sequence: \(self.memberSeq), Schedule Sequence: \(scheduleSeq)")
+                            }
+                        } else {
+                            print("scheduleSeq not found in response data")
+                        }
+                    } catch {
+                        print("JSON 파싱 실패: \(error)")
+                    }
+                } else {
+                    handleErrorResponse(result, endpoint: "스케줄 생성")
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    print("요청 실패: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+}
+
+func handleErrorResponse(_ result: Response, endpoint: String, params: [String: Any]? = nil) {
+    DispatchQueue.main.async {
+        var errorMessage = "\(endpoint) 오류:"
+        
+        do {
+            let errorResponse = try result.map(ErrorResponse.self)
+            errorMessage += "\n상태 코드: \(errorResponse.status)"
+            errorMessage += "\n메시지: \(errorResponse.message)"
+            errorMessage += "\n에러 코드: \(errorResponse.code)"
+        } catch {
+            errorMessage += "\n상태 코드: \(result.statusCode)"
+            errorMessage += "\n응답 파싱 실패: \(error)"
+        }
+        
+        if let params = params {
+            errorMessage += "\n매개변수: \(params)"
+        }
+        
+        print(errorMessage)
     }
 }

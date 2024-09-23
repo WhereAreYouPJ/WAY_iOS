@@ -14,7 +14,7 @@ enum ScheduleAPI {
     case putSchedule(request: CreateScheduleBody)
     case deleteSchedule(request: CreateScheduleBody)
     case postEcceptSchedule(requst: CreateScheduleBody)
-    case getMonthSchedule(request: CreateScheduleBody)
+    case getMonthlySchedule(yearMonth: String, memberSeq: Int)
     case getDate(request: CreateScheduleBody)
 }
 
@@ -35,8 +35,8 @@ extension ScheduleAPI: TargetType {
             return "/schedule"
         case .postEcceptSchedule:
             return "/schedule/accept-schedule"
-        case .getMonthSchedule:
-            return "/schedule/month-schedule"
+        case .getMonthlySchedule:
+            return "/schedule/month"
         case .getDate:
             return "/schedule/date"
         }
@@ -46,7 +46,7 @@ extension ScheduleAPI: TargetType {
         switch self {
         case .postSchedule, .postEcceptSchedule:
             return .post
-        case .getSchedule, .getMonthSchedule, .getDate:
+        case .getSchedule, .getMonthlySchedule, .getDate:
             return .get
         case .putSchedule:
             return .put
@@ -67,8 +67,8 @@ extension ScheduleAPI: TargetType {
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .postEcceptSchedule(requst: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .getMonthSchedule(request: let request):
-            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+        case .getMonthlySchedule(let yearMonth, let memberSeq):
+            return .requestParameters(parameters: ["yearMonth": yearMonth, "memberSeq": memberSeq], encoding: URLEncoding.queryString)
         case .getDate(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         }

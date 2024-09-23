@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MonthScheduleResponse: Codable {
+struct ScheduleByMonth: Codable {
     let scheduleSeq: Int
     let title: String
     let startTime: String
@@ -16,5 +16,8 @@ struct MonthScheduleResponse: Codable {
     let streetName: String
     let x: Double
     let y: Double
+    let color: String
     let memo: String
 }
+
+typealias GetScheduleByMonthResponse = [ScheduleByMonth]

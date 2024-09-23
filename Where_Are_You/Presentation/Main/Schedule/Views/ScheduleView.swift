@@ -1,5 +1,5 @@
 //
-//  CalendarView.swift
+//  ScheduleView.swift
 //  Where_Are_You
 //
 //  Created by juhee on 01.08.24.
@@ -7,100 +7,95 @@
 
 import SwiftUI
 
-struct CalendarView: View {
-    @State private var month: Date = Date()
+struct ScheduleView: View {
+    @StateObject var viewModel = ScheduleViewModel()
     @State private var clickedCurrentMonthDates: Date?
     @State private var showMenu = false
     @State private var showCreateSchedule = false
     
-    @State var isShownMapView = false
+    // 추가: UIKit 버튼 액션을 위한 클로저
+    var onNotificationTapped: (() -> Void)?
+    var onAddTapped: (() -> Void)?
     
     init(
-        month: Date = Date(),
-        clickedCurrentMonthDates: Date? = nil
+        onNotificationTapped: (() -> Void)? = nil,
+        onAddTapped: (() -> Void)? = nil
     ) {
-        _month = State(initialValue: month)
-        _clickedCurrentMonthDates = State(initialValue: clickedCurrentMonthDates)
+        self.onNotificationTapped = onNotificationTapped
+        self.onAddTapped = onAddTapped
     }
     
     var body: some View {
-        GeometryReader { geometry in
-            VStack(spacing: 0) {
-                headerView
-                weekdayView
-                calendarGridView(in: geometry)
+        NavigationStack {
+            GeometryReader { geometry in
+                VStack(spacing: 0) {
+                    weekdayView
+                    calendarGridView(in: geometry)
+                }
+                .padding(.horizontal, 10)
+                .frame(width: geometry.size.width, height: geometry.size.height)
             }
-            .padding(.horizontal, 10)
-            .frame(width: geometry.size.width, height: geometry.size.height)
         }
-    }
-    
-    // MARK: 헤더
-    private var headerView: some View {
-        VStack {
-            HStack {
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
                 yearMonthView
-                
-                Spacer()
-                
-                Button(action: {}, label: {
-                    Image("icon-notification")
-                })
-                
-                Menu {
-                    Button(action: {self.showCreateSchedule = true}, label: {
-                        Text("일정 추가")
-                    })
-                    .foregroundStyle(.white)
-                    .background(Color(.color81))
-                    
+            }
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                HStack(spacing: 0) {
                     Button(action: {
-                        self.isShownMapView = true
-                    }, label: {
-                        Text("지도")
-                    })
-                    .foregroundStyle(.white)
-                    .background(Color(.color81))
-                } label: {
-                    Image("icon-plus")
+                        print("알림 페이지로 이동")
+                    }) {
+                        Image("icon-notification")
+                            .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
+                    }
+                    .padding(0)
+                    
+                    Menu {
+                        Button("일정 추가", action: {
+                            print("일정 추가")
+                            showCreateSchedule.toggle()
+                        })
+                    } label: {
+                        Image("icon-plus")
+                            .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
+                    }
+                    .padding(EdgeInsets(top: -4, leading: -8, bottom: -4, trailing: 0))
                 }
             }
-            .padding(.horizontal, 10)
-            .padding(.bottom, 30)
         }
-        .sheet(isPresented: self.$showCreateSchedule, content: {
-            CreateScheduleView()
-                .interactiveDismissDisabled()
+        .onAppear(perform: {
+//            viewModel.getMonthlySchedule()
         })
+        .sheet(isPresented: $showCreateSchedule, content: {
+            CreateScheduleView()
+        })
+        .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
     }
     
     // MARK: 연월 표시
     private var yearMonthView: some View {
         HStack(alignment: .center, spacing: 20) {
-            Button(
-                action: {
-                    changeMonth(by: -1)
-                },
-                label: {
-                    Image(systemName: "chevron.left")
-                        .font(.title)
-                        .foregroundColor(.black)
-                }
-            )
+            Button(action: {
+                viewModel.changeMonth(by: -1)
+            }, label: {
+                Image(systemName: "chevron.left")
+                    .foregroundColor(.black)
+            })
             
-            Text(month, formatter: Self.calendarHeaderDateFormatter)
-                .font(.title)
+            Text(viewModel.month, formatter: Self.calendarHeaderDateFormatter)
+                .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 22))))
+                .foregroundStyle(Color(.color17))
             
-            Button(
-                action: {
-                    changeMonth(by: 1)
-                },
-                label: {
-                    Image(systemName: "chevron.right")
-                        .font(.title)
-                        .foregroundColor(.black)
-                }
-            )
+            Button(action: {
+                viewModel.changeMonth(by: 1)
+            }, label: {
+                Image(systemName: "chevron.right")
+                    .foregroundColor(.black)
+            })
+            
+            Spacer()
         }
     }
     
@@ -123,22 +118,24 @@ struct CalendarView: View {
     // MARK: 요일 색 지정
     private func weekdayColor(for index: Int) -> Color {
         switch index {
-        case 0: return .red  // 일요일
-        case 6: return .blue // 토요일
-        default: return .black
+        case 0: return Color(.color255125)  // 일요일
+        case 6: return Color(.color57125) // 토요일
+        default: return Color(.color102)
         }
     }
     
     // MARK: 날짜 그리드 뷰
     private func calendarGridView(in geometry: GeometryProxy) -> some View {
-        let daysInMonth: Int = numberOfDays(in: month)
-        let firstWeekday: Int = firstWeekdayOfMonth(in: month) - 1
+        let daysInMonth: Int = numberOfDays(in: viewModel.month)
+        let firstWeekday: Int = firstWeekdayOfMonth(in: viewModel.month) - 1
         let lastDayOfMonthBefore = numberOfDays(in: previousMonth())
         let numberOfRows = Int(ceil(Double(daysInMonth + firstWeekday) / 7.0))
         let visibleDaysOfNextMonth = numberOfRows * 7 - (daysInMonth + firstWeekday)
         
-        let availableHeight = geometry.size.height - 100
+        let availableHeight = geometry.size.height - LayoutAdapter.shared.scale(value: 80)
         let cellHeight = availableHeight / CGFloat(numberOfRows)
+        
+        let monthlySchedules = viewModel.monthlySchedules
         
         return LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 0) {
             ForEach(-firstWeekday ..< daysInMonth + visibleDaysOfNextMonth, id: \.self) { index in
@@ -171,7 +168,7 @@ struct CalendarView: View {
     }
 }
 
-// MARK: 일자 셀 뷰
+// MARK: - CellView
 private struct CellView: View {
     private var day: Int
     private var clicked: Bool
@@ -182,12 +179,12 @@ private struct CellView: View {
         if isToday {
             return .white
         } else if !isCurrentMonthDay {
-            return .gray
+            return Color(.color190)
         } else {
             switch weekday {
-            case 1: return .red
-            case 7: return .blue
-            default: return .black
+            case 1: return Color(.color25569)
+            case 7: return Color(.color5769)
+            default: return Color(.color17)
             }
         }
     }
@@ -237,7 +234,8 @@ private struct CellView: View {
     }
 }
 
-private extension CalendarView {
+// MARK: - ScheduleView Extensions
+private extension ScheduleView {
     var today: Date {
         let now = Date()
         let components = Calendar.current.dateComponents([.year, .month, .day], from: now)
@@ -251,16 +249,14 @@ private extension CalendarView {
     }()
     
     static let weekdaySymbols: [String] = Calendar.current.shortWeekdaySymbols
-}
-
-private extension CalendarView {
+    
     /// 특정 해당 날짜
     func getDate(for index: Int) -> Date {
         let calendar = Calendar.current
         guard let firstDayOfMonth = calendar.date(
             from: DateComponents(
-                year: calendar.component(.year, from: month),
-                month: calendar.component(.month, from: month),
+                year: calendar.component(.year, from: viewModel.month),
+                month: calendar.component(.month, from: viewModel.month),
                 day: 1
             )
         ) else {
@@ -293,27 +289,15 @@ private extension CalendarView {
     
     /// 이전 월 마지막 일자
     func previousMonth() -> Date {
-        let components = Calendar.current.dateComponents([.year, .month], from: month)
+        let components = Calendar.current.dateComponents([.year, .month], from: viewModel.month)
         let firstDayOfMonth = Calendar.current.date(from: components)!
         let previousMonth = Calendar.current.date(byAdding: .month, value: -1, to: firstDayOfMonth)!
         
         return previousMonth
     }
-    
-    /// 월 변경
-    func changeMonth(by value: Int) {
-        self.month = adjustedMonth(by: value)
-    }
-    
-    /// 변경하려는 월 반환
-    func adjustedMonth(by value: Int) -> Date {
-        if let newMonth = Calendar.current.date(byAdding: .month, value: value, to: month) {
-            return newMonth
-        }
-        return month
-    }
 }
 
+// MARK: - Date Extension
 extension Date {
     static let calendarDayDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -326,6 +310,7 @@ extension Date {
     }
 }
 
+// MARK: - Preview
 #Preview {
-    CalendarView()
+    ScheduleView()
 }
