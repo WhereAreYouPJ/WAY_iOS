@@ -84,8 +84,7 @@ class LoginViewController: UIViewController {
         UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
             if let error = error {
                 print(error)
-            }
-            else {
+            } else {
                 print("loginWithKakaoTalk() success.")
                 
                 //do something
@@ -98,8 +97,7 @@ class LoginViewController: UIViewController {
         UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
             if let error = error {
                 print(error)
-            }
-            else {
+            } else {
                 print("loginWithKakaoAccount() success.")
                 
                 //do something

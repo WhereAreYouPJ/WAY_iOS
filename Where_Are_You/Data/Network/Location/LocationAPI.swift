@@ -10,8 +10,8 @@ import Moya
 
 enum LocationAPI {
     case getLocation(memberSeq: Int)
-    case postLocation(request: CreateScheduleBody)
-    case deleteLocation(request: CreateScheduleBody)
+    case postLocation(request: PostFavoriteLocationBody)
+    case deleteLocation(request: DeleteFavoriteLocationBody)
 }
 
 extension LocationAPI: TargetType {
@@ -21,11 +21,11 @@ extension LocationAPI: TargetType {
     
     var path: String {
         switch self {
-        case .getLocation(let memberSeq):
+        case .getLocation:
             return "/location"
-        case .postLocation(request: let request):
+        case .postLocation:
             return "/location"
-        case .deleteLocation(request: let request):
+        case .deleteLocation:
             return "/location"
         }
     }

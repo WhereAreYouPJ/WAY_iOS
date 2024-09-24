@@ -32,7 +32,7 @@ struct CreateScheduleView: View {
                 
                 DateAndTimeView(isAllDay: $viewModel.isAllDay, startTime: $viewModel.startTime, endTime: $viewModel.endTime)
                 
-                AddPlaceView(place: $viewModel.place, favPlaces: $viewModel.favPlaces, path: $path)
+                AddPlaceView(viewModel: viewModel, path: $path)
                 
                 AddFriendsView(selectedFriends: $viewModel.selectedFriends, path: $path)
                 
@@ -73,9 +73,15 @@ struct CreateScheduleView: View {
                     SearchFriendsView(selectedFriends: $viewModel.selectedFriends)
                 case .confirmLocation(let location):
                     ConfirmLocationView(location: $viewModel.place, path: $path)
+                        .onDisappear {
+                            viewModel.getFavoriteLocation()
+                        }
                     
                 }
             }
+        }
+        .onAppear {
+            viewModel.getFavoriteLocation()
         }
     }
 }
@@ -118,8 +124,7 @@ struct DateAndTimeView: View {
 }
 
 struct AddPlaceView: View {
-    @Binding var place: Location
-    @Binding var favPlaces: [Location]
+    @ObservedObject var viewModel: CreateScheduleViewModel
     @Binding var path: NavigationPath
     
     var body: some View {
@@ -128,7 +133,7 @@ struct AddPlaceView: View {
         
         HStack {
             Image("icon-place")
-            if place.location == "" {
+            if viewModel.place.location == "" {
                 Text("위치 추가")
                     .foregroundStyle(Color(.color118))
                     .onTapGesture {
@@ -136,25 +141,21 @@ struct AddPlaceView: View {
                     }
                 
             } else {
-                Text(place.location)
+                Text(viewModel.place.location)
                     .foregroundStyle(Color.primary)
+                    .onTapGesture {
+                        path.append(Route.confirmLocation(viewModel.place))
+                    }
             }
         }
         
         ScrollView(.horizontal) {
             HStack {
-                //                let favPlaces: [Place] = [
-                //                    .init(location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526),
-                //                    .init(location: "여의도공원", streetName: "서울 영등포구 여의공원로 68", x: 37.5268, y: 126.9244),
-                //                    .init(location: "올림픽체조경기장", streetName: "서울 종로구 세종대로 173", x: 37.5221, y: 127.1259),
-                //                    .init(location: "재즈바", streetName: "서울 종로구 세종대로 174", x: 37.5665, y: 126.9780),
-                //                    .init(location: "신도림", streetName: "서울 종로구 세종대로 175", x: 37.5088, y: 126.8912),
-                //                    .init(location: "망원한강공원", streetName: "서울 종로구 세종대로 176", x: 37.5545, y: 126.8964),
-                //                    .init(location: "부천시청", streetName: "서울 종로구 세종대로 177", x: 37.5037, y: 126.7661)
-                //                ]
-                ForEach(favPlaces) { favPlace in
+                ForEach(viewModel.favPlaces) { favPlace in
                     FavoritePlaceCell(place: favPlace) {
-                        place = favPlace
+                        viewModel.geocodeSelectedLocation(favPlace) { geocodedLocation in
+                            viewModel.place = geocodedLocation
+                        }
                     }
                 }
             }
@@ -206,6 +207,9 @@ struct AddFriendsView: View {
                     } else {
                         Text(selectedFriends[idx].name)
                     }
+                }
+                .onTapGesture {
+                    path.append(Route.searchFriends)
                 }
                 
                 if count > 3 {

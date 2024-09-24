@@ -14,3 +14,7 @@ struct FavLocation: Codable {
 }
 
 typealias GetFavLocationResponse = [FavLocation]
+
+struct PostFavLocation: Codable {
+    let locationSeq: Int
+}

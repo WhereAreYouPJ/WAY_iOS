@@ -14,7 +14,7 @@ enum ScheduleAPI {
     case putSchedule(request: CreateScheduleBody)
     case deleteSchedule(request: CreateScheduleBody)
     case postEcceptSchedule(request: CreateScheduleBody)
-    case getMonthSchedule(request: CreateScheduleBody)
+    case getMonthlySchedule(yearMonth: String, memberSeq: Int)
     case getDate(request: CreateScheduleBody)
     case getDDaySchedule(memberSeq: Int)
 }
@@ -36,8 +36,8 @@ extension ScheduleAPI: TargetType {
             return "/schedule"
         case .postEcceptSchedule:
             return "/schedule/accept-schedule"
-        case .getMonthSchedule:
-            return "/schedule/month-schedule"
+        case .getMonthlySchedule:
+            return "/schedule/month"
         case .getDate:
             return "/schedule/date"
         case .getDDaySchedule:
@@ -49,7 +49,7 @@ extension ScheduleAPI: TargetType {
         switch self {
         case .postSchedule, .postEcceptSchedule:
             return .post
-        case .getSchedule, .getMonthSchedule, .getDate, .getDDaySchedule:
+        case .getSchedule, .getMonthlySchedule, .getDate, .getDDaySchedule:
             return .get
         case .putSchedule:
             return .put
@@ -70,8 +70,8 @@ extension ScheduleAPI: TargetType {
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .postEcceptSchedule(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .getMonthSchedule(request: let request):
-            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+        case .getMonthlySchedule(let yearMonth, let memberSeq):
+            return .requestParameters(parameters: ["yearMonth": yearMonth, "memberSeq": memberSeq], encoding: URLEncoding.queryString)
         case .getDate(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .getDDaySchedule(let memberSeq):
