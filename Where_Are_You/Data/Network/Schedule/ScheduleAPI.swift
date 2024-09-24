@@ -13,7 +13,7 @@ enum ScheduleAPI {
     case getSchedule(request: CreateScheduleBody)
     case putSchedule(request: CreateScheduleBody)
     case deleteSchedule(request: CreateScheduleBody)
-    case postEcceptSchedule(requst: CreateScheduleBody)
+    case postEcceptSchedule(request: CreateScheduleBody)
     case getMonthlySchedule(yearMonth: String, memberSeq: Int)
     case getDate(request: CreateScheduleBody)
     case getDDaySchedule(memberSeq: Int)
@@ -49,8 +49,7 @@ extension ScheduleAPI: TargetType {
         switch self {
         case .postSchedule, .postEcceptSchedule:
             return .post
-        case .getSchedule, .getMonthlySchedule, .getDate:
-        case .getSchedule, .getMonthSchedule, .getDate, .getDDaySchedule:
+        case .getSchedule, .getMonthlySchedule, .getDate, .getDDaySchedule:
             return .get
         case .putSchedule:
             return .put
