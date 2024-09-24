@@ -66,11 +66,13 @@ struct ScheduleView: View {
             }
         }
         .onAppear(perform: {
-//            viewModel.getMonthlySchedule()
+            viewModel.getMonthlySchedule()
         })
-        .sheet(isPresented: $showCreateSchedule, content: {
+        .sheet(isPresented: $showCreateSchedule, onDismiss: {
+            viewModel.getMonthlySchedule()
+        }) {
             CreateScheduleView()
-        })
+        }
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
     }
     
@@ -141,42 +143,64 @@ struct ScheduleView: View {
             ForEach(-firstWeekday ..< daysInMonth + visibleDaysOfNextMonth, id: \.self) { index in
                 Group {
                     if index > -1 && index < daysInMonth {
-                        let date = getDate(for: index)
-                        let day = Calendar.current.component(.day, from: date)
-                        let weekday = Calendar.current.component(.weekday, from: date)
-                        let clicked = clickedCurrentMonthDates == date
-                        let isToday = date.formattedCalendarDayDate == today.formattedCalendarDayDate
-                        
-                        CellView(day: day, clicked: clicked, isToday: isToday, isCurrentMonthDay: true, weekday: weekday)
-                            .onTapGesture {
-                                clickedCurrentMonthDates = date
-                            }
-                    } else if let prevMonthDate = Calendar.current.date(
-                        byAdding: .day,
-                        value: index + lastDayOfMonthBefore,
-                        to: previousMonth()
-                    ) {
-                        let day = Calendar.current.component(.day, from: prevMonthDate)
-                        let weekday = Calendar.current.component(.weekday, from: prevMonthDate)
-                        
-                        CellView(day: day, isCurrentMonthDay: false, weekday: weekday)
+                        currentMonthCell(for: index, cellHeight: cellHeight, monthlySchedules: monthlySchedules)
+                    } else {
+                        otherMonthCell(for: index, lastDayOfMonthBefore: lastDayOfMonthBefore, cellHeight: cellHeight, monthlySchedules: monthlySchedules)
+                            .frame(height: cellHeight)
                     }
                 }
-                .frame(height: cellHeight)
             }
         }
     }
+    
+    private func currentMonthCell(for index: Int, cellHeight: CGFloat, monthlySchedules: [Schedule]) -> some View {
+        let date = getDate(for: index)
+        let day = Calendar.current.component(.day, from: date)
+        let weekday = Calendar.current.component(.weekday, from: date)
+        let clicked = clickedCurrentMonthDates == date
+        let isToday = date.formattedCalendarDayDate == today.formattedCalendarDayDate
+        let daySchedules = monthlySchedules.filter { Calendar.current.isDate($0.startTime, inSameDayAs: date) }
+        
+        print("Date: \(date), Schedules: \(daySchedules.map { $0.title })")
+        
+        return CellView(day: day, clicked: clicked, isToday: isToday, isCurrentMonthDay: true, weekday: weekday, schedules: daySchedules)
+            .onTapGesture {
+                clickedCurrentMonthDates = date
+            }
+            .frame(height: cellHeight)
+    }
+    
+    private func otherMonthCell(for index: Int, lastDayOfMonthBefore: Int, cellHeight: CGFloat, monthlySchedules: [Schedule]) -> CellView {
+        let calendar = Calendar.current
+        let date = getDate(for: index)
+        let daySchedules = monthlySchedules.filter { Calendar.current.isDate($0.startTime, inSameDayAs: date) }
+        if let prevMonthDate = calendar.date(
+            byAdding: .day,
+            value: index + lastDayOfMonthBefore,
+            to: previousMonth()
+        ) {
+            let day = calendar.component(.day, from: prevMonthDate)
+            let weekday = calendar.component(.weekday, from: prevMonthDate)
+            
+            return CellView(day: day, isCurrentMonthDay: false, weekday: weekday, schedules: daySchedules)
+        } else {
+            // 이전 달의 날짜를 계산할 수 없는 경우, 빈 CellView를 반환
+            return CellView(day: 0, isCurrentMonthDay: false, weekday: 1, schedules: daySchedules)
+        }
+    }
+    
 }
 
 // MARK: - CellView
-private struct CellView: View {
+private struct CellView: View { // TODO: 각 날짜에 맞게 일정 보여주기
     private var day: Int
     private var clicked: Bool
     private var isToday: Bool
     private var isCurrentMonthDay: Bool
     private var weekday: Int
+    private var schedules: [Schedule]
     private var textColor: Color {
-        if isToday {
+        if clicked {
             return .white
         } else if !isCurrentMonthDay {
             return Color(.color190)
@@ -189,9 +213,7 @@ private struct CellView: View {
         }
     }
     private var backgroundColor: Color {
-        if clicked {
-            return Color(.brandColor)
-        } else if isToday {
+        if clicked || isToday {
             return Color(.brandColor)
         } else {
             return .white
@@ -203,23 +225,25 @@ private struct CellView: View {
         clicked: Bool = false,
         isToday: Bool = false,
         isCurrentMonthDay: Bool = true,
-        weekday: Int
+        weekday: Int,
+        schedules: [Schedule] = []
     ) {
         self.day = day
         self.clicked = clicked
         self.isToday = isToday
         self.isCurrentMonthDay = isCurrentMonthDay
         self.weekday = weekday
+        self.schedules = schedules
     }
     
     fileprivate var body: some View {
         VStack {
             ZStack {
-                if isToday {
+                if clicked {
                     Circle()
                         .fill(backgroundColor)
                         .frame(width: 30, height: 30)
-                } else if clicked {
+                } else if isToday {
                     Circle()
                         .stroke(backgroundColor, lineWidth: 1.5)
                         .frame(width: 30, height: 30)
@@ -229,7 +253,36 @@ private struct CellView: View {
                     .foregroundColor(textColor)
                     .frame(width: 30, height: 30)
             }
+            .padding(.bottom, 2)
+            
+            VStack(spacing: 2) {
+                ForEach(0..<min(3, schedules.count), id: \.self) { index in
+                    scheduleBar(schedule: schedules[index])
+                }
+                if schedules.count > 3 {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 2)
+                            .fill(Color(.color231))
+                            .frame(width: .infinity, height: LayoutAdapter.shared.scale(value: 14))
+                        
+                        Text("+")
+                            .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 11))))
+                    }
+                }
+            }
+            
             Spacer()
+        }
+    }
+    
+    private func scheduleBar(schedule: Schedule) -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 2)
+                .fill(Color.colorRed)
+                .frame(width: .infinity, height: LayoutAdapter.shared.scale(value: 14))
+            
+            Text(schedule.title)
+                .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 11))))
         }
     }
 }
@@ -313,4 +366,22 @@ extension Date {
 // MARK: - Preview
 #Preview {
     ScheduleView()
+}
+
+#Preview("CellView Variations") {
+    VStack(spacing: 10) {
+        HStack(spacing: 10) {
+            CellView(day: 24, clicked: false, isToday: false, isCurrentMonthDay: true, weekday: 2, schedules: [
+                Schedule(scheduleSeq: 1, title: "프리뷰", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []),
+                Schedule(scheduleSeq: 2, title: "프리뷰", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []),
+                Schedule(scheduleSeq: 3, title: "프리뷰", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []),
+                Schedule(scheduleSeq: 4, title: "프리뷰", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: [])
+            ])
+            .frame(width: 50, height: 120)
+            .previewDisplayName("With Schedule")
+        }
+    }
+    .padding()
+    .previewLayout(.sizeThatFits)
+    .background(Color.gray.opacity(0.1))
 }

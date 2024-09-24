@@ -9,9 +9,10 @@ import Foundation
 import Moya
 
 class ConfirmLocationViewModel: ObservableObject {
-    let provider = MoyaProvider<LocationAPI>()
     @Published var isFavorite = false
-    let memberSeq = 1 // TODO: 실제 사용 시에는 현재 로그인한 사용자의 memberSeq를 사용
+    
+    let provider = MoyaProvider<LocationAPI>()
+    let memberSeq = UserDefaultsManager.shared.getMemberSeq()
     private var currentLocationSeq: Int?
     
     func isFavoriteLocation(location: Location, completion: @escaping (Bool) -> Void) {

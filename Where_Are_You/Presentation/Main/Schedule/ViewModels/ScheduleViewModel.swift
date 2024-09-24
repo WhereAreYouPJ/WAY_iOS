@@ -11,10 +11,10 @@ import Moya
 class ScheduleViewModel: ObservableObject {
     @Published var month: Date = Date()
     @Published var clickedCurrentMonthDates: Date?
-    
     @Published var monthlySchedules: [Schedule] = []
+    
     let provider = MoyaProvider<ScheduleAPI>()
-    private var memberSeq = 1
+    private var memberSeq = UserDefaultsManager.shared.getMemberSeq()
     private let dateFormatterS2D: DateFormatter
     private let dateFormatterD2S: DateFormatter
     
@@ -44,7 +44,7 @@ class ScheduleViewModel: ObservableObject {
                         
                         DispatchQueue.main.async {
                             self.monthlySchedules = genericResponse.data.map { schedule in
-                                Schedule(scheduleSeq: schedule.scheduleSeq, title: schedule.title, startTime: self.dateFormatterS2D.date(from: schedule.startTime)!, endTime: self.dateFormatterS2D.date(from: schedule.endTime)!, location: Location(sequence: 0, location: schedule.location, streetName: schedule.streetName, x: schedule.x, y: schedule.y), color: schedule.color, memo: schedule.memo, invitedMember: nil)
+                                Schedule(scheduleSeq: schedule.scheduleSeq, title: schedule.title, startTime: self.dateFormatterS2D.date(from: schedule.startTime) ?? Date.now, endTime: self.dateFormatterS2D.date(from: schedule.endTime) ?? Date.now, isAllday: schedule.allDay, location: Location(sequence: 0, location: schedule.location ?? "", streetName: schedule.streetName ?? "", x: schedule.x ?? 0, y: schedule.y ?? 0), color: schedule.color, memo: schedule.memo, invitedMember: nil)
                             }
                             print("월간 일정 로드 성공: \(self.monthlySchedules.count)개의 일정을 받았습니다.")
                         }

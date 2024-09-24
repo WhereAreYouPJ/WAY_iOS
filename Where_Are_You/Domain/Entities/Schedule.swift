@@ -13,8 +13,9 @@ struct Schedule: Identifiable {
     let title: String
     let startTime: Date
     let endTime: Date
+    let isAllday: Bool?
     let location: Location?
     let color: String
-    let memo: String
+    let memo: String?
     let invitedMember: [Friend]?
 }

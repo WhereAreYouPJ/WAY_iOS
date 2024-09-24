@@ -15,7 +15,7 @@ final class CreateScheduleViewModel: ObservableObject {
     @Published var startTime: Date
     @Published var endTime: Date
     @Published var selectedFriends: [Friend] = []
-    @Published var place: Location = Location(sequence: 0, location: "", streetName: "", x: 0, y: 0)
+    @Published var place: Location = Location(sequence: 0, location: "", streetName: "", x: 0, y: 0) // TODO: 서버 nullable 값 수정 필요?
     @Published var favPlaces: [Location] = []
     @Published var color: String = "red"
     @Published var memo: String = ""

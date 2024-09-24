@@ -12,12 +12,13 @@ struct ScheduleByMonth: Codable {
     let title: String
     let startTime: String
     let endTime: String
-    let location: String
-    let streetName: String
-    let x: Double
-    let y: Double
+    let location: String?
+    let streetName: String?
+    let x: Double?
+    let y: Double?
     let color: String
-    let memo: String
+    let memo: String?
+    let allDay: Bool?
 }
 
 typealias GetScheduleByMonthResponse = [ScheduleByMonth]
