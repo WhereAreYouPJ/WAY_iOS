@@ -8,13 +8,12 @@
 import Alamofire
 import Moya
 
-// MARK: - AuthServiceProtocol
+// MARK: - MemberServiceProtocol
 
 protocol MemberServiceProtocol {
     func modifyUserName(userName: String, completion: @escaping (Result<Void, Error>) -> Void)
     func signUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void)
     func resetPassword(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void)
-    
     func logout(completion: @escaping (Result<Void, Error>) -> Void)
     func login(request: LoginBody, completion: @escaping (Result<GenericResponse<LoginResponse>, Error>) -> Void)
     func emailVerify(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
@@ -45,103 +44,103 @@ class MemberService: MemberServiceProtocol {
     // MARK: - APIService
     func modifyUserName(userName: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         provider.request(.modifyUserName(memberSeq: memberSeq, userName: userName)) { result in
-            self.handleResponse(result, completion: completion)
+            APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
     func signUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void) {
         provider.request(.signUp(request: request)) { result in
-            self.handleResponse(result, completion: completion)
+            APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
     func resetPassword(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void) {
         provider.request(.resetPassword(request: request)) { result in
-            self.handleResponse(result, completion: completion)
+            APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
     func logout(completion: @escaping (Result<Void, Error>) -> Void) {
         let request = LogoutBody(memberSeq: memberSeq)
         provider.request(.logout(request: request)) { result in
-            self.handleResponse(result, completion: completion)
+            APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
     func login(request: LoginBody, completion: @escaping (Result<GenericResponse<LoginResponse>, Error>) -> Void) {
         provider.request(.login(request: request)) { result in
-            self.handleResponse(result, completion: completion)
+            APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
     func emailVerify(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void) {
         provider.request(.emailVerify(requst: request)) { result in
-            self.handleResponse(result, completion: completion)
+            APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
     func emailVerifyPassword(request: EmailVerifyPasswordBody, completion: @escaping (Result<Void, Error>) -> Void) {
         provider.request(.emailVerifyPassword(request: request)) { result in
-            self.handleResponse(result, completion: completion)
+            APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
     func emailSend(request: EmailSendBody, completion: @escaping (Result<Void, Error>) -> Void) {
         provider.request(.emailSend(request: request)) { result in
-            self.handleResponse(result, completion: completion)
+            APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
     func memberSearch(request: MemberSearchParameters, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void) {
         provider.request(.memberSearch(request: request)) { result in
-            self.handleResponse(result, completion: completion)
+            APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
     func memberDetails(completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void) {
         provider.request(.memberDetails(memberSeq: memberSeq)) { result in
-            self.handleResponse(result, completion: completion)
+            APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
     func checkEmail(request: CheckEmailParameters, completion: @escaping (Result<GenericResponse<CheckEmailResponse>, Error>) -> Void) {
         provider.request(.checkEmail(request: request)) { result in
-            self.handleResponse(result, completion: completion)
+            APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
     // MARK: - HandleResponse
-    
-    private func handleResponse<T>(_ result: Result<Moya.Response, MoyaError>, completion: @escaping (Result<T, Error>) -> Void) where T: Decodable {
-        switch result {
-        case .success(let response):
-            do {
-                // TODO: 앱 개발 완료후 지우기(받는 데이터 정보 확인용)
-                if let json = try? response.mapJSON() {
-                    print("Response JSON: \(json)")
-                }
-                
-                let data = try response.map(T.self)
-                completion(.success(data))
-            } catch let error {
-                completion(.failure(error))
-            }
-        case .failure(let error):
-            completion(.failure(error))
-        }
-    }
-    
-    private func handleResponse(_ result: Result<Moya.Response, MoyaError>, completion: @escaping (Result<Void, Error>) -> Void) {
-        switch result {
-        case .success(let response):
-            do {
-                _ = try response.filterSuccessfulStatusCodes()
-                completion(.success(()))
-            } catch let error {
-                completion(.failure(error))
-            }
-        case .failure(let error):
-            completion(.failure(error))
-        }
-    }
+//    
+//    private func handleResponse<T>(_ result: Result<Moya.Response, MoyaError>, completion: @escaping (Result<T, Error>) -> Void) where T: Decodable {
+//        switch result {
+//        case .success(let response):
+//            do {
+//                // TODO: 앱 개발 완료후 지우기(받는 데이터 정보 확인용)
+//                if let json = try? response.mapJSON() {
+//                    print("Response JSON: \(json)")
+//                }
+//                
+//                let data = try response.map(T.self)
+//                completion(.success(data))
+//            } catch let error {
+//                completion(.failure(error))
+//            }
+//        case .failure(let error):
+//            completion(.failure(error))
+//        }
+//    }
+//    
+//    private func handleResponse(_ result: Result<Moya.Response, MoyaError>, completion: @escaping (Result<Void, Error>) -> Void) {
+//        switch result {
+//        case .success(let response):
+//            do {
+//                _ = try response.filterSuccessfulStatusCodes()
+//                completion(.success(()))
+//            } catch let error {
+//                completion(.failure(error))
+//            }
+//        case .failure(let error):
+//            completion(.failure(error))
+//        }
+//    }
 }
