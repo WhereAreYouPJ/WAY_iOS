@@ -34,6 +34,8 @@ extension UIColor {
     static let color29 = UIColor.rgb(red: 29, green: 29, blue: 29)
     static let color34 = UIColor.rgb(red: 34, green: 34, blue: 34)
     static let color51 = UIColor.rgb(red: 51, green: 51, blue: 51)
+    static let color5769 = UIColor.rgb(red: 57, green: 69, blue: 255)
+    static let color57125 = UIColor.rgb(red: 57, green: 125, blue: 255)
     static let color68 = UIColor.rgb(red: 68, green: 68, blue: 68)
     static let color81 = UIColor.rgb(red: 81, green: 70, blue: 117)
     static let color102 = UIColor.rgb(red: 102, green: 102, blue: 102)
@@ -52,6 +54,8 @@ extension UIColor {
     static let color240 = UIColor.rgb(red: 240, green: 240, blue: 240)
     static let color242 = UIColor.rgb(red: 242, green: 242, blue: 242)
     static let color249 = UIColor.rgb(red: 249, green: 249, blue: 249)
+    static let color255125 = UIColor.rgb(red: 255, green: 125, blue: 150)
+    static let color25569 = UIColor.rgb(red: 255, green: 69, blue: 69)
 }
 
 // MARK: - UIFont

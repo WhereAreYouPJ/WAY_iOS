@@ -10,6 +10,7 @@ import MapKit
 
 struct Location: Identifiable, Codable, Hashable {
     var id = UUID()
+    var sequence: Int
     var location: String
     var streetName: String
     var x: Double

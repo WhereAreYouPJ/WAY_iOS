@@ -30,6 +30,7 @@ struct Document: Codable {
     func toLocation() -> Location {
         Location(
             id: UUID(), // UUID를 생성하거나 id를 사용할 수 있습니다.
+            sequence: 0,
             location: placeName,
             streetName: roadAddressName.isEmpty ? addressName : roadAddressName,
             x: Double(x) ?? 0,

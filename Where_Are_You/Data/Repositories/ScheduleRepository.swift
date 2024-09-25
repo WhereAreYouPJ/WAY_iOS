@@ -13,7 +13,7 @@ protocol ScheduleRepositoryProtocol {
     func putSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     func deleteSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postEcceptSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
-    func getMonthSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func getMonthlySchedule(yearMonth: String, completion: @escaping (Result<GenericResponse<[GetScheduleByMonthResponse]>, Error>) -> Void)
     func getDate(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     func getDDaySchedule(completion: @escaping (Result<GenericResponse<DDayScheduleResponse>, Error>) -> Void)
 }
@@ -45,8 +45,8 @@ class ScheduleRepository: ScheduleRepositoryProtocol {
         scheduleService.postEcceptSchedule(request: request, completion: completion)
     }
     
-    func getMonthSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
-        scheduleService.getMonthSchedule(request: request, completion: completion)
+    func getMonthlySchedule(yearMonth: String, completion: @escaping (Result<GenericResponse<[GetScheduleByMonthResponse]>, Error>) -> Void) {
+        scheduleService.getMonthlySchedule(yearMonth: yearMonth, completion: completion)
     }
     
     func getDate(request: CreateScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
