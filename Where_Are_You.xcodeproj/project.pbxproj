@@ -70,6 +70,7 @@
 		995358492C00C558005BF799 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 995358482C00C558005BF799 /* Assets.xcassets */; };
 		9953584C2C00C558005BF799 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 9953584B2C00C558005BF799 /* Base */; };
 		995358552C00DB0A005BF799 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 995358542C00DB0A005BF799 /* .swiftlint.yml */; };
+		995493F62CA3E2EF008BFA19 /* ScheduleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995493F52CA3E2EF008BFA19 /* ScheduleList.swift */; };
 		995E3E5B2C507FE6006B4480 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995E3E5A2C507FE6006B4480 /* MyPageView.swift */; };
 		995E3E5E2C508039006B4480 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995E3E5D2C508039006B4480 /* MyPageViewController.swift */; };
 		9967C1522C56467D00927277 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9967C1512C56467D00927277 /* CustomAlert.swift */; };
@@ -273,6 +274,7 @@
 		9953584B2C00C558005BF799 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9953584D2C00C558005BF799 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		995358542C00DB0A005BF799 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		995493F52CA3E2EF008BFA19 /* ScheduleList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleList.swift; sourceTree = "<group>"; };
 		995E3E5A2C507FE6006B4480 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		995E3E5D2C508039006B4480 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		9967C1512C56467D00927277 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
@@ -970,6 +972,7 @@
 				D54C040B2C651832009CC419 /* Schedule.swift */,
 				99107EA22C6F3E42007D129F /* DDay.swift */,
 				99107EA42C6F3E4A007D129F /* Location.swift */,
+				995493F52CA3E2EF008BFA19 /* ScheduleList.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -1583,6 +1586,7 @@
 				99EC78D02C11E20F007C4415 /* PasswordFinishResetView.swift in Sources */,
 				99949F492C587BA500AE0177 /* FriendsListView.swift in Sources */,
 				99F9FADE2C0B6187005B36B9 /* AccountSearchViewController.swift in Sources */,
+				995493F62CA3E2EF008BFA19 /* ScheduleList.swift in Sources */,
 				99949F4F2C58890C00AE0177 /* ProfileView.swift in Sources */,
 				99E7BA592C69A5D500F79C96 /* ImageUtility.swift in Sources */,
 				99C1403E2C6496BC00A706B6 /* NoDataView.swift in Sources */,
