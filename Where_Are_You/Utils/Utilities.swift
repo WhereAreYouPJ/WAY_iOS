@@ -10,7 +10,7 @@ import SnapKit
 
 class Utilities {
     // 네비게이션 바 생성
-    static func createNavigationBar(for viewController: UIViewController, title: String, backButtonAction: Selector? = nil, showBackButton: Bool = true) {
+    static func createNavigationBar(for viewController: UIViewController, title: String, backButtonAction: Selector? = nil, showBackButton: Bool = true, rightButton: UIBarButtonItem? = nil) {
         // 네비게이션 바의 외형을 설정
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -18,7 +18,7 @@ class Utilities {
         // 네비게이션 컨트롤러가 존재할 경우 설정 적용
         if let navigationController = viewController.navigationController {
             navigationController.navigationBar.standardAppearance = appearance
-            navigationController.navigationBar.scrollEdgeAppearance = navigationController.navigationBar.standardAppearance
+            navigationController.navigationBar.scrollEdgeAppearance = appearance
             navigationController.navigationBar.barStyle = .black
             navigationController.navigationBar.isTranslucent = false
             navigationController.navigationBar.tintColor = .white
@@ -26,17 +26,24 @@ class Utilities {
         
         // 뒤로 가기 버튼을 설정
         if showBackButton, let backButtonAction = backButtonAction {
-            let image = UIImage(systemName: "arrow.backward")
-            let backButton = UIBarButtonItem(image: image, style: .plain, target: viewController, action: backButtonAction)
+            let backButton = UIBarButtonItem(image: UIImage(systemName: "arrow.backward"),
+                                             style: .plain,
+                                             target: viewController,
+                                             action: backButtonAction)
             backButton.tintColor = .color172
             viewController.navigationItem.leftBarButtonItem = backButton
         }
+        
+        if rightButton != nil {
+            viewController.navigationItem.rightBarButtonItem = rightButton
+        }
+        
         viewController.navigationItem.title = title
     }
     
     // TextField with layer and placeholder
     static func inputContainerTextField(withPlaceholder placeholder: String) -> CustomTextField {
-        let tf = CustomTextField()
+        let tf = CustomTextField(placeholder: placeholder)
         tf.adjustsFontForContentSizeCategory = true
         tf.textColor = .color34
         tf.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14)))

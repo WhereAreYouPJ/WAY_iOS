@@ -15,6 +15,8 @@ class AddFeedViewController: UIViewController {
     private var isDropdownVisible = false
     private var contentTextViewHeightConstraint: NSLayoutConstraint!
     
+    private let viewModel = AddFeedViewModel()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -23,9 +25,19 @@ class AddFeedViewController: UIViewController {
         setupNavigationBar()
         buttonActions()
         setupUI()
+        setupTableView()
+        
+        viewModel.delegate = self
+        viewModel.fetchSchedules()
     }
     
     // MARK: - Helpers
+    
+    private func setupTableView() {
+        addFeedView.scheduleDropDown.dropDownTableView.delegate = self
+        addFeedView.scheduleDropDown.dropDownTableView.dataSource = self
+        addFeedView.scheduleDropDown.dropDownTableView.register(ScheduleDropDownCell.self, forCellReuseIdentifier: ScheduleDropDownCell.identifier)
+    }
     
     private func setupNavigationBar() {
         Utilities.createNavigationBar(for: self, title: "새 피드 작성", backButtonAction: #selector(backButtonTapped), showBackButton: true)
@@ -73,6 +85,7 @@ class AddFeedViewController: UIViewController {
     
     @objc func createFeed() {
         // 피드 생성하기 버튼 눌림
+        guard let scheduleSeq = viewModel.selectedScheduleSeq else { return }
     }
 }
 
@@ -100,4 +113,43 @@ extension AddFeedViewController: UITextViewDelegate {
             self.view.layoutIfNeeded()
         }
     }
+}
+
+extension AddFeedViewController: AddFeedViewModelDelegate {
+    func didUpdateSchedules() {
+        addFeedView.scheduleDropDown.dropDownTableView.reloadData()
+    }
+}
+
+extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+            return viewModel.numberOfSections()
+        }
+        
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return viewModel.numberOfRows(in: section)
+        }
+        
+        func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+            return viewModel.titleForHeader(in: section)
+        }
+        
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ScheduleDropDownCell.identifier, for: indexPath) as! ScheduleDropDownCell
+            let schedule = viewModel.schedule(for: indexPath)
+            cell.configure(with: schedule)
+            return cell
+        }
+        
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            let schedule = viewModel.schedule(for: indexPath)
+            
+            if !schedule.feedGet {
+                // 선택된 일정의 seq를 ViewModel에 전달
+                viewModel.selectSchedule(at: indexPath)
+                
+                // 참가자 정보 표시 등 추가 작업
+                // 예: scheduleSeq를 이용해 참가자 데이터를 표시하는 로직 구현
+            }
+        }
 }

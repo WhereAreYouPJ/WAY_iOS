@@ -32,7 +32,11 @@ class LocationBookmarkViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        Utilities.createNavigationBar(for: self, title: "위치 즐겨찾기", backButtonAction: #selector(backButtonTapped))
+        let rightButton =  UIBarButtonItem(image: UIImage(systemName: "icon-plus"),
+                                           style: .plain,
+                                           target: self,
+                                           action: #selector(plusButtonTapped))
+        Utilities.createNavigationBar(for: self, title: "위치 즐겨찾기", backButtonAction: #selector(backButtonTapped), rightButton: rightButton)
     }
     
     private func setupBindings() {
@@ -43,5 +47,17 @@ class LocationBookmarkViewController: UIViewController {
 
     @objc private func backButtonTapped() {
         // 뒤로가기 버튼 눌림
+    }
+    
+    @objc private func plusButtonTapped() {
+        // 위치 삭제 버튼 나타남(custom option button 사용)
+        locationBookmarkView.editingButton.isHidden = false
+    }
+    
+    @objc private func editingButtonTapped() {
+        // 위치 삭제하기로 뷰 변경
+        locationBookmarkView.editingButton.isHidden = true
+        locationBookmarkView.deleteButton.isHidden = false
+        
     }
 }

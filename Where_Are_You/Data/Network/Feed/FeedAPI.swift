@@ -8,8 +8,8 @@
 import Moya
 
 enum FeedAPI {
-    case updateFeed(request: ModifyFeedRequest, images: [UIImage]?)
-    case createFeed(request: SaveFeedRequest, images: [UIImage]?)
+    case putFeed(request: ModifyFeedRequest, images: [UIImage]?)
+    case postFeed(request: SaveFeedRequest, images: [UIImage]?)
 }
 
 extension FeedAPI: TargetType {
@@ -24,19 +24,19 @@ extension FeedAPI: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .updateFeed:
+        case .putFeed:
             return .put
-        case .createFeed:
+        case .postFeed:
             return .post
         }
     }
     
     var task: Moya.Task {
         switch self {
-        case .updateFeed(let request, let images):
+        case .putFeed(let request, let images):
             let multipartData = MultipartFormDataHelper.createMultipartData(from: request, images: images)
             return .uploadMultipart(multipartData)
-        case .createFeed(let request, let images):
+        case .postFeed(let request, let images):
             let multipartData = MultipartFormDataHelper.createMultipartData(from: request, images: images)
             return .uploadMultipart(multipartData)
         }

@@ -13,17 +13,52 @@ import UIKit
 class CustomTextField: UITextField {
     
     private var textPadding: UIEdgeInsets
+    private var placeholderText: String?
+    private var hasBorder: Bool
     
-    init(textPadding: UIEdgeInsets = UIEdgeInsets(top: 11, left: 8, bottom: 11, right: 8)) {
+    init(textPadding: UIEdgeInsets = UIEdgeInsets(top: 12, left: 8, bottom: 12, right: 8),
+         placeholder: String,
+         hasBorder: Bool = true,
+         fontSize: CGFloat = LayoutAdapter.shared.scale(value: 14)) {
         self.textPadding = textPadding
+        self.hasBorder = hasBorder
+        self.placeholderText = placeholder
         super.init(frame: .zero)
+        setupTextField()
         setupBorder()
     }
     
     required init?(coder: NSCoder) {
-        self.textPadding = UIEdgeInsets(top: 11, left: 8, bottom: 11, right: 8)
+        self.textPadding = UIEdgeInsets(top: 12, left: 8, bottom: 12, right: 8)
+        self.hasBorder = true
         super.init(coder: coder)
+        setupTextField()
         setupBorder()
+    }
+    
+    private func setupTextField() {
+        adjustsFontForContentSizeCategory = true
+        textColor = .color34
+        font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14)))
+        
+        // Set placeholder with color
+        if let placeholderText = placeholderText {
+            attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: [NSAttributedString.Key.foregroundColor: UIColor.color102])
+        }
+    }
+    
+    private func setupBorder() {
+        if hasBorder {
+            layer.borderColor = UIColor.color212.cgColor
+            layer.borderWidth = 1.0
+            layer.cornerRadius = LayoutAdapter.shared.scale(value: 6)
+        } else {
+            layer.borderWidth = 0
+        }
+    }
+    
+    func setBorderColor(_ color: UIColor) {
+        layer.borderColor = color.cgColor
     }
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
@@ -36,15 +71,5 @@ class CustomTextField: UITextField {
     
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: textPadding)
-    }
-    
-    private func setupBorder() {
-        layer.borderColor = UIColor.color212.cgColor
-        layer.borderWidth = 1.0
-        layer.cornerRadius = 7.0
-    }
-    
-    func setBorderColor(_ color: UIColor) {
-        layer.borderColor = color.cgColor
     }
 }
