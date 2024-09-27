@@ -9,7 +9,8 @@ import UIKit
 
 class MainHomeViewModel {
     // MARK: - Properties
-
+    private let getDDayScheduleUseCase: GetDDayScheduleUseCase
+    
     private var images: [UIImage] = []
     private var dDays: [DDay] = []
     private var feeds: [Feed] = []
@@ -17,6 +18,10 @@ class MainHomeViewModel {
     var onBannerDataFetched: (() -> Void)?
     var onDDayDataFetched: (() -> Void)?
     var onFeedsDataFetched: (() -> Void)?
+    
+    init(getDDayScheduleUseCase: GetDDayScheduleUseCase) {
+        self.getDDayScheduleUseCase = getDDayScheduleUseCase
+    }
     
     // MARK: - Helpers
     
@@ -39,14 +44,17 @@ class MainHomeViewModel {
 
     private func fetchDDays() {
         // 예시 일정 데이터 (나중에 실제 데이터를 로딩하는 로직으로 대체)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        self.dDays = [
-            DDay(date: dateFormatter.date(from: "2025-12-31")!, title: "96조 여의도 한강공원 모임"),
-            DDay(date: dateFormatter.date(from: "2024-10-10")!, title: "96조 워크숍")
-        ]
-        onDDayDataFetched?()
+        getDDayScheduleUseCase.execute { result in
+            switch result {
+            case .success(let data):
+                self.dDays = data.map { data in
+                    return DDay(date: data.dDay, title: data.title)
+                }
+                self.onDDayDataFetched?()
+            case .failure(let error):
+                print("\(error.localizedDescription)")
+            }
+        }
     }
 
     // 피드를 불러오는 메서드

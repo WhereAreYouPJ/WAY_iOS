@@ -135,7 +135,7 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: ScheduleDropDownCell.identifier, for: indexPath) as! ScheduleDropDownCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ScheduleDropDownCell.identifier, for: indexPath) as? ScheduleDropDownCell else { return UITableViewCell() }
             let schedule = viewModel.schedule(for: indexPath)
             cell.configure(with: schedule)
             return cell

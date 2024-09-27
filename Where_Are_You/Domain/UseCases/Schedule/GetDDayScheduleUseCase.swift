@@ -8,7 +8,7 @@
 import Foundation
 
 protocol GetDDayScheduleUseCase {
-    func execute(completion: @escaping (Result<DDayScheduleResponse, Error>) -> Void)
+    func execute(completion: @escaping (Result<[DDayScheduleResponse], Error>) -> Void)
 }
 
 class GetDDayScheduleUseCaseImpl: GetDDayScheduleUseCase {
@@ -18,7 +18,7 @@ class GetDDayScheduleUseCaseImpl: GetDDayScheduleUseCase {
         self.scheduleRepository = scheduleRepository
     }
     
-    func execute(completion: @escaping (Result<DDayScheduleResponse, any Error>) -> Void) {
+    func execute(completion: @escaping (Result<[DDayScheduleResponse], any Error>) -> Void) {
         scheduleRepository.getDDaySchedule { result in
             switch result {
             case .success(let response):

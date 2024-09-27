@@ -27,7 +27,7 @@ class MainHomeViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.trailing.bottom.equalToSuperview()
         }
-        mainHomeViewModel = MainHomeViewModel()
+        setupViewModel()
         setupNavigationBar()
         setupViewControllers()
         setupBindings()
@@ -37,6 +37,15 @@ class MainHomeViewController: UIViewController {
     }
     
     // MARK: - Helpers
+    
+    private func setupViewModel() {
+        let scheduleService = ScheduleService()
+        let scheduleRepository = ScheduleRepository(scheduleService: scheduleService)
+        mainHomeViewModel = MainHomeViewModel(
+            getDDayScheduleUseCase: GetDDayScheduleUseCaseImpl(scheduleRepository: scheduleRepository)
+        )
+    }
+    
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleView.titleLabel)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: titleView.iconStack)
@@ -63,19 +72,22 @@ class MainHomeViewController: UIViewController {
     private func setupBindings() {
         mainHomeViewModel.onBannerDataFetched = { [weak self] in
             DispatchQueue.main.async {
-                self?.bannerViewController.viewModel.setBanners(self?.mainHomeViewModel.getBannerImages() ?? [])
+                guard let bannerImages = self?.mainHomeViewModel.getBannerImages() else { return }
+                self?.bannerViewController.viewModel.setBanners(bannerImages)
             }
         }
         
         mainHomeViewModel.onDDayDataFetched = { [weak self] in
             DispatchQueue.main.async {
-                self?.dDayViewController.viewModel.setDDays(self?.mainHomeViewModel.getDDays() ?? [])
+                guard let dDays = self?.mainHomeViewModel.getDDays() else { return }
+                self?.dDayViewController.viewModel.setDDays(dDays)
             }
         }
         
         mainHomeViewModel.onFeedsDataFetched = { [weak self] in
             DispatchQueue.main.async {
-                self?.homeFeedViewController.viewModel.setFeeds(self?.mainHomeViewModel.getFeeds() ?? [])
+                guard let homeFeed = self?.mainHomeViewModel.getFeeds() else { return }
+                self?.homeFeedViewController.viewModel.setFeeds(homeFeed)
             }
         }
     }
