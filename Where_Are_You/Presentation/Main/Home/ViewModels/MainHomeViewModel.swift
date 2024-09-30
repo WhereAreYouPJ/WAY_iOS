@@ -43,7 +43,6 @@ class MainHomeViewModel {
     }
 
     private func fetchDDays() {
-        // 예시 일정 데이터 (나중에 실제 데이터를 로딩하는 로직으로 대체)
         getDDayScheduleUseCase.execute { result in
             switch result {
             case .success(let data):
