@@ -19,7 +19,7 @@ protocol AddFeedViewModelDelegate: AnyObject {
 class AddFeedViewModel {
     private let getScheduleListUseCase: GetScheduleListUseCase
     
-    private var schedules: [ScheduleList] = []
+    private var schedules: [ScheduleContent] = []
     private var page: Int32 = 0
     private var isLoading = false
     
@@ -43,7 +43,7 @@ class AddFeedViewModel {
         getScheduleListUseCase.execute(page: page) { result in
             switch result {
             case .success(let newSchedules):
-//                self.schedules.append(contentsOf: newSchedules)
+                self.schedules.append(contentsOf: newSchedules)
                 self.page += 1
                 self.onSchedulesUpadated?()
                 // 여기에 성공했을때 일정 리스트들을 올리면 된다.
@@ -52,17 +52,15 @@ class AddFeedViewModel {
             }
         }
         
-        schedules = [
-            ScheduleList(title: "한강공원", location: "여의도한강공원", startTime: "2024-09-23T02:09:19.849", scheduleSeq: 1, feedGet: false),
-            ScheduleList(title: "독서모임", location: "교보문고 광화문점", startTime: "2024-09-23T10:00:00.000", scheduleSeq: 2, feedGet: true),
-            ScheduleList(title: "기획 미팅", location: "회사", startTime: "2024-09-24T11:00:00.000", scheduleSeq: 3, feedGet: false),
-            ScheduleList(title: "회사 회식", location: "마포갈비집", startTime: "2024-09-24T18:00:00.000", scheduleSeq: 4, feedGet: false)
-        ]
-        
-        groupedSchedules = Dictionary(grouping: schedules, by: { schedule -> String in
-            return String(schedule.startTime.prefix(10))
-        })
-        
+//        schedules = [
+//            ScheduleList(title: "한강공원", location: "여의도한강공원", startTime: "2024-09-23T02:09:19.849", scheduleSeq: 1, feedGet: false),
+//            ScheduleList(title: "독서모임", location: "교보문고 광화문점", startTime: "2024-09-23T10:00:00.000", scheduleSeq: 2, feedGet: true),
+//            ScheduleList(title: "기획 미팅", location: "회사", startTime: "2024-09-24T11:00:00.000", scheduleSeq: 3, feedGet: false),
+//            ScheduleList(title: "회사 회식", location: "마포갈비집", startTime: "2024-09-24T18:00:00.000", scheduleSeq: 4, feedGet: false)
+//        ]
+//        groupedSchedules = Dictionary(grouping: schedules, by: { schedule -> String in
+//            return String(schedule.startTime.prefix(10))
+//        })
         delegate?.didUpdateSchedules()
     }
     

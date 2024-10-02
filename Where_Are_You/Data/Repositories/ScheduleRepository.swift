@@ -16,7 +16,7 @@ protocol ScheduleRepositoryProtocol {
     func getMonthlySchedule(yearMonth: String, completion: @escaping (Result<GenericResponse<[GetScheduleByMonthResponse]>, Error>) -> Void)
     func getDate(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     func getDDaySchedule(completion: @escaping (Result<GenericResponse<[DDayScheduleResponse]>, Error>) -> Void)
-    func getScheduleList(page: Int32, completion: @escaping (Result<Void, Error>) -> Void)
+    func getScheduleList(page: Int32, completion: @escaping (Result<GenericResponse<GetScheduleListResponse>, Error>) -> Void)
 }
 
 class ScheduleRepository: ScheduleRepositoryProtocol {
@@ -58,7 +58,7 @@ class ScheduleRepository: ScheduleRepositoryProtocol {
         scheduleService.getDDaySchedule(completion: completion)
     }
     
-    func getScheduleList(page: Int32, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func getScheduleList(page: Int32, completion: @escaping (Result<GenericResponse<GetScheduleListResponse>, any Error>) -> Void) {
         scheduleService.getScheduleList(page: page, completion: completion)
     }
 }
