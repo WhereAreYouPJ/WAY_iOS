@@ -25,13 +25,13 @@ class AccountLoginController: UIViewController {
     }
     
     // MARK: - Helpers
-    func setupUI() {
+   private func setupUI() {
         self.view = accountLoginView
         configureNavigationBar(title: "로그인", backButtonAction: #selector(backButtonTapped))
         accountLoginView.passwordTextField.isSecureTextEntry = true
     }
     
-    func setupActions() {
+    private func setupActions() {
         accountLoginView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         accountLoginView.findAccountButton.button.addTarget(self, action: #selector(findAccountButtonTapped), for: .touchUpInside)
         accountLoginView.signupButton.addTarget(self, action: #selector(registerAccountButtonTapped), for: .touchUpInside)
@@ -40,13 +40,13 @@ class AccountLoginController: UIViewController {
         accountLoginView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
-    func setupViewModel() {
+    private func setupViewModel() {
         let memberService = MemberService()
         let memberRepository = MemberRepository(memberService: memberService)
         viewModel = AccountLoginViewModel(accountLoginUseCase: AccountLoginUseCaseImpl(memberRepository: memberRepository))
     }
     
-    func setupBindings() {
+    private func setupBindings() {
         viewModel.onLoginSuccess = { [weak self] in
             let controller = MainTabBarController()
             let nav = UINavigationController(rootViewController: controller)
@@ -65,7 +65,7 @@ class AccountLoginController: UIViewController {
     }
     
     // MARK: - Selectors
-    @objc func backButtonTapped() {
+    @objc private func backButtonTapped() {
         dismiss(animated: true)
     }
     
@@ -74,21 +74,21 @@ class AccountLoginController: UIViewController {
         accountLoginView.updateLoginButtonState()
     }
     
-    @objc func loginButtonTapped() {
+    @objc private func loginButtonTapped() {
         guard let email = accountLoginView.emailTextField.text, !email.isEmpty,
               let password = accountLoginView.passwordTextField.text, !password.isEmpty else { return }
         
         viewModel.login(email: email, password: password)
     }
     
-    @objc func findAccountButtonTapped() {
+    @objc private func findAccountButtonTapped() {
         let controller = AccountSearchViewController()
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true, completion: nil)
     }
     
-    @objc func registerAccountButtonTapped() {
+    @objc private func registerAccountButtonTapped() {
         let controller = TermsAgreementViewController()
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen

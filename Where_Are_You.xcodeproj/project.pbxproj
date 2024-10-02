@@ -41,6 +41,8 @@
 		99149FEB2C4F97C300136097 /* ValidationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99149FEA2C4F97C300136097 /* ValidationHelper.swift */; };
 		99149FED2C4F97EA00136097 /* TimeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99149FEC2C4F97EA00136097 /* TimeHelper.swift */; };
 		992381882C7DC8C900FFCBCB /* MyDetailManageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992381872C7DC8C900FFCBCB /* MyDetailManageViewModel.swift */; };
+		992BF70A2CAA8819008D3055 /* GetScheduleListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992BF7092CAA8819008D3055 /* GetScheduleListResponse.swift */; };
+		992BF70C2CAA9006008D3055 /* GetScheduleListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992BF70B2CAA9006008D3055 /* GetScheduleListUseCase.swift */; };
 		992F1EC62C37ED400042CB1A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 992F1EC52C37ED400042CB1A /* .gitignore */; };
 		992F57C22C5B1E8900219C6B /* ParameterConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57C12C5B1E8900219C6B /* ParameterConvertible.swift */; };
 		992F57C62C5B265600219C6B /* SingUpBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57C52C5B265600219C6B /* SingUpBody.swift */; };
@@ -246,6 +248,8 @@
 		99149FEA2C4F97C300136097 /* ValidationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationHelper.swift; sourceTree = "<group>"; };
 		99149FEC2C4F97EA00136097 /* TimeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeHelper.swift; sourceTree = "<group>"; };
 		992381872C7DC8C900FFCBCB /* MyDetailManageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDetailManageViewModel.swift; sourceTree = "<group>"; };
+		992BF7092CAA8819008D3055 /* GetScheduleListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetScheduleListResponse.swift; sourceTree = "<group>"; };
+		992BF70B2CAA9006008D3055 /* GetScheduleListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetScheduleListUseCase.swift; sourceTree = "<group>"; };
 		992F1EC52C37ED400042CB1A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		992F57C12C5B1E8900219C6B /* ParameterConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterConvertible.swift; sourceTree = "<group>"; };
 		992F57C52C5B265600219C6B /* SingUpBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingUpBody.swift; sourceTree = "<group>"; };
@@ -569,7 +573,6 @@
 		992F57D92C5B294F00219C6B /* Responses */ = {
 			isa = PBXGroup;
 			children = (
-				99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */,
 				D51AC99D2C84A08200D0AD2E /* Location */,
 				D585E2852C82F63500C16A14 /* Schedule */,
 				99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */,
@@ -797,6 +800,7 @@
 			isa = PBXGroup;
 			children = (
 				99C6D2A22C904006009C0CF8 /* GetDDayScheduleUseCase.swift */,
+				992BF70B2CAA9006008D3055 /* GetScheduleListUseCase.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -921,7 +925,6 @@
 		99CC5E6A2C5211ED00A0509A /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				99CC5E6B2C52122500A0509A /* FriendFeed */,
 				99C1403D2C6496BC00A706B6 /* NoDataView.swift */,
 				99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */,
 				99D8FBAD2C3B64040062AF10 /* Home */,
@@ -1220,8 +1223,8 @@
 			isa = PBXGroup;
 			children = (
 				D585E2862C82F6C600C16A14 /* GetScheduleByMonthResponse.swift */,
-				D585E2862C82F6C600C16A14 /* MonthScheduleResponse.swift */,
 				99C6D29B2C903526009C0CF8 /* DDayScheduleResponse.swift */,
+				992BF7092CAA8819008D3055 /* GetScheduleListResponse.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -1526,6 +1529,7 @@
 				9910B84E2C71B7F6005F7EEE /* AddFeedViewController.swift in Sources */,
 				D5D807F22C860931008F7882 /* CommonFriensView.swift in Sources */,
 				9910B84A2C71B621005F7EEE /* FriendsTableViewCell.swift in Sources */,
+				992BF70A2CAA8819008D3055 /* GetScheduleListResponse.swift in Sources */,
 				9910B8492C71B617005F7EEE /* ResetPasswordUseCase.swift in Sources */,
 				9910B8482C71B5A4005F7EEE /* DDayViewController.swift in Sources */,
 				9910B8472C71B59E005F7EEE /* AccountSearchView.swift in Sources */,
@@ -1618,6 +1622,7 @@
 				99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */,
 				992F57D02C5B28C400219C6B /* EmailVerifyPasswordBody.swift in Sources */,
 				D54C040C2C651832009CC419 /* Schedule.swift in Sources */,
+				992BF70C2CAA9006008D3055 /* GetScheduleListUseCase.swift in Sources */,
 				995E3E5E2C508039006B4480 /* MyPageViewController.swift in Sources */,
 				99C6D29C2C903526009C0CF8 /* DDayScheduleResponse.swift in Sources */,
 				99CEAD4C2C5397B1006B3D41 /* DeviceConfig.swift in Sources */,

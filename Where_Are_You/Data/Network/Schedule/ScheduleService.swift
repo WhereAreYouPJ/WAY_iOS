@@ -18,12 +18,14 @@ protocol ScheduleServiceProtocol {
     func postEcceptSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     func getMonthlySchedule(yearMonth: String, completion: @escaping (Result<GenericResponse<[GetScheduleByMonthResponse]>, Error>) -> Void)
     func getDate(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
-    func getDDaySchedule(completion: @escaping (Result<GenericResponse<DDayScheduleResponse>, Error>) -> Void)
+    func getDDaySchedule(completion: @escaping (Result<GenericResponse<[DDayScheduleResponse]>, Error>) -> Void)
+    func getScheduleList(page: Int32, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 // MARK: - ScheduleService
 
 class ScheduleService: ScheduleServiceProtocol {
+
     private var provider = MoyaProvider<ScheduleAPI>()
     
     private var memberSeq: Int {
@@ -80,8 +82,14 @@ class ScheduleService: ScheduleServiceProtocol {
         }
     }
     
-    func getDDaySchedule(completion: @escaping (Result<GenericResponse<DDayScheduleResponse>, Error>) -> Void) {
+    func getDDaySchedule(completion: @escaping (Result<GenericResponse<[DDayScheduleResponse]>, Error>) -> Void) {
         provider.request(.getDDaySchedule(memberSeq: memberSeq)) { result in
+            APIResponseHandler.handleResponse(result, completion: completion)
+        }
+    }
+    
+    func getScheduleList(page: Int32, completion: @escaping (Result<Void, any Error>) -> Void) {
+        provider.request(.getScheduleList(memberSeq: memberSeq, page: page)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }

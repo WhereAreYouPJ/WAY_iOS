@@ -17,13 +17,41 @@ protocol AddFeedViewModelDelegate: AnyObject {
 }
 
 class AddFeedViewModel {
+    private let getScheduleListUseCase: GetScheduleListUseCase
+    
     private var schedules: [ScheduleList] = []
+    private var page: Int32 = 0
+    private var isLoading = false
+    
     private var groupedSchedules: [String: [ScheduleList]] = [:]
     var selectedScheduleSeq: Int?
     
-    weak var delegate: AddFeedViewModelDelegate?
+    var onSchedulesUpadated: (() -> Void)?
     
+    weak var delegate: AddFeedViewModelDelegate?
+    // MARK: - Lifecycle
+    init(getScheduleListUseCase: GetScheduleListUseCase) {
+        self.getScheduleListUseCase = getScheduleListUseCase
+    }
+    
+    // MARK: - Helpers
+
     func fetchSchedules() {
+        guard !isLoading else { return }
+        isLoading = true
+        
+        getScheduleListUseCase.execute(page: page) { result in
+            switch result {
+            case .success(let newSchedules):
+//                self.schedules.append(contentsOf: newSchedules)
+                self.page += 1
+                self.onSchedulesUpadated?()
+                // 여기에 성공했을때 일정 리스트들을 올리면 된다.
+            case .failure(let error):
+                print("\(error.localizedDescription)")
+            }
+        }
+        
         schedules = [
             ScheduleList(title: "한강공원", location: "여의도한강공원", startTime: "2024-09-23T02:09:19.849", scheduleSeq: 1, feedGet: false),
             ScheduleList(title: "독서모임", location: "교보문고 광화문점", startTime: "2024-09-23T10:00:00.000", scheduleSeq: 2, feedGet: true),
