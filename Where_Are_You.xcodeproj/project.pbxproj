@@ -160,6 +160,7 @@
 		99FBA5582C453C05002EEEC7 /* HomeFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5572C453C05002EEEC7 /* HomeFeedViewModel.swift */; };
 		99FDD0BD2C6DF72700B15026 /* MultipartFormDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */; };
 		99FDD0BF2C6DF99400B15026 /* ReadFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FDD0BE2C6DF99400B15026 /* ReadFeedUseCase.swift */; };
+		D512EC572CA6E56C001AC965 /* GetScheduleByDateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512EC562CA6E56C001AC965 /* GetScheduleByDateResponse.swift */; };
 		D51AC99C2C849AB400D0AD2E /* LocationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51AC99B2C849AB400D0AD2E /* LocationAPI.swift */; };
 		D51AC99F2C84A0AD00D0AD2E /* FavLocationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51AC99E2C84A0AD00D0AD2E /* FavLocationResponse.swift */; };
 		D53620912C8AE1010017B279 /* SearchLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53620902C8AE1010017B279 /* SearchLocationViewModel.swift */; };
@@ -181,12 +182,12 @@
 		D592D8EF2C7DE3B100736D93 /* SearchFriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */; };
 		D593CCC82C82318F00A862FF /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D593CCC72C82318F00A862FF /* ScheduleViewModel.swift */; };
 		D5B79A162C5B83CD004EDDF2 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		D5CCD96F2CB0217E008497AD /* DailyScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CCD96E2CB0217E008497AD /* DailyScheduleView.swift */; };
 		D5D24CDC2C70756D00EDADAF /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D24CDB2C70756D00EDADAF /* Config.swift */; };
 		D5D807ED2C85F60B008F7882 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D807EC2C85F60B008F7882 /* FriendsView.swift */; };
 		D5D807F22C860931008F7882 /* CommonFriensView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D807F12C860931008F7882 /* CommonFriensView.swift */; };
 		D5DCBF342C7435E2003F0246 /* SearchFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DCBF332C7435E2003F0246 /* SearchFriendsView.swift */; };
 		D5E3D7D82C63BF730041B28D /* CreateScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */; };
-		D5F2C5FD2C94904600F68823 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F2C5FC2C94904600F68823 /* ScheduleViewController.swift */; };
 		D79EFAD9E5409233E5338E46 /* Pods_Where_Are_You.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */; };
 /* End PBXBuildFile section */
 
@@ -374,6 +375,7 @@
 		99FDD0BE2C6DF99400B15026 /* ReadFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFeedUseCase.swift; sourceTree = "<group>"; };
 		A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5015275FE458D5F6450041 /* Pods-Where_Are_You.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You.release.xcconfig"; path = "Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You.release.xcconfig"; sourceTree = "<group>"; };
+		D512EC562CA6E56C001AC965 /* GetScheduleByDateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetScheduleByDateResponse.swift; sourceTree = "<group>"; };
 		D51AC99B2C849AB400D0AD2E /* LocationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAPI.swift; sourceTree = "<group>"; };
 		D51AC99E2C84A0AD00D0AD2E /* FavLocationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavLocationResponse.swift; sourceTree = "<group>"; };
 		D53078812C5D3C9D0041BBB7 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -395,12 +397,12 @@
 		D58F5A4F2C9332220048C23A /* GetMonthlyScheduleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMonthlyScheduleBody.swift; sourceTree = "<group>"; };
 		D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendsViewModel.swift; sourceTree = "<group>"; };
 		D593CCC72C82318F00A862FF /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
+		D5CCD96E2CB0217E008497AD /* DailyScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyScheduleView.swift; sourceTree = "<group>"; };
 		D5D24CDB2C70756D00EDADAF /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		D5D807EC2C85F60B008F7882 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		D5D807F12C860931008F7882 /* CommonFriensView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFriensView.swift; sourceTree = "<group>"; };
 		D5DCBF332C7435E2003F0246 /* SearchFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendsView.swift; sourceTree = "<group>"; };
 		D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleViewModel.swift; sourceTree = "<group>"; };
-		D5F2C5FC2C94904600F68823 /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScheduleViewController.swift; path = Where_Are_You/Data/Models/Requests/Schedule/ScheduleViewController.swift; sourceTree = SOURCE_ROOT; };
 		EF2914052EE4B6C83BE57C93 /* Pods-Where_Are_You_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -565,7 +567,6 @@
 		992F57D92C5B294F00219C6B /* Responses */ = {
 			isa = PBXGroup;
 			children = (
-				99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */,
 				D51AC99D2C84A08200D0AD2E /* Location */,
 				D585E2852C82F63500C16A14 /* Schedule */,
 				99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */,
@@ -916,7 +917,6 @@
 		99CC5E6A2C5211ED00A0509A /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				99CC5E6B2C52122500A0509A /* FriendFeed */,
 				99C1403D2C6496BC00A706B6 /* NoDataView.swift */,
 				99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */,
 				99D8FBAD2C3B64040062AF10 /* Home */,
@@ -1214,8 +1214,8 @@
 			isa = PBXGroup;
 			children = (
 				D585E2862C82F6C600C16A14 /* GetScheduleByMonthResponse.swift */,
-				D585E2862C82F6C600C16A14 /* MonthScheduleResponse.swift */,
 				99C6D29B2C903526009C0CF8 /* DDayScheduleResponse.swift */,
+				D512EC562CA6E56C001AC965 /* GetScheduleByDateResponse.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -1233,7 +1233,6 @@
 			isa = PBXGroup;
 			children = (
 				D5B79A122C5B838B004EDDF2 /* Views */,
-				D5B79A132C5B839C004EDDF2 /* ViewControllers */,
 				D5B79A142C5B83A4004EDDF2 /* ViewModels */,
 			);
 			path = Schedule;
@@ -1244,16 +1243,9 @@
 			children = (
 				D55DFC2E2C61021800EEEF51 /* ScheduleView.swift */,
 				D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */,
+				D5CCD96E2CB0217E008497AD /* DailyScheduleView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		D5B79A132C5B839C004EDDF2 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				D5F2C5FC2C94904600F68823 /* ScheduleViewController.swift */,
-			);
-			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		D5B79A142C5B83A4004EDDF2 /* ViewModels */ = {
@@ -1521,6 +1513,7 @@
 				D5D807F22C860931008F7882 /* CommonFriensView.swift in Sources */,
 				9910B84A2C71B621005F7EEE /* FriendsTableViewCell.swift in Sources */,
 				9910B8492C71B617005F7EEE /* ResetPasswordUseCase.swift in Sources */,
+				D512EC572CA6E56C001AC965 /* GetScheduleByDateResponse.swift in Sources */,
 				9910B8482C71B5A4005F7EEE /* DDayViewController.swift in Sources */,
 				9910B8472C71B59E005F7EEE /* AccountSearchView.swift in Sources */,
 				99C140422C64A01A00A706B6 /* AddFeedView.swift in Sources */,
@@ -1626,7 +1619,6 @@
 				D53A515C2CA1260400025AC8 /* ErrorResponse.swift in Sources */,
 				99EC78CE2C11DBA5007C4415 /* PasswordResetViewController.swift in Sources */,
 				99B397832C0C3E9D00D7A109 /* AccountCheckView.swift in Sources */,
-				D5F2C5FD2C94904600F68823 /* ScheduleViewController.swift in Sources */,
 				99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */,
 				D55DFC312C61022900EEEF51 /* CreateScheduleView.swift in Sources */,
 				D58EC0692C633217001BC030 /* SearchLocationView.swift in Sources */,
@@ -1670,6 +1662,7 @@
 				99EC20AB2C0D9D9D0018904D /* SignUpViewModel.swift in Sources */,
 				99EC20AD2C0D9DB50018904D /* AcoountSearchViewModel.swift in Sources */,
 				D58F5A502C9332220048C23A /* GetMonthlyScheduleBody.swift in Sources */,
+				D5CCD96F2CB0217E008497AD /* DailyScheduleView.swift in Sources */,
 				99107EA32C6F3E42007D129F /* DDay.swift in Sources */,
 				99CA4F262C33B704007C027C /* ResetPasswordViewModel.swift in Sources */,
 				99D23FF42C6889BA00CFD4F0 /* FeedDetailViewModel.swift in Sources */,
