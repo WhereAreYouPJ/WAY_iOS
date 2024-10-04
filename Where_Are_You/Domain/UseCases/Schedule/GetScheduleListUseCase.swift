@@ -12,7 +12,6 @@ protocol GetScheduleListUseCase {
 
 }
 
-
 class GetScheduleListUseCaseImpl: GetScheduleListUseCase {
     
     private let scheduleRepository: ScheduleRepositoryProtocol

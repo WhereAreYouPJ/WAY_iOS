@@ -16,7 +16,6 @@ class AddFeedViewController: UIViewController {
     private var isDropdownVisible = false
     private var contentTextViewHeightConstraint: NSLayoutConstraint!
     
-    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -86,7 +85,14 @@ class AddFeedViewController: UIViewController {
         let iconName = isDropdownVisible ? "chevron.up" : "chevron.down"
         addFeedView.scheduleDropDown.dropDownButton.image = UIImage(systemName: iconName)
         
-        dropViewHeightConstraint.constant = isDropdownVisible ? LayoutAdapter.shared.scale(value: 356) : LayoutAdapter.shared.scale(value: 50) // 테이블 뷰 포함 높이 조정
+        dropViewHeightConstraint.constant = isDropdownVisible ? min(LayoutAdapter.shared.scale(value: 141), LayoutAdapter.shared.scale(value: 460)) : LayoutAdapter.shared.scale(value: 50) // 테이블 뷰 포함 높이 조정
+        
+        addFeedView.bringSubviewToFront(addFeedView.scheduleDropDown)
+
+        if isDropdownVisible {
+            viewModel.fetchSchedules()
+        }
+        
         addFeedView.scheduleDropDown.dropDownTableView.isHidden = !isDropdownVisible // 테이블 뷰 표시/숨김 처리
         
         UIView.animate(withDuration: 0.3) {
@@ -145,6 +151,10 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
         return viewModel.numberOfRows(in: section)
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return LayoutAdapter.shared.scale(value: 62)
+    }
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return viewModel.titleForHeader(in: section)
     }
@@ -159,7 +169,7 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let schedule = viewModel.schedule(for: indexPath)
         
-        if !schedule.feedGet {
+        if !schedule.feedExists {
             // 선택된 일정의 seq를 ViewModel에 전달
             viewModel.selectSchedule(at: indexPath)
             
