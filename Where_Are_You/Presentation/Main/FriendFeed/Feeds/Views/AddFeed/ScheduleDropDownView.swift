@@ -33,17 +33,17 @@ class ScheduleDropDown: UIView {
         return imageView
     }()
     
-//    let dropDownTableView: UITableView = {
-//        let tableView = UITableView()
-//        tableView.isHidden = true
-//        return tableView
-//    }()
-    // TODO: 추후 테이블뷰로 변경
-    let dropDownTableView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-        return view
+    let dropDownTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.isHidden = true
+        return tableView
     }()
+    
+//    let dropDownTableView: UIView = {
+//        let view = UIView()
+//        view.backgroundColor = .black
+//        return view
+//    }()
     
     // MARK: - Lifecycle
 

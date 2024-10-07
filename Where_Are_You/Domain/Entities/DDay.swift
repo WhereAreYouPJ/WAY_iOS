@@ -8,14 +8,6 @@
 import Foundation
 
 struct DDay {
-    let date: Date
+    let date: String
     let title: String
-    
-    var dDay: Int {
-        let calendar = Calendar.current
-        let startOfToday = calendar.startOfDay(for: Date())
-        let startOfEventDay = calendar.startOfDay(for: date)
-        let components = calendar.dateComponents([.day], from: startOfToday, to: startOfEventDay)
-        return components.day ?? 0
-    }
 }

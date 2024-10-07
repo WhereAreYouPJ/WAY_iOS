@@ -8,8 +8,8 @@
 import UIKit
 
 protocol FeedRepositoryProtocol {
-    func createFeed(request: SaveFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void)
-    func updateFeed(request: ModifyFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void)
+    func postFeed(request: SaveFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void)
+    func putFeed(request: ModifyFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class FeedRepository: FeedRepositoryProtocol {
@@ -19,11 +19,11 @@ class FeedRepository: FeedRepositoryProtocol {
         self.feedService = feedService
     }
     
-    func createFeed(request: SaveFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void) {
-        feedService.createFeed(request: request, images: images, completion: completion)
+    func postFeed(request: SaveFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void) {
+        feedService.postFeed(request: request, images: images, completion: completion)
     }
     
-    func updateFeed(request: ModifyFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void) {
-        feedService.updateFeed(request: request, images: images, completion: completion)
+    func putFeed(request: ModifyFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void) {
+        feedService.putFeed(request: request, images: images, completion: completion)
     }
 }

@@ -27,7 +27,7 @@ class LoginViewController: UIViewController {
     }
     
     // MARK: - Helpers
-    func buttonAction() {
+    private func buttonAction() {
         loginView.kakaoLogin.addTarget(self, action: #selector(kakaoLoginTapped), for: .touchUpInside)
         loginView.appleLogin.addTarget(self, action: #selector(appleLoginTapped), for: .touchUpInside)
         loginView.accountLogin.addTarget(self, action: #selector(accountLoginTapped), for: .touchUpInside)

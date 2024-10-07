@@ -17,6 +17,7 @@ enum ScheduleAPI {
     case getMonthlySchedule(yearMonth: String, memberSeq: Int)
     case getDailySchedule(date: String, memberSeq: Int)
     case getDDaySchedule(memberSeq: Int)
+    case getScheduleList(memberSeq: Int, page: Int32)
 }
 
 extension ScheduleAPI: TargetType {
@@ -41,7 +42,9 @@ extension ScheduleAPI: TargetType {
         case .getDailySchedule:
             return "/schedule/date"
         case .getDDaySchedule:
-            return "/schedule/dday-schedule"
+            return "/schedule/dday"
+        case .getScheduleList:
+            return "/schedule/list"
         }
     }
     
@@ -76,6 +79,8 @@ extension ScheduleAPI: TargetType {
             return .requestParameters(parameters: ["date": date, "memberSeq": memberSeq], encoding: URLEncoding.queryString)
         case .getDDaySchedule(let memberSeq):
             return .requestParameters(parameters: ["memberSeq": memberSeq], encoding: URLEncoding.queryString)
+        case .getScheduleList(let memberSeq, let page):
+            return .requestParameters(parameters: ["memberSeq": memberSeq, "page": page], encoding: URLEncoding.queryString)
         }
     }
     

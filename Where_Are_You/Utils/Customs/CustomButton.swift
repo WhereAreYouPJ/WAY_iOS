@@ -36,7 +36,7 @@ class CustomOptionButtonView: UIView {
     
     // MARK: - Setup Methods
     
-    private func createButton(title: String, image: UIImage? = nil) -> UIButton {
+    private func createButton(title: String, image: UIImage? = nil) {
         let label = UILabel()
         label.text = title
         label.textColor = .white
@@ -58,7 +58,6 @@ class CustomOptionButtonView: UIView {
                 make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 13))
             }
         }
-        return button
     }
 }
 
