@@ -12,6 +12,7 @@ class ScheduleViewModel: ObservableObject {
     @Published var month: Date = Date()
     @Published var clickedCurrentMonthDates: Date?
     @Published var monthlySchedules: [Schedule] = []
+    @Published var dailySchedules: [Schedule] = []
     
     let provider = MoyaProvider<ScheduleAPI>()
     private var memberSeq = UserDefaultsManager.shared.getMemberSeq()
@@ -20,7 +21,7 @@ class ScheduleViewModel: ObservableObject {
     
     init() {
         dateFormatterS2D = DateFormatter()
-        dateFormatterS2D.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatterS2D.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         
         dateFormatterD2S = DateFormatter()
         dateFormatterD2S.dateFormat = "yyyy-MM"

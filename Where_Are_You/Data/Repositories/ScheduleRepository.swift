@@ -14,6 +14,8 @@ protocol ScheduleRepositoryProtocol {
     func deleteSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postEcceptSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     func getMonthlySchedule(yearMonth: String, completion: @escaping (Result<GenericResponse<[GetScheduleByMonthResponse]>, Error>) -> Void)
+    func getDailySchedule(date: String, memberSeq: Int, completion: @escaping (Result<GenericResponse<[GetScheduleByDateResponse]>, Error>) -> Void)
+    func getDDaySchedule(completion: @escaping (Result<GenericResponse<DDayScheduleResponse>, Error>) -> Void)
     func getDate(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     func getDDaySchedule(completion: @escaping (Result<GenericResponse<[DDayScheduleResponse]>, Error>) -> Void)
     func getScheduleList(page: Int32, completion: @escaping (Result<Void, Error>) -> Void)
@@ -50,8 +52,8 @@ class ScheduleRepository: ScheduleRepositoryProtocol {
         scheduleService.getMonthlySchedule(yearMonth: yearMonth, completion: completion)
     }
     
-    func getDate(request: CreateScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
-        scheduleService.getDate(request: request, completion: completion)
+    func getDailySchedule(date: String, memberSeq: Int, completion: @escaping (Result<GenericResponse<[GetScheduleByDateResponse]>, Error>) -> Void) {
+        scheduleService.getDailySchedule(date: date, memberSeq: memberSeq, completion: completion)
     }
     
     func getDDaySchedule(completion: @escaping (Result<GenericResponse<[DDayScheduleResponse]>, any Error>) -> Void) {

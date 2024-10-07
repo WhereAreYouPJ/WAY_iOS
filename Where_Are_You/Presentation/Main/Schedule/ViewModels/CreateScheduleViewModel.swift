@@ -108,7 +108,7 @@ final class CreateScheduleViewModel: ObservableObject {
                         if let scheduleSeq = genericResponse.data["scheduleSeq"] {
                             DispatchQueue.main.async {
                                 self.isSuccess = true
-                                print("post 성공!")
+                                print("post 성공! start time: \(self.startTime.toString()), end time: \(self.endTime.toString())")
                                 print("Member Sequence: \(self.memberSeq), Schedule Sequence: \(scheduleSeq)")
                             }
                         } else {
