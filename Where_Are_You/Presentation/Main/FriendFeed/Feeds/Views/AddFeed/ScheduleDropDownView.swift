@@ -36,11 +36,8 @@ class ScheduleDropDown: UIView {
     let dropDownTableView: UITableView = {
         let tableView = UITableView()
         tableView.isHidden = true
-        tableView.backgroundColor = .white
         return tableView
     }()
-    
-
     
     // MARK: - Lifecycle
 

@@ -85,13 +85,16 @@ class AddFeedViewController: UIViewController {
         let iconName = isDropdownVisible ? "chevron.up" : "chevron.down"
         addFeedView.scheduleDropDown.dropDownButton.image = UIImage(systemName: iconName)
         
-        dropViewHeightConstraint.constant = isDropdownVisible ? min(LayoutAdapter.shared.scale(value: 141), LayoutAdapter.shared.scale(value: 460)) : LayoutAdapter.shared.scale(value: 50) // 테이블 뷰 포함 높이 조정
+        dropViewHeightConstraint.constant = isDropdownVisible ? min(LayoutAdapter.shared.scale(value: 150), LayoutAdapter.shared.scale(value: 460)) : LayoutAdapter.shared.scale(value: 50) // 테이블 뷰 포함 높이 조정
         
-        addFeedView.bringSubviewToFront(addFeedView.scheduleDropDown)
-
+        
+        
         if isDropdownVisible {
+            addFeedView.scheduleDropDown.dropDownTableView.layer.zPosition = 1
             viewModel.fetchSchedules()
         }
+        addFeedView.setNeedsLayout()
+            addFeedView.layoutIfNeeded()
         
         addFeedView.scheduleDropDown.dropDownTableView.isHidden = !isDropdownVisible // 테이블 뷰 표시/숨김 처리
         
