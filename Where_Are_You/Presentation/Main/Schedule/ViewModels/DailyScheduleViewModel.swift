@@ -11,15 +11,19 @@ import SwiftUICore
 
 class DailyScheduleViewModel: ObservableObject {
     @Published var schedules: [Schedule] = []
+    @Published var isLoading = false
+    @Published var errorMessage: String?
     
+    private let service: ScheduleServiceProtocol
     private let provider = MoyaProvider<ScheduleAPI>()
     private var memberSeq = UserDefaultsManager.shared.getMemberSeq()
     let date: Date
     private let dateFormatterS2D: DateFormatter
     private let dateFormatterD2S: DateFormatter
     
-    init(date: Date) {
+    init(date: Date, service: ScheduleServiceProtocol) {
         self.date = date
+        self.service = service
         
         dateFormatterS2D = DateFormatter()
         dateFormatterS2D.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
@@ -73,13 +77,77 @@ class DailyScheduleViewModel: ObservableObject {
     }
     
     func deleteSchedule(_ schedule: Schedule) {
-        schedules.removeAll { $0.scheduleSeq == schedule.scheduleSeq }
-        // TODO: Implement API call to delete schedule from backend
+        isLoading = true
+        
+        let deleteRequest = DeleteScheduleBody(scheduleSeq: schedule.scheduleSeq, memberSeq: memberSeq)
+        let isCreator = !(schedule.invitedMember?.contains(where: { $0.memberSeq == memberSeq }) ?? false)
+        
+        let deleteMethod = isCreator ? service.deleteScheduleByCreator : service.deleteScheduleByInvitee
+        
+        deleteMethod(deleteRequest) { [weak self] result in
+            DispatchQueue.main.async {
+                self?.isLoading = false
+                switch result {
+                case .success:
+                    print("Schedule successfully deleted")
+                    self?.getDailySchedule()
+                case .failure(let error):
+                    self?.errorMessage = error.localizedDescription
+                    print("Failed to delete schedule: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    func isEditableSchedule(_ schedule: Schedule) -> Bool {
+        return false
+    }
+    
+    func isOneDaySchedule(_ schedule: Schedule) -> Bool {
+        let startDate = dateFormatterD2S.string(from: schedule.startTime)
+        let endDate = dateFormatterD2S.string(from: schedule.endTime)
+        return startDate == endDate
+    }
+    
+    func getScheduleDate(_ schedule: Schedule) -> String? {
+        let startDate = formatDate(schedule.startTime)
+        let endDate = formatDate(schedule.endTime)
+        let startTime = formatTime(schedule.startTime)
+        let endTime = formatTime(schedule.endTime)
+        
+        if !(schedule.isAllday ?? true) {
+            if startDate == endDate { /// 하루 일정
+                if startTime == endTime {
+                    return startTime
+                } else {
+                    return "\(startTime) - \(endTime)"
+                }
+            } else { /// 이틀 이상 일정
+                return "\(startDate) \(startTime) - \(endDate) \(endTime)"
+            }
+        } else { /// 하루종일 일정
+            return nil
+        }
     }
     
     func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "M월 d일 a h시"
+        formatter.dateFormat = "M월 d일"
+        
+        return formatter.string(from: date)
+    }
+    
+    func formatTime(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        let calendar = Calendar.current
+        let minute = calendar.component(.minute, from: date)
+        
+        if minute == 0 {
+            formatter.dateFormat = "a h시"
+        } else {
+            formatter.dateFormat = "a h시 m분"
+        }
+        
         return formatter.string(from: date)
     }
     

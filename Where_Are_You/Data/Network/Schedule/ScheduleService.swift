@@ -13,13 +13,12 @@ import Moya
 protocol ScheduleServiceProtocol {
     func postSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     func getSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
-    func putSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
-    func deleteSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func putSchedule(request: PutScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func deleteScheduleByInvitee(request: DeleteScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func deleteScheduleByCreator(request: DeleteScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postEcceptSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     func getMonthlySchedule(yearMonth: String, completion: @escaping (Result<GenericResponse<[GetScheduleByMonthResponse]>, Error>) -> Void)
     func getDailySchedule(date: String, memberSeq: Int, completion: @escaping (Result<GenericResponse<[GetScheduleByDateResponse]>, Error>) -> Void)
-    func getDDaySchedule(completion: @escaping (Result<GenericResponse<DDayScheduleResponse>, Error>) -> Void)
-    func getDate(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     func getDDaySchedule(completion: @escaping (Result<GenericResponse<[DDayScheduleResponse]>, Error>) -> Void)
     func getScheduleList(page: Int32, completion: @escaping (Result<Void, Error>) -> Void)
 }
@@ -54,14 +53,20 @@ class ScheduleService: ScheduleServiceProtocol {
         }
     }
     
-    func putSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func putSchedule(request: PutScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
         provider.request(.putSchedule(request: request)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
-    func deleteSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
-        provider.request(.deleteSchedule(request: request)) { result in
+    func deleteScheduleByInvitee(request: DeleteScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+        provider.request(.deleteScheduleByInvitee(request: request)) { result in
+            APIResponseHandler.handleResponse(result, completion: completion)
+        }
+    }
+    
+    func deleteScheduleByCreator(request: DeleteScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+        provider.request(.deleteScheduleByCreator(request: request)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }

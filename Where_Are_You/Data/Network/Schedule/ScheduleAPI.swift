@@ -11,8 +11,9 @@ import Moya
 enum ScheduleAPI {
     case postSchedule(request: CreateScheduleBody)
     case getSchedule(request: CreateScheduleBody)
-    case putSchedule(request: CreateScheduleBody)
-    case deleteSchedule(request: CreateScheduleBody)
+    case putSchedule(request: PutScheduleBody)
+    case deleteScheduleByInvitee(request: DeleteScheduleBody)
+    case deleteScheduleByCreator(request: DeleteScheduleBody)
     case postEcceptSchedule(request: CreateScheduleBody)
     case getMonthlySchedule(yearMonth: String, memberSeq: Int)
     case getDailySchedule(date: String, memberSeq: Int)
@@ -33,8 +34,10 @@ extension ScheduleAPI: TargetType {
             return "/schedule"
         case .putSchedule:
             return "/schedule"
-        case .deleteSchedule:
-            return "/schedule"
+        case .deleteScheduleByInvitee:
+            return "/schedule/invited"
+        case .deleteScheduleByCreator:
+            return "/schedule/creator"
         case .postEcceptSchedule:
             return "/schedule/accept-schedule"
         case .getMonthlySchedule:
@@ -52,11 +55,11 @@ extension ScheduleAPI: TargetType {
         switch self {
         case .postSchedule, .postEcceptSchedule:
             return .post
-        case .getSchedule, .getMonthlySchedule, .getDailySchedule, .getDDaySchedule:
+        case .getSchedule, .getMonthlySchedule, .getDailySchedule, .getDDaySchedule, .getScheduleList:
             return .get
         case .putSchedule:
             return .put
-        case .deleteSchedule:
+        case .deleteScheduleByInvitee, .deleteScheduleByCreator:
             return .delete
         }
     }
@@ -65,13 +68,10 @@ extension ScheduleAPI: TargetType {
         switch self {
         case .postSchedule(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .getSchedule(request: let request):
-            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .putSchedule(request: let request):
-            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .deleteSchedule(request: let request):
-            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .postEcceptSchedule(request: let request):
+            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+            
+        case .getSchedule(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .getMonthlySchedule(let yearMonth, let memberSeq):
             return .requestParameters(parameters: ["yearMonth": yearMonth, "memberSeq": memberSeq], encoding: URLEncoding.queryString)
@@ -81,6 +81,14 @@ extension ScheduleAPI: TargetType {
             return .requestParameters(parameters: ["memberSeq": memberSeq], encoding: URLEncoding.queryString)
         case .getScheduleList(let memberSeq, let page):
             return .requestParameters(parameters: ["memberSeq": memberSeq, "page": page], encoding: URLEncoding.queryString)
+            
+        case .putSchedule(request: let request):
+            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+            
+        case .deleteScheduleByInvitee(request: let request):
+            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+        case .deleteScheduleByCreator(request: let request):
+            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         }
     }
     
