@@ -39,12 +39,6 @@ class ScheduleDropDown: UIView {
         return tableView
     }()
     
-//    let dropDownTableView: UIView = {
-//        let view = UIView()
-//        view.backgroundColor = .black
-//        return view
-//    }()
-    
     // MARK: - Lifecycle
 
     override init(frame: CGRect) {

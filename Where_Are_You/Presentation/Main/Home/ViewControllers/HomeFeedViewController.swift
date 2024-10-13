@@ -77,7 +77,8 @@ extension HomeFeedViewController: UICollectionViewDelegateFlowLayout {
 extension HomeFeedViewController: MoreFeedCollectionViewCellDelegate {
     func didTapMoreButton() {
         // 더보기 버튼 눌러서 전체 피드 뷰 컨트롤러로 이동
-        let feedsViewController = FeedsViewController()
-        navigationController?.pushViewController(feedsViewController, animated: true)
+        if let tabBarController = self.tabBarController {
+            tabBarController.selectedIndex = 2
+        }
     }
 }
