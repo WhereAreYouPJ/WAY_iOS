@@ -10,7 +10,7 @@ import UIKit
 class AddFeedViewController: UIViewController {
     // MARK: - Properties
     private var viewModel: AddFeedViewModel!
-
+    
     let addFeedView = AddFeedView()
     private var dropViewHeightConstraint: NSLayoutConstraint!
     private var isDropdownVisible = false
@@ -87,14 +87,12 @@ class AddFeedViewController: UIViewController {
         
         dropViewHeightConstraint.constant = isDropdownVisible ? min(LayoutAdapter.shared.scale(value: 150), LayoutAdapter.shared.scale(value: 460)) : LayoutAdapter.shared.scale(value: 50) // 테이블 뷰 포함 높이 조정
         
-        
-        
         if isDropdownVisible {
             addFeedView.scheduleDropDown.dropDownTableView.layer.zPosition = 1
             viewModel.fetchSchedules()
         }
         addFeedView.setNeedsLayout()
-            addFeedView.layoutIfNeeded()
+        addFeedView.layoutIfNeeded()
         
         addFeedView.scheduleDropDown.dropDownTableView.isHidden = !isDropdownVisible // 테이블 뷰 표시/숨김 처리
         
