@@ -20,7 +20,7 @@ protocol ScheduleServiceProtocol {
     func getMonthlySchedule(yearMonth: String, completion: @escaping (Result<GenericResponse<[GetScheduleByMonthResponse]>, Error>) -> Void)
     func getDailySchedule(date: String, memberSeq: Int, completion: @escaping (Result<GenericResponse<[GetScheduleByDateResponse]>, Error>) -> Void)
     func getDDaySchedule(completion: @escaping (Result<GenericResponse<[DDayScheduleResponse]>, Error>) -> Void)
-    func getScheduleList(page: Int32, completion: @escaping (Result<Void, Error>) -> Void)
+    func getScheduleList(page: Int32, completion: @escaping (Result<GenericResponse<GetScheduleListResponse>, Error>) -> Void)
 }
 
 // MARK: - ScheduleService
@@ -95,7 +95,7 @@ class ScheduleService: ScheduleServiceProtocol {
         }
     }
     
-    func getScheduleList(page: Int32, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func getScheduleList(page: Int32, completion: @escaping (Result<GenericResponse<GetScheduleListResponse>, any Error>) -> Void) {
         provider.request(.getScheduleList(memberSeq: memberSeq, page: page)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }

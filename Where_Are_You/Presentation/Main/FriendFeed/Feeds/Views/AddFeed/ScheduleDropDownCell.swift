@@ -56,9 +56,9 @@ class ScheduleDropDownCell: UITableViewCell {
         }
     }
     
-    func configure(with schedule: ScheduleList) {
+    func configure(with schedule: ScheduleContent) {
         titleLabel.text = schedule.title
         locationLabel.text = schedule.location
-        checkmarkImageView.isHidden = !schedule.feedGet
+        checkmarkImageView.isHidden = !schedule.feedExists
     }
 }

@@ -47,7 +47,6 @@ class DDayViewController: UIViewController {
     }
     
     // MARK: - Selectors
-    
     // NotificationCenter로부터 알림을 수신하여 콜렉션 뷰를 업데이트합니다.
     @objc private func scrollToDDayIndex(_ notification: Notification) {
         if let userInfo = notification.userInfo, let indexPath = userInfo["indexPath"] as? IndexPath {
@@ -70,15 +69,14 @@ extension DDayViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DDAyCell.identifier, for: indexPath) as? DDAyCell else {
-            fatalError("Unable to dequeue DDayCell")
-        }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DDAyCell.identifier, for: indexPath) as? DDAyCell else { fatalError("Unable to dequeue DDayCell") }
         let dDays = viewModel.getDDays()
         let correctedIndex = (indexPath.item + dDays.count) % (dDays.count + 2)
         if dDays.isEmpty {
             cell.configure(with: nil)
         } else {
             cell.configure(with: dDays[correctedIndex % dDays.count])
+            dDayView.layer.borderColor = UIColor.brandColor.cgColor
         }
         return cell
     }
