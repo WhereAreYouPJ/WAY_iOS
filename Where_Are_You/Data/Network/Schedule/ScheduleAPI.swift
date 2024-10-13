@@ -15,7 +15,7 @@ enum ScheduleAPI {
     case deleteSchedule(request: CreateScheduleBody)
     case postEcceptSchedule(request: CreateScheduleBody)
     case getMonthlySchedule(yearMonth: String, memberSeq: Int)
-    case getDate(request: CreateScheduleBody)
+    case getDailySchedule(date: String, memberSeq: Int)
     case getDDaySchedule(memberSeq: Int)
     case getScheduleList(memberSeq: Int, page: Int32)
 }
@@ -39,7 +39,7 @@ extension ScheduleAPI: TargetType {
             return "/schedule/accept-schedule"
         case .getMonthlySchedule:
             return "/schedule/month"
-        case .getDate:
+        case .getDailySchedule:
             return "/schedule/date"
         case .getDDaySchedule:
             return "/schedule/dday"
@@ -52,7 +52,7 @@ extension ScheduleAPI: TargetType {
         switch self {
         case .postSchedule, .postEcceptSchedule:
             return .post
-        case .getSchedule, .getMonthlySchedule, .getDate, .getDDaySchedule, .getScheduleList:
+        case .getSchedule, .getMonthlySchedule, .getDailySchedule, .getDDaySchedule:
             return .get
         case .putSchedule:
             return .put
@@ -75,8 +75,8 @@ extension ScheduleAPI: TargetType {
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .getMonthlySchedule(let yearMonth, let memberSeq):
             return .requestParameters(parameters: ["yearMonth": yearMonth, "memberSeq": memberSeq], encoding: URLEncoding.queryString)
-        case .getDate(request: let request):
-            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+        case .getDailySchedule(let date, let memberSeq):
+            return .requestParameters(parameters: ["date": date, "memberSeq": memberSeq], encoding: URLEncoding.queryString)
         case .getDDaySchedule(let memberSeq):
             return .requestParameters(parameters: ["memberSeq": memberSeq], encoding: URLEncoding.queryString)
         case .getScheduleList(let memberSeq, let page):
