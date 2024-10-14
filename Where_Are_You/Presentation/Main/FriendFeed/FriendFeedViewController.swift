@@ -65,6 +65,8 @@ class FriendFeedViewController: UIViewController {
         return stackView
     }()
     
+    let plusOptionButton = CustomOptionButtonView(title: "새 피드 작성")
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,6 +81,7 @@ class FriendFeedViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = .white
         
+        let feedsView = FeedsView()
         // Add FeedsViewController
         addChild(feedsViewController)
         view.addSubview(feedsViewController.view)
@@ -97,6 +100,8 @@ class FriendFeedViewController: UIViewController {
         // Setup navigation items
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonStack)
+        
+        plusOptionButton.isHidden = true
     }
     
     private func setupConstraints() {
@@ -116,6 +121,17 @@ class FriendFeedViewController: UIViewController {
         addButton.snp.makeConstraints { make in
             make.width.height.equalTo(LayoutAdapter.shared.scale(value: 34))
         }
+        
+        if segmentControl.selectedSegmentIndex == 0 {
+            view.addSubview(plusOptionButton)
+
+            plusOptionButton.snp.makeConstraints { make in
+                make.top.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 9))
+                make.trailing.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 15))
+                make.width.equalTo(160)
+                make.height.equalTo(38)
+            }
+        }
     }
     
     private func setupActions() {
@@ -123,6 +139,9 @@ class FriendFeedViewController: UIViewController {
         searchFriendButton.addTarget(self, action: #selector(handleSearch), for: .touchUpInside)
         notificationButton.addTarget(self, action: #selector(handleNotification), for: .touchUpInside)
         addButton.addTarget(self, action: #selector(handleAdd), for: .touchUpInside)
+        plusOptionButton.button.addTarget(self, action: #selector(plusOptionButtonTapped), for: .touchUpInside)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
+        view.addGestureRecognizer(tapGesture)
     }
 
     private func setupNavigationBar() {
@@ -163,12 +182,23 @@ class FriendFeedViewController: UIViewController {
     
     @objc private func handleAdd() {
         if segmentControl.selectedSegmentIndex == 0 {
-            let controller = AddFeedViewController()
-            let nav = UINavigationController(rootViewController: controller)
-            nav.modalPresentationStyle = .fullScreen
-            present(nav, animated: true, completion: nil)
+            plusOptionButton.isHidden = false
         } else {
-            print("친구 추가 버튼 눌림")
+            print("친구창에서 +버튼 눌렀을때 액션")
+        }
+    }
+    
+    @objc func plusOptionButtonTapped() {
+        let controller = AddFeedViewController()
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
+    }
+    
+    @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {
+        let location = sender.location(in: self.view)
+        if !plusOptionButton.frame.contains(location) && !plusOptionButton.frame.contains(location) {
+            plusOptionButton.isHidden = true
         }
     }
 }

@@ -12,13 +12,13 @@ protocol LocationRepositoryProtocol {
 }
 
 class LocationRepository: LocationRepositoryProtocol {
-    private let LocationService: LocationRepositoryProtocol
+    private let locationService: LocationRepositoryProtocol
     
-    init(LocationService: LocationRepositoryProtocol) {
-        self.LocationService = LocationService
+    init(locationService: LocationRepositoryProtocol) {
+        self.locationService = locationService
     }
     
     func getLocation(completion: @escaping (Result<GenericResponse<GetFavLocationResponse>, any Error>) -> Void) {
-        LocationService.getLocation(completion: completion)
+        locationService.getLocation(completion: completion)
     }
 }
