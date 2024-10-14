@@ -17,17 +17,30 @@ class LocationBookmarkViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViewModel()
         updateViewVisibility()
-        viewModel = LocationBookmarkViewModel()
         setupBindings()
         setupNavigationBar()
+        
+        viewModel.getLocationBookMark()
     }
     
     // MARK: - Helpers
+    
+    private func setupViewModel() {
+        let locationService = LocationService()
+        let locationRepository = LocationRepository(locationService: locationService)
+        viewModel = LocationBookmarkViewModel(getLocationUseCase: GetLocationUseCaseImpl(locationRepository: locationRepository))
+    }
+    
     private func updateViewVisibility() {
         // FeedsViewController보고 참고하기
         // 위치 즐겨찾기가 없는경우 noDataView가 뜨게 하고
         // 정보가 있는경우 bookMark가 뜨게 하면됨.
+        noDataView.descriptionLabel.text = "아직은 즐겨찾기한 위치가 없어요. \n목록을 생성하여 좀 더 편리하게 \n일정 추가 시 위치를 선택할 수 있어요."
+        noDataView.borderView.snp.makeConstraints { make in
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 150))
+        }
         view = noDataView
     }
     
@@ -40,7 +53,17 @@ class LocationBookmarkViewController: UIViewController {
     }
     
     private func setupBindings() {
+        viewModel.onGetLocationBookMarkSuccess = { [weak self] data in
+            DispatchQueue.main.async {
+                // 데이터 있을때 불러오는거
+            }
+        }
         
+        viewModel.onGetLocationBookMarkFailure = { [weak self]  in
+            DispatchQueue.main.async {
+                // 데이터 없는 상태
+            }
+        }
     }
     
     // MARK: - Selectors

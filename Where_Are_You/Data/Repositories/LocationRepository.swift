@@ -12,9 +12,9 @@ protocol LocationRepositoryProtocol {
 }
 
 class LocationRepository: LocationRepositoryProtocol {
-    private let locationService: LocationRepositoryProtocol
+    private let locationService: LocationServiceProtocol
     
-    init(locationService: LocationRepositoryProtocol) {
+    init(locationService: LocationServiceProtocol) {
         self.locationService = locationService
     }
     

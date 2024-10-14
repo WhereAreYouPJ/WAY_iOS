@@ -11,7 +11,7 @@ import Moya
 // MARK: - LocationServiceProtocol
 
 protocol LocationServiceProtocol {
-    func getLocation(memberSeq: Int, completion: @escaping (Result<GenericResponse<GetFavLocationResponse>, Error>) -> Void)
+    func getLocation(completion: @escaping (Result<GenericResponse<GetFavLocationResponse>, Error>) -> Void)
 }
 
 class LocationService: LocationServiceProtocol {
@@ -29,7 +29,7 @@ class LocationService: LocationServiceProtocol {
     }
 
     // MARK: - APIService
-    func getLocation(memberSeq: Int, completion: @escaping (Result<GenericResponse<GetFavLocationResponse>, any Error>) -> Void) {
+    func getLocation(completion: @escaping (Result<GenericResponse<GetFavLocationResponse>, any Error>) -> Void) {
         provider.request(.getLocation(memberSeq: memberSeq)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
