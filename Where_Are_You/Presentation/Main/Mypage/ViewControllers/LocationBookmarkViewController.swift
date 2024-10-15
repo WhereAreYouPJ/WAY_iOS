@@ -13,9 +13,9 @@ class LocationBookmarkViewController: UIViewController {
     private let noDataView: NoDataView = {
         let view = NoDataView()
         view.descriptionLabel.text = "아직은 즐겨찾기한 위치가 없어요. \n목록을 생성하여 좀 더 편리하게 \n일정 추가 시 위치를 선택할 수 있어요."
-        view.borderView.snp.makeConstraints { make in
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 150))
-        }
+        //        view.borderView.snp.makeConstraints { make in
+        //            make.height.equalTo(LayoutAdapter.shared.scale(value: 150))
+        //        }
         return view
     }()
     
@@ -24,10 +24,17 @@ class LocationBookmarkViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.addSubview(locationBookmarkView)
+        view.addSubview(noDataView)
+        
         setupTableView()
         setupViewModel()
         setupBindings()
         setupNavigationBar()
+        
+        locationBookmarkView.isHidden = true
+        noDataView.isHidden = true
         
         viewModel.getLocationBookMark()
     }
@@ -58,23 +65,38 @@ class LocationBookmarkViewController: UIViewController {
     private func setupBindings() {
         viewModel.onGetLocationBookMark = { [weak self] in
             DispatchQueue.main.async {
-                // 데이터 있을때 불러오는거
-                self?.view = self?.locationBookmarkView
-                self?.locationBookmarkView.bookMarkTableView.reloadData()
+                self?.showBookmarkView()
             }
         }
         
         viewModel.onEmptyLocation = { [weak self] in
             DispatchQueue.main.async {
-                self?.view = self?.noDataView
+                self?.showNoDataView()
             }
         }
     }
     
+    private func showBookmarkView() {
+        noDataView.isHidden = true
+        locationBookmarkView.isHidden = false
+        locationBookmarkView.bookMarkTableView.reloadData()
+        locationBookmarkView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    private func showNoDataView() {
+        noDataView.isHidden = false
+        locationBookmarkView.isHidden = true
+        noDataView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
     // MARK: - Selectors
-
+    
     @objc private func backButtonTapped() {
-        // 뒤로가기 버튼 눌림
+        navigationController?.popViewController(animated: true)
     }
     
     @objc private func plusButtonTapped() {
@@ -96,7 +118,7 @@ extension LocationBookmarkViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: LocationBookMarkCell.identifier, for: indexPath) as! LocationBookMarkCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: LocationBookMarkCell.identifier, for: indexPath) as? LocationBookMarkCell else { return UITableViewCell() }
         let location = viewModel.locations[indexPath.row]
         cell.configure(with: location)
         return cell

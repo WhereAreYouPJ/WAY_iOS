@@ -52,7 +52,6 @@ class NoDataView: UIView {
     
     private func setupConstraints() {
         borderView.snp.makeConstraints { make in
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 214))
             make.top.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 134))
             make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 22))
         }
@@ -65,6 +64,7 @@ class NoDataView: UIView {
         
         descriptionLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 50))
+            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 36))
             make.centerX.equalToSuperview()
         }
     }
