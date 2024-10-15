@@ -52,7 +52,7 @@ extension ScheduleAPI: TargetType {
         switch self {
         case .postSchedule, .postEcceptSchedule:
             return .post
-        case .getSchedule, .getMonthlySchedule, .getDailySchedule, .getDDaySchedule:
+        case .getSchedule, .getMonthlySchedule, .getDailySchedule, .getDDaySchedule, .getScheduleList:
             return .get
         case .putSchedule:
             return .put
