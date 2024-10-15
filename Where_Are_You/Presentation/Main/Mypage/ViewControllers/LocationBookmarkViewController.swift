@@ -10,15 +10,22 @@ import UIKit
 class LocationBookmarkViewController: UIViewController {
     
     private let locationBookmarkView = LocationBookmarkView()
-    private let noDataView = NoDataView()
+    private let noDataView: NoDataView = {
+        let view = NoDataView()
+        view.descriptionLabel.text = "아직은 즐겨찾기한 위치가 없어요. \n목록을 생성하여 좀 더 편리하게 \n일정 추가 시 위치를 선택할 수 있어요."
+        view.borderView.snp.makeConstraints { make in
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 150))
+        }
+        return view
+    }()
     
     var viewModel: LocationBookmarkViewModel!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupTableView()
         setupViewModel()
-        updateViewVisibility()
         setupBindings()
         setupNavigationBar()
         
@@ -27,21 +34,17 @@ class LocationBookmarkViewController: UIViewController {
     
     // MARK: - Helpers
     
+    private func setupTableView() {
+        locationBookmarkView.bookMarkTableView.delegate = self
+        locationBookmarkView.bookMarkTableView.dataSource = self
+        locationBookmarkView.bookMarkTableView.register(LocationBookMarkCell.self, forCellReuseIdentifier: LocationBookMarkCell.identifier)
+        locationBookmarkView.bookMarkTableView.isEditing = false // 기본 편집 모드 꺼짐
+    }
+    
     private func setupViewModel() {
         let locationService = LocationService()
         let locationRepository = LocationRepository(locationService: locationService)
         viewModel = LocationBookmarkViewModel(getLocationUseCase: GetLocationUseCaseImpl(locationRepository: locationRepository))
-    }
-    
-    private func updateViewVisibility() {
-        // FeedsViewController보고 참고하기
-        // 위치 즐겨찾기가 없는경우 noDataView가 뜨게 하고
-        // 정보가 있는경우 bookMark가 뜨게 하면됨.
-        noDataView.descriptionLabel.text = "아직은 즐겨찾기한 위치가 없어요. \n목록을 생성하여 좀 더 편리하게 \n일정 추가 시 위치를 선택할 수 있어요."
-        noDataView.borderView.snp.makeConstraints { make in
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 150))
-        }
-        view = noDataView
     }
     
     private func setupNavigationBar() {
@@ -53,15 +56,17 @@ class LocationBookmarkViewController: UIViewController {
     }
     
     private func setupBindings() {
-        viewModel.onGetLocationBookMarkSuccess = { [weak self] data in
+        viewModel.onGetLocationBookMark = { [weak self] in
             DispatchQueue.main.async {
                 // 데이터 있을때 불러오는거
+                self?.view = self?.locationBookmarkView
+                self?.locationBookmarkView.bookMarkTableView.reloadData()
             }
         }
         
-        viewModel.onGetLocationBookMarkFailure = { [weak self]  in
+        viewModel.onEmptyLocation = { [weak self] in
             DispatchQueue.main.async {
-                // 데이터 없는 상태
+                self?.view = self?.noDataView
             }
         }
     }
@@ -82,5 +87,18 @@ class LocationBookmarkViewController: UIViewController {
         locationBookmarkView.editingButton.isHidden = true
         locationBookmarkView.deleteButton.isHidden = false
         
+    }
+}
+
+extension LocationBookmarkViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.locations.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: LocationBookMarkCell.identifier, for: indexPath) as! LocationBookMarkCell
+        let location = viewModel.locations[indexPath.row]
+        cell.configure(with: location)
+        return cell
     }
 }
