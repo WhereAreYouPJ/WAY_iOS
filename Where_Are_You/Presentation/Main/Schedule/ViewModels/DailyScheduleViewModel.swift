@@ -76,29 +76,6 @@ class DailyScheduleViewModel: ObservableObject {
         }
     }
     
-    func deleteSchedule(_ schedule: Schedule) {
-        isLoading = true
-        
-        let deleteRequest = DeleteScheduleBody(scheduleSeq: schedule.scheduleSeq, memberSeq: memberSeq)
-        let isCreator = !(schedule.invitedMember?.contains(where: { $0.memberSeq == memberSeq }) ?? false)
-        
-        let deleteMethod = isCreator ? service.deleteScheduleByCreator : service.deleteScheduleByInvitee
-        
-        deleteMethod(deleteRequest) { [weak self] result in
-            DispatchQueue.main.async {
-                self?.isLoading = false
-                switch result {
-                case .success:
-                    print("Schedule successfully deleted")
-                    self?.getDailySchedule()
-                case .failure(let error):
-                    self?.errorMessage = error.localizedDescription
-                    print("Failed to delete schedule: \(error.localizedDescription)")
-                }
-            }
-        }
-    }
-    
     func isEditableSchedule(_ schedule: Schedule) -> Bool {
         return false
     }

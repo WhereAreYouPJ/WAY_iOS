@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CustomAlertSwiftUI: View {
     @Binding var isPresented: Bool
+    @Binding var showDailySchedule: Bool
     let title: String
     let message: String
     let cancelTitle: String
@@ -46,6 +47,7 @@ struct CustomAlertSwiftUI: View {
                     
                     Button(action: {
                         isPresented = false
+                        showDailySchedule = true
                     }) {
                         Text(cancelTitle)
                             .foregroundColor(.white)
@@ -70,11 +72,11 @@ struct CustomAlertSwiftUI: View {
 }
 
 extension View {
-    func customAlert(isPresented: Binding<Bool>, title: String, message: String, cancelTitle: String, actionTitle: String, action: @escaping () -> Void) -> some View {
+    func customAlert(isPresented: Binding<Bool>, showDailySchedule: Binding<Bool>, title: String, message: String, cancelTitle: String, actionTitle: String, action: @escaping () -> Void) -> some View {
         ZStack {
             self
             if isPresented.wrappedValue {
-                CustomAlertSwiftUI(isPresented: isPresented, title: title, message: message, cancelTitle: cancelTitle, actionTitle: actionTitle, action: action)
+                CustomAlertSwiftUI(isPresented: isPresented, showDailySchedule: showDailySchedule, title: title, message: message, cancelTitle: cancelTitle, actionTitle: actionTitle, action: action)
             }
         }
     }
@@ -82,7 +84,7 @@ extension View {
 
 // Preview
 #Preview {
-    CustomAlertSwiftUI(isPresented: .constant(true),
+    CustomAlertSwiftUI(isPresented: .constant(true), showDailySchedule: .constant(false),
                        title: "알림",
                        message: "이것은 커스텀 알림입니다.\n여러 줄 메시지도 가능합니다.",
                        cancelTitle: "취소",
