@@ -113,6 +113,7 @@ class MyPageViewController: UIViewController {
             moveToDetailController(controller: MyDetailManageViewcontroller(userName: userName, email: email))
         case 1:
             // Handle "위치 즐겨찾기"
+            moveToDetailController(controller: LocationBookmarkViewController())
             print("위치 즐겨찾기 tapped")
         case 2:
             // Handle "피드 책갈피"

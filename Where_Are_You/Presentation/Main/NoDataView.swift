@@ -10,7 +10,7 @@ import UIKit
 class NoDataView: UIView {
     // MARK: - Properties
 
-    private let borderView: UIView = {
+    let borderView: UIView = {
         let view = UIView()
         view.layer.borderWidth = 2
         view.layer.borderColor = UIColor.color221.cgColor
@@ -25,7 +25,7 @@ class NoDataView: UIView {
         return imageView
     }()
     
-    private let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: "오늘 하루 수고했던 일은 \n어떤 경험을 남기게 했나요? \n\n하루의 소중한 시간을 기록하고 \n오래 기억될 수 있도록 간직해보세요!", textColor: .color118, fontSize: 14)
+    let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: "오늘 하루 수고했던 일은 \n어떤 경험을 남기게 했나요? \n\n하루의 소중한 시간을 기록하고 \n오래 기억될 수 있도록 간직해보세요!", textColor: .color118, fontSize: 14)
     
     // MARK: - Lifecycle
     
@@ -52,7 +52,6 @@ class NoDataView: UIView {
     
     private func setupConstraints() {
         borderView.snp.makeConstraints { make in
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 214))
             make.top.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 134))
             make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 22))
         }
@@ -65,6 +64,7 @@ class NoDataView: UIView {
         
         descriptionLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 50))
+            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 36))
             make.centerX.equalToSuperview()
         }
     }
