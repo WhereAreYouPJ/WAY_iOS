@@ -81,6 +81,9 @@ class MyDetailManageViewcontroller: UIViewController {
             mydetailManageView.emailTextfield.textColor = .color153
             mydetailManageView.updateDetailButton.isHidden = false
             addButton.isHidden = true
+            mydetailManageView.updateDetailButton.snp.makeConstraints { make in
+                make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
+            }
         } else {
             mydetailManageView.userNameTextField.text = userName
             mydetailManageView.userNameTextField.textColor = .color102
@@ -126,6 +129,7 @@ class MyDetailManageViewcontroller: UIViewController {
     }
     
     @objc private func updateDetailButtonTapped() {
+        isEditingMode.toggle()
         guard let userName = mydetailManageView.userNameTextField.text else { return }
         viewModel.modifyUserName(userName: userName)
     }
@@ -146,7 +150,7 @@ class MyDetailManageViewcontroller: UIViewController {
     private func updateStatus(label: UILabel?, isAvailable: Bool, textField: UITextField?) {
         label?.isHidden = isAvailable
         textField?.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
-        mydetailManageView.updateDetailButton.isEnabled = isAvailable
+        mydetailManageView.updateDetailButton.isEnabled = !isAvailable
         mydetailManageView.updateDetailButton.backgroundColor = isAvailable ? .brandColor : .color171
     }
 }

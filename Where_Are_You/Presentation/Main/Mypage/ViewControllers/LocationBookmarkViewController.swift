@@ -13,10 +13,17 @@ class LocationBookmarkViewController: UIViewController {
     private let noDataView: NoDataView = {
         let view = NoDataView()
         view.descriptionLabel.text = "아직은 즐겨찾기한 위치가 없어요. \n목록을 생성하여 좀 더 편리하게 \n일정 추가 시 위치를 선택할 수 있어요."
-        //        view.borderView.snp.makeConstraints { make in
-        //            make.height.equalTo(LayoutAdapter.shared.scale(value: 150))
-        //        }
         return view
+    }()
+    
+    private let addButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "icon-plus"), for: .normal)
+        button.snp.makeConstraints { make in
+            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 34))
+        }
+        button.tintColor = .brandColor
+        return button
     }()
     
     var viewModel: LocationBookmarkViewModel!
@@ -25,16 +32,14 @@ class LocationBookmarkViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(locationBookmarkView)
-        view.addSubview(noDataView)
-        
+        setupActions()
         setupTableView()
         setupViewModel()
         setupBindings()
         setupNavigationBar()
         
-        locationBookmarkView.isHidden = true
-        noDataView.isHidden = true
+        locationBookmarkView.translatesAutoresizingMaskIntoConstraints = false
+        noDataView.translatesAutoresizingMaskIntoConstraints = false
         
         viewModel.getLocationBookMark()
     }
@@ -55,11 +60,8 @@ class LocationBookmarkViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        let rightButton =  UIBarButtonItem(image: UIImage(systemName: "icon-plus"),
-                                           style: .plain,
-                                           target: self,
-                                           action: #selector(plusButtonTapped))
-        Utilities.createNavigationBar(for: self, title: "위치 즐겨찾기", backButtonAction: #selector(backButtonTapped), rightButton: rightButton)
+        Utilities.createNavigationBar(for: self, title: "위치 즐겨찾기", backButtonAction: #selector(backButtonTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
     }
     
     private func setupBindings() {
@@ -77,20 +79,26 @@ class LocationBookmarkViewController: UIViewController {
     }
     
     private func showBookmarkView() {
-        noDataView.isHidden = true
-        locationBookmarkView.isHidden = false
-        locationBookmarkView.bookMarkTableView.reloadData()
+        noDataView.removeFromSuperview()
+        view.addSubview(locationBookmarkView)
         locationBookmarkView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        locationBookmarkView.bookMarkTableView.reloadData()
+    }
+    
+    private func showNoDataView() {
+        locationBookmarkView.removeFromSuperview()
+        view.addSubview(noDataView)
+        noDataView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
     
-    private func showNoDataView() {
-        noDataView.isHidden = false
-        locationBookmarkView.isHidden = true
-        noDataView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+    private func setupActions() {
+        locationBookmarkView.editingButton.button.addTarget(self, action: #selector(editingButtonTapped), for: .touchUpInside)
+        locationBookmarkView.deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        addButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Selectors
@@ -107,8 +115,12 @@ class LocationBookmarkViewController: UIViewController {
     @objc private func editingButtonTapped() {
         // 위치 삭제하기로 뷰 변경
         locationBookmarkView.editingButton.isHidden = true
+        addButton.isHidden = true
         locationBookmarkView.deleteButton.isHidden = false
-        
+    }
+    
+    @objc private func deleteButtonTapped() {
+        // 삭제하기 버튼 눌림
     }
 }
 
@@ -122,5 +134,20 @@ extension LocationBookmarkViewController: UITableViewDataSource, UITableViewDele
         let location = viewModel.locations[indexPath.row]
         cell.configure(with: location)
         return cell
+    }
+    
+    // 순서를 변경할 수 있는 메서드 추가
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        viewModel.moveLocation(from: sourceIndexPath.row, to: destinationIndexPath.row)
+    }
+    
+    // 편집 모드에서 삭제 가능 여부 설정 (순서 변경만 허용할 때는 false로 설정)
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    // 특정 행을 드래그해서 이동할 수 있게 허용
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
 }
