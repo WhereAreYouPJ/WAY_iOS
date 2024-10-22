@@ -11,7 +11,6 @@ class LocationBookmarkView: UIView {
     // MARK: - Properties
     let editingButton = CustomOptionButtonView(title: "위치 삭제")
     let bookMarkTableView = UITableView()
-    let deleteButton = BottomButtonView(title: "삭제하기")
     
     lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [bookMarkTableView, deleteButton])
@@ -19,6 +18,8 @@ class LocationBookmarkView: UIView {
         stackView.spacing = LayoutAdapter.shared.scale(value: 24)
         return stackView
     }()
+    
+    let deleteButton = CustomButton(title: "삭제하기", backgroundColor: .color171, titleColor: .white, font: UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 18)))
 
     // MARK: - Lifecycle
     override init(frame: CGRect) {
@@ -37,8 +38,7 @@ class LocationBookmarkView: UIView {
     private func setupUI() {
         editingButton.isHidden = true
         deleteButton.isHidden = true
-        deleteButton.backgroundColor = .color171
-        deleteButton.isUserInteractionEnabled = false
+        deleteButton.isEnabled = false
     }
     
     private func configureViewComponents() {
@@ -55,8 +55,13 @@ class LocationBookmarkView: UIView {
         }
         
         stackView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 20))
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 20))
+            make.bottom.equalTo(safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 20))
             make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
+        }
+        
+        deleteButton.snp.makeConstraints { make in
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
         }
     }
 }

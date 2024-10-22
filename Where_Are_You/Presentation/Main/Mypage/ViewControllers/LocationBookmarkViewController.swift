@@ -16,6 +16,16 @@ class LocationBookmarkViewController: UIViewController {
         return view
     }()
     
+    private let addButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "icon-plus"), for: .normal)
+        button.snp.makeConstraints { make in
+            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 34))
+        }
+        button.tintColor = .brandColor
+        return button
+    }()
+    
     var viewModel: LocationBookmarkViewModel!
     
     // MARK: - Lifecycle
@@ -50,11 +60,8 @@ class LocationBookmarkViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        let rightButton =  UIBarButtonItem(image: UIImage(named: "icon-plus"),
-                                           style: .plain,
-                                           target: self,
-                                           action: #selector(plusButtonTapped))
-        Utilities.createNavigationBar(for: self, title: "위치 즐겨찾기", backButtonAction: #selector(backButtonTapped), rightButton: rightButton)
+        Utilities.createNavigationBar(for: self, title: "위치 즐겨찾기", backButtonAction: #selector(backButtonTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
     }
     
     private func setupBindings() {
@@ -90,7 +97,8 @@ class LocationBookmarkViewController: UIViewController {
     
     private func setupActions() {
         locationBookmarkView.editingButton.button.addTarget(self, action: #selector(editingButtonTapped), for: .touchUpInside)
-        locationBookmarkView.deleteButton.button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        locationBookmarkView.deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        addButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Selectors
@@ -107,6 +115,7 @@ class LocationBookmarkViewController: UIViewController {
     @objc private func editingButtonTapped() {
         // 위치 삭제하기로 뷰 변경
         locationBookmarkView.editingButton.isHidden = true
+        addButton.isHidden = true
         locationBookmarkView.deleteButton.isHidden = false
     }
     

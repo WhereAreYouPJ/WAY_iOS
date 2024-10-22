@@ -85,7 +85,7 @@ class MyDetailManageView: UIView {
         
         updateDetailButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
-            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+            make.bottom.equalTo(safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 24))
             make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
         }
     }
