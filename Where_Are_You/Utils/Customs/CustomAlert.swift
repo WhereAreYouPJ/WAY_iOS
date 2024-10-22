@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import SwiftUI
 
 class CustomAlert: UIView {
     // MARK: - Properties
@@ -132,6 +133,14 @@ class CustomAlert: UIView {
         UIView.animate(withDuration: 0.3) {
             self.backgroundView.alpha = 1
             self.alpha = 1
+        }
+    }
+}
+
+extension CustomAlert {
+    func update(isPresented: Binding<Bool>) {
+        if !isPresented.wrappedValue {
+            dismissAlert()
         }
     }
 }

@@ -16,6 +16,7 @@ struct ScheduleByDate: Codable {
     let endTime: String
     let group: String?
     let allDay: Bool?
+    let creator: Int
 }
 
 typealias GetScheduleByDateResponse = [ScheduleByDate]

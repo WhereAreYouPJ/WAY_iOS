@@ -11,4 +11,5 @@ struct LoginBody: ParameterConvertible {
     let email: String
     let password: String
     let fcmToken: String
+    let loginType: String
 }

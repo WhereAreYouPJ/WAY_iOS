@@ -13,13 +13,17 @@ class ScheduleViewModel: ObservableObject {
     @Published var clickedCurrentMonthDates: Date?
     @Published var monthlySchedules: [Schedule] = []
     @Published var dailySchedules: [Schedule] = []
+    @Published var isLoading = false
     
     let provider = MoyaProvider<ScheduleAPI>()
+    private let service: ScheduleServiceProtocol
     private var memberSeq = UserDefaultsManager.shared.getMemberSeq()
     private let dateFormatterS2D: DateFormatter
     private let dateFormatterD2S: DateFormatter
     
-    init() {
+    init(service: ScheduleServiceProtocol) {
+        self.service = service
+        
         dateFormatterS2D = DateFormatter()
         dateFormatterS2D.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         
@@ -61,6 +65,27 @@ class ScheduleViewModel: ObservableObject {
                 }
             case .failure(let error):
                 print("요청 실패: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func deleteSchedule(_ schedule: Schedule) {
+        isLoading = true
+        
+        let deleteRequest = DeleteScheduleBody(scheduleSeq: schedule.scheduleSeq, memberSeq: memberSeq)
+        let isCreator = !(schedule.invitedMember?.contains(where: { $0.memberSeq == memberSeq }) ?? false)
+        
+        let deleteMethod = isCreator ? service.deleteScheduleByCreator : service.deleteScheduleByInvitee
+        
+        deleteMethod(deleteRequest) { [weak self] result in
+            DispatchQueue.main.async {
+                self?.isLoading = false
+                switch result {
+                case .success:
+                    print("Schedule successfully deleted")
+                case .failure(let error):
+                    print("Failed to delete schedule: \(error.localizedDescription)")
+                }
             }
         }
     }

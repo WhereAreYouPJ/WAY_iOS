@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct ScheduleView: View {
-    @StateObject var viewModel = ScheduleViewModel()
-    @State private var clickedCurrentMonthDates: Date?
+    @StateObject var viewModel: ScheduleViewModel
+    @State private var selectedDate: Date?
     @State private var showMenu = false
     @State private var showCreateSchedule = false
     @State private var showDailySchedule = false
+    @State private var showingDeleteAlert = false
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
+    @State private var scheduleToDelete: Schedule?
     
     // 추가: UIKit 버튼 액션을 위한 클로저
     var onNotificationTapped: (() -> Void)?
@@ -22,59 +26,86 @@ struct ScheduleView: View {
         onNotificationTapped: (() -> Void)? = nil,
         onAddTapped: (() -> Void)? = nil
     ) {
+        let service = ScheduleService()
+        _viewModel = StateObject(wrappedValue: ScheduleViewModel(service: service))
         self.onNotificationTapped = onNotificationTapped
         self.onAddTapped = onAddTapped
     }
     
     var body: some View {
-        NavigationStack {
-            GeometryReader { geometry in
-                VStack(spacing: 0) {
-                    weekdayView
-                    calendarGridView(in: geometry)
-                }
-                .padding(.horizontal, 10)
-                .frame(width: geometry.size.width, height: geometry.size.height)
-            }
-        }
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                yearMonthView
-            }
-            
-            ToolbarItem(placement: .navigationBarTrailing) {
-                HStack(spacing: 0) {
-                    Button(action: {
-                        print("알림 페이지로 이동")
-                    }) {
-                        Image("icon-notification")
-                            .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
+        ZStack {
+            NavigationStack {
+                GeometryReader { geometry in
+                    VStack(spacing: 0) {
+                        weekdayView
+                        calendarGridView(in: geometry)
                     }
-                    .padding(0)
+                    .padding(.horizontal, 10)
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+                }
+                
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        yearMonthView
+                    }
                     
-                    Menu {
-                        Button("일정 추가", action: {
-                            print("일정 추가")
-                            showCreateSchedule.toggle()
-                        })
-                    } label: {
-                        Image("icon-plus")
-                            .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        HStack(spacing: 0) {
+                            Button(action: {
+                                print("알림 페이지로 이동")
+                            }) {
+                                Image("icon-notification")
+                                    .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
+                            }
+                            .padding(0)
+                            
+                            Menu {
+                                Button("일정 추가", action: {
+                                    print("일정 추가")
+                                    showCreateSchedule.toggle()
+                                })
+                            } label: {
+                                Image("icon-plus")
+                                    .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
+                            }
+                            .padding(EdgeInsets(top: -4, leading: -8, bottom: -4, trailing: 0))
+                        }
                     }
-                    .padding(EdgeInsets(top: -4, leading: -8, bottom: -4, trailing: 0))
                 }
             }
-        }
-        .onAppear(perform: {
-            viewModel.getMonthlySchedule()
-        })
-        .sheet(isPresented: $showCreateSchedule, onDismiss: {
-            viewModel.getMonthlySchedule()
-        }) {
-            CreateScheduleView()
-        }
-        .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
+            .sheet(isPresented: $showCreateSchedule, onDismiss: {
+                viewModel.getMonthlySchedule()
+            }) {
+                CreateScheduleView()
+            }
+            .sheet(isPresented: $showDailySchedule) {
+                if let date = selectedDate {
+                    DailyScheduleView(date: date, isPresented: $showDailySchedule, onDeleteSchedule: { schedule, title, message in
+                        scheduleToDelete = schedule
+                        alertTitle = title
+                        alertMessage = message
+                        showingDeleteAlert = true
+                    })
+                    .presentationDetents([.medium])
+                }
+            }
+            .customAlert(isPresented: $showingDeleteAlert, showDailySchedule: $showDailySchedule,
+                         title: alertTitle,
+                         message: alertMessage,
+                         cancelTitle: "취소",
+                         actionTitle: "삭제") {
+                if let scheduleToDelete = scheduleToDelete {
+                    viewModel.deleteSchedule(scheduleToDelete)
+                    print("Schedule deleted: \(scheduleToDelete.title)")
+                }
+                showDailySchedule = true
+            }
+            .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
+            .onAppear(perform: {
+                             viewModel.getMonthlySchedule()
+                         })
+        } // ZStack
     }
     
     // MARK: 연월 표시
@@ -160,7 +191,7 @@ struct ScheduleView: View {
         let date = getDate(for: index)
         let day = Calendar.current.component(.day, from: date)
         let weekday = Calendar.current.component(.weekday, from: date)
-        let clicked = clickedCurrentMonthDates == date
+        let clicked = selectedDate == date
         let isToday = date.formattedCalendarDayDate == today.formattedCalendarDayDate
         let daySchedules = monthlySchedules.filter { schedule in
             let scheduleStartDate = Calendar.current.startOfDay(for: schedule.startTime)
@@ -176,9 +207,9 @@ struct ScheduleView: View {
         
         print("Date: \(date), Schedules: \(daySchedules.map { $0.title })")
         
-        return CellView(showDailySchedule: $showDailySchedule, day: day, clicked: clicked, isToday: isToday, isCurrentMonthDay: true, weekday: weekday, schedules: processedSchedules, clickedCurrentMonthDates: clickedCurrentMonthDates ?? Date.now)
+        return CellView(day: day, clicked: clicked, isToday: isToday, isCurrentMonthDay: true, weekday: weekday, schedules: processedSchedules)
             .onTapGesture {
-                clickedCurrentMonthDates = date
+                selectedDate = date
                 showDailySchedule = true
             }
             .frame(height: cellHeight)
@@ -206,10 +237,10 @@ struct ScheduleView: View {
             let day = calendar.component(.day, from: prevMonthDate)
             let weekday = calendar.component(.weekday, from: prevMonthDate)
             
-            return CellView(showDailySchedule: $showDailySchedule, day: day, isCurrentMonthDay: false, weekday: weekday, schedules: processedSchedules, clickedCurrentMonthDates: Date.now)
+            return CellView(day: day, isCurrentMonthDay: false, weekday: weekday, schedules: processedSchedules)
         } else {
             // 이전 달의 날짜를 계산할 수 없는 경우, 빈 CellView를 반환
-            return CellView(showDailySchedule: $showDailySchedule, day: 0, isCurrentMonthDay: false, weekday: 1, schedules: processedSchedules, clickedCurrentMonthDates: Date.now)
+            return CellView(day: 0, isCurrentMonthDay: false, weekday: 1, schedules: processedSchedules)
         }
     }
     
@@ -217,8 +248,6 @@ struct ScheduleView: View {
 
 // MARK: - CellView
 private struct CellView: View { // TODO: 각 날짜에 맞게 일정 보여주기
-    @Binding private var showDailySchedule: Bool
-    private var clickedCurrentMonthDates: Date?
     private var day: Int
     private var clicked: Bool
     private var isToday: Bool
@@ -247,23 +276,19 @@ private struct CellView: View { // TODO: 각 날짜에 맞게 일정 보여주�
     }
     
     fileprivate init(
-        showDailySchedule: Binding<Bool>,
         day: Int,
         clicked: Bool = false,
         isToday: Bool = false,
         isCurrentMonthDay: Bool = true,
         weekday: Int,
-        schedules: [(Schedule, Bool, Bool)] = [],
-        clickedCurrentMonthDates: Date?
+        schedules: [(Schedule, Bool, Bool)] = []
     ) {
-        self._showDailySchedule = showDailySchedule
         self.day = day
         self.clicked = clicked
         self.isToday = isToday
         self.isCurrentMonthDay = isCurrentMonthDay
         self.weekday = weekday
         self.schedules = schedules
-        self.clickedCurrentMonthDates = clickedCurrentMonthDates
     }
     
     fileprivate var body: some View {
@@ -295,10 +320,6 @@ private struct CellView: View { // TODO: 각 날짜에 맞게 일정 보여주�
             }
             
             Spacer()
-        }
-        .sheet(isPresented: $showDailySchedule) {
-            DailyScheduleView(date: clickedCurrentMonthDates ?? Date.now)
-                .presentationDetents([.medium])
         }
     }
     
@@ -484,34 +505,34 @@ extension Date {
 #Preview("CellView Variations") {
     VStack {
         HStack(spacing: 0) {
-            CellView(showDailySchedule: .constant(false), day: 24, clicked: false, isToday: false, isCurrentMonthDay: true, weekday: 6, schedules: [
+            CellView(day: 24, clicked: false, isToday: false, isCurrentMonthDay: true, weekday: 6, schedules: [
                 (Schedule(scheduleSeq: 1, title: "연속3일정", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, false),
                 (Schedule(scheduleSeq: 2, title: "연속", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, false),
                 (Schedule(scheduleSeq: 3, title: "금", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, true),
                 (Schedule(scheduleSeq: 4, title: "러닝", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, true)
-            ], clickedCurrentMonthDates: Date.now)
+            ])
             .frame(width: 50, height: 120)
             
-            CellView(showDailySchedule: .constant(false), day: 25, clicked: false, isToday: false, isCurrentMonthDay: true, weekday: 7, schedules: [
+            CellView(day: 25, clicked: false, isToday: false, isCurrentMonthDay: true, weekday: 7, schedules: [
                 (Schedule(scheduleSeq: 5, title: "연속3일정", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), false, false),
                 (Schedule(scheduleSeq: 6, title: "연속", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), false, true),
                 (Schedule(scheduleSeq: 7, title: "토", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, true)
-            ], clickedCurrentMonthDates: Date.now)
+            ])
             .frame(width: 50, height: 120)
         }
         HStack(spacing: 0) {
-            CellView(showDailySchedule: .constant(false), day: 26, clicked: false, isToday: false, isCurrentMonthDay: true, weekday: 1, schedules: [
+            CellView(day: 26, clicked: false, isToday: false, isCurrentMonthDay: true, weekday: 1, schedules: [
                 (Schedule(scheduleSeq: 1, title: "연속3일정", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), false, true),
                 (Schedule(scheduleSeq: 2, title: "일", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, true),
                 (Schedule(scheduleSeq: 3, title: "한강", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, true),
                 (Schedule(scheduleSeq: 4, title: "러닝", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, true)
-            ], clickedCurrentMonthDates: Date.now)
+            ])
             .frame(width: 50, height: 120)
             
-            CellView(showDailySchedule: .constant(false), day: 27, clicked: false, isToday: false, isCurrentMonthDay: true, weekday: 2, schedules: [
+            CellView(day: 27, clicked: false, isToday: false, isCurrentMonthDay: true, weekday: 2, schedules: [
                 (Schedule(scheduleSeq: 6, title: "월", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, true),
                 (Schedule(scheduleSeq: 7, title: "드럼", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, true)
-            ], clickedCurrentMonthDates: Date.now)
+            ])
             .frame(width: 50, height: 120)
         }
     }

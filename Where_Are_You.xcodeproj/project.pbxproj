@@ -172,6 +172,7 @@
 		D51AC99F2C84A0AD00D0AD2E /* FavLocationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51AC99E2C84A0AD00D0AD2E /* FavLocationResponse.swift */; };
 		D53620912C8AE1010017B279 /* SearchLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53620902C8AE1010017B279 /* SearchLocationViewModel.swift */; };
 		D53A515C2CA1260400025AC8 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53A515B2CA1260400025AC8 /* ErrorResponse.swift */; };
+		D53E05F52CB97C4100F96346 /* PutScheduleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E05F42CB97C4100F96346 /* PutScheduleBody.swift */; };
 		D5496DD22C6B69570056C196 /* ConfirmLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5496DD12C6B69570056C196 /* ConfirmLocationView.swift */; };
 		D549C8452C6366A400DDAD5A /* .gitattributes in Resources */ = {isa = PBXBuildFile; fileRef = D549C8442C6366A400DDAD5A /* .gitattributes */; };
 		D54C040A2C6516CB009CC419 /* CreateScheduleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54C04092C6516CB009CC419 /* CreateScheduleBody.swift */; };
@@ -188,6 +189,8 @@
 		D58F5A502C9332220048C23A /* GetMonthlyScheduleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58F5A4F2C9332220048C23A /* GetMonthlyScheduleBody.swift */; };
 		D592D8EF2C7DE3B100736D93 /* SearchFriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */; };
 		D593CCC82C82318F00A862FF /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D593CCC72C82318F00A862FF /* ScheduleViewModel.swift */; };
+		D5954FCC2CB62F8800ADB877 /* DeleteScheduleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5954FCB2CB62F8800ADB877 /* DeleteScheduleBody.swift */; };
+		D5A91D5B2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */; };
 		D5B3B5392CB3DE63004353F6 /* DailyScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */; };
 		D5B79A162C5B83CD004EDDF2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D5CCD96F2CB0217E008497AD /* DailyScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CCD96E2CB0217E008497AD /* DailyScheduleView.swift */; };
@@ -396,6 +399,7 @@
 		D53078812C5D3C9D0041BBB7 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		D53620902C8AE1010017B279 /* SearchLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationViewModel.swift; sourceTree = "<group>"; };
 		D53A515B2CA1260400025AC8 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
+		D53E05F42CB97C4100F96346 /* PutScheduleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutScheduleBody.swift; sourceTree = "<group>"; };
 		D5496DD12C6B69570056C196 /* ConfirmLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLocationView.swift; sourceTree = "<group>"; };
 		D549C8442C6366A400DDAD5A /* .gitattributes */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitattributes; sourceTree = "<group>"; };
 		D54C04092C6516CB009CC419 /* CreateScheduleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleBody.swift; sourceTree = "<group>"; };
@@ -412,6 +416,8 @@
 		D58F5A4F2C9332220048C23A /* GetMonthlyScheduleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMonthlyScheduleBody.swift; sourceTree = "<group>"; };
 		D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendsViewModel.swift; sourceTree = "<group>"; };
 		D593CCC72C82318F00A862FF /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
+		D5954FCB2CB62F8800ADB877 /* DeleteScheduleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteScheduleBody.swift; sourceTree = "<group>"; };
+		D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertSwiftUI.swift; sourceTree = "<group>"; };
 		D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyScheduleViewModel.swift; sourceTree = "<group>"; };
 		D5CCD96E2CB0217E008497AD /* DailyScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyScheduleView.swift; sourceTree = "<group>"; };
 		D5D24CDB2C70756D00EDADAF /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -835,6 +841,7 @@
 		99C9B2232C01973E008D7CBD /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				D5D22E162CB5587C00C1BD94 /* Common */,
 				99CC5E652C5210FF00A0509A /* Login */,
 				99CC5E6A2C5211ED00A0509A /* Main */,
 			);
@@ -1037,6 +1044,8 @@
 			children = (
 				D54C04092C6516CB009CC419 /* CreateScheduleBody.swift */,
 				D58F5A4F2C9332220048C23A /* GetMonthlyScheduleBody.swift */,
+				D5954FCB2CB62F8800ADB877 /* DeleteScheduleBody.swift */,
+				D53E05F42CB97C4100F96346 /* PutScheduleBody.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -1132,6 +1141,7 @@
 				99D11EB02C06F56F006BE265 /* CustomButton.swift */,
 				99D8FBBF2C3BA2180062AF10 /* CustomLabel.swift */,
 				99D8FBC12C3BA25B0062AF10 /* CustomTextField.swift */,
+				D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -1287,6 +1297,13 @@
 				D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		D5D22E162CB5587C00C1BD94 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		D5D807EE2C85F825008F7882 /* UIKit_Deprecated */ = {
@@ -1540,6 +1557,7 @@
 				9910B84C2C71B638005F7EEE /* DDayViewModel.swift in Sources */,
 				D53620912C8AE1010017B279 /* SearchLocationViewModel.swift in Sources */,
 				9910B84B2C71B62E005F7EEE /* PasswordResetView.swift in Sources */,
+				D5A91D5B2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift in Sources */,
 				9913A44F2C75CD0A00309DBF /* PhotoAuthService.swift in Sources */,
 				999E29712CBB9AF900AB9FF9 /* LocationRepository.swift in Sources */,
 				9910B84E2C71B7F6005F7EEE /* AddFeedViewController.swift in Sources */,
@@ -1634,6 +1652,7 @@
 				99C68E522C64B96E00DEC1F1 /* ModifyFeedUseCase.swift in Sources */,
 				99C6D29E2C90379F009C0CF8 /* APIResponseHandler.swift in Sources */,
 				D54C040A2C6516CB009CC419 /* CreateScheduleBody.swift in Sources */,
+				D5954FCC2CB62F8800ADB877 /* DeleteScheduleBody.swift in Sources */,
 				99949F532C58A67400AE0177 /* FriendsTableView.swift in Sources */,
 				990902112C5F239A00BC3F20 /* CommonDescription.swift in Sources */,
 				992F57DB2C5B2A1D00219C6B /* MemberAPI.swift in Sources */,
@@ -1686,6 +1705,7 @@
 				9953583F2C00C555005BF799 /* SceneDelegate.swift in Sources */,
 				990F57B22C282C5900F6E1AD /* EmailSendUseCase.swift in Sources */,
 				99107EA52C6F3E4A007D129F /* Location.swift in Sources */,
+				D53E05F52CB97C4100F96346 /* PutScheduleBody.swift in Sources */,
 				992381882C7DC8C900FFCBCB /* MyDetailManageViewModel.swift in Sources */,
 				99D780E22C606726005A3F30 /* MemberDetailsResponse.swift in Sources */,
 				99D780E42C606735005A3F30 /* CheckEmailResponse.swift in Sources */,
