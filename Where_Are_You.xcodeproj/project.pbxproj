@@ -841,7 +841,6 @@
 		99C9B2232C01973E008D7CBD /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				D5D22E162CB5587C00C1BD94 /* Common */,
 				99CC5E652C5210FF00A0509A /* Login */,
 				99CC5E6A2C5211ED00A0509A /* Main */,
 			);
@@ -1297,13 +1296,6 @@
 				D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */,
 			);
 			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		D5D22E162CB5587C00C1BD94 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Common;
 			sourceTree = "<group>";
 		};
 		D5D807EE2C85F825008F7882 /* UIKit_Deprecated */ = {

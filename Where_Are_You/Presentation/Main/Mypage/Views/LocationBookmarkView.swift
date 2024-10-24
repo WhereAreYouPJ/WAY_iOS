@@ -10,6 +10,7 @@ import UIKit
 class LocationBookmarkView: UIView {
     // MARK: - Properties
     let editingButton = CustomOptionButtonView(title: "위치 삭제")
+    let tableBackView = UIView()
     let bookMarkTableView = UITableView()
     
     lazy var stackView: UIStackView = {
@@ -42,14 +43,14 @@ class LocationBookmarkView: UIView {
     }
     
     private func configureViewComponents() {
-        addSubview(editingButton)
         addSubview(stackView)
+        addSubview(editingButton)
     }
     
     private func setupConstraints() {
         editingButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
-            make.top.equalToSuperview().offset(LayoutAdapter.shared.scale(value: -3))
+            make.top.equalToSuperview()
             make.height.equalTo(LayoutAdapter.shared.scale(value: 38))
             make.width.equalTo(LayoutAdapter.shared.scale(value: 160))
         }

@@ -62,4 +62,6 @@ class LocationBookmarkViewModel {
             locations.remove(at: index)
         }
     }
+
+    // 수정된 위치 즐겨찾기 순서를 서버로 보내기
 }
