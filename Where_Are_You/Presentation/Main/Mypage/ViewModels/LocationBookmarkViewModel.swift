@@ -11,7 +11,8 @@ class LocationBookmarkViewModel {
     var locations: [FavLocation] = []
     var onGetLocationBookMark: (() -> Void)?
     var onEmptyLocation: (() -> Void)?
-    
+    private var checkedLocations = Set<Int>() // 선택된 위치를 저장
+        
     private let getLocationUseCase: GetLocationUseCase
     
     init(getLocationUseCase: GetLocationUseCase) {
@@ -60,6 +61,20 @@ class LocationBookmarkViewModel {
     func deleteLocations(at indexes: [Int]) {
         for index in indexes.sorted(by: >) {
             locations.remove(at: index)
+        }
+    }
+    
+    // 위치가 선택되었는지 확인
+    func isLocationChecked(at index: Int) -> Bool {
+        return checkedLocations.contains(index)
+    }
+    
+    // 위치 선택 상태를 토글
+    func toggleLocationCheck(at index: Int) {
+        if checkedLocations.contains(index) {
+            checkedLocations.remove(index)
+        } else {
+            checkedLocations.insert(index)
         }
     }
 

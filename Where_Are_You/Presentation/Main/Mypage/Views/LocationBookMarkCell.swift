@@ -12,15 +12,18 @@ class LocationBookMarkCell: UITableViewCell {
     
     let locationLabel = UILabel()
     
-    let selectButton: UIButton = {
-        let button = UIButton()
-        button.imageView?.image = UIImage(named: "icon-deselected")
-        return button
+    let checkmarkImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "icon-deselected")
+        imageView.isHidden = true
+        return imageView
     }()
+    
+    var isChecked: Bool = false // 선택 상태를 관리하는 변수
+    var selectionAction: (() -> Void)? // 선택 액션 클로저
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        selectButton.isHidden = true
         configureCell()
     }
     
@@ -31,32 +34,39 @@ class LocationBookMarkCell: UITableViewCell {
     private func configureCell() {
         locationLabel.textColor = .color34
         locationLabel.font = UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 16))
+        
         contentView.addSubview(locationLabel)
-        contentView.addSubview(selectButton)
+        contentView.addSubview(checkmarkImageView)
+        
         locationLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 6))
-            make.top.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 11))
+            make.centerY.equalToSuperview()
         }
         
-        selectButton.snp.makeConstraints { make in
+        checkmarkImageView.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
             make.height.width.equalTo(LayoutAdapter.shared.scale(value: 22))
             make.centerY.equalToSuperview()
         }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        addGestureRecognizer(tapGesture)
     }
     
-    func configure(with location: FavLocation) {
+    func configure(with location: FavLocation, isSelected: Bool) {
         locationLabel.text = location.location
+        checkmarkImageView.isHidden = false // 선택 가능하므로 보여주기
+        self.isChecked = isSelected
+        updateCheckmark()
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        if selected {
-            // 선택되었을때 상태
-            selectButton.imageView?.image = UIImage(named: "icon-selected")
-        } else {
-            // 선택 안되었을때 상태
-            selectButton.imageView?.image = UIImage(named: "icon-deselected")
-        }
+    private func updateCheckmark() {
+        checkmarkImageView.image = isChecked ? UIImage(named: "icon-selected") : UIImage(named: "icon-deselected")
+    }
+    
+    @objc func handleTap() {
+        isChecked.toggle()
+        updateCheckmark()
+        selectionAction?()
     }
 }
