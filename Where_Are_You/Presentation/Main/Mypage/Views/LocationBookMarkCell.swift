@@ -11,7 +11,6 @@ class LocationBookMarkCell: UITableViewCell {
     static let identifier = "LocationBookMarkCell"
     
     let locationLabel = UILabel()
-    
     let checkmarkImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "icon-deselected")
@@ -19,7 +18,12 @@ class LocationBookMarkCell: UITableViewCell {
         return imageView
     }()
     
-    var isChecked: Bool = false // 선택 상태를 관리하는 변수
+    var isChecked: Bool = false {
+        didSet {
+            updateCheckmark() // 상태 변경 시 바로 체크 표시 업데이트
+        }
+    }
+    
     var selectionAction: (() -> Void)? // 선택 액션 클로저
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -53,9 +57,9 @@ class LocationBookMarkCell: UITableViewCell {
         addGestureRecognizer(tapGesture)
     }
     
-    func configure(with location: FavLocation, isSelected: Bool) {
+    func configure(with location: FavLocation, isSelected: Bool, isEditingMode: Bool) {
         locationLabel.text = location.location
-        checkmarkImageView.isHidden = false // 선택 가능하므로 보여주기
+        checkmarkImageView.isHidden = !isEditingMode // 선택 가능하므로 보여주기
         self.isChecked = isSelected
         updateCheckmark()
     }

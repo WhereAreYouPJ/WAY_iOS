@@ -10,7 +10,7 @@ import UIKit
 class LocationBookmarkViewController: UIViewController {
     
     private let locationBookmarkView = LocationBookmarkView()
-//    private var isEditingMode = false // 삭제 모드인지 조건
+    private var isEditingMode = false // 삭제 모드인지 조건
     private var selectedLocations: Set<Int> = [] // 선택된 위치들 저장할 set
     private let noDataView: NoDataView = {
         let view = NoDataView()
@@ -117,17 +117,15 @@ class LocationBookmarkViewController: UIViewController {
     
     @objc private func editingButtonTapped() {
         // 위치 삭제 모드로 전환
+        isEditingMode.toggle()
         locationBookmarkView.editingButton.isHidden = true
-        addButton.isHidden = true
-        locationBookmarkView.deleteButton.isHidden = false
-        //        isEditingMode = true
-        
-        // 편집 모드를 활성화하고 row 이동 비활성화
-        locationBookmarkView.bookMarkTableView.allowsMultipleSelectionDuringEditing = true
+        addButton.isHidden = isEditingMode
+        locationBookmarkView.deleteButton.isHidden = !isEditingMode
         locationBookmarkView.bookMarkTableView.reloadData()
     }
     
     @objc private func deleteButtonTapped() {
+        isEditingMode.toggle()
         // selectedLocations에 있는 위치들을 삭제
         let indexes = Array(selectedLocations)
         viewModel.deleteLocations(at: indexes)
@@ -138,9 +136,9 @@ class LocationBookmarkViewController: UIViewController {
         
         // 선택된 항목 초기화
         selectedLocations.removeAll()
-        locationBookmarkView.deleteButton.isHidden = true
-        locationBookmarkView.editingButton.isHidden = false
-        addButton.isHidden = false
+        locationBookmarkView.deleteButton.isHidden = !isEditingMode
+        locationBookmarkView.editingButton.isHidden = isEditingMode
+        addButton.isHidden = !isEditingMode
         
         //        if let selectedRows = locationBookmarkView.bookMarkTableView.indexPathsForVisibleRows {
         //            let indexes = selectedRows.map { $0.row }
@@ -151,6 +149,10 @@ class LocationBookmarkViewController: UIViewController {
 }
 
 extension LocationBookmarkViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return LayoutAdapter.shared.scale(value: 46)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.locations.count
     }
@@ -160,7 +162,7 @@ extension LocationBookmarkViewController: UITableViewDataSource, UITableViewDele
         let location = viewModel.locations[indexPath.row]
         
         // 셀에 현재 선택 상태 전달
-        cell.configure(with: location, isSelected: selectedLocations.contains(indexPath.row))
+        cell.configure(with: location, isSelected: viewModel.isLocationChecked(at: indexPath.row), isEditingMode: isEditingMode)
         
         // 선택 액션 설정
         cell.selectionAction = { [weak self] in
