@@ -78,7 +78,6 @@ class AddFeedView: UIView {
         addSubview(scrollView)
         scrollView.addSubview(contentView)
         
-        contentView.addSubview(scheduleDropDown)
         contentView.addSubview(titleTextField)
         contentView.addSubview(titleSeparator)
         contentView.addSubview(imagesView)
@@ -86,6 +85,8 @@ class AddFeedView: UIView {
         contentView.addSubview(addStackView)
         
         addSubview(creatFeedButton)
+        contentView.addSubview(scheduleDropDown)
+
     }
     
     private func setupConstraints() {
