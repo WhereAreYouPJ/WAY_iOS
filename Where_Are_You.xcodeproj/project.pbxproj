@@ -160,6 +160,9 @@
 		99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC78D32C11E809007C4415 /* FinishRegisterview.swift */; };
 		99EC78D62C11E8A3007C4415 /* FinishRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC78D52C11E8A3007C4415 /* FinishRegisterViewController.swift */; };
 		99EF53A02C366D8900C6A399 /* APIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EF539F2C366D8900C6A399 /* APIServiceTests.swift */; };
+		99EFC7692CD0B9420044DFC5 /* PutLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EFC7682CD0B9420044DFC5 /* PutLocationUseCase.swift */; };
+		99EFC76B2CD0B9560044DFC5 /* PostLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EFC76A2CD0B9560044DFC5 /* PostLocationUseCase.swift */; };
+		99EFC76D2CD0B9630044DFC5 /* DeleteLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EFC76C2CD0B9630044DFC5 /* DeleteLocationUseCase.swift */; };
 		99F9FADE2C0B6187005B36B9 /* AccountSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9FADD2C0B6187005B36B9 /* AccountSearchViewController.swift */; };
 		99FBA54E2C453924002EEEC7 /* BannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA54D2C453924002EEEC7 /* BannerViewController.swift */; };
 		99FBA5502C45394E002EEEC7 /* BannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA54F2C45394E002EEEC7 /* BannerViewModel.swift */; };
@@ -381,6 +384,9 @@
 		99EF53952C366D2B00C6A399 /* Where_Are_You_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Where_Are_You_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		99EF539F2C366D8900C6A399 /* APIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceTests.swift; sourceTree = "<group>"; };
 		99EF53A12C366EEE00C6A399 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		99EFC7682CD0B9420044DFC5 /* PutLocationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutLocationUseCase.swift; sourceTree = "<group>"; };
+		99EFC76A2CD0B9560044DFC5 /* PostLocationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLocationUseCase.swift; sourceTree = "<group>"; };
+		99EFC76C2CD0B9630044DFC5 /* DeleteLocationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteLocationUseCase.swift; sourceTree = "<group>"; };
 		99F78F1D2C09C98D004C0C72 /* AccountSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSearchView.swift; sourceTree = "<group>"; };
 		99F9FADD2C0B6187005B36B9 /* AccountSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSearchViewController.swift; sourceTree = "<group>"; };
 		99FBA54D2C453924002EEEC7 /* BannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewController.swift; sourceTree = "<group>"; };
@@ -752,6 +758,9 @@
 			isa = PBXGroup;
 			children = (
 				999E29722CBB9C7F00AB9FF9 /* GetLocationUseCase.swift */,
+				99EFC7682CD0B9420044DFC5 /* PutLocationUseCase.swift */,
+				99EFC76A2CD0B9560044DFC5 /* PostLocationUseCase.swift */,
+				99EFC76C2CD0B9630044DFC5 /* DeleteLocationUseCase.swift */,
 			);
 			path = Loacation;
 			sourceTree = "<group>";
@@ -841,7 +850,6 @@
 		99C9B2232C01973E008D7CBD /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				D5D22E162CB5587C00C1BD94 /* Common */,
 				99CC5E652C5210FF00A0509A /* Login */,
 				99CC5E6A2C5211ED00A0509A /* Main */,
 			);
@@ -1299,13 +1307,6 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		D5D22E162CB5587C00C1BD94 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
 		D5D807EE2C85F825008F7882 /* UIKit_Deprecated */ = {
 			isa = PBXGroup;
 			children = (
@@ -1555,6 +1556,7 @@
 				D564EDF52C8F13300002A4C5 /* FavoriteLocationBody.swift in Sources */,
 				9975A35B2C8055C100A0FF5C /* MemberDetailsUseCase.swift in Sources */,
 				9910B84C2C71B638005F7EEE /* DDayViewModel.swift in Sources */,
+				99EFC76D2CD0B9630044DFC5 /* DeleteLocationUseCase.swift in Sources */,
 				D53620912C8AE1010017B279 /* SearchLocationViewModel.swift in Sources */,
 				9910B84B2C71B62E005F7EEE /* PasswordResetView.swift in Sources */,
 				D5A91D5B2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift in Sources */,
@@ -1599,6 +1601,7 @@
 				995175022C7EF95100E938DE /* LocationBookmarkViewModel.swift in Sources */,
 				D5B79A162C5B83CD004EDDF2 /* (null) in Sources */,
 				9953583D2C00C555005BF799 /* AppDelegate.swift in Sources */,
+				99EFC76B2CD0B9560044DFC5 /* PostLocationUseCase.swift in Sources */,
 				992F57DF2C5B614A00219C6B /* LogoutUseCase.swift in Sources */,
 				992F57E52C5B623F00219C6B /* CheckEmailUseCase.swift in Sources */,
 				9911F9842C3F5AA600D0FDC9 /* BannerView.swift in Sources */,
@@ -1652,6 +1655,7 @@
 				99C68E522C64B96E00DEC1F1 /* ModifyFeedUseCase.swift in Sources */,
 				99C6D29E2C90379F009C0CF8 /* APIResponseHandler.swift in Sources */,
 				D54C040A2C6516CB009CC419 /* CreateScheduleBody.swift in Sources */,
+				99EFC7692CD0B9420044DFC5 /* PutLocationUseCase.swift in Sources */,
 				D5954FCC2CB62F8800ADB877 /* DeleteScheduleBody.swift in Sources */,
 				99949F532C58A67400AE0177 /* FriendsTableView.swift in Sources */,
 				990902112C5F239A00BC3F20 /* CommonDescription.swift in Sources */,
