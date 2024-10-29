@@ -57,7 +57,7 @@ class LocationBookMarkCell: UITableViewCell {
         addGestureRecognizer(tapGesture)
     }
     
-    func configure(with location: FavLocation, isSelected: Bool, isEditingMode: Bool) {
+    func configure(with location: GetFavLocation, isSelected: Bool, isEditingMode: Bool) {
         locationLabel.text = location.location
         checkmarkImageView.isHidden = !isEditingMode // 선택 가능하므로 보여주기
         self.isChecked = isSelected

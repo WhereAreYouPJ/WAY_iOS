@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct FavLocation: Codable {
+struct GetFavLocation: Codable {
     let locationSeq: Int
     let location: String
     let streetName: String
 }
 
-typealias GetFavLocationResponse = [FavLocation]
+typealias GetFavLocationResponse = [GetFavLocation]
 
 struct PostFavLocation: Codable {
     let locationSeq: Int

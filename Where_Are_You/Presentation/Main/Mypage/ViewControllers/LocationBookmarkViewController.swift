@@ -53,8 +53,8 @@ class LocationBookmarkViewController: UIViewController {
         locationBookmarkView.bookMarkTableView.delegate = self
         locationBookmarkView.bookMarkTableView.dataSource = self
         locationBookmarkView.bookMarkTableView.register(LocationBookMarkCell.self, forCellReuseIdentifier: LocationBookMarkCell.identifier)
-//        locationBookmarkView.bookMarkTableView.setEditing(true, animated: false) // 드래그로 순서 변경 가능
         locationBookmarkView.bookMarkTableView.allowsMultipleSelection = true
+        locationBookmarkView.bookMarkTableView.setEditing(true, animated: false)
     }
     
     private func setupViewModel() {
@@ -118,7 +118,13 @@ class LocationBookmarkViewController: UIViewController {
     @objc private func editingButtonTapped() {
         // 위치 삭제 모드로 전환
         isEditingMode.toggle()
-        locationBookmarkView.editingButton.isHidden = true
+        
+        if isEditingMode {
+            viewModel.checkedLocations.removeAll()
+        }
+        
+        locationBookmarkView.bookMarkTableView.setEditing(!isEditingMode, animated: true)
+        locationBookmarkView.editingButton.isHidden = isEditingMode
         addButton.isHidden = isEditingMode
         locationBookmarkView.deleteButton.isHidden = !isEditingMode
         locationBookmarkView.bookMarkTableView.reloadData()
@@ -177,7 +183,7 @@ extension LocationBookmarkViewController: UITableViewDataSource, UITableViewDele
 
     // 특정 행을 드래그해서 이동할 수 있게 허용
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return true
+        return !isEditingMode
     }
     
     // 순서를 변경할 수 있는 메서드 추가
@@ -189,9 +195,6 @@ extension LocationBookmarkViewController: UITableViewDataSource, UITableViewDele
     
     // 편집 모드에서 삭제 가능 여부 설정 (순서 변경만 허용할 때는 false로 설정)
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        return false
     }
 }

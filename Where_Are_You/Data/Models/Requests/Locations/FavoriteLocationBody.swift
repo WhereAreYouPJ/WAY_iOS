@@ -17,3 +17,4 @@ struct DeleteFavoriteLocationBody: ParameterConvertible {
     let memberSeq: Int
     let locationSeqs: [Int]
 }
+

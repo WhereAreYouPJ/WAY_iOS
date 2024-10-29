@@ -12,6 +12,7 @@ enum LocationAPI {
     case getLocation(memberSeq: Int)
     case postLocation(request: PostFavoriteLocationBody)
     case deleteLocation(request: DeleteFavoriteLocationBody)
+    case putLocation(memberSeq: Int)
 }
 
 extension LocationAPI: TargetType {
@@ -27,6 +28,8 @@ extension LocationAPI: TargetType {
             return "/location"
         case .deleteLocation:
             return "/location"
+        case .putLocation:
+            return "/location"
         }
     }
     
@@ -38,6 +41,8 @@ extension LocationAPI: TargetType {
             return .get
         case .deleteLocation:
             return .delete
+        case .putLocation:
+            return .put
         }
     }
     
@@ -49,6 +54,8 @@ extension LocationAPI: TargetType {
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .deleteLocation(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+        case .putLocation(let memberSeq):
+            return .requestParameters(parameters: ["memberSeq": memberSeq], encoding: URLEncoding.queryString)
         }
     }
     

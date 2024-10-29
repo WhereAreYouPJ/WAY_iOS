@@ -12,6 +12,9 @@ import Moya
 
 protocol LocationServiceProtocol {
     func getLocation(completion: @escaping (Result<GenericResponse<GetFavLocationResponse>, Error>) -> Void)
+    func putLocation(completion: @escaping (Result<Void, Error>) -> Void)
+    func postLocation(request: PostFavoriteLocationBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func deleteLocation(request: DeleteFavoriteLocationBody, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class LocationService: LocationServiceProtocol {
@@ -35,4 +38,21 @@ class LocationService: LocationServiceProtocol {
         }
     }
     
+    func putLocation(completion: @escaping (Result<Void, any Error>) -> Void) {
+        provider.request(.putLocation(memberSeq: memberSeq)) { result in
+            APIResponseHandler.handleResponse(result, completion: completion)
+        }
+    }
+    
+    func postLocation(request: PostFavoriteLocationBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+        provider.request(.postLocation(request: request)) { result in
+            APIResponseHandler.handleResponse(result, completion: completion)
+        }
+    }
+    
+    func deleteLocation(request: DeleteFavoriteLocationBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+        provider.request(.deleteLocation(request: request)) { result in
+            APIResponseHandler.handleResponse(result, completion: completion)
+        }
+    }
 }
