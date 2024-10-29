@@ -33,79 +33,63 @@ struct ScheduleView: View {
     }
     
     var body: some View {
-        ZStack {
-            NavigationStack {
-                GeometryReader { geometry in
-                    VStack(spacing: 0) {
-                        weekdayView
-                        calendarGridView(in: geometry)
-                    }
-                    .padding(.horizontal, 10)
-                    .frame(width: geometry.size.width, height: geometry.size.height)
-                }
-                
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        yearMonthView
-                    }
-                    
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        HStack(spacing: 0) {
-                            Button(action: {
-                                print("알림 페이지로 이동")
-                            }) {
-                                Image("icon-notification")
-                                    .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
-                            }
-                            .padding(0)
-                            
-                            Menu {
-                                Button("일정 추가", action: {
-                                    print("일정 추가")
-                                    showCreateSchedule.toggle()
-                                })
-                            } label: {
-                                Image("icon-plus")
-                                    .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
-                            }
-                            .padding(EdgeInsets(top: -4, leading: -8, bottom: -4, trailing: 0))
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                HStack(alignment: .center) {
+                    yearMonthView
+                    Spacer()
+                    HStack(spacing: 0) {
+                        Button(action: {
+                            print("알림 페이지로 이동")
+                        }) {
+                            Image("icon-notification")
+                                .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
                         }
+                        .padding(0)
+                        
+                        Menu {
+                            Button("일정 추가", action: {
+                                print("일정 추가")
+                                showCreateSchedule.toggle()
+                            })
+                        } label: {
+                            Image("icon-plus")
+                                .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
+                        }
+                        .padding(EdgeInsets(top: -4, leading: -8, bottom: -4, trailing: 0))
                     }
                 }
+                .padding(.horizontal, 10)
+                .padding(.vertical, 8)
+                
+                weekdayView
+                calendarGridView(in: geometry)
             }
-            .sheet(isPresented: $showCreateSchedule, onDismiss: {
-                viewModel.getMonthlySchedule()
-            }) {
-                CreateScheduleView()
+            .padding(.horizontal, 10)
+        }
+        .edgesIgnoringSafeArea(.top)  // 추가
+        .sheet(isPresented: $showCreateSchedule, onDismiss: {
+            viewModel.getMonthlySchedule()
+        }) {
+            CreateScheduleView()
+        }
+        .sheet(isPresented: $showDailySchedule, onDismiss: {
+            viewModel.getMonthlySchedule()
+        }) {
+            if let date = selectedDate {
+                DailyScheduleView(date: date, isPresented: $showDailySchedule, onDeleteSchedule: { schedule, title, message in
+                    scheduleToDelete = schedule
+                    alertTitle = title
+                    alertMessage = message
+                    showingDeleteAlert = true
+                })
+                .presentationDetents([.medium])
             }
-            .sheet(isPresented: $showDailySchedule) {
-                if let date = selectedDate {
-                    DailyScheduleView(date: date, isPresented: $showDailySchedule, onDeleteSchedule: { schedule, title, message in
-                        scheduleToDelete = schedule
-                        alertTitle = title
-                        alertMessage = message
-                        showingDeleteAlert = true
-                    })
-                    .presentationDetents([.medium])
-                }
-            }
-            .customAlert(isPresented: $showingDeleteAlert, showDailySchedule: $showDailySchedule,
-                         title: alertTitle,
-                         message: alertMessage,
-                         cancelTitle: "취소",
-                         actionTitle: "삭제") {
-                if let scheduleToDelete = scheduleToDelete {
-                    viewModel.deleteSchedule(scheduleToDelete)
-                    print("Schedule deleted: \(scheduleToDelete.title)")
-                }
-                showDailySchedule = true
-            }
-            .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
-            .onAppear(perform: {
-                             viewModel.getMonthlySchedule()
-                         })
-        } // ZStack
+        }
+        .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
+        .onAppear(perform: {
+            viewModel.getMonthlySchedule()
+        })
     }
     
     // MARK: 연월 표시
@@ -210,7 +194,7 @@ struct ScheduleView: View {
         return CellView(day: day, clicked: clicked, isToday: isToday, isCurrentMonthDay: true, weekday: weekday, schedules: processedSchedules)
             .onTapGesture {
                 selectedDate = date
-                showDailySchedule = true
+                showDailySchedule = !processedSchedules.isEmpty
             }
             .frame(height: cellHeight)
     }

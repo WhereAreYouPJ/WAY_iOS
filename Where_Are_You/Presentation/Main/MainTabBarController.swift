@@ -20,12 +20,25 @@ class MainTabBarController: UITabBarController {
         // 각 뷰 컨트롤러를 초기화하고 설정
         let mainVC = createNavController(viewController: MainHomeViewController(), title: "홈", imageName: "icon-home", selectedImageName: "icon-home-filled")
         let friendsVC = createNavController(viewController: FriendFeedViewController(), title: "피드", imageName: "icon-friends", selectedImageName: "icon-friends-filled")
-        let scheduleVC = createNavController(viewController: UIHostingController(rootView: ScheduleView()), title: "일정", imageName: "icon-schedule", selectedImageName: "icon-schedule-filled")
+        // ScheduleView를 위한 특별한 설정
+            let scheduleHostingVC = UIHostingController(rootView: ScheduleView())
+            scheduleHostingVC.navigationItem.largeTitleDisplayMode = .never
+            let scheduleNavVC = UINavigationController(rootViewController: scheduleHostingVC)
+            scheduleNavVC.navigationBar.prefersLargeTitles = false
+            scheduleNavVC.navigationBar.isTranslucent = false  // 추가
+            scheduleNavVC.navigationBar.standardAppearance.configureWithTransparentBackground()  // 추가
+            scheduleNavVC.navigationBar.scrollEdgeAppearance = scheduleNavVC.navigationBar.standardAppearance  // 추가
+            scheduleHostingVC.tabBarItem = UITabBarItem(
+                title: "일정",
+                image: UIImage(named: "icon-schedule")?.withRenderingMode(.alwaysOriginal),
+                selectedImage: UIImage(named: "icon-schedule-filled")?.withRenderingMode(.alwaysOriginal)
+            )
+//        let scheduleVC = createNavController(viewController: UIHostingController(rootView: ScheduleView()), title: "일정", imageName: "icon-schedule", selectedImageName: "icon-schedule-filled")
 //        let scheduleVC = createNavController(viewController: ScheduleViewController(), title: "일정", imageName: "icon-schedule", selectedImageName: "icon-schedule-filled")
         let myPageVC = createNavController(viewController: MyPageViewController(), title: "마이페이지", imageName: "icon-mypage", selectedImageName: "icon-mypage-filled")
         
         // 탭바 컨트롤러에 뷰 컨트롤러 추가
-        viewControllers = [mainVC, scheduleVC, friendsVC, myPageVC]
+        viewControllers = [mainVC, scheduleNavVC, friendsVC, myPageVC]
         
         // 탭바 색상 (선택, 비선택)
         self.tabBar.tintColor = .color34
