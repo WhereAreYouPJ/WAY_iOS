@@ -9,32 +9,36 @@ import Foundation
 
 class LocationBookmarkViewModel {
     // MARK: - Properties
-
+    
     var locations: [GetFavLocation] = []
     var onGetLocationBookMark: (() -> Void)?
     var onEmptyLocation: (() -> Void)?
     var onDeleteLocationSuccess: (() -> Void)?
     var onDeleteLocationFailure: ((Error) -> Void)?
     var onSelectionChanged: ((Bool) -> Void)?
+    var onUpdateLocationSuccess: (() -> Void)?
+    var onUpdateLocationFailure: ((String) -> Void)?
     
     var hasSelectedLocations: Bool {
-            return !checkedLocations.isEmpty
-        }
+        return !checkedLocations.isEmpty
+    }
     
     var checkedLocations = Set<Int>() // 선택된 위치를 저장
-        
+    
     private let getLocationUseCase: GetLocationUseCase
+    private let putLocationUseCase: PutLocationUseCase
     private let deleteLocationUseCase: DeleteLocationUseCase
     
     // MARK: - Lifecycle
-
-    init(getLocationUseCase: GetLocationUseCase, deleteLocationUseCase: DeleteLocationUseCase) {
+    
+    init(getLocationUseCase: GetLocationUseCase, putLocationUseCase: PutLocationUseCase, deleteLocationUseCase: DeleteLocationUseCase) {
         self.getLocationUseCase = getLocationUseCase
+        self.putLocationUseCase = putLocationUseCase
         self.deleteLocationUseCase = deleteLocationUseCase
     }
     
     // MARK: - GET
-
+    
     func getLocationBookMark() {
         getLocationUseCase.execute { result in
             switch result {
@@ -52,14 +56,29 @@ class LocationBookmarkViewModel {
     }
     
     // MARK: - MOVE
-
+    
     func moveLocation(from sourceIndex: Int, to destinationIndex: Int) {
         let movedLocation = locations.remove(at: sourceIndex)
         locations.insert(movedLocation, at: destinationIndex)
     }
     
+    func putLocation() {
+        let updateLocationSeqs = locations.enumerated().map { index, location in
+            PutFavoriteLocationBody(locationSeq: location.locationSeq, sequence: index)
+        }
+        
+        putLocationUseCase.execute(request: updateLocationSeqs) { result in
+            switch result {
+            case .success:
+                self.onUpdateLocationSuccess?()
+            case .failure(let error):
+                self.onUpdateLocationFailure?(error.localizedDescription)
+            }
+        }
+    }
+    
     // MARK: - SELECT
-
+    
     // 위치가 선택되었는지 확인
     func isLocationChecked(at index: Int) -> Bool {
         return checkedLocations.contains(index)
@@ -77,7 +96,7 @@ class LocationBookmarkViewModel {
     }
     
     // MARK: - DELETE
-
+    
     func deleteLocations(at indexes: [Int]) {
         for index in indexes.sorted(by: >) {
             locations.remove(at: index)

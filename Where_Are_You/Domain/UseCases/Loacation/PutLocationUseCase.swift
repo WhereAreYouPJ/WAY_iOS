@@ -8,7 +8,7 @@
 import Foundation
 
 protocol PutLocationUseCase {
-    func execute(completion: @escaping (Result<Void, Error>) -> Void)
+    func execute(request: PutFavoriteLocationRequest, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class PutLocationUseCaseImpl: PutLocationUseCase {
@@ -18,7 +18,7 @@ class PutLocationUseCaseImpl: PutLocationUseCase {
         self.locationRepository = locationRepository
     }
     
-    func execute(completion: @escaping (Result<Void, Error>) -> Void) {
-        locationRepository.putLocation(completion: completion)
+    func execute(request: PutFavoriteLocationRequest, completion: @escaping (Result<Void, Error>) -> Void) {
+        locationRepository.putLocation(request: request, completion: completion)
     }
 }

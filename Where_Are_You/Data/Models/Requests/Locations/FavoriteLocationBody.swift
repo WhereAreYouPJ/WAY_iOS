@@ -18,3 +18,9 @@ struct DeleteFavoriteLocationBody: ParameterConvertible {
     let locationSeqs: [Int]
 }
 
+struct PutFavoriteLocationBody: ParameterConvertible {
+    let locationSeq: Int
+    let sequence: Int
+}
+
+typealias PutFavoriteLocationRequest = [PutFavoriteLocationBody]

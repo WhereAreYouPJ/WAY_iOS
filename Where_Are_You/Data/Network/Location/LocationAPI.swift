@@ -12,7 +12,7 @@ enum LocationAPI {
     case getLocation(memberSeq: Int)
     case postLocation(request: PostFavoriteLocationBody)
     case deleteLocation(request: DeleteFavoriteLocationBody)
-    case putLocation(memberSeq: Int)
+    case putLocation(memberSeq: Int, request: PutFavoriteLocationRequest)
 }
 
 extension LocationAPI: TargetType {
@@ -54,8 +54,12 @@ extension LocationAPI: TargetType {
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .deleteLocation(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .putLocation(let memberSeq):
-            return .requestParameters(parameters: ["memberSeq": memberSeq], encoding: URLEncoding.queryString)
+        case .putLocation(let memberSeq, request: let request):
+            let parameters = ["memberSeq": memberSeq]
+            // JSON 배열을 데이터로 인코딩
+            let bodyData = try? JSONSerialization.data(withJSONObject: request.map { $0.toParameters() }, options: [])
+            
+            return .requestCompositeData(bodyData: bodyData ?? Data(), urlParameters: parameters)
         }
     }
     

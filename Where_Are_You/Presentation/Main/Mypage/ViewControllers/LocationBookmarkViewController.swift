@@ -46,6 +46,12 @@ class LocationBookmarkViewController: UIViewController {
         locationBookmarkView.translatesAutoresizingMaskIntoConstraints = false
         noDataView.translatesAutoresizingMaskIntoConstraints = false
         
+        // 테이블뷰 왼쪽 여백 지우는 코드
+        locationBookmarkView.bookMarkTableView.separatorInset = .zero
+        
+        // tableHeaderView에 빈 뷰 추가하여 최상단 분리선 숨기기
+        locationBookmarkView.bookMarkTableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: locationBookmarkView.bookMarkTableView.bounds.width, height: 1))
+        
         viewModel.getLocationBookMark()
         locationBookmarkView.bookMarkTableView.reloadData()
         
@@ -58,14 +64,16 @@ class LocationBookmarkViewController: UIViewController {
         locationBookmarkView.bookMarkTableView.delegate = self
         locationBookmarkView.bookMarkTableView.dataSource = self
         locationBookmarkView.bookMarkTableView.register(LocationBookMarkCell.self, forCellReuseIdentifier: LocationBookMarkCell.identifier)
-        locationBookmarkView.bookMarkTableView.allowsMultipleSelection = true
+        
+        locationBookmarkView.bookMarkTableView.allowsSelectionDuringEditing = true
+        locationBookmarkView.bookMarkTableView.allowsSelection = false
         locationBookmarkView.bookMarkTableView.setEditing(true, animated: false)
     }
     
     private func setupViewModel() {
         let locationService = LocationService()
         let locationRepository = LocationRepository(locationService: locationService)
-        viewModel = LocationBookmarkViewModel(getLocationUseCase: GetLocationUseCaseImpl(locationRepository: locationRepository), deleteLocationUseCase: DeleteLocationUseCaseImpl(locationRepository: locationRepository))
+        viewModel = LocationBookmarkViewModel(getLocationUseCase: GetLocationUseCaseImpl(locationRepository: locationRepository), putLocationUseCase: PutLocationUseCaseImpl(locationRepository: locationRepository), deleteLocationUseCase: DeleteLocationUseCaseImpl(locationRepository: locationRepository))
     }
     
     private func setupNavigationBar() {
@@ -88,8 +96,7 @@ class LocationBookmarkViewController: UIViewController {
         
         viewModel.onDeleteLocationSuccess = { [weak self] in
             DispatchQueue.main.async {
-                self?.locationBookmarkView.bookMarkTableView.reloadData()
-                self?.editingButtonTapped() // 삭제 후 편집 모드 종료
+                self?.setupViewMode(editMode: false)
             }
         }
         
@@ -102,6 +109,17 @@ class LocationBookmarkViewController: UIViewController {
                 self?.locationBookmarkView.updateDeleteButtonState(isEnabled: hasSelectedLocations)
             }
         }
+        
+        viewModel.onUpdateLocationSuccess = { [weak self] in
+            DispatchQueue.main.async{
+                self?.locationBookmarkView.bookMarkTableView.reloadData()
+            }
+        }
+        
+        viewModel.onUpdateLocationFailure = { [weak self] error in
+            print(error)
+            self?.locationBookmarkView.bookMarkTableView.reloadData()
+        }
     }
     
     private func showBookmarkView() {
@@ -110,15 +128,26 @@ class LocationBookmarkViewController: UIViewController {
         locationBookmarkView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        setupViewMode(editMode: false)
         locationBookmarkView.bookMarkTableView.reloadData()
     }
     
     private func showNoDataView() {
         locationBookmarkView.removeFromSuperview()
         view.addSubview(noDataView)
+        addButton.isHidden = true
         noDataView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+    }
+    
+    private func setupViewMode(editMode: Bool) {
+        isEditingMode = editMode
+        locationBookmarkView.editingButton.isHidden = !editMode
+        locationBookmarkView.deleteButton.isHidden = !editMode
+        addButton.isHidden = editMode
+        locationBookmarkView.bookMarkTableView.setEditing(!editMode, animated: true)
+        locationBookmarkView.bookMarkTableView.reloadData()
     }
     
     private func setupActions() {
@@ -131,6 +160,10 @@ class LocationBookmarkViewController: UIViewController {
         view.hideWhenTappedOutside(ignoreViews: [locationBookmarkView.editingButton]) {
             self.locationBookmarkView.editingButton.isHidden = true
         }
+    }
+    
+    private func updateServerOrder() {
+        viewModel.putLocation()
     }
     
     // MARK: - Selectors
@@ -153,12 +186,13 @@ class LocationBookmarkViewController: UIViewController {
         
         locationBookmarkView.editingButton.isHidden = isEditingMode
         addButton.isHidden = isEditingMode
+        
         locationBookmarkView.deleteButton.isHidden = !isEditingMode
         locationBookmarkView.bookMarkTableView.reloadData()
+        locationBookmarkView.bookMarkTableView.setEditing(!isEditingMode, animated: true)
     }
     
     @objc private func deleteButtonTapped() {
-        print("deleteButtonTapped")
         viewModel.deleteSelectedLocations()
     }
 }
@@ -189,7 +223,7 @@ extension LocationBookmarkViewController: UITableViewDataSource, UITableViewDele
     }
     
     // MARK: - MoveRow
-
+    
     // 특정 행을 드래그해서 이동할 수 있게 허용
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return !isEditingMode
@@ -198,12 +232,18 @@ extension LocationBookmarkViewController: UITableViewDataSource, UITableViewDele
     // 순서를 변경할 수 있는 메서드 추가
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         viewModel.moveLocation(from: sourceIndexPath.row, to: destinationIndexPath.row)
+        updateServerOrder()
     }
     
     // MARK: - EditRow
     
-    // 편집 모드에서 삭제 가능 여부 설정 (순서 변경만 허용할 때는 false로 설정)
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return false
+    // 셀의 편집 스타일을 설정하여 삭제 버튼을 숨김
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none // 삭제 버튼이 나타나지 않도록 설정
+    }
+    
+    // reorder control만 표시되도록 설정
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false // 드래그 시 인덴트 적용되지 않게 설정
     }
 }
