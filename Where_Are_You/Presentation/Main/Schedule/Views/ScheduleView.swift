@@ -60,14 +60,13 @@ struct ScheduleView: View {
                     }
                 }
                 .padding(.horizontal, 10)
-                .padding(.vertical, 8)
+                .padding(.bottom, 8)
                 
                 weekdayView
                 calendarGridView(in: geometry)
             }
             .padding(.horizontal, 10)
         }
-        .edgesIgnoringSafeArea(.top)  // 추가
         .sheet(isPresented: $showCreateSchedule, onDismiss: {
             viewModel.getMonthlySchedule()
         }) {

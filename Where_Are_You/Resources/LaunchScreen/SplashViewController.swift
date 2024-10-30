@@ -35,8 +35,6 @@ class SplashViewController: UIViewController {
         if UserDefaultsManager.shared.isLoggedIn() {
             let mainTabBarController = MainTabBarController()
             transitionToViewController(mainTabBarController)
-//            let mainTabView = UIHostingController(rootView: MainTabView())
-//            transitionToViewController(mainTabView)
         } else {
             let loginVC = LoginViewController()
             transitionToViewController(loginVC)
