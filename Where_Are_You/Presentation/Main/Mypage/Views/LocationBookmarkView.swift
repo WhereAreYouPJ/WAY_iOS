@@ -21,7 +21,7 @@ class LocationBookmarkView: UIView {
     }()
     
     let deleteButton = CustomButton(title: "삭제하기", backgroundColor: .color171, titleColor: .white, font: UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 18)))
-
+    
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,12 +39,16 @@ class LocationBookmarkView: UIView {
     private func setupUI() {
         editingButton.isHidden = true
         deleteButton.isHidden = true
-        deleteButton.isEnabled = false
     }
     
     private func configureViewComponents() {
         addSubview(stackView)
         addSubview(editingButton)
+    }
+    
+    func updateDeleteButtonState(isEnabled: Bool) {
+        deleteButton.isEnabled = isEnabled
+        deleteButton.backgroundColor = isEnabled ? .brandColor : .color171 // 선택 여부에 따라 색상 변경
     }
     
     private func setupConstraints() {

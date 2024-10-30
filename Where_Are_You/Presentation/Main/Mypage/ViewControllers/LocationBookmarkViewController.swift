@@ -11,7 +11,9 @@ class LocationBookmarkViewController: UIViewController {
     
     private let locationBookmarkView = LocationBookmarkView()
     private var isEditingMode = false // 삭제 모드인지 조건
+    
     private var selectedLocations: Set<Int> = [] // 선택된 위치들 저장할 set
+    
     private let noDataView: NoDataView = {
         let view = NoDataView()
         view.descriptionLabel.text = "아직은 즐겨찾기한 위치가 없어요. \n목록을 생성하여 좀 더 편리하게 \n일정 추가 시 위치를 선택할 수 있어요."
@@ -39,12 +41,15 @@ class LocationBookmarkViewController: UIViewController {
         setupTableView()
         setupBindings()
         setupNavigationBar()
+        setupOutsideTap()
         
         locationBookmarkView.translatesAutoresizingMaskIntoConstraints = false
         noDataView.translatesAutoresizingMaskIntoConstraints = false
         
         viewModel.getLocationBookMark()
         locationBookmarkView.bookMarkTableView.reloadData()
+        
+        locationBookmarkView.updateDeleteButtonState(isEnabled: false)
     }
     
     // MARK: - Helpers
@@ -60,7 +65,7 @@ class LocationBookmarkViewController: UIViewController {
     private func setupViewModel() {
         let locationService = LocationService()
         let locationRepository = LocationRepository(locationService: locationService)
-        viewModel = LocationBookmarkViewModel(getLocationUseCase: GetLocationUseCaseImpl(locationRepository: locationRepository))
+        viewModel = LocationBookmarkViewModel(getLocationUseCase: GetLocationUseCaseImpl(locationRepository: locationRepository), deleteLocationUseCase: DeleteLocationUseCaseImpl(locationRepository: locationRepository))
     }
     
     private func setupNavigationBar() {
@@ -78,6 +83,23 @@ class LocationBookmarkViewController: UIViewController {
         viewModel.onEmptyLocation = { [weak self] in
             DispatchQueue.main.async {
                 self?.showNoDataView()
+            }
+        }
+        
+        viewModel.onDeleteLocationSuccess = { [weak self] in
+            DispatchQueue.main.async {
+                self?.locationBookmarkView.bookMarkTableView.reloadData()
+                self?.editingButtonTapped() // 삭제 후 편집 모드 종료
+            }
+        }
+        
+        viewModel.onDeleteLocationFailure = { error in
+            print("Delete failed with error: \(error.localizedDescription)")
+        }
+        
+        viewModel.onSelectionChanged = { [weak self] hasSelectedLocations in
+            DispatchQueue.main.async {
+                self?.locationBookmarkView.updateDeleteButtonState(isEnabled: hasSelectedLocations)
             }
         }
     }
@@ -105,6 +127,12 @@ class LocationBookmarkViewController: UIViewController {
         addButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
     }
     
+    private func setupOutsideTap() {
+        view.hideWhenTappedOutside(ignoreViews: [locationBookmarkView.editingButton]) {
+            self.locationBookmarkView.editingButton.isHidden = true
+        }
+    }
+    
     // MARK: - Selectors
     
     @objc private func backButtonTapped() {
@@ -123,7 +151,6 @@ class LocationBookmarkViewController: UIViewController {
             viewModel.checkedLocations.removeAll()
         }
         
-        locationBookmarkView.bookMarkTableView.setEditing(!isEditingMode, animated: true)
         locationBookmarkView.editingButton.isHidden = isEditingMode
         addButton.isHidden = isEditingMode
         locationBookmarkView.deleteButton.isHidden = !isEditingMode
@@ -131,26 +158,8 @@ class LocationBookmarkViewController: UIViewController {
     }
     
     @objc private func deleteButtonTapped() {
-        isEditingMode.toggle()
-        // selectedLocations에 있는 위치들을 삭제
-        let indexes = Array(selectedLocations)
-        viewModel.deleteLocations(at: indexes)
-        
-        // 테이블 뷰에서 삭제 애니메이션 처리
-        let indexPaths = indexes.map { IndexPath(row: $0, section: 0) }
-        locationBookmarkView.bookMarkTableView.deleteRows(at: indexPaths, with: .automatic)
-        
-        // 선택된 항목 초기화
-        selectedLocations.removeAll()
-        locationBookmarkView.deleteButton.isHidden = !isEditingMode
-        locationBookmarkView.editingButton.isHidden = isEditingMode
-        addButton.isHidden = !isEditingMode
-        
-        //        if let selectedRows = locationBookmarkView.bookMarkTableView.indexPathsForVisibleRows {
-        //            let indexes = selectedRows.map { $0.row }
-        //            viewModel.deleteLocations(at: indexes)
-        //            locationBookmarkView.bookMarkTableView.deleteRows(at: selectedRows, with: .automatic)
-        //        }
+        print("deleteButtonTapped")
+        viewModel.deleteSelectedLocations()
     }
 }
 
