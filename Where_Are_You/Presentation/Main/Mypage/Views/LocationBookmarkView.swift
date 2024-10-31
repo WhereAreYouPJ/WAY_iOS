@@ -26,7 +26,6 @@ class LocationBookmarkView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
-//        setupUI()
         configureViewComponents()
         setupConstraints()
     }
@@ -36,11 +35,6 @@ class LocationBookmarkView: UIView {
     }
     
     // MARK: - Helpers
-    private func setupUI() {
-        editingButton.isHidden = true
-        deleteButton.isHidden = true
-    }
-    
     private func configureViewComponents() {
         addSubview(stackView)
         addSubview(editingButton)

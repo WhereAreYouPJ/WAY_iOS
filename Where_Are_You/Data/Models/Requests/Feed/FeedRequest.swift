@@ -13,3 +13,10 @@ struct SaveFeedRequest: Codable {
     let title: String
     let content: String?
 }
+
+struct ModifyFeedRequest: Codable {
+    let feedSeq: Int
+    let creatorSeq: Int
+    let title: String
+    let content: String?
+}
