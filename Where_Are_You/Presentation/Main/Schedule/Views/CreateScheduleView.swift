@@ -71,7 +71,7 @@ struct CreateScheduleView: View {
                     SearchLocationView(selectedLocation: $viewModel.place, path: $path)
                 case .searchFriends:
                     SearchFriendsView(selectedFriends: $viewModel.selectedFriends)
-                case .confirmLocation(let location):
+                case .confirmLocation(_):
                     ConfirmLocationView(location: $viewModel.place, path: $path)
                         .onDisappear {
                             viewModel.getFavoriteLocation()
@@ -300,7 +300,7 @@ struct MaxLengthModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .onChange(of: text) { newValue in
+            .onChange(of: text) { _, newValue in
                 if newValue.count > maxLength {
                     text = String(newValue.prefix(maxLength))
                 }

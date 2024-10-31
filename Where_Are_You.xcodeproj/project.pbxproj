@@ -173,7 +173,6 @@
 		D512EC572CA6E56C001AC965 /* GetScheduleByDateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512EC562CA6E56C001AC965 /* GetScheduleByDateResponse.swift */; };
 		D51AC99C2C849AB400D0AD2E /* LocationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51AC99B2C849AB400D0AD2E /* LocationAPI.swift */; };
 		D51AC99F2C84A0AD00D0AD2E /* FavLocationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51AC99E2C84A0AD00D0AD2E /* FavLocationResponse.swift */; };
-		D53424892CD0D59300C4F55C /* ScheduleViewUIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53424882CD0D59300C4F55C /* ScheduleViewUIKit.swift */; };
 		D53620912C8AE1010017B279 /* SearchLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53620902C8AE1010017B279 /* SearchLocationViewModel.swift */; };
 		D53A515C2CA1260400025AC8 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53A515B2CA1260400025AC8 /* ErrorResponse.swift */; };
 		D53E05F52CB97C4100F96346 /* PutScheduleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E05F42CB97C4100F96346 /* PutScheduleBody.swift */; };
@@ -405,7 +404,6 @@
 		D51AC99B2C849AB400D0AD2E /* LocationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAPI.swift; sourceTree = "<group>"; };
 		D51AC99E2C84A0AD00D0AD2E /* FavLocationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavLocationResponse.swift; sourceTree = "<group>"; };
 		D53078812C5D3C9D0041BBB7 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		D53424882CD0D59300C4F55C /* ScheduleViewUIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewUIKit.swift; sourceTree = "<group>"; };
 		D53620902C8AE1010017B279 /* SearchLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationViewModel.swift; sourceTree = "<group>"; };
 		D53A515B2CA1260400025AC8 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
 		D53E05F42CB97C4100F96346 /* PutScheduleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutScheduleBody.swift; sourceTree = "<group>"; };
@@ -1298,7 +1296,6 @@
 				D55DFC2E2C61021800EEEF51 /* ScheduleView.swift */,
 				D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */,
 				D5CCD96E2CB0217E008497AD /* DailyScheduleView.swift */,
-				D53424882CD0D59300C4F55C /* ScheduleViewUIKit.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1689,7 +1686,6 @@
 				D5C2D6742CC8C273002F5607 /* CustomAlertViewController.swift in Sources */,
 				99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */,
 				D55DFC312C61022900EEEF51 /* CreateScheduleView.swift in Sources */,
-				D53424892CD0D59300C4F55C /* ScheduleViewUIKit.swift in Sources */,
 				D58EC0692C633217001BC030 /* SearchLocationView.swift in Sources */,
 				D592D8EF2C7DE3B100736D93 /* SearchFriendsViewModel.swift in Sources */,
 				D5496DD22C6B69570056C196 /* ConfirmLocationView.swift in Sources */,
