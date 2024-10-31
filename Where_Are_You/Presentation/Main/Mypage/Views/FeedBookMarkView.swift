@@ -10,6 +10,7 @@ import UIKit
 class FeedBookMarkView: UIView {
     // MARK: - Properties
     
+    let feedDetailBoxView = FeedDetailBoxView()
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {

@@ -7,11 +7,10 @@
 
 import Foundation
 
-
 // MARK: - DataClass
 struct GetBookMarkResponse: Codable {
     let totalElements, totalPages, size: Int
-    let content: [Content]
+    let content: [BookMarkContent]
     let number: Int
     let sort: Sort
     let first, last: Bool
@@ -21,7 +20,7 @@ struct GetBookMarkResponse: Codable {
 }
 
 // MARK: - Content
-struct Content: Codable {
+struct BookMarkContent: Codable {
     let memberSeq: Int
     let profileImage, startTime, location, title: String
     let bookMarkImageInfos: [BookMarkImageInfo]
