@@ -58,7 +58,6 @@ extension LocationAPI: TargetType {
             let parameters = ["memberSeq": memberSeq]
             // JSON 배열을 데이터로 인코딩
             let bodyData = try? JSONSerialization.data(withJSONObject: request.map { $0.toParameters() }, options: [])
-            
             return .requestCompositeData(bodyData: bodyData ?? Data(), urlParameters: parameters)
         }
     }
