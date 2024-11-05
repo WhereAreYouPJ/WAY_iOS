@@ -470,8 +470,8 @@
 		990DE76D2C660A56007B78C9 /* Friends */ = {
 			isa = PBXGroup;
 			children = (
+				D5D807EE2C85F825008F7882 /* UIKit_Deprecated */,
 				990DE76F2C660A64007B78C9 /* Views */,
-				990DE7702C660A67007B78C9 /* Viewcontrollers */,
 				990DE7712C660A6D007B78C9 /* ViewModels */,
 			);
 			path = Friends;
@@ -490,20 +490,11 @@
 		990DE76F2C660A64007B78C9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D5D807EE2C85F825008F7882 /* UIKit_Deprecated */,
 				D5D807EC2C85F60B008F7882 /* FriendsView.swift */,
 				D5DCBF332C7435E2003F0246 /* SearchFriendsView.swift */,
 				D5D807F12C860931008F7882 /* CommonFriensView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		990DE7702C660A67007B78C9 /* Viewcontrollers */ = {
-			isa = PBXGroup;
-			children = (
-				99949F562C58B1CE00AE0177 /* FriendsListViewController.swift */,
-			);
-			path = Viewcontrollers;
 			sourceTree = "<group>";
 		};
 		990DE7712C660A6D007B78C9 /* ViewModels */ = {
@@ -1310,7 +1301,7 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		D5D807EE2C85F825008F7882 /* UIKit_Deprecated */ = {
+		D5CE91132CD3A9AD00BAEAB7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				99949F4E2C58890C00AE0177 /* ProfileView.swift */,
@@ -1318,6 +1309,23 @@
 				99949F502C588B6200AE0177 /* FavoritesTableView.swift */,
 				99949F522C58A67400AE0177 /* FriendsTableView.swift */,
 				99949F482C587BA500AE0177 /* FriendsListView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D5CE91142CD3A9BC00BAEAB7 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				99949F562C58B1CE00AE0177 /* FriendsListViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		D5D807EE2C85F825008F7882 /* UIKit_Deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				D5CE91142CD3A9BC00BAEAB7 /* ViewControllers */,
+				D5CE91132CD3A9AD00BAEAB7 /* Views */,
 			);
 			path = UIKit_Deprecated;
 			sourceTree = "<group>";

@@ -71,7 +71,7 @@ struct CreateScheduleView: View {
                     SearchLocationView(selectedLocation: $viewModel.place, path: $path)
                 case .searchFriends:
                     SearchFriendsView(selectedFriends: $viewModel.selectedFriends)
-                case .confirmLocation(_):
+                case .confirmLocation:
                     ConfirmLocationView(location: $viewModel.place, path: $path)
                         .onDisappear {
                             viewModel.getFavoriteLocation()

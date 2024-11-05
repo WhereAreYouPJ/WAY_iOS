@@ -139,8 +139,8 @@ struct DailyScheduleView: View {
     
     private func scheduleListView() -> some View {
         // dummy test
-//        ForEach(schedules, id: \.scheduleSeq) { schedule in
-                    ForEach(viewModel.schedules, id: \.scheduleSeq) { schedule in
+        ForEach(schedules, id: \.scheduleSeq) { schedule in
+//                    ForEach(viewModel.schedules, id: \.scheduleSeq) { schedule in
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     Circle()
@@ -169,6 +169,9 @@ struct DailyScheduleView: View {
                 Divider()
                     .padding(.vertical, 4)
             }
+//            .onTapGesture {
+//                <#code#>
+//            }
         }
     }
     
