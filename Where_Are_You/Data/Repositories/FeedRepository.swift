@@ -10,6 +10,10 @@ import UIKit
 protocol FeedRepositoryProtocol {
     func postFeed(request: SaveFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void)
     func putFeed(request: ModifyFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void)
+    
+    func getBookMarkFeed(page: Int32, completion: @escaping (Result<GenericResponse<GetBookMarkResponse>, Error>) -> Void)
+    func postBookMarkFeed(request: BookMarkFeedRequest, completion: @escaping (Result<Void, Error>) -> Void)
+    func deleteBookMarkFeed(request: BookMarkFeedRequest, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class FeedRepository: FeedRepositoryProtocol {
@@ -19,11 +23,27 @@ class FeedRepository: FeedRepositoryProtocol {
         self.feedService = feedService
     }
     
+    // MARK: - Feed
+
     func postFeed(request: SaveFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void) {
         feedService.postFeed(request: request, images: images, completion: completion)
     }
     
     func putFeed(request: ModifyFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void) {
         feedService.putFeed(request: request, images: images, completion: completion)
+    }
+    
+    // MARK: - BookMarkFeed
+
+    func getBookMarkFeed(page: Int32, completion: @escaping (Result<GenericResponse<GetBookMarkResponse>, any Error>) -> Void) {
+        feedService.getBookMarkFeed(page: page, completion: completion)
+    }
+    
+    func postBookMarkFeed(request: BookMarkFeedRequest, completion: @escaping (Result<Void, any Error>) -> Void) {
+        feedService.postBookMarkFeed(request: request, completion: completion)
+    }
+    
+    func deleteBookMarkFeed(request: BookMarkFeedRequest, completion: @escaping (Result<Void, any Error>) -> Void) {
+        feedService.deleteBookMarkFeed(request: request, completion: completion)
     }
 }

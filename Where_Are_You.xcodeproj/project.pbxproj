@@ -93,6 +93,7 @@
 		99949F592C58B81A00AE0177 /* FriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F582C58B81A00AE0177 /* FriendsViewModel.swift */; };
 		99949F5B2C58B85E00AE0177 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F5A2C58B85E00AE0177 /* Friend.swift */; };
 		99949F5F2C58BBAD00AE0177 /* FeedsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F5E2C58BBAD00AE0177 /* FeedsViewController.swift */; };
+		999B88692CD1C51D00F329C9 /* HandleOutsideTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999B88682CD1C51D00F329C9 /* HandleOutsideTap.swift */; };
 		999E296D2CBB989600AB9FF9 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E296C2CBB989600AB9FF9 /* LocationService.swift */; };
 		999E29712CBB9AF900AB9FF9 /* LocationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E29702CBB9AF900AB9FF9 /* LocationRepository.swift */; };
 		999E29732CBB9C7F00AB9FF9 /* GetLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E29722CBB9C7F00AB9FF9 /* GetLocationUseCase.swift */; };
@@ -105,8 +106,7 @@
 		99C1403C2C6496B400A706B6 /* FeedsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C1403B2C6496B400A706B6 /* FeedsTableViewCell.swift */; };
 		99C1403E2C6496BC00A706B6 /* NoDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C1403D2C6496BC00A706B6 /* NoDataView.swift */; };
 		99C140422C64A01A00A706B6 /* AddFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C140412C64A01A00A706B6 /* AddFeedView.swift */; };
-		99C68E3F2C64B11D00DEC1F1 /* SaveFeedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E3E2C64B11D00DEC1F1 /* SaveFeedRequest.swift */; };
-		99C68E412C64B21F00DEC1F1 /* ModifyFeedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E402C64B21F00DEC1F1 /* ModifyFeedRequest.swift */; };
+		99C68E3F2C64B11D00DEC1F1 /* FeedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E3E2C64B11D00DEC1F1 /* FeedRequest.swift */; };
 		99C68E432C64B28400DEC1F1 /* FeedAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E422C64B28400DEC1F1 /* FeedAPI.swift */; };
 		99C68E482C64B43900DEC1F1 /* FeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E472C64B43900DEC1F1 /* FeedService.swift */; };
 		99C68E4C2C64B83D00DEC1F1 /* FeedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E4B2C64B83D00DEC1F1 /* FeedRepository.swift */; };
@@ -133,6 +133,13 @@
 		99CC5E642C51EFAB00A0509A /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CC5E632C51EFAB00A0509A /* MyPageViewModel.swift */; };
 		99CEAD4A2C539743006B3D41 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CEAD492C539743006B3D41 /* SplashViewController.swift */; };
 		99CEAD4C2C5397B1006B3D41 /* DeviceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CEAD4B2C5397B1006B3D41 /* DeviceConfig.swift */; };
+		99CF9BF92CD3172D0079BE81 /* FeedBookMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CF9BF82CD3172D0079BE81 /* FeedBookMarkView.swift */; };
+		99CF9BFB2CD317920079BE81 /* FeedBookMarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CF9BFA2CD317920079BE81 /* FeedBookMarkViewController.swift */; };
+		99CF9BFD2CD319360079BE81 /* BookMarkFeedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CF9BFC2CD319360079BE81 /* BookMarkFeedRequest.swift */; };
+		99CF9BFF2CD341F40079BE81 /* GetBookMarkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CF9BFE2CD341F40079BE81 /* GetBookMarkResponse.swift */; };
+		99CF9C012CD343620079BE81 /* GetBookMarkFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CF9C002CD343620079BE81 /* GetBookMarkFeedUseCase.swift */; };
+		99CF9C032CD343790079BE81 /* PostBookMarkFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CF9C022CD343790079BE81 /* PostBookMarkFeedUseCase.swift */; };
+		99CF9C052CD3438C0079BE81 /* DeleteBookMarkFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CF9C042CD3438C0079BE81 /* DeleteBookMarkFeedUseCase.swift */; };
 		99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D11EB02C06F56F006BE265 /* CustomButton.swift */; };
 		99D23FF42C6889BA00CFD4F0 /* FeedDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D23FF32C6889BA00CFD4F0 /* FeedDetailViewModel.swift */; };
 		99D373902C6ADF030093F386 /* FeedImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D3738F2C6ADF030093F386 /* FeedImagesViewController.swift */; };
@@ -315,6 +322,7 @@
 		99949F582C58B81A00AE0177 /* FriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewModel.swift; sourceTree = "<group>"; };
 		99949F5A2C58B85E00AE0177 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		99949F5E2C58BBAD00AE0177 /* FeedsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsViewController.swift; sourceTree = "<group>"; };
+		999B88682CD1C51D00F329C9 /* HandleOutsideTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleOutsideTap.swift; sourceTree = "<group>"; };
 		999E296C2CBB989600AB9FF9 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		999E29702CBB9AF900AB9FF9 /* LocationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRepository.swift; sourceTree = "<group>"; };
 		999E29722CBB9C7F00AB9FF9 /* GetLocationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLocationUseCase.swift; sourceTree = "<group>"; };
@@ -327,8 +335,7 @@
 		99C1403B2C6496B400A706B6 /* FeedsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsTableViewCell.swift; sourceTree = "<group>"; };
 		99C1403D2C6496BC00A706B6 /* NoDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoDataView.swift; sourceTree = "<group>"; };
 		99C140412C64A01A00A706B6 /* AddFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeedView.swift; sourceTree = "<group>"; };
-		99C68E3E2C64B11D00DEC1F1 /* SaveFeedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFeedRequest.swift; sourceTree = "<group>"; };
-		99C68E402C64B21F00DEC1F1 /* ModifyFeedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyFeedRequest.swift; sourceTree = "<group>"; };
+		99C68E3E2C64B11D00DEC1F1 /* FeedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRequest.swift; sourceTree = "<group>"; };
 		99C68E422C64B28400DEC1F1 /* FeedAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAPI.swift; sourceTree = "<group>"; };
 		99C68E472C64B43900DEC1F1 /* FeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedService.swift; sourceTree = "<group>"; };
 		99C68E4B2C64B83D00DEC1F1 /* FeedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRepository.swift; sourceTree = "<group>"; };
@@ -356,6 +363,13 @@
 		99CC5E632C51EFAB00A0509A /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		99CEAD492C539743006B3D41 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		99CEAD4B2C5397B1006B3D41 /* DeviceConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceConfig.swift; sourceTree = "<group>"; };
+		99CF9BF82CD3172D0079BE81 /* FeedBookMarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedBookMarkView.swift; sourceTree = "<group>"; };
+		99CF9BFA2CD317920079BE81 /* FeedBookMarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedBookMarkViewController.swift; sourceTree = "<group>"; };
+		99CF9BFC2CD319360079BE81 /* BookMarkFeedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookMarkFeedRequest.swift; sourceTree = "<group>"; };
+		99CF9BFE2CD341F40079BE81 /* GetBookMarkResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBookMarkResponse.swift; sourceTree = "<group>"; };
+		99CF9C002CD343620079BE81 /* GetBookMarkFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBookMarkFeedUseCase.swift; sourceTree = "<group>"; };
+		99CF9C022CD343790079BE81 /* PostBookMarkFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostBookMarkFeedUseCase.swift; sourceTree = "<group>"; };
+		99CF9C042CD3438C0079BE81 /* DeleteBookMarkFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteBookMarkFeedUseCase.swift; sourceTree = "<group>"; };
 		99D11EB02C06F56F006BE265 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		99D23FF32C6889BA00CFD4F0 /* FeedDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModel.swift; sourceTree = "<group>"; };
 		99D3738F2C6ADF030093F386 /* FeedImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImagesViewController.swift; sourceTree = "<group>"; };
@@ -773,6 +787,7 @@
 			isa = PBXGroup;
 			children = (
 				99107EA02C6F2C94007D129F /* SaveFeedResponse.swift */,
+				99CF9BFE2CD341F40079BE81 /* GetBookMarkResponse.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -818,6 +833,9 @@
 				99C68E4F2C64B96500DEC1F1 /* SaveFeedUseCase.swift */,
 				99C68E512C64B96E00DEC1F1 /* ModifyFeedUseCase.swift */,
 				99FDD0BE2C6DF99400B15026 /* ReadFeedUseCase.swift */,
+				99CF9C002CD343620079BE81 /* GetBookMarkFeedUseCase.swift */,
+				99CF9C022CD343790079BE81 /* PostBookMarkFeedUseCase.swift */,
+				99CF9C042CD3438C0079BE81 /* DeleteBookMarkFeedUseCase.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -864,6 +882,7 @@
 				9974EA1F2C62196500826793 /* SnappingFlowLayout.swift */,
 				99E7BA582C69A5D500F79C96 /* ImageUtility.swift */,
 				99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */,
+				999B88682CD1C51D00F329C9 /* HandleOutsideTap.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -908,6 +927,7 @@
 				9985AB962C786D0400D1442E /* MyDetailManageView.swift */,
 				995174FF2C7EF89B00E938DE /* LocationBookmarkView.swift */,
 				99A7D7E32C999897002BCD21 /* LocationBookMarkCell.swift */,
+				99CF9BF82CD3172D0079BE81 /* FeedBookMarkView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -918,6 +938,7 @@
 				995E3E5D2C508039006B4480 /* MyPageViewController.swift */,
 				9985AB982C78802400D1442E /* MyDetailManageViewcontroller.swift */,
 				995174FD2C7EF89100E938DE /* LocationBookmarkViewController.swift */,
+				99CF9BFA2CD317920079BE81 /* FeedBookMarkViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1061,8 +1082,8 @@
 		99D780DB2C6055B6005A3F30 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				99C68E3E2C64B11D00DEC1F1 /* SaveFeedRequest.swift */,
-				99C68E402C64B21F00DEC1F1 /* ModifyFeedRequest.swift */,
+				99C68E3E2C64B11D00DEC1F1 /* FeedRequest.swift */,
+				99CF9BFC2CD319360079BE81 /* BookMarkFeedRequest.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -1570,6 +1591,7 @@
 				99EFC76D2CD0B9630044DFC5 /* DeleteLocationUseCase.swift in Sources */,
 				D53620912C8AE1010017B279 /* SearchLocationViewModel.swift in Sources */,
 				9910B84B2C71B62E005F7EEE /* PasswordResetView.swift in Sources */,
+				99CF9C012CD343620079BE81 /* GetBookMarkFeedUseCase.swift in Sources */,
 				D5A91D5B2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift in Sources */,
 				9913A44F2C75CD0A00309DBF /* PhotoAuthService.swift in Sources */,
 				999E29712CBB9AF900AB9FF9 /* LocationRepository.swift in Sources */,
@@ -1584,6 +1606,7 @@
 				99C140422C64A01A00A706B6 /* AddFeedView.swift in Sources */,
 				995174FE2C7EF89100E938DE /* LocationBookmarkViewController.swift in Sources */,
 				D5B3B5392CB3DE63004353F6 /* DailyScheduleViewModel.swift in Sources */,
+				99CF9BF92CD3172D0079BE81 /* FeedBookMarkView.swift in Sources */,
 				9950C65B2C10B0F5003155A7 /* SignUpFormViewController.swift in Sources */,
 				992F57CC2C5B270300219C6B /* LoginBody.swift in Sources */,
 				99FBA5562C453BDD002EEEC7 /* HomeFeedViewController.swift in Sources */,
@@ -1634,13 +1657,13 @@
 				99C9B2292C0197CA008D7CBD /* User.swift in Sources */,
 				99D780DE2C6066FA005A3F30 /* LoginResponse.swift in Sources */,
 				99949F452C58788200AE0177 /* FriendFeedViewController.swift in Sources */,
-				99C68E412C64B21F00DEC1F1 /* ModifyFeedRequest.swift in Sources */,
 				D593CCC82C82318F00A862FF /* ScheduleViewModel.swift in Sources */,
 				995175002C7EF89B00E938DE /* LocationBookmarkView.swift in Sources */,
 				99C68E432C64B28400DEC1F1 /* FeedAPI.swift in Sources */,
 				999E29732CBB9C7F00AB9FF9 /* GetLocationUseCase.swift in Sources */,
 				9974EA202C62196500826793 /* SnappingFlowLayout.swift in Sources */,
 				99C6D29A2C90341F009C0CF8 /* ScheduleService.swift in Sources */,
+				99CF9BFF2CD341F40079BE81 /* GetBookMarkResponse.swift in Sources */,
 				D5D807ED2C85F60B008F7882 /* FriendsView.swift in Sources */,
 				99C68E502C64B96500DEC1F1 /* SaveFeedUseCase.swift in Sources */,
 				997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */,
@@ -1666,6 +1689,7 @@
 				99C68E522C64B96E00DEC1F1 /* ModifyFeedUseCase.swift in Sources */,
 				99C6D29E2C90379F009C0CF8 /* APIResponseHandler.swift in Sources */,
 				D54C040A2C6516CB009CC419 /* CreateScheduleBody.swift in Sources */,
+				99CF9BFD2CD319360079BE81 /* BookMarkFeedRequest.swift in Sources */,
 				99EFC7692CD0B9420044DFC5 /* PutLocationUseCase.swift in Sources */,
 				D5954FCC2CB62F8800ADB877 /* DeleteScheduleBody.swift in Sources */,
 				99949F532C58A67400AE0177 /* FriendsTableView.swift in Sources */,
@@ -1693,11 +1717,13 @@
 				99B397832C0C3E9D00D7A109 /* AccountCheckView.swift in Sources */,
 				D5C2D6742CC8C273002F5607 /* CustomAlertViewController.swift in Sources */,
 				99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */,
+				99CF9C032CD343790079BE81 /* PostBookMarkFeedUseCase.swift in Sources */,
 				D55DFC312C61022900EEEF51 /* CreateScheduleView.swift in Sources */,
 				D58EC0692C633217001BC030 /* SearchLocationView.swift in Sources */,
 				D592D8EF2C7DE3B100736D93 /* SearchFriendsViewModel.swift in Sources */,
 				D5496DD22C6B69570056C196 /* ConfirmLocationView.swift in Sources */,
 				99C6D2A02C903EAF009C0CF8 /* ScheduleRepository.swift in Sources */,
+				99CF9C052CD3438C0079BE81 /* DeleteBookMarkFeedUseCase.swift in Sources */,
 				99149FED2C4F97EA00136097 /* TimeHelper.swift in Sources */,
 				D57AC3B12C8B6336006AE7D7 /* KakaoLocalResponse.swift in Sources */,
 				D54C040E2C651B8A009CC419 /* ScheduleAPI.swift in Sources */,
@@ -1714,7 +1740,7 @@
 				99D8FBC02C3BA2180062AF10 /* CustomLabel.swift in Sources */,
 				992F57DD2C5B56E200219C6B /* AutoTokenPlugin.swift in Sources */,
 				992F57E32C5B618D00219C6B /* MemberSearchUseCase.swift in Sources */,
-				99C68E3F2C64B11D00DEC1F1 /* SaveFeedRequest.swift in Sources */,
+				99C68E3F2C64B11D00DEC1F1 /* FeedRequest.swift in Sources */,
 				995E3E5B2C507FE6006B4480 /* MyPageView.swift in Sources */,
 				99A7D7E42C999897002BCD21 /* LocationBookMarkCell.swift in Sources */,
 				D51AC99C2C849AB400D0AD2E /* LocationAPI.swift in Sources */,
@@ -1726,6 +1752,7 @@
 				99D780E22C606726005A3F30 /* MemberDetailsResponse.swift in Sources */,
 				99D780E42C606735005A3F30 /* CheckEmailResponse.swift in Sources */,
 				9950C6592C10B0DF003155A7 /* SignUpFormView.swift in Sources */,
+				99CF9BFB2CD317920079BE81 /* FeedBookMarkViewController.swift in Sources */,
 				99FBA5582C453C05002EEEC7 /* HomeFeedViewModel.swift in Sources */,
 				99949F512C588B6200AE0177 /* FavoritesTableView.swift in Sources */,
 				992F57CE2C5B28A800219C6B /* EmailVerifyBody.swift in Sources */,
@@ -1738,6 +1765,7 @@
 				99EC20AB2C0D9D9D0018904D /* SignUpViewModel.swift in Sources */,
 				99EC20AD2C0D9DB50018904D /* AcoountSearchViewModel.swift in Sources */,
 				D58F5A502C9332220048C23A /* GetMonthlyScheduleBody.swift in Sources */,
+				999B88692CD1C51D00F329C9 /* HandleOutsideTap.swift in Sources */,
 				D5CCD96F2CB0217E008497AD /* DailyScheduleView.swift in Sources */,
 				99107EA32C6F3E42007D129F /* DDay.swift in Sources */,
 				99CA4F262C33B704007C027C /* ResetPasswordViewModel.swift in Sources */,

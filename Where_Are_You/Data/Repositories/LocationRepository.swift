@@ -9,7 +9,7 @@ import Foundation
 
 protocol LocationRepositoryProtocol {
     func getLocation(completion: @escaping (Result<GenericResponse<GetFavLocationResponse>, Error>) -> Void)
-    func putLocation(completion: @escaping (Result<Void, Error>) -> Void)
+    func putLocation(request: PutFavoriteLocationRequest, completion: @escaping (Result<Void, Error>) -> Void)
     func postLocation(request: PostFavoriteLocationBody, completion: @escaping (Result<Void, Error>) -> Void)
     func deleteLocation(request: DeleteFavoriteLocationBody, completion: @escaping (Result<Void, Error>) -> Void)
 }
@@ -25,8 +25,8 @@ class LocationRepository: LocationRepositoryProtocol {
         locationService.getLocation(completion: completion)
     }
     
-    func putLocation(completion: @escaping (Result<Void, any Error>) -> Void) {
-        locationService.putLocation(completion: completion)
+    func putLocation(request: PutFavoriteLocationRequest, completion: @escaping (Result<Void, any Error>) -> Void) {
+        locationService.putLocation(request: request, completion: completion)
     }
     
     func postLocation(request: PostFavoriteLocationBody, completion: @escaping (Result<Void, any Error>) -> Void) {

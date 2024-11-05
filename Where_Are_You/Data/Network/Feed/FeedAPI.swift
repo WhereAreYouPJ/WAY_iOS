@@ -10,6 +10,10 @@ import Moya
 enum FeedAPI {
     case putFeed(request: ModifyFeedRequest, images: [UIImage]?)
     case postFeed(request: SaveFeedRequest, images: [UIImage]?)
+    
+    case getBookMarkFeed(memberSeq: Int, page: Int32)
+    case postBookMarkFeed(request: BookMarkFeedRequest)
+    case deleteBookMarkFeed(request: BookMarkFeedRequest)
 }
 
 extension FeedAPI: TargetType {
@@ -26,8 +30,12 @@ extension FeedAPI: TargetType {
         switch self {
         case .putFeed:
             return .put
-        case .postFeed:
+        case .postFeed, .postBookMarkFeed:
             return .post
+        case .getBookMarkFeed:
+            return .get
+        case .deleteBookMarkFeed:
+            return .delete
         }
     }
     
@@ -39,6 +47,13 @@ extension FeedAPI: TargetType {
         case .postFeed(let request, let images):
             let multipartData = MultipartFormDataHelper.createMultipartData(from: request, images: images)
             return .uploadMultipart(multipartData)
+            
+        case .getBookMarkFeed(let memberSeq, let page):
+            return .requestParameters(parameters: ["memberSeq": memberSeq, "page": page], encoding: URLEncoding.queryString)
+        case .postBookMarkFeed(request: let request):
+            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+        case .deleteBookMarkFeed(request: let request):
+            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         }
     }
     
