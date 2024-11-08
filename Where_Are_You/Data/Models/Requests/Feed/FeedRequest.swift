@@ -11,7 +11,7 @@ struct SaveFeedRequest: Codable {
     let scheduleSeq: Int
     let memberSeq: Int
     let title: String
-    let content: String
+    let content: String?
     let feedImageOrders: [Int]
 }
 

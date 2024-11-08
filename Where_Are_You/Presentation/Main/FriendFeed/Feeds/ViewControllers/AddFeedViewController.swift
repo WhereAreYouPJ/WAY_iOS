@@ -35,8 +35,10 @@ class AddFeedViewController: UIViewController {
     // MARK: - Helpers
     private func setupViewModel() {
         let scheduleService = ScheduleService()
+        let feedService = FeedService()
+        let feedRepository = FeedRepository(feedService: feedService)
         let scheduleRepository = ScheduleRepository(scheduleService: scheduleService)
-        viewModel = AddFeedViewModel(getScheduleListUseCase: GetScheduleListUseCaseImpl(scheduleRepository: scheduleRepository))
+        viewModel = AddFeedViewModel(getScheduleListUseCase: GetScheduleListUseCaseImpl(scheduleRepository: scheduleRepository), saveFeedUseCase: SaveFeedUseCaseImpl(feedRepository: feedRepository))
     }
     
     private func setupTableView() {
@@ -70,7 +72,7 @@ class AddFeedViewController: UIViewController {
     
     private func buttonActions() {
         addFeedView.scheduleDropDown.scheduleDropDownView.addTarget(self, action: #selector(dropDownButtonTapped), for: .touchUpInside)
-        addFeedView.addImages.addTarget(self, action: #selector(addImagesTapped), for: .touchUpInside)
+        addFeedView.addImages.addTarget(self, action: #selector(handleAddImagesTapped), for: .touchUpInside)
         addFeedView.creatFeedButton.button.addTarget(self, action: #selector(createFeed), for: .touchUpInside)
     }
     
@@ -101,13 +103,20 @@ class AddFeedViewController: UIViewController {
         }
     }
     
-    @objc func addImagesTapped() {
-        // 사진 추가 버튼 눌림
-    }
-    
     @objc func createFeed() {
         // 피드 생성하기 버튼 눌림
-        guard let scheduleSeq = viewModel.selectedScheduleSeq else { return }
+        guard let title = addFeedView.titleTextField.text, !title.isEmpty else { return }
+        
+        let content = addFeedView.contentTextView.text == "어떤 일이 있었나요?" ? nil : addFeedView.contentTextView.text
+        
+        viewModel.saveFeed(title: title, content: content) { [weak self] result in
+            switch result {
+            case .success:
+                self?.dismiss(animated: true)
+            case .failure:
+                print("피드 생성 실패")
+            }
+        }
     }
 }
 
@@ -188,5 +197,25 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
             // 테이블 뷰 끝에 도달했을 때 다음 페이지의 데이터를 불러옴
             viewModel.fetchSchedules()
         }
+    }
+}
+
+extension AddFeedViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    @objc func handleAddImagesTapped() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = false
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            viewModel.selectedImages.append(image)
+            addFeedView.imagesView.isHidden = false
+            // 이미지를 미리보기로 추가하는 로직
+        }
+        dismiss(animated: true, completion: nil)
     }
 }
