@@ -203,7 +203,18 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
             
             dropDownButtonTapped()
             // 참가자 정보 표시 등 추가 작업
-            // 예: scheduleSeq를 이용해 참가자 데이터를 표시하는 로직 구현
+            // 선택된 일정에 참가자 정보를 가져와 업데이트
+            viewModel.fetchParticipants(for: schedule.scheduleSeq) { [weak self] in
+                DispatchQueue.main.async {
+                    let participantInfo = self?.viewModel.getParticipants() ?? ""
+                    if participantInfo.isEmpty {
+                        self?.addFeedView.membersInfo.isHidden = true
+                    } else {
+                        self?.addFeedView.membersInfo.isHidden = false
+                        self?.addFeedView.membersInfo.descriptionLabel.text = participantInfo
+                    }
+                }
+            }
         }
     }
     
