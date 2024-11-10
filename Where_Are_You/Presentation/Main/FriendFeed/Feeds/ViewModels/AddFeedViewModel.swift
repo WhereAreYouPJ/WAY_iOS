@@ -85,14 +85,19 @@ class AddFeedViewModel {
     
     // 일정 선택시 호출
     func selectSchedule(at indexPath: IndexPath) {
-        let key = Array(groupedSchedules.keys)[indexPath.row]
-        let schedule = groupedSchedules[key]![indexPath.row]
-        
-        if !schedule.feedExists {
-            selectedScheduleSeq = schedule.scheduleSeq
-            selectedSchedule = schedule
-            onSchedulesUpadated?() // 선택된 일정 정보 업데이트 알림
+        let key = Array(groupedSchedules.keys)[indexPath.section]
+        if let schedule = groupedSchedules[key]?[indexPath.row] {
+            if !schedule.feedExists {
+                selectedScheduleSeq = schedule.scheduleSeq
+                selectedSchedule = schedule
+                onSchedulesUpadated?() // 선택된 일정 정보 업데이트 알림
+            }
         }
+    }
+
+    // 전체 행 수를 반환하는 메서드 추가
+    func totalNumberOfRows() -> Int {
+        return groupedSchedules.values.reduce(0) { $0 + $1.count }
     }
     
     // 피드 저장 메서드
