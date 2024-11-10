@@ -9,9 +9,10 @@ import UIKit
 
 struct SaveFeedRequest: Codable {
     let scheduleSeq: Int
-    let creatorSeq: Int
+    let memberSeq: Int
     let title: String
     let content: String?
+    let feedImageOrders: [Int]
 }
 
 struct ModifyFeedRequest: Codable {
