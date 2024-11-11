@@ -16,15 +16,13 @@ class ScheduleDropDown: UIView {
     
     let scheduleDateLabel: UILabel = {
         let label = UILabel()
-        label.text = "2024.04.05"
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 12))
-        label.adjustsFontForContentSizeCategory = true
         label.textColor = .color68
         label.numberOfLines = 2
         return label
     }()
     
-    let scheduleLocationLabel: UILabel = CustomLabel(UILabel_NotoSans: .medium, text: "여의도한강공원", textColor: .color68, fontSize: LayoutAdapter.shared.scale(value: 16))
+    let scheduleLocationLabel: UILabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color68, fontSize: LayoutAdapter.shared.scale(value: 16))
     
     let dropDownButton: UIImageView = {
         let imageView = UIImageView()
@@ -59,6 +57,7 @@ class ScheduleDropDown: UIView {
         layer.borderColor = UIColor.brandColor.cgColor
         scheduleDateLabel.isHidden = true
         scheduleLocationLabel.isHidden = true
+        
     }
 
     private func configureViewComponents() {
@@ -86,9 +85,9 @@ class ScheduleDropDown: UIView {
         }
         
         scheduleDateLabel.snp.makeConstraints { make in
-            make.width.equalTo(35)
+            make.width.equalTo(40)
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 14))
-            make.top.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
+            make.centerY.equalToSuperview()
         }
         
         scheduleLocationLabel.snp.makeConstraints { make in

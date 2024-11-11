@@ -20,7 +20,7 @@ class GetScheduleListUseCaseImpl: GetScheduleListUseCase {
         self.scheduleRepository = scheduleRepository
     }
     
-    func execute(page: Int32, completion: @escaping (Result<[ScheduleContent], any Error>) -> Void) {
+    func execute(page: Int32, completion: @escaping (Result<[ScheduleContent], Error>) -> Void) {
         scheduleRepository.getScheduleList(page: page) { result in
             switch result {
             case .success(let response):
