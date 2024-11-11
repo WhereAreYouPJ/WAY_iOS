@@ -66,6 +66,10 @@ class AddFeedViewController: UIViewController {
         viewModel.onSchedulesUpadated = { [weak self] in
             DispatchQueue.main.async {
                 self?.addFeedView.scheduleDropDown.dropDownTableView.reloadData()
+                // 선택된 일정의 정보를 표시
+                if let selectedSchedule = self?.viewModel.selectedSchedule {
+                    self?.addFeedView.scheduleDropDown.chooseScheduleLabel.isHidden = true
+                }
             }
         }
     }
@@ -87,20 +91,20 @@ class AddFeedViewController: UIViewController {
         let iconName = isDropdownVisible ? "chevron.up" : "chevron.down"
         addFeedView.scheduleDropDown.dropDownButton.image = UIImage(systemName: iconName)
         
-        dropViewHeightConstraint.constant = isDropdownVisible ? min(LayoutAdapter.shared.scale(value: 150), LayoutAdapter.shared.scale(value: 460)) : LayoutAdapter.shared.scale(value: 50) // 테이블 뷰 포함 높이 조정
+        dropViewHeightConstraint.constant = isDropdownVisible ? LayoutAdapter.shared.scale(value: 460) : LayoutAdapter.shared.scale(value: 50) // 테이블 뷰 포함 높이 조정
         
         if isDropdownVisible {
+            updateDropDownHeight()
             addFeedView.scheduleDropDown.dropDownTableView.layer.zPosition = 1
             viewModel.fetchSchedules()
         }
-        addFeedView.setNeedsLayout()
-        addFeedView.layoutIfNeeded()
-        
-        addFeedView.scheduleDropDown.dropDownTableView.isHidden = !isDropdownVisible // 테이블 뷰 표시/숨김 처리
-        
+//        addFeedView.setNeedsLayout()
+//        addFeedView.layoutIfNeeded()
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
+        
+        addFeedView.scheduleDropDown.dropDownTableView.isHidden = !isDropdownVisible // 테이블 뷰 표시/숨김 처리
     }
     
     @objc func createFeed() {
@@ -119,6 +123,8 @@ class AddFeedViewController: UIViewController {
         }
     }
 }
+
+// MARK: - UITextViewDelegate
 
 extension AddFeedViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -146,11 +152,15 @@ extension AddFeedViewController: UITextViewDelegate {
     }
 }
 
+// MARK: - AddFeedViewModelDelegate
+
 extension AddFeedViewController: AddFeedViewModelDelegate {
     func didUpdateSchedules() {
         addFeedView.scheduleDropDown.dropDownTableView.reloadData()
     }
 }
+
+// MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -182,9 +192,29 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
         if !schedule.feedExists {
             // 선택된 일정의 seq를 ViewModel에 전달
             viewModel.selectSchedule(at: indexPath)
+            // 선택된 일정의 정보로 label 업데이트
+            addFeedView.scheduleDropDown.scheduleDateLabel.text = schedule.startTime.prefix(10).replacingOccurrences(of: "-", with: ".")
+            addFeedView.scheduleDropDown.scheduleLocationLabel.text = schedule.title
             
+            // 선택된 일정 정보에 맞춰 라벨 보이기 설정
+            addFeedView.scheduleDropDown.scheduleDateLabel.isHidden = false
+            addFeedView.scheduleDropDown.scheduleLocationLabel.isHidden = false
+            addFeedView.scheduleDropDown.chooseScheduleLabel.isHidden = true
+            
+            dropDownButtonTapped()
             // 참가자 정보 표시 등 추가 작업
-            // 예: scheduleSeq를 이용해 참가자 데이터를 표시하는 로직 구현
+            // 선택된 일정에 참가자 정보를 가져와 업데이트
+            viewModel.fetchParticipants(for: schedule.scheduleSeq) { [weak self] in
+                DispatchQueue.main.async {
+                    let participantInfo = self?.viewModel.getParticipants() ?? ""
+                    if participantInfo.isEmpty {
+                        self?.addFeedView.membersInfo.isHidden = true
+                    } else {
+                        self?.addFeedView.membersInfo.isHidden = false
+                        self?.addFeedView.membersInfo.descriptionLabel.text = participantInfo
+                    }
+                }
+            }
         }
     }
     
@@ -198,11 +228,27 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
             viewModel.fetchSchedules()
         }
     }
+    
+    func updateDropDownHeight() {
+        let rowHeight = LayoutAdapter.shared.scale(value: 62)
+        let numberOfRows = viewModel.totalNumberOfRows()
+        let totalHeight = CGFloat(numberOfRows) * rowHeight
+        let maxHeight = LayoutAdapter.shared.scale(value: 460)
+        
+        dropViewHeightConstraint.constant = min(totalHeight, maxHeight)
+        
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
 }
+
+// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 
 extension AddFeedViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @objc func handleAddImagesTapped() {
+        print("handleAddImagesTapped")
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
@@ -210,7 +256,7 @@ extension AddFeedViewController: UIImagePickerControllerDelegate, UINavigationCo
         present(imagePicker, animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[.originalImage] as? UIImage {
             viewModel.selectedImages.append(image)
             addFeedView.imagesView.isHidden = false
