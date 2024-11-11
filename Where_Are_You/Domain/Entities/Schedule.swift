@@ -10,12 +10,12 @@ import Foundation
 struct Schedule: Identifiable {
     let id = UUID()
     let scheduleSeq: Int
-    let title: String
-    let startTime: Date
-    let endTime: Date
-    let isAllday: Bool?
-    let location: Location?
-    let color: String
-    let memo: String?
-    let invitedMember: [Friend]?
+    var title: String
+    var startTime: Date
+    var endTime: Date
+    var isAllday: Bool?
+    var location: Location?
+    var color: String
+    var memo: String?
+    var invitedMember: [Friend]?
 }

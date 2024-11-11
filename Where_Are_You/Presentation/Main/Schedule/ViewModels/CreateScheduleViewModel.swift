@@ -26,7 +26,17 @@ final class CreateScheduleViewModel: ObservableObject {
     let dateFormatter: DateFormatter
     let memberSeq = UserDefaultsManager.shared.getMemberSeq()
     
-    init() {
+    init(schedule: Schedule? = nil) {
+        if let schedule = schedule {
+            self.title = schedule.title
+            self.isAllDay = schedule.isAllday ?? false
+            self.startTime = schedule.startTime
+            self.endTime = schedule.endTime
+            self.place = schedule.location ?? Location(sequence: 0, location: "", streetName: "", x: 0, y: 0)
+            self.selectedFriends = schedule.invitedMember ?? []
+            self.color = schedule.color
+            self.memo = schedule.memo ?? ""
+        }
         let calendar = Calendar.current
         let now = Date()
         let components = calendar.dateComponents([.year, .month, .day, .hour], from: now)

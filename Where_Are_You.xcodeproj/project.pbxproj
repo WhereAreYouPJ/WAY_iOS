@@ -208,6 +208,8 @@
 		D5D24CDC2C70756D00EDADAF /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D24CDB2C70756D00EDADAF /* Config.swift */; };
 		D5D807ED2C85F60B008F7882 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D807EC2C85F60B008F7882 /* FriendsView.swift */; };
 		D5D807F22C860931008F7882 /* CommonFriensView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D807F12C860931008F7882 /* CommonFriensView.swift */; };
+		D5DB6C6D2CDA297300D89360 /* ScheduleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DB6C6C2CDA297300D89360 /* ScheduleDetailView.swift */; };
+		D5DB6C6F2CDA2A0900D89360 /* ScheduleDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DB6C6E2CDA2A0900D89360 /* ScheduleDetailViewModel.swift */; };
 		D5DCBF342C7435E2003F0246 /* SearchFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DCBF332C7435E2003F0246 /* SearchFriendsView.swift */; };
 		D5E3D7D82C63BF730041B28D /* CreateScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */; };
 		D79EFAD9E5409233E5338E46 /* Pods_Where_Are_You.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */; };
@@ -445,6 +447,8 @@
 		D5D24CDB2C70756D00EDADAF /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		D5D807EC2C85F60B008F7882 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		D5D807F12C860931008F7882 /* CommonFriensView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFriensView.swift; sourceTree = "<group>"; };
+		D5DB6C6C2CDA297300D89360 /* ScheduleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDetailView.swift; sourceTree = "<group>"; };
+		D5DB6C6E2CDA2A0900D89360 /* ScheduleDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDetailViewModel.swift; sourceTree = "<group>"; };
 		D5DCBF332C7435E2003F0246 /* SearchFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendsView.swift; sourceTree = "<group>"; };
 		D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleViewModel.swift; sourceTree = "<group>"; };
 		EF2914052EE4B6C83BE57C93 /* Pods-Where_Are_You_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1308,6 +1312,7 @@
 				D55DFC2E2C61021800EEEF51 /* ScheduleView.swift */,
 				D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */,
 				D5CCD96E2CB0217E008497AD /* DailyScheduleView.swift */,
+				D5DB6C6C2CDA297300D89360 /* ScheduleDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1318,6 +1323,7 @@
 				D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */,
 				D593CCC72C82318F00A862FF /* ScheduleViewModel.swift */,
 				D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */,
+				D5DB6C6E2CDA2A0900D89360 /* ScheduleDetailViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1694,6 +1700,7 @@
 				D5954FCC2CB62F8800ADB877 /* DeleteScheduleBody.swift in Sources */,
 				99949F532C58A67400AE0177 /* FriendsTableView.swift in Sources */,
 				990902112C5F239A00BC3F20 /* CommonDescription.swift in Sources */,
+				D5DB6C6D2CDA297300D89360 /* ScheduleDetailView.swift in Sources */,
 				992F57DB2C5B2A1D00219C6B /* MemberAPI.swift in Sources */,
 				99FDD0BD2C6DF72700B15026 /* MultipartFormDataHelper.swift in Sources */,
 				99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */,
@@ -1768,6 +1775,7 @@
 				999B88692CD1C51D00F329C9 /* HandleOutsideTap.swift in Sources */,
 				D5CCD96F2CB0217E008497AD /* DailyScheduleView.swift in Sources */,
 				99107EA32C6F3E42007D129F /* DDay.swift in Sources */,
+				D5DB6C6F2CDA2A0900D89360 /* ScheduleDetailViewModel.swift in Sources */,
 				99CA4F262C33B704007C027C /* ResetPasswordViewModel.swift in Sources */,
 				99D23FF42C6889BA00CFD4F0 /* FeedDetailViewModel.swift in Sources */,
 				99DA18B92C4E132A00D5CDA6 /* TitleView.swift in Sources */,

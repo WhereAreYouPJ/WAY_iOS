@@ -129,6 +129,7 @@ struct AddPlaceView: View {
     
     var body: some View {
         Text("위치추가")
+        
         Divider()
         
         HStack {
@@ -141,11 +142,20 @@ struct AddPlaceView: View {
                     }
                 
             } else {
-                Text(viewModel.place.location)
-                    .foregroundStyle(Color.primary)
-                    .onTapGesture {
-                        path.append(Route.confirmLocation(viewModel.place))
-                    }
+                HStack {
+                    Text(viewModel.place.location)
+                        .onTapGesture {
+                            path.append(Route.confirmLocation(viewModel.place))
+                        }
+                }
+                
+                Spacer()
+                
+                Button(action: {
+                    viewModel.place = Location(sequence: 0, location: "", streetName: "", x: 0, y: 0)
+                }, label: {
+                    CancellationView()
+                })
             }
         }
         
@@ -163,7 +173,6 @@ struct AddPlaceView: View {
         }
     }
 }
-
 
 struct FavoritePlaceCell: View {
     let place: Location
@@ -215,9 +224,33 @@ struct AddFriendsView: View {
                 if count > 3 {
                     Text("외 " + String(count - 3) + "명")
                 }
+                
+                Spacer()
+                
+                Button(action: {
+                    selectedFriends.removeAll()
+                }, label: {
+                    CancellationView()
+                })
             }
         }
         .padding(.bottom, 20)
+    }
+}
+
+struct CancellationView: View {
+    var body: some View {
+        ZStack {
+            Circle()
+                .frame(width: LayoutAdapter.shared.scale(value: 18), height: LayoutAdapter.shared.scale(value: 18))
+                .foregroundColor(Color(.color235))
+            
+            Image("icon-delete")
+                .resizable()
+                .frame(width: LayoutAdapter.shared.scale(value: 18), height: LayoutAdapter.shared.scale(value: 18))
+                .opacity(0.8)
+        }
+        .padding(.trailing, 4)
     }
 }
 
