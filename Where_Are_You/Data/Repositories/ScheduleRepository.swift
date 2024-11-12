@@ -10,6 +10,8 @@ import Foundation
 protocol ScheduleRepositoryProtocol {
     func postSchedule(request: CreateScheduleBody, completion: @escaping (Result<GenericResponse<PostScheduleResponse>, Error>) -> Void)
     func getSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func postSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func getSchedule(scheduleSeq: Int, completion: @escaping (Result<GenericResponse<GetScheduleResponse>, Error>) -> Void)
     func putSchedule(request: PutScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     func deleteSchedule(request: DeleteScheduleBody, isCreator: Bool, completion: @escaping (Result<Void, Error>) -> Void)
     func postEcceptSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
@@ -20,6 +22,7 @@ protocol ScheduleRepositoryProtocol {
 }
 
 class ScheduleRepository: ScheduleRepositoryProtocol {
+
     private let scheduleService: ScheduleServiceProtocol
     
     init(scheduleService: ScheduleServiceProtocol) {
@@ -29,9 +32,9 @@ class ScheduleRepository: ScheduleRepositoryProtocol {
     func postSchedule(request: CreateScheduleBody, completion: @escaping (Result<GenericResponse<PostScheduleResponse>, any Error>) -> Void) {
         scheduleService.postSchedule(request: request, completion: completion)
     }
-    
-    func getSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
-        scheduleService.getSchedule(request: request, completion: completion)
+ 
+    func getSchedule(scheduleSeq: Int, completion: @escaping (Result<GenericResponse<GetScheduleResponse>, any Error>) -> Void) {
+        scheduleService.getSchedule(scheduleSeq: scheduleSeq, completion: completion)
     }
     
     func putSchedule(request: PutScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {

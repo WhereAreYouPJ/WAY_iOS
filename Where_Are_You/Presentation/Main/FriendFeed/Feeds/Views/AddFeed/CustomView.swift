@@ -14,7 +14,7 @@ class CustomView: UIView {
     private let separator2 = UIView()
     let imageView = UIImageView()
     
-    let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: "사진 추가", textColor: .color102, fontSize: 16)
+    let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color102, fontSize: 16)
     
     // MARK: - Lifecycle
 

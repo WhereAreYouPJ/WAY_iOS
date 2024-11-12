@@ -94,6 +94,11 @@
 		99949F5B2C58B85E00AE0177 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F5A2C58B85E00AE0177 /* Friend.swift */; };
 		99949F5F2C58BBAD00AE0177 /* FeedsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99949F5E2C58BBAD00AE0177 /* FeedsViewController.swift */; };
 		99960AAB2CE1D26C007D2B61 /* GetScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99960AAA2CE1D26C007D2B61 /* GetScheduleUseCase.swift */; };
+		99960AAD2CE1D875007D2B61 /* PostScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99960AAC2CE1D875007D2B61 /* PostScheduleUseCase.swift */; };
+		99960AAF2CE1D8DB007D2B61 /* PutScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99960AAE2CE1D8DB007D2B61 /* PutScheduleUseCase.swift */; };
+		99960AB12CE1D96D007D2B61 /* DeleteScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99960AB02CE1D96D007D2B61 /* DeleteScheduleUseCase.swift */; };
+		99960AB32CE1D97C007D2B61 /* PostEcceptScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99960AB22CE1D97C007D2B61 /* PostEcceptScheduleUseCase.swift */; };
+		99960AB52CE1DE5B007D2B61 /* GetScheduleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99960AB42CE1DE5B007D2B61 /* GetScheduleResponse.swift */; };
 		999B88692CD1C51D00F329C9 /* HandleOutsideTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999B88682CD1C51D00F329C9 /* HandleOutsideTap.swift */; };
 		999E296D2CBB989600AB9FF9 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E296C2CBB989600AB9FF9 /* LocationService.swift */; };
 		999E29712CBB9AF900AB9FF9 /* LocationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E29702CBB9AF900AB9FF9 /* LocationRepository.swift */; };
@@ -327,6 +332,11 @@
 		99949F5A2C58B85E00AE0177 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		99949F5E2C58BBAD00AE0177 /* FeedsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsViewController.swift; sourceTree = "<group>"; };
 		99960AAA2CE1D26C007D2B61 /* GetScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetScheduleUseCase.swift; sourceTree = "<group>"; };
+		99960AAC2CE1D875007D2B61 /* PostScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostScheduleUseCase.swift; sourceTree = "<group>"; };
+		99960AAE2CE1D8DB007D2B61 /* PutScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutScheduleUseCase.swift; sourceTree = "<group>"; };
+		99960AB02CE1D96D007D2B61 /* DeleteScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteScheduleUseCase.swift; sourceTree = "<group>"; };
+		99960AB22CE1D97C007D2B61 /* PostEcceptScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostEcceptScheduleUseCase.swift; sourceTree = "<group>"; };
+		99960AB42CE1DE5B007D2B61 /* GetScheduleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetScheduleResponse.swift; sourceTree = "<group>"; };
 		999B88682CD1C51D00F329C9 /* HandleOutsideTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleOutsideTap.swift; sourceTree = "<group>"; };
 		999E296C2CBB989600AB9FF9 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		999E29702CBB9AF900AB9FF9 /* LocationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRepository.swift; sourceTree = "<group>"; };
@@ -851,9 +861,13 @@
 		99C6D2A12C903FEA009C0CF8 /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
+				99960AAC2CE1D875007D2B61 /* PostScheduleUseCase.swift */,
+				99960AAA2CE1D26C007D2B61 /* GetScheduleUseCase.swift */,
+				99960AAE2CE1D8DB007D2B61 /* PutScheduleUseCase.swift */,
+				99960AB02CE1D96D007D2B61 /* DeleteScheduleUseCase.swift */,
+				99960AB22CE1D97C007D2B61 /* PostEcceptScheduleUseCase.swift */,
 				99C6D2A22C904006009C0CF8 /* GetDDayScheduleUseCase.swift */,
 				992BF70B2CAA9006008D3055 /* GetScheduleListUseCase.swift */,
-				99960AAA2CE1D26C007D2B61 /* GetScheduleUseCase.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -1290,6 +1304,7 @@
 				D512EC562CA6E56C001AC965 /* GetScheduleByDateResponse.swift */,
 				992BF7092CAA8819008D3055 /* GetScheduleListResponse.swift */,
 				D5FC8ED32CE31151000A08C2 /* PostScheduleResponse.swift */,
+				99960AB42CE1DE5B007D2B61 /* GetScheduleResponse.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -1599,6 +1614,7 @@
 			files = (
 				D564EDF52C8F13300002A4C5 /* FavoriteLocationBody.swift in Sources */,
 				9975A35B2C8055C100A0FF5C /* MemberDetailsUseCase.swift in Sources */,
+				99960AB52CE1DE5B007D2B61 /* GetScheduleResponse.swift in Sources */,
 				9910B84C2C71B638005F7EEE /* DDayViewModel.swift in Sources */,
 				99EFC76D2CD0B9630044DFC5 /* DeleteLocationUseCase.swift in Sources */,
 				D53620912C8AE1010017B279 /* SearchLocationViewModel.swift in Sources */,
@@ -1626,6 +1642,7 @@
 				99C9B22C2C019C67008D7CBD /* LoginView.swift in Sources */,
 				99949F5F2C58BBAD00AE0177 /* FeedsViewController.swift in Sources */,
 				9950C6572C1040FD003155A7 /* TermsAgreementViewController.swift in Sources */,
+				99960AB12CE1D96D007D2B61 /* DeleteScheduleUseCase.swift in Sources */,
 				9910B8522C71EAA4005F7EEE /* ScheduleDropDownCell.swift in Sources */,
 				99FDD0BF2C6DF99400B15026 /* ReadFeedUseCase.swift in Sources */,
 				99D8FBBB2C3BA1D90062AF10 /* MainHomeViewController.swift in Sources */,
@@ -1652,6 +1669,7 @@
 				992F57E52C5B623F00219C6B /* CheckEmailUseCase.swift in Sources */,
 				9911F9842C3F5AA600D0FDC9 /* BannerView.swift in Sources */,
 				D5DCBF342C7435E2003F0246 /* SearchFriendsView.swift in Sources */,
+				99960AAD2CE1D875007D2B61 /* PostScheduleUseCase.swift in Sources */,
 				99C9B2422C01CE4C008D7CBD /* AccountLoginViewModel.swift in Sources */,
 				99107EA12C6F2C94007D129F /* SaveFeedResponse.swift in Sources */,
 				99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */,
@@ -1670,6 +1688,7 @@
 				99D780DE2C6066FA005A3F30 /* LoginResponse.swift in Sources */,
 				99949F452C58788200AE0177 /* FriendFeedViewController.swift in Sources */,
 				D593CCC82C82318F00A862FF /* ScheduleViewModel.swift in Sources */,
+				99960AAF2CE1D8DB007D2B61 /* PutScheduleUseCase.swift in Sources */,
 				995175002C7EF89B00E938DE /* LocationBookmarkView.swift in Sources */,
 				99C68E432C64B28400DEC1F1 /* FeedAPI.swift in Sources */,
 				999E29732CBB9C7F00AB9FF9 /* GetLocationUseCase.swift in Sources */,
@@ -1778,6 +1797,7 @@
 				992F57C82C5B26D700219C6B /* ResetPasswordBody.swift in Sources */,
 				99EC20AB2C0D9D9D0018904D /* SignUpViewModel.swift in Sources */,
 				99EC20AD2C0D9DB50018904D /* AcoountSearchViewModel.swift in Sources */,
+				99960AB32CE1D97C007D2B61 /* PostEcceptScheduleUseCase.swift in Sources */,
 				D58F5A502C9332220048C23A /* GetMonthlyScheduleBody.swift in Sources */,
 				999B88692CD1C51D00F329C9 /* HandleOutsideTap.swift in Sources */,
 				D5FC8ED42CE31151000A08C2 /* PostScheduleResponse.swift in Sources */,
