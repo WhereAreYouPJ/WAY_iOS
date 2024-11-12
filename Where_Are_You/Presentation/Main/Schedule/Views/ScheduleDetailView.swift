@@ -21,13 +21,11 @@ struct ScheduleDetailView: View {
     var body: some View {
         NavigationStack(path: $path) {
             VStack(alignment: .leading, content: {
-                ReadonlyContainer(isEditable: viewModel.isEditable) {
-                    TextField("",
-                              text: Binding(get: { viewModel.schedule.title },
-                                            set: { viewModel.schedule.title = $0 }),
-                              prompt: Text("메모를 작성해주세요.").foregroundColor(Color(.color118)))
-                    .disabled(!viewModel.isEditable)
-                }
+                TextField("",
+                          text: Binding(get: { viewModel.schedule.title },
+                                        set: { viewModel.schedule.title = $0 }),
+                          prompt: Text("메모를 작성해주세요.").foregroundColor(Color(.color118)))
+                .disabled(!viewModel.isEditable)
                 
                 Divider()
                     .padding(.bottom, 16)
@@ -120,67 +118,6 @@ struct ScheduleDetailView: View {
         }
         .onAppear {
             viewModel.createViewModel.getFavoriteLocation()
-        }
-    }
-}
-
-struct ReadonlyContainer<Content: View>: View {
-    var isEditable: Bool
-    let content: Content
-    @State private var showingFeedback = false
-    var feedbackMessage: String
-    
-    init(
-        isEditable: Bool,
-        feedbackMessage: String = "그룹 일정은 생성자만 수정할 수 있습니다",
-        @ViewBuilder content: () -> Content
-    ) {
-        self.isEditable = isEditable
-        self.content = content()
-        self.feedbackMessage = feedbackMessage
-    }
-    
-    var body: some View {
-        VStack {
-            ZStack {
-                content
-                    .tint(isEditable ? .blue : .gray)
-                
-                if !isEditable {
-                    VStack {
-                        // Toggle 높이만큼 투명 공간
-                        Color.clear
-                            .frame(height: 10)
-                        
-                        // DatePicker 영역 커버
-                        Rectangle()
-                            .fill(Color.white.opacity(0.001))
-                            .allowsHitTesting(true)
-                            .onTapGesture {
-                                showingFeedback = true
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                    showingFeedback = false
-                                }
-                            }
-                    }
-                    
-                    if showingFeedback {
-                        VStack {
-                            Spacer()
-                            HStack {
-                                Image("icon-information")
-                                Text(feedbackMessage)
-                                    .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 12)))
-                                    .foregroundStyle(.red)
-                            }
-                            .transition(.opacity)
-                            .animation(.easeInOut, value: showingFeedback)
-                        }
-                    }
-                }
-            }
-            
-            
         }
     }
 }

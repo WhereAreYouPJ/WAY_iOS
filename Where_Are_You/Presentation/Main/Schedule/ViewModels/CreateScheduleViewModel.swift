@@ -55,8 +55,6 @@ final class CreateScheduleViewModel: ObservableObject {
         
         dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        
-        getFavoriteLocation()
     }
     
     func geocodeSelectedLocation(_ location: Location, completion: @escaping (Location) -> Void) {

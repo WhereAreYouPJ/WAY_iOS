@@ -9,9 +9,9 @@ import SwiftUI
 
 struct DailyScheduleView: View {
     @StateObject private var viewModel: DailyScheduleViewModel
-    @State private var showingScheduleDetail = false
     @State private var showingDeleteAlert = false
     @State private var selectedSchedule: Schedule?
+    @State private var scheduleForDetail: Schedule?
     @Binding var isPresented: Bool
     var onDeleteSchedule: (Schedule, String, String) -> Void
     private let formatter = DateFormatter()
@@ -140,7 +140,7 @@ struct DailyScheduleView: View {
     
     private func scheduleListView() -> some View {
         // dummy test
-//        ForEach(schedules, id: \.scheduleSeq) { schedule in
+        //        ForEach(schedules, id: \.scheduleSeq) { schedule in
         ForEach(viewModel.schedules, id: \.scheduleSeq) { schedule in
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
@@ -170,20 +170,17 @@ struct DailyScheduleView: View {
                 Divider()
                     .padding(.vertical, 4)
             }
-            .contentShape(Rectangle())  // 전체 영역을 탭 가능하게 만듦
+            .contentShape(Rectangle())
             .onTapGesture {
-                selectedSchedule = schedule
-                showingScheduleDetail = true
+                scheduleForDetail = schedule
             }
         }
-        .sheet(isPresented: $showingScheduleDetail) {
-            if let schedule = selectedSchedule {
-                NavigationStack {
-                    ScheduleDetailView(schedule: schedule)
-                }
-                .presentationDetents([.large])
-                .presentationDragIndicator(.visible)
+        .sheet(item: $scheduleForDetail) { schedule in
+            NavigationStack {
+                ScheduleDetailView(schedule: schedule)
             }
+            .presentationDetents([.large])
+            .presentationDragIndicator(.visible)
         }
     }
     

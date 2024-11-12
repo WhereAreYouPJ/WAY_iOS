@@ -21,7 +21,7 @@ class ScheduleDetailViewModel: ObservableObject {
     }
     
     private var isScheduleCreator: Bool {
-        return schedule.invitedMember?.contains { $0.memberSeq == memberSeq } ?? false
+        return !(schedule.invitedMember?.contains { $0.memberSeq == memberSeq } ?? false)
     }
     
     var isEditable: Bool {
@@ -33,6 +33,7 @@ class ScheduleDetailViewModel: ObservableObject {
     }
     
     init(schedule: Schedule) {
+        print("ScheduleDetailViewModel init with schedule: \(schedule.title)")
         self.schedule = schedule
         self.createViewModel = CreateScheduleViewModel(schedule: schedule)
     }
