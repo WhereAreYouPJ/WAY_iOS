@@ -10,7 +10,7 @@ import Moya
 
 enum ScheduleAPI {
     case postSchedule(request: CreateScheduleBody)
-    case getSchedule(request: CreateScheduleBody)
+    case getSchedule(scheduleSeq: Int, memberSeq: Int)
     case putSchedule(request: PutScheduleBody)
     case deleteScheduleByInvitee(request: DeleteScheduleBody)
     case deleteScheduleByCreator(request: DeleteScheduleBody)
@@ -71,8 +71,8 @@ extension ScheduleAPI: TargetType {
         case .postEcceptSchedule(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
             
-        case .getSchedule(request: let request):
-            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+        case .getSchedule(let scheduleSeq, let memberSeq):
+            return .requestParameters(parameters: ["scheduleSeq": scheduleSeq, "memberSeq": memberSeq], encoding: URLEncoding.queryString)
         case .getMonthlySchedule(let yearMonth, let memberSeq):
             return .requestParameters(parameters: ["yearMonth": yearMonth, "memberSeq": memberSeq], encoding: URLEncoding.queryString)
         case .getDailySchedule(let date, let memberSeq):

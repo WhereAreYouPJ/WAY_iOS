@@ -8,7 +8,8 @@
 import Foundation
 
 protocol GetScheduleUseCase {
-    func execute(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func execute(scheduleSeq: Int, completion: @escaping (Result<GetScheduleResponse, Error>) -> Void)
+
 }
 
 class GetScheduleUseCaseImpl: GetScheduleUseCase {
@@ -18,8 +19,14 @@ class GetScheduleUseCaseImpl: GetScheduleUseCase {
         self.scheduleRepository = scheduleRepository
     }
     
-    func execute(request: CreateScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
-        scheduleRepository.getSchedule(request: request, completion: completion)
+    func execute(scheduleSeq: Int, completion: @escaping (Result<GetScheduleResponse, any Error>) -> Void) {
+        scheduleRepository.getSchedule(scheduleSeq: scheduleSeq) { result in
+            switch result {
+            case .success(let response):
+                completion(.success(response.data))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
-    
 }

@@ -98,6 +98,7 @@
 		99960AAF2CE1D8DB007D2B61 /* PutScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99960AAE2CE1D8DB007D2B61 /* PutScheduleUseCase.swift */; };
 		99960AB12CE1D96D007D2B61 /* DeleteScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99960AB02CE1D96D007D2B61 /* DeleteScheduleUseCase.swift */; };
 		99960AB32CE1D97C007D2B61 /* PostEcceptScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99960AB22CE1D97C007D2B61 /* PostEcceptScheduleUseCase.swift */; };
+		99960AB52CE1DE5B007D2B61 /* GetScheduleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99960AB42CE1DE5B007D2B61 /* GetScheduleResponse.swift */; };
 		999B88692CD1C51D00F329C9 /* HandleOutsideTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999B88682CD1C51D00F329C9 /* HandleOutsideTap.swift */; };
 		999E296D2CBB989600AB9FF9 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E296C2CBB989600AB9FF9 /* LocationService.swift */; };
 		999E29712CBB9AF900AB9FF9 /* LocationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E29702CBB9AF900AB9FF9 /* LocationRepository.swift */; };
@@ -331,6 +332,7 @@
 		99960AAE2CE1D8DB007D2B61 /* PutScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutScheduleUseCase.swift; sourceTree = "<group>"; };
 		99960AB02CE1D96D007D2B61 /* DeleteScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteScheduleUseCase.swift; sourceTree = "<group>"; };
 		99960AB22CE1D97C007D2B61 /* PostEcceptScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostEcceptScheduleUseCase.swift; sourceTree = "<group>"; };
+		99960AB42CE1DE5B007D2B61 /* GetScheduleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetScheduleResponse.swift; sourceTree = "<group>"; };
 		999B88682CD1C51D00F329C9 /* HandleOutsideTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleOutsideTap.swift; sourceTree = "<group>"; };
 		999E296C2CBB989600AB9FF9 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		999E29702CBB9AF900AB9FF9 /* LocationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRepository.swift; sourceTree = "<group>"; };
@@ -863,10 +865,10 @@
 				99960AAC2CE1D875007D2B61 /* PostScheduleUseCase.swift */,
 				99960AAA2CE1D26C007D2B61 /* GetScheduleUseCase.swift */,
 				99960AAE2CE1D8DB007D2B61 /* PutScheduleUseCase.swift */,
-				99C6D2A22C904006009C0CF8 /* GetDDayScheduleUseCase.swift */,
-				992BF70B2CAA9006008D3055 /* GetScheduleListUseCase.swift */,
 				99960AB02CE1D96D007D2B61 /* DeleteScheduleUseCase.swift */,
 				99960AB22CE1D97C007D2B61 /* PostEcceptScheduleUseCase.swift */,
+				99C6D2A22C904006009C0CF8 /* GetDDayScheduleUseCase.swift */,
+				992BF70B2CAA9006008D3055 /* GetScheduleListUseCase.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -1301,6 +1303,7 @@
 				99C6D29B2C903526009C0CF8 /* DDayScheduleResponse.swift */,
 				D512EC562CA6E56C001AC965 /* GetScheduleByDateResponse.swift */,
 				992BF7092CAA8819008D3055 /* GetScheduleListResponse.swift */,
+				99960AB42CE1DE5B007D2B61 /* GetScheduleResponse.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -1591,6 +1594,7 @@
 			files = (
 				D564EDF52C8F13300002A4C5 /* FavoriteLocationBody.swift in Sources */,
 				9975A35B2C8055C100A0FF5C /* MemberDetailsUseCase.swift in Sources */,
+				99960AB52CE1DE5B007D2B61 /* GetScheduleResponse.swift in Sources */,
 				9910B84C2C71B638005F7EEE /* DDayViewModel.swift in Sources */,
 				99EFC76D2CD0B9630044DFC5 /* DeleteLocationUseCase.swift in Sources */,
 				D53620912C8AE1010017B279 /* SearchLocationViewModel.swift in Sources */,

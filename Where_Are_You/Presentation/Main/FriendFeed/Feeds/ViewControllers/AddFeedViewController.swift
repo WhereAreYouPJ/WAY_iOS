@@ -38,7 +38,10 @@ class AddFeedViewController: UIViewController {
         let feedService = FeedService()
         let feedRepository = FeedRepository(feedService: feedService)
         let scheduleRepository = ScheduleRepository(scheduleService: scheduleService)
-        viewModel = AddFeedViewModel(getScheduleListUseCase: GetScheduleListUseCaseImpl(scheduleRepository: scheduleRepository), saveFeedUseCase: SaveFeedUseCaseImpl(feedRepository: feedRepository))
+        viewModel = AddFeedViewModel(
+            getScheduleListUseCase: GetScheduleListUseCaseImpl(scheduleRepository: scheduleRepository),
+            saveFeedUseCase: SaveFeedUseCaseImpl(feedRepository: feedRepository),
+            getScheduleUseCase: GetScheduleUseCaseImpl(scheduleRepository: scheduleRepository))
     }
     
     private func setupTableView() {
@@ -63,7 +66,7 @@ class AddFeedViewController: UIViewController {
     }
     
     private func setupBindings() {
-        viewModel.onSchedulesUpadated = { [weak self] in
+        viewModel.onSchedulesUpdated = { [weak self] in
             DispatchQueue.main.async {
                 self?.addFeedView.scheduleDropDown.dropDownTableView.reloadData()
                 // 선택된 일정의 정보를 표시
