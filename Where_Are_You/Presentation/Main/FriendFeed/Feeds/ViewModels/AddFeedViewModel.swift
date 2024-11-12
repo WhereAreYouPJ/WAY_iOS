@@ -14,6 +14,7 @@ protocol AddFeedViewModelDelegate: AnyObject {
 class AddFeedViewModel {
     private let getScheduleListUseCase: GetScheduleListUseCase
     private let saveFeedUseCase: SaveFeedUseCase
+    private let getScheduleUseCase: GetScheduleUseCase
     
     private var participants: [String] = [] // 참가자 이름을 저장할 배열
     private var schedules: [ScheduleContent] = []
@@ -25,14 +26,15 @@ class AddFeedViewModel {
     var selectedSchedule: ScheduleContent?
     var selectedImages: [UIImage] = []
     
-    var onSchedulesUpadated: (() -> Void)?
+    var onSchedulesUpdated: (() -> Void)?
     
     weak var delegate: AddFeedViewModelDelegate?
     
     // MARK: - Lifecycle
-    init(getScheduleListUseCase: GetScheduleListUseCase, saveFeedUseCase: SaveFeedUseCase) {
+    init(getScheduleListUseCase: GetScheduleListUseCase, saveFeedUseCase: SaveFeedUseCase, getScheduleUseCase: GetScheduleUseCase) {
         self.getScheduleListUseCase = getScheduleListUseCase
         self.saveFeedUseCase = saveFeedUseCase
+        self.getScheduleUseCase = getScheduleUseCase
     }
     
     // MARK: - Helpers
@@ -54,7 +56,7 @@ class AddFeedViewModel {
                 self.groupedSchedules = Dictionary(grouping: schedules, by: { schedule -> String in
                     return String(schedule.startTime.prefix(10))
                 })
-                self.onSchedulesUpadated?()
+                self.onSchedulesUpdated?()
                 self.delegate?.didUpdateSchedules()
                 // 여기에 성공했을때 일정 리스트들을 올리면 된다.
             case .failure(let error):
@@ -91,20 +93,24 @@ class AddFeedViewModel {
             if !schedule.feedExists {
                 selectedScheduleSeq = schedule.scheduleSeq
                 selectedSchedule = schedule
-                onSchedulesUpadated?() // 선택된 일정 정보 업데이트 알림
+                onSchedulesUpdated?() // 선택된 일정 정보 업데이트 알림
             }
         }
     }
     
     // 참가자 정보 가져오기 메서드 추가
     func fetchParticipants(for scheduleSeq: Int, completion: @escaping () -> Void) {
-        
-        // 예: 일정 ID(scheduleSeq)에 해당하는 참가자 정보를 서버에서 받아오는 로직 구현
-        // 아래는 예시 데이터
-        let exampleParticipants = ["김민정", "임창균", "이주헌"]
-        
-        self.participants = exampleParticipants
-        completion()
+        getScheduleUseCase.execute(scheduleSeq: scheduleSeq) { result in
+            switch result {
+            case .success(let data):
+                self.participants = data.memberInfos
+                    .filter{ !$0.isCreate }
+                    .map{ $0.userName }
+                completion()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     // 참가자 정보 가져오기
@@ -122,7 +128,7 @@ class AddFeedViewModel {
         return groupedSchedules.values.reduce(0) { $0 + $1.count }
     }
     
-    // 피드 저장 메서드
+    // MARK: - 피드 저장 메서드
     func saveFeed(title: String, content: String?, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let schedule = selectedSchedule else { return }
         

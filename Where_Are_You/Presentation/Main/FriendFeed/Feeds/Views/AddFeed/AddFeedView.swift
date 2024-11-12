@@ -46,7 +46,7 @@ class AddFeedView: UIView {
         return button
     }()
     
-    let membersInfo = CustomView(image: "icon-users", text: "김민정, 임창균, 이주헌 외 4명", textColor: .color34, separatorHidden: true)
+    let membersInfo = CustomView(image: "icon-users", text: "", textColor: .color34, separatorHidden: true)
     
     lazy var addStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [addImages, membersInfo])
