@@ -8,7 +8,7 @@
 import Foundation
 
 protocol GetLocationUseCase {
-    func execute(completion: @escaping (Result<GetFavLocationResponse, Error>) -> Void)
+    func execute(memberSeq: Int, completion: @escaping (Result<GetFavLocationResponse, Error>) -> Void)
 }
 
 class GetLocationUseCaseImpl: GetLocationUseCase {
@@ -18,8 +18,8 @@ class GetLocationUseCaseImpl: GetLocationUseCase {
         self.locationRepository = locationRepository
     }
     
-    func execute(completion: @escaping (Result<GetFavLocationResponse, any Error>) -> Void) {
-        locationRepository.getLocation { result in
+    func execute(memberSeq: Int, completion: @escaping (Result<GetFavLocationResponse, any Error>) -> Void) {
+        locationRepository.getLocation(memberSeq: memberSeq) { result in
             switch result {
             case .success(let response):
                 completion(.success(response.data))

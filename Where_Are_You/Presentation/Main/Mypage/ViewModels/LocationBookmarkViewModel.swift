@@ -9,7 +9,7 @@ import Foundation
 
 class LocationBookmarkViewModel {
     // MARK: - Properties
-    
+    let memberSeq = UserDefaultsManager.shared.getMemberSeq()
     var locations: [GetFavLocation] = []
     var onGetLocationBookMark: (() -> Void)?
     var onEmptyLocation: (() -> Void)?
@@ -40,7 +40,7 @@ class LocationBookmarkViewModel {
     // MARK: - GET
     
     func getLocationBookMark() {
-        getLocationUseCase.execute { result in
+        getLocationUseCase.execute(memberSeq: memberSeq) { result in
             switch result {
             case .success(let data):
                 if data.isEmpty {

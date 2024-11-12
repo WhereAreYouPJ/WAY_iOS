@@ -21,15 +21,18 @@ struct ScheduleDetailView: View {
     var body: some View {
         NavigationStack(path: $path) {
             VStack(alignment: .leading, content: {
-                TextField("",
-                          text: Binding(get: { viewModel.schedule.title },
-                                        set: { viewModel.schedule.title = $0 }),
-                          prompt: Text("메모를 작성해주세요.").foregroundColor(Color(.color118)))
+                ReadonlyContainer(isEditable: viewModel.isEditable) {
+                    TextField("",
+                              text: Binding(get: { viewModel.schedule.title },
+                                            set: { viewModel.schedule.title = $0 }),
+                              prompt: Text("메모를 작성해주세요.").foregroundColor(Color(.color118)))
+                    .disabled(!viewModel.isEditable)
+                }
                 
                 Divider()
                     .padding(.bottom, 16)
                 
-                DateAndTimeView(
+                ReadonlyDateTimeContainer(
                     isAllDay: Binding(
                         get: { viewModel.schedule.isAllday ?? false },
                         set: { viewModel.schedule.isAllday = $0 }
@@ -41,16 +44,37 @@ struct ScheduleDetailView: View {
                     endTime: Binding(
                         get: { viewModel.schedule.endTime },
                         set: { viewModel.schedule.endTime = $0 }
-                    )
+                    ),
+                    isEditable: viewModel.isEditable
                 )
                 
+                //                DateAndTimeView(
+                //                    isAllDay: Binding(
+                //                        get: { viewModel.schedule.isAllday ?? false },
+                //                        set: { viewModel.schedule.isAllday = $0 }
+                //                    ),
+                //                    startTime: Binding(
+                //                        get: { viewModel.schedule.startTime },
+                //                        set: { viewModel.schedule.startTime = $0 }
+                //                    ),
+                //                    endTime: Binding(
+                //                        get: { viewModel.schedule.endTime },
+                //                        set: { viewModel.schedule.endTime = $0 }
+                //                    )
+                //                )
+                //                .disabled(!viewModel.isEditable)
+                
                 AddPlaceView(viewModel: viewModel.createViewModel, path: $path)
+                    .disabled(!viewModel.isEditable)
                 
                 AddFriendsView(selectedFriends: $viewModel.createViewModel.selectedFriends, path: $path)
+                    .disabled(!viewModel.isEditable)
                 
                 SetColorView(color: $viewModel.createViewModel.color)
+                    .disabled(!viewModel.isEditable)
                 
                 MemoView(memo: $viewModel.createViewModel.memo)
+                    .disabled(!viewModel.isEditable)
             })
             .padding(15)
             .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
@@ -62,17 +86,19 @@ struct ScheduleDetailView: View {
                     .foregroundStyle(Color.red)
                 }
                 ToolbarItem(placement: .primaryAction) {
-                    Button("수정") {
-                        viewModel.updateSchedule()
-                        if viewModel.isSuccess {
-                            dismiss()
-                        } else {
-                            // TODO: 일정 생성 예외 처리 필요, 실패 경우 동작 구현
-                            dismiss()
+                    if viewModel.isEditable {
+                        Button("수정") {
+                            viewModel.updateSchedule()
+                            if viewModel.isSuccess {
+                                dismiss()
+                            } else {
+                                // TODO: 일정 생성 예외 처리 필요, 실패 경우 동작 구현
+                                dismiss()
+                            }
                         }
+                        .foregroundStyle(viewModel.schedule.title.isEmpty ? Color.gray : Color.red)
+                        .disabled(viewModel.schedule.title.isEmpty)
                     }
-                    .foregroundStyle(viewModel.schedule.title.isEmpty ? Color.gray : Color.red)
-                    .disabled(viewModel.schedule.title.isEmpty)
                 }
             }
             .navigationTitle("일정 수정")
@@ -94,6 +120,133 @@ struct ScheduleDetailView: View {
         }
         .onAppear {
             viewModel.createViewModel.getFavoriteLocation()
+        }
+    }
+}
+
+struct ReadonlyContainer<Content: View>: View {
+    var isEditable: Bool
+    let content: Content
+    @State private var showingFeedback = false
+    var feedbackMessage: String
+    
+    init(
+        isEditable: Bool,
+        feedbackMessage: String = "그룹 일정은 생성자만 수정할 수 있습니다",
+        @ViewBuilder content: () -> Content
+    ) {
+        self.isEditable = isEditable
+        self.content = content()
+        self.feedbackMessage = feedbackMessage
+    }
+    
+    var body: some View {
+        VStack {
+            ZStack {
+                content
+                    .tint(isEditable ? .blue : .gray)
+                
+                if !isEditable {
+                    VStack {
+                        // Toggle 높이만큼 투명 공간
+                        Color.clear
+                            .frame(height: 10)
+                        
+                        // DatePicker 영역 커버
+                        Rectangle()
+                            .fill(Color.white.opacity(0.001))
+                            .allowsHitTesting(true)
+                            .onTapGesture {
+                                showingFeedback = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                    showingFeedback = false
+                                }
+                            }
+                    }
+                    
+                    if showingFeedback {
+                        VStack {
+                            Spacer()
+                            HStack {
+                                Image("icon-information")
+                                Text(feedbackMessage)
+                                    .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 12)))
+                                    .foregroundStyle(.red)
+                            }
+                            .transition(.opacity)
+                            .animation(.easeInOut, value: showingFeedback)
+                        }
+                    }
+                }
+            }
+            
+            
+        }
+    }
+}
+
+struct ReadonlyDateTimeContainer: View {
+    @Binding var isAllDay: Bool
+    @Binding var startTime: Date
+    @Binding var endTime: Date
+    var isEditable: Bool
+    @State private var showingFeedback = false
+    
+    private var allDayBinding: Binding<Bool> {
+            Binding(
+                get: { isAllDay },
+                set: { newValue in
+                    if isEditable {
+                        isAllDay = newValue
+                    }
+                }
+            )
+        }
+    
+    var body: some View {
+        ZStack {
+            VStack {
+                DateAndTimeView(
+                    isAllDay: allDayBinding,
+                    startTime: $startTime,
+                    endTime: $endTime
+                )
+            }
+            // 편집 불가능할 때만 오버레이 추가
+            if !isEditable {
+                // Toggle 부분을 제외한 DatePicker 영역만 커버하는 오버레이
+                VStack {
+                    // Toggle 높이만큼 투명 공간
+                    Color.clear
+                        .frame(height: 50)
+                    
+                    // DatePicker 영역 커버
+                    Rectangle()
+                        .fill(Color.white.opacity(0.001))
+                        .allowsHitTesting(true)
+                        .onTapGesture {
+                            showingFeedback = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                showingFeedback = false
+                            }
+                        }
+                }
+                
+                // 피드백 메시지
+                if showingFeedback {
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Image("icon-information")
+                            Text("그룹 일정은 생성자만 수정할 수 있습니다")
+                                .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 12)))
+                                .foregroundStyle(.red)
+                        }
+                        .transition(.opacity)
+                        .animation(.easeInOut, value: showingFeedback)
+                    }
+                }
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DailyScheduleView: View {
     @StateObject private var viewModel: DailyScheduleViewModel
+    @State private var showingScheduleDetail = false
     @State private var showingDeleteAlert = false
     @State private var selectedSchedule: Schedule?
     @Binding var isPresented: Bool
@@ -119,12 +120,12 @@ struct DailyScheduleView: View {
                     message: Text(message),
                     primaryButton: .destructive(Text("삭제")) {
                         viewModel.deleteSchedule(schedule) { isEmpty in
-                                if isEmpty {
-                                    isPresented = false // 일정이 모두 삭제되면 모달 닫기
+                            if isEmpty {
+                                isPresented = false // 일정이 모두 삭제되면 모달 닫기
                             }
                         }
-//                        onDeleteSchedule(schedule, title, message)
-//                        isPresented = false
+                        //                        onDeleteSchedule(schedule, title, message)
+                        //                        isPresented = false
                     },
                     secondaryButton: .cancel(Text("취소"))
                 )
@@ -139,8 +140,8 @@ struct DailyScheduleView: View {
     
     private func scheduleListView() -> some View {
         // dummy test
-        ForEach(schedules, id: \.scheduleSeq) { schedule in
-//                    ForEach(viewModel.schedules, id: \.scheduleSeq) { schedule in
+//        ForEach(schedules, id: \.scheduleSeq) { schedule in
+        ForEach(viewModel.schedules, id: \.scheduleSeq) { schedule in
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     Circle()
@@ -157,7 +158,7 @@ struct DailyScheduleView: View {
                         //                        onDeleteSchedule(schedule, title, message)
                         selectedSchedule = schedule
                         showingDeleteAlert = true
-//                        isPresented = false
+                        //                        isPresented = false
                     }) {
                         Text("삭제")
                             .foregroundStyle(Color(.color118))
@@ -169,9 +170,20 @@ struct DailyScheduleView: View {
                 Divider()
                     .padding(.vertical, 4)
             }
-//            .onTapGesture {
-//                <#code#>
-//            }
+            .contentShape(Rectangle())  // 전체 영역을 탭 가능하게 만듦
+            .onTapGesture {
+                selectedSchedule = schedule
+                showingScheduleDetail = true
+            }
+        }
+        .sheet(isPresented: $showingScheduleDetail) {
+            if let schedule = selectedSchedule {
+                NavigationStack {
+                    ScheduleDetailView(schedule: schedule)
+                }
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+            }
         }
     }
     
@@ -236,5 +248,3 @@ struct DailyScheduleView: View {
     .presentationDetents([.medium])
     .presentationBackground(.clear)
 }
-
-
