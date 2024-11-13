@@ -8,7 +8,7 @@
 import Foundation
 
 protocol PutScheduleUseCase {
-    func execute(request: PutScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func execute(request: PutScheduleBody, completion: @escaping (Result<GenericResponse<PutScheduleResponse>, Error>) -> Void)
 }
 
 class PutScheduleUseCaseImpl: PutScheduleUseCase {
@@ -18,7 +18,7 @@ class PutScheduleUseCaseImpl: PutScheduleUseCase {
         self.scheduleRepository = scheduleRepository
     }
     
-    func execute(request: PutScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func execute(request: PutScheduleBody, completion: @escaping (Result<GenericResponse<PutScheduleResponse>, any Error>) -> Void) {
         scheduleRepository.putSchedule(request: request, completion: completion)
     }
 }

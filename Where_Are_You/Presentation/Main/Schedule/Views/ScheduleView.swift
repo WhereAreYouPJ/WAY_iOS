@@ -205,6 +205,7 @@ struct ScheduleView: View {
             let scheduleStartDate = Calendar.current.startOfDay(for: schedule.startTime)
             let scheduleEndDate = Calendar.current.startOfDay(for: schedule.endTime)
             let cellDate = Calendar.current.startOfDay(for: date)
+            
             return (scheduleStartDate...scheduleEndDate).contains(cellDate)
         }
         let processedSchedules = daySchedules.map { schedule in

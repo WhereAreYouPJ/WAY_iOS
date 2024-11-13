@@ -206,6 +206,7 @@
 		D592D8EF2C7DE3B100736D93 /* SearchFriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */; };
 		D593CCC82C82318F00A862FF /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D593CCC72C82318F00A862FF /* ScheduleViewModel.swift */; };
 		D5954FCC2CB62F8800ADB877 /* DeleteScheduleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5954FCB2CB62F8800ADB877 /* DeleteScheduleBody.swift */; };
+		D5A20AF02CE4A6110048281A /* PutScheduleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A20AEF2CE4A60A0048281A /* PutScheduleResponse.swift */; };
 		D5A91D5B2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */; };
 		D5B3B5392CB3DE63004353F6 /* DailyScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */; };
 		D5B79A162C5B83CD004EDDF2 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -453,6 +454,7 @@
 		D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendsViewModel.swift; sourceTree = "<group>"; };
 		D593CCC72C82318F00A862FF /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
 		D5954FCB2CB62F8800ADB877 /* DeleteScheduleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteScheduleBody.swift; sourceTree = "<group>"; };
+		D5A20AEF2CE4A60A0048281A /* PutScheduleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutScheduleResponse.swift; sourceTree = "<group>"; };
 		D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertSwiftUI.swift; sourceTree = "<group>"; };
 		D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyScheduleViewModel.swift; sourceTree = "<group>"; };
 		D5C2D6732CC8C26D002F5607 /* CustomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewController.swift; sourceTree = "<group>"; };
@@ -1299,6 +1301,7 @@
 		D585E2852C82F63500C16A14 /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
+				D5A20AEF2CE4A60A0048281A /* PutScheduleResponse.swift */,
 				D585E2862C82F6C600C16A14 /* GetScheduleByMonthResponse.swift */,
 				99C6D29B2C903526009C0CF8 /* DDayScheduleResponse.swift */,
 				D512EC562CA6E56C001AC965 /* GetScheduleByDateResponse.swift */,
@@ -1747,6 +1750,7 @@
 				D53A515C2CA1260400025AC8 /* ErrorResponse.swift in Sources */,
 				99EC78CE2C11DBA5007C4415 /* PasswordResetViewController.swift in Sources */,
 				99B397832C0C3E9D00D7A109 /* AccountCheckView.swift in Sources */,
+				D5A20AF02CE4A6110048281A /* PutScheduleResponse.swift in Sources */,
 				D5C2D6742CC8C273002F5607 /* CustomAlertViewController.swift in Sources */,
 				99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */,
 				99CF9C032CD343790079BE81 /* PostBookMarkFeedUseCase.swift in Sources */,

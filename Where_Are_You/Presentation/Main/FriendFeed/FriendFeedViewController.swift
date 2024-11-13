@@ -37,6 +37,15 @@ class FriendFeedViewController: UIViewController {
         return sc
     }()
     
+    private var showSearchBar: Bool = false {
+        didSet {
+                    // 프로퍼티가 변경될 때마다 FriendsView를 업데이트
+                    if let friendsHostingController = friendsHostingController {
+                        let updatedView = FriendsView(showSearchBar: .constant(showSearchBar))
+                        friendsHostingController.rootView = updatedView
+                    }
+                }
+        }
     let searchFriendButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "icon-search"), for: .normal)
@@ -88,14 +97,28 @@ class FriendFeedViewController: UIViewController {
         feedsViewController.didMove(toParent: self)
         
         // Setup FriendsView
-        let friendsView = FriendsView()
-        friendsHostingController = UIHostingController(rootView: friendsView)
-        if let friendsHostingController = friendsHostingController {
-            addChild(friendsHostingController)
-            view.addSubview(friendsHostingController.view)
-            friendsHostingController.didMove(toParent: self)
-            friendsHostingController.view.isHidden = true
-        }
+//        let friendsView = FriendsView()
+//        friendsHostingController = UIHostingController(rootView: friendsView)
+//        if let friendsHostingController = friendsHostingController {
+//            addChild(friendsHostingController)
+//            view.addSubview(friendsHostingController.view)
+//            friendsHostingController.didMove(toParent: self)
+//            friendsHostingController.view.isHidden = true
+//        }
+        
+        // Setup FriendsView with showSearchBar binding
+                let friendsView = FriendsView(showSearchBar: .constant(false))
+                friendsHostingController = UIHostingController(rootView: friendsView)
+                if let friendsHostingController = friendsHostingController {
+                    addChild(friendsHostingController)
+                    view.addSubview(friendsHostingController.view)
+                    friendsHostingController.didMove(toParent: self)
+                    friendsHostingController.view.isHidden = true
+                    
+                    friendsHostingController.view.snp.makeConstraints { make in
+                        make.edges.equalToSuperview()
+                    }
+                }
         
         // Setup navigation items
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
@@ -158,6 +181,7 @@ class FriendFeedViewController: UIViewController {
             searchFriendButton.isHidden = true
             notificationButton.isHidden = false
             addButton.isHidden = false
+            showSearchBar = false  // 피드 탭으로 전환시 검색바 숨김
         } else {
             feedsViewController.view.isHidden = true
             friendsHostingController?.view.isHidden = false
@@ -173,6 +197,7 @@ class FriendFeedViewController: UIViewController {
     }
     
     @objc private func handleSearch() {
+        showSearchBar.toggle()
         print("친구 검색")
     }
     

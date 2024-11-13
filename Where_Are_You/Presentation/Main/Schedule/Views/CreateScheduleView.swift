@@ -25,7 +25,7 @@ struct CreateScheduleView: View {
     var body: some View {
         NavigationStack(path: $path) {
             VStack(alignment: .leading, content: {
-                TextField("", text: $viewModel.title, prompt: Text("메모를 작성해주세요.").foregroundColor(Color(.color118)))
+                TextField("", text: $viewModel.title, prompt: Text("일정명을 작성해주세요.").foregroundColor(Color(.color118)))
                 
                 Divider()
                     .padding(.bottom, 16)
@@ -114,6 +114,7 @@ struct DateAndTimeView: View {
         
         Divider()
         
+        // TODO: 하루종일이고 시작일을 다른 날짜로 할 경우 종료일이 오늘 날짜가 됨. 오류 수정 필요
         DatePicker("종료", selection: $endTime, in: startTime..., displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
             .environment(\.locale, Locale(identifier: "ko_KR"))
             .environment(\.calendar, Calendar(identifier: .gregorian))

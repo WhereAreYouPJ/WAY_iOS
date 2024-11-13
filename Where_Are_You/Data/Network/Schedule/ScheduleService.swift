@@ -13,7 +13,7 @@ import Moya
 protocol ScheduleServiceProtocol {
     func postSchedule(request: CreateScheduleBody, completion: @escaping (Result<GenericResponse<PostScheduleResponse>, Error>) -> Void)
     func getSchedule(scheduleSeq: Int, completion: @escaping (Result<GenericResponse<GetScheduleResponse>, Error>) -> Void)
-    func putSchedule(request: PutScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func putSchedule(request: PutScheduleBody, completion: @escaping (Result<GenericResponse<PutScheduleResponse>, Error>) -> Void)
     func deleteScheduleByInvitee(request: DeleteScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     func deleteScheduleByCreator(request: DeleteScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postEcceptSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
@@ -54,7 +54,7 @@ class ScheduleService: ScheduleServiceProtocol {
     }
     
     
-    func putSchedule(request: PutScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func putSchedule(request: PutScheduleBody, completion: @escaping (Result<GenericResponse<PutScheduleResponse>, any Error>) -> Void) {
         provider.request(.putSchedule(request: request)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }

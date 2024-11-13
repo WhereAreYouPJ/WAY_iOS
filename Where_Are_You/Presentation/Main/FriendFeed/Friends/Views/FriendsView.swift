@@ -10,10 +10,19 @@ import SwiftUI
 struct FriendsView: View {
     @StateObject private var viewModel = FriendsViewModel()
     @Environment(\.dismiss) private var dismiss
+    @Binding var showSearchBar: Bool
     
     var body: some View {
         VStack(spacing: 0) {
-            SearchBarView(searchText: $viewModel.searchText, onClear: viewModel.clearSearch)
+            if showSearchBar {
+                SearchBarView(searchText: $viewModel.searchText,
+                              onClear: {
+                    viewModel.clearSearch()
+                    showSearchBar = false
+                })
+                .transition(.move(edge: .top))
+                .animation(.easeInOut, value: showSearchBar)
+            }
             
             ScrollView {
                 VStack(spacing: 0) {
@@ -52,5 +61,5 @@ struct FriendsSectionView: View {
 }
 
 #Preview {
-    FriendsView()
+    FriendsView(showSearchBar: .constant(false))
 }
