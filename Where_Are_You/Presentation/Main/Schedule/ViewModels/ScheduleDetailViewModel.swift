@@ -17,7 +17,7 @@ class ScheduleDetailViewModel: ObservableObject {
     private let service = ScheduleService()
     private let memberSeq = UserDefaultsManager.shared.getMemberSeq()
     let provider = MoyaProvider<ScheduleAPI>()
-    var cancellables = Set<AnyCancellable>() // Combine 구독 저장용
+    var cancellables = Set<AnyCancellable>()
     
     private var isGroupSchedule: Bool {
         return !(schedule.invitedMember?.isEmpty ?? true)
@@ -76,7 +76,6 @@ class ScheduleDetailViewModel: ObservableObject {
                 case .failure(let error):
                     self.isSuccess = false
                     print("일정 수정 실패: \(error.localizedDescription)")
-                    // TODO: 실패 시 사용자에게 알림을 보여주는 로직 추가 필요
                 }
             }
         }

@@ -11,6 +11,7 @@ import SwiftUICore
 
 class DailyScheduleViewModel: ObservableObject {
     @Published var schedules: [Schedule] = []
+    @Published var shouldDismissView = false
     @Published var isLoading = false
     @Published var errorMessage: String?
     
@@ -58,6 +59,11 @@ class DailyScheduleViewModel: ObservableObject {
                                          memo: "",
                                          invitedMember: nil)
                             }
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                self.shouldDismissView = self.schedules.isEmpty
+                            }
+                            
                             print("일간 일정 로드 성공: \(self.schedules.count)개의 일정을 받았습니다.")
                         }
                     } catch {
@@ -91,11 +97,7 @@ class DailyScheduleViewModel: ObservableObject {
                 case .success:
                     print("Schedule successfully deleted")
                     self?.getDailySchedule()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        if let isEmpty = self?.schedules.isEmpty {
-                            completion(isEmpty)
-                        }
-                    }
+                    completion(true)
                 case .failure(let error):
                     print("Failed to delete schedule: \(error.localizedDescription)")
                     completion(false)
@@ -173,7 +175,6 @@ extension DailyScheduleViewModel {
     func createScheduleDetailViewModel(for schedule: Schedule) -> ScheduleDetailViewModel {
         let detailViewModel = ScheduleDetailViewModel(schedule: schedule)
         
-        // isSuccess 상태 변화 관찰
         detailViewModel.$isSuccess
             .sink { [weak self] success in
                 if success {
@@ -181,7 +182,7 @@ extension DailyScheduleViewModel {
                 }
             }
             .store(in: &detailViewModel.cancellables)
-            
+        
         return detailViewModel
     }
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DailyScheduleView: View { // TODO: 일정을 삭제하거나 날짜가 바뀌어 원래 날짜에 아무 일정이 없어지는 경우 sheet 닫기 필요
+struct DailyScheduleView: View {
     @StateObject private var viewModel: DailyScheduleViewModel
     @State private var showingDeleteAlert = false
     @State private var selectedSchedule: Schedule?
@@ -136,6 +136,11 @@ struct DailyScheduleView: View { // TODO: 일정을 삭제하거나 날짜가 �
         .onAppear {
             viewModel.getDailySchedule()
         }
+        .onChange(of: viewModel.shouldDismissView) { _, shouldDismiss in
+            if shouldDismiss {
+                isPresented = false
+            }
+        }
     }
     
     private func scheduleListView() -> some View {
@@ -159,7 +164,7 @@ struct DailyScheduleView: View { // TODO: 일정을 삭제하거나 날짜가 �
                         selectedSchedule = schedule
                         showingDeleteAlert = true
                         //                        isPresented = false
-                    },label: {
+                    }, label: {
                         Text("삭제")
                             .foregroundStyle(Color(.color118))
                             .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 12))))
