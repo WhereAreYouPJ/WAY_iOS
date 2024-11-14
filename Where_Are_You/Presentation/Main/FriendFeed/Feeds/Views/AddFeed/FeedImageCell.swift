@@ -14,6 +14,8 @@ protocol FeedImageCellDelegate: AnyObject {
 class FeedImageCell: UICollectionViewCell {
     static let identifier = "FeedImageCell"
     
+    weak var delegate: FeedImageCellDelegate?
+    
     private let imageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -55,5 +57,6 @@ class FeedImageCell: UICollectionViewCell {
     
     @objc private func deleteTapped() {
         // 이미지 삭제 로직
+        delegate?.didTapDeleteButton(in: self)
     }
 }

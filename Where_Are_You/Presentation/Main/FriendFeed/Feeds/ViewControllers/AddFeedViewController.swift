@@ -111,8 +111,6 @@ class AddFeedViewController: UIViewController {
             addFeedView.scheduleDropDown.dropDownTableView.layer.zPosition = 1
             viewModel.fetchSchedules()
         }
-        //        addFeedView.setNeedsLayout()
-        //        addFeedView.layoutIfNeeded()
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -263,9 +261,9 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
+// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate, PHPickerViewControllerDelegate
 
-extension AddFeedViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension AddFeedViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, PHPickerViewControllerDelegate {
     
     @objc func handleAddImagesTapped() {
         var configuration = PHPickerConfiguration()
@@ -280,16 +278,10 @@ extension AddFeedViewController: UIImagePickerControllerDelegate, UINavigationCo
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[.originalImage] as? UIImage {
             viewModel.selectedImages.append(image)
-//            addFeedView.imagesCollectionView.isHidden = false
-            // 이미지를 미리보기로 추가하는 로직
         }
         dismiss(animated: true, completion: nil)
     }
-}
-
-// MARK: - PHPickerViewControllerDelegate
-
-extension AddFeedViewController: PHPickerViewControllerDelegate {
+    
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true, completion: nil)
         
@@ -313,10 +305,11 @@ extension AddFeedViewController: PHPickerViewControllerDelegate {
             self?.addFeedView.imagesCollectionView.isHidden = self?.selectedImages.isEmpty ?? true
         }
     }
-    
 }
 
-extension AddFeedViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+// MARK: - ImageCollectionView
+
+extension AddFeedViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, FeedImageCellDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return selectedImages.count
     }
@@ -327,10 +320,20 @@ extension AddFeedViewController: UICollectionViewDataSource, UICollectionViewDel
         }
         let image = selectedImages[indexPath.item]
         cell.configure(with: image)
+        cell.delegate = self
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: LayoutAdapter.shared.scale(value: 268), height: LayoutAdapter.shared.scale(value: 232))
+    }
+    
+    func didTapDeleteButton(in cell: FeedImageCell) {
+        guard let indexPath = addFeedView.imagesCollectionView.indexPath(for: cell) else { return }
+        selectedImages.remove(at: indexPath.item)
+        addFeedView.imagesCollectionView.reloadData()
+        
+        // 만약 이미지가 모두 삭제된 경우 collectionView를 숨김
+        addFeedView.imagesCollectionView.isHidden = selectedImages.isEmpty
     }
 }

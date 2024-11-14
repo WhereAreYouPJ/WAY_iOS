@@ -21,6 +21,8 @@ class AddFeedView: UIView {
         return view
     }()
     
+    let imageBackView = UIView()
+    
     let imagesCollectionView: UICollectionView = {
         let layout = SnappingFlowLayout()
         layout.scrollDirection = .horizontal
@@ -31,10 +33,10 @@ class AddFeedView: UIView {
         return collectionView
     }()
     
-    lazy var titleImageStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [titleSeparator, imagesCollectionView])
-        stackView.spacing = 7
+    lazy var imageStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [imageBackView, imagesCollectionView])
         stackView.axis = .vertical
+        stackView.spacing = 0
         return stackView
     }()
     
@@ -90,7 +92,8 @@ class AddFeedView: UIView {
         scrollView.addSubview(contentView)
         
         contentView.addSubview(titleTextField)
-        contentView.addSubview(titleImageStackView)
+        contentView.addSubview(titleSeparator)
+        contentView.addSubview(imageStackView)
         contentView.addSubview(contentTextView)
         contentView.addSubview(addStackView)
         
@@ -121,9 +124,14 @@ class AddFeedView: UIView {
         }
         
         titleSeparator.snp.makeConstraints { make in
+            make.top.equalTo(titleTextField.snp.bottom).offset(LayoutAdapter.shared.scale(value: 6))
             make.height.equalTo(1)
-            make.width.equalTo(LayoutAdapter.shared.scale(value: 345))
-            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
+        }
+        
+        imageBackView.snp.makeConstraints { make in
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 7))
+            make.top.leading.trailing.equalToSuperview()
         }
         
         imagesCollectionView.snp.makeConstraints { make in
@@ -131,14 +139,13 @@ class AddFeedView: UIView {
             make.height.equalTo(LayoutAdapter.shared.scale(value: 232))
         }
         
-        titleImageStackView.snp.makeConstraints { make in
-            make.top.equalTo(titleTextField.snp.bottom).offset(LayoutAdapter.shared.scale(value: 6))
-//            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
+        imageStackView.snp.makeConstraints { make in
+            make.top.equalTo(titleSeparator.snp.bottom)
             make.leading.trailing.equalToSuperview()
         }
         
         contentTextView.snp.makeConstraints { make in
-            make.top.equalTo(titleImageStackView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 7))
+            make.top.equalTo(imageStackView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 6))
             make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 23))
             make.height.greaterThanOrEqualTo(LayoutAdapter.shared.scale(value: 110))
         }
