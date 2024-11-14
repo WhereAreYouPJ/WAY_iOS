@@ -6,10 +6,16 @@
 //
 
 import UIKit
+import PhotosUI
 
 class AddFeedViewController: UIViewController {
     // MARK: - Properties
     private var viewModel: AddFeedViewModel!
+    private var selectedImages: [UIImage] = [] {
+        didSet {
+            viewModel.selectedImages = selectedImages // 뷰모델에 선택된 이미지를 전달합니다.
+        }
+    }
     
     let addFeedView = AddFeedView()
     private var dropViewHeightConstraint: NSLayoutConstraint!
@@ -59,6 +65,10 @@ class AddFeedViewController: UIViewController {
         dropViewHeightConstraint.isActive = true
         
         addFeedView.contentTextView.delegate = self
+        addFeedView.imagesCollectionView.dataSource = self
+        addFeedView.imagesCollectionView.delegate = self
+        
+        addFeedView.imagesCollectionView.register(FeedImageCell.self, forCellWithReuseIdentifier: FeedImageCell.identifier)
         
         // 텍스트 뷰의 높이 제약 조건 저장
         contentTextViewHeightConstraint = addFeedView.contentTextView.heightAnchor.constraint(equalToConstant: LayoutAdapter.shared.scale(value: 110))
@@ -101,8 +111,6 @@ class AddFeedViewController: UIViewController {
             addFeedView.scheduleDropDown.dropDownTableView.layer.zPosition = 1
             viewModel.fetchSchedules()
         }
-//        addFeedView.setNeedsLayout()
-//        addFeedView.layoutIfNeeded()
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -186,6 +194,13 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ScheduleDropDownCell.identifier, for: indexPath) as? ScheduleDropDownCell else { return UITableViewCell() }
         let schedule = viewModel.schedule(for: indexPath)
         cell.configure(with: schedule)
+        // `feedExists`가 true이면 선택 불가하도록 설정
+        if schedule.feedExists {
+            cell.isUserInteractionEnabled = false
+        } else {
+            cell.isUserInteractionEnabled = true
+            cell.alpha = 1.0
+        }
         return cell
     }
     
@@ -193,8 +208,8 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
         let schedule = viewModel.schedule(for: indexPath)
         
         if !schedule.feedExists {
-            // 선택된 일정의 seq를 ViewModel에 전달
             viewModel.selectSchedule(at: indexPath)
+            
             // 선택된 일정의 정보로 label 업데이트
             addFeedView.scheduleDropDown.scheduleDateLabel.text = schedule.startTime.prefix(10).replacingOccurrences(of: "-", with: ".")
             addFeedView.scheduleDropDown.scheduleLocationLabel.text = schedule.title
@@ -205,7 +220,7 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
             addFeedView.scheduleDropDown.chooseScheduleLabel.isHidden = true
             
             dropDownButtonTapped()
-            // 참가자 정보 표시 등 추가 작업
+            
             // 선택된 일정에 참가자 정보를 가져와 업데이트
             viewModel.fetchParticipants(for: schedule.scheduleSeq) { [weak self] in
                 DispatchQueue.main.async {
@@ -246,25 +261,79 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
+// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate, PHPickerViewControllerDelegate
 
-extension AddFeedViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension AddFeedViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, PHPickerViewControllerDelegate {
     
     @objc func handleAddImagesTapped() {
-        print("handleAddImagesTapped")
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.allowsEditing = false
-        present(imagePicker, animated: true, completion: nil)
+        var configuration = PHPickerConfiguration()
+        configuration.selectionLimit = 10  // 최대 선택 가능 사진 수
+        configuration.filter = .images  // 이미지만 선택할 수 있도록 설정
+        
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        present(picker, animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[.originalImage] as? UIImage {
             viewModel.selectedImages.append(image)
-            addFeedView.imagesView.isHidden = false
-            // 이미지를 미리보기로 추가하는 로직
         }
         dismiss(animated: true, completion: nil)
+    }
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        selectedImages.removeAll() // 초기화
+        
+        let group = DispatchGroup()
+        for result in results {
+            group.enter()
+            result.itemProvider.loadDataRepresentation(forTypeIdentifier: UTType.image.identifier) { [weak self] data, error in
+                if let data = data, let image = UIImage(data: data) {
+                    self?.selectedImages.append(image)
+                } else if let error = error {
+                    print("이미지를 불러오는 중 오류 발생: \(error.localizedDescription)")
+                }
+                group.leave()
+            }
+        }
+        
+        group.notify(queue: .main) { [weak self] in
+            self?.addFeedView.imagesCollectionView.reloadData()
+            self?.addFeedView.imagesCollectionView.isHidden = self?.selectedImages.isEmpty ?? true
+        }
+    }
+}
+
+// MARK: - ImageCollectionView
+
+extension AddFeedViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, FeedImageCellDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return selectedImages.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedImageCell.identifier, for: indexPath) as? FeedImageCell else {
+            return UICollectionViewCell()
+        }
+        let image = selectedImages[indexPath.item]
+        cell.configure(with: image)
+        cell.delegate = self
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: LayoutAdapter.shared.scale(value: 268), height: LayoutAdapter.shared.scale(value: 232))
+    }
+    
+    func didTapDeleteButton(in cell: FeedImageCell) {
+        guard let indexPath = addFeedView.imagesCollectionView.indexPath(for: cell) else { return }
+        selectedImages.remove(at: indexPath.item)
+        addFeedView.imagesCollectionView.reloadData()
+        
+        // 만약 이미지가 모두 삭제된 경우 collectionView를 숨김
+        addFeedView.imagesCollectionView.isHidden = selectedImages.isEmpty
     }
 }

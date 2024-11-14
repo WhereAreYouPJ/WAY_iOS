@@ -21,11 +21,23 @@ class AddFeedView: UIView {
         return view
     }()
     
-    // TODO: 피드뷰에서 사용하는 콜렉션뷰 사용하기
-    let imagesView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .warningColor
-        return view
+    let imageBackView = UIView()
+    
+    let imagesCollectionView: UICollectionView = {
+        let layout = SnappingFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.decelerationRate = .fast
+        collectionView.backgroundColor = .clear
+        return collectionView
+    }()
+    
+    lazy var imageStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [imageBackView, imagesCollectionView])
+        stackView.axis = .vertical
+        stackView.spacing = 0
+        return stackView
     }()
     
     let contentTextView: UITextView = {
@@ -40,6 +52,7 @@ class AddFeedView: UIView {
         let button = UIButton()
         let view = CustomView(image: "icon-Gallery", text: "사진 추가", textColor: .color102, separatorHidden: false)
         button.addSubview(view)
+        view.isUserInteractionEnabled = false
         view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -64,7 +77,7 @@ class AddFeedView: UIView {
         backgroundColor = .white
         configureViewComponents()
         setupConstraints()
-        imagesView.isHidden = true
+        imagesCollectionView.isHidden = true
         membersInfo.isHidden = true
     }
     
@@ -80,7 +93,7 @@ class AddFeedView: UIView {
         
         contentView.addSubview(titleTextField)
         contentView.addSubview(titleSeparator)
-        contentView.addSubview(imagesView)
+        contentView.addSubview(imageStackView)
         contentView.addSubview(contentTextView)
         contentView.addSubview(addStackView)
         
@@ -112,17 +125,27 @@ class AddFeedView: UIView {
         
         titleSeparator.snp.makeConstraints { make in
             make.top.equalTo(titleTextField.snp.bottom).offset(LayoutAdapter.shared.scale(value: 6))
-            make.leading.trailing.equalTo(scheduleDropDown)
             make.height.equalTo(1)
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
         }
         
-        imagesView.snp.makeConstraints { make in
-            make.top.equalTo(titleSeparator.snp.bottom).offset(LayoutAdapter.shared.scale(value: 7))
+        imageBackView.snp.makeConstraints { make in
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 7))
+            make.top.leading.trailing.equalToSuperview()
+        }
+        
+        imagesCollectionView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 232))
+        }
+        
+        imageStackView.snp.makeConstraints { make in
+            make.top.equalTo(titleSeparator.snp.bottom)
             make.leading.trailing.equalToSuperview()
         }
         
         contentTextView.snp.makeConstraints { make in
-            make.top.equalTo(imagesView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 7))
+            make.top.equalTo(imageStackView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 6))
             make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 23))
             make.height.greaterThanOrEqualTo(LayoutAdapter.shared.scale(value: 110))
         }

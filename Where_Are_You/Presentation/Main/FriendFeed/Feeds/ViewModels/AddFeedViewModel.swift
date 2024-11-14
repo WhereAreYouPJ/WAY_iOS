@@ -103,9 +103,7 @@ class AddFeedViewModel {
         getScheduleUseCase.execute(scheduleSeq: scheduleSeq) { result in
             switch result {
             case .success(let data):
-                self.participants = data.memberInfos
-                    .filter{ !$0.isCreate }
-                    .map{ $0.userName }
+                self.participants = data.memberInfos.filter{ !$0.isCreate }.map{ $0.userName }
                 completion()
             case .failure(let error):
                 print(error.localizedDescription)
@@ -132,11 +130,13 @@ class AddFeedViewModel {
     func saveFeed(title: String, content: String?, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let schedule = selectedSchedule else { return }
         
+        let feedImageOrders = Array(0..<selectedImages.count)
+        
         let request = SaveFeedRequest(scheduleSeq: schedule.scheduleSeq,
                                       memberSeq: UserDefaultsManager.shared.getMemberSeq(),
                                       title: title,
                                       content: content,
-                                      feedImageOrders: [])
+                                      feedImageOrders: feedImageOrders)
         
         saveFeedUseCase.execute(request: request, images: selectedImages, completion: completion)
     }
