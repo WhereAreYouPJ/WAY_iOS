@@ -12,6 +12,9 @@ import SwiftUICore
 class DailyScheduleViewModel: ObservableObject {
     @Published var schedules: [Schedule] = []
     @Published var shouldDismissView = false
+    @Published var showingDeleteAlert = false
+    @Published var selectedSchedule: Schedule?
+    
     @Published var isLoading = false
     @Published var errorMessage: String?
     
@@ -106,14 +109,25 @@ class DailyScheduleViewModel: ObservableObject {
         }
     }
     
-    func isEditableSchedule(_ schedule: Schedule) -> Bool {
-        return false
+    func setAlertContent(for schedule: Schedule) -> (String, String) {
+        if schedule.invitedMember?.count ?? 0 > 0 {
+            return ("그룹 일정 삭제", "그룹 일정을 삭제합니다.\n모든 참여자의 일정에서 삭제되며, 연관된 피드도 함께 삭제됩니다.")
+        } else {
+            return ("일정 삭제", "일정을 삭제합니다.\n연관된 피드가 있을 경우 함께 삭제됩니다.")
+        }
     }
     
-    func isOneDaySchedule(_ schedule: Schedule) -> Bool {
-        let startDate = dateFormatterD2S.string(from: schedule.startTime)
-        let endDate = dateFormatterD2S.string(from: schedule.endTime)
-        return startDate == endDate
+    func showDeleteAlert(for schedule: Schedule) {
+        selectedSchedule = schedule
+        showingDeleteAlert = true
+    }
+    
+    func handleDeleteConfirmation() {
+        guard let schedule = selectedSchedule else { return }
+        
+        deleteSchedule(schedule) { [weak self] _ in
+            self?.selectedSchedule = nil
+        }
     }
     
     func getScheduleDate(_ schedule: Schedule) -> String? {
