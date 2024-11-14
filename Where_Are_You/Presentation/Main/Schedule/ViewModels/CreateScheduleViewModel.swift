@@ -11,8 +11,22 @@ import CoreLocation
 
 final class CreateScheduleViewModel: ObservableObject {
     @Published var title: String = ""
-    @Published var isAllDay: Bool = true
-    @Published var startTime: Date
+    @Published var isAllDay: Bool = true {
+        didSet {
+            if isAllDay {
+                // 하루종일이 켜지면 종료일을 시작일과 동일하게 설정
+                endTime = Calendar.current.startOfDay(for: startTime)
+            }
+        }
+    }
+    @Published var startTime: Date {
+        didSet {
+            if isAllDay {
+                // 하루종일일 때 시작일이 변경되면 종료일도 함께 변경
+                endTime = Calendar.current.startOfDay(for: startTime)
+            }
+        }
+    }
     @Published var endTime: Date
     @Published var selectedFriends: [Friend] = []
     @Published var place: Location = Location(sequence: 0, location: "", streetName: "", x: 0, y: 0) // TODO: 서버 nullable 값 수정 필요?
@@ -101,35 +115,6 @@ final class CreateScheduleViewModel: ObservableObject {
                 }
             }
         }
-        //        provider.request(.getLocation(memberSeq: memberSeq)) { response in
-        //            switch response {
-        //            case .success(let result):
-        //                if result.statusCode == 200 {
-        //                    do {
-        //                        let genericResponse = try result.map(GenericResponse<GetFavLocationResponse>.self)
-        //                        DispatchQueue.main.async {
-        //                            self.favPlaces = genericResponse.data.map { location in
-        //                                Location(
-        //                                    sequence: location.locationSeq,
-        //                                    location: location.location,
-        //                                    streetName: location.streetName,
-        //                                    x: 0, // 서버 응답에 x, y 좌표가 없으므로 임시로 0을 설정
-        //                                    y: 0)
-        //                            }
-        //                            print("즐겨찾기 위치 로드 성공: \(self.favPlaces.count)개의 위치를 받았습니다.")
-        //                        }
-        //                    } catch {
-        //                        print("JSON 파싱 실패: \(error)")
-        //                    }
-        //                } else {
-        //                    handleErrorResponse(result, endpoint: "즐겨찾기 위치 조회", params: ["memberSeq": self.memberSeq])
-        //                }
-        //            case .failure(let error):
-        //                DispatchQueue.main.async {
-        //                    print("요청 실패: \(error.localizedDescription)")
-        //                }
-        //            }
-        //        }
     }
     
     func postSchedule() {
@@ -153,34 +138,6 @@ final class CreateScheduleViewModel: ObservableObject {
                 }
             }
         }
-        
-        //        provider.request(.postSchedule(request: body)) { response in
-        //            switch response {
-        //            case .success(let result):
-        //                if result.statusCode == 200 {
-        //                    do {
-        //                        let genericResponse = try result.map(GenericResponse<[String: Int]>.self)
-        //                        if let scheduleSeq = genericResponse.data["scheduleSeq"] {
-        //                            DispatchQueue.main.async {
-        //                                self.isSuccess = true
-        //                                print("post 성공! start time: \(self.startTime.toString()), end time: \(self.endTime.toString())")
-        //                                print("Member Sequence: \(self.memberSeq), Schedule Sequence: \(scheduleSeq)")
-        //                            }
-        //                        } else {
-        //                            print("scheduleSeq not found in response data")
-        //                        }
-        //                    } catch {
-        //                        print("JSON 파싱 실패: \(error)")
-        //                    }
-        //                } else {
-        //                    handleErrorResponse(result, endpoint: "스케줄 생성")
-        //                }
-        //            case .failure(let error):
-        //                DispatchQueue.main.async {
-        //                    print("요청 실패: \(error.localizedDescription)")
-        //                }
-        //            }
-        //        }
     }
 }
 

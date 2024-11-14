@@ -7,6 +7,7 @@
 
 import Foundation
 import Moya
+import Combine
 
 class ScheduleDetailViewModel: ObservableObject {
     @Published var schedule: Schedule
@@ -16,6 +17,7 @@ class ScheduleDetailViewModel: ObservableObject {
     private let service = ScheduleService()
     private let memberSeq = UserDefaultsManager.shared.getMemberSeq()
     let provider = MoyaProvider<ScheduleAPI>()
+    var cancellables = Set<AnyCancellable>() // Combine 구독 저장용
     
     private var isGroupSchedule: Bool {
         return !(schedule.invitedMember?.isEmpty ?? true)
@@ -43,11 +45,13 @@ class ScheduleDetailViewModel: ObservableObject {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         
+        let endTime = schedule.isAllday ?? false ? schedule.startTime : schedule.endTime
+        
         let updateRequest = PutScheduleBody(
             scheduleSeq: schedule.scheduleSeq,
             title: schedule.title,
             startTime: dateFormatter.string(from: schedule.startTime),
-            endTime: dateFormatter.string(from: schedule.endTime),
+            endTime: dateFormatter.string(from: endTime),
             location: schedule.location?.location ?? "",
             streetName: schedule.location?.streetName ?? "",
             x: schedule.location?.x ?? 0,
@@ -69,8 +73,6 @@ class ScheduleDetailViewModel: ObservableObject {
                 case .success(let response):
                     self.isSuccess = true
                     print("일정 수정 성공! scheduleSeq: \(response.data.scheduleSeq)")
-                    // TODO: 수정된 일정 정보를 화면에 반영하는 로직 추가 필요
-                    
                 case .failure(let error):
                     self.isSuccess = false
                     print("일정 수정 실패: \(error.localizedDescription)")

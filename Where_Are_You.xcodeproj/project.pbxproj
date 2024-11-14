@@ -207,6 +207,7 @@
 		D593CCC82C82318F00A862FF /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D593CCC72C82318F00A862FF /* ScheduleViewModel.swift */; };
 		D5954FCC2CB62F8800ADB877 /* DeleteScheduleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5954FCB2CB62F8800ADB877 /* DeleteScheduleBody.swift */; };
 		D5A20AF02CE4A6110048281A /* PutScheduleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A20AEF2CE4A60A0048281A /* PutScheduleResponse.swift */; };
+		D5A20AF42CE4DCD50048281A /* GetFriendResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A20AF32CE4DCD50048281A /* GetFriendResponse.swift */; };
 		D5A91D5B2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */; };
 		D5B3B5392CB3DE63004353F6 /* DailyScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */; };
 		D5B79A162C5B83CD004EDDF2 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -455,6 +456,7 @@
 		D593CCC72C82318F00A862FF /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
 		D5954FCB2CB62F8800ADB877 /* DeleteScheduleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteScheduleBody.swift; sourceTree = "<group>"; };
 		D5A20AEF2CE4A60A0048281A /* PutScheduleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutScheduleResponse.swift; sourceTree = "<group>"; };
+		D5A20AF32CE4DCD50048281A /* GetFriendResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFriendResponse.swift; sourceTree = "<group>"; };
 		D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertSwiftUI.swift; sourceTree = "<group>"; };
 		D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyScheduleViewModel.swift; sourceTree = "<group>"; };
 		D5C2D6732CC8C26D002F5607 /* CustomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewController.swift; sourceTree = "<group>"; };
@@ -593,10 +595,10 @@
 		992F57C32C5B1EBE00219C6B /* Requests */ = {
 			isa = PBXGroup;
 			children = (
+				D5A20AF12CE4DC820048281A /* Friend */,
 				D564EDF32C8F12DC0002A4C5 /* Locations */,
 				992F57C12C5B1E8900219C6B /* ParameterConvertible.swift */,
 				992F57C42C5B264400219C6B /* Member */,
-				99D780DA2C6055A0005A3F30 /* FriendRequest */,
 				99D780D92C605592005A3F30 /* Schedule */,
 				99D780DB2C6055B6005A3F30 /* Feed */,
 			);
@@ -622,6 +624,7 @@
 		992F57D92C5B294F00219C6B /* Responses */ = {
 			isa = PBXGroup;
 			children = (
+				D5A20AF22CE4DCBE0048281A /* Friend */,
 				D51AC99D2C84A08200D0AD2E /* Location */,
 				D585E2852C82F63500C16A14 /* Schedule */,
 				99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */,
@@ -1097,13 +1100,6 @@
 			path = Schedule;
 			sourceTree = "<group>";
 		};
-		99D780DA2C6055A0005A3F30 /* FriendRequest */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = FriendRequest;
-			sourceTree = "<group>";
-		};
 		99D780DB2C6055B6005A3F30 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
@@ -1319,6 +1315,21 @@
 				99C6D2992C90341F009C0CF8 /* ScheduleService.swift */,
 			);
 			path = Schedule;
+			sourceTree = "<group>";
+		};
+		D5A20AF12CE4DC820048281A /* Friend */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Friend;
+			sourceTree = "<group>";
+		};
+		D5A20AF22CE4DCBE0048281A /* Friend */ = {
+			isa = PBXGroup;
+			children = (
+				D5A20AF32CE4DCD50048281A /* GetFriendResponse.swift */,
+			);
+			path = Friend;
 			sourceTree = "<group>";
 		};
 		D5B79A112C5B8368004EDDF2 /* Schedule */ = {
@@ -1725,6 +1736,7 @@
 				D54C040A2C6516CB009CC419 /* CreateScheduleBody.swift in Sources */,
 				99CF9BFD2CD319360079BE81 /* BookMarkFeedRequest.swift in Sources */,
 				99EFC7692CD0B9420044DFC5 /* PutLocationUseCase.swift in Sources */,
+				D5A20AF42CE4DCD50048281A /* GetFriendResponse.swift in Sources */,
 				D5954FCC2CB62F8800ADB877 /* DeleteScheduleBody.swift in Sources */,
 				99949F532C58A67400AE0177 /* FriendsTableView.swift in Sources */,
 				990902112C5F239A00BC3F20 /* CommonDescription.swift in Sources */,

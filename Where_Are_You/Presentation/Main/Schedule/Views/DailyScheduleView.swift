@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DailyScheduleView: View {
+struct DailyScheduleView: View { // TODO: 일정을 삭제하거나 날짜가 바뀌어 원래 날짜에 아무 일정이 없어지는 경우 sheet 닫기 필요
     @StateObject private var viewModel: DailyScheduleViewModel
     @State private var showingDeleteAlert = false
     @State private var selectedSchedule: Schedule?
@@ -95,7 +95,7 @@ struct DailyScheduleView: View {
     }
     
     var body: some View {
-        ScrollView() {
+        ScrollView {
             VStack {
                 HStack {
                     Text(formatter.string(from: viewModel.date))
@@ -159,11 +159,11 @@ struct DailyScheduleView: View {
                         selectedSchedule = schedule
                         showingDeleteAlert = true
                         //                        isPresented = false
-                    }) {
+                    },label: {
                         Text("삭제")
                             .foregroundStyle(Color(.color118))
                             .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 12))))
-                    }
+                    })
                     .padding(.trailing, LayoutAdapter.shared.scale(value: 6))
                 }
                 
@@ -178,6 +178,9 @@ struct DailyScheduleView: View {
         .sheet(item: $scheduleForDetail) { schedule in
             NavigationStack {
                 ScheduleDetailView(schedule: schedule)
+                    .onDisappear {
+                        viewModel.getDailySchedule()
+                    }
             }
             .presentationDetents([.large])
             .presentationDragIndicator(.visible)

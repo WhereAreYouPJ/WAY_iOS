@@ -87,12 +87,7 @@ struct ScheduleDetailView: View {
                     if viewModel.isEditable {
                         Button("수정") {
                             viewModel.updateSchedule()
-                            if viewModel.isSuccess {
-                                dismiss()
-                            } else {
-                                // TODO: 일정 생성 예외 처리 필요, 실패 경우 동작 구현
-                                dismiss()
-                            }
+                            dismiss()
                         }
                         .foregroundStyle(viewModel.schedule.title.isEmpty ? Color.gray : Color.red)
                         .disabled(viewModel.schedule.title.isEmpty)

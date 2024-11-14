@@ -41,10 +41,10 @@ struct ScheduleView: View {
                     HStack(spacing: 0) {
                         Button(action: {
                             print("알림 페이지로 이동")
-                        }) {
+                        }, label: {
                             Image("icon-notification")
                                 .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
-                        }
+                        })
                         .padding(0)
                         
                         Menu {

@@ -168,3 +168,20 @@ class DailyScheduleViewModel: ObservableObject {
         }
     }
 }
+
+extension DailyScheduleViewModel {
+    func createScheduleDetailViewModel(for schedule: Schedule) -> ScheduleDetailViewModel {
+        let detailViewModel = ScheduleDetailViewModel(schedule: schedule)
+        
+        // isSuccess 상태 변화 관찰
+        detailViewModel.$isSuccess
+            .sink { [weak self] success in
+                if success {
+                    self?.getDailySchedule()
+                }
+            }
+            .store(in: &detailViewModel.cancellables)
+            
+        return detailViewModel
+    }
+}
