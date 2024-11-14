@@ -19,54 +19,60 @@ struct CustomAlertSwiftUI: View {
     var body: some View {
         ZStack {
             Color.black.opacity(0.3)
-                .edgesIgnoringSafeArea(.all)
+                .ignoresSafeArea()
                 .onTapGesture {
                     isPresented = false
                 }
             
-            VStack(spacing: 0) {
-                HStack {
-                    Text(title)
-                        .font(.pretendard(NotoSans: .bold, fontSize: 18))
-                        .foregroundColor(.white)
-                        .padding(.bottom, LayoutAdapter.shared.scale(value: 12))
-                    
-                    Spacer()
-                }
+            VStack {
+                Spacer().frame(height: LayoutAdapter.shared.scale(value: 120))
                 
-                HStack {
-                    Text(message)
-                        .foregroundColor(Color(.color160))
-                        .padding(.bottom, LayoutAdapter.shared.scale(value: 24))
-                    
-                    Spacer()
-                }
-                
-                HStack(spacing: LayoutAdapter.shared.scale(value: 24)) {
-                    Spacer()
-                    
-                    Button(action: {
-                        isPresented = false
-                        showDailySchedule = true
-                    }) {
-                        Text(cancelTitle)
+                VStack(spacing: 0) {
+                    HStack {
+                        Text(title)
+                            .font(.pretendard(NotoSans: .bold, fontSize: 18))
                             .foregroundColor(.white)
+                            .padding(.bottom, LayoutAdapter.shared.scale(value: 12))
+                        
+                        Spacer()
                     }
                     
-                    Button(action: {
-                        action()
-                        isPresented = false
-                    }) {
-                        Text(actionTitle)
-                            .foregroundColor(Color(.alertActionButtonColor))
+                    HStack {
+                        Text(message)
+                            .foregroundColor(Color(.color160))
+                            .padding(.bottom, LayoutAdapter.shared.scale(value: 24))
+                        
+                        Spacer()
+                    }
+                    
+                    HStack(spacing: LayoutAdapter.shared.scale(value: 24)) {
+                        Spacer()
+                        
+                        Button(action: {
+                            isPresented = false
+                            showDailySchedule = true
+                        }) {
+                            Text(cancelTitle)
+                                .foregroundColor(.white)
+                        }
+                        
+                        Button(action: {
+                            action()
+                            isPresented = false
+                        }) {
+                            Text(actionTitle)
+                                .foregroundColor(Color(.alertActionButtonColor))
+                        }
                     }
                 }
+                .padding(LayoutAdapter.shared.scale(value: 24))
+                .frame(width: UIScreen.main.bounds.width - LayoutAdapter.shared.scale(value: 32))
+                .background(Color(.color51))
+                .cornerRadius(12)
+                .font(.pretendard(NotoSans: .medium, fontSize: 14))
+                
+                Spacer()
             }
-            .padding(LayoutAdapter.shared.scale(value: 24))
-            .frame(width: UIScreen.main.bounds.width - LayoutAdapter.shared.scale(value: 32))
-            .background(Color(.color51))
-            .cornerRadius(12)
-            .font(.pretendard(NotoSans: .medium, fontSize: 14))
         }
     }
 }

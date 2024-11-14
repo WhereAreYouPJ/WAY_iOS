@@ -14,8 +14,8 @@ struct ScheduleByDate: Codable {
     let color: String
     let startTime: String
     let endTime: String
-    let group: String?
-    let allDay: Bool?
+    let group: Bool
+    let allDay: Bool
     let creator: Int
 }
 

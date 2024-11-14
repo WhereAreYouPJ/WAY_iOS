@@ -21,12 +21,29 @@ final class CreateScheduleViewModel: ObservableObject {
     @Published var memo: String = ""
     @Published var isSuccess = false
     
+    private let locationService: LocationServiceProtocol
+    private let scheduleService: ScheduleServiceProtocol
     let provider = MoyaProvider<LocationAPI>()
     let geocoder = CLGeocoder()
     let dateFormatter: DateFormatter
     let memberSeq = UserDefaultsManager.shared.getMemberSeq()
     
-    init() {
+    init(schedule: Schedule? = nil,
+         locationService: LocationServiceProtocol = LocationService(),
+         scheduleService: ScheduleServiceProtocol = ScheduleService()) {
+        self.locationService = locationService
+        self.scheduleService = scheduleService
+        
+        if let schedule = schedule {
+            self.title = schedule.title
+            self.isAllDay = schedule.isAllday ?? false
+            self.startTime = schedule.startTime
+            self.endTime = schedule.endTime
+            self.place = schedule.location ?? Location(sequence: 0, location: "", streetName: "", x: 0, y: 0)
+            self.selectedFriends = schedule.invitedMember ?? []
+            self.color = schedule.color
+            self.memo = schedule.memo ?? ""
+        }
         let calendar = Calendar.current
         let now = Date()
         let components = calendar.dateComponents([.year, .month, .day, .hour], from: now)
@@ -38,8 +55,6 @@ final class CreateScheduleViewModel: ObservableObject {
         
         dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        
-        getFavoriteLocation()
     }
     
     func geocodeSelectedLocation(_ location: Location, completion: @escaping (Location) -> Void) {
@@ -63,35 +78,58 @@ final class CreateScheduleViewModel: ObservableObject {
     }
     
     func getFavoriteLocation() {
-        provider.request(.getLocation(memberSeq: memberSeq)) { response in
-            switch response {
-            case .success(let result):
-                if result.statusCode == 200 {
-                    do {
-                        let genericResponse = try result.map(GenericResponse<GetFavLocationResponse>.self)
-                        DispatchQueue.main.async {
-                            self.favPlaces = genericResponse.data.map { location in
-                                Location(
-                                    sequence: location.locationSeq,
-                                    location: location.location,
-                                    streetName: location.streetName,
-                                    x: 0, // 서버 응답에 x, y 좌표가 없으므로 임시로 0을 설정
-                                    y: 0)
-                            }
-                            print("즐겨찾기 위치 로드 성공: \(self.favPlaces.count)개의 위치를 받았습니다.")
-                        }
-                    } catch {
-                        print("JSON 파싱 실패: \(error)")
+        locationService.getLocation(memberSeq: memberSeq) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let response):
+                DispatchQueue.main.async {
+                    self.favPlaces = response.data.map { location in
+                        Location(
+                            sequence: location.locationSeq,
+                            location: location.location,
+                            streetName: location.streetName,
+                            x: 0,
+                            y: 0
+                        )
                     }
-                } else {
-                    handleErrorResponse(result, endpoint: "즐겨찾기 위치 조회", params: ["memberSeq": self.memberSeq])
+                    print("즐겨찾기 위치 로드 성공: \(self.favPlaces.count)개의 위치를 받았습니다.")
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    print("요청 실패: \(error.localizedDescription)")
+                    print("즐겨찾기 위치 로드 실패: \(error.localizedDescription)")
                 }
             }
         }
+        //        provider.request(.getLocation(memberSeq: memberSeq)) { response in
+        //            switch response {
+        //            case .success(let result):
+        //                if result.statusCode == 200 {
+        //                    do {
+        //                        let genericResponse = try result.map(GenericResponse<GetFavLocationResponse>.self)
+        //                        DispatchQueue.main.async {
+        //                            self.favPlaces = genericResponse.data.map { location in
+        //                                Location(
+        //                                    sequence: location.locationSeq,
+        //                                    location: location.location,
+        //                                    streetName: location.streetName,
+        //                                    x: 0, // 서버 응답에 x, y 좌표가 없으므로 임시로 0을 설정
+        //                                    y: 0)
+        //                            }
+        //                            print("즐겨찾기 위치 로드 성공: \(self.favPlaces.count)개의 위치를 받았습니다.")
+        //                        }
+        //                    } catch {
+        //                        print("JSON 파싱 실패: \(error)")
+        //                    }
+        //                } else {
+        //                    handleErrorResponse(result, endpoint: "즐겨찾기 위치 조회", params: ["memberSeq": self.memberSeq])
+        //                }
+        //            case .failure(let error):
+        //                DispatchQueue.main.async {
+        //                    print("요청 실패: \(error.localizedDescription)")
+        //                }
+        //            }
+        //        }
     }
     
     func postSchedule() {
@@ -99,26 +137,15 @@ final class CreateScheduleViewModel: ObservableObject {
         let invitedMemberSeqs = selectedFriends.map { $0.memberSeq }
         let body = CreateScheduleBody(title: title, startTime: dateFormatter.string(from: startTime), endTime: dateFormatter.string(from: endTime), location: place.location, streetName: place.streetName, x: place.x, y: place.y, color: color, memo: memo, allDay: isAllDay, invitedMemberSeqs: invitedMemberSeqs, createMemberSeq: memberSeq)
         
-        provider.request(.postSchedule(request: body)) { response in
-            switch response {
-            case .success(let result):
-                if result.statusCode == 200 {
-                    do {
-                        let genericResponse = try result.map(GenericResponse<[String: Int]>.self)
-                        if let scheduleSeq = genericResponse.data["scheduleSeq"] {
-                            DispatchQueue.main.async {
-                                self.isSuccess = true
-                                print("post 성공! start time: \(self.startTime.toString()), end time: \(self.endTime.toString())")
-                                print("Member Sequence: \(self.memberSeq), Schedule Sequence: \(scheduleSeq)")
-                            }
-                        } else {
-                            print("scheduleSeq not found in response data")
-                        }
-                    } catch {
-                        print("JSON 파싱 실패: \(error)")
-                    }
-                } else {
-                    handleErrorResponse(result, endpoint: "스케줄 생성")
+        scheduleService.postSchedule(request: body) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let response):
+                DispatchQueue.main.async {
+                    self.isSuccess = true
+                    print("post 성공! start time: \(self.startTime.toString()), end time: \(self.endTime.toString())")
+                    print("Member Sequence: \(self.memberSeq), Schedule Sequence: \(response.data.scheduleSeq), Chat Root Sequence: \(response.data.chatRootSeq)")
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
@@ -126,6 +153,34 @@ final class CreateScheduleViewModel: ObservableObject {
                 }
             }
         }
+        
+        //        provider.request(.postSchedule(request: body)) { response in
+        //            switch response {
+        //            case .success(let result):
+        //                if result.statusCode == 200 {
+        //                    do {
+        //                        let genericResponse = try result.map(GenericResponse<[String: Int]>.self)
+        //                        if let scheduleSeq = genericResponse.data["scheduleSeq"] {
+        //                            DispatchQueue.main.async {
+        //                                self.isSuccess = true
+        //                                print("post 성공! start time: \(self.startTime.toString()), end time: \(self.endTime.toString())")
+        //                                print("Member Sequence: \(self.memberSeq), Schedule Sequence: \(scheduleSeq)")
+        //                            }
+        //                        } else {
+        //                            print("scheduleSeq not found in response data")
+        //                        }
+        //                    } catch {
+        //                        print("JSON 파싱 실패: \(error)")
+        //                    }
+        //                } else {
+        //                    handleErrorResponse(result, endpoint: "스케줄 생성")
+        //                }
+        //            case .failure(let error):
+        //                DispatchQueue.main.async {
+        //                    print("요청 실패: \(error.localizedDescription)")
+        //                }
+        //            }
+        //        }
     }
 }
 
