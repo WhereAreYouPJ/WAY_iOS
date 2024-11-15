@@ -10,7 +10,16 @@
 import SwiftUI
 
 struct SearchFriendsView: View {
-    @StateObject private var viewModel = SearchFriendsViewModel()
+    @StateObject private var viewModel: SearchFriendsViewModel = {
+        let service = MemberService()
+        let repository = MemberRepository(memberService: service)
+        let memberDetailsUseCase = MemberDetailsUseCaseImpl(memberRepository: repository)
+        let friendsViewModel = FriendsViewModel(memberDetailsUseCase: memberDetailsUseCase)
+        return SearchFriendsViewModel(
+            friendsViewModel: friendsViewModel,
+            memberDetailsUseCase: memberDetailsUseCase)
+    }()
+    
     @Binding var selectedFriends: [Friend]
     @Environment(\.dismiss) private var dismiss
     

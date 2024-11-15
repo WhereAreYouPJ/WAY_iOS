@@ -6,13 +6,18 @@
 //
 
 import Foundation
+import Moya
 
 class FriendsViewModel: ObservableObject {
     @Published var favorites: [Friend] = []
     @Published var friends: [Friend] = []
     @Published var searchText: String = ""
+    @Published var networkSuccess = false
     
-    init() {
+    private let memberDetailsUseCase: MemberDetailsUseCase
+    
+    init(memberDetailsUseCase: MemberDetailsUseCase) {
+        self.memberDetailsUseCase = memberDetailsUseCase
         setupInitialData()
     }
     
@@ -33,6 +38,22 @@ class FriendsViewModel: ObservableObject {
         ]
     }
     
+    func getFriendsList() {
+        
+    }
+    
+    func getMemberDetails(memberSeq: Int, completion: @escaping (Bool) -> Void) {
+        memberDetailsUseCase.execute { [weak self] result in
+            switch result {
+            case .success(let data):
+                completion(true)
+            case .failure(let error):
+                print("\(error.localizedDescription)")
+                completion(false)
+            }
+        }
+    }
+    
     var filteredFavorites: [Friend] {
         if searchText.isEmpty {
             return favorites
@@ -51,9 +72,5 @@ class FriendsViewModel: ObservableObject {
 
     func clearSearch() {
         searchText = ""
-    }
-    
-    func getFriendsList() {
-        
     }
 }

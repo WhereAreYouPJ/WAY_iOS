@@ -8,10 +8,48 @@
 import Foundation
 import SwiftUI
 
-class SearchFriendsViewModel: FriendsViewModel {
+class SearchFriendsViewModel: ObservableObject {
+    private let friendsViewModel: FriendsViewModel
+    private let memberDetailsUseCase: MemberDetailsUseCase
+    
     @Published var selectedFavorites: Set<UUID> = []
     @Published var selectedFriends: Set<UUID> = []
     
+    init(
+        friendsViewModel: FriendsViewModel,
+        memberDetailsUseCase: MemberDetailsUseCase
+    ) {
+        self.friendsViewModel = friendsViewModel
+        self.memberDetailsUseCase = memberDetailsUseCase
+    }
+    
+    // FriendsViewModel에서 forward
+    var searchText: String {
+        get { friendsViewModel.searchText }
+        set { friendsViewModel.searchText = newValue }
+    }
+    
+    var favorites: [Friend] {
+        friendsViewModel.favorites
+    }
+    
+    var friends: [Friend] {
+        friendsViewModel.friends
+    }
+    
+    var filteredFavorites: [Friend] {
+        friendsViewModel.filteredFavorites
+    }
+    
+    var filteredFriends: [Friend] {
+        friendsViewModel.filteredFriends
+    }
+    
+    func clearSearch() {
+        friendsViewModel.clearSearch()
+    }
+    
+    // SearchFriendsViewModel 고유 기능
     var selectedList: [Friend] {
         favorites.filter { selectedFavorites.contains($0.id) } +
         friends.filter { selectedFriends.contains($0.id) }

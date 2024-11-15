@@ -8,7 +8,13 @@
 import SwiftUI
 
 struct FriendsView: View {
-    @StateObject private var viewModel = FriendsViewModel()
+    @StateObject private var viewModel:  FriendsViewModel = {
+        let service = MemberService()
+        let repository = MemberRepository(memberService: service)
+        let memberDetailUseCase = MemberDetailsUseCaseImpl(memberRepository: repository)
+        return FriendsViewModel(memberDetailsUseCase: memberDetailUseCase)
+    }()
+    
     @Environment(\.dismiss) private var dismiss
     @Binding var showSearchBar: Bool
     
@@ -26,6 +32,8 @@ struct FriendsView: View {
             
             ScrollView {
                 VStack(spacing: 0) {
+                    MyProfileView()
+                    
                     FriendsSectionView(title: "즐겨찾기", count: viewModel.filteredFavorites.count)
                     ForEach(viewModel.filteredFavorites) { friend in
                         FriendCell(friend: friend)
@@ -40,6 +48,26 @@ struct FriendsView: View {
                 .padding()
             }
         }
+    }
+}
+
+struct MyProfileView: View {
+    var body: some View {
+        HStack {
+            Image("exampleProfileImage")
+                .resizable()
+                .scaledToFill()
+                .frame(width: UIScreen.main.bounds.width * 0.14, height: UIScreen.main.bounds.width * 0.14)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+
+            Text("김주희")
+                .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 17)))
+                .foregroundColor(Color(.color34))
+                .padding(8)
+
+            Spacer()
+        }
+        .padding(.bottom, 14)
     }
 }
 
