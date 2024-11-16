@@ -22,3 +22,5 @@ struct ScheduleFeedInfo: Codable {
     let bookMarkInfo: Bool
 }
 
+
+

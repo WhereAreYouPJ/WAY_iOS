@@ -17,6 +17,10 @@ enum FeedAPI {
     case getBookMarkFeed(memberSeq: Int, page: Int32)
     case postBookMarkFeed(request: BookMarkFeedRequest)
     case deleteBookMarkFeed(request: BookMarkFeedRequest)
+    
+    case getHideFeed(memberSeq: Int, page: Int32)
+    case postHideFeed(feedSeq: Int, memberSeq: Int)
+    case deleteHideFeed(feedSeq: Int, memberSeq: Int)
 }
 
 extension FeedAPI: TargetType {
@@ -35,6 +39,8 @@ extension FeedAPI: TargetType {
             return "/feed/details"
         case .getBookMarkFeed, .postBookMarkFeed, .deleteBookMarkFeed:
             return "/book-mark"
+        case .getHideFeed, .postHideFeed, .deleteHideFeed:
+            return "/hide-feed"
         }
     }
     
@@ -42,11 +48,11 @@ extension FeedAPI: TargetType {
         switch self {
         case .putFeed:
             return .put
-        case .postFeed, .postBookMarkFeed:
+        case .postFeed, .postBookMarkFeed, .postHideFeed:
             return .post
-        case .getBookMarkFeed, .getFeedList, .getFeedDetails:
+        case .getBookMarkFeed, .getFeedList, .getFeedDetails, .getHideFeed:
             return .get
-        case .deleteBookMarkFeed, .deleteFeed:
+        case .deleteBookMarkFeed, .deleteFeed , .deleteHideFeed:
             return .delete
         }
     }
@@ -72,6 +78,13 @@ extension FeedAPI: TargetType {
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .deleteBookMarkFeed(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+            
+        case .getHideFeed(let memberSeq, let page):
+            return .requestParameters(parameters: ["memberSeq": memberSeq, "page": page], encoding: URLEncoding.queryString)
+        case .postHideFeed(let feedSeq, let memberSeq):
+            return .requestParameters(parameters: ["feedSeq": feedSeq, "memberSeq": memberSeq], encoding: URLEncoding.queryString)
+        case .deleteHideFeed(let feedSeq, let memberSeq):
+            return .requestParameters(parameters: ["feedSeq": feedSeq, "memberSeq": memberSeq], encoding: URLEncoding.queryString)
         }
     }
     

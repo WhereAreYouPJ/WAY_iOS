@@ -9,7 +9,7 @@ import Foundation
 // MARK: - DataClass
 struct GetFeedListResponse: Codable {
     let totalElements, totalPages, size: Int
-    let content: [Content]
+    let content: [FeedListContent]
     let number: Int
     let sort: Sort
     let numberOfElements: Int
@@ -18,7 +18,7 @@ struct GetFeedListResponse: Codable {
 }
 
 // MARK: - Content
-struct Content: Codable {
+struct FeedListContent: Codable {
     let scheduleInfo: ScheduleInfo
     let scheduleFeedInfo: [ScheduleFeedInfo]
     let scheduleFriendInfo: [Info]
