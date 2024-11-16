@@ -19,6 +19,6 @@ class ModifyUserNameUseCaseImpl: ModifyUserNameUseCase {
     }
     
     func execute(userName: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        memberRepository.modifyUserName(userName: userName, completion: completion)
+        memberRepository.putUserName(userName: userName, completion: completion)
     }
 }

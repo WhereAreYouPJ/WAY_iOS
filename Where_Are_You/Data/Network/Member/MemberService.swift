@@ -11,17 +11,24 @@ import Moya
 // MARK: - MemberServiceProtocol
 
 protocol MemberServiceProtocol {
-    func modifyUserName(userName: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func signUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void)
-    func resetPassword(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void)
-    func logout(completion: @escaping (Result<Void, Error>) -> Void)
-    func login(request: LoginBody, completion: @escaping (Result<GenericResponse<LoginResponse>, Error>) -> Void)
-    func emailVerify(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
-    func emailVerifyPassword(request: EmailVerifyPasswordBody, completion: @escaping (Result<Void, Error>) -> Void)
-    func emailSend(request: EmailSendBody, completion: @escaping (Result<Void, Error>) -> Void)
-    func memberSearch(request: MemberSearchParameters, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void)
-    func memberDetails(completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void)
-    func checkEmail(request: CheckEmailParameters, completion: @escaping (Result<GenericResponse<CheckEmailResponse>, Error>) -> Void)
+    func putUserName(userName: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func putProfileImage(images: String, completion: @escaping (Result<Void, Error>) -> Void)
+    
+    func postSignUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func postMemberSns(request: MemberSnsBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func postResetPassword(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func postLogout(completion: @escaping (Result<Void, Error>) -> Void)
+    func postLogin(request: LoginBody, completion: @escaping (Result<GenericResponse<LoginResponse>, Error>) -> Void)
+    func postMemberLink(request: MemberSnsBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func postEmailVerify(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func postEmailVerifyPassword(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func postEmailSend(email: String, completion: @escaping (Result<Void, Error>) -> Void)
+    
+    func getMemberSearch(request: MemberSearchParameters, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void)
+    func getMemberDetails(completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void)
+    func getCheckEmail(email: String, completion: @escaping (Result<GenericResponse<CheckEmailResponse>, Error>) -> Void)
+    
+    func deleteMember(request: DeleteMemberBody, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 // MARK: - AuthService
@@ -40,71 +47,94 @@ class MemberService: MemberServiceProtocol {
         })
         self.provider = MoyaProvider<MemberAPI>(plugins: [tokenPlugin])
     }
-    
+
     // MARK: - APIService
-    func modifyUserName(userName: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        provider.request(.modifyUserName(memberSeq: memberSeq, userName: userName)) { result in
+    func putUserName(userName: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+        provider.request(.putUserName(memberSeq: memberSeq, userName: userName)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
-    func signUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void) {
-        provider.request(.signUp(request: request)) { result in
+    func putProfileImage(images: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+        provider.request(.putProfileImage(memberSeq: memberSeq, images: images)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
-    func resetPassword(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void) {
-        provider.request(.resetPassword(request: request)) { result in
+    func postSignUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void) {
+        provider.request(.postSignUp(request: request)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
-    func logout(completion: @escaping (Result<Void, Error>) -> Void) {
-        let request = LogoutBody(memberSeq: memberSeq)
-        provider.request(.logout(request: request)) { result in
+    func postMemberSns(request: MemberSnsBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+        provider.request(.postMemberSns(request: request)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
-    func login(request: LoginBody, completion: @escaping (Result<GenericResponse<LoginResponse>, Error>) -> Void) {
-        provider.request(.login(request: request)) { result in
+    func postResetPassword(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void) {
+        provider.request(.postResetPassword(request: request)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
-    func emailVerify(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void) {
-        provider.request(.emailVerify(requst: request)) { result in
+    func postLogout(completion: @escaping (Result<Void, Error>) -> Void) {
+        provider.request(.postLogout(memberSeq: memberSeq)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
-    func emailVerifyPassword(request: EmailVerifyPasswordBody, completion: @escaping (Result<Void, Error>) -> Void) {
-        provider.request(.emailVerifyPassword(request: request)) { result in
+    func postLogin(request: LoginBody, completion: @escaping (Result<GenericResponse<LoginResponse>, Error>) -> Void) {
+        provider.request(.postLogin(request: request)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
-    func emailSend(request: EmailSendBody, completion: @escaping (Result<Void, Error>) -> Void) {
-        provider.request(.emailSend(request: request)) { result in
+    func postMemberLink(request: MemberSnsBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+        provider.request(.postMemberLink(request: request)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
-    func memberSearch(request: MemberSearchParameters, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void) {
-        provider.request(.memberSearch(request: request)) { result in
+    func postEmailVerify(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void) {
+        provider.request(.postEmailVerify(requst: request)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
-    func memberDetails(completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void) {
-        provider.request(.memberDetails(memberSeq: memberSeq)) { result in
+    func postEmailVerifyPassword(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void) {
+        provider.request(.postEmailVerifyPassword(request: request)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
-    func checkEmail(request: CheckEmailParameters, completion: @escaping (Result<GenericResponse<CheckEmailResponse>, Error>) -> Void) {
-        provider.request(.checkEmail(request: request)) { result in
+    func postEmailSend(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        provider.request(.postEmailSend(email: email)) { result in
+            APIResponseHandler.handleResponse(result, completion: completion)
+        }
+    }
+    
+    func getMemberSearch(request: MemberSearchParameters, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void) {
+        provider.request(.getMemberSearch(request: request)) { result in
+            APIResponseHandler.handleResponse(result, completion: completion)
+        }
+    }
+    
+    func getMemberDetails(completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void) {
+        provider.request(.getMemberDetails(memberSeq: memberSeq)) { result in
+            APIResponseHandler.handleResponse(result, completion: completion)
+        }
+    }
+    
+    func getCheckEmail(email: String, completion: @escaping (Result<GenericResponse<CheckEmailResponse>, Error>) -> Void) {
+        provider.request(.getCheckEmail(email: email)) { result in
+            APIResponseHandler.handleResponse(result, completion: completion)
+        }
+    }
+    
+    func deleteMember(request: DeleteMemberBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+        provider.request(.deleteMember(request: request)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }

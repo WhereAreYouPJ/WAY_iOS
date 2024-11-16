@@ -19,6 +19,6 @@ class EmailVerifyUseCaseImpl: EmailVerifyUseCase {
     }
 
     func execute(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void) {
-        memberRepository.emailVerify(request: request, completion: completion)
+        memberRepository.postEmailVerify(request: request, completion: completion)
     }
 }

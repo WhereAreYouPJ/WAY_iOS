@@ -19,6 +19,6 @@ class LogoutUseCaseImpl: LogoutUseCase {
     }
 
     func execute(completion: @escaping (Result<Void, Error>) -> Void) {
-        memberRepository.logout(completion: completion)
+        memberRepository.postLogout(completion: completion)
     }
 }

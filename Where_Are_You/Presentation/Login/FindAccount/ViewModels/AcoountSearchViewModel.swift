@@ -44,7 +44,7 @@ class AcoountSearchViewModel {
     
     // 이메일 중복체크
     func checkEmailAvailability(email: String) {
-        checkEmailUseCase.execute(request: CheckEmailParameters(email: email)) { result in
+        checkEmailUseCase.execute(email: email) { result in
             switch result {
             case .success:
                 self.onRequestCodeFailure?("\(ValidationError.invalidEmailFormat)")
@@ -56,7 +56,7 @@ class AcoountSearchViewModel {
     }
     
     func requestEmailCode(email: String) {
-        emailSendUseCase.execute(request: EmailSendBody(email: email)) { [weak self] result in
+        emailSendUseCase.execute(email: email) { [weak self] result in
             switch result {
             case .success:
                 self?.onRequestCodeSuccess?("인증코드가 전송되었습니다.")

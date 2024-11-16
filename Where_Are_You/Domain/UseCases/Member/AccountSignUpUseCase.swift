@@ -19,6 +19,6 @@ class AccountSignUpUseCaseImpl: AccountSignUpUseCase {
     }
 
     func execute(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void) {
-        memberRepository.signUp(request: request, completion: completion)
+        memberRepository.postSignUp(request: request, completion: completion)
     }
 }
