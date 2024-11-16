@@ -18,10 +18,13 @@ protocol FeedServiceProtocol {
     func getBookMarkFeed(page: Int32, completion: @escaping (Result<GenericResponse<GetBookMarkResponse>, Error>) -> Void)
     func postBookMarkFeed(request: BookMarkFeedRequest, completion: @escaping (Result<Void, Error>) -> Void)
     func deleteBookMarkFeed(request: BookMarkFeedRequest, completion: @escaping (Result<Void, Error>) -> Void)
+    
+    func getHideFeed(page: Int32, completion: @escaping (Result<GenericResponse<GetHideFeedResponse>, Error>) -> Void)
+    func postHideFeed(feedSeq: Int, completion: @escaping (Result<Void, Error>) -> Void)
+    func deleteHideFeed(feedSeq: Int, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class FeedService: FeedServiceProtocol {
-    
     // MARK: - Properties
     private var provider = MoyaProvider<FeedAPI>()
     
@@ -80,6 +83,24 @@ class FeedService: FeedServiceProtocol {
     
     func deleteBookMarkFeed(request: BookMarkFeedRequest, completion: @escaping (Result<Void, any Error>) -> Void) {
         provider.request(.deleteBookMarkFeed(request: request)) { result in
+            APIResponseHandler.handleResponse(result, completion: completion)
+        }
+    }
+    
+    func getHideFeed(page: Int32, completion: @escaping (Result<GenericResponse<GetHideFeedResponse>, any Error>) -> Void) {
+        provider.request(.getHideFeed(memberSeq: memberSeq, page: page)) { result in
+            APIResponseHandler.handleResponse(result, completion: completion)
+        }
+    }
+    
+    func postHideFeed(feedSeq: Int, completion: @escaping (Result<Void, any Error>) -> Void) {
+        provider.request(.postHideFeed(feedSeq: feedSeq, memberSeq: memberSeq)) { result in
+            APIResponseHandler.handleResponse(result, completion: completion)
+        }
+    }
+    
+    func deleteHideFeed(feedSeq: Int, completion: @escaping (Result<Void, any Error>) -> Void) {
+        provider.request(.deleteHideFeed(feedSeq: feedSeq, memberSeq: memberSeq)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }

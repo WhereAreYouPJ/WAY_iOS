@@ -180,6 +180,10 @@
 		99EDF5922CE8AD2A0008B19A /* DeleteFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF5912CE8AD2A0008B19A /* DeleteFeedUseCase.swift */; };
 		99EDF5942CE8AD7A0008B19A /* GetFeedListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF5932CE8AD7A0008B19A /* GetFeedListUseCase.swift */; };
 		99EDF5962CE8AD980008B19A /* GetFeedDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF5952CE8AD980008B19A /* GetFeedDetailsUseCase.swift */; };
+		99EDF5982CE8BC380008B19A /* GetHideFeedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF5972CE8BC380008B19A /* GetHideFeedResponse.swift */; };
+		99EDF5A02CE8BE4A0008B19A /* GetHideFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF59F2CE8BE4A0008B19A /* GetHideFeedUseCase.swift */; };
+		99EDF5A22CE8BE520008B19A /* PostHideFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF5A12CE8BE520008B19A /* PostHideFeedUseCase.swift */; };
+		99EDF5A42CE8BE5B0008B19A /* DeleteHideFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF5A32CE8BE5B0008B19A /* DeleteHideFeedUseCase.swift */; };
 		99EF53A02C366D8900C6A399 /* APIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EF539F2C366D8900C6A399 /* APIServiceTests.swift */; };
 		99EFC7692CD0B9420044DFC5 /* PutLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EFC7682CD0B9420044DFC5 /* PutLocationUseCase.swift */; };
 		99EFC76B2CD0B9560044DFC5 /* PostLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EFC76A2CD0B9560044DFC5 /* PostLocationUseCase.swift */; };
@@ -426,6 +430,10 @@
 		99EDF5912CE8AD2A0008B19A /* DeleteFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFeedUseCase.swift; sourceTree = "<group>"; };
 		99EDF5932CE8AD7A0008B19A /* GetFeedListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFeedListUseCase.swift; sourceTree = "<group>"; };
 		99EDF5952CE8AD980008B19A /* GetFeedDetailsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFeedDetailsUseCase.swift; sourceTree = "<group>"; };
+		99EDF5972CE8BC380008B19A /* GetHideFeedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHideFeedResponse.swift; sourceTree = "<group>"; };
+		99EDF59F2CE8BE4A0008B19A /* GetHideFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHideFeedUseCase.swift; sourceTree = "<group>"; };
+		99EDF5A12CE8BE520008B19A /* PostHideFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHideFeedUseCase.swift; sourceTree = "<group>"; };
+		99EDF5A32CE8BE5B0008B19A /* DeleteHideFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteHideFeedUseCase.swift; sourceTree = "<group>"; };
 		99EF53952C366D2B00C6A399 /* Where_Are_You_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Where_Are_You_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		99EF539F2C366D8900C6A399 /* APIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceTests.swift; sourceTree = "<group>"; };
 		99EF53A12C366EEE00C6A399 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -821,6 +829,7 @@
 				99CF9BFE2CD341F40079BE81 /* GetBookMarkResponse.swift */,
 				99EDF58D2CE884820008B19A /* GetFeedListResponse.swift */,
 				99EDF58F2CE885CC0008B19A /* GetFeedDetailsResponse.swift */,
+				99EDF5972CE8BC380008B19A /* GetHideFeedResponse.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -867,14 +876,9 @@
 		99C68E4E2C64B93C00DEC1F1 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				99C68E512C64B96E00DEC1F1 /* ModifyFeedUseCase.swift */,
-				99C68E4F2C64B96500DEC1F1 /* SaveFeedUseCase.swift */,
-				99EDF5912CE8AD2A0008B19A /* DeleteFeedUseCase.swift */,
-				99EDF5932CE8AD7A0008B19A /* GetFeedListUseCase.swift */,
-				99EDF5952CE8AD980008B19A /* GetFeedDetailsUseCase.swift */,
-				99CF9C002CD343620079BE81 /* GetBookMarkFeedUseCase.swift */,
-				99CF9C022CD343790079BE81 /* PostBookMarkFeedUseCase.swift */,
-				99CF9C042CD3438C0079BE81 /* DeleteBookMarkFeedUseCase.swift */,
+				99EDF59D2CE8BE010008B19A /* Feed */,
+				99EDF59E2CE8BE210008B19A /* HideFeed */,
+				99EDF59C2CE8BDF50008B19A /* BookMarkFeed */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -1233,6 +1237,38 @@
 				999E29702CBB9AF900AB9FF9 /* LocationRepository.swift */,
 			);
 			path = Repositories;
+			sourceTree = "<group>";
+		};
+		99EDF59C2CE8BDF50008B19A /* BookMarkFeed */ = {
+			isa = PBXGroup;
+			children = (
+				99CF9C042CD3438C0079BE81 /* DeleteBookMarkFeedUseCase.swift */,
+				99CF9C002CD343620079BE81 /* GetBookMarkFeedUseCase.swift */,
+				99CF9C022CD343790079BE81 /* PostBookMarkFeedUseCase.swift */,
+			);
+			path = BookMarkFeed;
+			sourceTree = "<group>";
+		};
+		99EDF59D2CE8BE010008B19A /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				99C68E512C64B96E00DEC1F1 /* ModifyFeedUseCase.swift */,
+				99C68E4F2C64B96500DEC1F1 /* SaveFeedUseCase.swift */,
+				99EDF5912CE8AD2A0008B19A /* DeleteFeedUseCase.swift */,
+				99EDF5932CE8AD7A0008B19A /* GetFeedListUseCase.swift */,
+				99EDF5952CE8AD980008B19A /* GetFeedDetailsUseCase.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		99EDF59E2CE8BE210008B19A /* HideFeed */ = {
+			isa = PBXGroup;
+			children = (
+				99EDF59F2CE8BE4A0008B19A /* GetHideFeedUseCase.swift */,
+				99EDF5A12CE8BE520008B19A /* PostHideFeedUseCase.swift */,
+				99EDF5A32CE8BE5B0008B19A /* DeleteHideFeedUseCase.swift */,
+			);
+			path = HideFeed;
 			sourceTree = "<group>";
 		};
 		99EF53962C366D2B00C6A399 /* Where_Are_You_Tests */ = {
@@ -1638,6 +1674,7 @@
 				99960AB52CE1DE5B007D2B61 /* GetScheduleResponse.swift in Sources */,
 				9910B84C2C71B638005F7EEE /* DDayViewModel.swift in Sources */,
 				99EFC76D2CD0B9630044DFC5 /* DeleteLocationUseCase.swift in Sources */,
+				99EDF5A22CE8BE520008B19A /* PostHideFeedUseCase.swift in Sources */,
 				D53620912C8AE1010017B279 /* SearchLocationViewModel.swift in Sources */,
 				9910B84B2C71B62E005F7EEE /* PasswordResetView.swift in Sources */,
 				99CF9C012CD343620079BE81 /* GetBookMarkFeedUseCase.swift in Sources */,
@@ -1752,6 +1789,7 @@
 				992F57DB2C5B2A1D00219C6B /* MemberAPI.swift in Sources */,
 				99FDD0BD2C6DF72700B15026 /* MultipartFormDataHelper.swift in Sources */,
 				99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */,
+				99EDF5A42CE8BE5B0008B19A /* DeleteHideFeedUseCase.swift in Sources */,
 				D54C040C2C651832009CC419 /* Schedule.swift in Sources */,
 				992BF70C2CAA9006008D3055 /* GetScheduleListUseCase.swift in Sources */,
 				995E3E5E2C508039006B4480 /* MyPageViewController.swift in Sources */,
@@ -1779,9 +1817,11 @@
 				99C6D2A02C903EAF009C0CF8 /* ScheduleRepository.swift in Sources */,
 				99EDF5842CE864180008B19A /* DeleteMemberBody.swift in Sources */,
 				99CF9C052CD3438C0079BE81 /* DeleteBookMarkFeedUseCase.swift in Sources */,
+				99EDF5982CE8BC380008B19A /* GetHideFeedResponse.swift in Sources */,
 				99149FED2C4F97EA00136097 /* TimeHelper.swift in Sources */,
 				D57AC3B12C8B6336006AE7D7 /* KakaoLocalResponse.swift in Sources */,
 				D54C040E2C651B8A009CC419 /* ScheduleAPI.swift in Sources */,
+				99EDF5A02CE8BE4A0008B19A /* GetHideFeedUseCase.swift in Sources */,
 				9967C1522C56467D00927277 /* CustomAlert.swift in Sources */,
 				99C68E482C64B43900DEC1F1 /* FeedService.swift in Sources */,
 				99949F572C58B1CE00AE0177 /* FriendsListViewController.swift in Sources */,

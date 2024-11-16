@@ -8,7 +8,7 @@
 import Foundation
 
 protocol GetBookMarkFeedUseCase {
-    func execute(page: Int32, completion: @escaping (Result<GetBookMarkResponse, Error>) -> Void)
+    func execute(page: Int32, completion: @escaping (Result<[BookMarkContent], Error>) -> Void)
 }
 
 class GetBookMarkFeedUseCaseImpl: GetBookMarkFeedUseCase {
@@ -19,11 +19,11 @@ class GetBookMarkFeedUseCaseImpl: GetBookMarkFeedUseCase {
         self.feedRepository = feedRepository
     }
 
-    func execute(page: Int32, completion: @escaping (Result<GetBookMarkResponse, Error>) -> Void) {
+    func execute(page: Int32, completion: @escaping (Result<[BookMarkContent], Error>) -> Void) {
         feedRepository.getBookMarkFeed(page: page) { result in
             switch result {
             case .success(let response):
-                completion(.success(response.data))
+                completion(.success(response.data.content))
             case .failure(let error):
                 completion(.failure(error))
             }

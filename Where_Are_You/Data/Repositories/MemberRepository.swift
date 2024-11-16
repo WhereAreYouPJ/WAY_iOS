@@ -35,6 +35,8 @@ class MemberRepository: MemberRepositoryProtocol {
         self.memberService = memberService
     }
     
+    // MARK: - PUT
+
     func putUserName(userName: String, completion: @escaping (Result<Void, Error>) -> Void) {
         memberService.putUserName(userName: userName, completion: completion)
     }
@@ -43,7 +45,7 @@ class MemberRepository: MemberRepositoryProtocol {
         memberService.putProfileImage(images: images, completion: completion)
     }
     
-    
+    // MARK: - POST
     
     func postSignUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void) {
         memberService.postSignUp(request: request, completion: completion)
@@ -103,6 +105,8 @@ class MemberRepository: MemberRepositoryProtocol {
         memberService.postEmailSend(email: email, completion: completion)
     }
     
+    // MARK: - GET
+
     func getMemberSearch(request: MemberSearchParameters, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void) {
         memberService.getMemberSearch(request: request, completion: completion)
     }
@@ -114,6 +118,8 @@ class MemberRepository: MemberRepositoryProtocol {
     func getCheckEmail(email: String, completion: @escaping (Result<GenericResponse<CheckEmailResponse>, Error>) -> Void) {
         memberService.getCheckEmail(email: email, completion: completion)
     }
+    
+    // MARK: - DELETE
     
     func deleteMember(request: DeleteMemberBody, completion: @escaping (Result<Void, any Error>) -> Void) {
         memberService.deleteMember(request: request, completion: completion)
