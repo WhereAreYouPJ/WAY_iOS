@@ -1,26 +1,26 @@
 //
-//  GetBookMarkFeedUseCase.swift
+//  GetFeedListUseCase.swift
 //  Where_Are_You
 //
-//  Created by 오정석 on 31/10/2024.
+//  Created by 오정석 on 16/11/2024.
 //
 
 import Foundation
 
-protocol GetBookMarkFeedUseCase {
-    func execute(page: Int32, completion: @escaping (Result<GetBookMarkResponse, Error>) -> Void)
+protocol GetFeedListUseCase {
+    func execute(page: Int32, completion: @escaping (Result<GetFeedListResponse, Error>) -> Void)
+    
 }
 
-class GetBookMarkFeedUseCaseImpl: GetBookMarkFeedUseCase {
-
+class GetFeedListUseCaseImpl: GetFeedListUseCase {
     private let feedRepository: FeedRepositoryProtocol
-
+    
     init(feedRepository: FeedRepositoryProtocol) {
         self.feedRepository = feedRepository
     }
-
-    func execute(page: Int32, completion: @escaping (Result<GetBookMarkResponse, Error>) -> Void) {
-        feedRepository.getBookMarkFeed(page: page) { result in
+    
+    func execute(page: Int32, completion: @escaping (Result<GetFeedListResponse, any Error>) -> Void) {
+        feedRepository.getFeedList(page: page) { result in
             switch result {
             case .success(let response):
                 completion(.success(response.data))

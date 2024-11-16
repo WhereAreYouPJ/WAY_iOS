@@ -17,7 +17,13 @@ struct SaveFeedRequest: Codable {
 
 struct ModifyFeedRequest: Codable {
     let feedSeq: Int
-    let creatorSeq: Int
+    let memberSeq: Int
     let title: String
     let content: String?
+    let feedImageOrders: [Int]
+}
+
+struct DeleteFeedRequest: ParameterConvertible {
+    let memberSeq: Int
+    let feedSeq: Int
 }
