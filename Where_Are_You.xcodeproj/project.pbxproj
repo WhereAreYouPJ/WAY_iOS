@@ -47,10 +47,8 @@
 		992F57C22C5B1E8900219C6B /* ParameterConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57C12C5B1E8900219C6B /* ParameterConvertible.swift */; };
 		992F57C62C5B265600219C6B /* SingUpBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57C52C5B265600219C6B /* SingUpBody.swift */; };
 		992F57C82C5B26D700219C6B /* ResetPasswordBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57C72C5B26D700219C6B /* ResetPasswordBody.swift */; };
-		992F57CA2C5B26E700219C6B /* LogoutBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57C92C5B26E700219C6B /* LogoutBody.swift */; };
 		992F57CC2C5B270300219C6B /* LoginBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57CB2C5B270300219C6B /* LoginBody.swift */; };
 		992F57CE2C5B28A800219C6B /* EmailVerifyBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57CD2C5B28A800219C6B /* EmailVerifyBody.swift */; };
-		992F57D02C5B28C400219C6B /* EmailVerifyPasswordBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57CF2C5B28C400219C6B /* EmailVerifyPasswordBody.swift */; };
 		992F57D22C5B28D600219C6B /* EmailSendBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57D12C5B28D600219C6B /* EmailSendBody.swift */; };
 		992F57D42C5B28E900219C6B /* MemberSearchParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57D32C5B28E900219C6B /* MemberSearchParameters.swift */; };
 		992F57D82C5B290900219C6B /* CheckEmailParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57D72C5B290900219C6B /* CheckEmailParameters.swift */; };
@@ -173,6 +171,12 @@
 		99EC78D22C11E437007C4415 /* PasswordFinishResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC78D12C11E437007C4415 /* PasswordFinishResetViewController.swift */; };
 		99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC78D32C11E809007C4415 /* FinishRegisterview.swift */; };
 		99EC78D62C11E8A3007C4415 /* FinishRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC78D52C11E8A3007C4415 /* FinishRegisterViewController.swift */; };
+		99EDF5822CE862120008B19A /* MemberSnsBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF5812CE862120008B19A /* MemberSnsBody.swift */; };
+		99EDF5842CE864180008B19A /* DeleteMemberBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF5832CE864180008B19A /* DeleteMemberBody.swift */; };
+		99EDF5862CE873EB0008B19A /* ModifyProfileImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF5852CE873EB0008B19A /* ModifyProfileImageUseCase.swift */; };
+		99EDF5882CE874AB0008B19A /* SnsSignUpUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF5872CE874AB0008B19A /* SnsSignUpUseCase.swift */; };
+		99EDF58A2CE8764B0008B19A /* AccountLinkUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF5892CE8764B0008B19A /* AccountLinkUseCase.swift */; };
+		99EDF58C2CE877BD0008B19A /* DeleteMemberUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF58B2CE877BD0008B19A /* DeleteMemberUseCase.swift */; };
 		99EF53A02C366D8900C6A399 /* APIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EF539F2C366D8900C6A399 /* APIServiceTests.swift */; };
 		99EFC7692CD0B9420044DFC5 /* PutLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EFC7682CD0B9420044DFC5 /* PutLocationUseCase.swift */; };
 		99EFC76B2CD0B9560044DFC5 /* PostLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EFC76A2CD0B9560044DFC5 /* PostLocationUseCase.swift */; };
@@ -283,10 +287,8 @@
 		992F57C12C5B1E8900219C6B /* ParameterConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterConvertible.swift; sourceTree = "<group>"; };
 		992F57C52C5B265600219C6B /* SingUpBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingUpBody.swift; sourceTree = "<group>"; };
 		992F57C72C5B26D700219C6B /* ResetPasswordBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordBody.swift; sourceTree = "<group>"; };
-		992F57C92C5B26E700219C6B /* LogoutBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutBody.swift; sourceTree = "<group>"; };
 		992F57CB2C5B270300219C6B /* LoginBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBody.swift; sourceTree = "<group>"; };
 		992F57CD2C5B28A800219C6B /* EmailVerifyBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerifyBody.swift; sourceTree = "<group>"; };
-		992F57CF2C5B28C400219C6B /* EmailVerifyPasswordBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerifyPasswordBody.swift; sourceTree = "<group>"; };
 		992F57D12C5B28D600219C6B /* EmailSendBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSendBody.swift; sourceTree = "<group>"; };
 		992F57D32C5B28E900219C6B /* MemberSearchParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSearchParameters.swift; sourceTree = "<group>"; };
 		992F57D72C5B290900219C6B /* CheckEmailParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailParameters.swift; sourceTree = "<group>"; };
@@ -413,6 +415,12 @@
 		99EC78D12C11E437007C4415 /* PasswordFinishResetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordFinishResetViewController.swift; sourceTree = "<group>"; };
 		99EC78D32C11E809007C4415 /* FinishRegisterview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishRegisterview.swift; sourceTree = "<group>"; };
 		99EC78D52C11E8A3007C4415 /* FinishRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishRegisterViewController.swift; sourceTree = "<group>"; };
+		99EDF5812CE862120008B19A /* MemberSnsBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSnsBody.swift; sourceTree = "<group>"; };
+		99EDF5832CE864180008B19A /* DeleteMemberBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteMemberBody.swift; sourceTree = "<group>"; };
+		99EDF5852CE873EB0008B19A /* ModifyProfileImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyProfileImageUseCase.swift; sourceTree = "<group>"; };
+		99EDF5872CE874AB0008B19A /* SnsSignUpUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsSignUpUseCase.swift; sourceTree = "<group>"; };
+		99EDF5892CE8764B0008B19A /* AccountLinkUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLinkUseCase.swift; sourceTree = "<group>"; };
+		99EDF58B2CE877BD0008B19A /* DeleteMemberUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteMemberUseCase.swift; sourceTree = "<group>"; };
 		99EF53952C366D2B00C6A399 /* Where_Are_You_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Where_Are_You_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		99EF539F2C366D8900C6A399 /* APIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceTests.swift; sourceTree = "<group>"; };
 		99EF53A12C366EEE00C6A399 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -608,13 +616,13 @@
 			children = (
 				992F57C52C5B265600219C6B /* SingUpBody.swift */,
 				992F57C72C5B26D700219C6B /* ResetPasswordBody.swift */,
-				992F57C92C5B26E700219C6B /* LogoutBody.swift */,
 				992F57CB2C5B270300219C6B /* LoginBody.swift */,
 				992F57CD2C5B28A800219C6B /* EmailVerifyBody.swift */,
-				992F57CF2C5B28C400219C6B /* EmailVerifyPasswordBody.swift */,
 				992F57D12C5B28D600219C6B /* EmailSendBody.swift */,
 				992F57D32C5B28E900219C6B /* MemberSearchParameters.swift */,
 				992F57D72C5B290900219C6B /* CheckEmailParameters.swift */,
+				99EDF5812CE862120008B19A /* MemberSnsBody.swift */,
+				99EDF5832CE864180008B19A /* DeleteMemberBody.swift */,
 			);
 			path = Member;
 			sourceTree = "<group>";
@@ -835,15 +843,19 @@
 			isa = PBXGroup;
 			children = (
 				99D5FE3B2C88419300D224DA /* ModifyUserNameUseCase.swift */,
+				99EDF5852CE873EB0008B19A /* ModifyProfileImageUseCase.swift */,
 				990F57902C27ECDC00F6E1AD /* AccountSignUpUseCase.swift */,
+				99EDF5872CE874AB0008B19A /* SnsSignUpUseCase.swift */,
 				99CA4F272C33B72C007C027C /* ResetPasswordUseCase.swift */,
 				992F57DE2C5B614A00219C6B /* LogoutUseCase.swift */,
 				9979622C2C3E6B2200E95CA6 /* AccountLoginUseCase.swift */,
+				99EDF5892CE8764B0008B19A /* AccountLinkUseCase.swift */,
 				99E8BC442C2D26CF00536B95 /* EmailVerifyUseCase.swift */,
 				990F57B12C282C5900F6E1AD /* EmailSendUseCase.swift */,
 				992F57E22C5B618D00219C6B /* MemberSearchUseCase.swift */,
 				990F57A22C27F9FE00F6E1AD /* MemberDetailsUseCase.swift */,
 				992F57E42C5B623F00219C6B /* CheckEmailUseCase.swift */,
+				99EDF58B2CE877BD0008B19A /* DeleteMemberUseCase.swift */,
 			);
 			path = Member;
 			sourceTree = "<group>";
@@ -1648,8 +1660,8 @@
 				99960AB12CE1D96D007D2B61 /* DeleteScheduleUseCase.swift in Sources */,
 				9910B8522C71EAA4005F7EEE /* ScheduleDropDownCell.swift in Sources */,
 				99FDD0BF2C6DF99400B15026 /* ReadFeedUseCase.swift in Sources */,
+				99EDF5822CE862120008B19A /* MemberSnsBody.swift in Sources */,
 				99D8FBBB2C3BA1D90062AF10 /* MainHomeViewController.swift in Sources */,
-				992F57CA2C5B26E700219C6B /* LogoutBody.swift in Sources */,
 				99D8FBB52C3B9F9F0062AF10 /* MainHomeView.swift in Sources */,
 				99C140382C64943F00A706B6 /* LayoutAdapter.swift in Sources */,
 				995358412C00C555005BF799 /* LoginViewController.swift in Sources */,
@@ -1671,6 +1683,7 @@
 				992F57DF2C5B614A00219C6B /* LogoutUseCase.swift in Sources */,
 				992F57E52C5B623F00219C6B /* CheckEmailUseCase.swift in Sources */,
 				9911F9842C3F5AA600D0FDC9 /* BannerView.swift in Sources */,
+				99EDF5882CE874AB0008B19A /* SnsSignUpUseCase.swift in Sources */,
 				D5DCBF342C7435E2003F0246 /* SearchFriendsView.swift in Sources */,
 				99960AAD2CE1D875007D2B61 /* PostScheduleUseCase.swift in Sources */,
 				99C9B2422C01CE4C008D7CBD /* AccountLoginViewModel.swift in Sources */,
@@ -1679,6 +1692,7 @@
 				992F57D82C5B290900219C6B /* CheckEmailParameters.swift in Sources */,
 				D585E2872C82F6C600C16A14 /* GetScheduleByMonthResponse.swift in Sources */,
 				9911F9882C3F63D500D0FDC9 /* Feed.swift in Sources */,
+				99EDF5862CE873EB0008B19A /* ModifyProfileImageUseCase.swift in Sources */,
 				99949F592C58B81A00AE0177 /* FriendsViewModel.swift in Sources */,
 				99D8FBB92C3BA1CD0062AF10 /* MainTabBarController.swift in Sources */,
 				9911F9862C3F5E6F00D0FDC9 /* DDayView.swift in Sources */,
@@ -1732,7 +1746,6 @@
 				992F57DB2C5B2A1D00219C6B /* MemberAPI.swift in Sources */,
 				99FDD0BD2C6DF72700B15026 /* MultipartFormDataHelper.swift in Sources */,
 				99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */,
-				992F57D02C5B28C400219C6B /* EmailVerifyPasswordBody.swift in Sources */,
 				D54C040C2C651832009CC419 /* Schedule.swift in Sources */,
 				992BF70C2CAA9006008D3055 /* GetScheduleListUseCase.swift in Sources */,
 				995E3E5E2C508039006B4480 /* MyPageViewController.swift in Sources */,
@@ -1758,6 +1771,7 @@
 				D592D8EF2C7DE3B100736D93 /* SearchFriendsViewModel.swift in Sources */,
 				D5496DD22C6B69570056C196 /* ConfirmLocationView.swift in Sources */,
 				99C6D2A02C903EAF009C0CF8 /* ScheduleRepository.swift in Sources */,
+				99EDF5842CE864180008B19A /* DeleteMemberBody.swift in Sources */,
 				99CF9C052CD3438C0079BE81 /* DeleteBookMarkFeedUseCase.swift in Sources */,
 				99149FED2C4F97EA00136097 /* TimeHelper.swift in Sources */,
 				D57AC3B12C8B6336006AE7D7 /* KakaoLocalResponse.swift in Sources */,
@@ -1778,6 +1792,8 @@
 				99C68E3F2C64B11D00DEC1F1 /* FeedRequest.swift in Sources */,
 				995E3E5B2C507FE6006B4480 /* MyPageView.swift in Sources */,
 				99A7D7E42C999897002BCD21 /* LocationBookMarkCell.swift in Sources */,
+				99EDF58A2CE8764B0008B19A /* AccountLinkUseCase.swift in Sources */,
+				99EDF58C2CE877BD0008B19A /* DeleteMemberUseCase.swift in Sources */,
 				D51AC99C2C849AB400D0AD2E /* LocationAPI.swift in Sources */,
 				9953583F2C00C555005BF799 /* SceneDelegate.swift in Sources */,
 				990F57B22C282C5900F6E1AD /* EmailSendUseCase.swift in Sources */,

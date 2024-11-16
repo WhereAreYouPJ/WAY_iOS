@@ -19,6 +19,6 @@ class ResetPasswordUseCaseImpl: ResetPasswordUseCase {
     }
 
     func execute(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void) {
-        memberRepository.resetPassword(request: request, completion: completion)
+        memberRepository.postResetPassword(request: request, completion: completion)
     }
 }

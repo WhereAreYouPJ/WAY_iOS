@@ -52,13 +52,15 @@ class AddFeedViewModel {
                 self.schedules.append(contentsOf: newSchedules)
                 self.page += 1
                 
+                // 일정 배열을 최신 날짜 순으로 정렬 (날짜가 최신인 일정이 상단에 위치)
+                self.schedules.sort { $0.startTime > $1.startTime }
+                
                 // 데이터 그룹화 (날짜별로)
                 self.groupedSchedules = Dictionary(grouping: schedules, by: { schedule -> String in
                     return String(schedule.startTime.prefix(10))
                 })
                 self.onSchedulesUpdated?()
                 self.delegate?.didUpdateSchedules()
-                // 여기에 성공했을때 일정 리스트들을 올리면 된다.
             case .failure(let error):
                 print("\(error.localizedDescription)")
             }

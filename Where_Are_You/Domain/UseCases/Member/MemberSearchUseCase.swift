@@ -19,7 +19,7 @@ class MemberSearchUseCaseImpl: MemberSearchUseCase {
     }
 
     func execute(request: MemberSearchParameters, completion: @escaping (Result<MemberSearchResponse, Error>) -> Void) {
-        memberRepository.memberSearch(request: request) { result in
+        memberRepository.getMemberSearch(request: request) { result in
             switch result {
             case .success(let response):
                 completion(.success(response.data))

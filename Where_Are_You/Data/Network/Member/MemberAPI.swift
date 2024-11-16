@@ -8,17 +8,24 @@
 import Moya
 
 enum MemberAPI {
-    case modifyUserName(memberSeq: Int, userName: String)
-    case signUp(request: SignUpBody)
-    case resetPassword(request: ResetPasswordBody)
-    case logout(request: LogoutBody)
-    case login(request: LoginBody)
-    case emailVerify(requst: EmailVerifyBody)
-    case emailVerifyPassword(request: EmailVerifyPasswordBody)
-    case emailSend(request: EmailSendBody)
-    case memberSearch(request: MemberSearchParameters)
-    case memberDetails(memberSeq: Int)
-    case checkEmail(request: CheckEmailParameters)
+    case putUserName(memberSeq: Int, userName: String)
+    case putProfileImage(memberSeq: Int, images: String)
+    
+    case postSignUp(request: SignUpBody)
+    case postMemberSns(request: MemberSnsBody)
+    case postResetPassword(request: ResetPasswordBody)
+    case postLogout(memberSeq: Int)
+    case postLogin(request: LoginBody)
+    case postMemberLink(request: MemberSnsBody)
+    case postEmailVerify(requst: EmailVerifyBody)
+    case postEmailVerifyPassword(request: EmailVerifyBody)
+    case postEmailSend(email: String)
+    
+    case getMemberSearch(request: MemberSearchParameters)
+    case getMemberDetails(memberSeq: Int)
+    case getCheckEmail(email: String)
+    
+    case deleteMember(request: DeleteMemberBody)
 }
 
 extension MemberAPI: TargetType {
@@ -28,66 +35,92 @@ extension MemberAPI: TargetType {
     
     var path: String {
         switch self {
-        case .modifyUserName:
+        case .putUserName:
             return "/member/modify/userName"
-        case .signUp:
+        case .putProfileImage:
+            return "/member/profile-image"
+            
+        case .postSignUp:
             return "/member"
-        case .resetPassword:
+        case .postMemberSns:
+            return "/member/sns"
+        case .postResetPassword:
             return "/member/resetPassword"
-        case .logout:
+        case .postLogout:
             return "/member/logout"
-        case .login:
+        case .postLogin:
             return "/member/login"
-        case .emailVerify:
+        case .postMemberLink:
+            return "/member/link"
+        case .postEmailVerify:
             return "/member/email/verify"
-        case .emailVerifyPassword:
+        case .postEmailVerifyPassword:
             return "/member/email/verifyPassword"
-        case .emailSend:
+        case .postEmailSend:
             return "/member/email/send"
-        case .memberSearch:
+            
+        case .getMemberSearch:
             return "/member/search"
-        case .memberDetails:
+        case .getMemberDetails:
             return "/member/details"
-        case .checkEmail:
+        case .getCheckEmail:
             return "/member/checkEmail"
+            
+            
+        case .deleteMember(request: let request):
+            return "/member/member"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .modifyUserName:
+        case .putUserName, .putProfileImage:
             return .put
-        case .signUp, .resetPassword, .logout, .login, .emailVerify, .emailVerifyPassword, .emailSend:
+        case .postSignUp,.postMemberSns, .postResetPassword, .postLogout, .postLogin, .postMemberLink, .postEmailVerify, .postEmailVerifyPassword, .postEmailSend:
             return .post
-        case .memberSearch, .memberDetails, .checkEmail:
+        case .getMemberSearch, .getMemberDetails, .getCheckEmail:
             return .get
+        case .deleteMember:
+            return .delete
         }
     }
     
     var task: Task {
         switch self {
-        case .modifyUserName(let memberSeq, let userName):
+        case .putUserName(let memberSeq, let userName):
             return .requestParameters(parameters: ["memberSeq": memberSeq, "userName": userName], encoding: JSONEncoding.default)
-        case .signUp(let request):
+        case .putProfileImage(let memberSeq, let images):
+            return .requestParameters(parameters: ["memberSeq": memberSeq, "images": images], encoding: JSONEncoding.default)
+            
+        case .postSignUp(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .resetPassword(let request):
+        case .postMemberSns(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .logout(let request):
+        case .postResetPassword(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .login(let request):
+        case .postLogout(let memberSeq):
+            return .requestParameters(parameters: ["memberSeq": memberSeq], encoding: JSONEncoding.default)
+        case .postLogin(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .emailVerify(let request):
+        case .postMemberLink(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .emailVerifyPassword(let request):
+        case .postEmailVerify(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .emailSend(let request):
+        case .postEmailVerifyPassword(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .memberSearch(let request):
+        case .postEmailSend(let email):
+            return .requestParameters(parameters: ["email": email], encoding: JSONEncoding.default)
+            
+        case .getMemberSearch(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .memberDetails(let memberSeq):
+        case .getMemberDetails(let memberSeq):
             return .requestParameters(parameters: ["memberSeq": memberSeq], encoding: URLEncoding.queryString)
-        case .checkEmail(let request):
-            return .requestParameters(parameters: ["email": request.email], encoding: URLEncoding.queryString)
+        case .getCheckEmail(let email):
+            return .requestParameters(parameters: ["email": email], encoding: URLEncoding.queryString)
+            
+            
+        case .deleteMember(let request):
+            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         }
     }
     

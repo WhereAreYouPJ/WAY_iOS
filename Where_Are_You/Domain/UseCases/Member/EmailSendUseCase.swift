@@ -8,7 +8,7 @@
 import Foundation
 
 protocol EmailSendUseCase {
-    func execute(request: EmailSendBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func execute(email: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class EmailSendUseCaseImpl: EmailSendUseCase {
@@ -18,7 +18,7 @@ class EmailSendUseCaseImpl: EmailSendUseCase {
         self.memberRepository = memberRepository
     }
 
-    func execute(request: EmailSendBody, completion: @escaping (Result<Void, Error>) -> Void) {
-        memberRepository.emailSend(request: request, completion: completion)
+    func execute(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        memberRepository.postEmailSend(email: email, completion: completion)
     }
 }

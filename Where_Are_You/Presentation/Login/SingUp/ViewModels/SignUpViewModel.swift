@@ -112,7 +112,7 @@ class SignUpViewModel {
             return
         }
         
-        checkEmailUseCase.execute(request: CheckEmailParameters(email: email)) { result in
+        checkEmailUseCase.execute(email: email) { result in
             switch result {
             case .success(let data):
                 self.timerHelper.startTimer()
@@ -125,7 +125,7 @@ class SignUpViewModel {
     
     // 인증코드 전송
     func sendEmailVerificationCode(email: String) {
-        emailSendUseCase.execute(request: EmailSendBody(email: email)) { result in
+        emailSendUseCase.execute(email: email) { result in
             switch result {
             case .success:
                 self.email = email
