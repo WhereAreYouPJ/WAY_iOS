@@ -28,11 +28,7 @@ extension ScheduleAPI: TargetType {
     
     var path: String {
         switch self {
-        case .postSchedule:
-            return "/schedule"
-        case .getSchedule:
-            return "/schedule"
-        case .putSchedule:
+        case .postSchedule, .getSchedule, .putSchedule:
             return "/schedule"
         case .deleteScheduleByInvitee:
             return "/schedule/invited"
