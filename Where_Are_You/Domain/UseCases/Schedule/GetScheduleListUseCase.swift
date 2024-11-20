@@ -9,7 +9,6 @@ import Foundation
 
 protocol GetScheduleListUseCase {
     func execute(page: Int32, completion: @escaping (Result<[ScheduleContent], Error>) -> Void)
-
 }
 
 class GetScheduleListUseCaseImpl: GetScheduleListUseCase {

@@ -55,6 +55,8 @@
 		992F57DF2C5B614A00219C6B /* LogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57DE2C5B614A00219C6B /* LogoutUseCase.swift */; };
 		992F57E32C5B618D00219C6B /* MemberSearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57E22C5B618D00219C6B /* MemberSearchUseCase.swift */; };
 		992F57E52C5B623F00219C6B /* CheckEmailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57E42C5B623F00219C6B /* CheckEmailUseCase.swift */; };
+		995009792CE9A6E10069151D /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995009782CE9A6E10069151D /* FeedViewModel.swift */; };
+		9950097B2CE9B07A0069151D /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950097A2CE9B07A0069151D /* FeedView.swift */; };
 		9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C64D2C102FB6003155A7 /* TermsAgreementView.swift */; };
 		9950C6572C1040FD003155A7 /* TermsAgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C6562C1040FD003155A7 /* TermsAgreementViewController.swift */; };
 		9950C6592C10B0DF003155A7 /* SignUpFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C6582C10B0DF003155A7 /* SignUpFormView.swift */; };
@@ -100,6 +102,7 @@
 		999E29712CBB9AF900AB9FF9 /* LocationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E29702CBB9AF900AB9FF9 /* LocationRepository.swift */; };
 		999E29732CBB9C7F00AB9FF9 /* GetLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E29722CBB9C7F00AB9FF9 /* GetLocationUseCase.swift */; };
 		99A7D7E42C999897002BCD21 /* LocationBookMarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A7D7E32C999897002BCD21 /* LocationBookMarkCell.swift */; };
+		99A897D72CEB02E900E79BED /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A897D62CEB02E900E79BED /* ImageLoader.swift */; };
 		99B397832C0C3E9D00D7A109 /* AccountCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B397822C0C3E9D00D7A109 /* AccountCheckView.swift */; };
 		99B397852C0C41D300D7A109 /* AccountCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B397842C0C41D300D7A109 /* AccountCheckViewController.swift */; };
 		99B7BD742C72E68E00EC1C4F /* AddFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B7BD732C72E68E00EC1C4F /* AddFeedViewModel.swift */; };
@@ -176,7 +179,6 @@
 		99EDF58A2CE8764B0008B19A /* AccountLinkUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF5892CE8764B0008B19A /* AccountLinkUseCase.swift */; };
 		99EDF58C2CE877BD0008B19A /* DeleteMemberUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF58B2CE877BD0008B19A /* DeleteMemberUseCase.swift */; };
 		99EDF58E2CE884820008B19A /* GetFeedListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF58D2CE884820008B19A /* GetFeedListResponse.swift */; };
-		99EDF5902CE885CC0008B19A /* GetFeedDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF58F2CE885CC0008B19A /* GetFeedDetailsResponse.swift */; };
 		99EDF5922CE8AD2A0008B19A /* DeleteFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF5912CE8AD2A0008B19A /* DeleteFeedUseCase.swift */; };
 		99EDF5942CE8AD7A0008B19A /* GetFeedListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF5932CE8AD7A0008B19A /* GetFeedListUseCase.swift */; };
 		99EDF5962CE8AD980008B19A /* GetFeedDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF5952CE8AD980008B19A /* GetFeedDetailsUseCase.swift */; };
@@ -301,6 +303,8 @@
 		992F57DE2C5B614A00219C6B /* LogoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUseCase.swift; sourceTree = "<group>"; };
 		992F57E22C5B618D00219C6B /* MemberSearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSearchUseCase.swift; sourceTree = "<group>"; };
 		992F57E42C5B623F00219C6B /* CheckEmailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailUseCase.swift; sourceTree = "<group>"; };
+		995009782CE9A6E10069151D /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
+		9950097A2CE9B07A0069151D /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		9950C64D2C102FB6003155A7 /* TermsAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAgreementView.swift; sourceTree = "<group>"; };
 		9950C6562C1040FD003155A7 /* TermsAgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAgreementViewController.swift; sourceTree = "<group>"; };
 		9950C6582C10B0DF003155A7 /* SignUpFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFormView.swift; sourceTree = "<group>"; };
@@ -349,6 +353,7 @@
 		999E29702CBB9AF900AB9FF9 /* LocationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRepository.swift; sourceTree = "<group>"; };
 		999E29722CBB9C7F00AB9FF9 /* GetLocationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLocationUseCase.swift; sourceTree = "<group>"; };
 		99A7D7E32C999897002BCD21 /* LocationBookMarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationBookMarkCell.swift; sourceTree = "<group>"; };
+		99A897D62CEB02E900E79BED /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		99B397822C0C3E9D00D7A109 /* AccountCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCheckView.swift; sourceTree = "<group>"; };
 		99B397842C0C41D300D7A109 /* AccountCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCheckViewController.swift; sourceTree = "<group>"; };
 		99B7BD732C72E68E00EC1C4F /* AddFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeedViewModel.swift; sourceTree = "<group>"; };
@@ -426,7 +431,6 @@
 		99EDF5892CE8764B0008B19A /* AccountLinkUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLinkUseCase.swift; sourceTree = "<group>"; };
 		99EDF58B2CE877BD0008B19A /* DeleteMemberUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteMemberUseCase.swift; sourceTree = "<group>"; };
 		99EDF58D2CE884820008B19A /* GetFeedListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFeedListResponse.swift; sourceTree = "<group>"; };
-		99EDF58F2CE885CC0008B19A /* GetFeedDetailsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFeedDetailsResponse.swift; sourceTree = "<group>"; };
 		99EDF5912CE8AD2A0008B19A /* DeleteFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFeedUseCase.swift; sourceTree = "<group>"; };
 		99EDF5932CE8AD7A0008B19A /* GetFeedListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFeedListUseCase.swift; sourceTree = "<group>"; };
 		99EDF5952CE8AD980008B19A /* GetFeedDetailsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFeedDetailsUseCase.swift; sourceTree = "<group>"; };
@@ -534,6 +538,7 @@
 		990DE76E2C660A5A007B78C9 /* Feeds */ = {
 			isa = PBXGroup;
 			children = (
+				9950097A2CE9B07A0069151D /* FeedView.swift */,
 				990DE7742C660A94007B78C9 /* Views */,
 				990DE7732C660A8F007B78C9 /* ViewControllers */,
 				990DE7722C660A89007B78C9 /* ViewModels */,
@@ -563,6 +568,7 @@
 		990DE7722C660A89007B78C9 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				995009782CE9A6E10069151D /* FeedViewModel.swift */,
 				99D23FF32C6889BA00CFD4F0 /* FeedDetailViewModel.swift */,
 				99B7BD732C72E68E00EC1C4F /* AddFeedViewModel.swift */,
 			);
@@ -828,7 +834,6 @@
 				99107EA02C6F2C94007D129F /* SaveFeedResponse.swift */,
 				99CF9BFE2CD341F40079BE81 /* GetBookMarkResponse.swift */,
 				99EDF58D2CE884820008B19A /* GetFeedListResponse.swift */,
-				99EDF58F2CE885CC0008B19A /* GetFeedDetailsResponse.swift */,
 				99EDF5972CE8BC380008B19A /* GetHideFeedResponse.swift */,
 			);
 			path = Feed;
@@ -931,6 +936,7 @@
 				99E7BA582C69A5D500F79C96 /* ImageUtility.swift */,
 				99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */,
 				999B88682CD1C51D00F329C9 /* HandleOutsideTap.swift */,
+				99A897D62CEB02E900E79BED /* ImageLoader.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1010,9 +1016,9 @@
 				9911F9832C3F5AA600D0FDC9 /* BannerView.swift */,
 				990BDE522C40CF1E00A7FB5D /* DDayCell.swift */,
 				9911F9852C3F5E6F00D0FDC9 /* DDayView.swift */,
+				9911F98B2C3F908E00D0FDC9 /* HomeFeedView.swift */,
 				9911F98D2C3F913100D0FDC9 /* HomeFeedCollectionViewCell.swift */,
 				9974EA1D2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift */,
-				9911F98B2C3F908E00D0FDC9 /* HomeFeedView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1715,6 +1721,7 @@
 				9974EA1E2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift in Sources */,
 				99D780E02C60670E005A3F30 /* MemberSearchResponse.swift in Sources */,
 				992F57C22C5B1E8900219C6B /* ParameterConvertible.swift in Sources */,
+				9950097B2CE9B07A0069151D /* FeedView.swift in Sources */,
 				992F57D42C5B28E900219C6B /* MemberSearchParameters.swift in Sources */,
 				D5D24CDC2C70756D00EDADAF /* Config.swift in Sources */,
 				99107E9F2C6EDAE2007D129F /* ValidationError.swift in Sources */,
@@ -1749,6 +1756,7 @@
 				D593CCC82C82318F00A862FF /* ScheduleViewModel.swift in Sources */,
 				99960AAF2CE1D8DB007D2B61 /* PutScheduleUseCase.swift in Sources */,
 				995175002C7EF89B00E938DE /* LocationBookmarkView.swift in Sources */,
+				995009792CE9A6E10069151D /* FeedViewModel.swift in Sources */,
 				99C68E432C64B28400DEC1F1 /* FeedAPI.swift in Sources */,
 				999E29732CBB9C7F00AB9FF9 /* GetLocationUseCase.swift in Sources */,
 				9974EA202C62196500826793 /* SnappingFlowLayout.swift in Sources */,
@@ -1823,6 +1831,7 @@
 				D54C040E2C651B8A009CC419 /* ScheduleAPI.swift in Sources */,
 				99EDF5A02CE8BE4A0008B19A /* GetHideFeedUseCase.swift in Sources */,
 				9967C1522C56467D00927277 /* CustomAlert.swift in Sources */,
+				99A897D72CEB02E900E79BED /* ImageLoader.swift in Sources */,
 				99C68E482C64B43900DEC1F1 /* FeedService.swift in Sources */,
 				99949F572C58B1CE00AE0177 /* FriendsListViewController.swift in Sources */,
 				99149FEB2C4F97C300136097 /* ValidationHelper.swift in Sources */,
@@ -1851,7 +1860,6 @@
 				9950C6592C10B0DF003155A7 /* SignUpFormView.swift in Sources */,
 				99CF9BFB2CD317920079BE81 /* FeedBookMarkViewController.swift in Sources */,
 				99FBA5582C453C05002EEEC7 /* HomeFeedViewModel.swift in Sources */,
-				99EDF5902CE885CC0008B19A /* GetFeedDetailsResponse.swift in Sources */,
 				99949F512C588B6200AE0177 /* FavoritesTableView.swift in Sources */,
 				99960AAB2CE1D26C007D2B61 /* GetScheduleUseCase.swift in Sources */,
 				992F57CE2C5B28A800219C6B /* EmailVerifyBody.swift in Sources */,

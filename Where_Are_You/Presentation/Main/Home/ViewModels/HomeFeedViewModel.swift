@@ -6,22 +6,59 @@
 //
 
 import Foundation
+import UIKit
 
 class HomeFeedViewModel {
-    var onFeedsDataFetched: (() -> Void)?
-    private var feeds: [Feed] = []
+    // MARK: - Properties
     
-    // 데이터 설정 메서드
-    func setFeeds(_ feeds: [Feed]) {
-        self.feeds = feeds
-        onFeedsDataFetched?()
+    private let getFeedListUseCase: GetFeedListUseCase
+    
+    var onFeedsDataFetched: (() -> Void)?
+    private var rawFeedContent: [FeedContent] = []
+    private var displayFeedContent: [HomeFeedContent] = []
+    
+    init(getFeedListUseCase: GetFeedListUseCase) {
+        self.getFeedListUseCase = getFeedListUseCase
     }
     
-    func getFeeds() -> [Feed] {
-        return Array(feeds.prefix(10))
+    // MARK: - Helpers
+    
+    // 피드를 불러오는 메서드
+    func fetchFeeds() {
+        getFeedListUseCase.execute(page: 0) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let data):
+                self.rawFeedContent = data
+                self.displayFeedContent = rawFeedContent.compactMap { feedContent in
+                    guard let scheduleFeedInfo = feedContent.scheduleFeedInfo.first else { return nil }
+                    let profileImageURLString = scheduleFeedInfo.memberInfo.profileImage
+                    
+                    // URL이 nil일 경우 기본 이미지 처리
+                    // URL 체크 및 기본 이미지 처리
+                    let profileImageURL = URL(string: profileImageURLString ?? "")
+
+                    return HomeFeedContent(
+                        profileImage: profileImageURLString ?? "",
+                        location: feedContent.scheduleInfo.location,
+                        title: scheduleFeedInfo.feedInfo.title,
+                        content: scheduleFeedInfo.feedInfo.content
+                    )
+                }
+                DispatchQueue.main.async {
+                    self.onFeedsDataFetched?()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func getFeeds() -> [HomeFeedContent] {
+        return displayFeedContent
     }
     
     func shouldShowMoreFeedsCell() -> Bool {
-        return feeds.count > 9
+        return displayFeedContent.count > 9
     }
 }

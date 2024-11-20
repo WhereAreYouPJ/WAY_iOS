@@ -19,7 +19,7 @@ class PostHideFeedUseCaseImpl: PostHideFeedUseCase {
         self.feedRepository = feedRepository
     }
     
-    func execute(feedSeq: Int, completion: @escaping (Result<Void, Error>) -> Void){
+    func execute(feedSeq: Int, completion: @escaping (Result<Void, Error>) -> Void) {
         feedRepository.postHideFeed(feedSeq: feedSeq, completion: completion)
     }
 

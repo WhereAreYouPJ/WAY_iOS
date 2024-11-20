@@ -52,7 +52,7 @@ extension FeedAPI: TargetType {
             return .post
         case .getBookMarkFeed, .getFeedList, .getFeedDetails, .getHideFeed:
             return .get
-        case .deleteBookMarkFeed, .deleteFeed , .deleteHideFeed:
+        case .deleteBookMarkFeed, .deleteFeed, .deleteHideFeed:
             return .delete
         }
     }
@@ -89,9 +89,14 @@ extension FeedAPI: TargetType {
     }
     
     var headers: [String: String]? {
-        return ["Content-Type": "multipart/form-data"]
+        switch self {
+        case .putFeed, .postFeed:
+            return ["Content-Type": "multipart/form-data"]
+        default:
+            return ["Content-Type": "application/json"]
+        }
     }
-    
+
     var sampleData: Data {
         return Data()
     }

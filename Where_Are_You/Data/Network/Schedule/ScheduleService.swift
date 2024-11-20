@@ -53,7 +53,6 @@ class ScheduleService: ScheduleServiceProtocol {
         }
     }
     
-    
     func putSchedule(request: PutScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
         provider.request(.putSchedule(request: request)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)

@@ -18,13 +18,20 @@ class FeedImagesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view = feedImagesView
-        viewModel = FeedDetailViewModel()
         
+        setupViewModel()
         setupBindings()
         setupCollectionView()
     }
     
     // MARK: - Helpers
+    private func setupViewModel() {
+        let feedService = FeedService()
+        let feedRepository = FeedRepository(feedService: feedService)
+        viewModel = FeedDetailViewModel(getFeedListUseCase: GetFeedListUseCaseImpl(feedRepository: feedRepository))
+        
+    }
+    
     private func setupBindings() {
         // 페이지 인덱스 변경에 대한 바인딩
         viewModel.onCurrentImageIndexChanged = { [weak self] index in

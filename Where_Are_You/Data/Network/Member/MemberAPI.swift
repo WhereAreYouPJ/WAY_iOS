@@ -66,8 +66,7 @@ extension MemberAPI: TargetType {
         case .getCheckEmail:
             return "/member/checkEmail"
             
-            
-        case .deleteMember(request: let request):
+        case .deleteMember:
             return "/member/member"
         }
     }

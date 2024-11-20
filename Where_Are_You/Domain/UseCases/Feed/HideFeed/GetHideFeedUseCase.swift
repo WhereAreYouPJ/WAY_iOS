@@ -8,7 +8,7 @@
 import Foundation
 
 protocol GetHideFeedUseCase {
-    func execute(page: Int32, completion: @escaping (Result<GenericResponse<GetHideFeedResponse>, Error>) -> Void)
+    func execute(page: Int32, completion: @escaping (Result<[HideFeedContent], Error>) -> Void)
 }
 
 class GetHideFeedUseCaseImpl: GetHideFeedUseCase {
@@ -19,7 +19,14 @@ class GetHideFeedUseCaseImpl: GetHideFeedUseCase {
         self.feedRepository = feedRepository
     }
     
-    func execute(page: Int32, completion: @escaping (Result<GenericResponse<GetHideFeedResponse>, Error>) -> Void) {
-        feedRepository.getHideFeed(page: page, completion: completion)
+    func execute(page: Int32, completion: @escaping (Result<[HideFeedContent], Error>) -> Void) {
+        feedRepository.getHideFeed(page: page) { result in
+            switch result {
+            case .success(let response):
+                completion(.success(response.data.content))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
 }
