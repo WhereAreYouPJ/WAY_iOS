@@ -8,18 +8,35 @@
 import Foundation
 
 class DDayViewModel {
-    var onDDayDataFetched: (() -> Void)?
+    // MARK: - Properties
+
+    private let getDDayScheduleUseCase: GetDDayScheduleUseCase
+    
     private var dDays: [DDay] = []
     private var timer: Timer?
     private var currentIndex = 0
     
+    var onDDayDataFetched: (() -> Void)?
+
+    init(getDDayScheduleUseCase: GetDDayScheduleUseCase) {
+        self.getDDayScheduleUseCase = getDDayScheduleUseCase
+    }
+    
     // MARK: - Helpers
-    // 데이터 설정 메서드
-        func setDDays(_ dDays: [DDay]) {
-            self.dDays = dDays
-            onDDayDataFetched?()
-            startAutoScroll()
+    func fetchDDays() {
+        getDDayScheduleUseCase.execute { result in
+            switch result {
+            case .success(let data):
+                self.dDays = data.map { data in
+                    return DDay(date: data.dDay, title: data.title)
+                }
+                self.onDDayDataFetched?()
+                self.startAutoScroll()
+            case .failure(let error):
+                print(error)
+            }
         }
+    }
     
     func getDDays() -> [DDay] {
         return dDays

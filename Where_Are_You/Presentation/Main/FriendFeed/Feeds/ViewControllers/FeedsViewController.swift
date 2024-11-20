@@ -18,13 +18,25 @@ class FeedsViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = FeedDetailViewModel()
+        setupViewModel()
+        setupViews()
+        setupTableView()
+
         setupBindings()
+        
         updateViewVisibility()
+        addFeedImagesViewController()
         viewModel.fetchFeeds()
     }
     
     // MARK: - Helpers
+    
+    private func setupViewModel() {
+        let feedService = FeedService()
+        let feedRepository = FeedRepository(feedService: feedService)
+        viewModel = FeedDetailViewModel(getFeedListUseCase: GetFeedListUseCaseImpl(feedRepository: feedRepository))
+    }
+    
     private func setupBindings() {
         viewModel.onFeedsDataFetched = { [weak self] in
             DispatchQueue.main.async {
@@ -32,46 +44,71 @@ class FeedsViewController: UIViewController {
             }
         }
     }
-    
-    private func updateViewVisibility() {
-        let hasFeeds = !viewModel.feeds.isEmpty
-        
-        // 기존 뷰 제거
-        feedsView?.removeFromSuperview()
-        noFeedsView?.removeFromSuperview()
-        
-        // 피드 데이터에 따라 적절한 뷰 추가
-        if hasFeeds {
-            addFeedsView()
-        } else {
-            addNoFeedsView()
-        }
-    }
-    
-    private func addFeedsView() {
+//    private func updateViewVisibility() {
+//        let hasFeeds = !viewModel.feeds.isEmpty
+//        
+//        // 기존 뷰 제거
+//        feedsView?.removeFromSuperview()
+//        noFeedsView?.removeFromSuperview()
+//        
+//        // 피드 데이터에 따라 적절한 뷰 추가
+//        if hasFeeds {
+//            addFeedsView()
+//        } else {
+//            addNoFeedsView()
+//        }
+//    }
+    private func setupViews() {
         feedsView = FeedsView()
+        noFeedsView = NoDataView()
+
         view.addSubview(feedsView!)
-        
+        view.addSubview(noFeedsView!)
+
         feedsView!.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
-        // 테이블 뷰 설정
+        noFeedsView!.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+
+    private func setupTableView() {
         feedsView!.feedsTableView.delegate = self
         feedsView!.feedsTableView.dataSource = self
         feedsView!.feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
         feedsView!.feedsTableView.reloadData()
     }
     
-    private func addNoFeedsView() {
-        noFeedsView = NoDataView()
-        view.addSubview(noFeedsView!)
-        
-        noFeedsView!.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
-        }
+    private func updateViewVisibility() {
+        let hasFeeds = !viewModel.feeds.isEmpty
+        feedsView?.isHidden = !hasFeeds
+        noFeedsView?.isHidden = hasFeeds
     }
-    
+//    private func addFeedsView() {
+//        feedsView = FeedsView()
+//        view.addSubview(feedsView!)
+//        
+//        feedsView!.snp.makeConstraints { make in
+//            make.edges.equalTo(view.safeAreaLayoutGuide)
+//        }
+//        
+//        // 테이블 뷰 설정
+//        feedsView!.feedsTableView.delegate = self
+//        feedsView!.feedsTableView.dataSource = self
+//        feedsView!.feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
+//        feedsView!.feedsTableView.reloadData()
+//    }
+//    
+//    private func addNoFeedsView() {
+//        noFeedsView = NoDataView()
+//        view.addSubview(noFeedsView!)
+//        
+//        noFeedsView!.snp.makeConstraints { make in
+//            make.edges.equalTo(view.safeAreaLayoutGuide)
+//        }
+//    }
     private func addFeedImagesViewController() {
         feedImagesViewController = FeedImagesViewController()
         addChild(feedImagesViewController)
@@ -94,7 +131,7 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         let feed = viewModel.feeds[indexPath.row]
-        cell.configure(with: feed)
+//        cell.configure(with: feed)
         return cell
     }
 }

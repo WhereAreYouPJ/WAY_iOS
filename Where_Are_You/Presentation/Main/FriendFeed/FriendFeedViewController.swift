@@ -196,10 +196,7 @@ class FriendFeedViewController: UIViewController {
     }
     
     @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {
-        let location = sender.location(in: self.view)
-        if !plusOptionButton.frame.contains(location) && !plusOptionButton.frame.contains(location) {
-            plusOptionButton.isHidden = true
-        }
+        plusOptionButton.isHidden = true
     }
 }
 

@@ -8,8 +8,7 @@
 import Foundation
 
 protocol GetFeedListUseCase {
-    func execute(page: Int32, completion: @escaping (Result<[FeedListContent], Error>) -> Void)
-    
+    func execute(page: Int32, completion: @escaping (Result<[FeedContent], Error>) -> Void)
 }
 
 class GetFeedListUseCaseImpl: GetFeedListUseCase {
@@ -19,7 +18,7 @@ class GetFeedListUseCaseImpl: GetFeedListUseCase {
         self.feedRepository = feedRepository
     }
     
-    func execute(page: Int32, completion: @escaping (Result<[FeedListContent], any Error>) -> Void) {
+    func execute(page: Int32, completion: @escaping (Result<[FeedContent], Error>) -> Void) {
         feedRepository.getFeedList(page: page) { result in
             switch result {
             case .success(let response):

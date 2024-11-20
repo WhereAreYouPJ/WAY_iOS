@@ -8,11 +8,16 @@
 import UIKit
 
 class FeedDetailViewModel {
+    private let getFeedListUseCase: GetFeedListUseCase
+    
     var onFeedsDataFetched: (() -> Void)?
     var onFeedImagesUpdated: (([UIImage]) -> Void)?
     var onCurrentImageIndexChanged: ((Int) -> Void)?
     
-    private(set) var feeds: [Feed] = [] {
+    private var page: Int32 = 0
+    private var isLoading = false
+    
+    private(set) var feeds: [FeedContent] = [] {
         didSet {
             self.onFeedsDataFetched?()
             updateFeedImagesForCurrentIndex()
@@ -32,32 +37,22 @@ class FeedDetailViewModel {
         }
     }
     
+    init(getFeedListUseCase: GetFeedListUseCase) {
+        self.getFeedListUseCase = getFeedListUseCase
+    }
+    
     // MARK: - Helpers
     
     // 서버에서 피드 데이터를 가져오는 메서드
     func fetchFeeds() {
-        // 데이터 가져오기 로직 구현
-        // 예시를 위해 모의 데이터를 사용합니다.
-        let mockFeeds = [Feed(profileImage: UIImage(named: "exampleProfileImage") ?? UIImage(),
-                              date: "2024-08-12T02:25:28.272Z",
-                              location: "Seoul",
-                              title: "Beautiful Seoul",
-                              feedImages: [UIImage(named: "exampleFeedImage") ?? UIImage()],
-                              description: "A great view of Seoul."),
-                         Feed(profileImage: UIImage(named: "exampleProfileImage") ?? UIImage(),
-                              date: "2024-08-12T02:25:28.272Z",
-                              location: "Seoul",
-                              title: "Beautiful Seoul",
-                              feedImages: [UIImage(named: "exampleFeedImage") ?? UIImage()],
-                              description: "A great view of Seoul.")]
-        self.feeds = mockFeeds
+        
         updateFeedImagesForCurrentIndex()
     }
     
     private func updateFeedImagesForCurrentIndex() {
         guard currentFeedIndex < feeds.count else { return }
-        let feedImages = feeds[currentFeedIndex].feedImages ?? []
-        onFeedImagesUpdated?(feedImages)
+//        let feedImages = feeds[currentFeedIndex].scheduleFeedInfo ?? []
+//        onFeedImagesUpdated?(feedImages)
     }
     
     // 피드의 현재 인덱스를 업데이트하는 메서드

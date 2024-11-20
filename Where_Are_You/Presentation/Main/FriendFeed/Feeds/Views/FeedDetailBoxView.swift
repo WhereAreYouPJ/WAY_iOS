@@ -7,6 +7,7 @@
 
 import UIKit
 
+// scheduleInfo 관련 내용들
 class FeedDetailBoxView: UIView {
     // MARK: - Properties
 

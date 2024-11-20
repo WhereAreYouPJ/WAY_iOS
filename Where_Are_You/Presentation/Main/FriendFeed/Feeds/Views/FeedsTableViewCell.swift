@@ -20,12 +20,14 @@ class FeedsTableViewCell: UITableViewCell {
         button.tintColor = .black
         return button
     }()
+    
     let descriptionLabel: UILabel = {
         let label = CustomLabel(UILabel_NotoSans: .medium, text: "asdasdasd", textColor: .color34, fontSize: LayoutAdapter.shared.scale(value: 14))
         label.numberOfLines = 3
         label.lineBreakMode = .byTruncatingHead
         return label
     }()
+    
     
     // MARK: - Lifecycle
     
@@ -75,16 +77,16 @@ class FeedsTableViewCell: UITableViewCell {
         }
     }
     
-    func configure(with feed: Feed) {
-        if feed.description == nil {
+    func configure(with feed: MainFeedContent) {
+        if feed.content == nil {
             self.descriptionLabel.isHidden = true
         } else {
             descriptionLabel.isHidden = false
-            descriptionLabel.text = feed.description
+            descriptionLabel.text = feed.content
         }
         
-        detailBox.profileImage.image = feed.profileImage
-        detailBox.dateLabel.text = feed.date
+        detailBox.profileImage.loadImage(from: feed.profileImage, placeholder: UIImage(named: "basic_profile_image"))
+        detailBox.dateLabel.text = feed.startTime
         detailBox.locationLabel.text = feed.location
         detailBox.titleLabel.text = feed.title
     }

@@ -7,20 +7,17 @@
 
 import UIKit
 
-struct Feed {
-    var profileImage: UIImage 
-    let date: String?
+struct HomeFeedContent {
+    let profileImage: String
     let location: String
     let title: String
-    
-    var feedImages: [UIImage]?
-    let description: String?
+    let content: String?
 }
 
-struct CreateFeed {
-    let scheduleSeq: Int
-    let creatorSeq: Int
+struct MainFeedContent {
+    let profileImage: String
+    let startTime: String
+    let location: String
     let title: String
-    let content: String
-    var images: [UIImage]?
+    let content: String?
 }

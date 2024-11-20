@@ -13,7 +13,7 @@ protocol FeedServiceProtocol {
     func putFeed(request: ModifyFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void)
     func deleteFeed(request: DeleteFeedRequest, completion: @escaping (Result<Void, Error>) -> Void)
     func getFeedList(page: Int32, completion: @escaping (Result<GenericResponse<GetFeedListResponse>, Error>) -> Void)
-    func getFeedDetails(scheduleSeq: Int, completion: @escaping (Result<GenericResponse<GetFeedDetailsResponse>, Error>) -> Void)
+    func getFeedDetails(scheduleSeq: Int, completion: @escaping (Result<GenericResponse<FeedContent>, Error>) -> Void)
 
     func getBookMarkFeed(page: Int32, completion: @escaping (Result<GenericResponse<GetBookMarkResponse>, Error>) -> Void)
     func postBookMarkFeed(request: BookMarkFeedRequest, completion: @escaping (Result<Void, Error>) -> Void)
@@ -56,18 +56,17 @@ class FeedService: FeedServiceProtocol {
         }
     }
     
-    func getFeedList(page: Int32, completion: @escaping (Result<GenericResponse<GetFeedListResponse>, any Error>) -> Void) {
+    func getFeedList(page: Int32, completion: @escaping (Result<GenericResponse<GetFeedListResponse>, Error>) -> Void) {
         provider.request(.getFeedList(memberSeq: memberSeq, page: page)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
-    func getFeedDetails(scheduleSeq: Int, completion: @escaping (Result<GenericResponse<GetFeedDetailsResponse>, any Error>) -> Void) {
+    func getFeedDetails(scheduleSeq: Int, completion: @escaping (Result<GenericResponse<FeedContent>, any Error>) -> Void) {
         provider.request(.getFeedDetails(memberSeq: memberSeq, scheduleSeq: scheduleSeq)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
-    
     
     func getBookMarkFeed(page: Int32, completion: @escaping (Result<GenericResponse<GetBookMarkResponse>, any Error>) -> Void) {
         provider.request(.getBookMarkFeed(memberSeq: memberSeq, page: page)) { result in

@@ -128,3 +128,41 @@ extension UIImage {
         return imageData.base64EncodedString()
     }
 }
+
+// MARK: - UIImageView
+
+extension UIImageView {
+    func setImage(from urlString: String, placeholder: UIImage? = nil) {
+        // 기본 이미지 설정
+        self.image = placeholder
+        
+        ImageLoader.shared.loadImage(from: urlString) { [weak self] loadedImage in
+            guard let self = self else { return }
+            if let loadedImage = loadedImage {
+                self.image = loadedImage
+            }
+        }
+    }
+}
+
+extension UIImageView {
+    func loadImage(from urlString: String?, placeholder: UIImage? = UIImage(named: "basic_profile_image")) {
+        // 서버에서 비어있는 URL이 올 경우 기본 이미지 설정
+        guard let urlString = urlString, !urlString.isEmpty, let url = URL(string: urlString) else {
+            self.image = placeholder
+            return
+        }
+
+        // 네트워크에서 이미지를 비동기로 가져오기
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                if let data = data, let image = UIImage(data: data) {
+                    self.image = image
+                } else {
+                    self.image = placeholder // 요청 실패 시 기본 이미지
+                }
+            }
+        }.resume()
+    }
+}

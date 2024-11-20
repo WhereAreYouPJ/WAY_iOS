@@ -13,7 +13,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
 
     static let identifier = "HomeFeedCollectionViewCell"
     
-    private let profileImageView: UIImageView = {
+    let profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
@@ -93,10 +93,10 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func configure(with feed: Feed) {
-        profileImageView.image = feed.profileImage
+    func configure(with feed: HomeFeedContent) {
+        profileImageView.loadImage(from: feed.profileImage, placeholder: UIImage(named: "basic_profile_image"))
         locationLabel.text = feed.location
         titleLabel.text = feed.title
-        descriptionLabel.text = feed.description
+        descriptionLabel.text = feed.content
     }
 }

@@ -11,15 +11,25 @@ class HomeFeedViewController: UIViewController {
     
     // MARK: - Properties
     let feedView = HomeFeedView()
-    var viewModel: HomeFeedViewModel!
+    var viewModel: HomeFeedViewModel
+    
+    // MARK: - Initializer
+    init(viewModel: HomeFeedViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view = feedView
-        viewModel = HomeFeedViewModel()
         setupBindings()
         setupCollectionView()
+        viewModel.fetchFeeds()
     }
     
     // MARK: - Helpers
