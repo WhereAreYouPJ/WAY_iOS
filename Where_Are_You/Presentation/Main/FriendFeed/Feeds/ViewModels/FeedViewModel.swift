@@ -41,7 +41,7 @@ class FeedViewModel {
                     guard let scheduleFeedInfo = feedContent.scheduleFeedInfo.first else { return nil }
         
                     return MainFeedListContent(
-                        profileImage: scheduleFeedInfo.memberInfo.profileImage,
+                        profileImage: scheduleFeedInfo.memberInfo.profileImage ?? "",
                         startTime: feedContent.scheduleInfo.startTime,
                         location: feedContent.scheduleInfo.location,
                         title: scheduleFeedInfo.feedInfo.title,
