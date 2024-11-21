@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -494,6 +494,10 @@
 		EF2914052EE4B6C83BE57C93 /* Pods-Where_Are_You_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		99BC80742CEEC6420040E44B /* CoreData */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CoreData; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		995358362C00C555005BF799 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -765,6 +769,7 @@
 		9953583B2C00C555005BF799 /* Where_Are_You */ = {
 			isa = PBXGroup;
 			children = (
+				99BC80742CEEC6420040E44B /* CoreData */,
 				9953583C2C00C555005BF799 /* AppDelegate.swift */,
 				9953583E2C00C555005BF799 /* SceneDelegate.swift */,
 				99D11EBB2C07848B006BE265 /* Resources */,
@@ -905,8 +910,8 @@
 		99C9B2222C01973C008D7CBD /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				99D11EB22C07836C006BE265 /* Entities */,
 				99EC209F2C0D8DEC0018904D /* UseCases */,
+				99D11EB22C07836C006BE265 /* Entities */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -1459,6 +1464,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				99BC80742CEEC6420040E44B /* CoreData */,
 			);
 			name = Where_Are_You;
 			productName = Where_Are_You;

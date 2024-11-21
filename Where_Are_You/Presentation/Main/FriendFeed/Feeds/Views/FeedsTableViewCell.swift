@@ -28,9 +28,7 @@ class FeedsTableViewCell: UITableViewCell {
         return label
     }()
     
-    
     // MARK: - Lifecycle
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureViewComponents()
@@ -77,7 +75,7 @@ class FeedsTableViewCell: UITableViewCell {
         }
     }
     
-    func configure(with feed: MainFeedContent) {
+    func configure(with feed: MainFeedListContent) {
         if feed.content == nil {
             self.descriptionLabel.isHidden = true
         } else {

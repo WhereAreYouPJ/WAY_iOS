@@ -131,7 +131,7 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         let feed = viewModel.feeds[indexPath.row]
-//        cell.configure(with: feed)
+        cell.configure(with: feed)
         return cell
     }
 }

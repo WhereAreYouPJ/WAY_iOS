@@ -43,7 +43,7 @@ struct ScheduleFeedInfo: Codable {
 struct Info: Codable {
     let memberSeq: Int
     let userName: String
-    let profileImage: String? // 프로필 이미지
+    let profileImage: String // 프로필 이미지
 }
 
 // MARK: - FeedInfo
