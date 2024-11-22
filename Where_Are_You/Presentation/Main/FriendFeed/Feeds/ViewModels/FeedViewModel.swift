@@ -30,12 +30,18 @@ class FeedViewModel {
     
     // MARK: - Helpers
     func fetchFeeds() {
+        print("fetchFeeds() called")
+
         getFeedListUseCase.execute(page: page) { [weak self] result in
             guard let self = self else { return }
+            print("fetchFeeds() - result received")
+
             self.isLoading = false
 
             switch result {
             case .success(let data):
+                print("fetchFeeds() - success with data: \(data)")
+
                 self.rawFeedContent = data
                 self.displayFeedContent = rawFeedContent.compactMap { feedContent in
                     guard let scheduleFeedInfo = feedContent.scheduleFeedInfo.first else { return nil }

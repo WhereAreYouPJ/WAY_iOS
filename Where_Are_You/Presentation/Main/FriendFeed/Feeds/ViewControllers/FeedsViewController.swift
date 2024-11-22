@@ -10,15 +10,20 @@ import SwiftUI
 
 class FeedsViewController: UIViewController {
     // MARK: - Properties
-    private var feedsView: FeedsView?
-    private var noFeedsView: NoDataView?
-    var viewModel: FeedDetailViewModel!
+    private var feedsView = FeedsView()
+    private var noFeedsView = NoDataView()
+    var viewModel: FeedViewModel!
     private var feedImagesViewController: FeedImagesViewController!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("FeedsViewController - viewDidLoad() called") // 확인 로그
+        print("Is viewModel nil? \(viewModel == nil)") // viewModel nil 여부 확인
+
         setupViewModel()
+        print("Is viewModel nil after setupViewModel? \(viewModel == nil)") // viewModel 초기화 여부 확인
+
         setupViews()
         setupTableView()
 
@@ -26,6 +31,9 @@ class FeedsViewController: UIViewController {
         
         updateViewVisibility()
         addFeedImagesViewController()
+        
+        print("Calling fetchFeeds()")
+
         viewModel.fetchFeeds()
     }
     
@@ -34,13 +42,14 @@ class FeedsViewController: UIViewController {
     private func setupViewModel() {
         let feedService = FeedService()
         let feedRepository = FeedRepository(feedService: feedService)
-        viewModel = FeedDetailViewModel(getFeedListUseCase: GetFeedListUseCaseImpl(feedRepository: feedRepository))
+        viewModel = FeedViewModel(getFeedListUseCase: GetFeedListUseCaseImpl(feedRepository: feedRepository))
     }
     
     private func setupBindings() {
         viewModel.onFeedsDataFetched = { [weak self] in
             DispatchQueue.main.async {
                 self?.updateViewVisibility()
+                self?.feedsView.feedsTableView.reloadData()
             }
         }
     }
@@ -62,29 +71,30 @@ class FeedsViewController: UIViewController {
         feedsView = FeedsView()
         noFeedsView = NoDataView()
 
-        view.addSubview(feedsView!)
-        view.addSubview(noFeedsView!)
+        view.addSubview(feedsView)
+        view.addSubview(noFeedsView)
 
-        feedsView!.snp.makeConstraints { make in
+        feedsView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
-        noFeedsView!.snp.makeConstraints { make in
+        noFeedsView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
 
     private func setupTableView() {
-        feedsView!.feedsTableView.delegate = self
-        feedsView!.feedsTableView.dataSource = self
-        feedsView!.feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
-        feedsView!.feedsTableView.reloadData()
+        feedsView.feedsTableView.delegate = self
+        feedsView.feedsTableView.dataSource = self
+        feedsView.feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
     }
     
     private func updateViewVisibility() {
-        let hasFeeds = !viewModel.feeds.isEmpty
-        feedsView?.isHidden = !hasFeeds
-        noFeedsView?.isHidden = hasFeeds
+        let hasFeeds = !viewModel.displayFeedContent.isEmpty
+        feedsView.isHidden = !hasFeeds
+//        feedsView.isHidden = false
+//        noFeedsView.isHidden = true
+        noFeedsView.isHidden = hasFeeds
     }
 //    private func addFeedsView() {
 //        feedsView = FeedsView()
@@ -93,13 +103,6 @@ class FeedsViewController: UIViewController {
 //        feedsView!.snp.makeConstraints { make in
 //            make.edges.equalTo(view.safeAreaLayoutGuide)
 //        }
-//        
-//        // 테이블 뷰 설정
-//        feedsView!.feedsTableView.delegate = self
-//        feedsView!.feedsTableView.dataSource = self
-//        feedsView!.feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
-//        feedsView!.feedsTableView.reloadData()
-//    }
 //    
 //    private func addNoFeedsView() {
 //        noFeedsView = NoDataView()
@@ -123,14 +126,14 @@ class FeedsViewController: UIViewController {
 
 extension FeedsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.feeds.count
+        return viewModel.displayFeedContent.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedsTableViewCell.identifier, for: indexPath) as? FeedsTableViewCell else {
             return UITableViewCell()
         }
-        let feed = viewModel.feeds[indexPath.row]
+        let feed = viewModel.displayFeedContent[indexPath.row]
         cell.configure(with: feed)
         return cell
     }
