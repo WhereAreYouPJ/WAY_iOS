@@ -11,6 +11,7 @@ class LocationBookmarkViewModel {
     // MARK: - Properties
     let memberSeq = UserDefaultsManager.shared.getMemberSeq()
     var locations: [GetFavLocation] = []
+    
     var onGetLocationBookMark: (() -> Void)?
     var onEmptyLocation: (() -> Void)?
     var onDeleteLocationSuccess: (() -> Void)?

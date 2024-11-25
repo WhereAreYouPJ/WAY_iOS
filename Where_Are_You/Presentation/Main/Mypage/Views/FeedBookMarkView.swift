@@ -9,8 +9,9 @@ import UIKit
 
 class FeedBookMarkView: UIView {
     // MARK: - Properties
-    
-    let feedDetailBoxView = FeedDetailBoxView()
+    let scrollView = UIScrollView()
+    let contentView = UIView()
+    let feedsBookMarkTableView = UITableView()
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {
@@ -26,10 +27,25 @@ class FeedBookMarkView: UIView {
     
     // MARK: - Helpers
     private func configureViewComponents() {
-        
+        backgroundColor = .white
+        addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(feedsBookMarkTableView)
     }
     
     private func setupConstraints() {
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
+        contentView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView.contentLayoutGuide)
+            make.width.equalTo(scrollView.frameLayoutGuide)
+        }
+        
+        feedsBookMarkTableView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
+            make.top.bottom.equalToSuperview()
+        }
     }
 }
