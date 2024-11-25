@@ -9,18 +9,18 @@ import Foundation
 import SwiftUI
 
 class SearchFriendsViewModel: ObservableObject {
-    private let friendsViewModel: FriendsViewModel
-    private let memberDetailsUseCase: MemberDetailsUseCase
-    
     @Published var selectedFavorites: Set<UUID> = []
     @Published var selectedFriends: Set<UUID> = []
     
+    let friendsViewModel: FriendsViewModel
+    private let getFriendUseCase: GetFriendUseCase
+    
     init(
         friendsViewModel: FriendsViewModel,
-        memberDetailsUseCase: MemberDetailsUseCase
+        getFriendUseCase: GetFriendUseCase
     ) {
         self.friendsViewModel = friendsViewModel
-        self.memberDetailsUseCase = memberDetailsUseCase
+        self.getFriendUseCase = getFriendUseCase
     }
     
     // FriendsViewModel에서 forward

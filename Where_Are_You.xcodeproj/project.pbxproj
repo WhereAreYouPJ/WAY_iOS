@@ -185,6 +185,11 @@
 		99FDD0BD2C6DF72700B15026 /* MultipartFormDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */; };
 		99FDD0BF2C6DF99400B15026 /* ReadFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FDD0BE2C6DF99400B15026 /* ReadFeedUseCase.swift */; };
 		D512EC572CA6E56C001AC965 /* GetScheduleByDateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512EC562CA6E56C001AC965 /* GetScheduleByDateResponse.swift */; };
+		D517F25D2CEC8691003C5F60 /* FriendDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D517F25C2CEC8691003C5F60 /* FriendDetailView.swift */; };
+		D517F25F2CECA902003C5F60 /* FriendDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D517F25E2CECA902003C5F60 /* FriendDetailViewModel.swift */; };
+		D517F2612CECAAF1003C5F60 /* DeleteFriendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D517F2602CECAAF1003C5F60 /* DeleteFriendUseCase.swift */; };
+		D517F2632CECAB06003C5F60 /* DeleteFavoriteFriendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D517F2622CECAB06003C5F60 /* DeleteFavoriteFriendUseCase.swift */; };
+		D517F2652CECAB3E003C5F60 /* PostFavoriteFriendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D517F2642CECAB3E003C5F60 /* PostFavoriteFriendUseCase.swift */; };
 		D51AC99C2C849AB400D0AD2E /* LocationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51AC99B2C849AB400D0AD2E /* LocationAPI.swift */; };
 		D51AC99F2C84A0AD00D0AD2E /* FavLocationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51AC99E2C84A0AD00D0AD2E /* FavLocationResponse.swift */; };
 		D53620912C8AE1010017B279 /* SearchLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53620902C8AE1010017B279 /* SearchLocationViewModel.swift */; };
@@ -218,6 +223,7 @@
 		D5BA30922CE745A700958BF5 /* PostFavoriteFriendBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA30912CE745A700958BF5 /* PostFavoriteFriendBody.swift */; };
 		D5BA30942CE745D000958BF5 /* DeleteFavoriteFriendBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA30932CE745D000958BF5 /* DeleteFavoriteFriendBody.swift */; };
 		D5BA30962CE7481D00958BF5 /* FriendRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA30952CE7481D00958BF5 /* FriendRepository.swift */; };
+		D5BA30992CE74BF300958BF5 /* GetFriendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA30982CE74BF300958BF5 /* GetFriendUseCase.swift */; };
 		D5C2D6742CC8C273002F5607 /* CustomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C2D6732CC8C26D002F5607 /* CustomAlertViewController.swift */; };
 		D5CCD96F2CB0217E008497AD /* DailyScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CCD96E2CB0217E008497AD /* DailyScheduleView.swift */; };
 		D5D24CDC2C70756D00EDADAF /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D24CDB2C70756D00EDADAF /* Config.swift */; };
@@ -440,6 +446,11 @@
 		A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5015275FE458D5F6450041 /* Pods-Where_Are_You.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You.release.xcconfig"; path = "Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You.release.xcconfig"; sourceTree = "<group>"; };
 		D512EC562CA6E56C001AC965 /* GetScheduleByDateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetScheduleByDateResponse.swift; sourceTree = "<group>"; };
+		D517F25C2CEC8691003C5F60 /* FriendDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailView.swift; sourceTree = "<group>"; };
+		D517F25E2CECA902003C5F60 /* FriendDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailViewModel.swift; sourceTree = "<group>"; };
+		D517F2602CECAAF1003C5F60 /* DeleteFriendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFriendUseCase.swift; sourceTree = "<group>"; };
+		D517F2622CECAB06003C5F60 /* DeleteFavoriteFriendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFavoriteFriendUseCase.swift; sourceTree = "<group>"; };
+		D517F2642CECAB3E003C5F60 /* PostFavoriteFriendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFavoriteFriendUseCase.swift; sourceTree = "<group>"; };
 		D51AC99B2C849AB400D0AD2E /* LocationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAPI.swift; sourceTree = "<group>"; };
 		D51AC99E2C84A0AD00D0AD2E /* FavLocationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavLocationResponse.swift; sourceTree = "<group>"; };
 		D53078812C5D3C9D0041BBB7 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -473,6 +484,7 @@
 		D5BA30912CE745A700958BF5 /* PostFavoriteFriendBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFavoriteFriendBody.swift; sourceTree = "<group>"; };
 		D5BA30932CE745D000958BF5 /* DeleteFavoriteFriendBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFavoriteFriendBody.swift; sourceTree = "<group>"; };
 		D5BA30952CE7481D00958BF5 /* FriendRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRepository.swift; sourceTree = "<group>"; };
+		D5BA30982CE74BF300958BF5 /* GetFriendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFriendUseCase.swift; sourceTree = "<group>"; };
 		D5C2D6732CC8C26D002F5607 /* CustomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewController.swift; sourceTree = "<group>"; };
 		D5CCD96E2CB0217E008497AD /* DailyScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyScheduleView.swift; sourceTree = "<group>"; };
 		D5D24CDB2C70756D00EDADAF /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -543,6 +555,7 @@
 				D5D807EC2C85F60B008F7882 /* FriendsView.swift */,
 				D5DCBF332C7435E2003F0246 /* SearchFriendsView.swift */,
 				D5D807F12C860931008F7882 /* CommonFriensView.swift */,
+				D517F25C2CEC8691003C5F60 /* FriendDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -552,6 +565,7 @@
 			children = (
 				99949F582C58B81A00AE0177 /* FriendsViewModel.swift */,
 				D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */,
+				D517F25E2CECA902003C5F60 /* FriendDetailViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1209,6 +1223,7 @@
 		99EC209F2C0D8DEC0018904D /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				D5BA30972CE74BE200958BF5 /* Friend */,
 				999E296E2CBB9A8900AB9FF9 /* Loacation */,
 				99C6D2A12C903FEA009C0CF8 /* Schedule */,
 				99C68E4D2C64B93600DEC1F1 /* Member */,
@@ -1388,6 +1403,17 @@
 			children = (
 				D5BA308B2CE744C400958BF5 /* FriendAPI.swift */,
 				D5BA308D2CE744CA00958BF5 /* FriendService.swift */,
+			);
+			path = Friend;
+			sourceTree = "<group>";
+		};
+		D5BA30972CE74BE200958BF5 /* Friend */ = {
+			isa = PBXGroup;
+			children = (
+				D5BA30982CE74BF300958BF5 /* GetFriendUseCase.swift */,
+				D517F2602CECAAF1003C5F60 /* DeleteFriendUseCase.swift */,
+				D517F2622CECAB06003C5F60 /* DeleteFavoriteFriendUseCase.swift */,
+				D517F2642CECAB3E003C5F60 /* PostFavoriteFriendUseCase.swift */,
 			);
 			path = Friend;
 			sourceTree = "<group>";
@@ -1657,6 +1683,7 @@
 			files = (
 				D564EDF52C8F13300002A4C5 /* FavoriteLocationBody.swift in Sources */,
 				9975A35B2C8055C100A0FF5C /* MemberDetailsUseCase.swift in Sources */,
+				D517F25F2CECA902003C5F60 /* FriendDetailViewModel.swift in Sources */,
 				99960AB52CE1DE5B007D2B61 /* GetScheduleResponse.swift in Sources */,
 				9910B84C2C71B638005F7EEE /* DDayViewModel.swift in Sources */,
 				99EFC76D2CD0B9630044DFC5 /* DeleteLocationUseCase.swift in Sources */,
@@ -1671,6 +1698,7 @@
 				9910B84A2C71B621005F7EEE /* FriendsTableViewCell.swift in Sources */,
 				992BF70A2CAA8819008D3055 /* GetScheduleListResponse.swift in Sources */,
 				9910B8492C71B617005F7EEE /* ResetPasswordUseCase.swift in Sources */,
+				D517F2652CECAB3E003C5F60 /* PostFavoriteFriendUseCase.swift in Sources */,
 				D512EC572CA6E56C001AC965 /* GetScheduleByDateResponse.swift in Sources */,
 				9910B8482C71B5A4005F7EEE /* DDayViewController.swift in Sources */,
 				9910B8472C71B59E005F7EEE /* AccountSearchView.swift in Sources */,
@@ -1786,6 +1814,7 @@
 				D5BA308C2CE744C400958BF5 /* FriendAPI.swift in Sources */,
 				99D373902C6ADF030093F386 /* FeedImagesViewController.swift in Sources */,
 				99B7BD742C72E68E00EC1C4F /* AddFeedViewModel.swift in Sources */,
+				D517F25D2CEC8691003C5F60 /* FriendDetailView.swift in Sources */,
 				99FBA54E2C453924002EEEC7 /* BannerViewController.swift in Sources */,
 				990DE7682C65EAEB007B78C9 /* FeedImageCollectionViewCell.swift in Sources */,
 				99C1403A2C6494F000A706B6 /* FeedsView.swift in Sources */,
@@ -1808,10 +1837,12 @@
 				99149FED2C4F97EA00136097 /* TimeHelper.swift in Sources */,
 				D57AC3B12C8B6336006AE7D7 /* KakaoLocalResponse.swift in Sources */,
 				D54C040E2C651B8A009CC419 /* ScheduleAPI.swift in Sources */,
+				D5BA30992CE74BF300958BF5 /* GetFriendUseCase.swift in Sources */,
 				9967C1522C56467D00927277 /* CustomAlert.swift in Sources */,
 				99C68E482C64B43900DEC1F1 /* FeedService.swift in Sources */,
 				99949F572C58B1CE00AE0177 /* FriendsListViewController.swift in Sources */,
 				D5BA308E2CE744CA00958BF5 /* FriendService.swift in Sources */,
+				D517F2612CECAAF1003C5F60 /* DeleteFriendUseCase.swift in Sources */,
 				99149FEB2C4F97C300136097 /* ValidationHelper.swift in Sources */,
 				D5E3D7D82C63BF730041B28D /* CreateScheduleViewModel.swift in Sources */,
 				9911F98A2C3F6B4100D0FDC9 /* BannerCollectionViewCell.swift in Sources */,
@@ -1828,6 +1859,7 @@
 				99A7D7E42C999897002BCD21 /* LocationBookMarkCell.swift in Sources */,
 				D51AC99C2C849AB400D0AD2E /* LocationAPI.swift in Sources */,
 				9953583F2C00C555005BF799 /* SceneDelegate.swift in Sources */,
+				D517F2632CECAB06003C5F60 /* DeleteFavoriteFriendUseCase.swift in Sources */,
 				990F57B22C282C5900F6E1AD /* EmailSendUseCase.swift in Sources */,
 				99107EA52C6F3E4A007D129F /* Location.swift in Sources */,
 				D53E05F52CB97C4100F96346 /* PutScheduleBody.swift in Sources */,

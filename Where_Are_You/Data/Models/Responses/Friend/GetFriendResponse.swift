@@ -7,11 +7,9 @@
 
 import Foundation
 
-typealias GetFriendResponse = [FriendsResponse]
-
-struct FriendsResponse: Codable {
-    let memeberSeq: Int
+struct GetFriendResponse: Codable {
+    let memberSeq: Int
     let userName: String
     let profileImage: String?
-    let Favorites: Bool
+    let favorites: Bool
 }

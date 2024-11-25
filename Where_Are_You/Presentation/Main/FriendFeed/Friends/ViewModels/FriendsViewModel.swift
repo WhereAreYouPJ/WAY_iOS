@@ -8,51 +8,77 @@
 import Foundation
 import Moya
 
-class FriendsViewModel: ObservableObject {
+class FriendsViewModel: ObservableObject { // 친구 목록을 나중에는 iOS 자체 DB에 저장해뒀다가 새로고침 or 특정 시각에 업데이트
     @Published var favorites: [Friend] = []
     @Published var friends: [Friend] = []
     @Published var searchText: String = ""
-    @Published var networkSuccess = false
+    @Published var isLoading: Bool = false
+    @Published var hasError: Bool = false
     
-    private let memberDetailsUseCase: MemberDetailsUseCase
+    private let getFriendUseCase: GetFriendUseCase
     
-    init(memberDetailsUseCase: MemberDetailsUseCase) {
-        self.memberDetailsUseCase = memberDetailsUseCase
-        setupInitialData()
+    init(getFriendUseCase: GetFriendUseCase) {
+        self.getFriendUseCase = getFriendUseCase
+        //        setupInitialData()
     }
     
-    private func setupInitialData() {
-        favorites = [
-            Friend(memberSeq: 2, profileImage: "exampleProfileImage", name: "조승연"),
-            Friend(memberSeq: 3, profileImage: "exampleProfileImage", name: "김민정")
-        ]
-        friends = [
-            Friend(memberSeq: 4, profileImage: "exampleProfileImage", name: "임창균"),
-            Friend(memberSeq: 5, profileImage: "exampleProfileImage", name: "이승협"),
-            Friend(memberSeq: 6, profileImage: "exampleProfileImage", name: "김민지"),
-            Friend(memberSeq: 7, profileImage: "exampleProfileImage", name: "조유리"),
-            Friend(memberSeq: 4, profileImage: "exampleProfileImage", name: "김민규"),
-            Friend(memberSeq: 5, profileImage: "exampleProfileImage", name: "최유리"),
-            Friend(memberSeq: 6, profileImage: "exampleProfileImage", name: "이채영"),
-            Friend(memberSeq: 7, profileImage: "exampleProfileImage", name: "최수빈")
-        ]
-    }
+//    private func setupInitialData() {
+//        favorites = [
+//            Friend(memberSeq: 2, profileImage: "exampleProfileImage", name: "조승연", isFavorite: false),
+//            Friend(memberSeq: 3, profileImage: "exampleProfileImage", name: "김민정", isFavorite: false)
+//        ]
+//        friends = [
+//            Friend(memberSeq: 4, profileImage: "exampleProfileImage", name: "임창균", isFavorite: true),
+//            Friend(memberSeq: 5, profileImage: "exampleProfileImage", name: "이승협", isFavorite: true),
+//            Friend(memberSeq: 6, profileImage: "exampleProfileImage", name: "김민지", isFavorite: true),
+//            Friend(memberSeq: 7, profileImage: "exampleProfileImage", name: "조유리", isFavorite: true),
+//            Friend(memberSeq: 4, profileImage: "exampleProfileImage", name: "김민규", isFavorite: true),
+//            Friend(memberSeq: 5, profileImage: "exampleProfileImage", name: "최유리", isFavorite: true),
+//            Friend(memberSeq: 6, profileImage: "exampleProfileImage", name: "이채영", isFavorite: true),
+//            Friend(memberSeq: 7, profileImage: "exampleProfileImage", name: "최수빈", isFavorite: true)
+//        ]
+//    }
     
     func getFriendsList() {
+        isLoading = true
+        hasError = false
         
-    }
-    
-    func getMemberDetails(memberSeq: Int, completion: @escaping (Bool) -> Void) {
-        memberDetailsUseCase.execute { [weak self] result in
-            switch result {
-            case .success(let data):
-                completion(true)
-            case .failure(let error):
-                print("\(error.localizedDescription)")
-                completion(false)
+        getFriendUseCase.execute { result in
+            DispatchQueue.main.async {
+                self.isLoading = false
+                
+                switch result {
+                case .success(let friendLists):
+                    self.favorites = friendLists.favorites.compactMap { self.convertToFriend($0) }
+                    self.friends = friendLists.friends.compactMap { self.convertToFriend($0) }
+                case .failure(let error):
+                    print("Error fetching friends: \(error.localizedDescription)")
+                    self.hasError = true
+                }
             }
         }
     }
+    
+    private func convertToFriend(_ response: GetFriendResponse) -> Friend {
+        Friend(
+            memberSeq: response.memberSeq,
+            profileImage: response.profileImage ?? "defaultImage",
+            name: response.userName,
+            isFavorite: response.favorites
+        )
+    }
+    
+    //    func getMemberDetails(memberSeq: Int, completion: @escaping (Bool) -> Void) {
+    //        memberDetailsUseCase.execute { result in
+    //            switch result {
+    //            case .success:
+    //                completion(true)
+    //            case .failure(let error):
+    //                print("\(error.localizedDescription)")
+    //                completion(false)
+    //            }
+    //        }
+    //    }
     
     var filteredFavorites: [Friend] {
         if searchText.isEmpty {
@@ -69,7 +95,7 @@ class FriendsViewModel: ObservableObject {
             return friends.filter { $0.name.lowercased().contains(searchText.lowercased()) }
         }
     }
-
+    
     func clearSearch() {
         searchText = ""
     }

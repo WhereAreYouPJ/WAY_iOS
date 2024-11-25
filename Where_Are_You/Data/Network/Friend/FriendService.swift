@@ -9,7 +9,7 @@ import Alamofire
 import Moya
 
 protocol FriendServiceProtocol {
-    func getFriend(completion: @escaping (Result<[GetFriendResponse], Error>) -> Void)
+    func getFriend(completion: @escaping (Result<GenericResponse<[GetFriendResponse]>, Error>) -> Void)
     func deleteFriend(request: DeleteFriendBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postFavoriteFriend(request: PostFavoriteFriendBody, completion: @escaping (Result<Void, Error>) -> Void)
     func deleteFavoriteFriend(request: DeleteFavoriteFriendBody, completion: @escaping (Result<Void, Error>) -> Void)
@@ -29,7 +29,7 @@ class FriendService: FriendServiceProtocol {
         self.provider = MoyaProvider<FriendAPI>(plugins: [tokenPlugin])
     }
     
-    func getFriend(completion: @escaping (Result<[GetFriendResponse], any Error>) -> Void) {
+    func getFriend(completion: @escaping (Result<GenericResponse<[GetFriendResponse]>, any Error>) -> Void) {
         provider.request(.getFriend(memberSeq: memberSeq)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }

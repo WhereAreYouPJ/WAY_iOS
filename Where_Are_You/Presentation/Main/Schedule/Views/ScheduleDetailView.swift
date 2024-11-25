@@ -193,6 +193,6 @@ struct ReadonlyDateTimeContainer: View {
         location: Location(sequence: 1, location: "테스트 장소", streetName: "", x: 0, y: 0),
         color: "red",
         memo: "테스트 메모입니다.",
-        invitedMember: [Friend(memberSeq: 1, profileImage: "", name: "홍길동")]
+        invitedMember: [Friend(memberSeq: 1, profileImage: "", name: "홍길동", isFavorite: false)]
     ))
 }

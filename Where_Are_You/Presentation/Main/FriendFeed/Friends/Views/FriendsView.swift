@@ -8,15 +8,18 @@
 import SwiftUI
 
 struct FriendsView: View {
-    @StateObject private var viewModel:  FriendsViewModel = {
-        let service = MemberService()
-        let repository = MemberRepository(memberService: service)
-        let memberDetailUseCase = MemberDetailsUseCaseImpl(memberRepository: repository)
-        return FriendsViewModel(memberDetailsUseCase: memberDetailUseCase)
+    @StateObject private var viewModel: FriendsViewModel = {
+        let service = FriendService()
+        let repository = FriendRepository(friendService: service)
+        let getFriendUseCase = GetFriendUseCaseImpl(friendRepository: repository)
+        return FriendsViewModel(getFriendUseCase: getFriendUseCase)
     }()
     
     @Environment(\.dismiss) private var dismiss
     @Binding var showSearchBar: Bool
+    @State private var selectedFriend: Friend?
+    @State private var showFriendDetail = false
+    @State private var isMyProfileSelected = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -30,22 +33,30 @@ struct FriendsView: View {
                 .animation(.easeInOut, value: showSearchBar)
             }
             
-            ScrollView {
-                VStack(spacing: 0) {
-                    MyProfileView()
-                    
-                    FriendsSectionView(title: "즐겨찾기", count: viewModel.filteredFavorites.count)
-                    ForEach(viewModel.filteredFavorites) { friend in
-                        FriendCell(friend: friend)
-                    }
-                    
-                    FriendsSectionView(title: "친구", count: viewModel.filteredFriends.count)
-                        .padding(.top, 8)
-                    ForEach(viewModel.filteredFriends) { friend in
-                        FriendCell(friend: friend)
-                    }
+            MyProfileView()
+                .onTapGesture {
+                    isMyProfileSelected = true
+                    showFriendDetail = true
                 }
-                .padding()
+            
+            FriendListView(
+                viewModel: viewModel,
+                showToggle: false,
+                onFriendSelect: { friend in
+                    selectedFriend = friend
+                    isMyProfileSelected = false
+                    showFriendDetail = true
+                }
+            )
+        }
+        .onAppear {
+            viewModel.getFriendsList()
+        }
+        .fullScreenCover(isPresented: $showFriendDetail) {
+            if isMyProfileSelected {
+                FriendDetailView(viewModel: FriendDetailViewModel(isMyProfile: true))
+            } else if let friend = selectedFriend {
+                FriendDetailView(viewModel: FriendDetailViewModel(friend: friend, isMyProfile: false))
             }
         }
     }
@@ -59,32 +70,15 @@ struct MyProfileView: View {
                 .scaledToFill()
                 .frame(width: UIScreen.main.bounds.width * 0.14, height: UIScreen.main.bounds.width * 0.14)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
-
+            
             Text("김주희")
                 .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 17)))
                 .foregroundColor(Color(.color34))
                 .padding(8)
-
+            
             Spacer()
         }
-        .padding(.bottom, 14)
-    }
-}
-
-struct FriendsSectionView: View {
-    let title: String
-    let count: Int
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            Divider()
-            HStack {
-                Text(title)
-                Text("\(count)")
-                Spacer()
-            }
-            .padding(.vertical, 8)
-        }
+        .padding(.horizontal, 14)
     }
 }
 

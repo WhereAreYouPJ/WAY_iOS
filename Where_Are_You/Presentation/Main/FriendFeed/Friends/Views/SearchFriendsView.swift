@@ -11,13 +11,13 @@ import SwiftUI
 
 struct SearchFriendsView: View {
     @StateObject private var viewModel: SearchFriendsViewModel = {
-        let service = MemberService()
-        let repository = MemberRepository(memberService: service)
-        let memberDetailsUseCase = MemberDetailsUseCaseImpl(memberRepository: repository)
-        let friendsViewModel = FriendsViewModel(memberDetailsUseCase: memberDetailsUseCase)
+        let service = FriendService()
+        let repository = FriendRepository(friendService: service)
+        let getFriendUseCase = GetFriendUseCaseImpl(friendRepository: repository)
+        let friendsViewModel = FriendsViewModel(getFriendUseCase: getFriendUseCase)
         return SearchFriendsViewModel(
             friendsViewModel: friendsViewModel,
-            memberDetailsUseCase: memberDetailsUseCase)
+            getFriendUseCase: getFriendUseCase)
     }()
     
     @Binding var selectedFriends: [Friend]
@@ -39,26 +39,16 @@ struct SearchFriendsView: View {
             
             SearchBarView(searchText: $viewModel.searchText, onClear: viewModel.clearSearch)
             
-            ScrollView {
-                VStack(spacing: 0) {
-                    FriendsSectionView(title: "즐겨찾기", count: viewModel.filteredFavorites.count)
-                    ForEach(viewModel.filteredFavorites) { friend in
-                        FriendCell(friend: friend, showToggle: true, isOn: Binding(
-                            get: { viewModel.isSelected(friend: friend) },
-                            set: { _ in viewModel.toggleSelection(for: friend) }
-                        ))
-                    }
-                    
-                    FriendsSectionView(title: "친구", count: viewModel.filteredFriends.count)
-                    ForEach(viewModel.filteredFriends) { friend in
-                        FriendCell(friend: friend, showToggle: true, isOn: Binding(
-                            get: { viewModel.isSelected(friend: friend) },
-                            set: { _ in viewModel.toggleSelection(for: friend) }
-                        ))
-                    }
+            FriendListView(
+                viewModel: viewModel.friendsViewModel,
+                showToggle: true,
+                isSelected: { friend in
+                    viewModel.isSelected(friend: friend)
+                },
+                onToggle: { friend in
+                    viewModel.toggleSelection(for: friend)
                 }
-                .padding()
-            }
+            )
             
             Button(action: {
                 selectedFriends = viewModel.confirmSelection()

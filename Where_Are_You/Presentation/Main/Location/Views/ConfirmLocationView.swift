@@ -47,7 +47,6 @@ struct ConfirmLocationView: View {
                         if success {
                             // Toggle was successful, update UI if needed
                         } else {
-                            // Handle error
                             print("즐겨찾기 토글 실패")
                         }
                     }

@@ -8,7 +8,7 @@
 import Alamofire
 
 protocol FriendRepositoryProtocol {
-    func getFriends(completion: @escaping (Result<[GetFriendResponse], Error>) -> Void)
+    func getFriend(completion: @escaping (Result<GenericResponse<[GetFriendResponse]>, Error>) -> Void)
     func deleteFriend(request: DeleteFriendBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postFavoriteFriend(request: PostFavoriteFriendBody, completion: @escaping (Result<Void, Error>) -> Void)
     func deleteFavoriteFriend(request: DeleteFavoriteFriendBody, completion: @escaping (Result<Void, Error>) -> Void)
@@ -21,7 +21,7 @@ class FriendRepository: FriendRepositoryProtocol {
         self.friendService = friendService
     }
     
-    func getFriends(completion: @escaping (Result<[GetFriendResponse], any Error>) -> Void) {
+    func getFriend(completion: @escaping (Result<GenericResponse<[GetFriendResponse]>, any Error>) -> Void) {
         friendService.getFriend(completion: completion)
     }
     
