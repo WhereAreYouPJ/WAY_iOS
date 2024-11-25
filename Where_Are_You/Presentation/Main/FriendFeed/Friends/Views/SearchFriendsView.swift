@@ -11,10 +11,14 @@ import SwiftUI
 
 struct SearchFriendsView: View {
     @StateObject private var viewModel: SearchFriendsViewModel = {
-        let service = FriendService()
-        let repository = FriendRepository(friendService: service)
-        let getFriendUseCase = GetFriendUseCaseImpl(friendRepository: repository)
-        let friendsViewModel = FriendsViewModel(getFriendUseCase: getFriendUseCase)
+        let friendRepository = FriendRepository(friendService: FriendService())
+        let getFriendUseCase = GetFriendUseCaseImpl(friendRepository: friendRepository)
+        
+        let memberRepository = MemberRepository(memberService: MemberService())
+        let memberDetailsUseCase = MemberDetailsUseCaseImpl(memberRepository: memberRepository)
+        
+        let friendsViewModel = FriendsViewModel(getFriendUseCase: getFriendUseCase, memberDetailsUseCase: memberDetailsUseCase)
+        
         return SearchFriendsViewModel(
             friendsViewModel: friendsViewModel,
             getFriendUseCase: getFriendUseCase)

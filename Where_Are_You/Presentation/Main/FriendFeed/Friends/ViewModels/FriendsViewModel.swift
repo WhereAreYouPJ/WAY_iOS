@@ -9,6 +9,7 @@ import Foundation
 import Moya
 
 class FriendsViewModel: ObservableObject { // 친구 목록을 나중에는 iOS 자체 DB에 저장해뒀다가 새로고침 or 특정 시각에 업데이트
+    @Published var user = User(userName: nil, profileImage: nil, memberSeq: UserDefaultsManager.shared.getMemberSeq())
     @Published var favorites: [Friend] = []
     @Published var friends: [Friend] = []
     @Published var searchText: String = ""
@@ -16,10 +17,11 @@ class FriendsViewModel: ObservableObject { // 친구 목록을 나중에는 iOS 
     @Published var hasError: Bool = false
     
     private let getFriendUseCase: GetFriendUseCase
+    private let memberDetailsUseCase: MemberDetailsUseCase
     
-    init(getFriendUseCase: GetFriendUseCase) {
+    init(getFriendUseCase: GetFriendUseCase, memberDetailsUseCase: MemberDetailsUseCase) {
         self.getFriendUseCase = getFriendUseCase
-        //        setupInitialData()
+        self.memberDetailsUseCase = memberDetailsUseCase
     }
     
 //    private func setupInitialData() {
@@ -38,6 +40,19 @@ class FriendsViewModel: ObservableObject { // 친구 목록을 나중에는 iOS 
 //            Friend(memberSeq: 7, profileImage: "exampleProfileImage", name: "최수빈", isFavorite: true)
 //        ]
 //    }
+    
+    func getUserDetail() {
+        memberDetailsUseCase.execute { result in
+            switch result {
+            case .success(let member):
+                self.user.userName = member.userName
+                self.user.profileImage = member.profileImage?.toImage()
+            case .failure(let error):
+                print("Error getting user: \(error.localizedDescription)")
+                self.hasError = true
+            }
+        }
+    }
     
     func getFriendsList() {
         isLoading = true
@@ -67,18 +82,6 @@ class FriendsViewModel: ObservableObject { // 친구 목록을 나중에는 iOS 
             isFavorite: response.favorites
         )
     }
-    
-    //    func getMemberDetails(memberSeq: Int, completion: @escaping (Bool) -> Void) {
-    //        memberDetailsUseCase.execute { result in
-    //            switch result {
-    //            case .success:
-    //                completion(true)
-    //            case .failure(let error):
-    //                print("\(error.localizedDescription)")
-    //                completion(false)
-    //            }
-    //        }
-    //    }
     
     var filteredFavorites: [Friend] {
         if searchText.isEmpty {

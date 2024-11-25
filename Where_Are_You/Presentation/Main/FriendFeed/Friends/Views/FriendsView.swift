@@ -9,10 +9,13 @@ import SwiftUI
 
 struct FriendsView: View {
     @StateObject private var viewModel: FriendsViewModel = {
-        let service = FriendService()
-        let repository = FriendRepository(friendService: service)
-        let getFriendUseCase = GetFriendUseCaseImpl(friendRepository: repository)
-        return FriendsViewModel(getFriendUseCase: getFriendUseCase)
+        let friendRepository = FriendRepository(friendService: FriendService())
+        let getFriendUseCase = GetFriendUseCaseImpl(friendRepository: friendRepository)
+        
+        let memberRepository = MemberRepository(memberService: MemberService())
+        let memberDetailsUseCase = MemberDetailsUseCaseImpl(memberRepository: memberRepository)
+        
+        return FriendsViewModel(getFriendUseCase: getFriendUseCase, memberDetailsUseCase: memberDetailsUseCase)
     }()
     
     @Environment(\.dismiss) private var dismiss
@@ -20,6 +23,7 @@ struct FriendsView: View {
     @State private var selectedFriend: Friend?
     @State private var showFriendDetail = false
     @State private var isMyProfileSelected = false
+    @State private var shouldRefreshList = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -33,7 +37,7 @@ struct FriendsView: View {
                 .animation(.easeInOut, value: showSearchBar)
             }
             
-            MyProfileView()
+            myProfileView()
                 .onTapGesture {
                     isMyProfileSelected = true
                     showFriendDetail = true
@@ -50,22 +54,29 @@ struct FriendsView: View {
             )
         }
         .onAppear {
+            viewModel.getUserDetail()
             viewModel.getFriendsList()
         }
         .fullScreenCover(isPresented: $showFriendDetail) {
+            if shouldRefreshList {
+                viewModel.getFriendsList()
+                shouldRefreshList = false
+            }
+        } content: {
             if isMyProfileSelected {
                 FriendDetailView(viewModel: FriendDetailViewModel(isMyProfile: true))
             } else if let friend = selectedFriend {
-                FriendDetailView(viewModel: FriendDetailViewModel(friend: friend, isMyProfile: false))
+                FriendDetailView(
+                    viewModel: FriendDetailViewModel(friend: friend, isMyProfile: false),
+                    onDelete: { shouldRefreshList = true }
+                )
             }
         }
     }
-}
-
-struct MyProfileView: View {
-    var body: some View {
+    
+    func myProfileView() -> some View { // TODO: 이미지, 이름 실제 데이터로 변경
         HStack {
-            Image("exampleProfileImage")
+            Image("icon-profile-default")
                 .resizable()
                 .scaledToFill()
                 .frame(width: UIScreen.main.bounds.width * 0.14, height: UIScreen.main.bounds.width * 0.14)

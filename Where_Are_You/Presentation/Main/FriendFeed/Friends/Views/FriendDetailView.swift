@@ -13,6 +13,8 @@ struct FriendDetailView: View {
     @State private var showOptions = false
     @State private var menuPosition: CGPoint = .zero
     
+    var onDelete: (() -> Void)?
+    
     var body: some View {
         ZStack {
             Color(.color5).opacity(0.3)
@@ -103,8 +105,10 @@ struct FriendDetailView: View {
                     isPresented: $showOptions,
                     position: menuPosition
                 ) {
-                    // 친구 삭제 로직 실행
-                    showOptions = false
+                    viewModel.deleteFriend {
+                        onDelete?()
+                        dismiss()
+                    }
                 }
             }
         }
