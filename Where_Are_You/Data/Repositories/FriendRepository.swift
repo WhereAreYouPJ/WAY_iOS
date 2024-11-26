@@ -36,6 +36,4 @@ class FriendRepository: FriendRepositoryProtocol {
     func deleteFavoriteFriend(request: DeleteFavoriteFriendBody, completion: @escaping (Result<Void, any Error>) -> Void) {
         friendService.deleteFavoriteFriend(request: request, completion: completion)
     }
-    
-    
 }

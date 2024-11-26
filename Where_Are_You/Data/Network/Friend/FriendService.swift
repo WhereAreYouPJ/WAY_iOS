@@ -52,6 +52,4 @@ class FriendService: FriendServiceProtocol {
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
-    
-    
 }

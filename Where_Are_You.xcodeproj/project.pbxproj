@@ -204,6 +204,15 @@
 		D55C6C402CF585F1005132DC /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C3F2CF585F1005132DC /* AddFriendView.swift */; };
 		D55C6C422CF5B8D7005132DC /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C412CF5B8D7005132DC /* NavigationBarModifier.swift */; };
 		D55C6C442CF5C007005132DC /* AddFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C432CF5C007005132DC /* AddFriendViewModel.swift */; };
+		D55C6C472CF5D8DC005132DC /* PostFriendRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C462CF5D8DC005132DC /* PostFriendRequestBody.swift */; };
+		D55C6C492CF5D921005132DC /* AcceptFriendRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C482CF5D921005132DC /* AcceptFriendRequestBody.swift */; };
+		D55C6C4B2CF5D98E005132DC /* RefuseFriendRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C4A2CF5D98E005132DC /* RefuseFriendRequestBody.swift */; };
+		D55C6C4D2CF5D9B6005132DC /* CancelFriendRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C4C2CF5D9B6005132DC /* CancelFriendRequestBody.swift */; };
+		D55C6C502CF5D9FA005132DC /* GetFriendRequestForReceiverResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C4F2CF5D9FA005132DC /* GetFriendRequestForReceiverResponse.swift */; };
+		D55C6C522CF5DA5D005132DC /* GetFriendRequestForSenderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C512CF5DA5D005132DC /* GetFriendRequestForSenderResponse.swift */; };
+		D55C6C552CF5DA9C005132DC /* FriendRequestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C542CF5DA9C005132DC /* FriendRequestAPI.swift */; };
+		D55C6C572CF5DD10005132DC /* FriendRequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C562CF5DD10005132DC /* FriendRequestService.swift */; };
+		D55C6C592CF5DD33005132DC /* FriendRequestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C582CF5DD33005132DC /* FriendRequestRepository.swift */; };
 		D55DFC2F2C61021800EEEF51 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55DFC2E2C61021800EEEF51 /* ScheduleView.swift */; };
 		D55DFC312C61022900EEEF51 /* CreateScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */; };
 		D564EDF22C8F07570002A4C5 /* ConfirmLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D564EDF12C8F07570002A4C5 /* ConfirmLocationViewModel.swift */; };
@@ -471,6 +480,15 @@
 		D55C6C3F2CF585F1005132DC /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
 		D55C6C412CF5B8D7005132DC /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
 		D55C6C432CF5C007005132DC /* AddFriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewModel.swift; sourceTree = "<group>"; };
+		D55C6C462CF5D8DC005132DC /* PostFriendRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFriendRequestBody.swift; sourceTree = "<group>"; };
+		D55C6C482CF5D921005132DC /* AcceptFriendRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptFriendRequestBody.swift; sourceTree = "<group>"; };
+		D55C6C4A2CF5D98E005132DC /* RefuseFriendRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefuseFriendRequestBody.swift; sourceTree = "<group>"; };
+		D55C6C4C2CF5D9B6005132DC /* CancelFriendRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelFriendRequestBody.swift; sourceTree = "<group>"; };
+		D55C6C4F2CF5D9FA005132DC /* GetFriendRequestForReceiverResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFriendRequestForReceiverResponse.swift; sourceTree = "<group>"; };
+		D55C6C512CF5DA5D005132DC /* GetFriendRequestForSenderResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFriendRequestForSenderResponse.swift; sourceTree = "<group>"; };
+		D55C6C542CF5DA9C005132DC /* FriendRequestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestAPI.swift; sourceTree = "<group>"; };
+		D55C6C562CF5DD10005132DC /* FriendRequestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestService.swift; sourceTree = "<group>"; };
+		D55C6C582CF5DD33005132DC /* FriendRequestRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestRepository.swift; sourceTree = "<group>"; };
 		D55DFC2E2C61021800EEEF51 /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
 		D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleView.swift; sourceTree = "<group>"; };
 		D564EDF12C8F07570002A4C5 /* ConfirmLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLocationViewModel.swift; sourceTree = "<group>"; };
@@ -1254,6 +1272,7 @@
 				99C6D29F2C903EAF009C0CF8 /* ScheduleRepository.swift */,
 				999E29702CBB9AF900AB9FF9 /* LocationRepository.swift */,
 				D5BA30952CE7481D00958BF5 /* FriendRepository.swift */,
+				D55C6C582CF5DD33005132DC /* FriendRequestRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -1324,6 +1343,35 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		D55C6C452CF5D89F005132DC /* FriendRequest */ = {
+			isa = PBXGroup;
+			children = (
+				D55C6C462CF5D8DC005132DC /* PostFriendRequestBody.swift */,
+				D55C6C482CF5D921005132DC /* AcceptFriendRequestBody.swift */,
+				D55C6C4A2CF5D98E005132DC /* RefuseFriendRequestBody.swift */,
+				D55C6C4C2CF5D9B6005132DC /* CancelFriendRequestBody.swift */,
+			);
+			path = FriendRequest;
+			sourceTree = "<group>";
+		};
+		D55C6C4E2CF5D9DB005132DC /* FriendRequest */ = {
+			isa = PBXGroup;
+			children = (
+				D55C6C4F2CF5D9FA005132DC /* GetFriendRequestForReceiverResponse.swift */,
+				D55C6C512CF5DA5D005132DC /* GetFriendRequestForSenderResponse.swift */,
+			);
+			path = FriendRequest;
+			sourceTree = "<group>";
+		};
+		D55C6C532CF5DA90005132DC /* FriendRequest */ = {
+			isa = PBXGroup;
+			children = (
+				D55C6C542CF5DA9C005132DC /* FriendRequestAPI.swift */,
+				D55C6C562CF5DD10005132DC /* FriendRequestService.swift */,
+			);
+			path = FriendRequest;
+			sourceTree = "<group>";
+		};
 		D564EDF32C8F12DC0002A4C5 /* Locations */ = {
 			isa = PBXGroup;
 			children = (
@@ -1367,6 +1415,7 @@
 		D5A20AF12CE4DC820048281A /* Friend */ = {
 			isa = PBXGroup;
 			children = (
+				D55C6C452CF5D89F005132DC /* FriendRequest */,
 				D5BA308F2CE7453900958BF5 /* DeleteFriendBody.swift */,
 				D5BA30912CE745A700958BF5 /* PostFavoriteFriendBody.swift */,
 				D5BA30932CE745D000958BF5 /* DeleteFavoriteFriendBody.swift */,
@@ -1377,6 +1426,7 @@
 		D5A20AF22CE4DCBE0048281A /* Friend */ = {
 			isa = PBXGroup;
 			children = (
+				D55C6C4E2CF5D9DB005132DC /* FriendRequest */,
 				D5A20AF32CE4DCD50048281A /* GetFriendResponse.swift */,
 			);
 			path = Friend;
@@ -1416,6 +1466,7 @@
 		D5BA308A2CE744AC00958BF5 /* Friend */ = {
 			isa = PBXGroup;
 			children = (
+				D55C6C532CF5DA90005132DC /* FriendRequest */,
 				D5BA308B2CE744C400958BF5 /* FriendAPI.swift */,
 				D5BA308D2CE744CA00958BF5 /* FriendService.swift */,
 			);
@@ -1737,13 +1788,17 @@
 				99D8FBB52C3B9F9F0062AF10 /* MainHomeView.swift in Sources */,
 				99C140382C64943F00A706B6 /* LayoutAdapter.swift in Sources */,
 				995358412C00C555005BF799 /* LoginViewController.swift in Sources */,
+				D55C6C4D2CF5D9B6005132DC /* CancelFriendRequestBody.swift in Sources */,
 				99CEAD4A2C539743006B3D41 /* SplashViewController.swift in Sources */,
 				9910B4322C76BE3000DBE375 /* AlbumService.swift in Sources */,
+				D55C6C552CF5DA9C005132DC /* FriendRequestAPI.swift in Sources */,
 				99E755512C22E66F0016A0A6 /* MemberService.swift in Sources */,
+				D55C6C492CF5D921005132DC /* AcceptFriendRequestBody.swift in Sources */,
 				99D8FBC22C3BA25B0062AF10 /* CustomTextField.swift in Sources */,
 				D55C6C402CF585F1005132DC /* AddFriendView.swift in Sources */,
 				99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */,
 				9974EA1E2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift in Sources */,
+				D55C6C4B2CF5D98E005132DC /* RefuseFriendRequestBody.swift in Sources */,
 				99D780E02C60670E005A3F30 /* MemberSearchResponse.swift in Sources */,
 				992F57C22C5B1E8900219C6B /* ParameterConvertible.swift in Sources */,
 				992F57D42C5B28E900219C6B /* MemberSearchParameters.swift in Sources */,
@@ -1773,6 +1828,7 @@
 				9979622D2C3E6B2200E95CA6 /* AccountLoginUseCase.swift in Sources */,
 				990BDE532C40CF1E00A7FB5D /* DDayCell.swift in Sources */,
 				9911F98C2C3F908E00D0FDC9 /* HomeFeedView.swift in Sources */,
+				D55C6C522CF5DA5D005132DC /* GetFriendRequestForSenderResponse.swift in Sources */,
 				99C9B2292C0197CA008D7CBD /* User.swift in Sources */,
 				99D780DE2C6066FA005A3F30 /* LoginResponse.swift in Sources */,
 				99949F452C58788200AE0177 /* FriendFeedViewController.swift in Sources */,
@@ -1818,6 +1874,7 @@
 				D5954FCC2CB62F8800ADB877 /* DeleteScheduleBody.swift in Sources */,
 				99949F532C58A67400AE0177 /* FriendsTableView.swift in Sources */,
 				990902112C5F239A00BC3F20 /* CommonDescription.swift in Sources */,
+				D55C6C502CF5D9FA005132DC /* GetFriendRequestForReceiverResponse.swift in Sources */,
 				D5DB6C6D2CDA297300D89360 /* ScheduleDetailView.swift in Sources */,
 				992F57DB2C5B2A1D00219C6B /* MemberAPI.swift in Sources */,
 				99FDD0BD2C6DF72700B15026 /* MultipartFormDataHelper.swift in Sources */,
@@ -1829,6 +1886,7 @@
 				99C6D29C2C903526009C0CF8 /* DDayScheduleResponse.swift in Sources */,
 				99CEAD4C2C5397B1006B3D41 /* DeviceConfig.swift in Sources */,
 				99949F5B2C58B85E00AE0177 /* Friend.swift in Sources */,
+				D55C6C472CF5D8DC005132DC /* PostFriendRequestBody.swift in Sources */,
 				D5BA308C2CE744C400958BF5 /* FriendAPI.swift in Sources */,
 				99D373902C6ADF030093F386 /* FeedImagesViewController.swift in Sources */,
 				99B7BD742C72E68E00EC1C4F /* AddFeedViewModel.swift in Sources */,
@@ -1841,6 +1899,7 @@
 				9967C1542C566F2F00927277 /* NetworkAlert.swift in Sources */,
 				D53A515C2CA1260400025AC8 /* ErrorResponse.swift in Sources */,
 				99EC78CE2C11DBA5007C4415 /* PasswordResetViewController.swift in Sources */,
+				D55C6C572CF5DD10005132DC /* FriendRequestService.swift in Sources */,
 				99B397832C0C3E9D00D7A109 /* AccountCheckView.swift in Sources */,
 				D564EE882CF4DF540033DBD3 /* FriendsLocationView.swift in Sources */,
 				D5A20AF02CE4A6110048281A /* PutScheduleResponse.swift in Sources */,
@@ -1911,6 +1970,7 @@
 				99CA4F262C33B704007C027C /* ResetPasswordViewModel.swift in Sources */,
 				99D23FF42C6889BA00CFD4F0 /* FeedDetailViewModel.swift in Sources */,
 				99DA18B92C4E132A00D5CDA6 /* TitleView.swift in Sources */,
+				D55C6C592CF5DD33005132DC /* FriendRequestRepository.swift in Sources */,
 				99C68E4C2C64B83D00DEC1F1 /* FeedRepository.swift in Sources */,
 				99EC78D62C11E8A3007C4415 /* FinishRegisterViewController.swift in Sources */,
 				99C9B2322C01A45C008D7CBD /* Extensions.swift in Sources */,
