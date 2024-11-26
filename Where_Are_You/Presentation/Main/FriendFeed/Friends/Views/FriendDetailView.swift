@@ -85,7 +85,7 @@ struct FriendDetailView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: LayoutAdapter.shared.scale(value: 100), height: LayoutAdapter.shared.scale(value: 100))
-                    .clipShape(RoundedRectangle(cornerRadius: 40))
+                    .clipShape(RoundedRectangle(cornerRadius: 36))
                 
                 Text((viewModel.isMyProfile ? "김주희" : viewModel.friend?.name) ?? "") // TODO: 추후 실제 이름으로 변경
                     .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: 20)))

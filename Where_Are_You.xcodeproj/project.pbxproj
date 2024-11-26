@@ -201,6 +201,9 @@
 		D54C040C2C651832009CC419 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54C040B2C651832009CC419 /* Schedule.swift */; };
 		D54C040E2C651B8A009CC419 /* ScheduleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54C040D2C651B8A009CC419 /* ScheduleAPI.swift */; };
 		D55C6C3E2CF57E74005132DC /* CustomButtonSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C3D2CF57E74005132DC /* CustomButtonSwiftUI.swift */; };
+		D55C6C402CF585F1005132DC /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C3F2CF585F1005132DC /* AddFriendView.swift */; };
+		D55C6C422CF5B8D7005132DC /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C412CF5B8D7005132DC /* NavigationBarModifier.swift */; };
+		D55C6C442CF5C007005132DC /* AddFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C432CF5C007005132DC /* AddFriendViewModel.swift */; };
 		D55DFC2F2C61021800EEEF51 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55DFC2E2C61021800EEEF51 /* ScheduleView.swift */; };
 		D55DFC312C61022900EEEF51 /* CreateScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */; };
 		D564EDF22C8F07570002A4C5 /* ConfirmLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D564EDF12C8F07570002A4C5 /* ConfirmLocationViewModel.swift */; };
@@ -465,6 +468,9 @@
 		D54C040B2C651832009CC419 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		D54C040D2C651B8A009CC419 /* ScheduleAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleAPI.swift; sourceTree = "<group>"; };
 		D55C6C3D2CF57E74005132DC /* CustomButtonSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonSwiftUI.swift; sourceTree = "<group>"; };
+		D55C6C3F2CF585F1005132DC /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
+		D55C6C412CF5B8D7005132DC /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
+		D55C6C432CF5C007005132DC /* AddFriendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewModel.swift; sourceTree = "<group>"; };
 		D55DFC2E2C61021800EEEF51 /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
 		D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleView.swift; sourceTree = "<group>"; };
 		D564EDF12C8F07570002A4C5 /* ConfirmLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLocationViewModel.swift; sourceTree = "<group>"; };
@@ -560,6 +566,7 @@
 				D5DCBF332C7435E2003F0246 /* SearchFriendsView.swift */,
 				D5D807F12C860931008F7882 /* CommonFriensView.swift */,
 				D517F25C2CEC8691003C5F60 /* FriendDetailView.swift */,
+				D55C6C3F2CF585F1005132DC /* AddFriendView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -570,6 +577,7 @@
 				99949F582C58B81A00AE0177 /* FriendsViewModel.swift */,
 				D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */,
 				D517F25E2CECA902003C5F60 /* FriendDetailViewModel.swift */,
+				D55C6C432CF5C007005132DC /* AddFriendViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -945,6 +953,7 @@
 				99E7BA582C69A5D500F79C96 /* ImageUtility.swift */,
 				99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */,
 				999B88682CD1C51D00F329C9 /* HandleOutsideTap.swift */,
+				D55C6C412CF5B8D7005132DC /* NavigationBarModifier.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1732,6 +1741,7 @@
 				9910B4322C76BE3000DBE375 /* AlbumService.swift in Sources */,
 				99E755512C22E66F0016A0A6 /* MemberService.swift in Sources */,
 				99D8FBC22C3BA25B0062AF10 /* CustomTextField.swift in Sources */,
+				D55C6C402CF585F1005132DC /* AddFriendView.swift in Sources */,
 				99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */,
 				9974EA1E2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift in Sources */,
 				99D780E02C60670E005A3F30 /* MemberSearchResponse.swift in Sources */,
@@ -1796,11 +1806,13 @@
 				99949F4F2C58890C00AE0177 /* ProfileView.swift in Sources */,
 				99E7BA592C69A5D500F79C96 /* ImageUtility.swift in Sources */,
 				99C1403E2C6496BC00A706B6 /* NoDataView.swift in Sources */,
+				D55C6C422CF5B8D7005132DC /* NavigationBarModifier.swift in Sources */,
 				9910B8502C71E5B5005F7EEE /* ScheduleDropDownView.swift in Sources */,
 				99C68E522C64B96E00DEC1F1 /* ModifyFeedUseCase.swift in Sources */,
 				99C6D29E2C90379F009C0CF8 /* APIResponseHandler.swift in Sources */,
 				D54C040A2C6516CB009CC419 /* CreateScheduleBody.swift in Sources */,
 				99CF9BFD2CD319360079BE81 /* BookMarkFeedRequest.swift in Sources */,
+				D55C6C442CF5C007005132DC /* AddFriendViewModel.swift in Sources */,
 				99EFC7692CD0B9420044DFC5 /* PutLocationUseCase.swift in Sources */,
 				D5A20AF42CE4DCD50048281A /* GetFriendResponse.swift in Sources */,
 				D5954FCC2CB62F8800ADB877 /* DeleteScheduleBody.swift in Sources */,

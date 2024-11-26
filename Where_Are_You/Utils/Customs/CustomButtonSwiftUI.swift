@@ -7,6 +7,82 @@
 
 import SwiftUI
 
+struct CustomButtonSwiftUI: View {
+    // MARK: - Properties
+    private let title: String
+    private let backgroundColor: Color
+    private let titleColor: Color
+//    private let font: Font
+    private let action: () -> Void
+    
+    @State private var currentTitle: String
+    @State private var currentBackgroundColor: Color
+    @State private var currentTitleColor: Color
+//    @State private var currentFont: Font
+    
+    // MARK: - Initializer
+    init(
+        title: String,
+        backgroundColor: Color,
+        titleColor: Color,
+//        font: Font,
+        action: @escaping () -> Void
+    ) {
+        self.title = title
+        self.backgroundColor = backgroundColor
+        self.titleColor = titleColor
+//        self.font = font
+        self.action = action
+        
+        // State 초기값 설정
+        _currentTitle = State(initialValue: title)
+        _currentBackgroundColor = State(initialValue: backgroundColor)
+        _currentTitleColor = State(initialValue: titleColor)
+//        _currentFont = State(initialValue: font)
+    }
+    
+    // MARK: - Body
+    var body: some View {
+        Button(action: action) {
+            Text(currentTitle)
+//                .font(currentFont)
+                .foregroundColor(currentTitleColor)
+                .frame(maxWidth: .infinity)
+                .frame(maxHeight: .infinity)
+                .background(currentBackgroundColor)
+                .cornerRadius(LayoutAdapter.shared.scale(value: 6))
+                .contentShape(Rectangle())
+        }
+    }
+}
+
+struct BottomButtonSwiftUIView: View {
+    let title: String
+    let action: () -> Void
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            Rectangle()
+                .fill(Color(.color221))
+                .frame(height: 1)
+            
+            Button(action: action) {
+                Text(title)
+                    .font(.custom("Pretendard-Bold", size: LayoutAdapter.shared.scale(value: 18)))
+                    .foregroundColor(Color(.color242))
+                    .frame(maxWidth: .infinity)
+                    .frame(height: LayoutAdapter.shared.scale(value: 50))
+                    .background(Color(.brandColor))
+                    .cornerRadius(LayoutAdapter.shared.scale(value: 6))
+            }
+            .padding(.horizontal, LayoutAdapter.shared.scale(value: 15))
+            .padding(.top, LayoutAdapter.shared.scale(value: 12))
+            .padding(.bottom, LayoutAdapter.shared.scale(value: 24))
+        }
+        .background(Color.white)
+    }
+}
+
 struct MultiOptionButtonView<Content: View>: View {
     let content: Content
     
@@ -74,6 +150,23 @@ struct RoundedCorner: Shape {
             cornerRadii: CGSize(width: radius, height: radius)
         )
         return Path(path.cgPath)
+    }
+}
+
+#Preview {
+    CustomButtonSwiftUI(
+        title: "확인",
+        backgroundColor: Color(.brandColor),
+        titleColor: .white
+//        font: .body
+    ) {
+        print("커스텀 버튼")
+    }
+}
+
+#Preview {
+    BottomButtonSwiftUIView(title: "버튼 제목") {
+        print("버튼 탭됨")
     }
 }
 

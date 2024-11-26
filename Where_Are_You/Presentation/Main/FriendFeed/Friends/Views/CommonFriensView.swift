@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: 검색창
 struct SearchBarView: View {
     @Binding var searchText: String
     let onClear: () -> Void
@@ -37,7 +38,7 @@ struct SearchBarView: View {
     }
 }
 
-// 공통으로 사용할 FriendList 컴포넌트
+// MARK: 공통으로 사용할 FriendList 컴포넌트
 struct FriendListView: View {
     @ObservedObject var viewModel: FriendsViewModel
     let showToggle: Bool
@@ -109,6 +110,7 @@ struct FriendListView: View {
     }
 }
 
+// MARK: 섹션 구분선
 struct FriendsSectionView: View {
     let title: String
     let count: Int
@@ -126,6 +128,7 @@ struct FriendsSectionView: View {
     }
 }
 
+// MARK: 친구 셀
 struct FriendCell: View {
     let friend: Friend
     var showToggle: Bool = false
@@ -155,7 +158,7 @@ struct FriendCell: View {
     }
 }
 
-// 에러 발생 시 보여줄 뷰
+// MARK: 에러 발생 시 보여줄 뷰
 struct ErrorView: View {
     var retryAction: () -> Void
     
@@ -174,7 +177,7 @@ struct ErrorView: View {
     }
 }
 
-// 친구 목록이 비어있을 때 보여줄 뷰
+// MARK: 친구 목록이 비어있을 때 보여줄 뷰
 struct EmptyFriendsView: View {
     var body: some View {
         VStack(spacing: 16) {
