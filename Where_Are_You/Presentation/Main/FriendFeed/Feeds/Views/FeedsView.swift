@@ -34,6 +34,8 @@ class FeedsView: UIView {
         addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(feedsTableView)
+        
+        feedsTableView.isScrollEnabled = false
     }
     
     private func setupConstraints() {

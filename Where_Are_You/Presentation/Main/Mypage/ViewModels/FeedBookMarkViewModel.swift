@@ -16,6 +16,11 @@ class FeedBookMarkViewModel {
     private var isLoading = false
     
     private var bookMarkFeedContent: [BookMarkContent] = []
+    private(set) var displayBookMarkFeedContent: [BookMarkContent] = [] {
+        didSet {
+            self.onBookMarkFeedUpdated?()
+        }
+    }
     weak var delegate: FeedBookMarkViewModelDelegate?
 
     var onBookMarkFeedUpdated: (() -> Void)?

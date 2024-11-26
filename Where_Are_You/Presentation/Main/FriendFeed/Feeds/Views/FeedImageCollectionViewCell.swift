@@ -12,7 +12,7 @@ class FeedImageCollectionViewCell: UICollectionViewCell {
 
     static let identifier = "FeedImageCollectionViewCell"
     
-    private let imageView: UIImageView = {
+    var imageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true

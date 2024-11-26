@@ -20,20 +20,14 @@ class FeedsViewController: UIViewController {
         super.viewDidLoad()
         print("FeedsViewController - viewDidLoad() called") // 확인 로그
         print("Is viewModel nil? \(viewModel == nil)") // viewModel nil 여부 확인
-
+        
         setupViewModel()
         print("Is viewModel nil after setupViewModel? \(viewModel == nil)") // viewModel 초기화 여부 확인
-
+        
         setupViews()
         setupTableView()
-
         setupBindings()
-        
-        updateViewVisibility()
-        addFeedImagesViewController()
-        
-        print("Calling fetchFeeds()")
-
+//        addFeedImagesViewController()
         viewModel.fetchFeeds()
     }
     
@@ -48,74 +42,28 @@ class FeedsViewController: UIViewController {
     private func setupBindings() {
         viewModel.onFeedsDataFetched = { [weak self] in
             DispatchQueue.main.async {
-                self?.updateViewVisibility()
                 self?.feedsView.feedsTableView.reloadData()
             }
         }
     }
-//    private func updateViewVisibility() {
-//        let hasFeeds = !viewModel.feeds.isEmpty
-//        
-//        // 기존 뷰 제거
-//        feedsView?.removeFromSuperview()
-//        noFeedsView?.removeFromSuperview()
-//        
-//        // 피드 데이터에 따라 적절한 뷰 추가
-//        if hasFeeds {
-//            addFeedsView()
-//        } else {
-//            addNoFeedsView()
-//        }
-//    }
+    
     private func setupViews() {
-        feedsView = FeedsView()
-        noFeedsView = NoDataView()
-
         view.addSubview(feedsView)
-        view.addSubview(noFeedsView)
-
         feedsView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
-        
-        noFeedsView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
-        }
     }
-
+    
     private func setupTableView() {
         feedsView.feedsTableView.delegate = self
         feedsView.feedsTableView.dataSource = self
         feedsView.feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
     }
-    
-    private func updateViewVisibility() {
-        let hasFeeds = !viewModel.displayFeedContent.isEmpty
-        feedsView.isHidden = !hasFeeds
-//        feedsView.isHidden = false
-//        noFeedsView.isHidden = true
-        noFeedsView.isHidden = hasFeeds
-    }
-//    private func addFeedsView() {
-//        feedsView = FeedsView()
-//        view.addSubview(feedsView!)
-//        
-//        feedsView!.snp.makeConstraints { make in
-//            make.edges.equalTo(view.safeAreaLayoutGuide)
-//        }
-//    
-//    private func addNoFeedsView() {
-//        noFeedsView = NoDataView()
-//        view.addSubview(noFeedsView!)
-//        
-//        noFeedsView!.snp.makeConstraints { make in
-//            make.edges.equalTo(view.safeAreaLayoutGuide)
-//        }
-//    }
+
     private func addFeedImagesViewController() {
         feedImagesViewController = FeedImagesViewController()
         addChild(feedImagesViewController)
-        view.addSubview(feedImagesViewController.view)
+        feedsView.addSubview(feedImagesViewController.view)
         feedImagesViewController.didMove(toParent: self)
         
         feedImagesViewController.view.snp.makeConstraints { make in
@@ -126,15 +74,36 @@ class FeedsViewController: UIViewController {
 
 extension FeedsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.displayFeedContent.count
+        return viewModel.displayFeedContent.isEmpty ? 1 : viewModel.displayFeedContent.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if viewModel.displayFeedContent.isEmpty {
+            // NoDataView를 포함한 UITableViewCell 생성
+            let cell = UITableViewCell(style: .default, reuseIdentifier: "NoDataCell")
+            cell.selectionStyle = .none
+            // NoDataView를 셀의 컨텐츠로 추가
+            cell.contentView.addSubview(noFeedsView)
+            // NoDataView의 레이아웃 설정
+            noFeedsView.snp.makeConstraints { make in
+                make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 7))
+                make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 125))
+            }
+            return cell
+        }
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedsTableViewCell.identifier, for: indexPath) as? FeedsTableViewCell else {
             return UITableViewCell()
         }
         let feed = viewModel.displayFeedContent[indexPath.row]
         cell.configure(with: feed)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if viewModel.displayFeedContent.isEmpty {
+            return tableView.frame.height
+        }
+        return UITableView.automaticDimension
     }
 }

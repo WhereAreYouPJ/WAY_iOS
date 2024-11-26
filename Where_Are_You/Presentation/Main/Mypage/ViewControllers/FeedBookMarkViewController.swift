@@ -67,11 +67,16 @@ class FeedBookMarkViewController: UIViewController {
 
 extension FeedBookMarkViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        return viewModel.displayBookMarkFeedContent.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedsTableViewCell.identifier, for: indexPath) as? FeedsTableViewCell else {
+            return UITableViewCell()
+        }
+        let feed = viewModel.displayBookMarkFeedContent[indexPath.row]
+//        cell.configure(with: feed)
+        return cell
     }
 }
 

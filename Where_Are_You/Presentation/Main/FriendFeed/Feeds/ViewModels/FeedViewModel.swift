@@ -22,7 +22,7 @@ class FeedViewModel {
             updateFeedImagesForCurrentIndex()
         }
     }
-    
+        
     // MARK: - Initializer
     init(getFeedListUseCase: GetFeedListUseCase) {
         self.getFeedListUseCase = getFeedListUseCase
