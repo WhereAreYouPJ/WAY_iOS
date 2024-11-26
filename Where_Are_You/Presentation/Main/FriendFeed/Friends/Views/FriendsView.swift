@@ -76,20 +76,21 @@ struct FriendsView: View {
     
     func myProfileView() -> some View { // TODO: 이미지, 이름 실제 데이터로 변경
         HStack {
-            Image("icon-profile-default")
+            Image("exampleProfileImage")
                 .resizable()
                 .scaledToFill()
                 .frame(width: UIScreen.main.bounds.width * 0.14, height: UIScreen.main.bounds.width * 0.14)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16)))
             
             Text("김주희")
-                .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 17)))
+                .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 17))))
                 .foregroundColor(Color(.color34))
                 .padding(8)
             
             Spacer()
         }
-        .padding(.horizontal, 14)
+        .padding(.horizontal, LayoutAdapter.shared.scale(value: 14))
+        .padding(.top, LayoutAdapter.shared.scale(value: 10))
     }
 }
 

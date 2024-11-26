@@ -75,6 +75,25 @@ class FriendFeedViewController: UIViewController {
     }()
     
     let plusOptionButton = CustomOptionButtonView(title: "새 피드 작성")
+    // 1. 친구 관련 옵션 버튼 추가
+    private let friendOptionView: UIHostingController = {
+        let view = MultiOptionButtonView {
+            OptionButton(
+                title: "친구 추가",
+                position: .top
+            ) {
+                print("친구 추가")
+            }
+            
+            OptionButton(
+                title: "친구 관리",
+                position: .bottom
+            ) {
+                print("친구 관리")
+            }
+        }
+        return UIHostingController(rootView: view)
+    }()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -125,6 +144,9 @@ class FriendFeedViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonStack)
         
         plusOptionButton.isHidden = true
+        
+        view.addSubview(friendOptionView.view)
+        friendOptionView.view.isHidden = true
     }
     
     private func setupConstraints() {
@@ -155,6 +177,11 @@ class FriendFeedViewController: UIViewController {
                 make.height.equalTo(38)
             }
         }
+        
+        friendOptionView.view.snp.makeConstraints { make in
+                make.top.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 9))
+                make.trailing.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 15))
+            }
     }
     
     private func setupActions() {
@@ -181,13 +208,15 @@ class FriendFeedViewController: UIViewController {
             searchFriendButton.isHidden = true
             notificationButton.isHidden = false
             addButton.isHidden = false
-            showSearchBar = false  // 피드 탭으로 전환시 검색바 숨김
+            showSearchBar = false
+            friendOptionView.view.isHidden = true
         } else {
             feedsViewController.view.isHidden = true
             friendsHostingController?.view.isHidden = false
             searchFriendButton.isHidden = false
             notificationButton.isHidden = false
             addButton.isHidden = false
+            plusOptionButton.isHidden = true
         }
     }
     
@@ -205,11 +234,14 @@ class FriendFeedViewController: UIViewController {
         print("알림 페이지로 이동")
     }
     
+    // 4. handleAdd() 메서드 수정
     @objc private func handleAdd() {
         if segmentControl.selectedSegmentIndex == 0 {
             plusOptionButton.isHidden = false
+            friendOptionView.view.isHidden = true
         } else {
-            print("친구창에서 +버튼 눌렀을때 액션")
+            friendOptionView.view.isHidden = false
+            plusOptionButton.isHidden = true
         }
     }
     
@@ -220,10 +252,14 @@ class FriendFeedViewController: UIViewController {
         present(nav, animated: true, completion: nil)
     }
     
+    // 5. handleOutsideTap() 메서드 수정
     @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {
         let location = sender.location(in: self.view)
-        if !plusOptionButton.frame.contains(location) && !plusOptionButton.frame.contains(location) {
+        if !plusOptionButton.frame.contains(location) {
             plusOptionButton.isHidden = true
+        }
+        if !friendOptionView.view.frame.contains(location) {
+            friendOptionView.view.isHidden = true
         }
     }
 }

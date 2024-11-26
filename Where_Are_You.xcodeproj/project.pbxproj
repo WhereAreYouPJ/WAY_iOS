@@ -200,10 +200,12 @@
 		D54C040A2C6516CB009CC419 /* CreateScheduleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54C04092C6516CB009CC419 /* CreateScheduleBody.swift */; };
 		D54C040C2C651832009CC419 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54C040B2C651832009CC419 /* Schedule.swift */; };
 		D54C040E2C651B8A009CC419 /* ScheduleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54C040D2C651B8A009CC419 /* ScheduleAPI.swift */; };
+		D55C6C3E2CF57E74005132DC /* CustomButtonSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C3D2CF57E74005132DC /* CustomButtonSwiftUI.swift */; };
 		D55DFC2F2C61021800EEEF51 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55DFC2E2C61021800EEEF51 /* ScheduleView.swift */; };
 		D55DFC312C61022900EEEF51 /* CreateScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */; };
 		D564EDF22C8F07570002A4C5 /* ConfirmLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D564EDF12C8F07570002A4C5 /* ConfirmLocationViewModel.swift */; };
 		D564EDF52C8F13300002A4C5 /* FavoriteLocationBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D564EDF42C8F13300002A4C5 /* FavoriteLocationBody.swift */; };
+		D564EE882CF4DF540033DBD3 /* FriendsLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D564EE872CF4DF540033DBD3 /* FriendsLocationView.swift */; };
 		D57AC3B12C8B6336006AE7D7 /* KakaoLocalResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57AC3B02C8B6336006AE7D7 /* KakaoLocalResponse.swift */; };
 		D57B46F72C786AFD00657C51 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57B46F62C786AFD00657C51 /* MapView.swift */; };
 		D585E2872C82F6C600C16A14 /* GetScheduleByMonthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D585E2862C82F6C600C16A14 /* GetScheduleByMonthResponse.swift */; };
@@ -462,10 +464,12 @@
 		D54C04092C6516CB009CC419 /* CreateScheduleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleBody.swift; sourceTree = "<group>"; };
 		D54C040B2C651832009CC419 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		D54C040D2C651B8A009CC419 /* ScheduleAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleAPI.swift; sourceTree = "<group>"; };
+		D55C6C3D2CF57E74005132DC /* CustomButtonSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonSwiftUI.swift; sourceTree = "<group>"; };
 		D55DFC2E2C61021800EEEF51 /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
 		D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleView.swift; sourceTree = "<group>"; };
 		D564EDF12C8F07570002A4C5 /* ConfirmLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLocationViewModel.swift; sourceTree = "<group>"; };
 		D564EDF42C8F13300002A4C5 /* FavoriteLocationBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteLocationBody.swift; sourceTree = "<group>"; };
+		D564EE872CF4DF540033DBD3 /* FriendsLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsLocationView.swift; sourceTree = "<group>"; };
 		D57AC3B02C8B6336006AE7D7 /* KakaoLocalResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLocalResponse.swift; sourceTree = "<group>"; };
 		D57B46F62C786AFD00657C51 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		D585E2862C82F6C600C16A14 /* GetScheduleByMonthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetScheduleByMonthResponse.swift; sourceTree = "<group>"; };
@@ -1216,6 +1220,7 @@
 				99D8FBBF2C3BA2180062AF10 /* CustomLabel.swift */,
 				99D8FBC12C3BA25B0062AF10 /* CustomTextField.swift */,
 				D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */,
+				D55C6C3D2CF57E74005132DC /* CustomButtonSwiftUI.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -1296,6 +1301,7 @@
 				D57B46F62C786AFD00657C51 /* MapView.swift */,
 				D58EC0682C633217001BC030 /* SearchLocationView.swift */,
 				D5496DD12C6B69570056C196 /* ConfirmLocationView.swift */,
+				D564EE872CF4DF540033DBD3 /* FriendsLocationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1824,6 +1830,7 @@
 				D53A515C2CA1260400025AC8 /* ErrorResponse.swift in Sources */,
 				99EC78CE2C11DBA5007C4415 /* PasswordResetViewController.swift in Sources */,
 				99B397832C0C3E9D00D7A109 /* AccountCheckView.swift in Sources */,
+				D564EE882CF4DF540033DBD3 /* FriendsLocationView.swift in Sources */,
 				D5A20AF02CE4A6110048281A /* PutScheduleResponse.swift in Sources */,
 				D5C2D6742CC8C273002F5607 /* CustomAlertViewController.swift in Sources */,
 				99C9B2482C01D2B7008D7CBD /* Utilities.swift in Sources */,
@@ -1878,6 +1885,7 @@
 				D57B46F72C786AFD00657C51 /* MapView.swift in Sources */,
 				9911F98E2C3F913100D0FDC9 /* HomeFeedCollectionViewCell.swift in Sources */,
 				992F57C82C5B26D700219C6B /* ResetPasswordBody.swift in Sources */,
+				D55C6C3E2CF57E74005132DC /* CustomButtonSwiftUI.swift in Sources */,
 				99EC20AB2C0D9D9D0018904D /* SignUpViewModel.swift in Sources */,
 				99EC20AD2C0D9DB50018904D /* AcoountSearchViewModel.swift in Sources */,
 				99960AB32CE1D97C007D2B61 /* PostEcceptScheduleUseCase.swift in Sources */,

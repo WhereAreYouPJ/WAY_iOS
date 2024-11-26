@@ -81,7 +81,7 @@ struct FriendDetailView: View {
                 
                 Spacer()
                 
-                Image(viewModel.friend?.profileImage != "" ? "exampleProfileImage" : "defaultImage") // TODO: 추후 실제 프로필사진으로 변경
+                Image("icon-profile-default") // TODO: 추후 실제 프로필사진으로 변경
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: LayoutAdapter.shared.scale(value: 100), height: LayoutAdapter.shared.scale(value: 100))
@@ -105,7 +105,7 @@ struct FriendDetailView: View {
                     isPresented: $showOptions,
                     position: menuPosition
                 ) {
-                    viewModel.deleteFriend {
+                    viewModel.deleteFriend { // TODO: 커스텀 팝업창 띄워 삭제 확인
                         onDelete?()
                         dismiss()
                     }

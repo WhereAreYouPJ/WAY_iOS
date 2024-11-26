@@ -1,19 +1,19 @@
 //
-//  SearchPlaceView.swift
+//  FriendsLocationView.swift
 //  Where_Are_You
 //
-//  Created by juhee on 06.09.24.
+//  Created by juhee on 26.11.24.
 //
 
 import SwiftUI
 import KakaoMapsSDK
 
-struct MapView: View {
+struct FriendsLocationView: View {
     @State var draw: Bool = false // 뷰의 appear 상태를 전달하기 위한 변수.
     @Binding var location: Location
     
     var body: some View {
-        KakaoMapView(draw: $draw, location: $location)
+        KakaoMapFriendsView(draw: $draw, location: $location)
             .onAppear(perform: {
                 self.draw = true
             })
@@ -22,7 +22,7 @@ struct MapView: View {
     }
 }
 
-struct KakaoMapView: UIViewRepresentable {
+struct KakaoMapFriendsView: UIViewRepresentable {
     @Binding var draw: Bool
     @Binding var location: Location
     
@@ -225,5 +225,5 @@ struct KakaoMapView: UIViewRepresentable {
 }
 
 #Preview {
-    MapView(location: .constant(Location(sequence: 0, location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526)))
+    FriendsLocationView(location: .constant(Location(sequence: 0, location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526)))
 }
