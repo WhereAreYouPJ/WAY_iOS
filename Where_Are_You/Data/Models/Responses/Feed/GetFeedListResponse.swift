@@ -50,7 +50,7 @@ struct Info: Codable {
 struct FeedInfo: Codable {
     let feedSeq: Int
     let title: String // 피드 제목
-    let content: String // 피드 내용
+    let content: String? // 피드 내용
 }
 
 // MARK: - FeedImageInfo

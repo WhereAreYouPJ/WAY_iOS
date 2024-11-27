@@ -16,7 +16,7 @@ class FeedsTableViewCell: UITableViewCell {
     let feedImagesView = FeedImagesView()
     let bookMarkButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "bookmark"), for: .normal)
+        button.setImage(UIImage(named: "icon-feed_bookmark"), for: .normal)
         button.tintColor = .black
         return button
     }()
@@ -96,7 +96,7 @@ class FeedsTableViewCell: UITableViewCell {
         detailBox.dateLabel.text = feed.startTime
         detailBox.locationLabel.text = feed.location
         detailBox.titleLabel.text = feed.title
-        self.imageUrls = feed.feedImageInfos.map{ $0.feedImageURL }
+        self.imageUrls = feed.feedImageInfos.map { $0.feedImageURL }
         feedImagesView.collectionView.reloadData()
         
         feedImagesView.pageControl.numberOfPages = imageUrls.count

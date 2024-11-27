@@ -10,7 +10,7 @@ import SwiftUI
 
 class FeedsView: UIView {
     // MARK: - Properties
-
+    
     let scrollView = UIScrollView()
     let contentView = UIView()
     let feedsTableView = UITableView()
@@ -28,9 +28,10 @@ class FeedsView: UIView {
     }
     
     // MARK: - helpers
-
+    
     private func configureViewComponents() {
         backgroundColor = .white
+        
         addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(feedsTableView)
@@ -50,7 +51,19 @@ class FeedsView: UIView {
         
         feedsTableView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
-            make.top.bottom.equalToSuperview()
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview().priority(.low)
+        }
+    }
+    
+    func updateContentHeight() {
+        // 테이블뷰 콘텐츠 크기에 따라 contentView의 높이를 업데이트
+        feedsTableView.layoutIfNeeded()
+        let contentHeight = feedsTableView.contentSize.height
+        contentView.snp.remakeConstraints { make in
+            make.edges.equalTo(scrollView.contentLayoutGuide)
+            make.width.equalTo(scrollView.frameLayoutGuide)
+            make.height.equalTo(contentHeight) // 높이를 동적으로 업데이트
         }
     }
 }

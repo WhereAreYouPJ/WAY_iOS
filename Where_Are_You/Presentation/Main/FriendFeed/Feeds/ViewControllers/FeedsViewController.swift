@@ -13,7 +13,7 @@ class FeedsViewController: UIViewController {
     private var feedsView = FeedsView()
     private var noFeedsView = NoDataView()
     var viewModel: FeedViewModel!
-    private var feedImagesViewController: FeedImagesViewController!
+//    private var feedImagesViewController: FeedImagesViewController!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -42,6 +42,7 @@ class FeedsViewController: UIViewController {
     private func setupBindings() {
         viewModel.onFeedsDataFetched = { [weak self] in
             DispatchQueue.main.async {
+                self?.feedsView.updateContentHeight()
                 self?.feedsView.feedsTableView.reloadData()
             }
         }
@@ -61,14 +62,14 @@ class FeedsViewController: UIViewController {
     }
 
     private func addFeedImagesViewController() {
-        feedImagesViewController = FeedImagesViewController()
-        addChild(feedImagesViewController)
-        feedsView.addSubview(feedImagesViewController.view)
-        feedImagesViewController.didMove(toParent: self)
-        
-        feedImagesViewController.view.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+//        feedImagesViewController = FeedImagesViewController()
+//        addChild(feedImagesViewController)
+//        feedsView.addSubview(feedImagesViewController.view)
+//        feedImagesViewController.didMove(toParent: self)
+//        
+//        feedImagesViewController.view.snp.makeConstraints { make in
+//            make.edges.equalToSuperview()
+//        }
     }
 }
 
