@@ -10,7 +10,7 @@ import Foundation
 protocol ScheduleRepositoryProtocol {
     func postSchedule(request: CreateScheduleBody, completion: @escaping (Result<GenericResponse<PostScheduleResponse>, Error>) -> Void)
     func getSchedule(scheduleSeq: Int, completion: @escaping (Result<GenericResponse<GetScheduleResponse>, Error>) -> Void)
-    func putSchedule(request: PutScheduleBody, completion: @escaping (Result<GenericResponse<PutScheduleResponse>, Error>) -> Void)
+    func putSchedule(request: PutScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     func deleteSchedule(request: DeleteScheduleBody, isCreator: Bool, completion: @escaping (Result<Void, Error>) -> Void)
     func postEcceptSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     func getMonthlySchedule(yearMonth: String, completion: @escaping (Result<GenericResponse<[GetScheduleByMonthResponse]>, Error>) -> Void)
@@ -36,7 +36,7 @@ class ScheduleRepository: ScheduleRepositoryProtocol {
         scheduleService.getSchedule(scheduleSeq: scheduleSeq, completion: completion)
     }
     
-    func putSchedule(request: PutScheduleBody, completion: @escaping (Result<GenericResponse<PutScheduleResponse>, any Error>) -> Void) {
+    func putSchedule(request: PutScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
         scheduleService.putSchedule(request: request, completion: completion)
     }
     

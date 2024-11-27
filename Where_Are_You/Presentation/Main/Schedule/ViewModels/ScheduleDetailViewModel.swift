@@ -72,7 +72,7 @@ class ScheduleDetailViewModel: ObservableObject {
                 switch result {
                 case .success(let response):
                     self.isSuccess = true
-                    print("일정 수정 성공! scheduleSeq: \(response.data.scheduleSeq)")
+                    print("일정 수정 성공!")
                 case .failure(let error):
                     self.isSuccess = false
                     print("일정 수정 실패: \(error.localizedDescription)")
