@@ -26,7 +26,6 @@ protocol ScheduleServiceProtocol {
 // MARK: - ScheduleService
 
 class ScheduleService: ScheduleServiceProtocol {
-
     private var provider = MoyaProvider<ScheduleAPI>()
     
     private var memberSeq: Int {

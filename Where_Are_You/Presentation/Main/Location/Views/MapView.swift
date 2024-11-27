@@ -1,3 +1,10 @@
+//
+//  SearchPlaceView.swift
+//  Where_Are_You
+//
+//  Created by juhee on 06.09.24.
+//
+
 import SwiftUI
 import KakaoMapsSDK
 

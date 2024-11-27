@@ -8,49 +8,92 @@
 import SwiftUI
 
 struct FriendsView: View {
-    @StateObject private var viewModel = FriendsViewModel()
+    @StateObject private var viewModel: FriendsViewModel = {
+        let friendRepository = FriendRepository(friendService: FriendService())
+        let getFriendUseCase = GetFriendUseCaseImpl(friendRepository: friendRepository)
+        
+        let memberRepository = MemberRepository(memberService: MemberService())
+        let memberDetailsUseCase = MemberDetailsUseCaseImpl(memberRepository: memberRepository)
+        
+        return FriendsViewModel(getFriendUseCase: getFriendUseCase, memberDetailsUseCase: memberDetailsUseCase)
+    }()
+    
     @Environment(\.dismiss) private var dismiss
+    @Binding var showSearchBar: Bool
+    @State private var selectedFriend: Friend?
+    @State private var showFriendDetail = false
+    @State private var isMyProfileSelected = false
+    @State private var shouldRefreshList = false
     
     var body: some View {
         VStack(spacing: 0) {
-            SearchBarView(searchText: $viewModel.searchText, onClear: viewModel.clearSearch)
+            if showSearchBar {
+                SearchBarView(searchText: $viewModel.searchText,
+                              onClear: {
+                    viewModel.clearSearch()
+                    showSearchBar = false
+                })
+                .transition(.move(edge: .top))
+                .animation(.easeInOut, value: showSearchBar)
+            }
             
-            ScrollView {
-                VStack(spacing: 0) {
-                    FriendsSectionView(title: "즐겨찾기", count: viewModel.filteredFavorites.count)
-                    ForEach(viewModel.filteredFavorites) { friend in
-                        FriendCell(friend: friend)
-                    }
-                    
-                    FriendsSectionView(title: "친구", count: viewModel.filteredFriends.count)
-                        .padding(.top, 8)
-                    ForEach(viewModel.filteredFriends) { friend in
-                        FriendCell(friend: friend)
-                    }
+            myProfileView()
+                .onTapGesture {
+                    isMyProfileSelected = true
+                    showFriendDetail = true
                 }
-                .padding()
+            
+            FriendListView(
+                viewModel: viewModel,
+                showToggle: false,
+                onFriendSelect: { friend in
+                    selectedFriend = friend
+                    isMyProfileSelected = false
+                    showFriendDetail = true
+                }
+            )
+        }
+        .onAppear {
+            viewModel.getUserDetail()
+            viewModel.getFriendsList()
+        }
+        .fullScreenCover(isPresented: $showFriendDetail) {
+            if shouldRefreshList {
+                viewModel.getFriendsList()
+                shouldRefreshList = false
+            }
+        } content: {
+            if isMyProfileSelected {
+                FriendDetailView(viewModel: FriendDetailViewModel(isMyProfile: true))
+            } else if let friend = selectedFriend {
+                FriendDetailView(
+                    viewModel: FriendDetailViewModel(friend: friend, isMyProfile: false),
+                    onDelete: { shouldRefreshList = true }
+                )
             }
         }
     }
-}
-
-struct FriendsSectionView: View {
-    let title: String
-    let count: Int
     
-    var body: some View {
-        VStack(spacing: 0) {
-            Divider()
-            HStack {
-                Text(title)
-                Text("\(count)")
-                Spacer()
-            }
-            .padding(.vertical, 8)
+    func myProfileView() -> some View { // TODO: 이미지, 이름 실제 데이터로 변경
+        HStack {
+            Image("exampleProfileImage")
+                .resizable()
+                .scaledToFill()
+                .frame(width: UIScreen.main.bounds.width * 0.14, height: UIScreen.main.bounds.width * 0.14)
+                .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16)))
+            
+            Text("김주희")
+                .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 17))))
+                .foregroundColor(Color(.color34))
+                .padding(8)
+            
+            Spacer()
         }
+        .padding(.horizontal, LayoutAdapter.shared.scale(value: 14))
+        .padding(.top, LayoutAdapter.shared.scale(value: 10))
     }
 }
 
 #Preview {
-    FriendsView()
+    FriendsView(showSearchBar: .constant(false))
 }

@@ -152,7 +152,7 @@ extension UIImageView {
             self.image = placeholder
             return
         }
-
+        
         // 네트워크에서 이미지를 비동기로 가져오기
         URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             guard let self = self else { return }
@@ -164,5 +164,14 @@ extension UIImageView {
                 }
             }
         }.resume()
+    }
+}
+
+extension String {
+    func toImage() -> UIImage? {
+        if let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters){
+            return UIImage(data: data)
+        }
+        return nil
     }
 }

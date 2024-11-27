@@ -9,7 +9,7 @@ import Foundation
 
 struct PutScheduleBody: ParameterConvertible {
     let scheduleSeq: Int
-    let title: String?
+    let title: String
     let startTime: String?
     let endTime: String?
     let location: String?
@@ -20,5 +20,5 @@ struct PutScheduleBody: ParameterConvertible {
     let memo: String?
     let allDay: Bool
     let invitedMemberSeqs: [Int]?
-    let createMemberSeq: Int?
+    let createMemberSeq: Int
 }

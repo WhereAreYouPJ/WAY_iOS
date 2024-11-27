@@ -12,13 +12,13 @@ struct ScheduleView: View {
     @State private var selectedDate: Date?
     @State private var showMenu = false
     @State private var showCreateSchedule = false
+    @State private var showFriendsLocation = false // MARK: 친구 위치 실시간 확인 테스트용
     @State private var showDailySchedule = false
     @State private var showingDeleteAlert = false
     @State private var alertTitle = ""
     @State private var alertMessage = ""
     @State private var scheduleToDelete: Schedule?
     
-    // 추가: UIKit 버튼 액션을 위한 클로저
     var onNotificationTapped: (() -> Void)?
     var onAddTapped: (() -> Void)?
     
@@ -41,10 +41,10 @@ struct ScheduleView: View {
                     HStack(spacing: 0) {
                         Button(action: {
                             print("알림 페이지로 이동")
-                        }) {
+                        }, label: {
                             Image("icon-notification")
                                 .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
-                        }
+                        })
                         .padding(0)
                         
                         Menu {
@@ -54,6 +54,18 @@ struct ScheduleView: View {
                             })
                         } label: {
                             Image("icon-plus")
+                                .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
+                        }
+                        .padding(EdgeInsets(top: -4, leading: -8, bottom: -4, trailing: 0))
+                        
+                        // MARK: 친구 위치 실시간 확인 테스트용
+                        Menu {
+                            Button("친구 위치", action: {
+                                print("친구 위치")
+                                showFriendsLocation.toggle()
+                            })
+                        } label: {
+                            Image("icon-place")
                                 .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
                         }
                         .padding(EdgeInsets(top: -4, leading: -8, bottom: -4, trailing: 0))
@@ -84,6 +96,12 @@ struct ScheduleView: View {
                 })
                 .presentationDetents([.medium])
             }
+        }
+        // MARK: 친구 위치 실시간 확인 테스트용
+        .fullScreenCover(isPresented: $showFriendsLocation, onDismiss: {
+            viewModel.getMonthlySchedule()
+        }) {
+            FriendsLocationView(location: .constant(Location(sequence: 0, location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526)))
         }
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
         .onAppear(perform: {
@@ -205,6 +223,7 @@ struct ScheduleView: View {
             let scheduleStartDate = Calendar.current.startOfDay(for: schedule.startTime)
             let scheduleEndDate = Calendar.current.startOfDay(for: schedule.endTime)
             let cellDate = Calendar.current.startOfDay(for: date)
+            
             return (scheduleStartDate...scheduleEndDate).contains(cellDate)
         }
         let processedSchedules = daySchedules.map { schedule in
