@@ -27,13 +27,13 @@ extension FriendRequestAPI: TargetType {
             return "/friend-request"
         case .getListForSender:
             return "/friend-request/list"
-        case .postFriendRequest(request: let request):
+        case .postFriendRequest:
             return "/friend-request"
-        case .acceptFriendRequest(request: let request):
+        case .acceptFriendRequest:
             return "/friend-request/accept"
-        case .refuseFriendRequest(request: let request):
+        case .refuseFriendRequest:
             return "/friend-request/refuse"
-        case .cancelFriendRequest(request: let request):
+        case .cancelFriendRequest:
             return "/friend-request/cancel"
         }
     }

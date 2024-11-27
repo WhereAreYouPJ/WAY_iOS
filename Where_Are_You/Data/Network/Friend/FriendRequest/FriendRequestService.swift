@@ -9,8 +9,8 @@ import Alamofire
 import Moya
 
 protocol FriendRequestServiceProtocol {
-    func getListForReceiver(completion: @escaping (Result<GenericResponse<[GetFriendRequestForReceiverResponse]>, Error>) -> Void)
-    func getListForSender(completion: @escaping (Result<GenericResponse<[GetFriendRequestForSenderResponse]>, Error>) -> Void)
+    func getListForReceiver(completion: @escaping (Result<GenericResponse<[GetListForReceiverResponse]>, Error>) -> Void)
+    func getListForSender(completion: @escaping (Result<GenericResponse<[GetListForSenderResponse]>, Error>) -> Void)
     
     func postFriendRequest(request: PostFriendRequestBody, completion: @escaping (Result<Void, Error>) -> Void)
     func acceptFriendRequest(request: AcceptFriendRequestBody, completion: @escaping (Result<Void, Error>) -> Void)
@@ -33,12 +33,12 @@ class FriendRequestService: FriendRequestServiceProtocol {
         self.provider = MoyaProvider<FriendRequestAPI>(plugins: [tokenPlugin])
     }
     
-    func getListForReceiver(completion: @escaping (Result<GenericResponse<[GetFriendRequestForReceiverResponse]>, any Error>) -> Void) {
+    func getListForReceiver(completion: @escaping (Result<GenericResponse<[GetListForReceiverResponse]>, any Error>) -> Void) {
         provider.request(.getListForReceiver(memberSeq: memberSeq)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
-    func getListForSender(completion: @escaping (Result<GenericResponse<[GetFriendRequestForSenderResponse]>, any Error>) -> Void) {
+    func getListForSender(completion: @escaping (Result<GenericResponse<[GetListForSenderResponse]>, any Error>) -> Void) {
         provider.request(.getListForSender(memberSeq: memberSeq)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }

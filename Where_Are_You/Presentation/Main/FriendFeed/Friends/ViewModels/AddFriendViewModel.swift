@@ -10,4 +10,5 @@ import Foundation
 class AddFriendViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var friend: Friend?
+    @Published var showError: Bool = false
 }
