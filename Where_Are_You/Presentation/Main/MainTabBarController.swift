@@ -18,7 +18,17 @@ class MainTabBarController: UITabBarController {
     
     private func configureMainInterface() {
         // 각 뷰 컨트롤러를 초기화하고 설정
-        let mainVC = createNavController(viewController: MainHomeViewController(), title: "홈", imageName: "icon-home", selectedImageName: "icon-home-filled")
+        let feedService = FeedService()
+        let feedRepository = FeedRepository(feedService: feedService)
+        
+        let scheduleService = ScheduleService()
+        let scheduleRepository = ScheduleRepository(scheduleService: scheduleService)
+        
+        let bannerViewModel = BannerViewModel()
+        let dDayViewModel = DDayViewModel(getDDayScheduleUseCase: GetDDayScheduleUseCaseImpl(scheduleRepository: scheduleRepository))
+        let homeFeedViewModel = HomeFeedViewModel(getFeedListUseCase: GetFeedListUseCaseImpl(feedRepository: feedRepository))
+            
+        let mainVC = createNavController(viewController: MainHomeViewController(bannerViewModel: bannerViewModel, dDayViewModel: dDayViewModel, homeFeedViewModel: homeFeedViewModel), title: "홈", imageName: "icon-home", selectedImageName: "icon-home-filled")
         let friendsVC = createNavController(viewController: FriendFeedViewController(), title: "피드", imageName: "icon-friends", selectedImageName: "icon-friends-filled")
         
         let scheduleHostingVC = UIHostingController(rootView: ScheduleView())

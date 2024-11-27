@@ -19,7 +19,7 @@ class MemberDetailsUseCaseImpl: MemberDetailsUseCase {
     }
     
     func execute(completion: @escaping (Result<MemberDetailsResponse, Error>) -> Void) {
-        memberRepository.memberDetails { result in
+        memberRepository.getMemberDetails { result in
             switch result {
             case .success(let response):
                 completion(.success(response.data))

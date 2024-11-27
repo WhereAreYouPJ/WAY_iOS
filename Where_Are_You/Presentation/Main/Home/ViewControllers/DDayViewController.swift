@@ -10,13 +10,22 @@ import UIKit
 class DDayViewController: UIViewController {
     // MARK: - Properties
     let dDayView = DDayView()
-    var viewModel: DDayViewModel!
+    var viewModel: DDayViewModel
+    
+    // MARK: - Initializer
+    init(viewModel: DDayViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view = dDayView
-        viewModel = DDayViewModel()
         setupBindings()
         setupCollectionView()
         
@@ -49,9 +58,17 @@ class DDayViewController: UIViewController {
     // MARK: - Selectors
     // NotificationCenter로부터 알림을 수신하여 콜렉션 뷰를 업데이트합니다.
     @objc private func scrollToDDayIndex(_ notification: Notification) {
-        if let userInfo = notification.userInfo, let indexPath = userInfo["indexPath"] as? IndexPath {
-            let correctedIndex = IndexPath(item: (indexPath.item + viewModel.getDDays().count) % (viewModel.getDDays().count + 2), section: 0)
-            dDayView.collectionView.scrollToItem(at: correctedIndex, at: .centeredHorizontally, animated: true)
+        if let userInfo = notification.userInfo,
+           let indexPath = userInfo["indexPath"] as? IndexPath {
+            let correctedIndex = IndexPath(
+                item: (indexPath.item + viewModel.getDDays().count) % (viewModel.getDDays().count + 2),
+                section: 0
+            )
+            dDayView.collectionView.scrollToItem(
+                at: correctedIndex,
+                at: .centeredHorizontally,
+                animated: true
+            )
         }
     }
     

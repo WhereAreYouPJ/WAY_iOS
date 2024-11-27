@@ -10,10 +10,17 @@ import Moya
 enum FeedAPI {
     case putFeed(request: ModifyFeedRequest, images: [UIImage]?)
     case postFeed(request: SaveFeedRequest, images: [UIImage]?)
+    case deleteFeed(request: DeleteFeedRequest)
+    case getFeedList(memberSeq: Int, page: Int32)
+    case getFeedDetails(memberSeq: Int, scheduleSeq: Int)
     
     case getBookMarkFeed(memberSeq: Int, page: Int32)
     case postBookMarkFeed(request: BookMarkFeedRequest)
     case deleteBookMarkFeed(request: BookMarkFeedRequest)
+    
+    case getHideFeed(memberSeq: Int, page: Int32)
+    case postHideFeed(feedSeq: Int, memberSeq: Int)
+    case deleteHideFeed(feedSeq: Int, memberSeq: Int)
 }
 
 extension FeedAPI: TargetType {
@@ -23,18 +30,29 @@ extension FeedAPI: TargetType {
     }
     
     var path: String {
-        return "/feed"
+        switch self {
+        case .putFeed, .postFeed, .deleteFeed:
+            return "/feed"
+        case .getFeedList:
+            return "/feed/list"
+        case .getFeedDetails:
+            return "/feed/details"
+        case .getBookMarkFeed, .postBookMarkFeed, .deleteBookMarkFeed:
+            return "/book-mark"
+        case .getHideFeed, .postHideFeed, .deleteHideFeed:
+            return "/hide-feed"
+        }
     }
     
     var method: Moya.Method {
         switch self {
         case .putFeed:
             return .put
-        case .postFeed, .postBookMarkFeed:
+        case .postFeed, .postBookMarkFeed, .postHideFeed:
             return .post
-        case .getBookMarkFeed:
+        case .getBookMarkFeed, .getFeedList, .getFeedDetails, .getHideFeed:
             return .get
-        case .deleteBookMarkFeed:
+        case .deleteBookMarkFeed, .deleteFeed, .deleteHideFeed:
             return .delete
         }
     }
@@ -47,6 +65,12 @@ extension FeedAPI: TargetType {
         case .postFeed(let request, let images):
             let multipartData = MultipartFormDataHelper.createMultipartData(from: request, images: images)
             return .uploadMultipart(multipartData)
+        case .deleteFeed(let request):
+            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+        case .getFeedList(let memberSeq, let page):
+            return .requestParameters(parameters: ["memberSeq": memberSeq, "page": page], encoding: URLEncoding.queryString)
+        case .getFeedDetails(let memberSeq, let scheduleSeq):
+            return .requestParameters(parameters: ["memberSeq": memberSeq, "scheduleSeq": scheduleSeq], encoding: URLEncoding.queryString)
             
         case .getBookMarkFeed(let memberSeq, let page):
             return .requestParameters(parameters: ["memberSeq": memberSeq, "page": page], encoding: URLEncoding.queryString)
@@ -54,13 +78,25 @@ extension FeedAPI: TargetType {
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .deleteBookMarkFeed(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+            
+        case .getHideFeed(let memberSeq, let page):
+            return .requestParameters(parameters: ["memberSeq": memberSeq, "page": page], encoding: URLEncoding.queryString)
+        case .postHideFeed(let feedSeq, let memberSeq):
+            return .requestParameters(parameters: ["feedSeq": feedSeq, "memberSeq": memberSeq], encoding: URLEncoding.queryString)
+        case .deleteHideFeed(let feedSeq, let memberSeq):
+            return .requestParameters(parameters: ["feedSeq": feedSeq, "memberSeq": memberSeq], encoding: URLEncoding.queryString)
         }
     }
     
     var headers: [String: String]? {
-        return ["Content-Type": "multipart/form-data"]
+        switch self {
+        case .putFeed, .postFeed:
+            return ["Content-Type": "multipart/form-data"]
+        default:
+            return ["Content-Type": "application/json"]
+        }
     }
-    
+
     var sampleData: Data {
         return Data()
     }

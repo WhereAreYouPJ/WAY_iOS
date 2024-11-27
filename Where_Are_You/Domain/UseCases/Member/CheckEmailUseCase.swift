@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CheckEmailUseCase {
-    func execute(request: CheckEmailParameters, completion: @escaping (Result<CheckEmailResponse, ValidationError>) -> Void)
+    func execute(email: String, completion: @escaping (Result<CheckEmailResponse, ValidationError>) -> Void)
 }
 
 class CheckEmailUseCaseImpl: CheckEmailUseCase {
@@ -18,8 +18,8 @@ class CheckEmailUseCaseImpl: CheckEmailUseCase {
         self.memberRepository = memberRepository
     }
 
-    func execute(request: CheckEmailParameters, completion: @escaping (Result<CheckEmailResponse, ValidationError>) -> Void) {
-        memberRepository.checkEmail(request: request) { result in
+    func execute(email: String, completion: @escaping (Result<CheckEmailResponse, ValidationError>) -> Void) {
+        memberRepository.getCheckEmail(email: email) { result in
             switch result {
             case .success(let response):
                 completion(.success(response.data))

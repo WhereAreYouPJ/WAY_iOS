@@ -20,7 +20,10 @@ class APIResponseHandler {
                 
                 let data = try response.map(T.self)
                 completion(.success(data))
-            } catch let error {
+            } catch DecodingError.valueNotFound(let type, let context) {
+                print("Value not found for type \(type): \(context.debugDescription)")
+                completion(.failure(DecodingError.valueNotFound(type, context)))
+            } catch {
                 completion(.failure(error))
             }
         case .failure(let error):

@@ -20,13 +20,14 @@ protocol ScheduleRepositoryProtocol {
 }
 
 class ScheduleRepository: ScheduleRepositoryProtocol {
+    // MARK: - Properties
 
     private let scheduleService: ScheduleServiceProtocol
-    
+
     init(scheduleService: ScheduleServiceProtocol) {
         self.scheduleService = scheduleService
     }
-    
+
     func postSchedule(request: CreateScheduleBody, completion: @escaping (Result<GenericResponse<PostScheduleResponse>, any Error>) -> Void) {
         scheduleService.postSchedule(request: request, completion: completion)
     }

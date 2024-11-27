@@ -19,6 +19,6 @@ class AccountLoginUseCaseImpl: AccountLoginUseCase {
     }
 
     func execute(request: LoginBody, completion: @escaping (Result<Void, Error>) -> Void) {
-        memberRepository.login(request: request, completion: completion)
+        memberRepository.postLogin(request: request, completion: completion)
     }
 }
