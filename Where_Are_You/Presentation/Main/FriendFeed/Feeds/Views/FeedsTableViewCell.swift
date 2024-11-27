@@ -13,10 +13,10 @@ class FeedsTableViewCell: UITableViewCell {
     static let identifier = "FeedsTableViewCell"
     
     let detailBox = FeedDetailBoxView()
-    let feedImageView = FeedImagesView()
+    let feedImagesView = FeedImagesView()
     let bookMarkButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "bookmark"), for: .normal)
+        button.setImage(UIImage(named: "icon-feed_bookmark"), for: .normal)
         button.tintColor = .black
         return button
     }()
@@ -28,13 +28,14 @@ class FeedsTableViewCell: UITableViewCell {
         return label
     }()
     
+    private var imageUrls: [String] = []
     
     // MARK: - Lifecycle
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureViewComponents()
         setupConstraints()
+        setupCollectionView()
     }
     
     required init?(coder: NSCoder) {
@@ -42,10 +43,10 @@ class FeedsTableViewCell: UITableViewCell {
     }
     
     // MARK: - Helpers
-
+    
     private func configureViewComponents() {
         contentView.addSubview(detailBox)
-        contentView.addSubview(feedImageView)
+        contentView.addSubview(feedImagesView)
         contentView.addSubview(bookMarkButton)
         contentView.addSubview(descriptionLabel)
         
@@ -59,14 +60,14 @@ class FeedsTableViewCell: UITableViewCell {
             make.height.equalTo(LayoutAdapter.shared.scale(value: 74))
         }
         
-        feedImageView.snp.makeConstraints { make in
+        feedImagesView.snp.makeConstraints { make in
             make.top.equalTo(detailBox.snp.bottom).offset(LayoutAdapter.shared.scale(value: 10))
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(LayoutAdapter.shared.scale(value: 290))
         }
         
         bookMarkButton.snp.makeConstraints { make in
-            make.top.equalTo(feedImageView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 6))
+            make.top.equalTo(feedImagesView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 6))
             make.height.width.equalTo(LayoutAdapter.shared.scale(value: 30))
             make.trailing.equalToSuperview()
         }
@@ -77,7 +78,13 @@ class FeedsTableViewCell: UITableViewCell {
         }
     }
     
-    func configure(with feed: MainFeedContent) {
+    func setupCollectionView() {
+        feedImagesView.collectionView.delegate = self
+        feedImagesView.collectionView.dataSource = self
+        feedImagesView.collectionView.register(FeedImageCollectionViewCell.self, forCellWithReuseIdentifier: FeedImageCollectionViewCell.identifier)
+    }
+    
+    func configure(with feed: MainFeedListContent) {
         if feed.content == nil {
             self.descriptionLabel.isHidden = true
         } else {
@@ -85,9 +92,38 @@ class FeedsTableViewCell: UITableViewCell {
             descriptionLabel.text = feed.content
         }
         
-        detailBox.profileImage.loadImage(from: feed.profileImage, placeholder: UIImage(named: "basic_profile_image"))
+        detailBox.profileImage.setImage(from: feed.profileImage, placeholder: UIImage(named: "basic_profile_image"))
         detailBox.dateLabel.text = feed.startTime
         detailBox.locationLabel.text = feed.location
         detailBox.titleLabel.text = feed.title
+        self.imageUrls = feed.feedImageInfos.map { $0.feedImageURL }
+        feedImagesView.collectionView.reloadData()
+        
+        feedImagesView.pageControl.numberOfPages = imageUrls.count
+        feedImagesView.pageControl.currentPage = 0
     }
+}
+
+extension FeedsTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imageUrls.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedImageCollectionViewCell.identifier, for: indexPath) as? FeedImageCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        let imageUrl = imageUrls[indexPath.item]
+        cell.configure(with: UIImage(named: "placeholder")) // Placeholder 적용
+        cell.imageView.setImage(from: imageUrl, placeholder: UIImage(named: "placeholder")) // 비동기로 이미지 로드
+        return cell
+    }
+}
+
+extension FeedsTableViewCell: UIScrollViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+            guard let collectionView = scrollView as? UICollectionView else { return }
+            let pageIndex = Int(collectionView.contentOffset.x / collectionView.frame.width)
+            feedImagesView.pageControl.currentPage = pageIndex
+        }
 }

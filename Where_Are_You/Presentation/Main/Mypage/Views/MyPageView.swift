@@ -112,7 +112,7 @@ class MyPageView: UIView {
         addSubview(separatorview)
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
         // 유저프로필
         profileBackgroundView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
@@ -242,5 +242,11 @@ class MyPageView: UIView {
                 button.addTarget(target, action: action, for: .touchUpInside)
             }
         }
+    }
+    
+    func configureUI(member: Member) {
+        self.profileImageView.setImage(from: member.profileImage)
+        self.userNameLabel.text = member.userName
+        self.userCodeLabel.text = member.memberCode
     }
 }

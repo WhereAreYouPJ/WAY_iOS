@@ -40,6 +40,14 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         return stackView
     }()
     
+    private let feedContentView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
+        iv.layer.cornerRadius = 6
+        return iv
+    }()
+    
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
@@ -51,7 +59,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
     }()
     
     private lazy var mainStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [titleStackView, descriptionLabel])
+        let stackView = UIStackView(arrangedSubviews: [titleStackView, descriptionLabel, feedContentView])
         stackView.axis = .vertical
         stackView.spacing = 10
         return stackView
@@ -76,6 +84,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor.color212.cgColor
         contentView.addSubview(mainStack)
+        feedContentView.isHidden = true
     }
     
     private func setupConstraints() {
@@ -91,12 +100,24 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         descriptionLabel.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
         }
+        
+        feedContentView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+        }
     }
     
     func configure(with feed: HomeFeedContent) {
-        profileImageView.loadImage(from: feed.profileImage, placeholder: UIImage(named: "basic_profile_image"))
+        profileImageView.setImage(from: feed.profileImage, placeholder: UIImage(named: "basic_profile_image"))
         locationLabel.text = feed.location
         titleLabel.text = feed.title
-        descriptionLabel.text = feed.content
+        if feed.content == nil {
+            descriptionLabel.isHidden = true
+            feedContentView.isHidden = false
+            feedContentView.setImage(from: feed.feedImage)
+        } else {
+            descriptionLabel.isHidden = false
+            feedContentView.isHidden = true
+            descriptionLabel.text = feed.content
+        }
     }
 }

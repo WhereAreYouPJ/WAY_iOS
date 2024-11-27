@@ -32,17 +32,13 @@ class HomeFeedViewModel {
                 self.rawFeedContent = data
                 self.displayFeedContent = rawFeedContent.compactMap { feedContent in
                     guard let scheduleFeedInfo = feedContent.scheduleFeedInfo.first else { return nil }
-                    let profileImageURLString = scheduleFeedInfo.memberInfo.profileImage
                     
-                    // URL이 nil일 경우 기본 이미지 처리
-                    // URL 체크 및 기본 이미지 처리
-                    let profileImageURL = URL(string: profileImageURLString ?? "")
-
                     return HomeFeedContent(
-                        profileImage: profileImageURLString ?? "",
+                        profileImage: scheduleFeedInfo.memberInfo.profileImage ?? "",
                         location: feedContent.scheduleInfo.location,
                         title: scheduleFeedInfo.feedInfo.title,
-                        content: scheduleFeedInfo.feedInfo.content
+                        content: scheduleFeedInfo.feedInfo.content,
+                        feedImage: scheduleFeedInfo.feedImageInfos.first?.feedImageURL
                     )
                 }
                 DispatchQueue.main.async {

@@ -17,7 +17,7 @@ class FeedDetailViewModel {
     private var page: Int32 = 0
     private var isLoading = false
     
-    private(set) var feeds: [FeedContent] = [] {
+    private(set) var feeds: [MainFeedListContent] = [] {
         didSet {
             self.onFeedsDataFetched?()
             updateFeedImagesForCurrentIndex()

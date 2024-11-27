@@ -32,10 +32,9 @@ class MyPageViewController: UIViewController {
         view = myPageView
         setupViewModel()
         setupActions()
+        viewModel.memberDetails()
         setupBindings()
         
-        myPageView.userCodeLabel.text = UserDefaultsManager.shared.getMemberCode()
-        viewModel.memberDetails()
         NotificationCenter.default.addObserver(self, selector: #selector(userNameDidChange), name: .userNameDidChange, object: nil)
     }
     
@@ -67,9 +66,11 @@ class MyPageViewController: UIViewController {
         
         viewModel.onGetMemberSuccess = { [weak self] memberDetails in
             DispatchQueue.main.async {
-                self?.myPageView.userNameLabel.text = memberDetails.userName
-                self?.userName = memberDetails.userName
-                self?.email = memberDetails.email
+                let memberCode = UserDefaultsManager.shared.getMemberCode()
+                let member = Member(userName: memberDetails.userName,
+                                    profileImage: memberDetails.profileImage,
+                                    memberCode: memberCode)
+                self?.myPageView.configureUI(member: member)
             }
         }
     }

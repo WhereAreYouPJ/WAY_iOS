@@ -105,7 +105,7 @@ class AddFeedViewModel {
         getScheduleUseCase.execute(scheduleSeq: scheduleSeq) { result in
             switch result {
             case .success(let data):
-                self.participants = data.memberInfos.filter{ !$0.isCreate }.map{ $0.userName }
+                self.participants = data.memberInfos.filter{ !$0.isCreate }.map { $0.userName }
                 completion()
             case .failure(let error):
                 print(error.localizedDescription)

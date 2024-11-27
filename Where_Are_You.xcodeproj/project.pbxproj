@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -101,6 +101,7 @@
 		999E296D2CBB989600AB9FF9 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E296C2CBB989600AB9FF9 /* LocationService.swift */; };
 		999E29712CBB9AF900AB9FF9 /* LocationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E29702CBB9AF900AB9FF9 /* LocationRepository.swift */; };
 		999E29732CBB9C7F00AB9FF9 /* GetLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E29722CBB9C7F00AB9FF9 /* GetLocationUseCase.swift */; };
+		99A07CD42CF440E100A47796 /* FeedBookMarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A07CD32CF440E100A47796 /* FeedBookMarkViewModel.swift */; };
 		99A7D7E42C999897002BCD21 /* LocationBookMarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A7D7E32C999897002BCD21 /* LocationBookMarkCell.swift */; };
 		99A897D72CEB02E900E79BED /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A897D62CEB02E900E79BED /* ImageLoader.swift */; };
 		99B397832C0C3E9D00D7A109 /* AccountCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B397822C0C3E9D00D7A109 /* AccountCheckView.swift */; };
@@ -122,7 +123,7 @@
 		99C6D29E2C90379F009C0CF8 /* APIResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C6D29D2C90379F009C0CF8 /* APIResponseHandler.swift */; };
 		99C6D2A02C903EAF009C0CF8 /* ScheduleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C6D29F2C903EAF009C0CF8 /* ScheduleRepository.swift */; };
 		99C6D2A32C904006009C0CF8 /* GetDDayScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C6D2A22C904006009C0CF8 /* GetDDayScheduleUseCase.swift */; };
-		99C9B2292C0197CA008D7CBD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2282C0197CA008D7CBD /* User.swift */; };
+		99C9B2292C0197CA008D7CBD /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2282C0197CA008D7CBD /* Member.swift */; };
 		99C9B22C2C019C67008D7CBD /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B22B2C019C67008D7CBD /* LoginView.swift */; };
 		99C9B2322C01A45C008D7CBD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2312C01A45C008D7CBD /* Extensions.swift */; };
 		99C9B23D2C01ACBE008D7CBD /* Ttangsbudaejjigae-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 99C9B23A2C01ACBE008D7CBD /* Ttangsbudaejjigae-Medium.otf */; };
@@ -386,6 +387,7 @@
 		999E296C2CBB989600AB9FF9 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		999E29702CBB9AF900AB9FF9 /* LocationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRepository.swift; sourceTree = "<group>"; };
 		999E29722CBB9C7F00AB9FF9 /* GetLocationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLocationUseCase.swift; sourceTree = "<group>"; };
+		99A07CD32CF440E100A47796 /* FeedBookMarkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedBookMarkViewModel.swift; sourceTree = "<group>"; };
 		99A7D7E32C999897002BCD21 /* LocationBookMarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationBookMarkCell.swift; sourceTree = "<group>"; };
 		99A897D62CEB02E900E79BED /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		99B397822C0C3E9D00D7A109 /* AccountCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCheckView.swift; sourceTree = "<group>"; };
@@ -407,7 +409,7 @@
 		99C6D29D2C90379F009C0CF8 /* APIResponseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseHandler.swift; sourceTree = "<group>"; };
 		99C6D29F2C903EAF009C0CF8 /* ScheduleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRepository.swift; sourceTree = "<group>"; };
 		99C6D2A22C904006009C0CF8 /* GetDDayScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDDayScheduleUseCase.swift; sourceTree = "<group>"; };
-		99C9B2282C0197CA008D7CBD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		99C9B2282C0197CA008D7CBD /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		99C9B22B2C019C67008D7CBD /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		99C9B2312C01A45C008D7CBD /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		99C9B23A2C01ACBE008D7CBD /* Ttangsbudaejjigae-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ttangsbudaejjigae-Medium.otf"; sourceTree = "<group>"; };
@@ -561,6 +563,10 @@
 		D5FC8ED32CE31151000A08C2 /* PostScheduleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostScheduleResponse.swift; sourceTree = "<group>"; };
 		EF2914052EE4B6C83BE57C93 /* Pods-Where_Are_You_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		99BC80742CEEC6420040E44B /* CoreData */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CoreData; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		995358362C00C555005BF799 /* Frameworks */ = {
@@ -840,6 +846,7 @@
 		9953583B2C00C555005BF799 /* Where_Are_You */ = {
 			isa = PBXGroup;
 			children = (
+				99BC80742CEEC6420040E44B /* CoreData */,
 				9953583C2C00C555005BF799 /* AppDelegate.swift */,
 				9953583E2C00C555005BF799 /* SceneDelegate.swift */,
 				99D11EBB2C07848B006BE265 /* Resources */,
@@ -980,8 +987,8 @@
 		99C9B2222C01973C008D7CBD /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				99D11EB22C07836C006BE265 /* Entities */,
 				99EC209F2C0D8DEC0018904D /* UseCases */,
+				99D11EB22C07836C006BE265 /* Entities */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -1079,6 +1086,7 @@
 				99CC5E632C51EFAB00A0509A /* MyPageViewModel.swift */,
 				992381872C7DC8C900FFCBCB /* MyDetailManageViewModel.swift */,
 				995175012C7EF95100E938DE /* LocationBookmarkViewModel.swift */,
+				99A07CD32CF440E100A47796 /* FeedBookMarkViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1158,7 +1166,7 @@
 		99D11EB22C07836C006BE265 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				99C9B2282C0197CA008D7CBD /* User.swift */,
+				99C9B2282C0197CA008D7CBD /* Member.swift */,
 				9911F9872C3F63D500D0FDC9 /* Feed.swift */,
 				99949F5A2C58B85E00AE0177 /* Friend.swift */,
 				D54C040B2C651832009CC419 /* Schedule.swift */,
@@ -1619,6 +1627,9 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				99BC80742CEEC6420040E44B /* CoreData */,
+			);
 			name = Where_Are_You;
 			productName = Where_Are_You;
 			productReference = 995358392C00C555005BF799 /* Where_Are_You.app */;
@@ -1921,6 +1932,7 @@
 				9979622D2C3E6B2200E95CA6 /* AccountLoginUseCase.swift in Sources */,
 				990BDE532C40CF1E00A7FB5D /* DDayCell.swift in Sources */,
 				9911F98C2C3F908E00D0FDC9 /* HomeFeedView.swift in Sources */,
+				99C9B2292C0197CA008D7CBD /* Member.swift in Sources */,
 				D55C6C522CF5DA5D005132DC /* GetListForSenderResponse.swift in Sources */,
 				99C9B2292C0197CA008D7CBD /* User.swift in Sources */,
 				99D780DE2C6066FA005A3F30 /* LoginResponse.swift in Sources */,
@@ -1931,6 +1943,7 @@
 				995009792CE9A6E10069151D /* FeedViewModel.swift in Sources */,
 				99C68E432C64B28400DEC1F1 /* FeedAPI.swift in Sources */,
 				999E29732CBB9C7F00AB9FF9 /* GetLocationUseCase.swift in Sources */,
+				99A07CD42CF440E100A47796 /* FeedBookMarkViewModel.swift in Sources */,
 				9974EA202C62196500826793 /* SnappingFlowLayout.swift in Sources */,
 				99C6D29A2C90341F009C0CF8 /* ScheduleService.swift in Sources */,
 				99CF9BFF2CD341F40079BE81 /* GetBookMarkResponse.swift in Sources */,

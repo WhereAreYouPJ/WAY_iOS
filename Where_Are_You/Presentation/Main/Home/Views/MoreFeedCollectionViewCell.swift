@@ -80,13 +80,13 @@ class MoreFeedCollectionViewCell: UICollectionViewCell {
         borderView.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.top.equalToSuperview().inset(5)
-            make.leading.equalToSuperview().inset(28)
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 28))
         }
         
         profileImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(16)
             make.centerX.equalToSuperview()
-            make.width.height.equalTo(50)
+            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 50))
         }
         
         titleLabel.snp.makeConstraints { make in
