@@ -87,12 +87,7 @@ struct ScheduleDetailView: View {
                     if viewModel.isEditable {
                         Button("수정") {
                             viewModel.updateSchedule()
-                            if viewModel.isSuccess {
-                                dismiss()
-                            } else {
-                                // TODO: 일정 생성 예외 처리 필요, 실패 경우 동작 구현
-                                dismiss()
-                            }
+                            dismiss()
                         }
                         .foregroundStyle(viewModel.schedule.title.isEmpty ? Color.gray : Color.red)
                         .disabled(viewModel.schedule.title.isEmpty)
@@ -198,6 +193,6 @@ struct ReadonlyDateTimeContainer: View {
         location: Location(sequence: 1, location: "테스트 장소", streetName: "", x: 0, y: 0),
         color: "red",
         memo: "테스트 메모입니다.",
-        invitedMember: [Friend(memberSeq: 1, profileImage: "", name: "홍길동")]
+        invitedMember: [Friend(memberSeq: 1, profileImage: "", name: "홍길동", isFavorite: false)]
     ))
 }

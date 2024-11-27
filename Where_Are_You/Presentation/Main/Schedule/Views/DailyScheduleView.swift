@@ -9,11 +9,8 @@ import SwiftUI
 
 struct DailyScheduleView: View {
     @StateObject private var viewModel: DailyScheduleViewModel
-    @State private var showingDeleteAlert = false
-    @State private var selectedSchedule: Schedule?
     @State private var scheduleForDetail: Schedule?
     @Binding var isPresented: Bool
-    var onDeleteSchedule: (Schedule, String, String) -> Void
     private let formatter = DateFormatter()
     
     // MARK: dummy data
@@ -27,7 +24,7 @@ struct DailyScheduleView: View {
             location: Location(sequence: 1, location: "망원한강공원", streetName: "", x: 0, y: 0),
             color: "red",
             memo: "",
-            invitedMember: [Friend(memberSeq: 1, profileImage: "", name: "")]
+            invitedMember: [Friend(memberSeq: 1, profileImage: "", name: "", isFavorite: false)]
         ),
         Schedule(
             scheduleSeq: 2,
@@ -82,7 +79,7 @@ struct DailyScheduleView: View {
             location: Location(sequence: 3, location: "강남역 레스토랑", streetName: "", x: 0, y: 0),
             color: "pink",
             memo: "",
-            invitedMember: [Friend(memberSeq: 2, profileImage: "", name: "김철수")]
+            invitedMember: [Friend(memberSeq: 2, profileImage: "", name: "김철수", isFavorite: false)]
         )
     ]
     
@@ -90,12 +87,11 @@ struct DailyScheduleView: View {
         let service = ScheduleService()
         _viewModel = StateObject(wrappedValue: DailyScheduleViewModel(date: date, service: service))
         formatter.dateFormat = "MM월 dd일"
-        self.onDeleteSchedule = onDeleteSchedule
         self._isPresented = isPresented
     }
     
     var body: some View {
-        ScrollView() {
+        ScrollView {
             VStack {
                 HStack {
                     Text(formatter.string(from: viewModel.date))
@@ -112,20 +108,14 @@ struct DailyScheduleView: View {
             .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
             .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
         }
-        .alert(isPresented: $showingDeleteAlert) {
-            if let schedule = selectedSchedule {
-                let (title, message) = setAlertContent(for: schedule)
+        .alert(isPresented: $viewModel.showingDeleteAlert) {
+            if let schedule = viewModel.selectedSchedule {
+                let (title, message) = viewModel.setAlertContent(for: schedule)
                 return Alert(
                     title: Text(title),
                     message: Text(message),
                     primaryButton: .destructive(Text("삭제")) {
-                        viewModel.deleteSchedule(schedule) { isEmpty in
-                            if isEmpty {
-                                isPresented = false // 일정이 모두 삭제되면 모달 닫기
-                            }
-                        }
-                        //                        onDeleteSchedule(schedule, title, message)
-                        //                        isPresented = false
+                        viewModel.handleDeleteConfirmation()
                     },
                     secondaryButton: .cancel(Text("취소"))
                 )
@@ -135,6 +125,11 @@ struct DailyScheduleView: View {
         }
         .onAppear {
             viewModel.getDailySchedule()
+        }
+        .onChange(of: viewModel.shouldDismissView) { _, shouldDismiss in
+            if shouldDismiss {
+                isPresented = false
+            }
         }
     }
     
@@ -153,17 +148,15 @@ struct DailyScheduleView: View {
                     
                     Spacer()
                     
-                    Button(action: {
-                        //                        let (title, message) = setAlertContent(for: schedule)
-                        //                        onDeleteSchedule(schedule, title, message)
-                        selectedSchedule = schedule
-                        showingDeleteAlert = true
-                        //                        isPresented = false
-                    }) {
-                        Text("삭제")
-                            .foregroundStyle(Color(.color118))
-                            .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 12))))
-                    }
+                    Button(
+                        action: {
+                            viewModel.showDeleteAlert(for: schedule)
+                        },
+                        label: {
+                            Text("삭제")
+                                .foregroundStyle(Color(.color118))
+                                .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 12))))
+                        })
                     .padding(.trailing, LayoutAdapter.shared.scale(value: 6))
                 }
                 
@@ -178,6 +171,9 @@ struct DailyScheduleView: View {
         .sheet(item: $scheduleForDetail) { schedule in
             NavigationStack {
                 ScheduleDetailView(schedule: schedule)
+                    .onDisappear {
+                        viewModel.getDailySchedule()
+                    }
             }
             .presentationDetents([.large])
             .presentationDragIndicator(.visible)
@@ -225,15 +221,6 @@ struct DailyScheduleView: View {
             }
         }
     }
-    
-    private func setAlertContent(for schedule: Schedule) -> (String, String) {
-        if schedule.invitedMember?.count ?? 0 > 0 {
-            return ("그룹 일정 삭제", "그룹 일정을 삭제합니다.\n모든 참여자의 일정에서 삭제되며, 연관된 피드도 함께 삭제됩니다.")
-        } else {
-            return ("일정 삭제", "일정을 삭제합니다.\n연관된 피드가 있을 경우 함께 삭제됩니다.")
-        }
-    }
-    
 }
 
 #Preview {

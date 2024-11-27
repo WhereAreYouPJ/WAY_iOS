@@ -7,6 +7,7 @@
 
 import Foundation
 import Moya
+import Combine
 
 class ScheduleDetailViewModel: ObservableObject {
     @Published var schedule: Schedule
@@ -15,6 +16,8 @@ class ScheduleDetailViewModel: ObservableObject {
     
     private let service = ScheduleService()
     private let memberSeq = UserDefaultsManager.shared.getMemberSeq()
+    let provider = MoyaProvider<ScheduleAPI>()
+    var cancellables = Set<AnyCancellable>()
     
     private var isGroupSchedule: Bool {
         return !(schedule.invitedMember?.isEmpty ?? true)
@@ -39,5 +42,42 @@ class ScheduleDetailViewModel: ObservableObject {
     }
     
     func updateSchedule() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        
+        let endTime = schedule.isAllday ?? false ? schedule.startTime : schedule.endTime
+        
+        let updateRequest = PutScheduleBody(
+            scheduleSeq: schedule.scheduleSeq,
+            title: schedule.title,
+            startTime: dateFormatter.string(from: schedule.startTime),
+            endTime: dateFormatter.string(from: endTime),
+            location: schedule.location?.location ?? "",
+            streetName: schedule.location?.streetName ?? "",
+            x: schedule.location?.x ?? 0,
+            y: schedule.location?.y ?? 0,
+            color: schedule.color,
+            memo: schedule.memo ?? "",
+            allDay: schedule.isAllday ?? false,
+            invitedMemberSeqs: schedule.invitedMember?.map { $0.memberSeq } ?? [],
+            createMemberSeq: memberSeq
+        )
+        
+        print(updateRequest)
+        
+        service.putSchedule(request: updateRequest) { [weak self] result in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    self.isSuccess = true
+                    print("일정 수정 성공!")
+                case .failure(let error):
+                    self.isSuccess = false
+                    print("일정 수정 실패: \(error.localizedDescription)")
+                }
+            }
+        }
     }
 }

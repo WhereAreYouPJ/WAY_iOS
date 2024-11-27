@@ -25,7 +25,7 @@ struct CreateScheduleView: View {
     var body: some View {
         NavigationStack(path: $path) {
             VStack(alignment: .leading, content: {
-                TextField("", text: $viewModel.title, prompt: Text("메모를 작성해주세요.").foregroundColor(Color(.color118)))
+                TextField("", text: $viewModel.title, prompt: Text("일정명을 작성해주세요.").foregroundColor(Color(.color118)))
                 
                 Divider()
                     .padding(.bottom, 16)

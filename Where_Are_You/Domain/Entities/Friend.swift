@@ -12,4 +12,5 @@ struct Friend: Identifiable {
     let memberSeq: Int
     let profileImage: String
     let name: String
+    var isFavorite: Bool
 }
