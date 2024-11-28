@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MemberSearchUseCase {
-    func execute(request: MemberSearchParameters, completion: @escaping (Result<MemberSearchResponse, Error>) -> Void)
+    func execute(memberCode: String, completion: @escaping (Result<MemberSearchResponse, Error>) -> Void)
 }
 
 class MemberSearchUseCaseImpl: MemberSearchUseCase {
@@ -18,8 +18,8 @@ class MemberSearchUseCaseImpl: MemberSearchUseCase {
         self.memberRepository = memberRepository
     }
 
-    func execute(request: MemberSearchParameters, completion: @escaping (Result<MemberSearchResponse, Error>) -> Void) {
-        memberRepository.getMemberSearch(request: request) { result in
+    func execute(memberCode: String, completion: @escaping (Result<MemberSearchResponse, Error>) -> Void) {
+        memberRepository.getMemberSearch(memberCode: memberCode) { result in
             switch result {
             case .success(let response):
                 completion(.success(response.data))
