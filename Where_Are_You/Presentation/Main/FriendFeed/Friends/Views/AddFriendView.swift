@@ -13,7 +13,11 @@ struct AddFriendView: View { // TODO: 친구 신청 완료시 토스트 팝업
         let memberRepository = MemberRepository(memberService: MemberService())
         let memberSearchUseCase = MemberSearchUseCaseImpl(memberRepository: memberRepository)
         
-        return AddFriendViewModel(memberSearchUseCase: memberSearchUseCase)
+        let friendRequestRepository = FriendRequestRepository(friendRequestService: FriendRequestService())
+        let postFriendRequestUseCase = PostFriendRequestUseCaseImpl(repository: friendRequestRepository)
+        
+        return AddFriendViewModel(memberSearchUseCase: memberSearchUseCase,
+                                  postFriendRequestUseCase: postFriendRequestUseCase)
     }()
     
     var body: some View {
@@ -29,7 +33,7 @@ struct AddFriendView: View { // TODO: 친구 신청 완료시 토스트 팝업
                 
                 if viewModel.searchedMember != nil {
                     BottomButtonSwiftUIView(title: "친구 신청하기") {
-                        print("친구 신청하기")
+                        viewModel.postFriendRequest()
                     }
                 }
             }
@@ -87,13 +91,13 @@ struct AddFriendView: View { // TODO: 친구 신청 완료시 토스트 팝업
                 .frame(height: LayoutAdapter.shared.scale(value: 158))
             
             VStack {
-                Image("exampleProfileImage")
+                Image(viewModel.searchedMember?.profileImage.isEmpty == true ? "icon-profile-default" : viewModel.searchedMember?.profileImage ?? "icon-profile-default") // TODO: 서버에서 URI 받아 프로필 이미지 띄우기
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: LayoutAdapter.shared.scale(value: 100), height: LayoutAdapter.shared.scale(value: 100))
                     .clipShape(RoundedRectangle(cornerRadius: 36))
                 
-                Text("고윤정")
+                Text(viewModel.searchedMember?.name ?? "")
                     .font(.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 18)))
             }
         }

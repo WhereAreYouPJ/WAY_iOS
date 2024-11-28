@@ -178,4 +178,5 @@ extension String {
 
 extension Notification.Name {
     static let showAddFriend = Notification.Name("showAddFriend")
+    static let showManageFriends = Notification.Name("showManageFriends")
 }

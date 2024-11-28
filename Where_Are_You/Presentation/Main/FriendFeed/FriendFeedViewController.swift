@@ -89,7 +89,7 @@ class FriendFeedViewController: UIViewController {
                 title: "친구 관리",
                 position: .bottom
             ) {
-                print("친구 관리")
+                NotificationCenter.default.post(name: .showManageFriends, object: nil)
             }
         }
         return UIHostingController(rootView: view)
@@ -102,14 +102,29 @@ class FriendFeedViewController: UIViewController {
             name: .showAddFriend,
             object: nil
         )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showManageFriendsView),
+            name: .showManageFriends,
+            object: nil
+        )
     }
 
     @objc private func showAddFriendView() {
         let addFriendView = AddFriendView()
-            .navigationBarBackButtonHidden(true) // 기본 back 버튼 숨기기
+            .navigationBarBackButtonHidden(true)
         let hostingController = UIHostingController(rootView: addFriendView)
         hostingController.modalPresentationStyle = .fullScreen
-        present(hostingController, animated: true) // UINavigationController로 감싸지 않고 직접 present
+        present(hostingController, animated: true)
+    }
+    
+    @objc private func showManageFriendsView() {
+        let manageFriendsView = ManageFriendsView()
+            .navigationBarBackButtonHidden(true)
+        let hostingController = UIHostingController(rootView: manageFriendsView)
+        hostingController.modalPresentationStyle = .fullScreen
+        present(hostingController, animated: true)
     }
     
     // MARK: - Lifecycle
