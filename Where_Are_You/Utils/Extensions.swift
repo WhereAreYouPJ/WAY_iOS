@@ -147,11 +147,26 @@ extension UIImageView {
     }
 }
 
+extension DateFormatter {
+    static func formatter(for format: DateFormat) -> DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format.rawValue
+        formatter.locale = Locale(identifier: "ko_KR")
+        return formatter
+    }
+}
+
+enum DateFormat: String {
+    case server = "yyyy-MM-dd'T'HH:mm:ss.SSS" // 서버의 날짜 형식
+    case yearMonthDate = "yy.MM.dd"                // "YY.MM.dd" 형태
+    case yearMonth = "yyyy.MM"               // "YYYY.MM" 형태
+}
+
 extension String {
-    func toImage() -> UIImage? {
-        if let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters){
-            return UIImage(data: data)
+    func formattedDate(to format: DateFormat) -> String {
+        guard let date = DateFormatter.formatter(for: .server).date(from: self) else {
+            return self // 변환 실패 시 원래 문자열 반환
         }
-        return nil
+        return DateFormatter.formatter(for: format).string(from: date)
     }
 }
