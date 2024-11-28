@@ -105,7 +105,7 @@ class FeedDetailBoxView: UIView {
         
         profileStack.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
-            make.top.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
+            make.centerY.equalToSuperview()
         }
         
         profileImage.snp.makeConstraints { make in

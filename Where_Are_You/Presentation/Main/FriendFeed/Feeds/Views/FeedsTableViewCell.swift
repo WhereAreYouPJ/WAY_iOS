@@ -93,7 +93,7 @@ class FeedsTableViewCell: UITableViewCell {
         }
         
         detailBox.profileImage.setImage(from: feed.profileImage, placeholder: UIImage(named: "basic_profile_image"))
-        detailBox.dateLabel.text = feed.startTime
+        detailBox.dateLabel.text = feed.startTime.formattedDate(to: .yearMonthDate)
         detailBox.locationLabel.text = feed.location
         detailBox.titleLabel.text = feed.title
         self.imageUrls = feed.feedImageInfos.map { $0.feedImageURL }

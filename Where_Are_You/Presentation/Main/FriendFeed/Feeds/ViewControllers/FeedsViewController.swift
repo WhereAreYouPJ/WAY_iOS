@@ -13,21 +13,14 @@ class FeedsViewController: UIViewController {
     private var feedsView = FeedsView()
     private var noFeedsView = NoDataView()
     var viewModel: FeedViewModel!
-//    private var feedImagesViewController: FeedImagesViewController!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("FeedsViewController - viewDidLoad() called") // 확인 로그
-        print("Is viewModel nil? \(viewModel == nil)") // viewModel nil 여부 확인
-        
         setupViewModel()
-        print("Is viewModel nil after setupViewModel? \(viewModel == nil)") // viewModel 초기화 여부 확인
-        
         setupViews()
         setupTableView()
         setupBindings()
-//        addFeedImagesViewController()
         viewModel.fetchFeeds()
     }
     
@@ -59,17 +52,6 @@ class FeedsViewController: UIViewController {
         feedsView.feedsTableView.delegate = self
         feedsView.feedsTableView.dataSource = self
         feedsView.feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
-    }
-
-    private func addFeedImagesViewController() {
-//        feedImagesViewController = FeedImagesViewController()
-//        addChild(feedImagesViewController)
-//        feedsView.addSubview(feedImagesViewController.view)
-//        feedImagesViewController.didMove(toParent: self)
-//        
-//        feedImagesViewController.view.snp.makeConstraints { make in
-//            make.edges.equalToSuperview()
-//        }
     }
 }
 

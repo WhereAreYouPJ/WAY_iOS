@@ -13,6 +13,7 @@ target 'Where_Are_You' do
 	pod 'Moya'
 	pod 'KakaoSDK'
 	pod 'KakaoMapsSDK'
+	pod 'Kingfisher', '~> 7.0'
 
 
 	target 'Where_Are_You_Tests' do
