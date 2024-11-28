@@ -75,7 +75,7 @@ extension MemberAPI: TargetType {
         switch self {
         case .putUserName, .putProfileImage:
             return .put
-        case .postSignUp,.postMemberSns, .postResetPassword, .postLogout, .postLogin, .postMemberLink, .postEmailVerify, .postEmailVerifyPassword, .postEmailSend:
+        case .postSignUp, .postMemberSns, .postResetPassword, .postLogout, .postLogin, .postMemberLink, .postEmailVerify, .postEmailVerifyPassword, .postEmailSend:
             return .post
         case .getMemberSearch, .getMemberDetails, .getCheckEmail:
             return .get
@@ -116,7 +116,6 @@ extension MemberAPI: TargetType {
             return .requestParameters(parameters: ["memberSeq": memberSeq], encoding: URLEncoding.queryString)
         case .getCheckEmail(let email):
             return .requestParameters(parameters: ["email": email], encoding: URLEncoding.queryString)
-            
             
         case .deleteMember(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)

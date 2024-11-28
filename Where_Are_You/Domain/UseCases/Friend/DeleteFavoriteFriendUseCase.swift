@@ -8,7 +8,7 @@
 import Foundation
 
 protocol DeleteFavoriteFriendUseCase {
-    func execute(request: DeleteFavoriteFriendBody,completion: @escaping (Result<Void, Error>) -> Void)
+    func execute(request: DeleteFavoriteFriendBody, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class DeleteFavoriteFriendUseCaseImpl: DeleteFavoriteFriendUseCase {
