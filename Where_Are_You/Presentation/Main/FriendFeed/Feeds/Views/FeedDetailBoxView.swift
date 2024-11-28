@@ -33,16 +33,19 @@ class FeedDetailBoxView: UIView {
     
     var titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "titleLabel", textColor: .color34, fontSize: LayoutAdapter.shared.scale(value: 16))
     
+    // 스케쥴 날짜, 스케쥴 장소
     lazy var dateLocationStack = createStackView(subviews: [dateLabel, locationLabel], axis: .horizontal, spacing: 0)
     
+    // (스케쥴 날짜, 스케쥴 장소), 피드 제목
     lazy var titleStack = createStackView(subviews: [dateLocationStack, titleLabel], axis: .vertical, spacing: 0)
     
+    // ((스케쥴 날짜, 스케쥴 장소), 피드 제목), 프로필 이미지
     lazy var profileStack = createStackView(subviews: [profileImage, titleStack], axis: .horizontal, spacing: 0)
     
     let participantBoxView: UIView = {
         let view = UIView()
         view.layer.borderColor = UIColor.rgb(red: 200, green: 171, blue: 229).cgColor
-        view.backgroundColor = UIColor.rgb(red: 238, green: 238, blue: 238)
+        view.backgroundColor = UIColor.rgb(red: 238, green: 238, blue: 238).withAlphaComponent(8)
         view.layer.borderWidth = 1
         view.layer.cornerRadius = LayoutAdapter.shared.scale(value: 50)
         view.snp.makeConstraints { make in
@@ -78,7 +81,6 @@ class FeedDetailBoxView: UIView {
         super.init(frame: frame)
         configureViewComponents()
         setupConstraints()
-        feedFixButton.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -90,10 +92,10 @@ class FeedDetailBoxView: UIView {
     private func configureViewComponents() {
         addSubview(detailBox)
         detailBox.addSubview(profileStack)
-        detailBox.addSubview(participantBoxView)
+        addSubview(participantBoxView)
         participantBoxView.addSubview(participantStackView)
         participantBoxView.addSubview(plusImage)
-        profileStack.addSubview(feedFixButton)
+        detailBox.addSubview(feedFixButton)
     }
     
     private func setupConstraints() {
@@ -102,7 +104,8 @@ class FeedDetailBoxView: UIView {
         }
         
         profileStack.snp.makeConstraints { make in
-            make.center.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
+            make.centerY.equalToSuperview()
         }
         
         profileImage.snp.makeConstraints { make in
@@ -110,7 +113,7 @@ class FeedDetailBoxView: UIView {
         }
         
         feedFixButton.snp.makeConstraints { make in
-            make.trailing.bottom.equalToSuperview()
+            make.trailing.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
             make.height.equalTo(LayoutAdapter.shared.scale(value: 30))
             make.width.equalTo(LayoutAdapter.shared.scale(value: 24))
         }

@@ -72,6 +72,7 @@ extension HomeFeedViewController: UICollectionViewDataSource, UICollectionViewDe
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoreFeedCollectionViewCell.identifier, for: indexPath) as? MoreFeedCollectionViewCell else {
                 return UICollectionViewCell()
             }
+            cell.profileImageView.setImage(from: "")
             cell.delegate = self
             return cell
         }

@@ -12,12 +12,15 @@ struct HomeFeedContent {
     let location: String
     let title: String
     let content: String?
+    let feedImage: String?
 }
 
-struct MainFeedContent {
+struct MainFeedListContent {
     let profileImage: String
     let startTime: String
     let location: String
     let title: String
     let content: String?
+    let scheduleFriendInfos: [Info]
+    let feedImageInfos: [FeedImageInfo]
 }

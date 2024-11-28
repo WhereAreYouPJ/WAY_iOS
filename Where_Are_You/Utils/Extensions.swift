@@ -130,49 +130,44 @@ extension UIImage {
 }
 
 // MARK: - UIImageView
-
 extension UIImageView {
-    func setImage(from urlString: String, placeholder: UIImage? = nil) {
-        // 기본 이미지 설정
-        self.image = placeholder
-        
-        ImageLoader.shared.loadImage(from: urlString) { [weak self] loadedImage in
-            guard let self = self else { return }
-            if let loadedImage = loadedImage {
-                self.image = loadedImage
-            }
-        }
-    }
-}
-
-extension UIImageView {
-    func loadImage(from urlString: String?, placeholder: UIImage? = UIImage(named: "basic_profile_image")) {
-        // 서버에서 비어있는 URL이 올 경우 기본 이미지 설정
-        guard let urlString = urlString, !urlString.isEmpty, let url = URL(string: urlString) else {
+    func setImage(from urlString: String?, placeholder: UIImage? = UIImage(named: "basic_profile_image")) {
+        // URL 검증 및 기본 이미지 설정
+        guard let urlString = urlString, !urlString.isEmpty else {
             self.image = placeholder
             return
         }
         
-        // 네트워크에서 이미지를 비동기로 가져오기
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-            guard let self = self else { return }
+        // ImageLoader를 통해 이미지 로드
+        ImageLoader.shared.loadImage(from: urlString) { [weak self] loadedImage in
             DispatchQueue.main.async {
-                if let data = data, let image = UIImage(data: data) {
-                    self.image = image
-                } else {
-                    self.image = placeholder // 요청 실패 시 기본 이미지
-                }
+                self?.image = loadedImage ?? placeholder
             }
-        }.resume()
+        }
     }
 }
 
+extension DateFormatter {
+    static func formatter(for format: DateFormat) -> DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format.rawValue
+        formatter.locale = Locale(identifier: "ko_KR")
+        return formatter
+    }
+}
+
+enum DateFormat: String {
+    case server = "yyyy-MM-dd'T'HH:mm:ss.SSS" // 서버의 날짜 형식
+    case yearMonthDate = "yy.MM.dd"                // "YY.MM.dd" 형태
+    case yearMonth = "yyyy.MM"               // "YYYY.MM" 형태
+}
+
 extension String {
-    func toImage() -> UIImage? {
-        if let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters){
-            return UIImage(data: data)
+    func formattedDate(to format: DateFormat) -> String {
+        guard let date = DateFormatter.formatter(for: .server).date(from: self) else {
+            return self // 변환 실패 시 원래 문자열 반환
         }
-        return nil
+        return DateFormatter.formatter(for: format).string(from: date)
     }
 }
 
