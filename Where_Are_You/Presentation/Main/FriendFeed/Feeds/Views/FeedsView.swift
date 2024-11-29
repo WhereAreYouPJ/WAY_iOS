@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 class FeedsView: UIView {
     // MARK: - Properties
@@ -47,6 +46,7 @@ class FeedsView: UIView {
         contentView.snp.makeConstraints { make in
             make.edges.equalTo(scrollView.contentLayoutGuide)
             make.width.equalTo(scrollView.frameLayoutGuide)
+            make.height.equalTo(1)
         }
         
         feedsTableView.snp.makeConstraints { make in
@@ -59,11 +59,10 @@ class FeedsView: UIView {
     func updateContentHeight() {
         // 테이블뷰 콘텐츠 크기에 따라 contentView의 높이를 업데이트
         feedsTableView.layoutIfNeeded()
-        let contentHeight = feedsTableView.contentSize.height
-        contentView.snp.remakeConstraints { make in
-            make.edges.equalTo(scrollView.contentLayoutGuide)
-            make.width.equalTo(scrollView.frameLayoutGuide)
+        let contentHeight = max(feedsTableView.contentSize.height, UIScreen.main.bounds.height)
+
+        contentView.snp.updateConstraints({ make in
             make.height.equalTo(contentHeight) // 높이를 동적으로 업데이트
-        }
+        })
     }
 }

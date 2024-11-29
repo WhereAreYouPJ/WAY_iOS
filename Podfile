@@ -6,10 +6,10 @@ source 'https://github.com/CocoaPods/Specs.git'
 target 'Where_Are_You' do
   use_frameworks!
 
-	pod 'Alamofire'
+	pod 'Alamofire', '~> 5.6'
 	pod 'SwiftLint'
-	pod 'SnapKit'
-	pod 'Moya'
+	pod 'SnapKit', '~> 5.0'
+	pod 'Moya', '~> 15.0'
 	pod 'KakaoSDK'
 	pod 'KakaoMapsSDK'
 	pod 'Kingfisher', '~> 7.0'
@@ -17,8 +17,6 @@ target 'Where_Are_You' do
 
 	target 'Where_Are_You_Tests' do
 	  inherit! :search_paths
-
-	  pod 'Alamofire'
 	end
 end
 
@@ -40,3 +38,4 @@ post_install do |installer|
     end
   end
 end
+

@@ -58,7 +58,7 @@ class MainHomeView: UIView {
         homeFeedView.snp.makeConstraints { make in
             make.top.equalTo(reminderLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 20))
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(168)
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 171))
         }
     }
 }
