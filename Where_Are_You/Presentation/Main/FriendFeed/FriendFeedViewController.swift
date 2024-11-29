@@ -141,6 +141,7 @@ class FriendFeedViewController: UIViewController {
     // MARK: - UI Setup
     private func setupUI() {
         view.backgroundColor = .white
+        
         // Add FeedsViewController
         addChild(feedsViewController)
         view.addSubview(feedsViewController.view)
@@ -162,14 +163,20 @@ class FriendFeedViewController: UIViewController {
         friendsHostingController?.view.isHidden = true
         feedsViewController.view.isHidden = false
         view.bringSubviewToFront(feedsViewController.view)
+        
         // Setup navigation items
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonStack)
         
-        plusOptionButton.isHidden = true
-        
+        // plusOptionButton과 friendOptionView를 항상 view에 추가
+        view.addSubview(plusOptionButton)
         view.addSubview(friendOptionView.view)
+        
+        plusOptionButton.isHidden = true
         friendOptionView.view.isHidden = true
+        
+        view.bringSubviewToFront(plusOptionButton)
+        view.bringSubviewToFront(friendOptionView.view)
     }
     
     private func setupConstraints() {
@@ -263,9 +270,11 @@ class FriendFeedViewController: UIViewController {
         if segmentControl.selectedSegmentIndex == 0 {
             plusOptionButton.isHidden = false
             friendOptionView.view.isHidden = true
+            view.bringSubviewToFront(plusOptionButton)
         } else {
             friendOptionView.view.isHidden = false
             plusOptionButton.isHidden = true
+            view.bringSubviewToFront(friendOptionView.view)
         }
     }
     

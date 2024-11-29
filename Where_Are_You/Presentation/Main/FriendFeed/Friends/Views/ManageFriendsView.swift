@@ -49,7 +49,7 @@ struct ManageFriendsView: View {
                     dismiss()
                 }
             )
-            .onAppear() {
+            .onAppear {
                 viewModel.getSentRequests()
             }
         }

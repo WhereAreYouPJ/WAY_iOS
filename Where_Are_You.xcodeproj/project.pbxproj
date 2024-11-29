@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -253,7 +253,7 @@
 		D5A20AF42CE4DCD50048281A /* GetFriendResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A20AF32CE4DCD50048281A /* GetFriendResponse.swift */; };
 		D5A91D5B2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */; };
 		D5B3B5392CB3DE63004353F6 /* DailyScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */; };
-		D5B79A162C5B83CD004EDDF2 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		D5B79A162C5B83CD004EDDF2 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		D5BA308C2CE744C400958BF5 /* FriendAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308B2CE744C400958BF5 /* FriendAPI.swift */; };
 		D5BA308E2CE744CA00958BF5 /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308D2CE744CA00958BF5 /* FriendService.swift */; };
 		D5BA30902CE7453900958BF5 /* DeleteFriendBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308F2CE7453900958BF5 /* DeleteFriendBody.swift */; };
@@ -571,14 +571,6 @@
 		D5FC8ED32CE31151000A08C2 /* PostScheduleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostScheduleResponse.swift; sourceTree = "<group>"; };
 		EF2914052EE4B6C83BE57C93 /* Pods-Where_Are_You_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		99BC80742CEEC6420040E44B /* CoreData */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = CoreData;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		995358362C00C555005BF799 /* Frameworks */ = {
@@ -921,6 +913,13 @@
 				99E9DC842CE48AA3007FFD91 /* FeedImageCell.swift */,
 			);
 			path = AddFeed;
+			sourceTree = "<group>";
+		};
+		99BC80742CEEC6420040E44B /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		99C68E442C64B3FC00DEC1F1 /* Feed */ = {
@@ -1642,9 +1641,6 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				99BC80742CEEC6420040E44B /* CoreData */,
-			);
 			name = Where_Are_You;
 			productName = Where_Are_You;
 			productReference = 995358392C00C555005BF799 /* Where_Are_You.app */;
@@ -1658,7 +1654,6 @@
 				99EF53912C366D2B00C6A399 /* Sources */,
 				99EF53922C366D2B00C6A399 /* Frameworks */,
 				99EF53932C366D2B00C6A399 /* Resources */,
-				1D2E8DFA42207C2064238541 /* [CP] Embed Pods Frameworks */,
 				99EF53A32C3672A500C6A399 /* CopyFiles */,
 			);
 			buildRules = (
@@ -1699,9 +1694,6 @@
 				ko,
 			);
 			mainGroup = 995358302C00C555005BF799;
-			packageReferences = (
-			);
-			preferredProjectObjectVersion = 77;
 			productRefGroup = 9953583A2C00C555005BF799 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1740,23 +1732,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1D2E8DFA42207C2064238541 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		3A2DC3F020E4C0FFB26A4E77 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1923,7 +1898,7 @@
 				99107E9F2C6EDAE2007D129F /* ValidationError.swift in Sources */,
 				995175022C7EF95100E938DE /* LocationBookmarkViewModel.swift in Sources */,
 				D5BA30922CE745A700958BF5 /* PostFavoriteFriendBody.swift in Sources */,
-				D5B79A162C5B83CD004EDDF2 /* (null) in Sources */,
+				D5B79A162C5B83CD004EDDF2 /* BuildFile in Sources */,
 				9953583D2C00C555005BF799 /* AppDelegate.swift in Sources */,
 				99EFC76B2CD0B9560044DFC5 /* PostLocationUseCase.swift in Sources */,
 				992F57DF2C5B614A00219C6B /* LogoutUseCase.swift in Sources */,
