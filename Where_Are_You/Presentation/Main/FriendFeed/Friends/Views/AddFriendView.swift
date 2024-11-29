@@ -7,20 +7,34 @@
 
 import SwiftUI
 
-struct AddFriendView: View {
+struct AddFriendView: View { // TODO: 친구 신청 완료시 토스트 팝업
     @Environment(\.dismiss) private var dismiss
+    @StateObject private var viewModel: AddFriendViewModel = {
+        let memberRepository = MemberRepository(memberService: MemberService())
+        let memberSearchUseCase = MemberSearchUseCaseImpl(memberRepository: memberRepository)
+        
+        let friendRequestRepository = FriendRequestRepository(friendRequestService: FriendRequestService())
+        let postFriendRequestUseCase = PostFriendRequestUseCaseImpl(repository: friendRequestRepository)
+        
+        return AddFriendViewModel(memberSearchUseCase: memberSearchUseCase,
+                                  postFriendRequestUseCase: postFriendRequestUseCase)
+    }()
     
     var body: some View {
         NavigationStack {
             VStack {
                 searchCodeView()
                 
-                profileCheckView()
+                if viewModel.searchedMember != nil {
+                    profileCheckView()
+                }
                 
                 Spacer()
                 
-                BottomButtonSwiftUIView(title: "친구 신청하기") {
-                    print("친구 신청하기")
+                if viewModel.searchedMember != nil {
+                    BottomButtonSwiftUIView(title: "친구 신청하기") {
+                        viewModel.postFriendRequest()
+                    }
                 }
             }
             .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
@@ -44,7 +58,8 @@ struct AddFriendView: View {
             }
             
             HStack {
-                TextField("  코드를 입력해주세요.", text: .constant(""))
+                TextField("코드를 입력해주세요.", text: $viewModel.searchText)
+                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 8))
                     .frame(height: LayoutAdapter.shared.scale(value: 42))
                     .overlay(
                         RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 6))
@@ -52,16 +67,18 @@ struct AddFriendView: View {
                     )
                 
                 CustomButtonSwiftUI(title: "확인", backgroundColor: Color(.brandColor), titleColor: .white) {
-                    print("확인")
+                    viewModel.searchMember()
                 }
                 .frame(width: LayoutAdapter.shared.scale(value: 100), height: LayoutAdapter.shared.scale(value: 42))
             }
             
-            HStack {
-                Text("코드를 다시 한번 확인해 주세요.")
-                    .foregroundStyle(Color.red)
-                    .font(.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 12)))
-                Spacer()
+            if viewModel.showError {
+                HStack {
+                    Text("코드를 다시 한번 확인해 주세요.")
+                        .foregroundStyle(Color.red)
+                        .font(.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 12)))
+                    Spacer()
+                }
             }
         }
         .padding(.horizontal, LayoutAdapter.shared.scale(value: 20))
@@ -74,13 +91,14 @@ struct AddFriendView: View {
                 .frame(height: LayoutAdapter.shared.scale(value: 158))
             
             VStack {
-                Image("exampleProfileImage")
+                Image(viewModel.searchedMember?.profileImage.isEmpty == true ? "icon-profile-default" : viewModel.searchedMember?.profileImage ?? "icon-profile-default") // TODO: 서버에서 URI 받아 프로필 이미지 띄우기
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: LayoutAdapter.shared.scale(value: 100), height: LayoutAdapter.shared.scale(value: 100))
                     .clipShape(RoundedRectangle(cornerRadius: 36))
                 
-                Text("고윤정")
+                Text(viewModel.searchedMember?.name ?? "")
+                    .font(.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 18)))
             }
         }
         .padding(.top, LayoutAdapter.shared.scale(value: 20))

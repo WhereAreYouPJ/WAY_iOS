@@ -170,3 +170,8 @@ extension String {
         return DateFormatter.formatter(for: format).string(from: date)
     }
 }
+
+extension Notification.Name {
+    static let showAddFriend = Notification.Name("showAddFriend")
+    static let showManageFriends = Notification.Name("showManageFriends")
+}

@@ -24,7 +24,7 @@ protocol MemberServiceProtocol {
     func postEmailVerifyPassword(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postEmailSend(email: String, completion: @escaping (Result<Void, Error>) -> Void)
     
-    func getMemberSearch(request: MemberSearchParameters, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void)
+    func getMemberSearch(memberCode: String, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void)
     func getMemberDetails(completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void)
     func getCheckEmail(email: String, completion: @escaping (Result<GenericResponse<CheckEmailResponse>, Error>) -> Void)
     
@@ -115,8 +115,8 @@ class MemberService: MemberServiceProtocol {
         }
     }
     
-    func getMemberSearch(request: MemberSearchParameters, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void) {
-        provider.request(.getMemberSearch(request: request)) { result in
+    func getMemberSearch(memberCode: String, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void) {
+        provider.request(.getMemberSearch(memberCode: memberCode)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }

@@ -12,46 +12,41 @@ struct CustomButtonSwiftUI: View {
     private let title: String
     private let backgroundColor: Color
     private let titleColor: Color
-//    private let font: Font
     private let action: () -> Void
     
     @State private var currentTitle: String
     @State private var currentBackgroundColor: Color
     @State private var currentTitleColor: Color
-//    @State private var currentFont: Font
     
-    // MARK: - Initializer
     init(
         title: String,
         backgroundColor: Color,
         titleColor: Color,
-//        font: Font,
         action: @escaping () -> Void
     ) {
         self.title = title
         self.backgroundColor = backgroundColor
         self.titleColor = titleColor
-//        self.font = font
         self.action = action
         
-        // State 초기값 설정
         _currentTitle = State(initialValue: title)
         _currentBackgroundColor = State(initialValue: backgroundColor)
         _currentTitleColor = State(initialValue: titleColor)
-//        _currentFont = State(initialValue: font)
     }
     
-    // MARK: - Body
     var body: some View {
         Button(action: action) {
             Text(currentTitle)
-//                .font(currentFont)
                 .foregroundColor(currentTitleColor)
                 .frame(maxWidth: .infinity)
                 .frame(maxHeight: .infinity)
                 .background(currentBackgroundColor)
                 .cornerRadius(LayoutAdapter.shared.scale(value: 6))
                 .contentShape(Rectangle())
+                .overlay(
+                    RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 6))
+                        .stroke(backgroundColor == .white ? Color(.color153) : .clear)
+                )
         }
     }
 }
@@ -68,7 +63,7 @@ struct BottomButtonSwiftUIView: View {
             
             Button(action: action) {
                 Text(title)
-                    .font(.custom("Pretendard-Bold", size: LayoutAdapter.shared.scale(value: 18)))
+                    .font(.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
                     .foregroundColor(Color(.color242))
                     .frame(maxWidth: .infinity)
                     .frame(height: LayoutAdapter.shared.scale(value: 50))
@@ -124,13 +119,13 @@ struct OptionButton: View {
         Button(action: action) {
             HStack {
                 Text(title)
-                    .font(.system(size: LayoutAdapter.shared.scale(value: 14), weight: .medium))
+                    .font(.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
                     .foregroundColor(.white)
                 
                 Spacer()
             }
             .padding(.leading, LayoutAdapter.shared.scale(value: 14))
-            .frame(width: LayoutAdapter.shared.scale(value: 160), height: LayoutAdapter.shared.scale(value: 30))
+            .frame(width: LayoutAdapter.shared.scale(value: 160), height: LayoutAdapter.shared.scale(value: 35))
             .background(Color(.popupButtonColor))
             .clipShape(
                 RoundedCorner(radius: LayoutAdapter.shared.scale(value: 10), corners: position.cornerRadius)
@@ -158,7 +153,6 @@ struct RoundedCorner: Shape {
         title: "확인",
         backgroundColor: Color(.brandColor),
         titleColor: .white
-//        font: .body
     ) {
         print("커스텀 버튼")
     }

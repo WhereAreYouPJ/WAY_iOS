@@ -21,7 +21,7 @@ protocol MemberRepositoryProtocol {
     func postEmailVerifyPassword(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postEmailSend(email: String, completion: @escaping (Result<Void, Error>) -> Void)
     
-    func getMemberSearch(request: MemberSearchParameters, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void)
+    func getMemberSearch(memberCode: String, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void)
     func getMemberDetails(completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void)
     func getCheckEmail(email: String, completion: @escaping (Result<GenericResponse<CheckEmailResponse>, Error>) -> Void)
     
@@ -107,8 +107,8 @@ class MemberRepository: MemberRepositoryProtocol {
     
     // MARK: - GET
 
-    func getMemberSearch(request: MemberSearchParameters, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void) {
-        memberService.getMemberSearch(request: request, completion: completion)
+    func getMemberSearch(memberCode: String, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void) {
+        memberService.getMemberSearch(memberCode: memberCode, completion: completion)
     }
     
     func getMemberDetails(completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void) {

@@ -39,13 +39,12 @@ class FriendFeedViewController: UIViewController {
     
     private var showSearchBar: Bool = false {
         didSet {
-                    // 프로퍼티가 변경될 때마다 FriendsView를 업데이트
-                    if let friendsHostingController = friendsHostingController {
-                        let updatedView = FriendsView(showSearchBar: .constant(showSearchBar))
-                        friendsHostingController.rootView = updatedView
-                    }
-                }
+            if let friendsHostingController = friendsHostingController {
+                let updatedView = FriendsView(showSearchBar: .constant(showSearchBar))
+                friendsHostingController.rootView = updatedView
+            }
         }
+    }
     let searchFriendButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "icon-search"), for: .normal)
@@ -75,29 +74,63 @@ class FriendFeedViewController: UIViewController {
     }()
     
     let plusOptionButton = CustomOptionButtonView(title: "새 피드 작성")
-    // 1. 친구 관련 옵션 버튼 추가
+    
+    // MARK: - 친구 탭 옵션메뉴
     private let friendOptionView: UIHostingController = {
         let view = MultiOptionButtonView {
             OptionButton(
                 title: "친구 추가",
                 position: .top
             ) {
-                print("친구 추가")
+                NotificationCenter.default.post(name: .showAddFriend, object: nil)
             }
             
             OptionButton(
                 title: "친구 관리",
                 position: .bottom
             ) {
-                print("친구 관리")
+                NotificationCenter.default.post(name: .showManageFriends, object: nil)
             }
         }
         return UIHostingController(rootView: view)
     }()
     
+    private func setupNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showAddFriendView),
+            name: .showAddFriend,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showManageFriendsView),
+            name: .showManageFriends,
+            object: nil
+        )
+    }
+
+    @objc private func showAddFriendView() {
+        let addFriendView = AddFriendView()
+            .navigationBarBackButtonHidden(true)
+        let hostingController = UIHostingController(rootView: addFriendView)
+        hostingController.modalPresentationStyle = .fullScreen
+        present(hostingController, animated: true)
+    }
+    
+    @objc private func showManageFriendsView() {
+        let manageFriendsView = ManageFriendsView()
+            .navigationBarBackButtonHidden(true)
+        let hostingController = UIHostingController(rootView: manageFriendsView)
+        hostingController.modalPresentationStyle = .fullScreen
+        present(hostingController, animated: true)
+    }
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNotifications()
         setupNavigationBar()
         setupUI()
         setupConstraints()
@@ -108,46 +141,42 @@ class FriendFeedViewController: UIViewController {
     // MARK: - UI Setup
     private func setupUI() {
         view.backgroundColor = .white
+        
         // Add FeedsViewController
         addChild(feedsViewController)
         view.addSubview(feedsViewController.view)
         feedsViewController.didMove(toParent: self)
-        
-        // Setup FriendsView
-//        let friendsView = FriendsView()
-//        friendsHostingController = UIHostingController(rootView: friendsView)
-//        if let friendsHostingController = friendsHostingController {
-//            addChild(friendsHostingController)
-//            view.addSubview(friendsHostingController.view)
-//            friendsHostingController.didMove(toParent: self)
-//            friendsHostingController.view.isHidden = true
-//        }
-        
-        // Setup FriendsView with showSearchBar binding
-                let friendsView = FriendsView(showSearchBar: .constant(false))
-                friendsHostingController = UIHostingController(rootView: friendsView)
-                if let friendsHostingController = friendsHostingController {
-                    addChild(friendsHostingController)
-                    view.addSubview(friendsHostingController.view)
-                    friendsHostingController.didMove(toParent: self)
-                    friendsHostingController.view.isHidden = true
-                    
-                    friendsHostingController.view.snp.makeConstraints { make in
-                        make.edges.equalToSuperview()
-                    }
-                }
+
+        let friendsView = FriendsView(showSearchBar: .constant(false))
+        friendsHostingController = UIHostingController(rootView: friendsView)
+        if let friendsHostingController = friendsHostingController {
+            addChild(friendsHostingController)
+            view.addSubview(friendsHostingController.view)
+            friendsHostingController.didMove(toParent: self)
+            friendsHostingController.view.isHidden = true
+            
+            friendsHostingController.view.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        }
         
         friendsHostingController?.view.isHidden = true
         feedsViewController.view.isHidden = false
         view.bringSubviewToFront(feedsViewController.view)
+        
         // Setup navigation items
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonStack)
         
-        plusOptionButton.isHidden = true
-        
+        // plusOptionButton과 friendOptionView를 항상 view에 추가
+        view.addSubview(plusOptionButton)
         view.addSubview(friendOptionView.view)
+        
+        plusOptionButton.isHidden = true
         friendOptionView.view.isHidden = true
+        
+        view.bringSubviewToFront(plusOptionButton)
+        view.bringSubviewToFront(friendOptionView.view)
     }
     
     private func setupConstraints() {
@@ -170,7 +199,7 @@ class FriendFeedViewController: UIViewController {
         
         if segmentControl.selectedSegmentIndex == 0 {
             view.addSubview(plusOptionButton)
-
+            
             plusOptionButton.snp.makeConstraints { make in
                 make.top.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 9))
                 make.trailing.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 15))
@@ -180,9 +209,9 @@ class FriendFeedViewController: UIViewController {
         }
         
         friendOptionView.view.snp.makeConstraints { make in
-                make.top.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 9))
-                make.trailing.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 15))
-            }
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 9))
+            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 15))
+        }
     }
     
     private func setupActions() {
@@ -194,7 +223,7 @@ class FriendFeedViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
         view.addGestureRecognizer(tapGesture)
     }
-
+    
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonStack)
@@ -237,14 +266,15 @@ class FriendFeedViewController: UIViewController {
         print("알림 페이지로 이동")
     }
     
-    // 4. handleAdd() 메서드 수정
     @objc private func handleAdd() {
         if segmentControl.selectedSegmentIndex == 0 {
             plusOptionButton.isHidden = false
             friendOptionView.view.isHidden = true
+            view.bringSubviewToFront(plusOptionButton)
         } else {
             friendOptionView.view.isHidden = false
             plusOptionButton.isHidden = true
+            view.bringSubviewToFront(friendOptionView.view)
         }
     }
     
@@ -255,7 +285,6 @@ class FriendFeedViewController: UIViewController {
         present(nav, animated: true, completion: nil)
     }
     
-    // 5. handleOutsideTap() 메서드 수정
     @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {
         let location = sender.location(in: self.view)
         if !plusOptionButton.frame.contains(location) {
@@ -272,23 +301,23 @@ class FriendFeedViewController: UIViewController {
 //    //    private let friendsViewController = FriendsListViewController()
 //    private var friendsHostingController: UIHostingController<FriendsView>?
 //    private let feedsViewController = FeedsViewController()
-//    
+//
 //    let friend: UIImage = {
 //        let image = UIImage()
 //        return image
 //    }()
-//    
+//
 //    let feed: UIImage = {
 //        let image = UIImage()
 //        return image
 //    }()
-//    
+//
 //    private let segmentControl: UISegmentedControl = {
 //        let sc = UISegmentedControl()
 //        sc.insertSegment(withTitle: "피드", at: 0, animated: true)
 //        sc.insertSegment(withTitle: "친구", at: 1, animated: true)
 //        sc.selectedSegmentIndex = 0
-//        
+//
 //        sc.setTitleTextAttributes([
 //            NSAttributedString.Key.foregroundColor: UIColor.color102,
 //            NSAttributedString.Key.font: UIFont.pretendard(NotoSans: .medium, fontSize: 20)
@@ -297,7 +326,7 @@ class FriendFeedViewController: UIViewController {
 //            NSAttributedString.Key.foregroundColor: UIColor.color34,
 //            NSAttributedString.Key.font: UIFont.pretendard(NotoSans: .medium, fontSize: 20)
 //        ], for: .selected)
-//        
+//
 //        sc.selectedSegmentTintColor = .clear
 //        sc.backgroundColor = .clear
 //        let image = UIImage()
@@ -305,21 +334,21 @@ class FriendFeedViewController: UIViewController {
 //        sc.setDividerImage(image, forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
 //        return sc
 //    }()
-//    
+//
 //    let searchFriendButton: UIButton = {
 //        let button = UIButton()
 //        button.setImage(UIImage(named: "icon-search"), for: .normal)
 //        button.tintColor = .brandColor
 //        return button
 //    }()
-//    
+//
 //    let notificationButton: UIButton = {
 //        let button = UIButton()
 //        button.setImage(UIImage(named: "icon-notification"), for: .normal)
 //        button.tintColor = .brandColor
 //        return button
 //    }()
-//    
+//
 //    let addButton: UIButton = {
 //        let button = UIButton()
 //        button.setImage(UIImage(named: "icon-plus"), for: .normal)
@@ -329,16 +358,16 @@ class FriendFeedViewController: UIViewController {
 //        button.tintColor = .brandColor
 //        return button
 //    }()
-//    
+//
 //    private lazy var barButtonStack: UIStackView = {
 //        let stackView = UIStackView(arrangedSubviews: [searchFriendButton, notificationButton, addButton])
 //        stackView.axis = .horizontal
 //        stackView.distribution = .fillEqually
 //        return stackView
 //    }()
-//    
+//
 //    // MARK: - Lifecycle
-//    
+//
 //    override func viewDidLoad() {
 //        super.viewDidLoad()
 //        setupNavigationBar()
@@ -346,56 +375,56 @@ class FriendFeedViewController: UIViewController {
 //        showFeedsView()
 //        handleSegmentChange()
 //        buttonActions()
-//        
+//
 //        segmentControl.snp.makeConstraints { make in
 //            make.height.equalTo(LayoutAdapter.shared.scale(value: 36)).priority(.required)
 //        }
 //    }
-//    
+//
 //    // MARK: - Helpers
-//    
+//
 //    private func setupNavigationBar() {
 //        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
 //        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonStack)
 //        segmentControl.addTarget(self, action: #selector(handleSegmentChange), for: .valueChanged)
 //    }
-//    
+//
 //    private func setupViews() {
 //        view.backgroundColor = .white
-//        
+//
 //        addChild(feedsViewController)
 //        view.addSubview(feedsViewController.view)
 //        feedsViewController.didMove(toParent: self)
-//        
+//
 //        feedsViewController.view.snp.makeConstraints { make in
 //            make.top.equalToSuperview().offset(8)
 //            make.leading.trailing.bottom.equalToSuperview()
 //        }
-//        
+//
 //        // SwiftUI FriendsView를 UIHostingController로 래핑
 //        let friendsView = FriendsView()
 //        friendsHostingController = UIHostingController(rootView: friendsView)
-//        
+//
 //        if let friendsHostingController = friendsHostingController {
 //            addChild(friendsHostingController)
 //            view.addSubview(friendsHostingController.view)
 //            friendsHostingController.didMove(toParent: self)
-//            
+//
 //            friendsHostingController.view.snp.makeConstraints { make in
 //                make.top.equalToSuperview().inset(15)
 //                make.leading.trailing.bottom.equalToSuperview()
 //            }
-//            
+//
 //            friendsHostingController.view.isHidden = true
 //        }
 //    }
-//    
+//
 //    private func buttonActions() {
 //        searchFriendButton.addTarget(self, action: #selector(handleSearch), for: .touchUpInside)
 //        notificationButton.addTarget(self, action: #selector(handleNotification), for: .touchUpInside)
 //        addButton.addTarget(self, action: #selector(handleAdd), for: .touchUpInside)
 //    }
-//    
+//
 //    private func showFriendsView() {
 //        friendsHostingController?.view.isHidden = false
 //        feedsViewController.view.isHidden = true
@@ -403,7 +432,7 @@ class FriendFeedViewController: UIViewController {
 //        notificationButton.isHidden = false
 //        addButton.isHidden = false
 //    }
-//    
+//
 //    private func showFeedsView() {
 //        friendsHostingController?.view.isHidden = false
 //        feedsViewController.view.isHidden = false
@@ -411,9 +440,9 @@ class FriendFeedViewController: UIViewController {
 //        notificationButton.isHidden = false
 //        addButton.isHidden = false
 //    }
-//    
+//
 //    // MARK: - Selectors
-//    
+//
 //    @objc private func handleSegmentChange() {
 //        if segmentControl.selectedSegmentIndex == 0 {
 //            showFeedsView()
@@ -421,15 +450,15 @@ class FriendFeedViewController: UIViewController {
 //            showFriendsView()
 //        }
 //    }
-//    
+//
 //    @objc private func handleSearch() {
 //        print("친구 검색")
 //    }
-//    
+//
 //    @objc private func handleNotification() {
 //        print("알림 페이지로 이동")
 //    }
-//    
+//
 //    @objc private func handleAdd() {
 //        // 피드
 //        if segmentControl.selectedSegmentIndex == 0 {

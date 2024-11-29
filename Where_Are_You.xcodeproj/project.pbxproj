@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -207,6 +207,7 @@
 		D51AC99C2C849AB400D0AD2E /* LocationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51AC99B2C849AB400D0AD2E /* LocationAPI.swift */; };
 		D51AC99F2C84A0AD00D0AD2E /* FavLocationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51AC99E2C84A0AD00D0AD2E /* FavLocationResponse.swift */; };
 		D53620912C8AE1010017B279 /* SearchLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53620902C8AE1010017B279 /* SearchLocationViewModel.swift */; };
+		D53A4E382CF810A800225E4C /* ManageFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53A4E372CF810A800225E4C /* ManageFriendsView.swift */; };
 		D53A515C2CA1260400025AC8 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53A515B2CA1260400025AC8 /* ErrorResponse.swift */; };
 		D53E05F52CB97C4100F96346 /* PutScheduleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E05F42CB97C4100F96346 /* PutScheduleBody.swift */; };
 		D5496DD22C6B69570056C196 /* ConfirmLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5496DD12C6B69570056C196 /* ConfirmLocationView.swift */; };
@@ -238,6 +239,8 @@
 		D564EDF22C8F07570002A4C5 /* ConfirmLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D564EDF12C8F07570002A4C5 /* ConfirmLocationViewModel.swift */; };
 		D564EDF52C8F13300002A4C5 /* FavoriteLocationBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D564EDF42C8F13300002A4C5 /* FavoriteLocationBody.swift */; };
 		D564EE882CF4DF540033DBD3 /* FriendsLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D564EE872CF4DF540033DBD3 /* FriendsLocationView.swift */; };
+		D567A9D02CF85B54009F6451 /* ManageFriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D567A9CF2CF85B54009F6451 /* ManageFriendsViewModel.swift */; };
+		D567A9D42CF86081009F6451 /* FriendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D567A9D32CF86081009F6451 /* FriendRequest.swift */; };
 		D57AC3B12C8B6336006AE7D7 /* KakaoLocalResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57AC3B02C8B6336006AE7D7 /* KakaoLocalResponse.swift */; };
 		D57B46F72C786AFD00657C51 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57B46F62C786AFD00657C51 /* MapView.swift */; };
 		D585E2872C82F6C600C16A14 /* GetScheduleByMonthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D585E2862C82F6C600C16A14 /* GetScheduleByMonthResponse.swift */; };
@@ -250,7 +253,7 @@
 		D5A20AF42CE4DCD50048281A /* GetFriendResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A20AF32CE4DCD50048281A /* GetFriendResponse.swift */; };
 		D5A91D5B2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */; };
 		D5B3B5392CB3DE63004353F6 /* DailyScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */; };
-		D5B79A162C5B83CD004EDDF2 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		D5B79A162C5B83CD004EDDF2 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		D5BA308C2CE744C400958BF5 /* FriendAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308B2CE744C400958BF5 /* FriendAPI.swift */; };
 		D5BA308E2CE744CA00958BF5 /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308D2CE744CA00958BF5 /* FriendService.swift */; };
 		D5BA30902CE7453900958BF5 /* DeleteFriendBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308F2CE7453900958BF5 /* DeleteFriendBody.swift */; };
@@ -503,6 +506,7 @@
 		D51AC99E2C84A0AD00D0AD2E /* FavLocationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavLocationResponse.swift; sourceTree = "<group>"; };
 		D53078812C5D3C9D0041BBB7 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		D53620902C8AE1010017B279 /* SearchLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationViewModel.swift; sourceTree = "<group>"; };
+		D53A4E372CF810A800225E4C /* ManageFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFriendsView.swift; sourceTree = "<group>"; };
 		D53A515B2CA1260400025AC8 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
 		D53E05F42CB97C4100F96346 /* PutScheduleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutScheduleBody.swift; sourceTree = "<group>"; };
 		D5496DD12C6B69570056C196 /* ConfirmLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLocationView.swift; sourceTree = "<group>"; };
@@ -534,6 +538,8 @@
 		D564EDF12C8F07570002A4C5 /* ConfirmLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLocationViewModel.swift; sourceTree = "<group>"; };
 		D564EDF42C8F13300002A4C5 /* FavoriteLocationBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteLocationBody.swift; sourceTree = "<group>"; };
 		D564EE872CF4DF540033DBD3 /* FriendsLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsLocationView.swift; sourceTree = "<group>"; };
+		D567A9CF2CF85B54009F6451 /* ManageFriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFriendsViewModel.swift; sourceTree = "<group>"; };
+		D567A9D32CF86081009F6451 /* FriendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequest.swift; sourceTree = "<group>"; };
 		D57AC3B02C8B6336006AE7D7 /* KakaoLocalResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLocalResponse.swift; sourceTree = "<group>"; };
 		D57B46F62C786AFD00657C51 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		D585E2862C82F6C600C16A14 /* GetScheduleByMonthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetScheduleByMonthResponse.swift; sourceTree = "<group>"; };
@@ -565,14 +571,6 @@
 		D5FC8ED32CE31151000A08C2 /* PostScheduleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostScheduleResponse.swift; sourceTree = "<group>"; };
 		EF2914052EE4B6C83BE57C93 /* Pods-Where_Are_You_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		99BC80742CEEC6420040E44B /* CoreData */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = CoreData;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		995358362C00C555005BF799 /* Frameworks */ = {
@@ -634,6 +632,7 @@
 				D5D807F12C860931008F7882 /* CommonFriensView.swift */,
 				D517F25C2CEC8691003C5F60 /* FriendDetailView.swift */,
 				D55C6C3F2CF585F1005132DC /* AddFriendView.swift */,
+				D53A4E372CF810A800225E4C /* ManageFriendsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -645,6 +644,7 @@
 				D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */,
 				D517F25E2CECA902003C5F60 /* FriendDetailViewModel.swift */,
 				D55C6C432CF5C007005132DC /* AddFriendViewModel.swift */,
+				D567A9CF2CF85B54009F6451 /* ManageFriendsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -915,6 +915,13 @@
 			path = AddFeed;
 			sourceTree = "<group>";
 		};
+		99BC80742CEEC6420040E44B /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		99C68E442C64B3FC00DEC1F1 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
@@ -1178,6 +1185,7 @@
 				99107EA22C6F3E42007D129F /* DDay.swift */,
 				99107EA42C6F3E4A007D129F /* Location.swift */,
 				995493F52CA3E2EF008BFA19 /* ScheduleList.swift */,
+				D567A9D32CF86081009F6451 /* FriendRequest.swift */,
 				99E9D39A2CF7F7FC00D2554A /* User.swift */,
 			);
 			path = Entities;
@@ -1462,8 +1470,8 @@
 		D55C6C5A2CF70FDA005132DC /* FriendRequest */ = {
 			isa = PBXGroup;
 			children = (
-				D55C6C5B2CF70FF5005132DC /* GetListForReceiverUseCase.swift */,
 				D55C6C5D2CF711C5005132DC /* GetListForSenderUseCase.swift */,
+				D55C6C5B2CF70FF5005132DC /* GetListForReceiverUseCase.swift */,
 				D55C6C5F2CF71241005132DC /* PostFriendRequestUseCase.swift */,
 				D55C6C612CF712A8005132DC /* AcceptFriendRequestUseCase.swift */,
 				D55C6C632CF712F5005132DC /* RefuseFriendRequestUseCase.swift */,
@@ -1633,9 +1641,6 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				99BC80742CEEC6420040E44B /* CoreData */,
-			);
 			name = Where_Are_You;
 			productName = Where_Are_You;
 			productReference = 995358392C00C555005BF799 /* Where_Are_You.app */;
@@ -1649,7 +1654,6 @@
 				99EF53912C366D2B00C6A399 /* Sources */,
 				99EF53922C366D2B00C6A399 /* Frameworks */,
 				99EF53932C366D2B00C6A399 /* Resources */,
-				1D2E8DFA42207C2064238541 /* [CP] Embed Pods Frameworks */,
 				99EF53A32C3672A500C6A399 /* CopyFiles */,
 			);
 			buildRules = (
@@ -1690,9 +1694,6 @@
 				ko,
 			);
 			mainGroup = 995358302C00C555005BF799;
-			packageReferences = (
-			);
-			preferredProjectObjectVersion = 77;
 			productRefGroup = 9953583A2C00C555005BF799 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1731,23 +1732,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1D2E8DFA42207C2064238541 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		3A2DC3F020E4C0FFB26A4E77 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1914,7 +1898,7 @@
 				99107E9F2C6EDAE2007D129F /* ValidationError.swift in Sources */,
 				995175022C7EF95100E938DE /* LocationBookmarkViewModel.swift in Sources */,
 				D5BA30922CE745A700958BF5 /* PostFavoriteFriendBody.swift in Sources */,
-				D5B79A162C5B83CD004EDDF2 /* (null) in Sources */,
+				D5B79A162C5B83CD004EDDF2 /* BuildFile in Sources */,
 				9953583D2C00C555005BF799 /* AppDelegate.swift in Sources */,
 				99EFC76B2CD0B9560044DFC5 /* PostLocationUseCase.swift in Sources */,
 				992F57DF2C5B614A00219C6B /* LogoutUseCase.swift in Sources */,
@@ -1960,6 +1944,7 @@
 				997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */,
 				99C6D2A32C904006009C0CF8 /* GetDDayScheduleUseCase.swift in Sources */,
 				9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */,
+				D53A4E382CF810A800225E4C /* ManageFriendsView.swift in Sources */,
 				9985AB972C786D0400D1442E /* MyDetailManageView.swift in Sources */,
 				99E8BC452C2D26CF00536B95 /* EmailVerifyUseCase.swift in Sources */,
 				D5BA30962CE7481D00958BF5 /* FriendRepository.swift in Sources */,
@@ -2085,9 +2070,11 @@
 				99EC20AD2C0D9DB50018904D /* AcoountSearchViewModel.swift in Sources */,
 				99960AB32CE1D97C007D2B61 /* PostEcceptScheduleUseCase.swift in Sources */,
 				D58F5A502C9332220048C23A /* GetMonthlyScheduleBody.swift in Sources */,
+				D567A9D42CF86081009F6451 /* FriendRequest.swift in Sources */,
 				999B88692CD1C51D00F329C9 /* HandleOutsideTap.swift in Sources */,
 				D5FC8ED42CE31151000A08C2 /* PostScheduleResponse.swift in Sources */,
 				D5CCD96F2CB0217E008497AD /* DailyScheduleView.swift in Sources */,
+				D567A9D02CF85B54009F6451 /* ManageFriendsViewModel.swift in Sources */,
 				99E9DC852CE48AA3007FFD91 /* FeedImageCell.swift in Sources */,
 				99107EA32C6F3E42007D129F /* DDay.swift in Sources */,
 				D5DB6C6F2CDA2A0900D89360 /* ScheduleDetailViewModel.swift in Sources */,
