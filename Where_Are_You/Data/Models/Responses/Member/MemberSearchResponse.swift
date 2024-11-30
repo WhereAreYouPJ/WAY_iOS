@@ -10,5 +10,5 @@ import Foundation
 struct MemberSearchResponse: Codable {
     let userName: String
     let memberSeq: Int
-    let profileImage: String
+    let profileImage: String?
 }

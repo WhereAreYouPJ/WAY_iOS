@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FriendsView: View {
+struct FriendsView: View { // TODO: Error getting user: Failed to map data to a Decodable object.
     @StateObject private var viewModel: FriendsViewModel = {
         let friendRepository = FriendRepository(friendService: FriendService())
         let getFriendUseCase = GetFriendUseCaseImpl(friendRepository: friendRepository)

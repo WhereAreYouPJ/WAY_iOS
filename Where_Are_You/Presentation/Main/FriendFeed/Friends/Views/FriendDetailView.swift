@@ -24,11 +24,11 @@ struct FriendDetailView: View {
                 HStack(spacing: 0) {
                     Button(action: {
                         dismiss()
-                    }) {
+                    }, label: {
                         Image(systemName: "xmark")
                             .foregroundStyle(Color.white)
                             .frame(width: LayoutAdapter.shared.scale(value: 14), height: LayoutAdapter.shared.scale(value: 14))
-                    }
+                    })
                     .padding(.leading, LayoutAdapter.shared.scale(value: 25))
                     .padding(.top, LayoutAdapter.shared.scale(value: 16))
                     

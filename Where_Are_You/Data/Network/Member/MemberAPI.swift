@@ -21,7 +21,7 @@ enum MemberAPI {
     case postEmailVerifyPassword(request: EmailVerifyBody)
     case postEmailSend(email: String)
     
-    case getMemberSearch(request: MemberSearchParameters)
+    case getMemberSearch(memberCode: String)
     case getMemberDetails(memberSeq: Int)
     case getCheckEmail(email: String)
     
@@ -110,8 +110,8 @@ extension MemberAPI: TargetType {
         case .postEmailSend(let email):
             return .requestParameters(parameters: ["email": email], encoding: JSONEncoding.default)
             
-        case .getMemberSearch(let request):
-            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+        case .getMemberSearch(let memberCode):
+            return .requestParameters(parameters: ["memberCode": memberCode], encoding: URLEncoding.queryString)
         case .getMemberDetails(let memberSeq):
             return .requestParameters(parameters: ["memberSeq": memberSeq], encoding: URLEncoding.queryString)
         case .getCheckEmail(let email):
