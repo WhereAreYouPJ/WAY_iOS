@@ -11,7 +11,7 @@ class ManageFriendsViewModel: ObservableObject {
     enum RequestState {
         case canceled
         case accepted
-        case rejected
+        case refused
     }
     
     @Published var sentRequests: [FriendRequest] = []
@@ -35,7 +35,7 @@ class ManageFriendsViewModel: ObservableObject {
         self.acceptFriendRequestUseCase = acceptFriendRequestUseCase
         self.refuseFriendRequestUseCase = refuseFriendRequestUseCase
         
-        getDummyData()
+//        getDummyData()
     }
     
     func getDummyData() {
@@ -73,7 +73,7 @@ class ManageFriendsViewModel: ObservableObject {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let requests):
-                    self?.sentRequests = requests.map { response in
+                    self?.receivedRequests = requests.map { response in
                         FriendRequest(friendRequestSeq: response.friendRequestSeq,
                                       createTime: response.createTime,
                                       friend: Friend(memberSeq: response.senderSeq,
@@ -85,6 +85,52 @@ class ManageFriendsViewModel: ObservableObject {
                     print("요청 받은 목록 조회 성공")
                 case .failure(let error):
                     print("요청 받은 목록 조회 실패 \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    func cancelRequest(requestSeq: Int) {
+        cancelFriendRequestUseCase.execute(request: CancelFriendRequestBody(friendRequestSeq: requestSeq)) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self?.sentRequests.removeAll { $0.friendRequestSeq == requestSeq }
+                    self?.requestStates[requestSeq] = .canceled
+                    print("요청 취소 성공")
+                case .failure(let error):
+                    print("요청 취소 실패 \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    func acceptRequest(request: FriendRequest) {
+        let memberSeq = UserDefaultsManager.shared.getMemberSeq()
+        acceptFriendRequestUseCase.execute(request: AcceptFriendRequestBody(friendRequestSeq: request.friendRequestSeq,
+                                                                            memberSeq: memberSeq,
+                                                                            senderSeq: request.friend.memberSeq)) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self?.requestStates[request.friendRequestSeq] = .accepted
+                    print("요청 수락 성공")
+                case .failure(let error):
+                    print("요청 수락 실패 \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    func refuseRequest(requestSeq: Int) {
+        refuseFriendRequestUseCase.execute(request: RefuseFriendRequestBody(friendRequestSeq: requestSeq)) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self?.requestStates[requestSeq] = .refused
+                    print("요청 거절 성공")
+                case .failure(let error):
+                    print("요청 거절 실패 \(error.localizedDescription)")
                 }
             }
         }

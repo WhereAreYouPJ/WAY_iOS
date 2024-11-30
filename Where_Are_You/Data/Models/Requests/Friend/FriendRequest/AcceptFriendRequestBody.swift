@@ -10,5 +10,5 @@ import Foundation
 struct AcceptFriendRequestBody: ParameterConvertible {
     let friendRequestSeq: Int
     let memberSeq: Int
-    let friendSeq: Int
+    let senderSeq: Int
 }

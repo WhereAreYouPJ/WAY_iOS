@@ -5,8 +5,6 @@
 //  Created by juhee on 20.08.24.
 //
 
-// TODO: 1. 친구 목록 정렬, 2. 코드 가독성 개선
-
 import SwiftUI
 
 struct SearchFriendsView: View {
@@ -57,10 +55,10 @@ struct SearchFriendsView: View {
             Button(action: {
                 selectedFriends = viewModel.confirmSelection()
                 dismiss()
-            }) {
+            }, label: {
                 Text("확인")
                     .frame(maxWidth: .infinity)
-            }
+            })
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
             .tint(Color(.brandColor))
@@ -89,7 +87,7 @@ struct SelectedFriendsView: View {
             }
             Button(action: {
                 isOn = false
-            }) {
+            }, label: {
                 ZStack {
                     Image(systemName: "circle.fill")
                         .foregroundColor(.white)
@@ -98,7 +96,7 @@ struct SelectedFriendsView: View {
                     Image(systemName: "multiply")
                         .foregroundColor(.gray)
                 }
-            }
+            })
             .offset(x: 20, y: -28)
         }
         .padding(.top, 4)

@@ -46,7 +46,7 @@ class FriendsViewModel: ObservableObject { // 친구 목록을 나중에는 iOS 
             switch result {
             case .success(let member):
                 self.user.userName = member.userName
-                self.user.profileImage = member.profileImage
+                self.user.profileImage = member.profileImage ?? ""
             case .failure(let error):
                 print("Error getting user: \(error.localizedDescription)")
                 self.hasError = true
@@ -77,7 +77,7 @@ class FriendsViewModel: ObservableObject { // 친구 목록을 나중에는 iOS 
     private func convertToFriend(_ response: GetFriendResponse) -> Friend {
         Friend(
             memberSeq: response.memberSeq,
-            profileImage: response.profileImage ?? "defaultImage",
+            profileImage: response.profileImage ?? "",
             name: response.userName,
             isFavorite: response.favorites
         )
