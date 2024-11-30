@@ -68,7 +68,7 @@ class MyPageViewController: UIViewController {
             DispatchQueue.main.async {
                 let memberCode = UserDefaultsManager.shared.getMemberCode()
                 let member = Member(userName: memberDetails.userName,
-                                    profileImage: memberDetails.profileImage,
+                                    profileImage: memberDetails.profileImage ?? "", // TODO: 프로필 이미지 null일 경우 처리 필요
                                     memberCode: memberCode)
                 self?.myPageView.configureUI(member: member)
             }
