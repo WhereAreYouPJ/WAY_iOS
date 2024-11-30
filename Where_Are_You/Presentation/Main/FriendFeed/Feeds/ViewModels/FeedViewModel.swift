@@ -22,7 +22,7 @@ class FeedViewModel {
             updateFeedImagesForCurrentIndex()
         }
     }
-        
+    
     // MARK: - Initializer
     init(getFeedListUseCase: GetFeedListUseCase) {
         self.getFeedListUseCase = getFeedListUseCase
@@ -33,13 +33,14 @@ class FeedViewModel {
         getFeedListUseCase.execute(page: page) { [weak self] result in
             guard let self = self else { return }
             self.isLoading = false
-
+            
             switch result {
             case .success(let data):
                 self.rawFeedContent = data
+                print("rawFeedContent count: \(rawFeedContent.count)")
                 self.displayFeedContent = rawFeedContent.compactMap { feedContent in
                     guard let scheduleFeedInfo = feedContent.scheduleFeedInfo.first else { return nil }
-        
+                    
                     return MainFeedListContent(
                         profileImage: scheduleFeedInfo.memberInfo.profileImage ?? "",
                         startTime: feedContent.scheduleInfo.startTime,

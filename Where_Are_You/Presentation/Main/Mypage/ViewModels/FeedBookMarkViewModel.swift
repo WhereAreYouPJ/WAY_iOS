@@ -57,7 +57,7 @@ class FeedBookMarkViewModel {
         let memberSeq = UserDefaultsManager.shared.getMemberSeq()
         deleteBookMarkFeedUseCase.execute(request: BookMarkFeedRequest(feedSeq: feedSeq, memberSeq: memberSeq)) { result in
             switch result {
-            case .success(let success):
+            case .success:
                 self.onBookMarkFeedUpdated?()
                 self.delegate?.didUpdateBookMarkFeed()
             case .failure(let error):

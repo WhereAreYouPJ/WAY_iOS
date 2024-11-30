@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class FeedsTableViewCell: UITableViewCell {
     
@@ -85,14 +86,18 @@ class FeedsTableViewCell: UITableViewCell {
     }
     
     func configure(with feed: MainFeedListContent) {
-        if feed.content == nil {
-            self.descriptionLabel.isHidden = true
-        } else {
+        if let content = feed.content {
             descriptionLabel.isHidden = false
-            descriptionLabel.text = feed.content
+            descriptionLabel.text = content
+        } else {
+            self.descriptionLabel.isHidden = true
         }
         
-        detailBox.profileImage.setImage(from: feed.profileImage, placeholder: UIImage(named: "basic_profile_image"))
+        let participants = feed.scheduleFriendInfos.compactMap { $0.profileImage }
+        print("participants: \(participants)") // 디버깅용 출력
+        
+        detailBox.configureParticipantImages(participants: participants)
+        detailBox.profileImage.kf.setImage(with: URL(string: feed.profileImage), placeholder: UIImage(named: "basic_profile_image"))
         detailBox.dateLabel.text = feed.startTime.formattedDate(to: .yearMonthDate)
         detailBox.locationLabel.text = feed.location
         detailBox.titleLabel.text = feed.title
@@ -113,9 +118,10 @@ extension FeedsTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedImageCollectionViewCell.identifier, for: indexPath) as? FeedImageCollectionViewCell else {
             return UICollectionViewCell()
         }
-        let imageUrl = imageUrls[indexPath.item]
+        let imageUrl = URL(string: imageUrls[indexPath.item])
         cell.configure(with: UIImage(named: "placeholder")) // Placeholder 적용
-        cell.imageView.setImage(from: imageUrl, placeholder: UIImage(named: "placeholder")) // 비동기로 이미지 로드
+        cell.imageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "placeholder"))
+//        cell.imageView.setImage(from: imageUrl, placeholder: UIImage(named: "placeholder")) // 비동기로 이미지 로드
         return cell
     }
 }

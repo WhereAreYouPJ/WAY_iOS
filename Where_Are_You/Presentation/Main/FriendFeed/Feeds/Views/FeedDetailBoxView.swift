@@ -10,7 +10,7 @@ import UIKit
 // scheduleInfo 관련 내용들
 class FeedDetailBoxView: UIView {
     // MARK: - Properties
-
+    
     let detailBox: UIView = {
         let view = UIView()
         view.layer.cornerRadius = LayoutAdapter.shared.scale(value: 14)
@@ -143,11 +143,13 @@ class FeedDetailBoxView: UIView {
         return stackView
     }
     
-    func configureParticipantImages(participants: [UIImage]) {
+    func configureParticipantImages(participants: [String]) {
+        participantBoxView.isHidden = participants.isEmpty
         participantStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
         for (index, image) in participants.prefix(3).enumerated() {
-            let imageView = UIImageView(image: image)
+            let imageView = UIImageView()
+            imageView.setImage(from: image)
             imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
             imageView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 9)
@@ -159,7 +161,5 @@ class FeedDetailBoxView: UIView {
             participantStackView.addArrangedSubview(imageView)
             imageView.layer.zPosition = CGFloat(3 - index)
         }
-        
-        participantStackView.isHidden = participants.isEmpty
     }
 }

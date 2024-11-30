@@ -1674,7 +1674,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1610;
 				TargetAttributes = {
 					995358382C00C555005BF799 = {
 						CreatedOnToolsVersion = 15.4;
@@ -1924,7 +1924,6 @@
 				9911F98C2C3F908E00D0FDC9 /* HomeFeedView.swift in Sources */,
 				99C9B2292C0197CA008D7CBD /* Member.swift in Sources */,
 				D55C6C522CF5DA5D005132DC /* GetListForSenderResponse.swift in Sources */,
-				99C9B2292C0197CA008D7CBD /* Member.swift in Sources */,
 				99D780DE2C6066FA005A3F30 /* LoginResponse.swift in Sources */,
 				99949F452C58788200AE0177 /* FriendFeedViewController.swift in Sources */,
 				D593CCC82C82318F00A862FF /* ScheduleViewModel.swift in Sources */,
@@ -2062,7 +2061,6 @@
 				99C1403C2C6496B400A706B6 /* FeedsTableViewCell.swift in Sources */,
 				D57B46F72C786AFD00657C51 /* MapView.swift in Sources */,
 				99D5FE3C2C88419300D224DA /* ModifyUserNameUseCase.swift in Sources */,
-				D57B46F72C786AFD00657C51 /* MapView.swift in Sources */,
 				9911F98E2C3F913100D0FDC9 /* HomeFeedCollectionViewCell.swift in Sources */,
 				992F57C82C5B26D700219C6B /* ResetPasswordBody.swift in Sources */,
 				D55C6C3E2CF57E74005132DC /* CustomButtonSwiftUI.swift in Sources */,

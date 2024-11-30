@@ -12,6 +12,8 @@ class FeedsViewController: UIViewController {
     // MARK: - Properties
     private var feedsView = FeedsView()
     private var noFeedsView = NoDataView()
+    let plusOptionButton = CustomOptionButtonView(title: "새 피드 작성")
+
     var viewModel: FeedViewModel!
     
     // MARK: - Lifecycle
@@ -35,8 +37,8 @@ class FeedsViewController: UIViewController {
     private func setupBindings() {
         viewModel.onFeedsDataFetched = { [weak self] in
             DispatchQueue.main.async {
-                self?.feedsView.updateContentHeight()
                 self?.feedsView.feedsTableView.reloadData()
+                self?.feedsView.updateContentHeight()
             }
         }
     }
@@ -46,17 +48,53 @@ class FeedsViewController: UIViewController {
         feedsView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
+        plusOptionButton.isHidden = true
+        
+        view.addSubview(plusOptionButton)
+
+        plusOptionButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 9))
+            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 15))
+            make.width.equalTo(160)
+            make.height.equalTo(38)
+        }
     }
     
     private func setupTableView() {
         feedsView.feedsTableView.delegate = self
         feedsView.feedsTableView.dataSource = self
+        feedsView.feedsTableView.rowHeight = UITableView.automaticDimension
+        feedsView.feedsTableView.estimatedRowHeight = LayoutAdapter.shared.scale(value: 416)
         feedsView.feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
+    }
+    
+    private func setupActions() {
+        plusOptionButton.button.addTarget(self, action: #selector(plusOptionButtonTapped), for: .touchUpInside)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    // MARK: - Selectors
+
+    @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {
+        let location = sender.location(in: self.view)
+        if !plusOptionButton.frame.contains(location) {
+            plusOptionButton.isHidden = true
+        }
+    }
+    
+    @objc func plusOptionButtonTapped() {
+        plusOptionButton.isHidden = true
+        let controller = AddFeedViewController()
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
     }
 }
 
 extension FeedsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("Number of rows: \(viewModel.displayFeedContent.count)")
         return viewModel.displayFeedContent.isEmpty ? 1 : viewModel.displayFeedContent.count
     }
     
@@ -70,7 +108,7 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource {
             // NoDataView의 레이아웃 설정
             noFeedsView.snp.makeConstraints { make in
                 make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 7))
-                make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 125))
+                make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 44))
             }
             return cell
         }
@@ -85,7 +123,7 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if viewModel.displayFeedContent.isEmpty {
-            return tableView.frame.height
+            return LayoutAdapter.shared.scale(value: 600)
         }
         return UITableView.automaticDimension
     }

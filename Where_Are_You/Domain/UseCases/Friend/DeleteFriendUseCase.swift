@@ -8,7 +8,7 @@
 import Foundation
 
 protocol DeleteFriendUseCase {
-    func execute(request: DeleteFriendBody,completion: @escaping (Result<Void, Error>) -> Void)
+    func execute(request: DeleteFriendBody, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class DeleteFriendUseCaseImpl: DeleteFriendUseCase {
