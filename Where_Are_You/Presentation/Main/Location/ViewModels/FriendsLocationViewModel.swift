@@ -10,13 +10,20 @@ import CoreLocation
 import KakaoMapsSDK
 
 class FriendsLocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
-    @Published var userLatitude: Double = 0
     @Published var userLongitude: Double = 0
+    @Published var userLatitude: Double = 0
     @Published var locationError: String?
     
     private var locationManager: CLLocationManager?
+    private let postCoordinateUseCase: PostCoordinateUseCase
+    private let getCoordinateUseCase: GetCoordinateUseCase
     
-    override init() {
+    init(
+        postCoordinateUseCase: PostCoordinateUseCase,
+        getCoordinateUseCase: GetCoordinateUseCase
+    ) {
+        self.postCoordinateUseCase = postCoordinateUseCase
+        self.getCoordinateUseCase = getCoordinateUseCase
         super.init()
         setupLocationManager()
     }
@@ -28,7 +35,6 @@ class FriendsLocationViewModel: NSObject, ObservableObject, CLLocationManagerDel
         locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         locationManager?.distanceFilter = kCLDistanceFilterNone
         
-        /// 비동기적으로 권한 요청
         DispatchQueue.global().async { [weak self] in
             self?.locationManager?.requestWhenInUseAuthorization()
         }
@@ -77,6 +83,7 @@ class FriendsLocationViewModel: NSObject, ObservableObject, CLLocationManagerDel
             self.locationError = nil
             self.userLatitude = location.coordinate.latitude
             self.userLongitude = location.coordinate.longitude
+            self.postCoordinate()
         }
     }
     
@@ -93,5 +100,30 @@ class FriendsLocationViewModel: NSObject, ObservableObject, CLLocationManagerDel
     func stopUpdatingLocation() {
         print("위치 업데이트 중지")
         locationManager?.stopUpdatingLocation()
+    }
+    
+    // MARK: 서버 통신 - 사용자 위치 정보 보내기
+    func postCoordinate() {
+        let memberSeq = UserDefaultsManager.shared.getMemberSeq()
+        postCoordinateUseCase.execute(request: PostCoordinateBody(memberSeq: memberSeq, scheduleSeq: 1, x: self.userLongitude, y: self.userLatitude)) { result in
+            switch result {
+            case .success:
+                print("사용자 위치 정보 보내기 완료!")
+            case .failure(let error):
+                print("사용자 위치 정보 보내기 실패 - \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    // MARK: 서버 통신 - 친구들 위치 정보 받기
+    func getCoordinate() {
+        getCoordinateUseCase.execute(scheduleSeq: 1) { result in // TODO: 실제 스케줄시퀀스 넘겨받기
+            switch result {
+            case .success:
+                print("친구들 위치 정보 받기 완료!")
+            case .failure(let error):
+                print("친구들 위치 정보 받기 실패 - \(error.localizedDescription)")
+            }
+        }
     }
 }

@@ -10,8 +10,15 @@ import SwiftUI
 struct FriendsLocationView: View {
     @Binding var isShownView: Bool
     @Binding var schedule: Schedule
-    @ObservedObject var viewModel = FriendsLocationViewModel()
     @State private var currentLocation: Location?
+    
+    @ObservedObject var viewModel: FriendsLocationViewModel = {
+        let coordinateRepository = CoordinateRepository(coordinateService: CoordinateService())
+        let postCoordinateUseCase = PostCoordinateUseCaseImpl(coordinateRepository: coordinateRepository)
+        let getCoordinateUseCase = GetCoordinateUseCaseImpl(coordinateRepository: coordinateRepository)
+        
+        return FriendsLocationViewModel(postCoordinateUseCase: postCoordinateUseCase, getCoordinateUseCase: getCoordinateUseCase)
+    }()
     
     var body: some View {
         ZStack {
