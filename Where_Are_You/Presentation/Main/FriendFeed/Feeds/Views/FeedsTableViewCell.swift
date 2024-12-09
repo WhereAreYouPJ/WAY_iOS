@@ -8,19 +8,19 @@
 import UIKit
 import Kingfisher
 
+protocol FeedsTableViewCellDelegate: AnyObject {
+    func didTapBookmarkButton(feedSeq: Int, isBookMarked: Bool)
+}
+
 class FeedsTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     static let identifier = "FeedsTableViewCell"
+    weak var delegate: FeedsTableViewCellDelegate?
     
     let detailBox = FeedDetailBoxView()
     let feedImagesView = FeedImagesView()
-    let bookMarkButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "icon-feed_bookmark"), for: .normal)
-        button.tintColor = .black
-        return button
-    }()
+    let bookMarkButton = UIButton()
     
     let descriptionLabel: UILabel = {
         let label = CustomLabel(UILabel_NotoSans: .medium, text: "asdasdasd", textColor: .color34, fontSize: LayoutAdapter.shared.scale(value: 14))
@@ -29,6 +29,8 @@ class FeedsTableViewCell: UITableViewCell {
         return label
     }()
     
+    private var feedSeq: Int?
+    private var isBookMarked: Bool = false
     private var imageUrls: [String] = []
     
     // MARK: - Lifecycle
@@ -52,6 +54,8 @@ class FeedsTableViewCell: UITableViewCell {
         contentView.addSubview(descriptionLabel)
         
         descriptionLabel.backgroundColor = .color249
+        
+        bookMarkButton.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
     }
     
     private func setupConstraints() {
@@ -86,30 +90,32 @@ class FeedsTableViewCell: UITableViewCell {
     }
     
     func configure(with feed: MainFeedListContent) {
-        if let content = feed.content {
-            descriptionLabel.isHidden = false
-            descriptionLabel.text = content
-        } else {
-            self.descriptionLabel.isHidden = true
-        }
-        
-        let participants = feed.scheduleFriendInfos.compactMap { $0.profileImage }
-        print("participants: \(participants)") // 디버깅용 출력
-        
-        detailBox.configureParticipantImages(participants: participants)
-        detailBox.profileImage.kf.setImage(with: URL(string: feed.profileImage), placeholder: UIImage(named: "basic_profile_image"))
-        detailBox.dateLabel.text = feed.startTime.formattedDate(to: .yearMonthDate)
-        detailBox.locationLabel.text = feed.location
-        detailBox.titleLabel.text = feed.title
+        descriptionLabel.isHidden = (feed.content == nil)
+        descriptionLabel.text = feed.content
+        detailBox.configure(with: feed)
         self.imageUrls = feed.feedImageInfos.map { $0.feedImageURL }
         feedImagesView.collectionView.reloadData()
+        feedImagesView.pageNumberLabel.text = "1/\(imageUrls.count)"
         
-        feedImagesView.pageControl.numberOfPages = imageUrls.count
-        feedImagesView.pageControl.currentPage = 0
+        feedSeq = feed.feedSeq
+        isBookMarked = feed.bookMarkInfo
+        updateBookMarkUI()
+    }
+    
+    private func updateBookMarkUI() {
+        let iconName = isBookMarked ? "icon-feed_bookmark_filled" : "icon-feed_bookmark"
+        bookMarkButton.setImage(UIImage(named: iconName), for: .normal)
+    }
+    
+    @objc private func bookmarkButtonTapped() {
+        guard let feedSeq = feedSeq else { return }
+        self.isBookMarked.toggle()
+        self.updateBookMarkUI()
+        delegate?.didTapBookmarkButton(feedSeq: feedSeq, isBookMarked: isBookMarked)
     }
 }
 
-extension FeedsTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
+extension FeedsTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIScrollViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageUrls.count
     }
@@ -118,18 +124,19 @@ extension FeedsTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedImageCollectionViewCell.identifier, for: indexPath) as? FeedImageCollectionViewCell else {
             return UICollectionViewCell()
         }
-        let imageUrl = URL(string: imageUrls[indexPath.item])
-        cell.configure(with: UIImage(named: "placeholder")) // Placeholder 적용
-        cell.imageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "placeholder"))
-//        cell.imageView.setImage(from: imageUrl, placeholder: UIImage(named: "placeholder")) // 비동기로 이미지 로드
+        let imageUrlString = imageUrls[indexPath.item]
+        cell.configure(with: imageUrlString)
         return cell
     }
-}
-
-extension FeedsTableViewCell: UIScrollViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+    }
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-            guard let collectionView = scrollView as? UICollectionView else { return }
-            let pageIndex = Int(collectionView.contentOffset.x / collectionView.frame.width)
-            feedImagesView.pageControl.currentPage = pageIndex
-        }
+        guard let collectionView = scrollView as? UICollectionView else { return }
+        let pageWidth = collectionView.frame.width
+        let pageIndex = Int(collectionView.contentOffset.x / pageWidth)
+        feedImagesView.pageNumberLabel.text = "\(pageIndex + 1)/\(imageUrls.count)"
+    }
 }

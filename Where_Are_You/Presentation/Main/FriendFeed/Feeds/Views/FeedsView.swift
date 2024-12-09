@@ -57,12 +57,13 @@ class FeedsView: UIView {
     }
     
     func updateContentHeight() {
-        // 테이블뷰 콘텐츠 크기에 따라 contentView의 높이를 업데이트
-        feedsTableView.layoutIfNeeded()
-        let contentHeight = max(feedsTableView.contentSize.height, UIScreen.main.bounds.height)
-
-        contentView.snp.updateConstraints({ make in
-            make.height.equalTo(contentHeight) // 높이를 동적으로 업데이트
-        })
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.feedsTableView.layoutIfNeeded()
+            let contentHeight = max(self.feedsTableView.contentSize.height, UIScreen.main.bounds.height)
+            self.contentView.snp.updateConstraints { make in
+                make.height.equalTo(contentHeight)
+            }
+        }
     }
 }

@@ -16,11 +16,13 @@ struct HomeFeedContent {
 }
 
 struct MainFeedListContent {
+    let feedSeq: Int
     let profileImage: String
     let startTime: String
     let location: String
     let title: String
     let content: String?
+    var bookMarkInfo: Bool
     let scheduleFriendInfos: [Info]
     let feedImageInfos: [FeedImageInfo]
 }

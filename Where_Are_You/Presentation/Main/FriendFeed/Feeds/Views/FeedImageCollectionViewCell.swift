@@ -9,18 +9,19 @@ import UIKit
 
 class FeedImageCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
-
+    
     static let identifier = "FeedImageCollectionViewCell"
     
     var imageView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
+        iv.contentMode = .scaleToFill
         iv.clipsToBounds = true
+        iv.layer.cornerRadius = LayoutAdapter.shared.scale(value: 6)
         return iv
     }()
     
     // MARK: - Lifecycle
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(imageView)
@@ -35,13 +36,10 @@ class FeedImageCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - Helpers
-
-    func configure(with image: UIImage?) {
-        if let image = image {
-            imageView.isHidden = false
-            imageView.image = image
-        } else {
-            imageView.isHidden = true
-        }
+    
+    func configure(with imageUrlString: String) {
+        let imageUrl = URL(string: imageUrlString)
+        imageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "basic_profile_image"))
+        imageView.isHidden = (imageUrl == nil)
     }
 }
