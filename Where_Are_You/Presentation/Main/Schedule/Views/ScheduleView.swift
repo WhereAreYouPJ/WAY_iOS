@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ScheduleView: View {
+struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 당일 일정인 경우
     @StateObject var viewModel: ScheduleViewModel
     @State private var selectedDate: Date?
     @State private var showMenu = false
@@ -101,7 +101,7 @@ struct ScheduleView: View {
         .fullScreenCover(isPresented: $showFriendsLocation, onDismiss: {
             viewModel.getMonthlySchedule()
         }) {
-            FriendsLocationView(location: .constant(Location(sequence: 0, location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526)))
+            FriendsLocationView(isShownView: $showFriendsLocation, schedule: .constant(Schedule(scheduleSeq: 1, title: "디큐브", startTime: Date.now, endTime: Date.now, color: "red")))
         }
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
         .onAppear(perform: {

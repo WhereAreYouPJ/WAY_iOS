@@ -33,11 +33,11 @@ struct SearchLocationView: View {
                         if !viewModel.searchText.isEmpty {
                             Button(action: {
                                 viewModel.searchText = ""
-                            }) {
+                            }, label: {
                                 Image(systemName: "multiply.circle.fill")
                                     .foregroundColor(.gray)
                                     .padding(.trailing, 8)
-                            }
+                            })
                         }
                     }
                 )
@@ -79,7 +79,7 @@ struct SearchLocationView: View {
         .navigationBarTitleDisplayMode(.inline)
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
         .foregroundStyle(Color(.color34))
-        .onChange(of: viewModel.searchText) { _, newValue in
+        .onChange(of: viewModel.searchText) { _, _ in
             showRecentSearch = (viewModel.searchText == "")
         }
     }
@@ -115,6 +115,7 @@ struct SearchLocationView: View {
             selectedLocation = location
             viewModel.addToRecentSearches(location)
             path.append(Route.confirmLocation(location))
+            print("위치: \(location.location) / \(location.streetName) / \(location.x) / \(location.y)")
         }
     }
 }

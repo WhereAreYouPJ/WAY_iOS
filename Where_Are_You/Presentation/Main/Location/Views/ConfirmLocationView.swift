@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ConfirmLocationView: View {
+struct ConfirmLocationView: View { // TODO: 뒤로가기 버튼
     @StateObject var viewModel = ConfirmLocationViewModel()
     @Environment(\.presentationMode) var presentationMode
     @Binding var location: Location
@@ -76,5 +76,5 @@ struct ConfirmLocationView: View {
 }
 
 #Preview {
-    ConfirmLocationView(location: .constant(Location(sequence: 0, location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526)), path: .constant(NavigationPath()))
+    ConfirmLocationView(location: .constant(Location(sequence: 0, location: "현대백화점 디큐브시티점", streetName: "서울 구로구 경인로 662", x: 126.88958060554663, y: 37.50910419634123)), path: .constant(NavigationPath()))
 }

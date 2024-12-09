@@ -1,19 +1,19 @@
 //
-//  SearchPlaceView.swift
+//  FriendsLocationView.swift
 //  Where_Are_You
 //
-//  Created by juhee on 06.09.24.
+//  Created by juhee on 26.11.24.
 //
 
 import SwiftUI
 import KakaoMapsSDK
 
-struct MapView: View {
+struct MapPinView: View {
     @State var draw: Bool = false // 뷰의 appear 상태를 전달하기 위한 변수.
-    @Binding var location: Location
+    @Binding var myLocation: Location
     
     var body: some View {
-        KakaoMapView(draw: $draw, location: $location)
+        KakaoMapPinView(draw: $draw, location: $myLocation)
             .onAppear(perform: {
                 self.draw = true
             })
@@ -22,7 +22,7 @@ struct MapView: View {
     }
 }
 
-struct KakaoMapView: UIViewRepresentable {
+struct KakaoMapPinView: UIViewRepresentable {
     @Binding var draw: Bool
     @Binding var location: Location
     
@@ -164,14 +164,23 @@ struct KakaoMapView: UIViewRepresentable {
             }
             let manager = view.getLabelManager()
             
-            let iconStyle1 = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.0))
-            let iconStyle2 = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.0))
+//            let iconStyle1 = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.0))
+//            let iconStyle1 = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.0))
+//            let iconStyle2 = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.0))
+            let myNoti = PoiBadge(badgeID: "myBadge", image: UIImage(named: "noti.png"), offset: CGPoint(x: 0.9, y: 0.1), zOrder: 0)
+            let myIconStyle = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.2), badges: [myNoti])
+            let friendsNoti = PoiBadge(badgeID: "friendsBadge", image: UIImage(named: "noti2.png"), offset: CGPoint(x: 0.9, y: 0.1), zOrder: 0)
+            let friendsIconStyle = PoiIconStyle(symbol: UIImage(named: "pin_red.png"), anchorPoint: CGPoint(x: 0.0, y: 0.5), badges: [friendsNoti])
             
-            let poiStyle = PoiStyle(styleID: "PerLevelStyle", styles: [
-                PerLevelPoiStyle(iconStyle: iconStyle1, level: 5),
-                PerLevelPoiStyle(iconStyle: iconStyle2, level: 12)
+            let myPoiStyle = PoiStyle(styleID: "myPoiStyle", styles: [
+                PerLevelPoiStyle(iconStyle: myIconStyle, level: 12)
             ])
-            manager.addPoiStyle(poiStyle)
+            let friendsPoiStyle = PoiStyle(styleID: "friendsPoiStyle", styles: [
+                PerLevelPoiStyle(iconStyle: myIconStyle, level: 12)
+            ])
+            
+            manager.addPoiStyle(myPoiStyle)
+            manager.addPoiStyle(friendsPoiStyle)
         }
         
         func createPois() {
@@ -182,7 +191,7 @@ struct KakaoMapView: UIViewRepresentable {
             let manager = view.getLabelManager()
             let layer = manager.getLabelLayer(layerID: "PoiLayer")
             
-            let poiOption = PoiOptions(styleID: "PerLevelStyle")
+            let poiOption = PoiOptions(styleID: "myPoiStyle")
             poiOption.rank = 0
             
             let poi1: Poi?
@@ -214,16 +223,45 @@ struct KakaoMapView: UIViewRepresentable {
             mapView.viewRect = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: size)
             if first {
                 let cameraUpdate = CameraUpdate.make(
-                    target: MapPoint(longitude: 126.978365, latitude: 37.566691),
+                    target: MapPoint(
+                        longitude: location?.x ?? 126.978365,
+                        latitude: location?.y ?? 37.566691
+                    ),
                     mapView: mapView
                 )
                 mapView.moveCamera(cameraUpdate)
                 first = false
             }
         }
+        
+        // location 값이 변경될 때 지도 업데이트를 위한 메서드 추가
+        func updateLocation(_ newLocation: Location) {
+            self.location = newLocation
+            
+            guard let view = controller?.getView("mapview") as? KakaoMap else {
+                print("view is nil in updateLocation")
+                return
+            }
+            
+            // 기존 POI 삭제
+            let manager = view.getLabelManager()
+            if let layer = manager.getLabelLayer(layerID: "PoiLayer") {
+                layer.clearAllItems() // TODO: 맞는 메서드인지 확인 필요
+            }
+            
+            // 새로운 POI 생성
+            createPois()
+            
+            // 카메라 이동
+            let cameraUpdate = CameraUpdate.make(
+                target: MapPoint(longitude: newLocation.x, latitude: newLocation.y),
+                mapView: view
+            )
+            view.moveCamera(cameraUpdate)
+        }
     }
 }
 
 #Preview {
-    MapView(location: .constant(Location(sequence: 0, location: "현대백화점 디큐브시티점", streetName: "서울 구로구 경인로 662", x: 126.88958060554663, y: 37.50910419634123)))
+    MapPinView(myLocation: .constant(Location(sequence: 0, location: "현대백화점 디큐브시티점", streetName: "서울 구로구 경인로 662", x: 127.038846, y: 37.495418))) // x: 126.88958060554663, y: 37.50910419634123
 }
