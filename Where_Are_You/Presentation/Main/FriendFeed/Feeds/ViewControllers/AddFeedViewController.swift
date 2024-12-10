@@ -17,6 +17,8 @@ class AddFeedViewController: UIViewController {
         }
     }
     
+    var onFeedCreated: (() -> Void)?
+    
     let addFeedView = AddFeedView()
     private var dropViewHeightConstraint: NSLayoutConstraint!
     private var isDropdownVisible = false
@@ -121,12 +123,12 @@ class AddFeedViewController: UIViewController {
     @objc func createFeed() {
         // 피드 생성하기 버튼 눌림
         guard let title = addFeedView.titleTextField.text, !title.isEmpty else { return }
-        
         let content = addFeedView.contentTextView.text == "어떤 일이 있었나요?" ? nil : addFeedView.contentTextView.text
         
         viewModel.saveFeed(title: title, content: content) { [weak self] result in
             switch result {
             case .success:
+                self?.onFeedCreated?()
                 self?.dismiss(animated: true)
             case .failure:
                 print("피드 생성 실패")

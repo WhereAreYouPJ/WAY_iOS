@@ -32,7 +32,7 @@ class SplashViewController: UIViewController {
     }
     
     private func navigateBasedOnLoginStatus() {
-        if UserDefaultsManager.shared.isLoggedIn() {
+        if UserDefaultsManager.shared.getIsLoggedIn() {
             let mainTabBarController = MainTabBarController()
             transitionToViewController(mainTabBarController)
         } else {

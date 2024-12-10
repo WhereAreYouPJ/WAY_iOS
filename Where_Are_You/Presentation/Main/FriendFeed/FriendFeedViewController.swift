@@ -167,14 +167,11 @@ class FriendFeedViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonStack)
         
-//        plusOptionButton.isHidden = true
         
         view.addSubview(friendOptionView.view)
         
-        plusOptionButton.isHidden = true
         friendOptionView.view.isHidden = true
         
-        view.bringSubviewToFront(plusOptionButton)
         view.bringSubviewToFront(friendOptionView.view)
     }
     
@@ -268,7 +265,6 @@ class FriendFeedViewController: UIViewController {
         if segmentControl.selectedSegmentIndex == 0 {
             feedsViewController.plusOptionButton.isHidden = false
             friendOptionView.view.isHidden = true
-            view.bringSubviewToFront(plusOptionButton)
         } else {
             friendOptionView.view.isHidden = false
             feedsViewController.plusOptionButton.isHidden = true

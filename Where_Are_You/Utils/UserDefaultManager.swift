@@ -13,6 +13,7 @@ class UserDefaultsManager {
     private let refreshTokenKey = "refreshToken"
     private let memberSeqKey = "memberSeq"
     private let memberCode = "memberCode"
+    private let isLoggedIn = "isLoggedIn"
     
     private init() {}
     
@@ -59,11 +60,11 @@ class UserDefaultsManager {
     // MARK: - IsLoggedIn
 
     func saveIsLoggedIn(_ loggedIn: Bool) {
-        UserDefaults.standard.set(loggedIn, forKey: "isLoggedIn")
+        UserDefaults.standard.set(loggedIn, forKey: isLoggedIn)
     }
 
-    func isLoggedIn() -> Bool {
-        return UserDefaults.standard.bool(forKey: "isLoggedIn")
+    func getIsLoggedIn() -> Bool {
+        return UserDefaults.standard.bool(forKey: isLoggedIn)
     }
     
     // MARK: - ClearData
