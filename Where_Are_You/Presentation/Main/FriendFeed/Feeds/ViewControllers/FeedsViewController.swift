@@ -129,6 +129,15 @@ class FeedsViewController: UIViewController {
 // MARK: - FeedsTableViewCellDelegate
 
 extension FeedsViewController: FeedsTableViewCellDelegate {
+    func didTapFixButton(feedSeq: Int, isOwner: Bool) {
+        if isOwner {
+            // 내가 작성한 피드
+        } else {
+            // 남이 작성한 피드
+            let optionButton = CustomOptionButtonView(title: "피드 숨김")
+        }
+    }
+    
     func didTapBookmarkButton(feedSeq: Int, isBookMarked: Bool) {
         if isBookMarked {
             viewModel.postFeedBookMark(feedSeq: feedSeq)

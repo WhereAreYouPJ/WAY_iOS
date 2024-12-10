@@ -147,8 +147,9 @@ class FeedDetailBoxView: UIView {
         return stackView
     }
     
-    func configure(with feed: MainFeedListContent) {
-        let participants = feed.scheduleFriendInfos.compactMap { $0.profileImage }
+    func configure(with feed: Feed) {
+        let scheduleFriendInfos = feed.scheduleFriendInfos ?? []
+        let participants = scheduleFriendInfos.compactMap { $0.profileImage }
         print("participants: \(participants)") // 디버깅용 출력
         
         configureParticipantImages(participants: participants)

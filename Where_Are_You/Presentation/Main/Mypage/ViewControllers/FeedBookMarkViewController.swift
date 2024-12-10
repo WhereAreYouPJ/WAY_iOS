@@ -21,22 +21,19 @@ class FeedBookMarkViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar()
-        setupActions()
-        setupTableView()
         setupViewModel()
+        setupViews()
+        setupTableView()
         setupBindings()
+        setupActions()
+        viewModel.fetchBookMarkFeed()
+        
+        feedBookMarkView.updateContentHeight()
     }
     
     // MARK: - Helpers
     private func setupNavigationBar() {
         Utilities.createNavigationBar(for: self, title: "피드 책갈피", backButtonAction: #selector(backButtonTapped), showBackButton: true)
-    }
-    
-    private func setupTableView() {
-        feedBookMarkView.feedsBookMarkTableView.delegate = self
-        feedBookMarkView.feedsBookMarkTableView.dataSource = self
-        feedBookMarkView.feedsBookMarkTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
     }
     
     private func setupViewModel() {
@@ -50,9 +47,39 @@ class FeedBookMarkViewController: UIViewController {
     private func setupBindings() {
         viewModel.onBookMarkFeedUpdated = { [weak self] in
             DispatchQueue.main.async {
-                self?.feedBookMarkView.feedsBookMarkTableView.reloadData()
+                let isEmpty = self?.viewModel.displayBookMarkFeedContent.isEmpty ?? true
+                self?.feedBookMarkView.isHidden = isEmpty
+                self?.noDataView.isHidden = !isEmpty
+                if !isEmpty {
+                    self?.feedBookMarkView.feedsTableView.reloadData()
+                    self?.feedBookMarkView.updateContentHeight()
+                }
             }
         }
+    }
+    
+    private func setupViews() {
+        view.addSubview(feedBookMarkView)
+        view.addSubview(noDataView)
+        feedBookMarkView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        noDataView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        noDataView.isHidden = true
+    }
+    
+    private func setupTableView() {
+        if viewModel.displayBookMarkFeedContent.isEmpty {
+            feedBookMarkView.isHidden = true
+            noDataView.isHidden = false
+        }
+        feedBookMarkView.feedsTableView.delegate = self
+        feedBookMarkView.feedsTableView.dataSource = self
+        feedBookMarkView.feedsTableView.rowHeight = UITableView.automaticDimension
+        feedBookMarkView.feedsTableView.estimatedRowHeight = LayoutAdapter.shared.scale(value: 498)
+        feedBookMarkView.feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
     }
     
     private func setupActions() {
@@ -64,6 +91,19 @@ class FeedBookMarkViewController: UIViewController {
         dismiss(animated: true)
     }
 }
+// MARK: - FeedsTableViewCellDelegate
+
+extension FeedBookMarkViewController: FeedsTableViewCellDelegate {
+    func didTapBookmarkButton(feedSeq: Int, isBookMarked: Bool) {
+        viewModel.deleteBookMarkFeed(feedSeq: feedSeq)
+        // 북마크 상태 변경 후 해당 셀만 업데이트
+        if let index = viewModel.displayBookMarkFeedContent.firstIndex(where: { $0.feedSeq == feedSeq }) {
+            let indexPath = IndexPath(row: index, section: 0)
+            feedBookMarkView.feedsTableView.reloadRows(at: [indexPath], with: .none)
+        }
+    }
+}
+// MARK: - UITableViewDataSource, UITableViewDelegate
 
 extension FeedBookMarkViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -75,13 +115,18 @@ extension FeedBookMarkViewController: UITableViewDataSource, UITableViewDelegate
             return UITableViewCell()
         }
         let feed = viewModel.displayBookMarkFeedContent[indexPath.row]
-//        cell.configure(with: feed)
+        cell.configure(with: feed)
+        cell.delegate = self
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }
 
 extension FeedBookMarkViewController: FeedBookMarkViewModelDelegate {
     func didUpdateBookMarkFeed() {
-        feedBookMarkView.feedsBookMarkTableView.reloadData()
+        feedBookMarkView.feedsTableView.reloadData()
     }
 }

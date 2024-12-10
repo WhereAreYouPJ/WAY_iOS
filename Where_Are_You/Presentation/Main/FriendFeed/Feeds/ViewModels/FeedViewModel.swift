@@ -27,7 +27,7 @@ class FeedViewModel {
     private var isLoading = false
     
     private var rawFeedContent: [FeedContent] = []
-    private(set) var displayFeedContent: [MainFeedListContent] = [] {
+    private(set) var displayFeedContent: [Feed] = [] {
         didSet {
             self.onFeedsDataFetched?()
         }
@@ -53,20 +53,21 @@ class FeedViewModel {
             switch result {
             case .success(let data):
                 self.rawFeedContent = data
-                self.displayFeedContent = rawFeedContent.compactMap { feedContent in
-                    guard let scheduleFeedInfo = feedContent.scheduleFeedInfo.first else { return nil }
-                    
-                    return MainFeedListContent(
-                        feedSeq: scheduleFeedInfo.feedInfo.feedSeq,
-                        profileImage: scheduleFeedInfo.memberInfo.profileImage,
-                        startTime: feedContent.scheduleInfo.startTime,
-                        location: feedContent.scheduleInfo.location,
-                        title: scheduleFeedInfo.feedInfo.title,
-                        content: scheduleFeedInfo.feedInfo.content,
-                        bookMarkInfo: scheduleFeedInfo.bookMarkInfo,
-                        scheduleFriendInfos: feedContent.scheduleFriendInfo,
-                        feedImageInfos: scheduleFeedInfo.feedImageInfos
-                    )
+                self.displayFeedContent = rawFeedContent.compactMap { $0.toFeeds()
+//                    feedContent in
+//                    guard let scheduleFeedInfo = feedContent.scheduleFeedInfo.first else { return nil }
+//                    
+//                    return MainFeedListContent(
+//                        feedSeq: scheduleFeedInfo.feedInfo.feedSeq,
+//                        profileImage: scheduleFeedInfo.memberInfo.profileImage,
+//                        startTime: feedContent.scheduleInfo.startTime,
+//                        location: feedContent.scheduleInfo.location,
+//                        title: scheduleFeedInfo.feedInfo.title,
+//                        content: scheduleFeedInfo.feedInfo.content,
+//                        bookMarkInfo: scheduleFeedInfo.bookMarkInfo,
+//                        scheduleFriendInfos: feedContent.scheduleFriendInfo,
+//                        feedImageInfos: scheduleFeedInfo.feedImageInfos
+//                    )
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -80,7 +81,7 @@ class FeedViewModel {
             case .success:
                 DispatchQueue.main.async {
                     if let index = self?.displayFeedContent.firstIndex(where: { $0.feedSeq == feedSeq }) {
-                        self?.displayFeedContent[index].bookMarkInfo = true
+                        self?.displayFeedContent[index].bookMark = true
 //                        self?.onBookMarkFeed?(true)
                     }
                 }
@@ -96,7 +97,7 @@ class FeedViewModel {
             case .success:
                 DispatchQueue.main.async {
                     if let index = self?.displayFeedContent.firstIndex(where: { $0.feedSeq == feedSeq }) {
-                        self?.displayFeedContent[index].bookMarkInfo = false
+                        self?.displayFeedContent[index].bookMark = false
 //                        self?.onBookMarkFeed?(false)
                     }
                 }

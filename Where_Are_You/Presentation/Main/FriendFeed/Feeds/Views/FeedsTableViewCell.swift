@@ -10,6 +10,7 @@ import Kingfisher
 
 protocol FeedsTableViewCellDelegate: AnyObject {
     func didTapBookmarkButton(feedSeq: Int, isBookMarked: Bool)
+    func didTapFixButton(feedSeq: Int, isOwner: Bool)
 }
 
 class FeedsTableViewCell: UITableViewCell {
@@ -17,6 +18,11 @@ class FeedsTableViewCell: UITableViewCell {
     // MARK: - Properties
     static let identifier = "FeedsTableViewCell"
     weak var delegate: FeedsTableViewCellDelegate?
+    
+    private var feedSeq: Int?
+    var isOwner: Bool = false
+    private var isBookMarked: Bool = false
+    private var imageUrls: [String] = []
     
     let detailBox = FeedDetailBoxView()
     let feedImagesView = FeedImagesView()
@@ -28,10 +34,6 @@ class FeedsTableViewCell: UITableViewCell {
         label.lineBreakMode = .byTruncatingHead
         return label
     }()
-    
-    private var feedSeq: Int?
-    private var isBookMarked: Bool = false
-    private var imageUrls: [String] = []
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -89,16 +91,18 @@ class FeedsTableViewCell: UITableViewCell {
         feedImagesView.collectionView.register(FeedImageCollectionViewCell.self, forCellWithReuseIdentifier: FeedImageCollectionViewCell.identifier)
     }
     
-    func configure(with feed: MainFeedListContent) {
+    func configure(with feed: Feed) {
         descriptionLabel.isHidden = (feed.content == nil)
         descriptionLabel.text = feed.content
         detailBox.configure(with: feed)
-        self.imageUrls = feed.feedImageInfos.map { $0.feedImageURL }
+        let feedImageInfos = feed.feedImageInfos ?? []
+        self.imageUrls = feedImageInfos.map { $0.feedImageURL }
         feedImagesView.collectionView.reloadData()
         feedImagesView.pageNumberLabel.text = "1/\(imageUrls.count)"
         
+        isOwner = (feed.memberSeq == UserDefaultsManager.shared.getMemberSeq())
         feedSeq = feed.feedSeq
-        isBookMarked = feed.bookMarkInfo
+        isBookMarked = feed.bookMark
         updateBookMarkUI()
     }
     
