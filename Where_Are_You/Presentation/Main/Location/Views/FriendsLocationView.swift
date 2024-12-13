@@ -10,7 +10,7 @@ import SwiftUI
 struct FriendsLocationView: View {
     @Binding var isShownView: Bool
     @Binding var schedule: Schedule
-    @State private var currentLocation: Location?
+    var currentLocation: LongLat?
     
     @ObservedObject var viewModel: FriendsLocationViewModel = {
         let coordinateRepository = CoordinateRepository(coordinateService: CoordinateService())
@@ -22,33 +22,20 @@ struct FriendsLocationView: View {
     
     var body: some View {
         ZStack {
-            if let location = currentLocation {
-                MapPinView(myLocation: .constant(location))
-            }
+            MapPinView(myLocation: $viewModel.myLocation)
             
             DismissButtonView(isShownView: $isShownView)
         }
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
         .onAppear {
             viewModel.startUpdatingLocation()
+            print("일정 정보: \(schedule.scheduleSeq)")
         }
-        .onChange(of: viewModel.userLatitude) { _, _ in
-            updateLocation()
+        .onChange(of: viewModel.myLocation.x) { _, _ in
+            viewModel.postCoordinate(scheduleSeq: schedule.scheduleSeq)
         }
-        .onChange(of: viewModel.userLongitude) { _, _ in
-            updateLocation()
-        }
-    }
-    
-    private func updateLocation() {
-        if viewModel.userLatitude != 0 && viewModel.userLongitude != 0 {
-            currentLocation = Location(
-                sequence: 0,
-                location: "현재 위치",
-                streetName: "",
-                x: viewModel.userLongitude,
-                y: viewModel.userLatitude
-            )
+        .onChange(of: viewModel.myLocation.y) { _, _ in
+            viewModel.postCoordinate(scheduleSeq: schedule.scheduleSeq)
         }
     }
 }

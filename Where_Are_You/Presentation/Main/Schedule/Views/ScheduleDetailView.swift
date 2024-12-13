@@ -11,6 +11,8 @@ struct ScheduleDetailView: View {
     @StateObject var viewModel: ScheduleDetailViewModel
     @Environment(\.dismiss) private var dismiss
     @State private var path = NavigationPath()
+    @State private var showFriendsLocation = false // MARK: 친구 위치 실시간 확인 테스트용
+    
     var schedule: Schedule
     
     init(schedule: Schedule) {
@@ -73,7 +75,18 @@ struct ScheduleDetailView: View {
                 
                 MemoView(memo: $viewModel.createViewModel.memo)
                     .disabled(!viewModel.isEditable)
+                
+                // MARK: 친구 위치 실시간 확인 테스트용
+                Button {
+                    self.showFriendsLocation.toggle()
+                } label: {
+                    Text("실시간 위치 확인")
+                }
+                .padding(.vertical, 20)
             })
+            .fullScreenCover(isPresented: $showFriendsLocation) {
+                FriendsLocationView(isShownView: $showFriendsLocation, schedule: $viewModel.schedule)
+            }
             .padding(15)
             .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
             .toolbar {

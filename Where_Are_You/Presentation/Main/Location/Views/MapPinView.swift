@@ -10,7 +10,7 @@ import KakaoMapsSDK
 
 struct MapPinView: View {
     @State var draw: Bool = false // 뷰의 appear 상태를 전달하기 위한 변수.
-    @Binding var myLocation: Location
+    @Binding var myLocation: LongLat
     
     var body: some View {
         KakaoMapPinView(draw: $draw, location: $myLocation)
@@ -24,7 +24,7 @@ struct MapPinView: View {
 
 struct KakaoMapPinView: UIViewRepresentable {
     @Binding var draw: Bool
-    @Binding var location: Location
+    @Binding var location: LongLat
     
     /// UIView를 상속한 KMViewContainer를 생성한다.
     /// 뷰 생성과 함께 KMControllerDelegate를 구현한 Coordinator를 생성하고, 엔진을 생성 및 초기화한다.
@@ -48,11 +48,19 @@ struct KakaoMapPinView: UIViewRepresentable {
                 
                 if !controller.isEnginePrepared {
                     controller.prepareEngine()
+                    
+                    // 엔진 준비 후 addViews 호출
+                    context.coordinator.addViews()
+                    print("Engine prepared and views added")
                 }
                 
                 if !controller.isEngineActive {
                     controller.activateEngine()
                 }
+                
+                // location이 변경되었을 때 updateLocation 호출
+                context.coordinator.updateLocation(location)
+                print("KakaoMapPinView - updateUIView with location x: \(location.x), y: \(location.y)")
             }
         } else {
             context.coordinator.controller?.resetEngine()
@@ -73,10 +81,11 @@ struct KakaoMapPinView: UIViewRepresentable {
     class KakaoMapCoordinator: NSObject, MapControllerDelegate {
         var controller: KMController?
         var container: KMViewContainer?
-        var location: Location?
-        var first: Bool = true
+        var location: LongLat?
+        private let mapViewName = "friendsLocationMapView"
+        private var isViewReady = false
         
-        init(location: Location?) {
+        init(location: LongLat?) {
             self.location = location
             super.init()
         }
@@ -94,10 +103,11 @@ struct KakaoMapPinView: UIViewRepresentable {
             let defaultPosition: MapPoint
             if let location {
                 defaultPosition = MapPoint(longitude: location.x, latitude: location.y)
+                print("MapPinView - x: \(location.x), y: \(location.y)")
             } else {
                 defaultPosition = MapPoint(longitude: 126.978365, latitude: 37.566691)
             }
-            let mapviewInfo: MapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition)
+            let mapviewInfo: MapviewInfo = MapviewInfo(viewName: mapViewName, viewInfoName: "map", defaultPosition: defaultPosition)
             
             guard let controller else {
                 print("Controller is nil in addViews")
@@ -119,6 +129,14 @@ struct KakaoMapPinView: UIViewRepresentable {
             createLabelLayer()
             createPoiStyle()
             createPois()
+            
+            // view가 성공적으로 추가되었음을 표시
+            isViewReady = true
+            
+            // 현재 location으로 카메라 위치 업데이트
+            if let currentLocation = location {
+                updateLocation(currentLocation)
+            }
         }
         
         // addView 실패 이벤트 delegate. 실패에 대한 오류 처리를 진행한다.
@@ -147,7 +165,7 @@ struct KakaoMapPinView: UIViewRepresentable {
                 return
             }
             
-            guard let view = controller.getView("mapview") as? KakaoMap else {
+            guard let view = controller.getView(mapViewName) as? KakaoMap else {
                 print("view is nil or not KakaoMap type in createLabelLayer")
                 return
             }
@@ -158,15 +176,15 @@ struct KakaoMapPinView: UIViewRepresentable {
         
         // Poi 표시 스타일 생성
         func createPoiStyle() {
-            guard let view = controller?.getView("mapview") as? KakaoMap else {
+            guard let view = controller?.getView(mapViewName) as? KakaoMap else {
                 print("view is nil in createPoiStyle")
                 return
             }
             let manager = view.getLabelManager()
             
-//            let iconStyle1 = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.0))
-//            let iconStyle1 = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.0))
-//            let iconStyle2 = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.0))
+            //            let iconStyle1 = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.0))
+            //            let iconStyle1 = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.0))
+            //            let iconStyle2 = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.0))
             let myNoti = PoiBadge(badgeID: "myBadge", image: UIImage(named: "noti.png"), offset: CGPoint(x: 0.9, y: 0.1), zOrder: 0)
             let myIconStyle = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.2), badges: [myNoti])
             let friendsNoti = PoiBadge(badgeID: "friendsBadge", image: UIImage(named: "noti2.png"), offset: CGPoint(x: 0.9, y: 0.1), zOrder: 0)
@@ -184,7 +202,7 @@ struct KakaoMapPinView: UIViewRepresentable {
         }
         
         func createPois() {
-            guard let view = controller?.getView("mapview") as? KakaoMap else {
+            guard let view = controller?.getView(mapViewName) as? KakaoMap else {
                 print("view is nil in createPois")
                 return
             }
@@ -216,33 +234,30 @@ struct KakaoMapPinView: UIViewRepresentable {
         
         // KMViewContainer 리사이징 될 때 호출.
         func containerDidResized(_ size: CGSize) {
-            guard let mapView = controller?.getView("mapview") as? KakaoMap else {
+            guard let mapView = controller?.getView(mapViewName) as? KakaoMap else {
                 print("mapView not found in containerDidResized")
                 return
             }
             mapView.viewRect = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: size)
-            if first {
-                let cameraUpdate = CameraUpdate.make(
-                    target: MapPoint(
-                        longitude: location?.x ?? 126.978365,
-                        latitude: location?.y ?? 37.566691
-                    ),
-                    mapView: mapView
-                )
-                mapView.moveCamera(cameraUpdate)
-                first = false
-            }
+            
+            let cameraUpdate = CameraUpdate.make(
+                target: MapPoint(
+                    longitude: location?.x ?? 126.978365,
+                    latitude: location?.y ?? 37.566691
+                ),
+                mapView: mapView
+            )
+            mapView.moveCamera(cameraUpdate)
         }
         
         // location 값이 변경될 때 지도 업데이트를 위한 메서드 추가
-        func updateLocation(_ newLocation: Location) {
+        func updateLocation(_ newLocation: LongLat) {
             self.location = newLocation
             
-            guard let view = controller?.getView("mapview") as? KakaoMap else {
-                print("view is nil in updateLocation")
-                return
-            }
-            
+            // view가 준비되지 않았으면 업데이트 스킵
+            guard isViewReady else { return }
+            guard let view = controller?.getView(mapViewName) as? KakaoMap else { return }
+
             // 기존 POI 삭제
             let manager = view.getLabelManager()
             if let layer = manager.getLabelLayer(layerID: "PoiLayer") {
@@ -253,15 +268,17 @@ struct KakaoMapPinView: UIViewRepresentable {
             createPois()
             
             // 카메라 이동
+            let target = MapPoint(longitude: newLocation.x, latitude: newLocation.y)
             let cameraUpdate = CameraUpdate.make(
-                target: MapPoint(longitude: newLocation.x, latitude: newLocation.y),
-                mapView: view
+                target: target,
+                zoomLevel: 15, mapView: view
             )
             view.moveCamera(cameraUpdate)
+            print("MapPinView camera updated! x: \(newLocation.x), y: \(newLocation.y)")
         }
     }
 }
 
 #Preview {
-    MapPinView(myLocation: .constant(Location(sequence: 0, location: "현대백화점 디큐브시티점", streetName: "서울 구로구 경인로 662", x: 127.038846, y: 37.495418))) // x: 126.88958060554663, y: 37.50910419634123
+    MapPinView(myLocation: .constant(LongLat(x: 127.0388462, y: 37.495418))) // x: 126.88958060554663, y: 37.50910419634123
 }

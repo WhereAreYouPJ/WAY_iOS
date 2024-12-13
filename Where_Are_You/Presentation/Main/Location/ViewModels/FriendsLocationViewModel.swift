@@ -9,9 +9,15 @@ import Foundation
 import CoreLocation
 import KakaoMapsSDK
 
+struct LongLat {
+    var x: Double
+    var y: Double
+}
+
 class FriendsLocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
-    @Published var userLongitude: Double = 0
-    @Published var userLatitude: Double = 0
+    @Published var myLocation = LongLat(x: 0, y: 0)
+    @Published var friendsLocation: [LongLat] = []
+    @Published var isNetworkSuccess = false
     @Published var locationError: String?
     
     private var locationManager: CLLocationManager?
@@ -61,6 +67,7 @@ class FriendsLocationViewModel: NSObject, ObservableObject, CLLocationManagerDel
     
     // MARK: 위치 업데이트 시작
     func startUpdatingLocation() {
+        self.isNetworkSuccess = true
         DispatchQueue.global().async { [weak self] in
             if CLLocationManager.locationServicesEnabled() {
                 self?.locationManager?.startUpdatingLocation()
@@ -77,13 +84,13 @@ class FriendsLocationViewModel: NSObject, ObservableObject, CLLocationManagerDel
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else {  return  }
         
-        print("위치 업데이트 성공 - 위도: \(location.coordinate.latitude), 경도: \(location.coordinate.longitude)")
-        
         DispatchQueue.main.async {
             self.locationError = nil
-            self.userLatitude = location.coordinate.latitude
-            self.userLongitude = location.coordinate.longitude
-            self.postCoordinate()
+            self.myLocation.x = location.coordinate.longitude
+            self.myLocation.y = location.coordinate.latitude
+            self.isNetworkSuccess = true
+            
+            print("위치 업데이트 성공 - longitude(x): \(location.coordinate.longitude), latitude(y): \(location.coordinate.latitude)")
         }
     }
     
@@ -103,9 +110,9 @@ class FriendsLocationViewModel: NSObject, ObservableObject, CLLocationManagerDel
     }
     
     // MARK: 서버 통신 - 사용자 위치 정보 보내기
-    func postCoordinate() {
+    func postCoordinate(scheduleSeq: Int) {
         let memberSeq = UserDefaultsManager.shared.getMemberSeq()
-        postCoordinateUseCase.execute(request: PostCoordinateBody(memberSeq: memberSeq, scheduleSeq: 1, x: self.userLongitude, y: self.userLatitude)) { result in
+        postCoordinateUseCase.execute(request: PostCoordinateBody(memberSeq: memberSeq, scheduleSeq: scheduleSeq, x: self.myLocation.x, y: self.myLocation.y)) { result in
             switch result {
             case .success:
                 print("사용자 위치 정보 보내기 완료!")

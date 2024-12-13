@@ -12,7 +12,6 @@ struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 
     @State private var selectedDate: Date?
     @State private var showMenu = false
     @State private var showCreateSchedule = false
-    @State private var showFriendsLocation = false // MARK: 친구 위치 실시간 확인 테스트용
     @State private var showDailySchedule = false
     @State private var showingDeleteAlert = false
     @State private var alertTitle = ""
@@ -57,18 +56,6 @@ struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 
                                 .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
                         }
                         .padding(EdgeInsets(top: -4, leading: -8, bottom: -4, trailing: 0))
-                        
-                        // MARK: 친구 위치 실시간 확인 테스트용
-                        Menu {
-                            Button("친구 위치", action: {
-                                print("친구 위치")
-                                showFriendsLocation.toggle()
-                            })
-                        } label: {
-                            Image("icon-place")
-                                .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
-                        }
-                        .padding(EdgeInsets(top: -4, leading: -8, bottom: -4, trailing: 0))
                     }
                 }
                 .padding(.horizontal, 10)
@@ -96,12 +83,6 @@ struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 
                 })
                 .presentationDetents([.medium])
             }
-        }
-        // MARK: 친구 위치 실시간 확인 테스트용
-        .fullScreenCover(isPresented: $showFriendsLocation, onDismiss: {
-            viewModel.getMonthlySchedule()
-        }) {
-            FriendsLocationView(isShownView: $showFriendsLocation, schedule: .constant(Schedule(scheduleSeq: 1, title: "디큐브", startTime: Date.now, endTime: Date.now, color: "red")))
         }
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
         .onAppear(perform: {
@@ -205,8 +186,6 @@ struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 
             let isEnd = Calendar.current.isDate(schedule.endTime, inSameDayAs: date)
             return (schedule, isStart, isEnd)
         }
-        
-        print("Date: \(date), Schedules: \(daySchedules.map { $0.title })")
         
         return CellView(day: day, clicked: clicked, isToday: isToday, isCurrentMonthDay: true, weekday: weekday, schedules: processedSchedules)
             .onTapGesture {
@@ -327,7 +306,6 @@ private struct CellView: View { // TODO: 각 날짜에 맞게 일정 보여주�
     
     private func scheduleBar(schedule: Schedule, isStart: Bool, isEnd: Bool, isMoreThanFour: Bool) -> some View {
         ZStack {
-            let _ = print("The day is: \(weekday)")
             if isMoreThanFour { /// 네번째 일정부터는 "+"로 표시
                 RoundedRectangle(cornerRadius: 2)
                     .fill(Color(.color231))
