@@ -10,7 +10,7 @@ import Kingfisher
 
 protocol FeedsTableViewCellDelegate: AnyObject {
     func didTapBookmarkButton(feedSeq: Int, isBookMarked: Bool)
-    func didTapFixButton(feedSeq: Int, isOwner: Bool)
+    func didTapFeedFixButton(feed: Feed, buttonFrame: CGRect)
 }
 
 class FeedsTableViewCell: UITableViewCell {
@@ -19,8 +19,8 @@ class FeedsTableViewCell: UITableViewCell {
     static let identifier = "FeedsTableViewCell"
     weak var delegate: FeedsTableViewCellDelegate?
     
+    private var feed: Feed?
     private var feedSeq: Int?
-    var isOwner: Bool = false
     private var isBookMarked: Bool = false
     private var imageUrls: [String] = []
     
@@ -58,6 +58,7 @@ class FeedsTableViewCell: UITableViewCell {
         descriptionLabel.backgroundColor = .color249
         
         bookMarkButton.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
+        detailBox.feedFixButton.addTarget(self, action: #selector(feedFixButtonTapped), for: .touchUpInside)
     }
     
     private func setupConstraints() {
@@ -100,7 +101,7 @@ class FeedsTableViewCell: UITableViewCell {
         feedImagesView.collectionView.reloadData()
         feedImagesView.pageNumberLabel.text = "1/\(imageUrls.count)"
         
-        isOwner = (feed.memberSeq == UserDefaultsManager.shared.getMemberSeq())
+        self.feed = feed
         feedSeq = feed.feedSeq
         isBookMarked = feed.bookMark
         updateBookMarkUI()
@@ -111,11 +112,18 @@ class FeedsTableViewCell: UITableViewCell {
         bookMarkButton.setImage(UIImage(named: iconName), for: .normal)
     }
     
+    // MARK: - Selectors
+    
     @objc private func bookmarkButtonTapped() {
         guard let feedSeq = feedSeq else { return }
         self.isBookMarked.toggle()
         self.updateBookMarkUI()
         delegate?.didTapBookmarkButton(feedSeq: feedSeq, isBookMarked: isBookMarked)
+    }
+    
+    @objc private func feedFixButtonTapped() {
+        guard let feed = feed else { return }
+        delegate?.didTapFeedFixButton(feed: feed, buttonFrame: detailBox.feedFixButton.convert(detailBox.feedFixButton.bounds, to: nil))
     }
 }
 

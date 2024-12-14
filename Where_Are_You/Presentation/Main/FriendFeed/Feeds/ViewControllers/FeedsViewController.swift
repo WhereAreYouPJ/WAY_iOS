@@ -12,7 +12,9 @@ class FeedsViewController: UIViewController {
     // MARK: - Properties
     private var feedsView = FeedsView()
     private var noFeedsView = NoDataView()
-    let plusOptionButton = CustomOptionButtonView(title: "새 피드 작성")
+    var plusOptionButton = CustomOptionButtonView(title: "새 피드 작성", image: nil)
+    private var optionsView = MultiCustomOptionsContainerView()
+    private var selectedFeed: Feed?
     
     var viewModel: FeedViewModel!
     
@@ -36,6 +38,8 @@ class FeedsViewController: UIViewController {
         let feedRepository = FeedRepository(feedService: feedService)
         viewModel = FeedViewModel(
             getFeedListUseCase: GetFeedListUseCaseImpl(feedRepository: feedRepository),
+            deleteFeedUseCase: DeleteFeedUseCaseImpl(feedRepository: feedRepository),
+            postHideFeedUseCase: PostHideFeedUseCaseImpl(feedRepository: feedRepository),
             postBookMarkFeedUseCase: PostBookMarkFeedUseCaseImpl(feedRepository: feedRepository),
             deleteBookMarkFeedUseCase: DeleteBookMarkFeedUseCaseImpl(feedRepository: feedRepository))
     }
@@ -52,17 +56,6 @@ class FeedsViewController: UIViewController {
                 }
             }
         }
-        
-        //        viewModel.onImageLoaded = { [weak self] feedSeq in
-        //            DispatchQueue.main.async {
-        //                let indexPath = IndexPath(row: feedSeq, section: 0)
-        //                if let cell = self?.feedsView.feedsTableView.cellForRow(at: indexPath) as? FeedsTableViewCell {
-        //                    if let image = self?.viewModel.image(for: feedSeq, at: 0) {
-        //                        cell.feedImagesView.collectionView.reloadData()
-        //                    }
-        //                }
-        //            }
-        //        }
     }
     
     private func setupViews() {
@@ -100,9 +93,62 @@ class FeedsViewController: UIViewController {
     }
     
     private func setupActions() {
-        plusOptionButton.button.addTarget(self, action: #selector(plusOptionButtonTapped), for: .touchUpInside)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
         view.addGestureRecognizer(tapGesture)
+    }
+    
+    private func showOptions(for feed: Feed, at frame: CGRect, isAuthor: Bool) {
+        optionsView.removeFromSuperview()
+        // Configure options
+        let titles: [String]
+        let actions: [() -> Void]
+        
+        if isAuthor {
+            titles = ["피드 삭제", "피드 수정", "피드 숨김"]
+            actions = [
+                { self.deleteFeed(feed) },
+                { self.editFeed(feed) },
+                { self.hideFeed(feed) }
+            ]
+        } else {
+            titles = ["피드 숨김"]
+            actions = [
+                { self.hideFeed(feed) }
+            ]
+        }
+        print("Titles: \(titles), Actions count: \(actions.count)")
+
+        // Configure CustomOptionsContainerView
+        optionsView.configureOptions(titles: titles, actions: actions)
+        optionsView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 10)
+        optionsView.clipsToBounds = true
+        view.addSubview(optionsView)
+        optionsView.snp.makeConstraints { make in
+            make.top.equalTo(frame.maxY)
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 160))
+            make.trailing.equalToSuperview().inset(11)
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 90))
+        }
+        view.layoutIfNeeded() // 레이아웃 강제 완료
+    }
+    
+    private func deleteFeed(_ feed: Feed) {
+        guard let feedSeq = feed.feedSeq else { return }
+        viewModel.deleteFeed(feedSeq: feedSeq)
+        optionsView.removeFromSuperview()
+        feedsView.feedsTableView.reloadData()
+    }
+    
+    private func editFeed(_ feed: Feed) {
+        print("\(feed.title) 수정")
+        optionsView.removeFromSuperview()
+    }
+    
+    private func hideFeed(_ feed: Feed) {
+        guard let feedSeq = feed.feedSeq else { return }
+        viewModel.hidFeed(feedSeq: feedSeq)
+        optionsView.removeFromSuperview()
+        feedsView.feedsTableView.reloadData()
     }
     
     // MARK: - Selectors
@@ -111,6 +157,10 @@ class FeedsViewController: UIViewController {
         let location = sender.location(in: self.view)
         if !plusOptionButton.frame.contains(location) {
             plusOptionButton.isHidden = true
+        }
+        
+        if !optionsView.frame.contains(location) {
+            optionsView.removeFromSuperview()
         }
     }
     
@@ -129,13 +179,9 @@ class FeedsViewController: UIViewController {
 // MARK: - FeedsTableViewCellDelegate
 
 extension FeedsViewController: FeedsTableViewCellDelegate {
-    func didTapFixButton(feedSeq: Int, isOwner: Bool) {
-        if isOwner {
-            // 내가 작성한 피드
-        } else {
-            // 남이 작성한 피드
-            let optionButton = CustomOptionButtonView(title: "피드 숨김")
-        }
+    func didTapFeedFixButton(feed: Feed, buttonFrame: CGRect) {
+        let isAuthor = feed.memberSeq == UserDefaultsManager.shared.getMemberSeq()
+        showOptions(for: feed, at: buttonFrame, isAuthor: isAuthor)
     }
     
     func didTapBookmarkButton(feedSeq: Int, isBookMarked: Bool) {

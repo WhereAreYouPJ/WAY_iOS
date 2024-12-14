@@ -11,6 +11,9 @@ import Kingfisher
 class FeedViewModel {
     // MARK: - Properties
     private let getFeedListUseCase: GetFeedListUseCase
+    private let deleteFeedUseCase: DeleteFeedUseCase
+    private let postHideFeedUseCase: PostHideFeedUseCase
+    
     private let postBookMarkFeedUseCase: PostBookMarkFeedUseCase
     private let deleteBookMarkFeedUseCase: DeleteBookMarkFeedUseCase
     
@@ -18,8 +21,7 @@ class FeedViewModel {
     private let memberSeq = UserDefaultsManager.shared.getMemberSeq()
     
     var onFeedsDataFetched: (() -> Void)?
-    var onImageLoaded: ((Int) -> Void)?
-    var onBookMarkFeed: ((Bool) -> Void)?
+    //    var onImageLoaded: ((Int) -> Void)?
     
     private(set) var currentIndex = 0
     
@@ -37,9 +39,13 @@ class FeedViewModel {
     
     // MARK: - Initializer
     init(getFeedListUseCase: GetFeedListUseCase,
+         deleteFeedUseCase: DeleteFeedUseCase,
+         postHideFeedUseCase: PostHideFeedUseCase,
          postBookMarkFeedUseCase: PostBookMarkFeedUseCase,
          deleteBookMarkFeedUseCase: DeleteBookMarkFeedUseCase) {
         self.getFeedListUseCase = getFeedListUseCase
+        self.deleteFeedUseCase = deleteFeedUseCase
+        self.postHideFeedUseCase = postHideFeedUseCase
         self.postBookMarkFeedUseCase = postBookMarkFeedUseCase
         self.deleteBookMarkFeedUseCase = deleteBookMarkFeedUseCase
     }
@@ -53,22 +59,34 @@ class FeedViewModel {
             switch result {
             case .success(let data):
                 self.rawFeedContent = data
-                self.displayFeedContent = rawFeedContent.compactMap { $0.toFeeds()
-//                    feedContent in
-//                    guard let scheduleFeedInfo = feedContent.scheduleFeedInfo.first else { return nil }
-//                    
-//                    return MainFeedListContent(
-//                        feedSeq: scheduleFeedInfo.feedInfo.feedSeq,
-//                        profileImage: scheduleFeedInfo.memberInfo.profileImage,
-//                        startTime: feedContent.scheduleInfo.startTime,
-//                        location: feedContent.scheduleInfo.location,
-//                        title: scheduleFeedInfo.feedInfo.title,
-//                        content: scheduleFeedInfo.feedInfo.content,
-//                        bookMarkInfo: scheduleFeedInfo.bookMarkInfo,
-//                        scheduleFriendInfos: feedContent.scheduleFriendInfo,
-//                        feedImageInfos: scheduleFeedInfo.feedImageInfos
-//                    )
+                self.displayFeedContent = rawFeedContent.compactMap { $0.toFeeds() }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func deleteFeed(feedSeq: Int) {
+        deleteFeedUseCase.execute(request: DeleteFeedRequest(memberSeq: memberSeq, feedSeq: feedSeq)) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                if let index = self.displayFeedContent.firstIndex(where: { $0.feedSeq == feedSeq }) {
+                    self.displayFeedContent.remove(at: index)
                 }
+                self.onFeedsDataFetched?()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func hidFeed(feedSeq: Int) {
+        postHideFeedUseCase.execute(feedSeq: feedSeq) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                self.onFeedsDataFetched?()
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -82,7 +100,6 @@ class FeedViewModel {
                 DispatchQueue.main.async {
                     if let index = self?.displayFeedContent.firstIndex(where: { $0.feedSeq == feedSeq }) {
                         self?.displayFeedContent[index].bookMark = true
-//                        self?.onBookMarkFeed?(true)
                     }
                 }
             case .failure(let error):
@@ -98,7 +115,6 @@ class FeedViewModel {
                 DispatchQueue.main.async {
                     if let index = self?.displayFeedContent.firstIndex(where: { $0.feedSeq == feedSeq }) {
                         self?.displayFeedContent[index].bookMark = false
-//                        self?.onBookMarkFeed?(false)
                     }
                 }
             case .failure(let error):

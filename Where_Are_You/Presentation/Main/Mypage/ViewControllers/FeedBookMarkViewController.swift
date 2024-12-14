@@ -25,7 +25,6 @@ class FeedBookMarkViewController: UIViewController {
         setupViews()
         setupTableView()
         setupBindings()
-        setupActions()
         viewModel.fetchBookMarkFeed()
         
         feedBookMarkView.updateContentHeight()
@@ -41,7 +40,8 @@ class FeedBookMarkViewController: UIViewController {
         let feedRepository = FeedRepository(feedService: feedService)
         viewModel = FeedBookMarkViewModel(
             getBookMarkFeedUseCase: GetBookMarkFeedUseCaseImpl(feedRepository: feedRepository),
-            deleteBookMarkFeedUseCase: DeleteBookMarkFeedUseCaseImpl(feedRepository: feedRepository))
+            deleteBookMarkFeedUseCase: DeleteBookMarkFeedUseCaseImpl(feedRepository: feedRepository), postHideFeedUseCase: PostHideFeedUseCaseImpl(feedRepository: feedRepository),
+            deleteFeedUseCase: DeleteFeedUseCaseImpl(feedRepository: feedRepository))
     }
     
     private func setupBindings() {
@@ -82,10 +82,6 @@ class FeedBookMarkViewController: UIViewController {
         feedBookMarkView.feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
     }
     
-    private func setupActions() {
-        
-    }
-    
     // MARK: - Selectors
     @objc func backButtonTapped() {
         dismiss(animated: true)
@@ -102,7 +98,26 @@ extension FeedBookMarkViewController: FeedsTableViewCellDelegate {
             feedBookMarkView.feedsTableView.reloadRows(at: [indexPath], with: .none)
         }
     }
+    
+    func didTapFeedFixButton(feed: Feed, buttonFrame: CGRect) {
+        let isAuthor = feed.memberSeq == UserDefaultsManager.shared.getMemberSeq()
+//        guard let feedSeq = feed.feedSeq else { return }
+//        showFeedOptions(
+//            feed: feed,
+//            isAuthor: isAuthor,
+//            currentViewType: .bookMark,
+//            deleteAction: { self.viewModel.deleteBookMarkFeed(feedSeq: feedSeq) },
+//            editAction: { self.editFeed(feed) },
+//            hideAction: { self.viewModel.hidFeed(feedSeq: feedSeq) },
+//            restoreAction: {}
+//        )
+    }
+    
+    private func editFeed(_ feed: Feed) {
+        // 피드 수정 화면으로 이동
+    }
 }
+
 // MARK: - UITableViewDataSource, UITableViewDelegate
 
 extension FeedBookMarkViewController: UITableViewDataSource, UITableViewDelegate {

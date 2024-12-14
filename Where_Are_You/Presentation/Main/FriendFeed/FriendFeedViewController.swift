@@ -73,7 +73,8 @@ class FriendFeedViewController: UIViewController {
         return stackView
     }()
     
-//    let plusOptionButton = CustomOptionButtonView(title: "새 피드 작성")
+//    private var plusOptionButton = CustomOptionButtonView(title: "새 피드 작성", image: nil)
+    
     // 1. 친구 관련 옵션 버튼 추가
     private let friendOptionView: UIHostingController = {
         let view = MultiOptionButtonView {
@@ -166,7 +167,6 @@ class FriendFeedViewController: UIViewController {
         // Setup navigation items
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonStack)
-        
         
         view.addSubview(friendOptionView.view)
         
@@ -265,9 +265,10 @@ class FriendFeedViewController: UIViewController {
         if segmentControl.selectedSegmentIndex == 0 {
             feedsViewController.plusOptionButton.isHidden = false
             friendOptionView.view.isHidden = true
+//            plusOptionButton.isHidden = false
         } else {
             friendOptionView.view.isHidden = false
-            feedsViewController.plusOptionButton.isHidden = true
+//            feedsViewController.plusOptionButton.isHidden = true
         }
     }
     

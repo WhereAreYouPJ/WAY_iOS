@@ -9,6 +9,13 @@ import UIKit
 import SwiftUI
 
 // MARK: - UIViewController
+
+enum FeedViewType {
+    case mainFeed
+    case bookMark
+    case archive
+}
+
 extension UIViewController {
     func configureNavigationBar(title: String, backButtonAction: Selector? = nil, showBackButton: Bool = true) {
         Utilities.createNavigationBar(for: self, title: title, backButtonAction: backButtonAction, showBackButton: showBackButton)
@@ -147,6 +154,8 @@ extension UIImageView {
     }
 }
 
+// MARK: - DateFormatter
+
 extension DateFormatter {
     static func formatter(for format: DateFormat) -> DateFormatter {
         let formatter = DateFormatter()
@@ -170,6 +179,8 @@ extension String {
         return DateFormatter.formatter(for: format).string(from: date)
     }
 }
+
+// MARK: - Notification
 
 extension Notification.Name {
     static let showAddFriend = Notification.Name("showAddFriend")
