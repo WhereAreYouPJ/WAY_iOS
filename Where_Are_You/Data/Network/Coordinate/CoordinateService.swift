@@ -9,7 +9,7 @@ import Alamofire
 import Moya
 
 protocol CoordinateServiceProtocol {
-    func getCoordinate(scheduleSeq: Int, completion: @escaping (Result<GenericResponse<GetCoordinateResponse>, Error>) -> Void)
+    func getCoordinate(memberSeq: Int, scheduleSeq: Int, completion: @escaping (Result<GenericResponse<GetCoordinateResponse>, Error>) -> Void)
     func postCoordinate(request: PostCoordinateBody, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
@@ -27,7 +27,7 @@ class CoordinateService: CoordinateServiceProtocol {
         self.provider = MoyaProvider<CoordinateAPI>(plugins: [tokenPlugin])
     }
 
-    func getCoordinate(scheduleSeq: Int, completion: @escaping (Result<GenericResponse<GetCoordinateResponse>, any Error>) -> Void) {
+    func getCoordinate(memberSeq: Int, scheduleSeq: Int, completion: @escaping (Result<GenericResponse<GetCoordinateResponse>, any Error>) -> Void) {
         provider.request(.getCoordinate(memberSeq: memberSeq, scheduleSeq: scheduleSeq)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }

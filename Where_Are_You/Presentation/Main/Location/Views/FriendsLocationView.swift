@@ -22,14 +22,17 @@ struct FriendsLocationView: View {
     
     var body: some View {
         ZStack {
-            MapPinView(myLocation: $viewModel.myLocation)
+            MapPinView(myLocation: $viewModel.myLocation, friendsLocation: $viewModel.friendsLocation)
             
             DismissButtonView(isShownView: $isShownView)
         }
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
         .onAppear {
             viewModel.startUpdatingLocation()
-            print("일정 정보: \(schedule.scheduleSeq)")
+            viewModel.startUpdatingFriendsLocation(schedule: schedule)
+        }
+        .onDisappear {
+            viewModel.stopUpdatingLocation()
         }
         .onChange(of: viewModel.myLocation.x) { _, _ in
             viewModel.postCoordinate(scheduleSeq: schedule.scheduleSeq)

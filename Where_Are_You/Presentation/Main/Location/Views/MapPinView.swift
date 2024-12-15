@@ -11,9 +11,10 @@ import KakaoMapsSDK
 struct MapPinView: View {
     @State var draw: Bool = false // 뷰의 appear 상태를 전달하기 위한 변수.
     @Binding var myLocation: LongLat
+    @Binding var friendsLocation: [LongLat]
     
     var body: some View {
-        KakaoMapPinView(draw: $draw, location: $myLocation)
+        KakaoMapPinView(draw: $draw, myLocation: $myLocation, friendsLocation: $friendsLocation)
             .onAppear(perform: {
                 self.draw = true
             })
@@ -24,7 +25,8 @@ struct MapPinView: View {
 
 struct KakaoMapPinView: UIViewRepresentable {
     @Binding var draw: Bool
-    @Binding var location: LongLat
+    @Binding var myLocation: LongLat
+    @Binding var friendsLocation: [LongLat]
     
     /// UIView를 상속한 KMViewContainer를 생성한다.
     /// 뷰 생성과 함께 KMControllerDelegate를 구현한 Coordinator를 생성하고, 엔진을 생성 및 초기화한다.
@@ -59,8 +61,8 @@ struct KakaoMapPinView: UIViewRepresentable {
                 }
                 
                 // location이 변경되었을 때 updateLocation 호출
-                context.coordinator.updateLocation(location)
-                print("KakaoMapPinView - updateUIView with location x: \(location.x), y: \(location.y)")
+                context.coordinator.updateLocation(myNewLocation: myLocation, friendsNewLocation: friendsLocation)
+                print("KakaoMapPinView - updateUIView with location x: \(myLocation.x), y: \(myLocation.y)")
             }
         } else {
             context.coordinator.controller?.resetEngine()
@@ -69,7 +71,7 @@ struct KakaoMapPinView: UIViewRepresentable {
     
     /// Coordinator 생성
     func makeCoordinator() -> KakaoMapCoordinator {
-        return KakaoMapCoordinator(location: location)
+        return KakaoMapCoordinator(myLocation: myLocation, friendsLocation: friendsLocation)
     }
     
     /// Cleans up the presented `UIView` (and coordinator) in anticipation of their removal.
@@ -81,12 +83,14 @@ struct KakaoMapPinView: UIViewRepresentable {
     class KakaoMapCoordinator: NSObject, MapControllerDelegate {
         var controller: KMController?
         var container: KMViewContainer?
-        var location: LongLat?
+        var myLocation: LongLat?
+        var friendsLocation: [LongLat]
         private let mapViewName = "friendsLocationMapView"
         private var isViewReady = false
         
-        init(location: LongLat?) {
-            self.location = location
+        init(myLocation: LongLat?, friendsLocation: [LongLat]) {
+            self.myLocation = myLocation
+            self.friendsLocation = friendsLocation
             super.init()
         }
         
@@ -101,12 +105,13 @@ struct KakaoMapPinView: UIViewRepresentable {
         // 원하는 뷰를 생성한다.
         func addViews() {
             let defaultPosition: MapPoint
-            if let location {
-                defaultPosition = MapPoint(longitude: location.x, latitude: location.y)
-                print("MapPinView - x: \(location.x), y: \(location.y)")
+            if let myLocation {
+                defaultPosition = MapPoint(longitude: myLocation.x, latitude: myLocation.y)
+                print("MapPinView - x: \(myLocation.x), y: \(myLocation.y)")
             } else {
                 defaultPosition = MapPoint(longitude: 126.978365, latitude: 37.566691)
             }
+            
             let mapviewInfo: MapviewInfo = MapviewInfo(viewName: mapViewName, viewInfoName: "map", defaultPosition: defaultPosition)
             
             guard let controller else {
@@ -134,8 +139,8 @@ struct KakaoMapPinView: UIViewRepresentable {
             isViewReady = true
             
             // 현재 location으로 카메라 위치 업데이트
-            if let currentLocation = location {
-                updateLocation(currentLocation)
+            if let currentLocation = myLocation {
+                updateLocation(myNewLocation: currentLocation, friendsNewLocation: friendsLocation)
             }
         }
         
@@ -209,27 +214,29 @@ struct KakaoMapPinView: UIViewRepresentable {
             let manager = view.getLabelManager()
             let layer = manager.getLabelLayer(layerID: "PoiLayer")
             
-            let poiOption = PoiOptions(styleID: "myPoiStyle")
-            poiOption.rank = 0
+            // 내 위치 POI 생성
+            let myPoiOption = PoiOptions(styleID: "myPoiStyle")
+            myPoiOption.rank = 0
             
-            let poi1: Poi?
-            if let location {
-                poi1 = layer?.addPoi(
-                    option: poiOption,
-                    at: MapPoint(longitude: location.x, latitude: location.y)
+            if let myLocation {
+                let myPoi = layer?.addPoi(
+                    option: myPoiOption,
+                    at: MapPoint(longitude: myLocation.x, latitude: myLocation.y)
                 )
-                print("location on")
-            } else {
-                poi1 = layer?.addPoi(option: poiOption, at: MapPoint(longitude: 126.978365, latitude: 37.566691))
-                print("default location")
+                myPoi?.show()
             }
             
-            guard let poi1 else {
-                print("Failed to create POI")
-                return
-            }
+            // 친구들 위치 POI 생성
+            let friendPoiOption = PoiOptions(styleID: "friendsPoiStyle")
+            friendPoiOption.rank = 1
             
-            poi1.show()
+            for friendLocation in friendsLocation {
+                let friendPoi = layer?.addPoi(
+                    option: friendPoiOption,
+                    at: MapPoint(longitude: friendLocation.x, latitude: friendLocation.y)
+                )
+                friendPoi?.show()
+            }
         }
         
         // KMViewContainer 리사이징 될 때 호출.
@@ -242,8 +249,8 @@ struct KakaoMapPinView: UIViewRepresentable {
             
             let cameraUpdate = CameraUpdate.make(
                 target: MapPoint(
-                    longitude: location?.x ?? 126.978365,
-                    latitude: location?.y ?? 37.566691
+                    longitude: myLocation?.x ?? 126.978365,
+                    latitude: myLocation?.y ?? 37.566691
                 ),
                 mapView: mapView
             )
@@ -251,8 +258,9 @@ struct KakaoMapPinView: UIViewRepresentable {
         }
         
         // location 값이 변경될 때 지도 업데이트를 위한 메서드 추가
-        func updateLocation(_ newLocation: LongLat) {
-            self.location = newLocation
+        func updateLocation(myNewLocation: LongLat, friendsNewLocation: [LongLat]) {
+            self.myLocation = myNewLocation
+            self.friendsLocation = friendsNewLocation
             
             // view가 준비되지 않았으면 업데이트 스킵
             guard isViewReady else { return }
@@ -267,18 +275,18 @@ struct KakaoMapPinView: UIViewRepresentable {
             // 새로운 POI 생성
             createPois()
             
-            // 카메라 이동
-            let target = MapPoint(longitude: newLocation.x, latitude: newLocation.y)
+            // 카메라 이동: 내 위치 중심
+            let target = MapPoint(longitude: myNewLocation.x, latitude: myNewLocation.y)
             let cameraUpdate = CameraUpdate.make(
                 target: target,
                 zoomLevel: 15, mapView: view
             )
             view.moveCamera(cameraUpdate)
-            print("MapPinView camera updated! x: \(newLocation.x), y: \(newLocation.y)")
+            print("MapPinView camera updated! x: \(myNewLocation.x), y: \(myNewLocation.y)")
         }
     }
 }
 
 #Preview {
-    MapPinView(myLocation: .constant(LongLat(x: 127.0388462, y: 37.495418))) // x: 126.88958060554663, y: 37.50910419634123
+    MapPinView(myLocation: .constant(LongLat(x: 127.0388462, y: 37.495418)), friendsLocation: .constant([LongLat(x: 127.0388461, y: 37.495418), LongLat(x: 127.0388461, y: 37.495417)])) // x: 126.88958060554663, y: 37.50910419634123
 }

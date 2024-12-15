@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CoordinateRepositoryProtocol {
-    func getCoordinate(scheduleSeq: Int, completion: @escaping (Result<GenericResponse<GetCoordinateResponse>, Error>) -> Void)
+    func getCoordinate(memberSeq: Int, scheduleSeq: Int, completion: @escaping (Result<GenericResponse<GetCoordinateResponse>, Error>) -> Void)
     func postCoordinate(request: PostCoordinateBody, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
@@ -19,8 +19,8 @@ class CoordinateRepository: CoordinateRepositoryProtocol {
         self.coordinateService = coordinateService
     }
     
-    func getCoordinate(scheduleSeq: Int, completion: @escaping (Result<GenericResponse<GetCoordinateResponse>, any Error>) -> Void) {
-        coordinateService.getCoordinate(scheduleSeq: scheduleSeq, completion: completion)
+    func getCoordinate(memberSeq: Int, scheduleSeq: Int, completion: @escaping (Result<GenericResponse<GetCoordinateResponse>, any Error>) -> Void) {
+        coordinateService.getCoordinate(memberSeq: memberSeq, scheduleSeq: scheduleSeq, completion: completion)
     }
     
     func postCoordinate(request: PostCoordinateBody, completion: @escaping (Result<Void, any Error>) -> Void) {

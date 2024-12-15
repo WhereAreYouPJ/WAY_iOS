@@ -10,6 +10,7 @@ import CoreLocation
 import KakaoMapsSDK
 
 struct LongLat {
+    var member: Member?
     var x: Double
     var y: Double
 }
@@ -23,6 +24,7 @@ class FriendsLocationViewModel: NSObject, ObservableObject, CLLocationManagerDel
     private var locationManager: CLLocationManager?
     private let postCoordinateUseCase: PostCoordinateUseCase
     private let getCoordinateUseCase: GetCoordinateUseCase
+    private var locationUpdateTimer: Timer?
     
     init(
         postCoordinateUseCase: PostCoordinateUseCase,
@@ -67,7 +69,7 @@ class FriendsLocationViewModel: NSObject, ObservableObject, CLLocationManagerDel
     
     // MARK: 위치 업데이트 시작
     func startUpdatingLocation() {
-        self.isNetworkSuccess = true
+//        self.isNetworkSuccess = true
         DispatchQueue.global().async { [weak self] in
             if CLLocationManager.locationServicesEnabled() {
                 self?.locationManager?.startUpdatingLocation()
@@ -80,6 +82,16 @@ class FriendsLocationViewModel: NSObject, ObservableObject, CLLocationManagerDel
         }
     }
     
+    // MARK: 5초마다 친구들 위치 업데이트 시작
+    func startUpdatingFriendsLocation(schedule: Schedule) {
+        locationUpdateTimer?.invalidate()
+        getCoordinate(schedule: schedule)
+        
+        locationUpdateTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] _ in
+            self?.getCoordinate(schedule: schedule)
+        }
+    }
+    
     // MARK: 위치 업데이트 성공
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else {  return  }
@@ -88,7 +100,7 @@ class FriendsLocationViewModel: NSObject, ObservableObject, CLLocationManagerDel
             self.locationError = nil
             self.myLocation.x = location.coordinate.longitude
             self.myLocation.y = location.coordinate.latitude
-            self.isNetworkSuccess = true
+//            self.isNetworkSuccess = true
             
             print("위치 업데이트 성공 - longitude(x): \(location.coordinate.longitude), latitude(y): \(location.coordinate.latitude)")
         }
@@ -107,6 +119,8 @@ class FriendsLocationViewModel: NSObject, ObservableObject, CLLocationManagerDel
     func stopUpdatingLocation() {
         print("위치 업데이트 중지")
         locationManager?.stopUpdatingLocation()
+        locationUpdateTimer?.invalidate()
+        locationUpdateTimer = nil
     }
     
     // MARK: 서버 통신 - 사용자 위치 정보 보내기
@@ -123,11 +137,19 @@ class FriendsLocationViewModel: NSObject, ObservableObject, CLLocationManagerDel
     }
     
     // MARK: 서버 통신 - 친구들 위치 정보 받기
-    func getCoordinate() {
-        getCoordinateUseCase.execute(scheduleSeq: 1) { result in // TODO: 실제 스케줄시퀀스 넘겨받기
+    func getCoordinate(schedule: Schedule) {
+        getCoordinateUseCase.execute(schedule: schedule) { [weak self] result in
             switch result {
-            case .success:
-                print("친구들 위치 정보 받기 완료!")
+            case .success(let responses):
+                let locations = responses.map { response in
+                    LongLat(member: Member(userName: response.userName, profileImage: response.profileImage, memberSeq: response.memberSeq),
+                            x: response.x, y: response.y)
+                }
+                
+                DispatchQueue.main.async {
+                    self?.friendsLocation = locations
+                }
+                print("친구들 위치 정보 받기 완료! \(String(describing: self?.friendsLocation.description))")
             case .failure(let error):
                 print("친구들 위치 정보 받기 실패 - \(error.localizedDescription)")
             }
