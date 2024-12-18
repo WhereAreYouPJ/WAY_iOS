@@ -34,7 +34,7 @@ extension UIColor {
     static let warningColor = UIColor.rgb(red: 225, green: 49, blue: 49)
     static let scheduleDateColor = UIColor.rgb(red: 252, green: 47, blue: 47)
     static let popupButtonColor = UIColor.rgb(red: 81, green: 70, blue: 117)
-    static let alertActionButtonColor = UIColor.rgb(red: 224, green: 158, blue: 255)
+    static let alertActionButtonColor = UIColor.rgb(red: 212, green: 158, blue: 255)
     
     static let color5 = UIColor.rgb(red: 5, green: 5, blue: 5)
     static let color17 = UIColor.rgb(red: 17, green: 17, blue: 17)

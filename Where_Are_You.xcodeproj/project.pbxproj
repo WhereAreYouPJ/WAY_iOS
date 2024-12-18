@@ -98,7 +98,6 @@
 		99960AB12CE1D96D007D2B61 /* DeleteScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99960AB02CE1D96D007D2B61 /* DeleteScheduleUseCase.swift */; };
 		99960AB32CE1D97C007D2B61 /* PostEcceptScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99960AB22CE1D97C007D2B61 /* PostEcceptScheduleUseCase.swift */; };
 		99960AB52CE1DE5B007D2B61 /* GetScheduleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99960AB42CE1DE5B007D2B61 /* GetScheduleResponse.swift */; };
-		999B88692CD1C51D00F329C9 /* HandleOutsideTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999B88682CD1C51D00F329C9 /* HandleOutsideTap.swift */; };
 		999E296D2CBB989600AB9FF9 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E296C2CBB989600AB9FF9 /* LocationService.swift */; };
 		999E29712CBB9AF900AB9FF9 /* LocationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E29702CBB9AF900AB9FF9 /* LocationRepository.swift */; };
 		999E29732CBB9C7F00AB9FF9 /* GetLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E29722CBB9C7F00AB9FF9 /* GetLocationUseCase.swift */; };
@@ -140,7 +139,6 @@
 		99CC5E642C51EFAB00A0509A /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CC5E632C51EFAB00A0509A /* MyPageViewModel.swift */; };
 		99CEAD4A2C539743006B3D41 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CEAD492C539743006B3D41 /* SplashViewController.swift */; };
 		99CEAD4C2C5397B1006B3D41 /* DeviceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CEAD4B2C5397B1006B3D41 /* DeviceConfig.swift */; };
-		99CF9BF92CD3172D0079BE81 /* FeedBookMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CF9BF82CD3172D0079BE81 /* FeedBookMarkView.swift */; };
 		99CF9BFB2CD317920079BE81 /* FeedBookMarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CF9BFA2CD317920079BE81 /* FeedBookMarkViewController.swift */; };
 		99CF9BFD2CD319360079BE81 /* BookMarkFeedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CF9BFC2CD319360079BE81 /* BookMarkFeedRequest.swift */; };
 		99CF9BFF2CD341F40079BE81 /* GetBookMarkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CF9BFE2CD341F40079BE81 /* GetBookMarkResponse.swift */; };
@@ -164,6 +162,7 @@
 		99DC75DE2D06782500C20857 /* FeedsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DC75DD2D06782500C20857 /* FeedsDetailViewController.swift */; };
 		99DE2F022D0813B40087ACC9 /* FeedArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DE2F012D0813B40087ACC9 /* FeedArchiveViewController.swift */; };
 		99DE2F042D0813EC0087ACC9 /* FeedArchiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DE2F032D0813EC0087ACC9 /* FeedArchiveViewModel.swift */; };
+		99E401252D0D6CD900A63304 /* FeedOptionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E401242D0D6CD900A63304 /* FeedOptionsHandler.swift */; };
 		99E755512C22E66F0016A0A6 /* MemberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E755502C22E66F0016A0A6 /* MemberService.swift */; };
 		99E7BA592C69A5D500F79C96 /* ImageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E7BA582C69A5D500F79C96 /* ImageUtility.swift */; };
 		99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */; };
@@ -391,7 +390,6 @@
 		99960AB02CE1D96D007D2B61 /* DeleteScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteScheduleUseCase.swift; sourceTree = "<group>"; };
 		99960AB22CE1D97C007D2B61 /* PostEcceptScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostEcceptScheduleUseCase.swift; sourceTree = "<group>"; };
 		99960AB42CE1DE5B007D2B61 /* GetScheduleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetScheduleResponse.swift; sourceTree = "<group>"; };
-		999B88682CD1C51D00F329C9 /* HandleOutsideTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleOutsideTap.swift; sourceTree = "<group>"; };
 		999E296C2CBB989600AB9FF9 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		999E29702CBB9AF900AB9FF9 /* LocationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRepository.swift; sourceTree = "<group>"; };
 		999E29722CBB9C7F00AB9FF9 /* GetLocationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLocationUseCase.swift; sourceTree = "<group>"; };
@@ -434,7 +432,6 @@
 		99CC5E632C51EFAB00A0509A /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		99CEAD492C539743006B3D41 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		99CEAD4B2C5397B1006B3D41 /* DeviceConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceConfig.swift; sourceTree = "<group>"; };
-		99CF9BF82CD3172D0079BE81 /* FeedBookMarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedBookMarkView.swift; sourceTree = "<group>"; };
 		99CF9BFA2CD317920079BE81 /* FeedBookMarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedBookMarkViewController.swift; sourceTree = "<group>"; };
 		99CF9BFC2CD319360079BE81 /* BookMarkFeedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookMarkFeedRequest.swift; sourceTree = "<group>"; };
 		99CF9BFE2CD341F40079BE81 /* GetBookMarkResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBookMarkResponse.swift; sourceTree = "<group>"; };
@@ -458,6 +455,7 @@
 		99DC75DD2D06782500C20857 /* FeedsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsDetailViewController.swift; sourceTree = "<group>"; };
 		99DE2F012D0813B40087ACC9 /* FeedArchiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedArchiveViewController.swift; sourceTree = "<group>"; };
 		99DE2F032D0813EC0087ACC9 /* FeedArchiveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedArchiveViewModel.swift; sourceTree = "<group>"; };
+		99E401242D0D6CD900A63304 /* FeedOptionsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedOptionsHandler.swift; sourceTree = "<group>"; };
 		99E755502C22E66F0016A0A6 /* MemberService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberService.swift; sourceTree = "<group>"; };
 		99E7BA582C69A5D500F79C96 /* ImageUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtility.swift; sourceTree = "<group>"; };
 		99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
@@ -1036,9 +1034,9 @@
 				9974EA1F2C62196500826793 /* SnappingFlowLayout.swift */,
 				99E7BA582C69A5D500F79C96 /* ImageUtility.swift */,
 				99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */,
-				999B88682CD1C51D00F329C9 /* HandleOutsideTap.swift */,
 				D55C6C412CF5B8D7005132DC /* NavigationBarModifier.swift */,
 				99A897D62CEB02E900E79BED /* ImageLoader.swift */,
+				99E401242D0D6CD900A63304 /* FeedOptionsHandler.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1083,7 +1081,6 @@
 				9985AB962C786D0400D1442E /* MyDetailManageView.swift */,
 				995174FF2C7EF89B00E938DE /* LocationBookmarkView.swift */,
 				99A7D7E32C999897002BCD21 /* LocationBookMarkCell.swift */,
-				99CF9BF82CD3172D0079BE81 /* FeedBookMarkView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1872,7 +1869,6 @@
 				99C140422C64A01A00A706B6 /* AddFeedView.swift in Sources */,
 				995174FE2C7EF89100E938DE /* LocationBookmarkViewController.swift in Sources */,
 				D5B3B5392CB3DE63004353F6 /* DailyScheduleViewModel.swift in Sources */,
-				99CF9BF92CD3172D0079BE81 /* FeedBookMarkView.swift in Sources */,
 				9950C65B2C10B0F5003155A7 /* SignUpFormViewController.swift in Sources */,
 				992F57CC2C5B270300219C6B /* LoginBody.swift in Sources */,
 				99FBA5562C453BDD002EEEC7 /* HomeFeedViewController.swift in Sources */,
@@ -1990,6 +1986,7 @@
 				D5DB6C6D2CDA297300D89360 /* ScheduleDetailView.swift in Sources */,
 				992F57DB2C5B2A1D00219C6B /* MemberAPI.swift in Sources */,
 				99FDD0BD2C6DF72700B15026 /* MultipartFormDataHelper.swift in Sources */,
+				99E401252D0D6CD900A63304 /* FeedOptionsHandler.swift in Sources */,
 				99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */,
 				99EDF5A42CE8BE5B0008B19A /* DeleteHideFeedUseCase.swift in Sources */,
 				D54C040C2C651832009CC419 /* Schedule.swift in Sources */,
@@ -2082,7 +2079,6 @@
 				99960AB32CE1D97C007D2B61 /* PostEcceptScheduleUseCase.swift in Sources */,
 				D58F5A502C9332220048C23A /* GetMonthlyScheduleBody.swift in Sources */,
 				D567A9D42CF86081009F6451 /* FriendRequest.swift in Sources */,
-				999B88692CD1C51D00F329C9 /* HandleOutsideTap.swift in Sources */,
 				D5FC8ED42CE31151000A08C2 /* PostScheduleResponse.swift in Sources */,
 				D5CCD96F2CB0217E008497AD /* DailyScheduleView.swift in Sources */,
 				D567A9D02CF85B54009F6451 /* ManageFriendsViewModel.swift in Sources */,

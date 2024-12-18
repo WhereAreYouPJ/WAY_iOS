@@ -149,7 +149,7 @@ class FeedDetailBoxView: UIView {
     
     func configure(with feed: Feed) {
         let scheduleFriendInfos = feed.scheduleFriendInfos ?? []
-        let participants = scheduleFriendInfos.compactMap { $0.profileImage }
+        let participants = scheduleFriendInfos.compactMap { $0.profileImageURL }
         print("participants: \(participants)") // 디버깅용 출력
         
         configureParticipantImages(participants: participants)

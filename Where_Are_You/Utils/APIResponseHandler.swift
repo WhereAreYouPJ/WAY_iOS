@@ -17,7 +17,8 @@ class APIResponseHandler {
                 if let json = try? response.mapJSON() {
                     print("Response JSON: \(json)")
                 }
-                
+            print("Response Status Code: \(response.response?.statusCode ?? 0)")
+                                
                 let data = try response.map(T.self)
                 completion(.success(data))
             } catch DecodingError.valueNotFound(let type, let context) {

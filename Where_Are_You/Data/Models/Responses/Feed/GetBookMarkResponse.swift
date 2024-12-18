@@ -24,7 +24,7 @@ struct BookMarkContent: Codable {
     let memberSeq: Int
     let profileImage, startTime, location, title: String
     let bookMarkImageInfos: [FeedImageInfo]
-    let bookMarkFriendInfos: [BookMarkFriendInfo]
+    let bookMarkFriendInfos: [Info]
     let content: String
     let bookMark: Bool
 }

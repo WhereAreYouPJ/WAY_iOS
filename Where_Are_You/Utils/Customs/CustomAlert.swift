@@ -59,8 +59,10 @@ class CustomAlert: UIView {
         backgroundColor = .color51
         layer.cornerRadius = LayoutAdapter.shared.scale(value: 12)
         clipsToBounds = true
-        
+                
         titleLabel.text = title
+        messageLabel.lineBreakMode = .byCharWrapping
+
         messageLabel.text = message
         cancelButton.setTitle(cancelTitle, for: .normal)
         actionButton.setTitle(actionTitle, for: .normal)
@@ -110,7 +112,6 @@ class CustomAlert: UIView {
     }
     
     @objc private func actionTapped() {
-        print("확인 버튼 눌림")
         self.action?()
         self.dismissAlert()
     }

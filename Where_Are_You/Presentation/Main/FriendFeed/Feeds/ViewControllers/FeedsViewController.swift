@@ -95,48 +95,37 @@ class FeedsViewController: UIViewController {
     private func setupActions() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
         view.addGestureRecognizer(tapGesture)
+        plusOptionButton.button.addTarget(self, action: #selector(plusOptionButtonTapped), for: .touchUpInside)
     }
     
     private func showOptions(for feed: Feed, at frame: CGRect, isAuthor: Bool) {
         optionsView.removeFromSuperview()
-        // Configure options
-        let titles: [String]
-        let actions: [() -> Void]
         
-        if isAuthor {
-            titles = ["피드 삭제", "피드 수정", "피드 숨김"]
-            actions = [
-                { self.deleteFeed(feed) },
-                { self.editFeed(feed) },
-                { self.hideFeed(feed) }
-            ]
-        } else {
-            titles = ["피드 숨김"]
-            actions = [
-                { self.hideFeed(feed) }
-            ]
-        }
-        print("Titles: \(titles), Actions count: \(actions.count)")
-
-        // Configure CustomOptionsContainerView
-        optionsView.configureOptions(titles: titles, actions: actions)
-        optionsView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 10)
-        optionsView.clipsToBounds = true
-        view.addSubview(optionsView)
-        optionsView.snp.makeConstraints { make in
-            make.top.equalTo(frame.maxY)
-            make.width.equalTo(LayoutAdapter.shared.scale(value: 160))
-            make.trailing.equalToSuperview().inset(11)
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 90))
-        }
-        view.layoutIfNeeded() // 레이아웃 강제 완료
+        optionsView = FeedOptionsHandler.showOptions(
+            in: self.view,
+            frame: frame,
+            isAuthor: isAuthor,
+            isArchive: false,
+            feed: feed,
+            deleteAction: { self.deleteFeed(feed) },
+            editAction: { self.editFeed(feed) },
+            hideAction: { self.hideFeed(feed) }
+        )
     }
     
     private func deleteFeed(_ feed: Feed) {
-        guard let feedSeq = feed.feedSeq else { return }
-        viewModel.deleteFeed(feedSeq: feedSeq)
-        optionsView.removeFromSuperview()
-        feedsView.feedsTableView.reloadData()
+        let alert = CustomAlert(
+            title: "피드 삭제",
+            message: "친구의 피드는 유지되며, 자신의 피드만 영구적으로 삭제됩니다.",
+            cancelTitle: "취소",
+            actionTitle: "삭제"
+        ) { [weak self] in
+            guard let feedSeq = feed.feedSeq else { return }
+            self?.viewModel.deleteFeed(feedSeq: feedSeq)
+            self?.optionsView.removeFromSuperview()
+            self?.feedsView.feedsTableView.reloadData()
+        }
+        alert.showAlert(on: self)
     }
     
     private func editFeed(_ feed: Feed) {
@@ -145,10 +134,18 @@ class FeedsViewController: UIViewController {
     }
     
     private func hideFeed(_ feed: Feed) {
-        guard let feedSeq = feed.feedSeq else { return }
-        viewModel.hidFeed(feedSeq: feedSeq)
-        optionsView.removeFromSuperview()
-        feedsView.feedsTableView.reloadData()
+        let alert = CustomAlert(
+            title: "피드 숨김",
+            message: "피드를 숨깁니다. 숨긴 피드는 마이페이지에서 복원하거나 영구 삭제할 수 있습니다.",
+            cancelTitle: "취소",
+            actionTitle: "숨김"
+        ) { [weak self] in
+            guard let feedSeq = feed.feedSeq else { return }
+            self?.viewModel.hidFeed(feedSeq: feedSeq)
+            self?.optionsView.removeFromSuperview()
+            self?.feedsView.feedsTableView.reloadData()
+        }
+        alert.showAlert(on: self)
     }
     
     // MARK: - Selectors
@@ -202,7 +199,6 @@ extension FeedsViewController: FeedsTableViewCellDelegate {
 
 extension FeedsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("Number of rows: \(viewModel.displayFeedContent.count)")
         return viewModel.displayFeedContent.count
     }
     

@@ -41,8 +41,12 @@ class LocationBookmarkViewController: UIViewController {
         setupTableView()
         setupBindings()
         setupNavigationBar()
-        setupOutsideTap()
-        
+//        setupOutsideTap()
+        setupViews()
+    }
+    
+    // MARK: - Helpers
+    private func setupViews() {
         locationBookmarkView.translatesAutoresizingMaskIntoConstraints = false
         noDataView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -57,8 +61,6 @@ class LocationBookmarkViewController: UIViewController {
         
         locationBookmarkView.updateDeleteButtonState(isEnabled: false)
     }
-    
-    // MARK: - Helpers
     
     private func setupTableView() {
         locationBookmarkView.bookMarkTableView.delegate = self
@@ -111,7 +113,7 @@ class LocationBookmarkViewController: UIViewController {
         }
         
         viewModel.onUpdateLocationSuccess = { [weak self] in
-            DispatchQueue.main.async{
+            DispatchQueue.main.async {
                 self?.locationBookmarkView.bookMarkTableView.reloadData()
             }
         }
@@ -154,19 +156,27 @@ class LocationBookmarkViewController: UIViewController {
         locationBookmarkView.editingButton.button.addTarget(self, action: #selector(editingButtonTapped), for: .touchUpInside)
         locationBookmarkView.deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
         addButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
+        view.addGestureRecognizer(tapGesture)
     }
     
-    private func setupOutsideTap() {
-        view.hideWhenTappedOutside(ignoreViews: [locationBookmarkView.editingButton]) {
-            self.locationBookmarkView.editingButton.isHidden = true
-        }
-    }
+//    private func setupOutsideTap() {
+//        view.hideWhenTappedOutside(ignoreViews: [locationBookmarkView.editingButton]) {
+//            self.locationBookmarkView.editingButton.isHidden = true
+//        }
+//    }
     
     private func updateServerOrder() {
         viewModel.putLocation()
     }
     
     // MARK: - Selectors
+    @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {
+        let location = sender.location(in: self.view)
+        if !locationBookmarkView.editingButton.frame.contains(location) {
+            locationBookmarkView.editingButton.removeFromSuperview()
+        }
+    }
     
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
@@ -218,7 +228,6 @@ extension LocationBookmarkViewController: UITableViewDataSource, UITableViewDele
             self?.viewModel.toggleLocationCheck(at: indexPath.row) // 선택 상태 변경
             tableView.reloadRows(at: [indexPath], with: .none) // 선택된 셀만 새로고침
         }
-        
         return cell
     }
     

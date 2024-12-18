@@ -17,7 +17,7 @@ class FeedViewModel {
     private let postBookMarkFeedUseCase: PostBookMarkFeedUseCase
     private let deleteBookMarkFeedUseCase: DeleteBookMarkFeedUseCase
     
-    private let imageCache = ImageCache.default
+//    private let imageCache = ImageCache.default
     private let memberSeq = UserDefaultsManager.shared.getMemberSeq()
     
     var onFeedsDataFetched: (() -> Void)?
@@ -59,7 +59,7 @@ class FeedViewModel {
             switch result {
             case .success(let data):
                 self.rawFeedContent = data
-                self.displayFeedContent = rawFeedContent.compactMap { $0.toFeeds() }
+                self.displayFeedContent = data.compactMap { $0.toFeeds() }
             case .failure(let error):
                 print(error.localizedDescription)
             }

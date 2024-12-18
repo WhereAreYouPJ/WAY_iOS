@@ -36,7 +36,7 @@ struct Feed {
     let title: String
     let content: String?
     var bookMark: Bool
-    let feedImage: String?
+    let feedImage: String? // 홈화면에 뜨는 피드의 이미지 하나
     let scheduleFriendInfos: [Info]?
     let feedImageInfos: [FeedImageInfo]?
 }
@@ -51,7 +51,7 @@ extension FeedContent {
             feedSeq: firstScheduleFeedInfo.feedInfo.feedSeq,
             memberSeq: firstScheduleFeedInfo.memberInfo.memberSeq,
             startTime: scheduleInfo.startTime,
-            profileImage: firstScheduleFeedInfo.memberInfo.profileImage,
+            profileImage: firstScheduleFeedInfo.memberInfo.profileImageURL,
             location: scheduleInfo.location,
             title: firstScheduleFeedInfo.feedInfo.title,
             content: firstScheduleFeedInfo.feedInfo.content,
@@ -75,10 +75,26 @@ extension BookMarkContent {
             content: content,
             bookMark: bookMark,
             feedImage: nil,
-            scheduleFriendInfos: bookMarkFriendInfos.map { friend in
-                Info(memberSeq: friend.memberSeq, userName: friend.userName, profileImage: friend.profileImageURL)
-            },
+            scheduleFriendInfos: bookMarkFriendInfos,
             feedImageInfos: bookMarkImageInfos
+        )
+    }
+}
+
+extension HideFeedContent {
+    func toFeeds() -> Feed {
+        return Feed(
+            feedSeq: nil, // BookMarkContent에는 feedSeq 없음
+            memberSeq: memberSeq,
+            startTime: startTime,
+            profileImage: profileImage,
+            location: location,
+            title: title,
+            content: content,
+            bookMark: bookMark,
+            feedImage: nil,
+            scheduleFriendInfos: feedFriendInfos,
+            feedImageInfos: hideFeedImageInfos
         )
     }
 }

@@ -123,7 +123,9 @@ class FeedsTableViewCell: UITableViewCell {
     
     @objc private func feedFixButtonTapped() {
         guard let feed = feed else { return }
-        delegate?.didTapFeedFixButton(feed: feed, buttonFrame: detailBox.feedFixButton.convert(detailBox.feedFixButton.bounds, to: nil))
+        let buttonFrame = detailBox.feedFixButton.convert(detailBox.feedFixButton.bounds, to: self.window)
+
+        delegate?.didTapFeedFixButton(feed: feed, buttonFrame: buttonFrame)
     }
 }
 

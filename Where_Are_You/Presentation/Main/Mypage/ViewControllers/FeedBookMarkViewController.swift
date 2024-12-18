@@ -9,13 +9,14 @@ import UIKit
 
 class FeedBookMarkViewController: UIViewController {
     // MARK: - Properties
-    private let feedBookMarkView = FeedBookMarkView()
+    private let feedBookMarkView = FeedsView()
     private let noDataView: NoDataView = {
         let view = NoDataView()
         view.descriptionLabel.text = "아직은 피드에 책갈피를 하지 않았어요. \n특별한 추억을 오래도록 기억할 수 있게 \n피드를 책갈피 해보세요!"
         return view
     }()
-    
+    private var optionsView = MultiCustomOptionsContainerView()
+
     var viewModel: FeedBookMarkViewModel!
     
     // MARK: - Lifecycle
@@ -23,8 +24,10 @@ class FeedBookMarkViewController: UIViewController {
         super.viewDidLoad()
         setupViewModel()
         setupViews()
+        setupNavigationBar()
         setupTableView()
         setupBindings()
+        setupActions()
         viewModel.fetchBookMarkFeed()
         
         feedBookMarkView.updateContentHeight()
@@ -32,7 +35,7 @@ class FeedBookMarkViewController: UIViewController {
     
     // MARK: - Helpers
     private func setupNavigationBar() {
-        Utilities.createNavigationBar(for: self, title: "피드 책갈피", backButtonAction: #selector(backButtonTapped), showBackButton: true)
+        Utilities.createNavigationBar(for: self, title: "피드 책갈피", backButtonAction: #selector(backButtonTapped))
     }
     
     private func setupViewModel() {
@@ -82,9 +85,71 @@ class FeedBookMarkViewController: UIViewController {
         feedBookMarkView.feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
     }
     
+    private func setupActions() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    private func showOptions(for feed: Feed, at frame: CGRect, isAuthor: Bool) {
+        optionsView.removeFromSuperview()
+        
+        optionsView = FeedOptionsHandler.showOptions(
+            in: self.view,
+            frame: frame,
+            isAuthor: isAuthor,
+            isArchive: false,
+            feed: feed,
+            deleteAction: { self.deleteFeed(feed) },
+            editAction: { self.editFeed(feed) },
+            hideAction: { self.hideFeed(feed) }
+        )
+    }
+    
+    private func deleteFeed(_ feed: Feed) {
+        let alert = CustomAlert(
+            title: "피드 삭제",
+            message: "친구의 피드는 유지되며, 자신의 피드만 영구적으로 삭제됩니다.",
+            cancelTitle: "취소",
+            actionTitle: "삭제"
+        ) { [weak self] in
+            guard let feedSeq = feed.feedSeq else { return }
+            self?.viewModel.deleteFeed(feedSeq: feedSeq)
+            self?.optionsView.removeFromSuperview()
+            self?.feedBookMarkView.feedsTableView.reloadData()
+        }
+        alert.showAlert(on: self)
+    }
+    
+    private func editFeed(_ feed: Feed) {
+        print("\(feed.title) 수정")
+        optionsView.removeFromSuperview()
+    }
+    
+    private func hideFeed(_ feed: Feed) {
+        let alert = CustomAlert(
+            title: "피드 숨김",
+            message: "피드를 숨깁니다. 숨긴 피드는 마이페이지에서 복원하거나 영구 삭제할 수 있습니다.",
+            cancelTitle: "취소",
+            actionTitle: "숨김"
+        ) { [weak self] in
+            guard let feedSeq = feed.feedSeq else { return }
+            self?.viewModel.hidFeed(feedSeq: feedSeq)
+            self?.optionsView.removeFromSuperview()
+            self?.feedBookMarkView.feedsTableView.reloadData()
+        }
+        alert.showAlert(on: self)
+    }
+    
     // MARK: - Selectors
     @objc func backButtonTapped() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {
+        let location = sender.location(in: self.view)
+        if !optionsView.frame.contains(location) {
+            optionsView.removeFromSuperview()
+        }
     }
 }
 // MARK: - FeedsTableViewCellDelegate
@@ -100,21 +165,9 @@ extension FeedBookMarkViewController: FeedsTableViewCellDelegate {
     }
     
     func didTapFeedFixButton(feed: Feed, buttonFrame: CGRect) {
+        let convertedFrame = view.convert(buttonFrame, from: nil) // ViewController 기준으로 변환
         let isAuthor = feed.memberSeq == UserDefaultsManager.shared.getMemberSeq()
-//        guard let feedSeq = feed.feedSeq else { return }
-//        showFeedOptions(
-//            feed: feed,
-//            isAuthor: isAuthor,
-//            currentViewType: .bookMark,
-//            deleteAction: { self.viewModel.deleteBookMarkFeed(feedSeq: feedSeq) },
-//            editAction: { self.editFeed(feed) },
-//            hideAction: { self.viewModel.hidFeed(feedSeq: feedSeq) },
-//            restoreAction: {}
-//        )
-    }
-    
-    private func editFeed(_ feed: Feed) {
-        // 피드 수정 화면으로 이동
+        showOptions(for: feed, at: convertedFrame, isAuthor: isAuthor)
     }
 }
 

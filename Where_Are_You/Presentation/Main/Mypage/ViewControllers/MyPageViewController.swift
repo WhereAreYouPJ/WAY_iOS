@@ -115,14 +115,12 @@ class MyPageViewController: UIViewController {
         case 1:
             // Handle "위치 즐겨찾기"
             moveToDetailController(controller: LocationBookmarkViewController())
-            print("위치 즐겨찾기 tapped")
         case 2:
             // Handle "피드 책갈피"
             moveToDetailController(controller: FeedBookMarkViewController())
-            print("피드 책갈피 tapped")
         case 3:
             // Handle "피드 보관함"
-            print("피드 보관함 tapped")
+            moveToDetailController(controller: FeedArchiveViewController())
         case 4:
             // Handle "공지사항"
             print("공지사항 tapped")
