@@ -206,6 +206,7 @@
 		D517F2652CECAB3E003C5F60 /* PostFavoriteFriendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D517F2642CECAB3E003C5F60 /* PostFavoriteFriendUseCase.swift */; };
 		D51AC99C2C849AB400D0AD2E /* LocationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51AC99B2C849AB400D0AD2E /* LocationAPI.swift */; };
 		D51AC99F2C84A0AD00D0AD2E /* FavLocationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51AC99E2C84A0AD00D0AD2E /* FavLocationResponse.swift */; };
+		D51F8E562D12F4E400364F31 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51F8E552D12F4E400364F31 /* ProfileImageView.swift */; };
 		D534B0F62D06EF42004864E0 /* GetCoordinateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D534B0F52D06EF42004864E0 /* GetCoordinateResponse.swift */; };
 		D534B0F92D06EFB6004864E0 /* PostCoordinateBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D534B0F82D06EFB6004864E0 /* PostCoordinateBody.swift */; };
 		D534B0FC2D06F012004864E0 /* CoordinateAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D534B0FB2D06F012004864E0 /* CoordinateAPI.swift */; };
@@ -514,6 +515,7 @@
 		D517F2642CECAB3E003C5F60 /* PostFavoriteFriendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFavoriteFriendUseCase.swift; sourceTree = "<group>"; };
 		D51AC99B2C849AB400D0AD2E /* LocationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAPI.swift; sourceTree = "<group>"; };
 		D51AC99E2C84A0AD00D0AD2E /* FavLocationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavLocationResponse.swift; sourceTree = "<group>"; };
+		D51F8E552D12F4E400364F31 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		D53078812C5D3C9D0041BBB7 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		D534B0F52D06EF42004864E0 /* GetCoordinateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCoordinateResponse.swift; sourceTree = "<group>"; };
 		D534B0F82D06EFB6004864E0 /* PostCoordinateBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCoordinateBody.swift; sourceTree = "<group>"; };
@@ -1486,6 +1488,7 @@
 				D5496DD12C6B69570056C196 /* ConfirmLocationView.swift */,
 				D564EE872CF4DF540033DBD3 /* MapPinView.swift */,
 				D55D27CA2CFAF33100893D9D /* FriendsLocationView.swift */,
+				D51F8E552D12F4E400364F31 /* ProfileImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2091,6 +2094,7 @@
 				D57AC3B12C8B6336006AE7D7 /* KakaoLocalResponse.swift in Sources */,
 				D534B0F62D06EF42004864E0 /* GetCoordinateResponse.swift in Sources */,
 				D534B1032D06F329004864E0 /* GetCoordinateUseCase.swift in Sources */,
+				D51F8E562D12F4E400364F31 /* ProfileImageView.swift in Sources */,
 				D54C040E2C651B8A009CC419 /* ScheduleAPI.swift in Sources */,
 				D5BA30992CE74BF300958BF5 /* GetFriendUseCase.swift in Sources */,
 				99EDF5A02CE8BE4A0008B19A /* GetHideFeedUseCase.swift in Sources */,

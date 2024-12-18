@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ScheduleDetailView: View {
-    @StateObject var viewModel: ScheduleDetailViewModel
+    @ObservedObject var viewModel: ScheduleDetailViewModel
     @Environment(\.dismiss) private var dismiss
     @State private var path = NavigationPath()
     @State private var showFriendsLocation = false // MARK: 친구 위치 실시간 확인 테스트용
@@ -17,7 +17,10 @@ struct ScheduleDetailView: View {
     
     init(schedule: Schedule) {
         self.schedule = schedule
-        _viewModel = StateObject(wrappedValue: ScheduleDetailViewModel(schedule: schedule))
+        let scheduleRepository = ScheduleRepository(scheduleService: ScheduleService())
+        let getScheduleUseCase = GetScheduleUseCaseImpl(scheduleRepository: scheduleRepository)
+        
+        _viewModel = ObservedObject(wrappedValue: ScheduleDetailViewModel(schedule: schedule, getScheduleUseCase: getScheduleUseCase))
     }
     
     var body: some View {
@@ -125,6 +128,7 @@ struct ScheduleDetailView: View {
             }
         }
         .onAppear {
+            viewModel.getScheduleDetail()
             viewModel.createViewModel.getFavoriteLocation()
         }
     }

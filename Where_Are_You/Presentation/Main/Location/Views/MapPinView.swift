@@ -187,23 +187,29 @@ struct KakaoMapPinView: UIViewRepresentable {
             }
             let manager = view.getLabelManager()
             
-            //            let iconStyle1 = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.0))
-            //            let iconStyle1 = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.0))
-            //            let iconStyle2 = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.0))
-            let myNoti = PoiBadge(badgeID: "myBadge", image: UIImage(named: "noti.png"), offset: CGPoint(x: 0.9, y: 0.1), zOrder: 0)
-            let myIconStyle = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.2), badges: [myNoti])
-            let friendsNoti = PoiBadge(badgeID: "friendsBadge", image: UIImage(named: "noti2.png"), offset: CGPoint(x: 0.9, y: 0.1), zOrder: 0)
-            let friendsIconStyle = PoiIconStyle(symbol: UIImage(named: "pin_red.png"), anchorPoint: CGPoint(x: 0.0, y: 0.5), badges: [friendsNoti])
-            
+            // 내 마커용 스타일 생성: SwiftUI View를 UIImage로 변환
+            let myMarker = ProfileImageView(image: Image(myLocation?.member?.profileImage ?? "icon-profile-default"))
+            let mySymbolImage = myMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 40.667)))
+            let myIconStyle = PoiIconStyle(symbol: mySymbolImage, anchorPoint: CGPoint(x: 0.5, y: 1))
             let myPoiStyle = PoiStyle(styleID: "myPoiStyle", styles: [
                 PerLevelPoiStyle(iconStyle: myIconStyle, level: 12)
             ])
-            let friendsPoiStyle = PoiStyle(styleID: "friendsPoiStyle", styles: [
-                PerLevelPoiStyle(iconStyle: myIconStyle, level: 12)
-            ])
-            
             manager.addPoiStyle(myPoiStyle)
-            manager.addPoiStyle(friendsPoiStyle)
+            
+            // 친구들 각각의 마커 스타일 생성
+            for (index, friend) in friendsLocation.enumerated() {
+                let profileImageName = friend.member?.profileImage ?? "icon-profile-default"
+                let friendMarker = ProfileImageView(image: Image(profileImageName))
+                let friendSymbolImage = friendMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 40.667)))
+                let friendIconStyle = PoiIconStyle(symbol: friendSymbolImage, anchorPoint: CGPoint(x: 0.5, y: 1))
+                
+                // 각 친구별로 고유한 styleID 생성
+                let styleID = "friendPoiStyle_\(index)"
+                let friendPoiStyle = PoiStyle(styleID: styleID, styles: [
+                    PerLevelPoiStyle(iconStyle: friendIconStyle, level: 12)
+                ])
+                manager.addPoiStyle(friendPoiStyle)
+            }
         }
         
         func createPois() {
@@ -226,14 +232,14 @@ struct KakaoMapPinView: UIViewRepresentable {
                 myPoi?.show()
             }
             
-            // 친구들 위치 POI 생성
-            let friendPoiOption = PoiOptions(styleID: "friendsPoiStyle")
-            friendPoiOption.rank = 1
-            
-            for friendLocation in friendsLocation {
+            // 친구들 위치 POI 생성 - 각각 다른 스타일 적용
+            for (index, friend) in friendsLocation.enumerated() {
+                let friendPoiOption = PoiOptions(styleID: "friendPoiStyle_\(index)")
+                friendPoiOption.rank = 1
+                
                 let friendPoi = layer?.addPoi(
                     option: friendPoiOption,
-                    at: MapPoint(longitude: friendLocation.x, latitude: friendLocation.y)
+                    at: MapPoint(longitude: friend.x, latitude: friend.y)
                 )
                 friendPoi?.show()
             }
@@ -279,7 +285,7 @@ struct KakaoMapPinView: UIViewRepresentable {
             let target = MapPoint(longitude: myNewLocation.x, latitude: myNewLocation.y)
             let cameraUpdate = CameraUpdate.make(
                 target: target,
-                zoomLevel: 15, mapView: view
+                zoomLevel: 16, mapView: view
             )
             view.moveCamera(cameraUpdate)
             print("MapPinView camera updated! x: \(myNewLocation.x), y: \(myNewLocation.y)")
@@ -288,5 +294,12 @@ struct KakaoMapPinView: UIViewRepresentable {
 }
 
 #Preview {
-    MapPinView(myLocation: .constant(LongLat(x: 127.0388462, y: 37.495418)), friendsLocation: .constant([LongLat(x: 127.0388461, y: 37.495418), LongLat(x: 127.0388461, y: 37.495417)])) // x: 126.88958060554663, y: 37.50910419634123
+    MapPinView(
+        myLocation: .constant(LongLat(member: Member(userName: "김주희", profileImage: "exampleProfileImage"), x: 127.0388462, y: 37.495418)),
+        friendsLocation: .constant([
+            LongLat(member: Member(userName: "최수빈", profileImage: "exampleBanner2"), x: 127.0398462, y: 37.496418),  // 약 100-200m 차이
+            LongLat(member: Member(userName: "이민혁", profileImage: "icon-profile-default"), x: 127.0378462, y: 37.494418),  // 약 100-200m 차이
+            LongLat(member: Member(userName: "강사랑", profileImage: "exampleBanner"), x: 127.0388462, y: 37.497418)   // 약 200m 차이
+        ])
+    )
 }

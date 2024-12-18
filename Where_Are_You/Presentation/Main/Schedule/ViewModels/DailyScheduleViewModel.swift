@@ -68,6 +68,7 @@ class DailyScheduleViewModel: ObservableObject {
                             }
                             
                             print("일간 일정 로드 성공: \(self.schedules.count)개의 일정을 받았습니다.")
+                            print("일간 일정 로드 성공: \(self.schedules)")
                         }
                     } catch {
                         print("JSON 디코딩 실패: \(error.localizedDescription)")
@@ -187,7 +188,7 @@ class DailyScheduleViewModel: ObservableObject {
 
 extension DailyScheduleViewModel {
     func createScheduleDetailViewModel(for schedule: Schedule) -> ScheduleDetailViewModel {
-        let detailViewModel = ScheduleDetailViewModel(schedule: schedule)
+        let detailViewModel = ScheduleDetailViewModel(schedule: schedule, getScheduleUseCase: GetScheduleUseCaseImpl(scheduleRepository: ScheduleRepository(scheduleService: ScheduleService())))
         
         detailViewModel.$isSuccess
             .sink { [weak self] success in
