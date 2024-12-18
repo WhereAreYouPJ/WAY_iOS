@@ -66,7 +66,7 @@ class MyPageViewController: UIViewController {
         
         viewModel.onGetMemberSuccess = { [weak self] memberDetails in
             DispatchQueue.main.async {
-                let memberCode = UserDefaultsManager.shared.getMemberCode()
+                guard let memberCode = UserDefaultsManager.shared.getMemberCode() else { return }
                 let member = Member(userName: memberDetails.userName,
                                     profileImage: memberDetails.profileImage,
                                     memberCode: memberCode)
