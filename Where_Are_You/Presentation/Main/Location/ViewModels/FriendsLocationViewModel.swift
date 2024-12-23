@@ -156,7 +156,6 @@ class FriendsLocationViewModel: NSObject, ObservableObject, CLLocationManagerDel
                     self?.friendsLocation = locations
                     self?.onLocationUpdate?()
                 }
-                print("친구들 위치 정보 받기 완료! \(String(describing: self?.friendsLocation.description))")
             case .failure(let error):
                 print("친구들 위치 정보 받기 실패 - \(error.localizedDescription)")
             }

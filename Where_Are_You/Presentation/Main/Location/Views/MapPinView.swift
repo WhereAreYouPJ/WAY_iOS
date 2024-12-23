@@ -85,6 +85,12 @@ struct KakaoMapPinView: UIViewRepresentable {
         var container: KMViewContainer?
         var myLocation: LongLat?
         var friendsLocation: [LongLat]
+        
+        // POI 객체들을 저장 -> 이미 생성된 POI는 위치 업데이트만 할 수 있도록
+        private var myLocationPoi: KakaoMapsSDK.Label?
+        private var friendsPois: [KakaoMapsSDK.Label] = []
+        private var createdStyleIDs: Set<String> = [] // 스타일을 한번만 생성하도록 각 스타일의 생성 여부 추적
+        
         private let mapViewName = "friendsLocationMapView"
         private var isViewReady = false
         
@@ -132,8 +138,12 @@ struct KakaoMapPinView: UIViewRepresentable {
             view.viewRect = container?.bounds ?? .zero
             
             createLabelLayer()
-            createPoiStyle()
-            createPois()
+            
+            createMyPoiStyle()
+            createFriendPoiStyles()
+            
+            createMyPoi()
+            createFriendPois()
             
             // view가 성공적으로 추가되었음을 표시
             isViewReady = true
@@ -180,79 +190,86 @@ struct KakaoMapPinView: UIViewRepresentable {
         }
         
         // Poi 표시 스타일 생성
-        func createPoiStyle() {
-            guard let view = controller?.getView(mapViewName) as? KakaoMap else {
-                print("view is nil in createPoiStyle")
-                return
-            }
+        func createMyPoiStyle() {
+            guard let view = controller?.getView(mapViewName) as? KakaoMap else { return }
             let manager = view.getLabelManager()
             
-            // 내 마커용 스타일 생성: SwiftUI View를 UIImage로 변환
-            let myMarker = ProfileImageView(image: Image(myLocation?.member?.profileImage ?? "icon-profile-default"))
-            let mySymbolImage = myMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 40.667)))
-            
-            let myIconStyle = PoiIconStyle(symbol: mySymbolImage, anchorPoint: CGPoint(x: 0.5, y: 1))
-            let myPoiStyle = PoiStyle(styleID: "myPoiStyle", styles: [
-                PerLevelPoiStyle(iconStyle: myIconStyle, level: 12)
-            ])
-            manager.addPoiStyle(myPoiStyle)
-            
-            // 친구들 각각의 마커 스타일 생성
-            for (index, friend) in friendsLocation.enumerated() {
-//                let profileImageName = friend.member?.profileImage ?? "icon-profile-default"
-                let profileImageName = "icon-profile-default"
-                let friendMarker = ProfileImageView(image: Image(profileImageName))
-                let friendSymbolImage = friendMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 40.667)))
-                
-                let friendIconStyle = PoiIconStyle(symbol: friendSymbolImage, anchorPoint: CGPoint(x: 0.5, y: 1))
-                
-                // 각 친구별로 고유한 styleID 생성
-                let styleID = "friendPoiStyle_\(index)"
-                let friendPoiStyle = PoiStyle(styleID: styleID, styles: [
-                    PerLevelPoiStyle(iconStyle: friendIconStyle, level: 12)
+            if !createdStyleIDs.contains("myPoiStyle") {
+                let myMarker = ProfileImageView(image: Image(myLocation?.member?.profileImage ?? "icon-profile-default"))
+                let mySymbolImage = myMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 40.667)))
+                let myIconStyle = PoiIconStyle(symbol: mySymbolImage, anchorPoint: CGPoint(x: 0.5, y: 1))
+                let myPoiStyle = PoiStyle(styleID: "myPoiStyle", styles: [
+                    PerLevelPoiStyle(iconStyle: myIconStyle, level: 12)
                 ])
-                manager.addPoiStyle(friendPoiStyle)
-                print("POI style \(styleID) created")
+                manager.addPoiStyle(myPoiStyle)
+                createdStyleIDs.insert("myPoiStyle")
+                print("📍 My POI style created")
+            }
+        }
+
+        func createFriendPoiStyles() {
+            guard let view = controller?.getView(mapViewName) as? KakaoMap else { return }
+            let manager = view.getLabelManager()
+            
+            for (index, friend) in friendsLocation.enumerated() {
+                let styleID = "friendPoiStyle_\(index)"
+                if !createdStyleIDs.contains(styleID) {
+                    print("📍 Creating style for friend \(index)")
+                    let profileImageName = friend.member?.profileImage ?? "icon-profile-default"
+                    let friendMarker = ProfileImageView(image: Image(profileImageName))
+                    let friendSymbolImage = friendMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 40.667)))
+                    let friendIconStyle = PoiIconStyle(symbol: friendSymbolImage, anchorPoint: CGPoint(x: 0.5, y: 1))
+                    let friendPoiStyle = PoiStyle(styleID: styleID, styles: [
+                        PerLevelPoiStyle(iconStyle: friendIconStyle, level: 12)
+                    ])
+                    manager.addPoiStyle(friendPoiStyle)
+                    createdStyleIDs.insert(styleID)
+                    print("📍 Friend POI style \(styleID) created")
+                }
             }
         }
         
-        func createPois() {
-            guard let view = controller?.getView(mapViewName) as? KakaoMap else {
-                print("view is nil in createPois")
-                return
-            }
-            let manager = view.getLabelManager()
-            let layer = manager.getLabelLayer(layerID: "PoiLayer")
+        private func createMyPoi() {
+            guard let view = controller?.getView(mapViewName) as? KakaoMap,
+                  let layer = view.getLabelManager().getLabelLayer(layerID: "PoiLayer"),
+                  let myLocation = myLocation else { return }
             
-            // 내 위치 POI 생성
             let myPoiOption = PoiOptions(styleID: "myPoiStyle")
             myPoiOption.rank = 0
+            myLocationPoi = layer.addPoi(
+                option: myPoiOption,
+                at: MapPoint(longitude: myLocation.x, latitude: myLocation.y)
+            )
+            myLocationPoi?.show()
+        }
+        
+        private func createFriendPois() {
+            print("Creating friend POIs, count: \(friendsLocation.count)")
+            guard let view = controller?.getView(mapViewName) as? KakaoMap,
+                  let layer = view.getLabelManager().getLabelLayer(layerID: "PoiLayer") else { return }
             
-            if let myLocation {
-                let myPoi = layer?.addPoi(
-                    option: myPoiOption,
-                    at: MapPoint(longitude: myLocation.x, latitude: myLocation.y)
-                )
-                myPoi?.show()
+            // 기존 POI 제거
+            for friend in friendsPois {
+                print("📍Removing previous friend POI: \(friend.itemID)")
+                layer.removePoi(poiID: friend.itemID)
             }
+            friendsPois.removeAll()
             
-            // 친구들 위치 POI 생성 - 각각 다른 스타일 적용
+            // 친구 POI 생성
             for (index, friend) in friendsLocation.enumerated() {
-                print("Creating friend POI \(index) at: \(friend.x), \(friend.y)")
+                print("📍Creating friend POI at (\(friend.x), \(friend.y)) with style: friendPoiStyle_\(index)")
+                
                 let friendPoiOption = PoiOptions(styleID: "friendPoiStyle_\(index)")
                 friendPoiOption.rank = 1
-                
-                let friendPoi = layer?.addPoi(
+                if let poi = layer.addPoi(
                     option: friendPoiOption,
                     at: MapPoint(longitude: friend.x, latitude: friend.y)
-                )
-//                friendPoi?.show()
-                
-                if let poi = friendPoi {
+                ) {
+                    friendsPois.append(poi)
                     poi.show()
-                    print("Friend POI \(index) created successfully")
+                    print("📍Successfully created and showed friend POI \(index)")
                 } else {
-                    print("Failed to create POI for friend \(index)")
+                    print("📍Failed to create friend POI \(index)")
                 }
             }
         }
@@ -283,17 +300,32 @@ struct KakaoMapPinView: UIViewRepresentable {
             // view가 준비되지 않았으면 업데이트 스킵
             guard isViewReady else { return }
             guard let view = controller?.getView(mapViewName) as? KakaoMap else { return }
-
-            // 기존 POI 삭제
-            let manager = view.getLabelManager()
-            if let layer = manager.getLabelLayer(layerID: "PoiLayer") {
-                layer.clearAllItems() // TODO: 맞는 메서드인지 확인 필요
+            
+            // 각각의 스타일 생성 확인
+            if !createdStyleIDs.contains("myPoiStyle") {
+                createMyPoiStyle()
+                createMyPoi()
+            }
+            if friendsPois.count != friendsNewLocation.count {
+                createFriendPoiStyles()
+                createFriendPois()
             }
             
-            // 스타일 다시 생성
-            createPoiStyle()
-            // 새로운 POI 생성
-            createPois()
+            // 위치 업데이트
+            if let myPoi = myLocationPoi as? Poi {
+                myPoi.moveAt(MapPoint(longitude: myNewLocation.x, latitude: myNewLocation.y), duration: 0)
+            }
+            if friendsPois.count != friendsNewLocation.count {
+                // 친구 수가 변경된 경우 POI 재생성
+                createFriendPois()
+            } else {
+                // 친구 수가 동일한 경우 위치만 업데이트
+                for (index, friend) in friendsNewLocation.enumerated() {
+                    if let friendPoi = friendsPois[index] as? Poi {
+                        friendPoi.moveAt(MapPoint(longitude: friend.x, latitude: friend.y), duration: 0)
+                    }
+                }
+            }
             
             // 카메라 이동: 내 위치 중심
             let target = MapPoint(longitude: myNewLocation.x, latitude: myNewLocation.y)
