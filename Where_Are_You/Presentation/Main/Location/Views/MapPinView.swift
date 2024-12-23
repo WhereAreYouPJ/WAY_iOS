@@ -190,6 +190,7 @@ struct KakaoMapPinView: UIViewRepresentable {
             // 내 마커용 스타일 생성: SwiftUI View를 UIImage로 변환
             let myMarker = ProfileImageView(image: Image(myLocation?.member?.profileImage ?? "icon-profile-default"))
             let mySymbolImage = myMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 40.667)))
+            
             let myIconStyle = PoiIconStyle(symbol: mySymbolImage, anchorPoint: CGPoint(x: 0.5, y: 1))
             let myPoiStyle = PoiStyle(styleID: "myPoiStyle", styles: [
                 PerLevelPoiStyle(iconStyle: myIconStyle, level: 12)
@@ -198,9 +199,11 @@ struct KakaoMapPinView: UIViewRepresentable {
             
             // 친구들 각각의 마커 스타일 생성
             for (index, friend) in friendsLocation.enumerated() {
-                let profileImageName = friend.member?.profileImage ?? "icon-profile-default"
+//                let profileImageName = friend.member?.profileImage ?? "icon-profile-default"
+                let profileImageName = "icon-profile-default"
                 let friendMarker = ProfileImageView(image: Image(profileImageName))
                 let friendSymbolImage = friendMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 40.667)))
+                
                 let friendIconStyle = PoiIconStyle(symbol: friendSymbolImage, anchorPoint: CGPoint(x: 0.5, y: 1))
                 
                 // 각 친구별로 고유한 styleID 생성
@@ -209,6 +212,7 @@ struct KakaoMapPinView: UIViewRepresentable {
                     PerLevelPoiStyle(iconStyle: friendIconStyle, level: 12)
                 ])
                 manager.addPoiStyle(friendPoiStyle)
+                print("POI style \(styleID) created")
             }
         }
         
@@ -234,6 +238,7 @@ struct KakaoMapPinView: UIViewRepresentable {
             
             // 친구들 위치 POI 생성 - 각각 다른 스타일 적용
             for (index, friend) in friendsLocation.enumerated() {
+                print("Creating friend POI \(index) at: \(friend.x), \(friend.y)")
                 let friendPoiOption = PoiOptions(styleID: "friendPoiStyle_\(index)")
                 friendPoiOption.rank = 1
                 
@@ -241,7 +246,14 @@ struct KakaoMapPinView: UIViewRepresentable {
                     option: friendPoiOption,
                     at: MapPoint(longitude: friend.x, latitude: friend.y)
                 )
-                friendPoi?.show()
+//                friendPoi?.show()
+                
+                if let poi = friendPoi {
+                    poi.show()
+                    print("Friend POI \(index) created successfully")
+                } else {
+                    print("Failed to create POI for friend \(index)")
+                }
             }
         }
         
@@ -278,6 +290,8 @@ struct KakaoMapPinView: UIViewRepresentable {
                 layer.clearAllItems() // TODO: 맞는 메서드인지 확인 필요
             }
             
+            // 스타일 다시 생성
+            createPoiStyle()
             // 새로운 POI 생성
             createPois()
             

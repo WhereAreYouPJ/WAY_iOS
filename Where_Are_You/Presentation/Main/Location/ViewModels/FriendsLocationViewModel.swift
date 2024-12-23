@@ -18,13 +18,14 @@ struct LongLat {
 class FriendsLocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var myLocation = LongLat(x: 0, y: 0)
     @Published var friendsLocation: [LongLat] = []
-    @Published var isNetworkSuccess = false
     @Published var locationError: String?
     
     private var locationManager: CLLocationManager?
     private let postCoordinateUseCase: PostCoordinateUseCase
     private let getCoordinateUseCase: GetCoordinateUseCase
     private var locationUpdateTimer: Timer?
+    
+    var onLocationUpdate: (() -> Void)? // 위치 변화시 실행되는 콜백 함수
     
     init(
         postCoordinateUseCase: PostCoordinateUseCase,
@@ -126,9 +127,10 @@ class FriendsLocationViewModel: NSObject, ObservableObject, CLLocationManagerDel
     // MARK: 서버 통신 - 사용자 위치 정보 보내기
     func postCoordinate(scheduleSeq: Int) {
         let memberSeq = UserDefaultsManager.shared.getMemberSeq()
-        postCoordinateUseCase.execute(request: PostCoordinateBody(memberSeq: memberSeq, scheduleSeq: scheduleSeq, x: self.myLocation.x, y: self.myLocation.y)) { result in
+        postCoordinateUseCase.execute(request: PostCoordinateBody(memberSeq: memberSeq, scheduleSeq: scheduleSeq, x: self.myLocation.x, y: self.myLocation.y)) { [weak self] result in
             switch result {
             case .success:
+                self?.onLocationUpdate?()
                 print("사용자 위치 정보 보내기 완료!")
             case .failure(let error):
                 print("사용자 위치 정보 보내기 실패 - \(error.localizedDescription)")
@@ -147,7 +149,12 @@ class FriendsLocationViewModel: NSObject, ObservableObject, CLLocationManagerDel
                 }
                 
                 DispatchQueue.main.async {
+                    print("Updating friends locations - count: \(locations.count)")
+                    locations.forEach { location in
+                        print("Friend location - x: \(location.x), y: \(location.y)")
+                    }
                     self?.friendsLocation = locations
+                    self?.onLocationUpdate?()
                 }
                 print("친구들 위치 정보 받기 완료! \(String(describing: self?.friendsLocation.description))")
             case .failure(let error):

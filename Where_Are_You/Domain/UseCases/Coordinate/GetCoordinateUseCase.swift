@@ -20,7 +20,7 @@ class GetCoordinateUseCaseImpl: GetCoordinateUseCase {
     
     func execute(schedule: Schedule, completion: @escaping (Result<[GetCoordinateResponse], any Error>) -> Void) {
         print("전체 일정 정보: \(schedule)")
-        print("초대된 멤버 정보: \(schedule.invitedMember)")
+        print("초대된 멤버 정보: \(String(describing: schedule.invitedMember))")
         print("현재 사용자 시퀀스: \(UserDefaultsManager.shared.getMemberSeq())")
         
         guard let invitedMembers = schedule.invitedMember?.filter({ $0.memberSeq != UserDefaultsManager.shared.getMemberSeq() }) else {

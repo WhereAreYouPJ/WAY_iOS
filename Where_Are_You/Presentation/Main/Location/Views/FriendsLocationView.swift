@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FriendsLocationView: View {
+struct FriendsLocationView: View { // TODO: 앱을 재시작해야만 일정에 초대된 친구가 업데이트 되는 문제
     @Binding var isShownView: Bool
     @Binding var schedule: Schedule
     var currentLocation: LongLat?
@@ -29,6 +29,7 @@ struct FriendsLocationView: View {
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
         .onAppear {
             viewModel.startUpdatingLocation()
+            viewModel.getCoordinate(schedule: schedule)
             viewModel.startUpdatingFriendsLocation(schedule: schedule)
         }
         .onDisappear {
