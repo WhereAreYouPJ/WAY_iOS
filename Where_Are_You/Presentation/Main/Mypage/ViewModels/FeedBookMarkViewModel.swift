@@ -15,14 +15,14 @@ class FeedBookMarkViewModel {
     private var page: Int32 = 0
     private var isLoading = false
     
-    private var bookMarkFeedContent: [BookMarkContent] = []
-    private(set) var displayBookMarkFeedContent: [BookMarkContent] = [] {
+    private var rawBookMarkFeedContent: [BookMarkContent] = []
+    private(set) var displayBookMarkFeedContent: [Feed] = [] {
         didSet {
             self.onBookMarkFeedUpdated?()
         }
     }
     weak var delegate: FeedBookMarkViewModelDelegate?
-
+    
     var onBookMarkFeedUpdated: (() -> Void)?
     
     private let getBookMarkFeedUseCase: GetBookMarkFeedUseCase
@@ -41,10 +41,11 @@ class FeedBookMarkViewModel {
             guard let self = self else { return }
             self.isLoading = false
             switch result {
-            case .success(let bookMarkFeed):
-                self.bookMarkFeedContent.append(contentsOf: bookMarkFeed)
+            case .success(let data):
                 self.page += 1
+                self.rawBookMarkFeedContent = data
                 
+                self.displayBookMarkFeedContent = rawBookMarkFeedContent.compactMap { $0.toFeeds() }
                 self.onBookMarkFeedUpdated?()
                 self.delegate?.didUpdateBookMarkFeed()
             case .failure(let error):
@@ -57,7 +58,7 @@ class FeedBookMarkViewModel {
         let memberSeq = UserDefaultsManager.shared.getMemberSeq()
         deleteBookMarkFeedUseCase.execute(request: BookMarkFeedRequest(feedSeq: feedSeq, memberSeq: memberSeq)) { result in
             switch result {
-            case .success(let success):
+            case .success:
                 self.onBookMarkFeedUpdated?()
                 self.delegate?.didUpdateBookMarkFeed()
             case .failure(let error):

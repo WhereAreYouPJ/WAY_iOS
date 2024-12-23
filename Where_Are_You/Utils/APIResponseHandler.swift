@@ -15,7 +15,7 @@ class APIResponseHandler {
             do {
                 // TODO: 앱 개발 완료후 지우기(받는 데이터 정보 확인용)
                 if let json = try? response.mapJSON() {
-//                    print("Response JSON: \(json)")
+                    print("Response JSON: \(json)")
                 }
                 
                 let data = try response.map(T.self)

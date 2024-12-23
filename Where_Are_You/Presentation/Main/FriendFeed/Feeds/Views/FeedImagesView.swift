@@ -14,15 +14,16 @@ class FeedImagesView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        return cv
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.decelerationRate = .fast
+        collectionView.backgroundColor = .clear
+        return collectionView
     }()
-    
-    let pageControl = UIPageControl()
-    
+        
     var pageNumberLabel: UILabel = {
         let label = UILabel()
-        label.layer.cornerRadius = LayoutAdapter.shared.scale(value: 50)
+        label.layer.cornerRadius = LayoutAdapter.shared.scale(value: 10)
         label.clipsToBounds = true
         label.textAlignment = .center
         label.textColor = .color223
@@ -45,15 +46,11 @@ class FeedImagesView: UIView {
     }
     
     // MARK: - Helpers
-    private func configureViewComponents() {
-        layer.cornerRadius = LayoutAdapter.shared.scale(value: 16)
-        clipsToBounds = true
-        
+    private func configureViewComponents() {        
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         
         addSubview(collectionView)
-        addSubview(pageControl)
         addSubview(pageNumberLabel)
     }
     
@@ -62,13 +59,8 @@ class FeedImagesView: UIView {
             make.edges.equalToSuperview()
         }
         
-        pageControl.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
-            make.centerX.equalToSuperview()
-        }
-        
         pageNumberLabel.snp.makeConstraints { make in
-            make.bottom.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 14))
+            make.bottom.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 12))
             make.width.equalTo(LayoutAdapter.shared.scale(value: 44))
             make.height.equalTo(LayoutAdapter.shared.scale(value: 23))
         }

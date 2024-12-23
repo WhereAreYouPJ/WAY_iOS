@@ -73,9 +73,8 @@ class FriendFeedViewController: UIViewController {
         return stackView
     }()
     
-    let plusOptionButton = CustomOptionButtonView(title: "새 피드 작성")
-    
-    // MARK: - 친구 탭 옵션메뉴
+//    let plusOptionButton = CustomOptionButtonView(title: "새 피드 작성")
+    // 1. 친구 관련 옵션 버튼 추가
     private let friendOptionView: UIHostingController = {
         let view = MultiOptionButtonView {
             OptionButton(
@@ -168,14 +167,11 @@ class FriendFeedViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonStack)
         
-        // plusOptionButton과 friendOptionView를 항상 view에 추가
-        view.addSubview(plusOptionButton)
+        
         view.addSubview(friendOptionView.view)
         
-        plusOptionButton.isHidden = true
         friendOptionView.view.isHidden = true
         
-        view.bringSubviewToFront(plusOptionButton)
         view.bringSubviewToFront(friendOptionView.view)
     }
     
@@ -198,14 +194,14 @@ class FriendFeedViewController: UIViewController {
         }
         
         if segmentControl.selectedSegmentIndex == 0 {
-            view.addSubview(plusOptionButton)
-            
-            plusOptionButton.snp.makeConstraints { make in
-                make.top.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 9))
-                make.trailing.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 15))
-                make.width.equalTo(160)
-                make.height.equalTo(38)
-            }
+//            view.addSubview(plusOptionButton)
+//
+//            plusOptionButton.snp.makeConstraints { make in
+//                make.top.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 9))
+//                make.trailing.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 15))
+//                make.width.equalTo(160)
+//                make.height.equalTo(38)
+//            }
         }
         
         friendOptionView.view.snp.makeConstraints { make in
@@ -219,7 +215,7 @@ class FriendFeedViewController: UIViewController {
         searchFriendButton.addTarget(self, action: #selector(handleSearch), for: .touchUpInside)
         notificationButton.addTarget(self, action: #selector(handleNotification), for: .touchUpInside)
         addButton.addTarget(self, action: #selector(handleAdd), for: .touchUpInside)
-        plusOptionButton.button.addTarget(self, action: #selector(plusOptionButtonTapped), for: .touchUpInside)
+//        plusOptionButton.button.addTarget(self, action: #selector(plusOptionButtonTapped), for: .touchUpInside)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
         view.addGestureRecognizer(tapGesture)
     }
@@ -248,7 +244,6 @@ class FriendFeedViewController: UIViewController {
             searchFriendButton.isHidden = false
             notificationButton.isHidden = false
             addButton.isHidden = false
-            plusOptionButton.isHidden = true
         }
     }
     
@@ -268,28 +263,26 @@ class FriendFeedViewController: UIViewController {
     
     @objc private func handleAdd() {
         if segmentControl.selectedSegmentIndex == 0 {
-            plusOptionButton.isHidden = false
+            feedsViewController.plusOptionButton.isHidden = false
             friendOptionView.view.isHidden = true
-            view.bringSubviewToFront(plusOptionButton)
         } else {
             friendOptionView.view.isHidden = false
-            plusOptionButton.isHidden = true
-            view.bringSubviewToFront(friendOptionView.view)
+            feedsViewController.plusOptionButton.isHidden = true
         }
     }
     
-    @objc func plusOptionButtonTapped() {
-        let controller = AddFeedViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
-    }
+//    @objc func plusOptionButtonTapped() {
+//        let controller = AddFeedViewController()
+//        let nav = UINavigationController(rootViewController: controller)
+//        nav.modalPresentationStyle = .fullScreen
+//        present(nav, animated: true, completion: nil)
+//    }
     
     @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {
         let location = sender.location(in: self.view)
-        if !plusOptionButton.frame.contains(location) {
-            plusOptionButton.isHidden = true
-        }
+//        if !plusOptionButton.frame.contains(location) {
+//            plusOptionButton.isHidden = true
+//        }
         if !friendOptionView.view.frame.contains(location) {
             friendOptionView.view.isHidden = true
         }

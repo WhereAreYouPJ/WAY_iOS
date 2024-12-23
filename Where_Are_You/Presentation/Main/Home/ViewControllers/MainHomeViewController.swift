@@ -66,26 +66,6 @@ class MainHomeViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
     }
     
-//    private func setupBindings() {
-//        bannerViewController.viewModel.onBannerDataFetched = { [weak self] in
-//            DispatchQueue.main.async {
-//                self?.bannerViewController.updateUI()
-//            }
-//        }
-//        
-//        dDayViewController.viewModel.onDDayDataFetched = { [weak self] in
-//            DispatchQueue.main.async {
-//                self?.dDayViewController.updateUI()
-//            }
-//        }
-//        
-//        homeFeedViewController.viewModel.onFeedsDataFetched = { [weak self] in
-//            DispatchQueue.main.async {
-//                self?.homeFeedViewController.updateUI()
-//            }
-//        }
-//    }
-    
     private func setupActions() {
         titleView.notificationButton.addTarget(self, action: #selector(moveToNotification), for: .touchUpInside)
         titleView.profileButton.addTarget(self, action: #selector(moveToMyPage), for: .touchUpInside)
@@ -99,28 +79,7 @@ class MainHomeViewController: UIViewController {
             make.edges.equalToSuperview()
         }
     }
-    //    private func setupBindings() {
-    //        mainHomeViewModel.onBannerDataFetched = { [weak self] in
-    //            DispatchQueue.main.async {
-    //                guard let bannerImages = self?.mainHomeViewModel.getBannerImages() else { return }
-    //                self?.bannerViewController.viewModel.setBanners(bannerImages)
-    //            }
-    //        }
-    //
-    //        mainHomeViewModel.onDDayDataFetched = { [weak self] in
-    //            DispatchQueue.main.async {
-    //                guard let dDays = self?.mainHomeViewModel.getDDays() else { return }
-    //                self?.dDayViewController.viewModel.setDDays(dDays)
-    //            }
-    //        }
-    //
-    //        mainHomeViewModel.onFeedsDataFetched = { [weak self] in
-    //            DispatchQueue.main.async {
-    //                guard let homeFeed = self?.mainHomeViewModel.getFeeds() else { return }
-    //                self?.homeFeedViewController.viewModel.setFeeds(homeFeed)
-    //            }
-    //        }
-    //    }
+
     // MARK: - Selectors
     @objc private func moveToNotification() {
         // 알림 페이지로 이동
