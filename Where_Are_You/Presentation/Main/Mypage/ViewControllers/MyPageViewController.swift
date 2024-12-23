@@ -68,7 +68,7 @@ class MyPageViewController: UIViewController {
             DispatchQueue.main.async {
                 let memberCode = UserDefaultsManager.shared.getMemberCode()
                 let member = Member(userName: memberDetails.userName,
-                                    profileImage: memberDetails.profileImage ?? "", // TODO: 프로필 이미지 null일 경우 처리 필요
+                                    profileImage: memberDetails.profileImage,
                                     memberCode: memberCode)
                 self?.myPageView.configureUI(member: member)
             }
@@ -118,6 +118,7 @@ class MyPageViewController: UIViewController {
             print("위치 즐겨찾기 tapped")
         case 2:
             // Handle "피드 책갈피"
+            moveToDetailController(controller: FeedBookMarkViewController())
             print("피드 책갈피 tapped")
         case 3:
             // Handle "피드 보관함"

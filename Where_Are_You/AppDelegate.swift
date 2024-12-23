@@ -10,13 +10,21 @@ import CoreData
 import KakaoSDKCommon
 import KakaoSDKAuth
 import KakaoMapsSDK
+import Kingfisher
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         SDKInitializer.InitSDK(appKey: Config.kakaoAppKey)
         KakaoSDK.initSDK(appKey: Config.kakaoAppKey)
+        ImageCache.default.memoryStorage.config.totalCostLimit = 50 * 1024 * 1024 // 메모리 캐시 50MB 제한
+        ImageCache.default.diskStorage.config.sizeLimit = 200 * 1024 * 1024       // 디스크 캐시 200MB 제한
         return true
+    }
+        
+    func applicationWillTerminate(_ application: UIApplication) {
+        // 앱 종료 시 캐시 데이터 정리
+        ImageCache.default.cleanExpiredDiskCache()
     }
     
     // MARK: UISceneSession Lifecycle

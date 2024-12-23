@@ -104,12 +104,16 @@ class FeedDetailBoxView: UIView {
         }
         
         profileStack.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
             make.centerY.equalToSuperview()
         }
         
         profileImage.snp.makeConstraints { make in
             make.height.width.equalTo(LayoutAdapter.shared.scale(value: 50))
+        }
+        
+        dateLabel.snp.makeConstraints { make in
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 68))
         }
         
         feedFixButton.snp.makeConstraints { make in
@@ -143,8 +147,25 @@ class FeedDetailBoxView: UIView {
         return stackView
     }
     
+    func configure(with feed: Feed) {
+        let scheduleFriendInfos = feed.scheduleFriendInfos ?? []
+        let participants = scheduleFriendInfos.compactMap { $0.profileImage }
+        print("participants: \(participants)") // 디버깅용 출력
+        
+        configureParticipantImages(participants: participants)
+        profileImage.kf.setImage(with: URL(string: feed.profileImage), placeholder: UIImage(named: "basic_profile_image"))
+        dateLabel.text = feed.startTime.formattedDate(to: .yearMonthDate)
+        locationLabel.text = feed.location
+        titleLabel.text = feed.title
+    }
+    
     func configureParticipantImages(participants: [String]) {
-        participantBoxView.isHidden = participants.isEmpty
+        guard participants.count > 1 else {
+            participantBoxView.isHidden = true
+            return
+        }
+        
+        participantBoxView.isHidden = false
         participantStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
         for (index, image) in participants.prefix(3).enumerated() {

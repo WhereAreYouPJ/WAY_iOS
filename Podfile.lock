@@ -49,7 +49,6 @@ PODS:
   - SwiftLint (0.57.1)
 
 DEPENDENCIES:
-  - Alamofire
   - Alamofire (~> 5.6)
   - KakaoMapsSDK
   - KakaoSDK
@@ -99,6 +98,6 @@ SPEC CHECKSUMS:
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   SwiftLint: 92196976e597b9afec5dbe374810103e6c1d9d7c
 
-PODFILE CHECKSUM: 4af774ab08e97df6904cf481bd5276fa808065b9
+PODFILE CHECKSUM: caf63b5dfbe2396e7dcedb3ef28842391650b5a1
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
