@@ -68,7 +68,6 @@ class DailyScheduleViewModel: ObservableObject {
                             }
                             
                             print("일간 일정 로드 성공: \(self.schedules.count)개의 일정을 받았습니다.")
-                            print("일간 일정 로드 성공: \(self.schedules)")
                         }
                     } catch {
                         print("JSON 디코딩 실패: \(error.localizedDescription)")

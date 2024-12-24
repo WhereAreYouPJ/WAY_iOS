@@ -19,8 +19,6 @@ class GetCoordinateUseCaseImpl: GetCoordinateUseCase {
     }
     
     func execute(schedule: Schedule, completion: @escaping (Result<[GetCoordinateResponse], any Error>) -> Void) {
-        print("전체 일정 정보: \(schedule)")
-        
         guard let invitedMembers = schedule.invitedMember?.filter({ $0.memberSeq != UserDefaultsManager.shared.getMemberSeq() }) else {
             print("초대된 멤버가 없거나 필터링 결과가 없습니다.")
             completion(.success([]))
@@ -50,7 +48,6 @@ class GetCoordinateUseCaseImpl: GetCoordinateUseCase {
         
         // 모든 요청이 완료되면 결과 반환
         group.notify(queue: .main) {
-            print("모든 위치 정보 요청 완료. 결과: \(friendsLocation)")
             completion(.success(friendsLocation))
         }
     }

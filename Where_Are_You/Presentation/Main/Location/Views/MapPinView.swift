@@ -53,7 +53,6 @@ struct KakaoMapPinView: UIViewRepresentable {
                     
                     // 엔진 준비 후 addViews 호출
                     context.coordinator.addViews()
-                    print("Engine prepared and views added")
                 }
                 
                 if !controller.isEngineActive {
@@ -62,7 +61,7 @@ struct KakaoMapPinView: UIViewRepresentable {
                 
                 // location이 변경되었을 때 updateLocation 호출
                 context.coordinator.updateLocation(myNewLocation: myLocation, friendsNewLocation: friendsLocation)
-                print("KakaoMapPinView - updateUIView with location x: \(myLocation.x), y: \(myLocation.y)")
+                print("📍KakaoMapPinView - updateUIView with location x: \(myLocation.x), y: \(myLocation.y)")
             }
         } else {
             context.coordinator.controller?.resetEngine()
@@ -113,7 +112,6 @@ struct KakaoMapPinView: UIViewRepresentable {
             let defaultPosition: MapPoint
             if let myLocation {
                 defaultPosition = MapPoint(longitude: myLocation.x, latitude: myLocation.y)
-                print("MapPinView - x: \(myLocation.x), y: \(myLocation.y)")
             } else {
                 defaultPosition = MapPoint(longitude: 126.978365, latitude: 37.566691)
             }
@@ -130,7 +128,6 @@ struct KakaoMapPinView: UIViewRepresentable {
         
         // addView 성공 이벤트 delegate. 추가적으로 수행할 작업을 진행한다.
         func addViewSucceeded(_ viewName: String, viewInfoName: String) {
-            print("addViewSucceeded called for \(viewName), \(viewInfoName)")
             guard let view = controller?.getView(viewName) else {
                 print("view not found in addViewSucceeded")
                 return
@@ -175,15 +172,9 @@ struct KakaoMapPinView: UIViewRepresentable {
         
         // Poi생성을 위한 LabelLayer 생성
         func createLabelLayer() {
-            guard let controller else {
-                print("Controller is nil in createLabelLayer")
-                return
-            }
+            guard let controller else { return }
             
-            guard let view = controller.getView(mapViewName) as? KakaoMap else {
-                print("view is nil or not KakaoMap type in createLabelLayer")
-                return
-            }
+            guard let view = controller.getView(mapViewName) as? KakaoMap else { return }
             let manager = view.getLabelManager()
             let layerOption = LabelLayerOptions(layerID: "PoiLayer", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 0)
             let _ = manager.addLabelLayer(option: layerOption)
@@ -203,7 +194,6 @@ struct KakaoMapPinView: UIViewRepresentable {
                 ])
                 manager.addPoiStyle(myPoiStyle)
                 createdStyleIDs.insert("myPoiStyle")
-                print("📍 My POI style created")
             }
         }
 
@@ -214,7 +204,6 @@ struct KakaoMapPinView: UIViewRepresentable {
             for (index, friend) in friendsLocation.enumerated() {
                 let styleID = "friendPoiStyle_\(index)"
                 if !createdStyleIDs.contains(styleID) {
-                    print("📍 Creating style for friend \(index)")
                     let profileImageName = friend.member?.profileImage ?? "icon-profile-default"
                     let friendMarker = ProfileImageView(image: Image(profileImageName))
                     let friendSymbolImage = friendMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 40.667)))
@@ -224,7 +213,6 @@ struct KakaoMapPinView: UIViewRepresentable {
                     ])
                     manager.addPoiStyle(friendPoiStyle)
                     createdStyleIDs.insert(styleID)
-                    print("📍 Friend POI style \(styleID) created")
                 }
             }
         }
@@ -244,21 +232,18 @@ struct KakaoMapPinView: UIViewRepresentable {
         }
         
         private func createFriendPois() {
-            print("Creating friend POIs, count: \(friendsLocation.count)")
+            print("📍Creating friend POIs, count: \(friendsLocation.count)")
             guard let view = controller?.getView(mapViewName) as? KakaoMap,
                   let layer = view.getLabelManager().getLabelLayer(layerID: "PoiLayer") else { return }
             
             // 기존 POI 제거
             for friend in friendsPois {
-                print("📍Removing previous friend POI: \(friend.itemID)")
                 layer.removePoi(poiID: friend.itemID)
             }
             friendsPois.removeAll()
             
             // 친구 POI 생성
             for (index, friend) in friendsLocation.enumerated() {
-                print("📍Creating friend POI at (\(friend.x), \(friend.y)) with style: friendPoiStyle_\(index)")
-                
                 let friendPoiOption = PoiOptions(styleID: "friendPoiStyle_\(index)")
                 friendPoiOption.rank = 1
                 if let poi = layer.addPoi(
@@ -267,7 +252,6 @@ struct KakaoMapPinView: UIViewRepresentable {
                 ) {
                     friendsPois.append(poi)
                     poi.show()
-                    print("📍Successfully created and showed friend POI \(index)")
                 } else {
                     print("📍Failed to create friend POI \(index)")
                 }
@@ -334,7 +318,7 @@ struct KakaoMapPinView: UIViewRepresentable {
                 zoomLevel: 16, mapView: view
             )
             view.moveCamera(cameraUpdate)
-            print("MapPinView camera updated! x: \(myNewLocation.x), y: \(myNewLocation.y)")
+            print("📍MapPinView camera updated! x: \(myNewLocation.x), y: \(myNewLocation.y)")
         }
     }
 }
