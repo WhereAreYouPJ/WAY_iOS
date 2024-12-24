@@ -187,7 +187,7 @@ class DailyScheduleViewModel: ObservableObject {
 
 extension DailyScheduleViewModel {
     func createScheduleDetailViewModel(for schedule: Schedule) -> ScheduleDetailViewModel {
-        let detailViewModel = ScheduleDetailViewModel(schedule: schedule)
+        let detailViewModel = ScheduleDetailViewModel(schedule: schedule, getScheduleUseCase: GetScheduleUseCaseImpl(scheduleRepository: ScheduleRepository(scheduleService: ScheduleService())))
         
         detailViewModel.$isSuccess
             .sink { [weak self] success in

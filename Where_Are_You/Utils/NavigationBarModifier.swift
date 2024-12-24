@@ -47,10 +47,10 @@ struct NavigationBarModifier: ViewModifier {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button(action: {
                             backButtonAction?()
-                        }) {
+                        }, label: {
                             Image(systemName: "arrow.backward")
                                 .foregroundColor(Color(.color172))
-                        }
+                        })
                     }
                 }
                 

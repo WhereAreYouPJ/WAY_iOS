@@ -10,7 +10,7 @@ import Foundation
 struct GetScheduleResponse: Codable {
     let title, startTime, endTime, location: String
     let streetName: String
-    let x, y: Int
+    let x, y: Double
     let color, memo: String
     let allDay: Bool
     let memberInfos: [MemberInfos]
