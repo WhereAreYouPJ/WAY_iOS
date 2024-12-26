@@ -17,6 +17,8 @@ class ScheduleDetailViewModel: ObservableObject {
     private let service = ScheduleService()
     private let memberSeq = UserDefaultsManager.shared.getMemberSeq()
     let provider = MoyaProvider<ScheduleAPI>()
+    
+    private var getScheduleUseCase: GetScheduleUseCase
     var cancellables = Set<AnyCancellable>()
     
     private var isGroupSchedule: Bool {
@@ -35,10 +37,46 @@ class ScheduleDetailViewModel: ObservableObject {
         return false
     }
     
-    init(schedule: Schedule) {
+    init(schedule: Schedule, getScheduleUseCase: GetScheduleUseCase) {
         print("ScheduleDetailViewModel init with schedule: \(schedule.title)")
         self.schedule = schedule
+        self.getScheduleUseCase = getScheduleUseCase
         self.createViewModel = CreateScheduleViewModel(schedule: schedule)
+    }
+    
+    func getScheduleDetail() {
+        getScheduleUseCase.execute(scheduleSeq: schedule.scheduleSeq) { [self] result in
+            switch result {
+            case .success(let data):
+                self.schedule = Schedule(
+                    scheduleSeq: schedule.scheduleSeq,
+                    title: data.title,
+                    startTime: data.startTime.toDate(from: .serverSimple) ?? Date.now,
+                    endTime: data.endTime.toDate(from: .serverSimple) ?? Date.now,
+                    isAllday: data.allDay,
+                    location: Location(
+                        sequence: 0,
+                        location: data.location,
+                        streetName: data.streetName,
+                        x: data.x,
+                        y: data.y
+                    ),
+                    color: data.color,
+                    memo: data.memo,
+                    invitedMember: data.memberInfos.map { memberInfo in
+                        Friend(
+                            memberSeq: memberInfo.memberSeq,
+                            profileImage: "",
+                            name: memberInfo.userName,
+                            isFavorite: false
+                        )
+                    }
+                )
+                print("일정 상세정보 받기 완료! \(self.schedule)")
+            case .failure(let error):
+                print("일정 상세정보 받기 실패 - \(error.localizedDescription)")
+            }
+        }
     }
     
     func updateSchedule() {
