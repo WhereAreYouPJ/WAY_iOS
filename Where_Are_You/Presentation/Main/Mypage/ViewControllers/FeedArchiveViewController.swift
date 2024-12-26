@@ -43,8 +43,7 @@ class FeedArchiveViewController: UIViewController {
         viewModel = FeedArchiveViewModel(
             deleteBookMarkFeedUseCase: DeleteBookMarkFeedUseCaseImpl(feedRepository: feedRepository),
             deleteHideFeedUseCase: DeleteHideFeedUseCaseImpl(feedRepository: feedRepository),
-            deleteFeedUseCase:
-                DeleteFeedUseCaseImpl(feedRepository: feedRepository),
+            deleteFeedUseCase: DeleteFeedUseCaseImpl(feedRepository: feedRepository),
             getHideFeedUseCase: GetHideFeedUseCaseImpl(feedRepository: feedRepository))
     }
     

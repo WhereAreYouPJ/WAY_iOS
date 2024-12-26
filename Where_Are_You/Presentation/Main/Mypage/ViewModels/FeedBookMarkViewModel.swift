@@ -61,11 +61,17 @@ class FeedBookMarkViewModel {
         }
     }
     
-    func hidFeed(feedSeq: Int) {
+    func hideFeed(feedSeq: Int) {
+        print("postHideFeedUseCase 실행 준비")
         postHideFeedUseCase.execute(feedSeq: feedSeq) { [weak self] result in
-            guard let self = self else { return }
+            guard let self = self else {
+                print("self가 nil입니다.")
+                return }
+            print("postHideFeedUseCase 실행됨")
+
             switch result {
             case .success:
+                print("피드 숨기기 성공")
                 self.onBookMarkFeedUpdated?()
             case .failure(let error):
                 print(error.localizedDescription)

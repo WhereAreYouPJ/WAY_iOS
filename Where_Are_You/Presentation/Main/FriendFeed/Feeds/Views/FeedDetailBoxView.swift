@@ -153,7 +153,7 @@ class FeedDetailBoxView: UIView {
         print("participants: \(participants)") // 디버깅용 출력
         
         configureParticipantImages(participants: participants)
-        profileImage.kf.setImage(with: URL(string: feed.profileImage), placeholder: UIImage(named: "basic_profile_image"))
+        profileImage.kf.setImage(with: URL(string: feed.profileImageURL), placeholder: UIImage(named: "basic_profile_image"))
         dateLabel.text = feed.startTime.formattedDate(to: .yearMonthDate)
         locationLabel.text = feed.location
         titleLabel.text = feed.title

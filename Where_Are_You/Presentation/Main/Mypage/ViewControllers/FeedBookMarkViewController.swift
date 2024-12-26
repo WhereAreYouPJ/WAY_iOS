@@ -132,8 +132,11 @@ class FeedBookMarkViewController: UIViewController {
             cancelTitle: "취소",
             actionTitle: "숨김"
         ) { [weak self] in
-            guard let feedSeq = feed.feedSeq else { return }
-            self?.viewModel.hidFeed(feedSeq: feedSeq)
+            print("숨김 버튼 눌림")
+            guard let feedSeq = feed.feedSeq else {
+                print("feedSeq가 nil입니다.")
+                return }
+            self?.viewModel.hideFeed(feedSeq: feedSeq)
             self?.optionsView.removeFromSuperview()
             self?.feedBookMarkView.feedsTableView.reloadData()
         }

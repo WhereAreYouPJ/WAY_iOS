@@ -34,7 +34,7 @@ class HomeFeedViewModel {
                     guard let scheduleFeedInfo = feedContent.scheduleFeedInfo.first else { return nil }
                     
                     return HomeFeedContent(
-                        profileImage: scheduleFeedInfo.memberInfo.profileImageURL,
+                        profileImageURL: scheduleFeedInfo.memberInfo.profileImageURL,
                         location: feedContent.scheduleInfo.location,
                         title: scheduleFeedInfo.feedInfo.title,
                         content: scheduleFeedInfo.feedInfo.content,

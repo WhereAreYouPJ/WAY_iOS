@@ -32,9 +32,9 @@ class MyPageViewController: UIViewController {
         view = myPageView
         setupViewModel()
         setupActions()
-        viewModel.memberDetails()
         setupBindings()
-        
+        viewModel.memberDetails()
+        print(UserDefaultsManager.shared.getMemberSeq())
         NotificationCenter.default.addObserver(self, selector: #selector(userNameDidChange), name: .userNameDidChange, object: nil)
     }
     
@@ -67,6 +67,7 @@ class MyPageViewController: UIViewController {
         viewModel.onGetMemberSuccess = { [weak self] memberDetails in
             DispatchQueue.main.async {
                 guard let memberCode = UserDefaultsManager.shared.getMemberCode() else { return }
+                print("memberCode is: \(memberCode)")
                 let member = Member(userName: memberDetails.userName,
                                     profileImage: memberDetails.profileImage,
                                     memberCode: memberCode)
