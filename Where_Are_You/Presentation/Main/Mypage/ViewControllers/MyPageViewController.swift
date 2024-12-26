@@ -32,9 +32,9 @@ class MyPageViewController: UIViewController {
         view = myPageView
         setupViewModel()
         setupActions()
-        viewModel.memberDetails()
         setupBindings()
-        
+        viewModel.memberDetails()
+        print(UserDefaultsManager.shared.getMemberSeq())
         NotificationCenter.default.addObserver(self, selector: #selector(userNameDidChange), name: .userNameDidChange, object: nil)
     }
     
@@ -66,7 +66,8 @@ class MyPageViewController: UIViewController {
         
         viewModel.onGetMemberSuccess = { [weak self] memberDetails in
             DispatchQueue.main.async {
-                let memberCode = UserDefaultsManager.shared.getMemberCode()
+                guard let memberCode = UserDefaultsManager.shared.getMemberCode() else { return }
+                print("memberCode is: \(memberCode)")
                 let member = Member(userName: memberDetails.userName,
                                     profileImage: memberDetails.profileImage,
                                     memberCode: memberCode)
@@ -115,14 +116,12 @@ class MyPageViewController: UIViewController {
         case 1:
             // Handle "위치 즐겨찾기"
             moveToDetailController(controller: LocationBookmarkViewController())
-            print("위치 즐겨찾기 tapped")
         case 2:
             // Handle "피드 책갈피"
             moveToDetailController(controller: FeedBookMarkViewController())
-            print("피드 책갈피 tapped")
         case 3:
             // Handle "피드 보관함"
-            print("피드 보관함 tapped")
+            moveToDetailController(controller: FeedArchiveViewController())
         case 4:
             // Handle "공지사항"
             print("공지사항 tapped")

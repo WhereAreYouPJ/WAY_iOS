@@ -8,7 +8,7 @@
 import UIKit
 
 struct HomeFeedContent {
-    let profileImage: String
+    let profileImageURL: String
     let location: String
     let title: String
     let content: String?
@@ -17,7 +17,7 @@ struct HomeFeedContent {
 
 struct MainFeedListContent {
     let feedSeq: Int?
-    let profileImage: String
+    let profileImageURL: String
     let startTime: String
     let location: String
     let title: String
@@ -31,12 +31,11 @@ struct Feed {
     let feedSeq: Int?
     let memberSeq: Int?
     let startTime: String
-    let profileImage: String
+    let profileImageURL: String
     let location: String
     let title: String
     let content: String?
     var bookMark: Bool
-    let feedImage: String?
     let scheduleFriendInfos: [Info]?
     let feedImageInfos: [FeedImageInfo]?
 }
@@ -51,12 +50,11 @@ extension FeedContent {
             feedSeq: firstScheduleFeedInfo.feedInfo.feedSeq,
             memberSeq: firstScheduleFeedInfo.memberInfo.memberSeq,
             startTime: scheduleInfo.startTime,
-            profileImage: firstScheduleFeedInfo.memberInfo.profileImage,
+            profileImageURL: firstScheduleFeedInfo.memberInfo.profileImageURL,
             location: scheduleInfo.location,
             title: firstScheduleFeedInfo.feedInfo.title,
             content: firstScheduleFeedInfo.feedInfo.content,
             bookMark: firstScheduleFeedInfo.bookMarkInfo,
-            feedImage: nil,
             scheduleFriendInfos: scheduleFriendInfo,
             feedImageInfos: firstScheduleFeedInfo.feedImageInfos
         )
@@ -66,19 +64,33 @@ extension FeedContent {
 extension BookMarkContent {
     func toFeeds() -> Feed {
         return Feed(
-            feedSeq: nil, // BookMarkContent에는 feedSeq 없음
+            feedSeq: feedSeq,
             memberSeq: memberSeq,
             startTime: startTime,
-            profileImage: profileImage,
+            profileImageURL: profileImageURL,
             location: location,
             title: title,
             content: content,
             bookMark: bookMark,
-            feedImage: nil,
-            scheduleFriendInfos: bookMarkFriendInfos.map { friend in
-                Info(memberSeq: friend.memberSeq, userName: friend.userName, profileImage: friend.profileImageURL)
-            },
+            scheduleFriendInfos: bookMarkFriendInfos,
             feedImageInfos: bookMarkImageInfos
+        )
+    }
+}
+
+extension HideFeedContent {
+    func toFeeds() -> Feed {
+        return Feed(
+            feedSeq: feedSeq,
+            memberSeq: memberSeq,
+            startTime: startTime,
+            profileImageURL: profileImageURL,
+            location: location,
+            title: title,
+            content: content,
+            bookMark: bookMark,
+            scheduleFriendInfos: feedFriendInfos,
+            feedImageInfos: hideFeedImageInfos
         )
     }
 }

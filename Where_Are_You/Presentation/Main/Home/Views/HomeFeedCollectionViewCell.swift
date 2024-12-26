@@ -115,7 +115,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with feed: HomeFeedContent) {
-        profileImageView.setImage(from: feed.profileImage, placeholder: UIImage(named: "basic_profile_image"))
+        profileImageView.setImage(from: feed.profileImageURL, placeholder: UIImage(named: "basic_profile_image"))
         locationLabel.text = feed.location
         titleLabel.text = feed.title
         if feed.content == nil {

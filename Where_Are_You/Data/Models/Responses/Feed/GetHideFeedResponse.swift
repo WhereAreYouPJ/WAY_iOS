@@ -20,22 +20,11 @@ struct GetHideFeedResponse: Codable {
 
 // MARK: - HideFeedContent
 struct HideFeedContent: Codable {
-    let profileImage, startTime, location, title: String
-    let hideFeedImageInfos: [HideFeedImageInfo]
+    let memberSeq: Int
+    let feedSeq: Int
+    let profileImageURL, startTime, location, title: String
+    let hideFeedImageInfos: [FeedImageInfo]
     let content: String
     let bookMark: Bool
-    let feedFriendInfos: [FeedFriendInfo]
-}
-
-// MARK: - FeedFriendInfo
-struct FeedFriendInfo: Codable {
-    let memberSeq: Int
-    let userName, profileImage: String
-}
-
-// MARK: - HideFeedImageInfo
-struct HideFeedImageInfo: Codable {
-    let feedImageSeq: Int
-    let feedImageURL: String
-    let feedImageOrder: Int
+    let feedFriendInfos: [Info]
 }
