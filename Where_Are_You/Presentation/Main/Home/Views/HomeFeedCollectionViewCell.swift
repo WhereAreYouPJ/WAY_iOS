@@ -43,8 +43,8 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
     private let feedContentView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
         iv.layer.cornerRadius = 6
+        iv.clipsToBounds = true
         return iv
     }()
     
@@ -58,8 +58,16 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    private lazy var feedContentStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [feedContentView, descriptionLabel])
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        return stackView
+    }()
+    
     private lazy var mainStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [titleStackView, descriptionLabel, feedContentView])
+        let stackView = UIStackView(arrangedSubviews: [titleStackView, feedContentStackView])
         stackView.axis = .vertical
         stackView.spacing = 10
         return stackView
@@ -97,17 +105,17 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
             make.width.equalTo(textStackView.snp.height)
         }
         
-        descriptionLabel.snp.makeConstraints { make in
+        feedContentStackView.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
         }
         
         feedContentView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
         }
     }
     
     func configure(with feed: HomeFeedContent) {
-        profileImageView.setImage(from: feed.profileImage, placeholder: UIImage(named: "basic_profile_image"))
+        profileImageView.setImage(from: feed.profileImageURL, placeholder: UIImage(named: "basic_profile_image"))
         locationLabel.text = feed.location
         titleLabel.text = feed.title
         if feed.content == nil {

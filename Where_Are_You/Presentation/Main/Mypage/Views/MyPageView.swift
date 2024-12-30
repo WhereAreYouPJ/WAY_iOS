@@ -245,7 +245,7 @@ class MyPageView: UIView {
     }
     
     func configureUI(member: Member) {
-        self.profileImageView.setImage(from: member.profileImage)
+        self.profileImageView.kf.setImage(with: URL(string: member.profileImage))
         self.userNameLabel.text = member.userName
         self.userCodeLabel.text = member.memberCode
     }

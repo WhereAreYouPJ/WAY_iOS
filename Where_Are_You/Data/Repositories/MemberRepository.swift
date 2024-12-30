@@ -112,7 +112,15 @@ class MemberRepository: MemberRepositoryProtocol {
     }
     
     func getMemberDetails(completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void) {
-        memberService.getMemberDetails(completion: completion)
+        memberService.getMemberDetails { result in
+            switch result {
+            case .success(let response):
+                let memberDetailData = response.data
+                UserDefaultsManager.shared.saveProfileImageURL(memberDetailData.profileImage)
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
     
     func getCheckEmail(email: String, completion: @escaping (Result<GenericResponse<CheckEmailResponse>, Error>) -> Void) {

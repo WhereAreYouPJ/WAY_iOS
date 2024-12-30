@@ -22,9 +22,10 @@ struct GetBookMarkResponse: Codable {
 // MARK: - Content
 struct BookMarkContent: Codable {
     let memberSeq: Int
-    let profileImage, startTime, location, title: String
-    let bookMarkImageInfos: [BookMarkImageInfo]
-    let bookMarkFriendInfos: [BookMarkFriendInfo]
+    let feedSeq: Int
+    let profileImageURL, startTime, location, title: String
+    let bookMarkImageInfos: [FeedImageInfo]
+    let bookMarkFriendInfos: [Info]
     let content: String
     let bookMark: Bool
 }
@@ -33,13 +34,6 @@ struct BookMarkContent: Codable {
 struct BookMarkFriendInfo: Codable {
     let memberSeq: Int
     let userName, profileImageURL: String
-}
-
-// MARK: - BookMarkImageInfo
-struct BookMarkImageInfo: Codable {
-    let feedImageSeq: Int
-    let feedImageURL: String
-    let feedImageOrder: Int
 }
 
 // MARK: - Pageable

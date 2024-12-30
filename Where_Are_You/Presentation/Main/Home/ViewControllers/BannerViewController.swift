@@ -77,7 +77,6 @@ class BannerViewController: UIViewController {
         if let userInfo = notification.userInfo, let indexPath = userInfo["indexPath"] as? IndexPath {
             bannerView.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
             viewModel.updateCurrentIndex(to: indexPath.item - 1) // -1 to adjust for fake cells
-            bannerView.pageControl.currentPage = viewModel.currentIndex
             updatePageNumber()
         }
     }
@@ -144,7 +143,6 @@ extension BannerViewController: UICollectionViewDelegateFlowLayout {
         } else {
             viewModel.updateCurrentIndex(to: currentPage - 1)
         }
-        bannerView.pageControl.currentPage = viewModel.currentIndex
         updatePageNumber()
     }
 }

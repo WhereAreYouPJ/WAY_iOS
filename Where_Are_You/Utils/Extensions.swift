@@ -9,6 +9,13 @@ import UIKit
 import SwiftUI
 
 // MARK: - UIViewController
+
+enum FeedViewType {
+    case mainFeed
+    case bookMark
+    case archive
+}
+
 extension UIViewController {
     func configureNavigationBar(title: String, backButtonAction: Selector? = nil, showBackButton: Bool = true) {
         Utilities.createNavigationBar(for: self, title: title, backButtonAction: backButtonAction, showBackButton: showBackButton)
@@ -27,7 +34,7 @@ extension UIColor {
     static let warningColor = UIColor.rgb(red: 225, green: 49, blue: 49)
     static let scheduleDateColor = UIColor.rgb(red: 252, green: 47, blue: 47)
     static let popupButtonColor = UIColor.rgb(red: 81, green: 70, blue: 117)
-    static let alertActionButtonColor = UIColor.rgb(red: 224, green: 158, blue: 255)
+    static let alertActionButtonColor = UIColor.rgb(red: 212, green: 158, blue: 255)
     
     static let color5 = UIColor.rgb(red: 5, green: 5, blue: 5)
     static let color17 = UIColor.rgb(red: 17, green: 17, blue: 17)
@@ -121,6 +128,12 @@ extension UIImage {
         return UIGraphicsGetImageFromCurrentImageContext()
     }
     
+    func resizedForProfile(to size: CGSize) -> UIImage {
+        return UIGraphicsImageRenderer(size: size).image { _ in
+            draw(in: CGRect(origin: .zero, size: size))
+        }
+    }
+    
     func toBase64() -> String? {
         guard let imageData = self.jpegData(compressionQuality: 1.0) else {
             return nil
@@ -147,17 +160,21 @@ extension UIImageView {
     }
 }
 
+// MARK: - DateFormatter
+
 extension DateFormatter {
     static func formatter(for format: DateFormat) -> DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = format.rawValue
         formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
         return formatter
     }
 }
 
 enum DateFormat: String {
     case server = "yyyy-MM-dd'T'HH:mm:ss.SSS" // 서버의 날짜 형식
+    case serverSimple = "yyyy-MM-dd'T'HH:mm:ss"
     case yearMonthDate = "yy.MM.dd"                // "YY.MM.dd" 형태
     case yearMonth = "yyyy.MM"               // "YYYY.MM" 형태
 }
@@ -169,9 +186,34 @@ extension String {
         }
         return DateFormatter.formatter(for: format).string(from: date)
     }
+    
+    func toDate(from format: DateFormat = .serverSimple) -> Date? {
+        return DateFormatter.formatter(for: format).date(from: self)
+    }
 }
+
+// MARK: - Notification
 
 extension Notification.Name {
     static let showAddFriend = Notification.Name("showAddFriend")
     static let showManageFriends = Notification.Name("showManageFriends")
+}
+
+// MARK: View to UIImage - 실시간 위치 조회시 프로필사진 마킹용
+extension View {
+    func snapshot() -> UIImage {
+        let controller = UIHostingController(rootView: self.edgesIgnoringSafeArea(.all))
+        let view = controller.view
+        
+        let targetSize = controller.view.intrinsicContentSize
+        
+        view?.bounds = CGRect(origin: .zero, size: targetSize)
+        view?.backgroundColor = .clear
+        
+        let renderer = UIGraphicsImageRenderer(size: targetSize)
+        
+        return renderer.image { _ in
+            view?.drawHierarchy(in: controller.view.bounds, afterScreenUpdates: true)
+        }
+    }
 }

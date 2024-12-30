@@ -34,6 +34,7 @@ class MyPageViewModel {
         memberDetailsUseCase.execute { result in
             switch result {
             case .success(let data):
+                print("memberDetailsData: \(data)")
                 self.onGetMemberSuccess?(data)
             case .failure(let error):
                 print("\(error.localizedDescription)")

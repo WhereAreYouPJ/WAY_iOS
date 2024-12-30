@@ -2,228 +2,76 @@
 //  FriendsLocationView.swift
 //  Where_Are_You
 //
-//  Created by juhee on 26.11.24.
+//  Created by juhee on 30.11.24.
 //
 
 import SwiftUI
-import KakaoMapsSDK
 
-struct FriendsLocationView: View {
-    @State var draw: Bool = false // 뷰의 appear 상태를 전달하기 위한 변수.
-    @Binding var location: Location
+struct FriendsLocationView: View { // TODO: 앱을 재시작해야만 일정에 초대된 친구가 업데이트 되는 문제
+    @Binding var isShownView: Bool
+    @Binding var schedule: Schedule
+    var currentLocation: LongLat?
+    
+    @ObservedObject var viewModel: FriendsLocationViewModel = {
+        let coordinateRepository = CoordinateRepository(coordinateService: CoordinateService())
+        let postCoordinateUseCase = PostCoordinateUseCaseImpl(coordinateRepository: coordinateRepository)
+        let getCoordinateUseCase = GetCoordinateUseCaseImpl(coordinateRepository: coordinateRepository)
+        
+        return FriendsLocationViewModel(postCoordinateUseCase: postCoordinateUseCase, getCoordinateUseCase: getCoordinateUseCase)
+    }()
     
     var body: some View {
-        KakaoMapFriendsView(draw: $draw, location: $location)
-            .onAppear(perform: {
-                self.draw = true
-            })
-            .onDisappear(perform: { self.draw = false })
-            .ignoresSafeArea()
+        ZStack {
+            MapPinView(myLocation: $viewModel.myLocation, friendsLocation: $viewModel.friendsLocation)
+            
+            DismissButtonView(isShownView: $isShownView)
+        }
+        .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
+        .onAppear {
+            viewModel.startUpdatingLocation()
+            viewModel.getCoordinate(schedule: schedule)
+            viewModel.startUpdatingFriendsLocation(schedule: schedule)
+        }
+        .onDisappear {
+            viewModel.stopUpdatingLocation()
+        }
+        .onChange(of: viewModel.myLocation.x) { _, _ in
+            viewModel.postCoordinate(scheduleSeq: schedule.scheduleSeq)
+        }
+        .onChange(of: viewModel.myLocation.y) { _, _ in
+            viewModel.postCoordinate(scheduleSeq: schedule.scheduleSeq)
+        }
     }
 }
 
-struct KakaoMapFriendsView: UIViewRepresentable {
-    @Binding var draw: Bool
-    @Binding var location: Location
+struct DismissButtonView: View {
+    @Binding var isShownView: Bool
     
-    /// UIView를 상속한 KMViewContainer를 생성한다.
-    /// 뷰 생성과 함께 KMControllerDelegate를 구현한 Coordinator를 생성하고, 엔진을 생성 및 초기화한다.
-    func makeUIView(context: Self.Context) -> KMViewContainer {
-        let view: KMViewContainer = KMViewContainer()
-        view.sizeToFit()
-        context.coordinator.createController(view)
-        return view
-    }
-    
-    /// Updates the presented `UIView` (and coordinator) to the latest configuration.
-    /// draw가 true로 설정되면 엔진을 시작하고 렌더링을 시작한다.
-    /// draw가 false로 설정되면 렌더링을 멈추고 엔진을 stop한다.
-    func updateUIView(_ uiView: KMViewContainer, context: Self.Context) {
-        if draw {
-            DispatchQueue.main.asyncAfter(deadline: .now()) {
-                guard let controller = context.coordinator.controller else {
-                    print("Controller is nil in updateUIView")
-                    return
+    var body: some View {
+        HStack {
+            VStack {
+                Button {
+                    self.isShownView.toggle()
+                } label: {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 4))
+                            .stroke(Color(.brandColor), lineWidth: LayoutAdapter.shared.scale(value: 1.5))
+                            .background(Color(.color249))
+                            .frame(width: LayoutAdapter.shared.scale(value: 32), height: LayoutAdapter.shared.scale(value: 32))
+                            .shadow(color: Color(.color153), radius: 5, x: 3, y: 3)
+                        
+                        Image(systemName: "arrow.backward")
+                            .foregroundColor(Color(.color34))
+                    }
                 }
-                
-                if !controller.isEnginePrepared {
-                    controller.prepareEngine()
-                }
-                
-                if !controller.isEngineActive {
-                    controller.activateEngine()
-                }
+                Spacer()
             }
-        } else {
-            context.coordinator.controller?.resetEngine()
+            Spacer()
         }
-    }
-    
-    /// Coordinator 생성
-    func makeCoordinator() -> KakaoMapCoordinator {
-        return KakaoMapCoordinator(location: location)
-    }
-    
-    /// Cleans up the presented `UIView` (and coordinator) in anticipation of their removal.
-    static func dismantleUIView(_ uiView: KMViewContainer, coordinator: KakaoMapCoordinator) {
-        
-    }
-    
-    /// Coordinator 구현. KMControllerDelegate를 adopt한다.
-    class KakaoMapCoordinator: NSObject, MapControllerDelegate {
-        var controller: KMController?
-        var container: KMViewContainer?
-        var location: Location?
-        var first: Bool = true
-        
-        init(location: Location?) {
-            self.location = location
-            super.init()
-        }
-        
-        // KMController 객체 생성 및 event delegate 지정
-        func createController(_ view: KMViewContainer) {
-            container = view
-            controller = KMController(viewContainer: view)
-            controller?.delegate = self
-        }
-        
-        // 엔진 생성 및 초기화 이후, 렌더링 준비가 완료되면 아래 addViews를 호출한다.
-        // 원하는 뷰를 생성한다.
-        func addViews() {
-            let defaultPosition: MapPoint
-            if let location {
-                defaultPosition = MapPoint(longitude: location.x, latitude: location.y)
-            } else {
-                defaultPosition = MapPoint(longitude: 126.978365, latitude: 37.566691)
-            }
-            let mapviewInfo: MapviewInfo = MapviewInfo(viewName: "mapview", viewInfoName: "map", defaultPosition: defaultPosition)
-            
-            guard let controller else {
-                print("Controller is nil in addViews")
-                return
-            }
-            
-            controller.addView(mapviewInfo)
-        }
-        
-        // addView 성공 이벤트 delegate. 추가적으로 수행할 작업을 진행한다.
-        func addViewSucceeded(_ viewName: String, viewInfoName: String) {
-            print("addViewSucceeded called for \(viewName), \(viewInfoName)")
-            guard let view = controller?.getView(viewName) else {
-                print("view not found in addViewSucceeded")
-                return
-            }
-            view.viewRect = container?.bounds ?? .zero
-            
-            createLabelLayer()
-            createPoiStyle()
-            createPois()
-        }
-        
-        // addView 실패 이벤트 delegate. 실패에 대한 오류 처리를 진행한다.
-        func addViewFailed(_ viewName: String, viewInfoName: String) {
-            print("Failed to add view")
-        }
-        
-        func authenticationSucceeded() {
-            print("auth succeed!!")
-            if let controller = controller,
-               !controller.isEngineActive {
-                controller.activateEngine()
-            }
-        }
-        
-        func authenticationFailed(_ errorCode: Int, desc: String) {
-            print("auth failed")
-            print("error code: \(errorCode)")
-            print(desc)
-        }
-        
-        // Poi생성을 위한 LabelLayer 생성
-        func createLabelLayer() {
-            guard let controller else {
-                print("Controller is nil in createLabelLayer")
-                return
-            }
-            
-            guard let view = controller.getView("mapview") as? KakaoMap else {
-                print("view is nil or not KakaoMap type in createLabelLayer")
-                return
-            }
-            let manager = view.getLabelManager()
-            let layerOption = LabelLayerOptions(layerID: "PoiLayer", competitionType: .none, competitionUnit: .symbolFirst, orderType: .rank, zOrder: 0)
-            let _ = manager.addLabelLayer(option: layerOption)
-        }
-        
-        // Poi 표시 스타일 생성
-        func createPoiStyle() {
-            guard let view = controller?.getView("mapview") as? KakaoMap else {
-                print("view is nil in createPoiStyle")
-                return
-            }
-            let manager = view.getLabelManager()
-            
-            let iconStyle1 = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.0))
-            let iconStyle2 = PoiIconStyle(symbol: UIImage(named: "icon-map-pin"), anchorPoint: CGPoint(x: 0.5, y: 1.0))
-            
-            let poiStyle = PoiStyle(styleID: "PerLevelStyle", styles: [
-                PerLevelPoiStyle(iconStyle: iconStyle1, level: 5),
-                PerLevelPoiStyle(iconStyle: iconStyle2, level: 12)
-            ])
-            manager.addPoiStyle(poiStyle)
-        }
-        
-        func createPois() {
-            guard let view = controller?.getView("mapview") as? KakaoMap else {
-                print("view is nil in createPois")
-                return
-            }
-            let manager = view.getLabelManager()
-            let layer = manager.getLabelLayer(layerID: "PoiLayer")
-            
-            let poiOption = PoiOptions(styleID: "PerLevelStyle")
-            poiOption.rank = 0
-            
-            let poi1: Poi?
-            if let location {
-                poi1 = layer?.addPoi(
-                    option: poiOption,
-                    at: MapPoint(longitude: location.x, latitude: location.y)
-                )
-                print("location on")
-            } else {
-                poi1 = layer?.addPoi(option: poiOption, at: MapPoint(longitude: 126.978365, latitude: 37.566691))
-                print("default location")
-            }
-            
-            guard let poi1 else {
-                print("Failed to create POI")
-                return
-            }
-            
-            poi1.show()
-        }
-        
-        // KMViewContainer 리사이징 될 때 호출.
-        func containerDidResized(_ size: CGSize) {
-            guard let mapView = controller?.getView("mapview") as? KakaoMap else {
-                print("mapView not found in containerDidResized")
-                return
-            }
-            mapView.viewRect = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: size)
-            if first {
-                let cameraUpdate = CameraUpdate.make(
-                    target: MapPoint(longitude: 126.978365, latitude: 37.566691),
-                    mapView: mapView
-                )
-                mapView.moveCamera(cameraUpdate)
-                first = false
-            }
-        }
+        .padding(LayoutAdapter.shared.scale(value: 15))
     }
 }
 
 #Preview {
-    FriendsLocationView(location: .constant(Location(sequence: 0, location: "서울대입구", streetName: "서울 종로구 세종대로 171", x: 37.4808, y: 126.9526)))
+    FriendsLocationView(isShownView: .constant(true), schedule: .constant(Schedule(scheduleSeq: 1, title: "디큐브", startTime: Date.now, endTime: Date.now, color: "red")))
 }

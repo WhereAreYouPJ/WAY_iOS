@@ -64,6 +64,9 @@ struct SearchFriendsView: View {
             .tint(Color(.brandColor))
             .padding(.horizontal)
             .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
+            .onAppear {
+                viewModel.friendsViewModel.getFriendsList()
+            }
         }
     }
 }

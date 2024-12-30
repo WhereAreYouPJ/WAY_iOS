@@ -23,11 +23,11 @@ extension FriendAPI: TargetType {
         switch self {
         case .getFriend:
             return "/friend"
-        case .deleteFriend(request: let request):
+        case .deleteFriend:
             return "/friend"
-        case .postFavoriteFriend(request: let request):
+        case .postFavoriteFriend:
             return "/friend/favorites"
-        case .deleteFavoriteFriend(request: let request):
+        case .deleteFavoriteFriend:
             return "/friend/favorites"
         }
     }
