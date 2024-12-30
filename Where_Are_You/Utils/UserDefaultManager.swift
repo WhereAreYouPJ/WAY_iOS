@@ -13,6 +13,7 @@ class UserDefaultsManager {
     private let refreshTokenKey = "refreshToken"
     private let memberSeqKey = "memberSeq"
     private let memberCode = "memberCode"
+    private let profileImage = "profileImage"
     private let isLoggedIn = "isLoggedIn"
     
     private init() {}
@@ -55,6 +56,16 @@ class UserDefaultsManager {
     
     func getMemberCode() -> String? {
         return UserDefaults.standard.string(forKey: memberCode)
+    }
+    
+    // MARK: - ProfileImage
+
+    func saveProfileImage(_ profileImage: String) {
+        UserDefaults.standard.set(profileImage, forKey: profileImage)
+    }
+    
+    func getProfileImage() -> String? {
+        return UserDefaults.standard.string(forKey: profileImage)
     }
     
     // MARK: - IsLoggedIn

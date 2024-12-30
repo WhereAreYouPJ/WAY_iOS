@@ -167,7 +167,6 @@ class FriendFeedViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonStack)
         
-        
         view.addSubview(friendOptionView.view)
         
         friendOptionView.view.isHidden = true
