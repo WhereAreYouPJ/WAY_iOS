@@ -172,6 +172,15 @@ class FriendFeedViewController: UIViewController {
         friendOptionView.view.isHidden = true
         
         view.bringSubviewToFront(friendOptionView.view)
+        
+        // 친구 관리 메뉴
+        addChild(friendOptionView)
+        view.addSubview(friendOptionView.view)
+        friendOptionView.didMove(toParent: self)
+        friendOptionView.view.isHidden = true
+        
+        // 항상 최상단에 표시되도록
+        view.bringSubviewToFront(friendOptionView.view)
     }
     
     private func setupConstraints() {
@@ -265,8 +274,12 @@ class FriendFeedViewController: UIViewController {
             feedsViewController.plusOptionButton.isHidden = false
             friendOptionView.view.isHidden = true
         } else {
-            friendOptionView.view.isHidden = false
+            friendOptionView.view.isHidden.toggle()  // toggle로 변경
             feedsViewController.plusOptionButton.isHidden = true
+            // 최상단에 표시되도록 추가
+            if !friendOptionView.view.isHidden {
+                view.bringSubviewToFront(friendOptionView.view)
+            }
         }
     }
     
