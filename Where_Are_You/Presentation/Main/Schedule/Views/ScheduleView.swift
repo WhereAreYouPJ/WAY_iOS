@@ -10,7 +10,7 @@ import SwiftUI
 struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 당일 일정인 경우
     @StateObject var viewModel: ScheduleViewModel
     @State private var selectedDate: Date?
-    @State private var showMenu = false
+    @State private var showOptionMenu = false
     @State private var showCreateSchedule = false
     @State private var showDailySchedule = false
     @State private var showingDeleteAlert = false
@@ -33,39 +33,60 @@ struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 
     
     var body: some View {
         GeometryReader { geometry in
-            VStack(spacing: 0) {
-                HStack(alignment: .center) {
-                    yearMonthView
-                    Spacer()
-                    HStack(spacing: 0) {
-                        Button(action: {
-                            print("알림 페이지로 이동")
-                        }, label: {
-                            Image("icon-notification")
-                                .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
-                        })
-                        .padding(0)
-                        
-                        Menu {
-                            Button("일정 추가", action: {
-                                print("일정 추가")
-                                showCreateSchedule.toggle()
-                            })
-                        } label: {
-                            Image("icon-plus")
-                                .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
+                ZStack(alignment: .top) {
+                    VStack(spacing: 0) {
+                        HStack(alignment: .center) {
+                            yearMonthView
+                            Spacer()
+                            HStack(spacing: 0) {
+                                Button(action: {
+                                    print("알림 페이지로 이동")
+                                }, label: {
+                                    Image("icon-notification")
+                                        .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
+                                })
+                                .padding(0)
+                                
+                                Button(action: {
+                                    showOptionMenu.toggle()
+                                }, label: {
+                                    Image("icon-plus")
+                                        .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
+                                })
+                            }
                         }
-                        .padding(EdgeInsets(top: -4, leading: -8, bottom: -4, trailing: 0))
+                        .padding(.horizontal, LayoutAdapter.shared.scale(value: 4))
+                        .padding(.top, LayoutAdapter.shared.scale(value: -2))
+                        .padding(.bottom, LayoutAdapter.shared.scale(value: 8))
+                        
+                        weekdayView
+                        calendarGridView(in: geometry)
+                    }
+                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 10))
+
+                    if showOptionMenu {
+                        // 배경 터치시 메뉴 닫기
+                        Color.clear
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                showOptionMenu = false
+                            }
+                        
+                        MultiOptionButtonView {
+                            OptionButton(
+                                title: "일정 추가",
+                                position: .single
+                            ) {
+                                showOptionMenu = false
+                                showCreateSchedule.toggle()
+                            }
+                        }
+                        .offset(y: LayoutAdapter.shared.scale(value: 44))
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .padding(.trailing, LayoutAdapter.shared.scale(value: 15))
                     }
                 }
-                .padding(.horizontal, 10)
-                .padding(.bottom, 8)
-                
-                weekdayView
-                calendarGridView(in: geometry)
             }
-            .padding(.horizontal, 10)
-        }
         .sheet(isPresented: $showCreateSchedule, onDismiss: {
             viewModel.getMonthlySchedule()
         }) {
