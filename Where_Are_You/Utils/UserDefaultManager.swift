@@ -13,6 +13,7 @@ class UserDefaultsManager {
     private let refreshTokenKey = "refreshToken"
     private let memberSeqKey = "memberSeq"
     private let memberCode = "memberCode"
+    private let userName = "userName"
     private let profileImage = "profileImage"
     private let isLoggedIn = "isLoggedIn"
     
@@ -58,14 +59,24 @@ class UserDefaultsManager {
         return UserDefaults.standard.string(forKey: memberCode)
     }
     
+    // MARK: - UserName
+
+    func saveUserName(_ userName: String) {
+        UserDefaults.standard.set(userName, forKey: userName)
+    }
+    
+    func getUserName() -> String? {
+        return UserDefaults.standard.string(forKey: userName)
+    }
+    
     // MARK: - ProfileImage
 
     func saveProfileImage(_ profileImage: String) {
         UserDefaults.standard.set(profileImage, forKey: profileImage)
     }
     
-    func getProfileImage() -> String? {
-        return UserDefaults.standard.string(forKey: profileImage)
+    func getProfileImage() -> String {
+        return UserDefaults.standard.string(forKey: profileImage) ?? AppConstants.defaultProfileImageUrl
     }
     
     // MARK: - IsLoggedIn
@@ -85,5 +96,7 @@ class UserDefaultsManager {
         UserDefaults.standard.removeObject(forKey: refreshTokenKey)
         UserDefaults.standard.removeObject(forKey: memberSeqKey)
         UserDefaults.standard.removeObject(forKey: memberCode)
+        UserDefaults.standard.removeObject(forKey: userName)
+        UserDefaults.standard.removeObject(forKey: profileImage)
     }
 }
