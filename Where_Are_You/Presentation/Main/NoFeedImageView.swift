@@ -11,7 +11,7 @@ import Kingfisher
 class NoFeedImageView: UIView {
     // MARK: - Properties
     
-    private let backgroundImage: UIImageView = {
+    let backgroundImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -25,7 +25,7 @@ class NoFeedImageView: UIView {
         return blurView
     }()
     
-    private let profileImageView: UIImageView = {
+    let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 60) // 반지름 (원형)
@@ -69,8 +69,12 @@ class NoFeedImageView: UIView {
     }
     
     func configureUI(profileImage: String) {
-        guard let profileImageURL = URL(string: profileImage) else { return }
+        guard let profileImageURL = URL(string: profileImage) else {
+            print("Invalid profile image URL")
+            return
+        }
         backgroundImage.kf.setImage(with: profileImageURL)
         profileImageView.kf.setImage(with: profileImageURL)
+        print("NoFeedImageView configured successfully with profile image.")
     }
 }

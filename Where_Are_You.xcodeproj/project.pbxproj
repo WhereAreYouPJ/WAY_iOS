@@ -700,7 +700,6 @@
 		990DE7742C660A94007B78C9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				99A814112D129DC5000FC5A3 /* NoFeedImageView.swift */,
 				990DE7632C65E767007B78C9 /* FeedDetailBoxView.swift */,
 				990DE7672C65EAEB007B78C9 /* FeedImageCollectionViewCell.swift */,
 				990DE7652C65E924007B78C9 /* FeedImagesView.swift */,
@@ -1158,6 +1157,7 @@
 			isa = PBXGroup;
 			children = (
 				99C1403D2C6496BC00A706B6 /* NoDataView.swift */,
+				99A814112D129DC5000FC5A3 /* NoFeedImageView.swift */,
 				99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */,
 				99D8FBAD2C3B64040062AF10 /* Home */,
 				D57B46ED2C78630A00657C51 /* Location */,

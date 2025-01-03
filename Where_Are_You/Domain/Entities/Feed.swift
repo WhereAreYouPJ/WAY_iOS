@@ -16,7 +16,7 @@ struct HomeFeedContent {
 }
 
 struct MainFeedListContent {
-    let feedSeq: Int?
+    let feedSeq: Int
     let profileImageURL: String
     let startTime: String
     let location: String
@@ -28,7 +28,7 @@ struct MainFeedListContent {
 }
 
 struct Feed {
-    let feedSeq: Int?
+    let feedSeq: Int
     let memberSeq: Int?
     let startTime: String
     let profileImageURL: String

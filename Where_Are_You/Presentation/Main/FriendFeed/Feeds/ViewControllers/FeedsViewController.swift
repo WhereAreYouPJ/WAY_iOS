@@ -120,8 +120,7 @@ class FeedsViewController: UIViewController {
             cancelTitle: "취소",
             actionTitle: "삭제"
         ) { [weak self] in
-            guard let feedSeq = feed.feedSeq else { return }
-            self?.viewModel.deleteFeed(feedSeq: feedSeq)
+            self?.viewModel.deleteFeed(feedSeq: feed.feedSeq)
             self?.optionsView.removeFromSuperview()
             self?.feedsView.feedsTableView.reloadData()
         }
@@ -140,8 +139,7 @@ class FeedsViewController: UIViewController {
             cancelTitle: "취소",
             actionTitle: "숨김"
         ) { [weak self] in
-            guard let feedSeq = feed.feedSeq else { return }
-            self?.viewModel.hidFeed(feedSeq: feedSeq)
+            self?.viewModel.hidFeed(feedSeq: feed.feedSeq)
             self?.optionsView.removeFromSuperview()
             self?.feedsView.feedsTableView.reloadData()
         }

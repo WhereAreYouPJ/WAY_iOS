@@ -70,6 +70,9 @@ class FeedArchiveViewModel {
             guard let self = self else { return }
             switch result {
             case .success:
+                if let index = self.displayArchiveFeedContent.firstIndex(where: { $0.feedSeq == feedSeq }) {
+                    self.displayArchiveFeedContent.remove(at: index)
+                }
                 self.onArchiveFeedUpdated?()
             case .failure(let error):
                 print(error.localizedDescription)
@@ -82,6 +85,9 @@ class FeedArchiveViewModel {
             guard let self = self else { return }
             switch result {
             case .success:
+                if let index = self.displayArchiveFeedContent.firstIndex(where: { $0.feedSeq == feedSeq }) {
+                    self.displayArchiveFeedContent.remove(at: index)
+                }
                 self.onArchiveFeedUpdated?()
             case .failure(let error):
                 print(error.localizedDescription)

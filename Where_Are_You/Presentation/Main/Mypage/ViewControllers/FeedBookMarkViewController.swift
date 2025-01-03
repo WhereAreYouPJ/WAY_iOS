@@ -112,10 +112,9 @@ class FeedBookMarkViewController: UIViewController {
             cancelTitle: "취소",
             actionTitle: "삭제"
         ) { [weak self] in
-            guard let feedSeq = feed.feedSeq else { return }
-            self?.viewModel.deleteFeed(feedSeq: feedSeq)
+            self?.viewModel.deleteFeed(feedSeq: feed.feedSeq)
             self?.optionsView.removeFromSuperview()
-            self?.feedBookMarkView.feedsTableView.reloadData()
+            self?.viewModel.fetchBookMarkFeed()
         }
         alert.showAlert(on: self)
     }
@@ -132,13 +131,10 @@ class FeedBookMarkViewController: UIViewController {
             cancelTitle: "취소",
             actionTitle: "숨김"
         ) { [weak self] in
-            print("숨김 버튼 눌림")
-            guard let feedSeq = feed.feedSeq else {
-                print("feedSeq가 nil입니다.")
-                return }
-            self?.viewModel.hideFeed(feedSeq: feedSeq)
+            print(feed.feedSeq)
+            self?.viewModel.hideFeed(feedSeq: feed.feedSeq)
             self?.optionsView.removeFromSuperview()
-            self?.feedBookMarkView.feedsTableView.reloadData()
+            self?.viewModel.fetchBookMarkFeed()
         }
         alert.showAlert(on: self)
     }
