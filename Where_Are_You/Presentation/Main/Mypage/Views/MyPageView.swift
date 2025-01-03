@@ -25,7 +25,6 @@ class MyPageView: UIView {
         imageView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 34.44)
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
-        imageView.image = UIImage(named: "exampleProfileImage")
         return imageView
     }()
     
@@ -47,7 +46,7 @@ class MyPageView: UIView {
         return view
     }()
     
-    let userCodeLabel = CustomLabel(UILabel_NotoSans: .medium, text: "qwer0865", textColor: .letterBrandColor, fontSize: 14)
+    let userCodeLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .letterBrandColor, fontSize: 14)
     
     // 내정보관리, 위치 즐겨찾기, 피드책갈피, 피드보관함
     private lazy var manageStackView: UIStackView = createStackView(buttonTitles: ["내 정보 관리", "위치 즐겨찾기", "피드 책갈피", "피드 보관함"], startingTag: 0)
@@ -245,7 +244,8 @@ class MyPageView: UIView {
     }
     
     func configureUI(member: Member) {
-        self.profileImageView.setImage(from: member.profileImage)
+        print("Configuring UI with member: \(member)")
+        self.profileImageView.kf.setImage(with: URL(string: member.profileImage))
         self.userNameLabel.text = member.userName
         self.userCodeLabel.text = member.memberCode
     }

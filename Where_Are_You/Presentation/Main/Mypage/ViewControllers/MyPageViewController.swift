@@ -19,6 +19,7 @@ class MyPageViewController: UIViewController {
         super.viewWillAppear(animated)
         // 네비게이션 바 숨기기
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        viewModel.memberDetails()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -31,10 +32,9 @@ class MyPageViewController: UIViewController {
         super.viewDidLoad()
         view = myPageView
         setupViewModel()
-        setupActions()
-        viewModel.memberDetails()
         setupBindings()
-        
+        setupActions()
+        print("memberSeq: \(UserDefaultsManager.shared.getMemberSeq())")
         NotificationCenter.default.addObserver(self, selector: #selector(userNameDidChange), name: .userNameDidChange, object: nil)
     }
     
@@ -58,6 +58,8 @@ class MyPageViewController: UIViewController {
     }
    
     private func setupBindings() {
+        print("Setting up bindings...")
+
         viewModel.onLogoutSuccess = { [weak self] in
             DispatchQueue.main.async {
                 self?.navigateToLogin()
@@ -66,7 +68,12 @@ class MyPageViewController: UIViewController {
         
         viewModel.onGetMemberSuccess = { [weak self] memberDetails in
             DispatchQueue.main.async {
-                let memberCode = UserDefaultsManager.shared.getMemberCode()
+                print("Updating UI with member details: \(memberDetails)")
+
+                guard let memberCode = UserDefaultsManager.shared.getMemberCode() else {
+                    print("Member code is missing")
+                    return
+                }
                 let member = Member(userName: memberDetails.userName,
                                     profileImage: memberDetails.profileImage,
                                     memberCode: memberCode)
@@ -115,14 +122,12 @@ class MyPageViewController: UIViewController {
         case 1:
             // Handle "위치 즐겨찾기"
             moveToDetailController(controller: LocationBookmarkViewController())
-            print("위치 즐겨찾기 tapped")
         case 2:
             // Handle "피드 책갈피"
             moveToDetailController(controller: FeedBookMarkViewController())
-            print("피드 책갈피 tapped")
         case 3:
             // Handle "피드 보관함"
-            print("피드 보관함 tapped")
+            moveToDetailController(controller: FeedArchiveViewController())
         case 4:
             // Handle "공지사항"
             print("공지사항 tapped")

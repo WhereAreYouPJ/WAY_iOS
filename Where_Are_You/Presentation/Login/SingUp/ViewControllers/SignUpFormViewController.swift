@@ -144,6 +144,7 @@ class SignUpFormViewController: UIViewController {
     }
     
     @objc func startButtonTapped() {
+        print("회원가입완료버튼 눌림")
         viewModel.signUp()
     }
     

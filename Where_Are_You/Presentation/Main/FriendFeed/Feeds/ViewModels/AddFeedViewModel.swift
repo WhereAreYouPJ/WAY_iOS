@@ -131,6 +131,30 @@ class AddFeedViewModel {
     // MARK: - 피드 저장 메서드
     func saveFeed(title: String, content: String?, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let schedule = selectedSchedule else { return }
+
+        if selectedImages.isEmpty {
+            let noFeedImageView = NoFeedImageView(frame: CGRect(x: 0, y: 0, width: 345, height: 290))
+            if let profileImageURL = UserDefaultsManager.shared.getProfileImageURL() {
+                noFeedImageView.configureUI(profileImage: profileImageURL)
+            } else {
+                // 디폴트 이미지를 설정
+                let defaultImage = UIImage(named: "defaultProfileImage")
+                noFeedImageView.profileImageView.image = defaultImage
+                noFeedImageView.backgroundImage.image = defaultImage
+            }
+            
+            // UIView를 UIImage로 변환
+            UIGraphicsBeginImageContextWithOptions(noFeedImageView.bounds.size, noFeedImageView.isOpaque, 0.0)
+            defer { UIGraphicsEndImageContext() }
+            noFeedImageView.layer.render(in: UIGraphicsGetCurrentContext()!)
+            
+            if let generatedImage = UIGraphicsGetImageFromCurrentImageContext() {
+                print("Generated Image: \(generatedImage)")
+                selectedImages.append(generatedImage) // `selectedImages`에 추가
+            } else {
+                print("Failed to generate image from NoFeedImageView.")
+            }
+        }
         
         let feedImageOrders = Array(0..<selectedImages.count)
         
