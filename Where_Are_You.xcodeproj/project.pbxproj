@@ -226,6 +226,7 @@
 		D54C040A2C6516CB009CC419 /* CreateScheduleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54C04092C6516CB009CC419 /* CreateScheduleBody.swift */; };
 		D54C040C2C651832009CC419 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54C040B2C651832009CC419 /* Schedule.swift */; };
 		D54C040E2C651B8A009CC419 /* ScheduleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54C040D2C651B8A009CC419 /* ScheduleAPI.swift */; };
+		D558CB662D28196100710808 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D558CB652D28196100710808 /* AppConstants.swift */; };
 		D55C6C3E2CF57E74005132DC /* CustomButtonSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C3D2CF57E74005132DC /* CustomButtonSwiftUI.swift */; };
 		D55C6C402CF585F1005132DC /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C3F2CF585F1005132DC /* AddFriendView.swift */; };
 		D55C6C422CF5B8D7005132DC /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C412CF5B8D7005132DC /* NavigationBarModifier.swift */; };
@@ -539,6 +540,7 @@
 		D54C04092C6516CB009CC419 /* CreateScheduleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleBody.swift; sourceTree = "<group>"; };
 		D54C040B2C651832009CC419 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		D54C040D2C651B8A009CC419 /* ScheduleAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleAPI.swift; sourceTree = "<group>"; };
+		D558CB652D28196100710808 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		D55C6C3D2CF57E74005132DC /* CustomButtonSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonSwiftUI.swift; sourceTree = "<group>"; };
 		D55C6C3F2CF585F1005132DC /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
 		D55C6C412CF5B8D7005132DC /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
@@ -1049,6 +1051,7 @@
 		99C9B2262C019748008D7CBD /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D558CB652D28196100710808 /* AppConstants.swift */,
 				997DC6562C3D253000EACA5F /* UserDefaultManager.swift */,
 				99C140372C64943F00A706B6 /* LayoutAdapter.swift */,
 				99C6D29D2C90379F009C0CF8 /* APIResponseHandler.swift */,
@@ -2002,6 +2005,7 @@
 				D51AC99F2C84A0AD00D0AD2E /* FavLocationResponse.swift in Sources */,
 				99B397852C0C41D300D7A109 /* AccountCheckViewController.swift in Sources */,
 				9979622D2C3E6B2200E95CA6 /* AccountLoginUseCase.swift in Sources */,
+				D558CB662D28196100710808 /* AppConstants.swift in Sources */,
 				990BDE532C40CF1E00A7FB5D /* DDayCell.swift in Sources */,
 				9911F98C2C3F908E00D0FDC9 /* HomeFeedView.swift in Sources */,
 				99C9B2292C0197CA008D7CBD /* Member.swift in Sources */,

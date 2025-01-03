@@ -9,7 +9,8 @@ import Foundation
 import Moya
 
 class FriendsViewModel: ObservableObject { // 친구 목록을 나중에는 iOS 자체 DB에 저장해뒀다가 새로고침 or 특정 시각에 업데이트
-    @Published var user = User(userName: nil, profileImage: nil, memberSeq: UserDefaultsManager.shared.getMemberSeq())
+    // TODO: UserDefaults 세팅 완료되면 해당 프로퍼티 삭제
+    @Published var user = User(userName: nil, profileImage: UserDefaultsManager.shared.getProfileImage(), memberSeq: UserDefaultsManager.shared.getMemberSeq())
     @Published var favorites: [Friend] = []
     @Published var friends: [Friend] = []
     @Published var searchText: String = ""
@@ -24,29 +25,13 @@ class FriendsViewModel: ObservableObject { // 친구 목록을 나중에는 iOS 
         self.memberDetailsUseCase = memberDetailsUseCase
     }
     
-//    private func setupInitialData() {
-//        favorites = [
-//            Friend(memberSeq: 2, profileImage: "exampleProfileImage", name: "조승연", isFavorite: false),
-//            Friend(memberSeq: 3, profileImage: "exampleProfileImage", name: "김민정", isFavorite: false)
-//        ]
-//        friends = [
-//            Friend(memberSeq: 4, profileImage: "exampleProfileImage", name: "임창균", isFavorite: true),
-//            Friend(memberSeq: 5, profileImage: "exampleProfileImage", name: "이승협", isFavorite: true),
-//            Friend(memberSeq: 6, profileImage: "exampleProfileImage", name: "김민지", isFavorite: true),
-//            Friend(memberSeq: 7, profileImage: "exampleProfileImage", name: "조유리", isFavorite: true),
-//            Friend(memberSeq: 4, profileImage: "exampleProfileImage", name: "김민규", isFavorite: true),
-//            Friend(memberSeq: 5, profileImage: "exampleProfileImage", name: "최유리", isFavorite: true),
-//            Friend(memberSeq: 6, profileImage: "exampleProfileImage", name: "이채영", isFavorite: true),
-//            Friend(memberSeq: 7, profileImage: "exampleProfileImage", name: "최수빈", isFavorite: true)
-//        ]
-//    }
-    
+    // TODO: UserDefaults 세팅 완료되면 해당 메서드 삭제
     func getUserDetail() {
         memberDetailsUseCase.execute { result in
             switch result {
             case .success(let member):
                 self.user.userName = member.userName
-                self.user.profileImage = member.profileImage ?? ""
+                self.user.profileImage = member.profileImage
             case .failure(let error):
                 print("Error getting user: \(error.localizedDescription)")
                 self.hasError = true
