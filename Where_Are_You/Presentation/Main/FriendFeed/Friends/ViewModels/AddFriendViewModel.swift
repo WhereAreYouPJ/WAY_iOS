@@ -24,9 +24,12 @@ class AddFriendViewModel: ObservableObject {
         memberSearchUseCase.execute(memberCode: searchText) { result in
             switch result {
             case .success(let friend):
-                self.searchedMember = Friend(memberSeq: friend.memberSeq, profileImage: friend.profileImage ?? "", name: friend.userName, isFavorite: false)
+                self.searchedMember = Friend(memberSeq: friend.memberSeq,
+                                             profileImage: friend.profileImage ?? AppConstants.ImageAssets.defaultProfileIcon,
+                                             name: friend.userName,
+                                             isFavorite: false)
                 self.showError = false
-                print("회원 검색 완료! 프로필 사진 url: \(String(describing: friend.profileImage))")
+                print("회원 검색 완료!")
             case .failure(let error):
                 self.showError = true
                 print("회원 검색 실패 - \(error.localizedDescription)")
