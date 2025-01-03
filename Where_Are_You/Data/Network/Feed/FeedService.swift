@@ -92,13 +92,13 @@ class FeedService: FeedServiceProtocol {
         }
     }
     
-    func postHideFeed(feedSeq: Int, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func postHideFeed(feedSeq: Int, completion: @escaping (Result<Void, Error>) -> Void) {
         provider.request(.postHideFeed(feedSeq: feedSeq, memberSeq: memberSeq)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
     
-    func deleteHideFeed(feedSeq: Int, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func deleteHideFeed(feedSeq: Int, completion: @escaping (Result<Void, Error>) -> Void) {
         provider.request(.deleteHideFeed(feedSeq: feedSeq, memberSeq: memberSeq)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }

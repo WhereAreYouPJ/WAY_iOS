@@ -70,7 +70,7 @@ extension FeedAPI: TargetType {
         case .getFeedList(let memberSeq, let page):
             return .requestParameters(parameters: ["memberSeq": memberSeq, "page": page], encoding: URLEncoding.queryString)
         case .getFeedDetails(let memberSeq, let scheduleSeq):
-            return .requestParameters(parameters: ["memberSeq": memberSeq, "scheduleSeq": scheduleSeq], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: ["memberSeq": memberSeq, "scheduleSeq": scheduleSeq], encoding: JSONEncoding.default)
             
         case .getBookMarkFeed(let memberSeq, let page):
             return .requestParameters(parameters: ["memberSeq": memberSeq, "page": page], encoding: URLEncoding.queryString)
@@ -82,9 +82,9 @@ extension FeedAPI: TargetType {
         case .getHideFeed(let memberSeq, let page):
             return .requestParameters(parameters: ["memberSeq": memberSeq, "page": page], encoding: URLEncoding.queryString)
         case .postHideFeed(let feedSeq, let memberSeq):
-            return .requestParameters(parameters: ["feedSeq": feedSeq, "memberSeq": memberSeq], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: ["feedSeq": feedSeq, "memberSeq": memberSeq], encoding: JSONEncoding.default)
         case .deleteHideFeed(let feedSeq, let memberSeq):
-            return .requestParameters(parameters: ["feedSeq": feedSeq, "memberSeq": memberSeq], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: ["feedSeq": feedSeq, "memberSeq": memberSeq], encoding: JSONEncoding.default)
         }
     }
     
