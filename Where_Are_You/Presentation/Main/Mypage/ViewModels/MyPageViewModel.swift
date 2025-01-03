@@ -31,13 +31,14 @@ class MyPageViewModel {
     }
     
     func memberDetails() {
+        print("Fetching member details...")
         memberDetailsUseCase.execute { result in
             switch result {
             case .success(let data):
-                print("memberDetailsData: \(data)")
+                print("Member details fetched successfully: \(data)")
                 self.onGetMemberSuccess?(data)
             case .failure(let error):
-                print("\(error.localizedDescription)")
+                print("Error fetching member details: \(error.localizedDescription)")
             }
         }
     }

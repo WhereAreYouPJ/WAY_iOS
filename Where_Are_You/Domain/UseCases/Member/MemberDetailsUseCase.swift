@@ -19,11 +19,17 @@ class MemberDetailsUseCaseImpl: MemberDetailsUseCase {
     }
     
     func execute(completion: @escaping (Result<MemberDetailsResponse, Error>) -> Void) {
+        print("Fetching member details in MemberDetailsUseCase...")
+
         memberRepository.getMemberDetails { result in
             switch result {
             case .success(let response):
+                print("Successfully fetched member details: \(response)")
+
                 completion(.success(response.data))
             case .failure(let error):
+                print("Error fetching member details: \(error.localizedDescription)")
+
                 completion(.failure(error))
             }
         }

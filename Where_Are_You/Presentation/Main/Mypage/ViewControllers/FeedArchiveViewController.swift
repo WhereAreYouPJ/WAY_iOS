@@ -84,6 +84,7 @@ class FeedArchiveViewController: UIViewController {
         feedArchiveView.feedsTableView.estimatedRowHeight = LayoutAdapter.shared.scale(value: 498)
         feedArchiveView.feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
     }
+    
     private func setupActions() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
         view.addGestureRecognizer(tapGesture)
@@ -110,10 +111,8 @@ class FeedArchiveViewController: UIViewController {
             cancelTitle: "취소",
             actionTitle: "삭제"
         ) { [weak self] in
-            guard let feedSeq = feed.feedSeq else { return }
-            self?.viewModel.deleteFeed(feedSeq: feedSeq)
+            self?.viewModel.deleteFeed(feedSeq: feed.feedSeq)
             self?.optionsView.removeFromSuperview()
-            self?.feedArchiveView.feedsTableView.reloadData()
         }
         alert.showAlert(on: self)
     }
@@ -127,8 +126,7 @@ class FeedArchiveViewController: UIViewController {
             cancelTitle: "취소",
             actionTitle: "복원"
         ) { [weak self] in
-            guard let feedSeq = feed.feedSeq else { return }
-            self?.viewModel.restoreFeed(feedSeq: feedSeq)
+            self?.viewModel.restoreFeed(feedSeq: feed.feedSeq)
             self?.optionsView.removeFromSuperview()
             self?.feedArchiveView.feedsTableView.reloadData()
         }

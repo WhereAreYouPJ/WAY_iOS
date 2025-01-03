@@ -19,6 +19,7 @@ class MyPageViewController: UIViewController {
         super.viewWillAppear(animated)
         // 네비게이션 바 숨기기
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        viewModel.memberDetails()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -31,10 +32,9 @@ class MyPageViewController: UIViewController {
         super.viewDidLoad()
         view = myPageView
         setupViewModel()
-        setupActions()
         setupBindings()
-        viewModel.memberDetails()
-        print(UserDefaultsManager.shared.getMemberSeq())
+        setupActions()
+        print("memberSeq: \(UserDefaultsManager.shared.getMemberSeq())")
         NotificationCenter.default.addObserver(self, selector: #selector(userNameDidChange), name: .userNameDidChange, object: nil)
     }
     
@@ -58,6 +58,8 @@ class MyPageViewController: UIViewController {
     }
    
     private func setupBindings() {
+        print("Setting up bindings...")
+
         viewModel.onLogoutSuccess = { [weak self] in
             DispatchQueue.main.async {
                 self?.navigateToLogin()
@@ -66,8 +68,12 @@ class MyPageViewController: UIViewController {
         
         viewModel.onGetMemberSuccess = { [weak self] memberDetails in
             DispatchQueue.main.async {
-                guard let memberCode = UserDefaultsManager.shared.getMemberCode() else { return }
-                print("memberCode is: \(memberCode)")
+                print("Updating UI with member details: \(memberDetails)")
+
+                guard let memberCode = UserDefaultsManager.shared.getMemberCode() else {
+                    print("Member code is missing")
+                    return
+                }
                 let member = Member(userName: memberDetails.userName,
                                     profileImage: memberDetails.profileImage,
                                     memberCode: memberCode)

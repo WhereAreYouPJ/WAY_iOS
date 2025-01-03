@@ -122,6 +122,7 @@ class AddFeedViewController: UIViewController {
     
     @objc func createFeed() {
         // 피드 생성하기 버튼 눌림
+        print("createFeed 눌림")
         guard let title = addFeedView.titleTextField.text, !title.isEmpty else { return }
         let content = addFeedView.contentTextView.text == "어떤 일이 있었나요?" ? nil : addFeedView.contentTextView.text
         
