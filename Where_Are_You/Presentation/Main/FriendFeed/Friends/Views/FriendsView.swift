@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct FriendsView: View { // TODO: Error getting user: Failed to map data to a Decodable object.
     @StateObject private var viewModel: FriendsViewModel = {
@@ -76,13 +77,13 @@ struct FriendsView: View { // TODO: Error getting user: Failed to map data to a 
     
     func myProfileView() -> some View { // TODO: 이미지, 이름 실제 데이터로 변경
         HStack {
-            Image("exampleProfileImage")
+            KFImage(URL(string: UserDefaultsManager.shared.getProfileImage()))
                 .resizable()
                 .scaledToFill()
                 .frame(width: UIScreen.main.bounds.width * 0.14, height: UIScreen.main.bounds.width * 0.14)
                 .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16)))
             
-            Text("김주희")
+            Text(UserDefaultsManager.shared.getUserName() ?? "유저 이름")
                 .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 17))))
                 .foregroundColor(Color(.color34))
                 .padding(8)

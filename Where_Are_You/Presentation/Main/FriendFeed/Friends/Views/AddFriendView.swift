@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct AddFriendView: View { // TODO: 친구 신청 완료시 토스트 팝업
     @Environment(\.dismiss) private var dismiss
@@ -91,7 +92,7 @@ struct AddFriendView: View { // TODO: 친구 신청 완료시 토스트 팝업
                 .frame(height: LayoutAdapter.shared.scale(value: 158))
             
             VStack {
-                Image(viewModel.searchedMember?.profileImage.isEmpty == true ? "icon-profile-default" : viewModel.searchedMember?.profileImage ?? "icon-profile-default") // TODO: 서버에서 URI 받아 프로필 이미지 띄우기
+                KFImage(URL(string: viewModel.searchedMember?.profileImage ?? AppConstants.defaultProfileImageUrl))
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: LayoutAdapter.shared.scale(value: 100), height: LayoutAdapter.shared.scale(value: 100))
