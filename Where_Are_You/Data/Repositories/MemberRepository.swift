@@ -42,7 +42,15 @@ class MemberRepository: MemberRepositoryProtocol {
     }
     
     func putProfileImage(images: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        memberService.putProfileImage(images: images, completion: completion)
+        memberService.putProfileImage(images: images) { result in
+            switch result {
+            case .success:
+                UserDefaultsManager.shared.saveProfileImageURL(images)
+                completion(.success(()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
     
     // MARK: - POST
