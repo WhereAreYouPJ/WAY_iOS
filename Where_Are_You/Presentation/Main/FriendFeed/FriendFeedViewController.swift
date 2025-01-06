@@ -276,7 +276,7 @@ class FriendFeedViewController: UIViewController {
             friendOptionView.view.isHidden = true
 //            plusOptionButton.isHidden = false
         } else {
-//             friendOptionView.view.isHidden.toggle()  // toggle로 변경
+             friendOptionView.view.isHidden.toggle()  // toggle로 변경
 //            plusOptionButton.isHidden = false
             feedsViewController.plusOptionButton.isHidden = true
             // 최상단에 표시되도록 추가
