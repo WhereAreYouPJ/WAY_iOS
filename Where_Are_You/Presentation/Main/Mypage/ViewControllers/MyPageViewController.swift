@@ -34,7 +34,6 @@ class MyPageViewController: UIViewController {
         setupViewModel()
         setupBindings()
         setupActions()
-        print("memberSeq: \(UserDefaultsManager.shared.getMemberSeq())")
         NotificationCenter.default.addObserver(self, selector: #selector(userNameDidChange), name: .userNameDidChange, object: nil)
     }
     
@@ -58,8 +57,6 @@ class MyPageViewController: UIViewController {
     }
    
     private func setupBindings() {
-        print("Setting up bindings...")
-
         viewModel.onLogoutSuccess = { [weak self] in
             DispatchQueue.main.async {
                 self?.navigateToLogin()
@@ -68,12 +65,7 @@ class MyPageViewController: UIViewController {
         
         viewModel.onGetMemberSuccess = { [weak self] memberDetails in
             DispatchQueue.main.async {
-                print("Updating UI with member details: \(memberDetails)")
-
-                guard let memberCode = UserDefaultsManager.shared.getMemberCode() else {
-                    print("Member code is missing")
-                    return
-                }
+                guard let memberCode = UserDefaultsManager.shared.getMemberCode() else { return }
                 let member = Member(userName: memberDetails.userName,
                                     profileImage: memberDetails.profileImage,
                                     memberCode: memberCode)

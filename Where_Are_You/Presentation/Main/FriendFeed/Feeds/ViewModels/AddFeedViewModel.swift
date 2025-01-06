@@ -27,6 +27,7 @@ class AddFeedViewModel {
     var selectedImages: [UIImage] = []
     
     var onSchedulesUpdated: (() -> Void)?
+    var onFeedCreated: (() -> Void)?
     
     weak var delegate: AddFeedViewModelDelegate?
     
@@ -105,7 +106,8 @@ class AddFeedViewModel {
         getScheduleUseCase.execute(scheduleSeq: scheduleSeq) { result in
             switch result {
             case .success(let data):
-                self.participants = data.memberInfos.filter { !$0.isCreate }.map { $0.userName }
+                let memberSeq = UserDefaultsManager.shared.getMemberSeq()
+                self.participants = data.memberInfos.filter { $0.memberSeq != memberSeq }.map { $0.userName }
                 completion()
             case .failure(let error):
                 print(error.localizedDescription)
@@ -129,25 +131,27 @@ class AddFeedViewModel {
     }
     
     // MARK: - 피드 저장 메서드
-    func saveFeed(title: String, content: String?, completion: @escaping (Result<Void, Error>) -> Void) {
+    func saveFeed(title: String, content: String?) {
         guard let schedule = selectedSchedule else { return }
 
-        if selectedImages.isEmpty {
-            let noFeedImageView = NoFeedImageView(frame: CGRect(x: 0, y: 0, width: 345, height: 290))
-            let profileImageURL = UserDefaultsManager.shared.getProfileImage()
-            
-            // UIView를 UIImage로 변환
-            UIGraphicsBeginImageContextWithOptions(noFeedImageView.bounds.size, noFeedImageView.isOpaque, 0.0)
-            defer { UIGraphicsEndImageContext() }
-            noFeedImageView.layer.render(in: UIGraphicsGetCurrentContext()!)
-            
-            if let generatedImage = UIGraphicsGetImageFromCurrentImageContext() {
-                print("Generated Image: \(generatedImage)")
-                selectedImages.append(generatedImage) // `selectedImages`에 추가
-            } else {
-                print("Failed to generate image from NoFeedImageView.")
-            }
-        }
+//        if selectedImages.isEmpty {
+//            let noFeedImageView = NoFeedImageView(frame: CGRect(x: 0, y: 0, width: 345, height: 290))
+//
+//            let profileImageURL = UserDefaultsManager.shared.getProfileImage()
+//            noFeedImageView.configureUI(profileImage: profileImageURL)
+//            
+//            // UIView를 UIImage로 변환
+//            UIGraphicsBeginImageContextWithOptions(noFeedImageView.bounds.size, noFeedImageView.isOpaque, 0.0)
+//            defer { UIGraphicsEndImageContext() }
+//            noFeedImageView.layer.render(in: UIGraphicsGetCurrentContext()!)
+//            
+//            if let generatedImage = UIGraphicsGetImageFromCurrentImageContext() {
+//                print("Generated Image: \(generatedImage)")
+//                selectedImages.append(generatedImage) // `selectedImages`에 추가
+//            } else {
+//                print("Failed to generate image from NoFeedImageView.")
+//            }
+//        }
         
         let feedImageOrders = Array(0..<selectedImages.count)
         
@@ -157,6 +161,14 @@ class AddFeedViewModel {
                                       content: content,
                                       feedImageOrders: feedImageOrders)
         
-        saveFeedUseCase.execute(request: request, images: selectedImages, completion: completion)
+        saveFeedUseCase.execute(request: request, images: selectedImages) { result
+            in
+            switch result {
+            case .success:
+                self.onFeedCreated?()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }

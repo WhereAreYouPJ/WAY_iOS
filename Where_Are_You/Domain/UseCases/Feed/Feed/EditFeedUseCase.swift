@@ -1,5 +1,5 @@
 //
-//  UpdateFeedUseCase.swift
+//  EditFeedUseCase.swift
 //  Where_Are_You
 //
 //  Created by 오정석 on 8/8/2024.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol UpdateFeedUseCase {
+protocol EditFeedUseCase {
     func execute(request: ModifyFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
-class UpdateFeedUseCaseImpl: UpdateFeedUseCase {
+class EditFeedUseCaseImpl: EditFeedUseCase {
     private let feedRepository: FeedRepositoryProtocol
 
     init(feedRepository: FeedRepositoryProtocol) {
