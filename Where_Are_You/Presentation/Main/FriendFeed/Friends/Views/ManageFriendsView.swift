@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ManageFriendsView: View { // TODO: 친구 요청 수락/거절의 경우 체크버튼 전환 애니메이션 필요
     @Environment(\.dismiss) private var dismiss
@@ -34,13 +35,14 @@ struct ManageFriendsView: View { // TODO: 친구 요청 수락/거절의 경우 
                         .padding(.top, LayoutAdapter.shared.scale(value: 16))
                     
                     Divider()
-                        .padding(LayoutAdapter.shared.scale(value: 8))
+                        .padding(.vertical, LayoutAdapter.shared.scale(value: 10))
                     
                     requestView(title: "요청이 들어온 친구", count: viewModel.receivedRequests.count, isSentRequest: false)
                     
                     Spacer()
                 }
             }
+            .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
             .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
             .customNavigationBar(
                 title: "친구 관리",
@@ -69,14 +71,13 @@ struct ManageFriendsView: View { // TODO: 친구 요청 수락/거절의 경우 
             
             requestCellView(isSentRequest: isSentRequest)
         }
-        .padding(.horizontal, LayoutAdapter.shared.scale(value: 20))
     }
     
     func requestCellView(isSentRequest: Bool) -> some View {
         VStack {
             ForEach(isSentRequest ? viewModel.sentRequests : viewModel.receivedRequests) { request in
                 HStack {
-                    Image(request.friend.profileImage == "" ? "icon-profile-default" : request.friend.profileImage)
+                    KFImage(URL(string: request.friend.profileImage))
                         .resizable()
                         .scaledToFill()
                         .frame(width: UIScreen.main.bounds.width * 0.14, height: UIScreen.main.bounds.width * 0.14)
@@ -85,7 +86,7 @@ struct ManageFriendsView: View { // TODO: 친구 요청 수락/거절의 경우 
                     Text(request.friend.name)
                         .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 17)))
                         .foregroundColor(Color(.color34))
-                        .padding(8)
+                        .padding(LayoutAdapter.shared.scale(value: 8))
                     
                     Spacer()
                     

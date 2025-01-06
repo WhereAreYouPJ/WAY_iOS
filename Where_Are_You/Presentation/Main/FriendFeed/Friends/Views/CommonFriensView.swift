@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 // MARK: 검색창
 struct SearchBarView: View {
@@ -84,7 +85,6 @@ struct FriendListView: View {
                         
                         if !viewModel.filteredFriends.isEmpty {
                             FriendsSectionView(title: "친구", count: viewModel.filteredFriends.count)
-                                .padding(.top, 8)
                             ForEach(viewModel.filteredFriends) { friend in
                                 if showToggle {
                                     FriendCell(
@@ -118,12 +118,13 @@ struct FriendsSectionView: View {
     var body: some View {
         VStack(spacing: 0) {
             Divider()
+                .padding(.vertical, LayoutAdapter.shared.scale(value: 10))
+            
             HStack {
                 Text(title)
                 Text("\(count)")
                 Spacer()
             }
-            .padding(.vertical, 8)
         }
     }
 }
@@ -136,7 +137,7 @@ struct FriendCell: View {
     
     var body: some View {
         HStack {
-            Image(friend.profileImage)
+            KFImage(URL(string: friend.profileImage))
                 .resizable()
                 .scaledToFill()
                 .frame(width: UIScreen.main.bounds.width * 0.14, height: UIScreen.main.bounds.width * 0.14)
@@ -154,7 +155,7 @@ struct FriendCell: View {
                     .toggleStyle(CheckboxToggleStyle())
             }
         }
-        .padding(.vertical, 6)
+        .padding(.top, LayoutAdapter.shared.scale(value: 10))
     }
 }
 

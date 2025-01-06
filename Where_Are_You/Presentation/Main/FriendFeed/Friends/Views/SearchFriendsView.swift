@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct SearchFriendsView: View {
     @StateObject private var viewModel: SearchFriendsViewModel = {
@@ -51,6 +52,7 @@ struct SearchFriendsView: View {
                     viewModel.toggleSelection(for: friend)
                 }
             )
+            .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
             
             Button(action: {
                 selectedFriends = viewModel.confirmSelection()
@@ -78,7 +80,8 @@ struct SelectedFriendsView: View {
     var body: some View {
         ZStack {
             VStack {
-                Image(friend.profileImage)
+//                Image(friend.profileImage)
+                KFImage(URL(string: friend.profileImage))
                     .resizable()
                     .scaledToFill()
                     .frame(width: UIScreen.main.bounds.width * 0.12, height: UIScreen.main.bounds.width * 0.12)
@@ -112,7 +115,7 @@ struct FriendCellWithToggle: View {
     
     var body: some View {
         HStack {
-            Image(friend.profileImage)
+            KFImage(URL(string: friend.profileImage))
                 .resizable()
                 .scaledToFill()
                 .frame(width: UIScreen.main.bounds.width * 0.14, height: UIScreen.main.bounds.width * 0.14)

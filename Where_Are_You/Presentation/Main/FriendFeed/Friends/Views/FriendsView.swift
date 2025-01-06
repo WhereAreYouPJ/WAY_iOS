@@ -8,7 +8,7 @@
 import SwiftUI
 import Kingfisher
 
-struct FriendsView: View { // TODO: Error getting user: Failed to map data to a Decodable object.
+struct FriendsView: View {
     @StateObject private var viewModel: FriendsViewModel = {
         let friendRepository = FriendRepository(friendService: FriendService())
         let getFriendUseCase = GetFriendUseCaseImpl(friendRepository: friendRepository)
@@ -54,28 +54,28 @@ struct FriendsView: View { // TODO: Error getting user: Failed to map data to a 
                 }
             )
         }
+        .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
         .onAppear {
             viewModel.getUserDetail()
             viewModel.getFriendsList()
         }
-        .fullScreenCover(isPresented: $showFriendDetail) {
-            if shouldRefreshList {
-                viewModel.getFriendsList()
-                shouldRefreshList = false
+        .fullScreenCover(
+            isPresented: $showFriendDetail,
+            onDismiss: { viewModel.getFriendsList() },
+            content: {
+                if isMyProfileSelected {
+                    FriendDetailView(viewModel: FriendDetailViewModel(isMyProfile: true))
+                } else if let friend = selectedFriend {
+                    FriendDetailView(
+                        viewModel: FriendDetailViewModel(friend: friend, isMyProfile: false),
+                        onDelete: { shouldRefreshList = true }
+                    )
+                }
             }
-        } content: {
-            if isMyProfileSelected {
-                FriendDetailView(viewModel: FriendDetailViewModel(isMyProfile: true))
-            } else if let friend = selectedFriend {
-                FriendDetailView(
-                    viewModel: FriendDetailViewModel(friend: friend, isMyProfile: false),
-                    onDelete: { shouldRefreshList = true }
-                )
-            }
-        }
+        )
     }
     
-    func myProfileView() -> some View { // TODO: 이미지, 이름 실제 데이터로 변경
+    func myProfileView() -> some View {
         HStack {
             KFImage(URL(string: UserDefaultsManager.shared.getProfileImage()))
                 .resizable()
@@ -86,11 +86,10 @@ struct FriendsView: View { // TODO: Error getting user: Failed to map data to a 
             Text(UserDefaultsManager.shared.getUserName() ?? "유저 이름")
                 .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 17))))
                 .foregroundColor(Color(.color34))
-                .padding(8)
+                .padding(LayoutAdapter.shared.scale(value: 8))
             
             Spacer()
         }
-        .padding(.horizontal, LayoutAdapter.shared.scale(value: 14))
         .padding(.top, LayoutAdapter.shared.scale(value: 10))
     }
 }
