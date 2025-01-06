@@ -134,14 +134,7 @@ class AddFeedViewModel {
 
         if selectedImages.isEmpty {
             let noFeedImageView = NoFeedImageView(frame: CGRect(x: 0, y: 0, width: 345, height: 290))
-            if let profileImageURL = UserDefaultsManager.shared.getProfileImageURL() {
-                noFeedImageView.configureUI(profileImage: profileImageURL)
-            } else {
-                // 디폴트 이미지를 설정
-                let defaultImage = UIImage(named: "defaultProfileImage")
-                noFeedImageView.profileImageView.image = defaultImage
-                noFeedImageView.backgroundImage.image = defaultImage
-            }
+            let profileImageURL = UserDefaultsManager.shared.getProfileImage()
             
             // UIView를 UIImage로 변환
             UIGraphicsBeginImageContextWithOptions(noFeedImageView.bounds.size, noFeedImageView.isOpaque, 0.0)

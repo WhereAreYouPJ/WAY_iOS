@@ -116,7 +116,7 @@ class MemberRepository: MemberRepositoryProtocol {
             switch result {
             case .success(let response):
                 let memberDetailData = response.data
-                UserDefaultsManager.shared.saveProfileImageURL(memberDetailData.profileImage)
+                UserDefaultsManager.shared.saveProfileImage(memberDetailData.profileImage)
                 completion(.success(response))
             case .failure(let error):
                 completion(.failure(error))
