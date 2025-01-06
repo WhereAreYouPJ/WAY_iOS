@@ -20,7 +20,7 @@ class UserDefaultsManager {
     private init() {}
     
     // MARK: - AccessToken
-
+    
     func saveAccessToken(_ token: String) {
         UserDefaults.standard.set(token, forKey: accessTokenKey)
     }
@@ -30,7 +30,7 @@ class UserDefaultsManager {
     }
     
     // MARK: - RefreshToken
-
+    
     func saveRefreshToken(_ token: String) {
         UserDefaults.standard.set(token, forKey: refreshTokenKey)
     }
@@ -40,7 +40,7 @@ class UserDefaultsManager {
     }
     
     // MARK: - MemberSeq
-
+    
     func saveMemberSeq(_ seq: Int) {
         UserDefaults.standard.set(seq, forKey: memberSeqKey)
     }
@@ -50,7 +50,7 @@ class UserDefaultsManager {
     }
     
     // MARK: - MemberCode
-
+    
     func saveMemberCode(_ code: String) {
         UserDefaults.standard.set(code, forKey: memberCode)
     }
@@ -60,7 +60,7 @@ class UserDefaultsManager {
     }
     
     // MARK: - UserName
-
+    
     func saveUserName(_ userName: String) {
         UserDefaults.standard.set(userName, forKey: userName)
     }
@@ -70,26 +70,26 @@ class UserDefaultsManager {
     }
     
     // MARK: - ProfileImage
-
+    
     func saveProfileImage(_ profileImage: String) {
         UserDefaults.standard.set(profileImage, forKey: profileImage)
     }
     
     func getProfileImage() -> String {
         return UserDefaults.standard.string(forKey: profileImage) ?? AppConstants.defaultProfileImageUrl
+    }
     
     // MARK: - IsLoggedIn
-
+    
     func saveIsLoggedIn(_ loggedIn: Bool) {
         UserDefaults.standard.set(loggedIn, forKey: isLoggedIn)
     }
-
+    
     func getIsLoggedIn() -> Bool {
         return UserDefaults.standard.bool(forKey: isLoggedIn)
     }
     
     // MARK: - ClearData
-
     func clearData() {
         UserDefaults.standard.removeObject(forKey: accessTokenKey)
         UserDefaults.standard.removeObject(forKey: refreshTokenKey)

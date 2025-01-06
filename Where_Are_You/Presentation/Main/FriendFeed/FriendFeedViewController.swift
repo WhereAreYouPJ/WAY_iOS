@@ -225,8 +225,8 @@ class FriendFeedViewController: UIViewController {
         notificationButton.addTarget(self, action: #selector(handleNotification), for: .touchUpInside)
         addButton.addTarget(self, action: #selector(handleAdd), for: .touchUpInside)
 //        plusOptionButton.button.addTarget(self, action: #selector(plusOptionButtonTapped), for: .touchUpInside)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
-        view.addGestureRecognizer(tapGesture)
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
+//        view.addGestureRecognizer(tapGesture)
     }
     
     private func setupNavigationBar() {
@@ -277,7 +277,7 @@ class FriendFeedViewController: UIViewController {
 //            plusOptionButton.isHidden = false
         } else {
 //             friendOptionView.view.isHidden.toggle()  // toggle로 변경
-            plusOptionButton.isHidden = false
+//            plusOptionButton.isHidden = false
             feedsViewController.plusOptionButton.isHidden = true
             // 최상단에 표시되도록 추가
             if !friendOptionView.view.isHidden {
