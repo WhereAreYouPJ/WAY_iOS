@@ -73,7 +73,8 @@ class FriendFeedViewController: UIViewController {
         return stackView
     }()
     
-//    let plusOptionButton = CustomOptionButtonView(title: "새 피드 작성")
+//    private var plusOptionButton = CustomOptionButtonView(title: "새 피드 작성", image: nil)
+    
     // 1. 친구 관련 옵션 버튼 추가
     private let friendOptionView: UIHostingController = {
         let view = MultiOptionButtonView {
@@ -273,8 +274,10 @@ class FriendFeedViewController: UIViewController {
         if segmentControl.selectedSegmentIndex == 0 {
             feedsViewController.plusOptionButton.isHidden = false
             friendOptionView.view.isHidden = true
+//            plusOptionButton.isHidden = false
         } else {
-            friendOptionView.view.isHidden.toggle()  // toggle로 변경
+//             friendOptionView.view.isHidden.toggle()  // toggle로 변경
+            plusOptionButton.isHidden = false
             feedsViewController.plusOptionButton.isHidden = true
             // 최상단에 표시되도록 추가
             if !friendOptionView.view.isHidden {
@@ -282,197 +285,4 @@ class FriendFeedViewController: UIViewController {
             }
         }
     }
-    
-//    @objc func plusOptionButtonTapped() {
-//        let controller = AddFeedViewController()
-//        let nav = UINavigationController(rootViewController: controller)
-//        nav.modalPresentationStyle = .fullScreen
-//        present(nav, animated: true, completion: nil)
-//    }
-    
-    @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {
-        let location = sender.location(in: self.view)
-//        if !plusOptionButton.frame.contains(location) {
-//            plusOptionButton.isHidden = true
-//        }
-        if !friendOptionView.view.frame.contains(location) {
-            friendOptionView.view.isHidden = true
-        }
-    }
 }
-
-//class FriendFeedViewController: UIViewController {
-//    // MARK: - Properties
-//    //    private let friendsViewController = FriendsListViewController()
-//    private var friendsHostingController: UIHostingController<FriendsView>?
-//    private let feedsViewController = FeedsViewController()
-//
-//    let friend: UIImage = {
-//        let image = UIImage()
-//        return image
-//    }()
-//
-//    let feed: UIImage = {
-//        let image = UIImage()
-//        return image
-//    }()
-//
-//    private let segmentControl: UISegmentedControl = {
-//        let sc = UISegmentedControl()
-//        sc.insertSegment(withTitle: "피드", at: 0, animated: true)
-//        sc.insertSegment(withTitle: "친구", at: 1, animated: true)
-//        sc.selectedSegmentIndex = 0
-//
-//        sc.setTitleTextAttributes([
-//            NSAttributedString.Key.foregroundColor: UIColor.color102,
-//            NSAttributedString.Key.font: UIFont.pretendard(NotoSans: .medium, fontSize: 20)
-//        ], for: .normal)
-//        sc.setTitleTextAttributes([
-//            NSAttributedString.Key.foregroundColor: UIColor.color34,
-//            NSAttributedString.Key.font: UIFont.pretendard(NotoSans: .medium, fontSize: 20)
-//        ], for: .selected)
-//
-//        sc.selectedSegmentTintColor = .clear
-//        sc.backgroundColor = .clear
-//        let image = UIImage()
-//        sc.setBackgroundImage(image, for: .normal, barMetrics: .default)
-//        sc.setDividerImage(image, forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
-//        return sc
-//    }()
-//
-//    let searchFriendButton: UIButton = {
-//        let button = UIButton()
-//        button.setImage(UIImage(named: "icon-search"), for: .normal)
-//        button.tintColor = .brandColor
-//        return button
-//    }()
-//
-//    let notificationButton: UIButton = {
-//        let button = UIButton()
-//        button.setImage(UIImage(named: "icon-notification"), for: .normal)
-//        button.tintColor = .brandColor
-//        return button
-//    }()
-//
-//    let addButton: UIButton = {
-//        let button = UIButton()
-//        button.setImage(UIImage(named: "icon-plus"), for: .normal)
-//        button.snp.makeConstraints { make in
-//            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 34))
-//        }
-//        button.tintColor = .brandColor
-//        return button
-//    }()
-//
-//    private lazy var barButtonStack: UIStackView = {
-//        let stackView = UIStackView(arrangedSubviews: [searchFriendButton, notificationButton, addButton])
-//        stackView.axis = .horizontal
-//        stackView.distribution = .fillEqually
-//        return stackView
-//    }()
-//
-//    // MARK: - Lifecycle
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        setupNavigationBar()
-//        setupViews()
-//        showFeedsView()
-//        handleSegmentChange()
-//        buttonActions()
-//
-//        segmentControl.snp.makeConstraints { make in
-//            make.height.equalTo(LayoutAdapter.shared.scale(value: 36)).priority(.required)
-//        }
-//    }
-//
-//    // MARK: - Helpers
-//
-//    private func setupNavigationBar() {
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonStack)
-//        segmentControl.addTarget(self, action: #selector(handleSegmentChange), for: .valueChanged)
-//    }
-//
-//    private func setupViews() {
-//        view.backgroundColor = .white
-//
-//        addChild(feedsViewController)
-//        view.addSubview(feedsViewController.view)
-//        feedsViewController.didMove(toParent: self)
-//
-//        feedsViewController.view.snp.makeConstraints { make in
-//            make.top.equalToSuperview().offset(8)
-//            make.leading.trailing.bottom.equalToSuperview()
-//        }
-//
-//        // SwiftUI FriendsView를 UIHostingController로 래핑
-//        let friendsView = FriendsView()
-//        friendsHostingController = UIHostingController(rootView: friendsView)
-//
-//        if let friendsHostingController = friendsHostingController {
-//            addChild(friendsHostingController)
-//            view.addSubview(friendsHostingController.view)
-//            friendsHostingController.didMove(toParent: self)
-//
-//            friendsHostingController.view.snp.makeConstraints { make in
-//                make.top.equalToSuperview().inset(15)
-//                make.leading.trailing.bottom.equalToSuperview()
-//            }
-//
-//            friendsHostingController.view.isHidden = true
-//        }
-//    }
-//
-//    private func buttonActions() {
-//        searchFriendButton.addTarget(self, action: #selector(handleSearch), for: .touchUpInside)
-//        notificationButton.addTarget(self, action: #selector(handleNotification), for: .touchUpInside)
-//        addButton.addTarget(self, action: #selector(handleAdd), for: .touchUpInside)
-//    }
-//
-//    private func showFriendsView() {
-//        friendsHostingController?.view.isHidden = false
-//        feedsViewController.view.isHidden = true
-//        searchFriendButton.isHidden = false
-//        notificationButton.isHidden = false
-//        addButton.isHidden = false
-//    }
-//
-//    private func showFeedsView() {
-//        friendsHostingController?.view.isHidden = false
-//        feedsViewController.view.isHidden = false
-//        searchFriendButton.isHidden = true
-//        notificationButton.isHidden = false
-//        addButton.isHidden = false
-//    }
-//
-//    // MARK: - Selectors
-//
-//    @objc private func handleSegmentChange() {
-//        if segmentControl.selectedSegmentIndex == 0 {
-//            showFeedsView()
-//        } else {
-//            showFriendsView()
-//        }
-//    }
-//
-//    @objc private func handleSearch() {
-//        print("친구 검색")
-//    }
-//
-//    @objc private func handleNotification() {
-//        print("알림 페이지로 이동")
-//    }
-//
-//    @objc private func handleAdd() {
-//        // 피드
-//        if segmentControl.selectedSegmentIndex == 0 {
-//            let controller = AddFeedViewController()
-//            let nav = UINavigationController(rootViewController: controller)
-//            nav.modalPresentationStyle = .fullScreen
-//            present(nav, animated: true, completion: nil)
-//        } else {
-//            print("친구 추가 버튼 눌림")
-//        }
-//    }
-//}

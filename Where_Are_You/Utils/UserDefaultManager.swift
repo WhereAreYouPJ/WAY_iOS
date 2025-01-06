@@ -77,7 +77,6 @@ class UserDefaultsManager {
     
     func getProfileImage() -> String {
         return UserDefaults.standard.string(forKey: profileImage) ?? AppConstants.defaultProfileImageUrl
-    }
     
     // MARK: - IsLoggedIn
 

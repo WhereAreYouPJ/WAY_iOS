@@ -37,7 +37,7 @@ class FeedDataManager {
                     guard let scheduleFeedInfo = feedContent.scheduleFeedInfo.first else { return nil }
                     return MainFeedListContent(
                         feedSeq: scheduleFeedInfo.feedInfo.feedSeq,
-                        profileImage: scheduleFeedInfo.memberInfo.profileImage,
+                        profileImageURL: scheduleFeedInfo.memberInfo.profileImageURL,
                         startTime: feedContent.scheduleInfo.startTime,
                         location: feedContent.scheduleInfo.location,
                         title: scheduleFeedInfo.feedInfo.title,

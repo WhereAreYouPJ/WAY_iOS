@@ -9,9 +9,130 @@ import UIKit
 import SnapKit
 import Foundation
 
+// MARK: - 추가 옵션버튼뷰(여러개)
+class MultiCustomOptionsContainerView: UIView {
+    private var buttons: [MultiCustomOptionButtonView] = []
+    private var actions: [() -> Void] = []
+    
+    func configureOptions(titles: [String], actions: [() -> Void]) {
+        print("Configuring options with titles: \(titles), actions count: \(actions.count)")
+
+        // 기존 버튼 제거
+        buttons.forEach { $0.removeFromSuperview() }
+        buttons.removeAll()
+        self.actions = actions
+        
+        // 새로운 버튼 추가
+        for (index, title) in titles.enumerated() {
+            print("Button \(index): \(title) being added to container.") // 추가
+
+            let isLast = index == titles.count - 1
+            let buttonView = MultiCustomOptionButtonView(title: title, showSeparator: !isLast)
+            addSubview(buttonView)
+            buttons.append(buttonView)
+            
+            buttonView.snp.makeConstraints { make in
+                if index == 0 {
+                    make.top.equalToSuperview()
+                } else {
+                    make.top.equalTo(buttons[index - 1].snp.bottom)
+                }
+                make.leading.trailing.equalToSuperview()
+                make.height.equalTo(LayoutAdapter.shared.scale(value: 31))
+            }
+            
+            // 버튼 액션 추가
+            buttonView.button.tag = index
+            buttonView.button.addAction(UIAction(handler: { [weak self] _ in
+                guard let self = self else { return }
+                print("Button tapped: \(title), index: \(index)") // 추가
+                self.handleButtonTap(index: index)
+            }), for: .touchUpInside)
+            print("Action added for button with title: \(title) at index: \(index)") // 확인 로그
+        }
+        
+        // 동적으로 높이 조정
+//        self.snp.updateConstraints { make in
+//            make.height.equalTo(buttons.count * 44)
+//        }
+        self.layoutIfNeeded() // 레이아웃 강제 적용
+
+    }
+    
+    private func handleButtonTap(index: Int) {
+        print("Attempting to execute action for button at index: \(index)") // 추가
+
+        guard index >= 0, index < actions.count else {         print("Invalid index: \(index), actions count: \(actions.count)") // 추가
+
+            return }
+        actions[index]()
+    }
+}
+
+class MultiCustomOptionButtonView: UIView {
+    let button: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .popupButtonColor
+        button.titleLabel?.font = UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))
+        button.setTitleColor(.white, for: .normal)
+        return button
+    }()
+    
+    private let separator: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.rgb(red: 114, green: 98, blue: 168) // 구분선 색상
+        return view
+    }()
+    
+    // MARK: - Initializer
+    init(title: String, showSeparator: Bool = true) {
+        super.init(frame: .zero)
+        setupView(title: title, showSeparator: showSeparator)
+        print("CustomOptionButtonView1 initialized with title: \(title), showSeparator: \(showSeparator)") // 추가
+        self.clipsToBounds = false // 부모 뷰가 자식 버튼의 일부를 자르지 않도록 설정
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupView(title: String, showSeparator: Bool) {
+        addSubview(button)
+        addSubview(separator)
+        
+        // 버튼 제목 설정
+        let label = UILabel()
+        label.text = title
+        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))
+        label.textColor = .white
+        button.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
+            make.centerY.equalToSuperview()
+        }
+        
+        // AutoLayout 설정
+        button.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 30))
+        }
+        print("Button frame: \(button.frame)") // 추가
+
+        self.layoutIfNeeded()
+
+        print("Button frame after layout: \(button.frame)")
+
+        separator.snp.makeConstraints { make in
+            make.top.equalTo(button.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(showSeparator ? 1 : 0) // Separator 보임 여부에 따라 높이 조절
+        }
+    }
+}
+
 // MARK: - 추가 옵션뷰 버튼
 class CustomOptionButtonView: UIView {
-    
+
     let button: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .popupButtonColor
@@ -19,7 +140,7 @@ class CustomOptionButtonView: UIView {
         button.clipsToBounds = true
         return button
     }()
-    
+
     // MARK: - Initializer
     init(title: String, image: UIImage? = nil) {
         super.init(frame: .zero)
@@ -29,13 +150,13 @@ class CustomOptionButtonView: UIView {
         }
         createButton(title: title, image: image)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Setup Methods
-    
+
     private func createButton(title: String, image: UIImage? = nil) {
         let label = UILabel()
         label.text = title
@@ -47,7 +168,7 @@ class CustomOptionButtonView: UIView {
             make.centerY.equalToSuperview()
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 14))
         }
-        
+
         if let image = image {
             let imageView = UIImageView()
             imageView.image = image

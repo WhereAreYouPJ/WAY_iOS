@@ -27,12 +27,19 @@ class FeedBookMarkViewModel {
     
     private let getBookMarkFeedUseCase: GetBookMarkFeedUseCase
     private let deleteBookMarkFeedUseCase: DeleteBookMarkFeedUseCase
-    
+    private let deleteFeedUseCase: DeleteFeedUseCase
+    private let postHideFeedUseCase: PostHideFeedUseCase
+    private let memberSeq = UserDefaultsManager.shared.getMemberSeq()
+
     // MARK: - Init
     init(getBookMarkFeedUseCase: GetBookMarkFeedUseCase,
-         deleteBookMarkFeedUseCase: DeleteBookMarkFeedUseCase) {
+         deleteBookMarkFeedUseCase: DeleteBookMarkFeedUseCase,
+         postHideFeedUseCase: PostHideFeedUseCase,
+         deleteFeedUseCase: DeleteFeedUseCase) {
         self.getBookMarkFeedUseCase = getBookMarkFeedUseCase
         self.deleteBookMarkFeedUseCase = deleteBookMarkFeedUseCase
+        self.postHideFeedUseCase = postHideFeedUseCase
+        self.deleteFeedUseCase = deleteFeedUseCase
     }
     
     // MARK: - Helepers
@@ -54,13 +61,41 @@ class FeedBookMarkViewModel {
         }
     }
     
+    func hideFeed(feedSeq: Int) {
+        print("postHideFeedUseCase 실행 준비")
+        postHideFeedUseCase.execute(feedSeq: feedSeq) { [weak self] result in
+            guard let self = self else {
+                print("self가 nil입니다.")
+                return }
+            print("postHideFeedUseCase 실행됨")
+
+            switch result {
+            case .success:
+                print("피드 숨기기 성공")
+                self.onBookMarkFeedUpdated?()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     func deleteBookMarkFeed(feedSeq: Int) {
-        let memberSeq = UserDefaultsManager.shared.getMemberSeq()
         deleteBookMarkFeedUseCase.execute(request: BookMarkFeedRequest(feedSeq: feedSeq, memberSeq: memberSeq)) { result in
             switch result {
             case .success:
                 self.onBookMarkFeedUpdated?()
                 self.delegate?.didUpdateBookMarkFeed()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func deleteFeed(feedSeq: Int) {
+        deleteFeedUseCase.execute(request: DeleteFeedRequest(memberSeq: memberSeq, feedSeq: feedSeq)) { [weak self] result in
+            switch result {
+            case .success:
+                self?.onBookMarkFeedUpdated?()
             case .failure(let error):
                 print(error.localizedDescription)
             }

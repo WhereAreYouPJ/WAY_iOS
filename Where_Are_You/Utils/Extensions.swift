@@ -9,6 +9,13 @@ import UIKit
 import SwiftUI
 
 // MARK: - UIViewController
+
+enum FeedViewType {
+    case mainFeed
+    case bookMark
+    case archive
+}
+
 extension UIViewController {
     func configureNavigationBar(title: String, backButtonAction: Selector? = nil, showBackButton: Bool = true) {
         Utilities.createNavigationBar(for: self, title: title, backButtonAction: backButtonAction, showBackButton: showBackButton)
@@ -27,7 +34,7 @@ extension UIColor {
     static let warningColor = UIColor.rgb(red: 225, green: 49, blue: 49)
     static let scheduleDateColor = UIColor.rgb(red: 252, green: 47, blue: 47)
     static let popupButtonColor = UIColor.rgb(red: 81, green: 70, blue: 117)
-    static let alertActionButtonColor = UIColor.rgb(red: 224, green: 158, blue: 255)
+    static let alertActionButtonColor = UIColor.rgb(red: 212, green: 158, blue: 255)
     
     static let color5 = UIColor.rgb(red: 5, green: 5, blue: 5)
     static let color17 = UIColor.rgb(red: 17, green: 17, blue: 17)
@@ -153,6 +160,8 @@ extension UIImageView {
     }
 }
 
+// MARK: - DateFormatter
+
 extension DateFormatter {
     static func formatter(for format: DateFormat) -> DateFormatter {
         let formatter = DateFormatter()
@@ -182,6 +191,8 @@ extension String {
         return DateFormatter.formatter(for: format).date(from: self)
     }
 }
+
+// MARK: - Notification
 
 extension Notification.Name {
     static let showAddFriend = Notification.Name("showAddFriend")
