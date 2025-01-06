@@ -7,6 +7,7 @@
 
 import SwiftUI
 import KakaoMapsSDK
+import Kingfisher
 
 struct MapPinView: View {
     @State var draw: Bool = false // 뷰의 appear 상태를 전달하기 위한 변수.
@@ -180,23 +181,70 @@ struct KakaoMapPinView: UIViewRepresentable {
             let _ = manager.addLabelLayer(option: layerOption)
         }
         
+//        // Poi 표시 스타일 생성
+//        func createMyPoiStyle() {
+//            guard let view = controller?.getView(mapViewName) as? KakaoMap else { return }
+//            let manager = view.getLabelManager()
+//            
+//            if !createdStyleIDs.contains("myPoiStyle") {
+//                let myMarker = ProfileImageView(image: Image(myLocation?.member?.profileImage ?? "icon-profile-default"))
+//                let mySymbolImage = myMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 40.667)))
+//                let myIconStyle = PoiIconStyle(symbol: mySymbolImage, anchorPoint: CGPoint(x: 0.5, y: 1))
+//                let myPoiStyle = PoiStyle(styleID: "myPoiStyle", styles: [
+//                    PerLevelPoiStyle(iconStyle: myIconStyle, level: 12)
+//                ])
+//                manager.addPoiStyle(myPoiStyle)
+//                createdStyleIDs.insert("myPoiStyle")
+//            }
+//        }
+        
         // Poi 표시 스타일 생성
         func createMyPoiStyle() {
             guard let view = controller?.getView(mapViewName) as? KakaoMap else { return }
             let manager = view.getLabelManager()
             
             if !createdStyleIDs.contains("myPoiStyle") {
-                let myMarker = ProfileImageView(image: Image(myLocation?.member?.profileImage ?? "icon-profile-default"))
-                let mySymbolImage = myMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 40.667)))
-                let myIconStyle = PoiIconStyle(symbol: mySymbolImage, anchorPoint: CGPoint(x: 0.5, y: 1))
-                let myPoiStyle = PoiStyle(styleID: "myPoiStyle", styles: [
-                    PerLevelPoiStyle(iconStyle: myIconStyle, level: 12)
-                ])
-                manager.addPoiStyle(myPoiStyle)
-                createdStyleIDs.insert("myPoiStyle")
+                let imageURL = URL(string: UserDefaultsManager.shared.getProfileImage()) ?? URL(string: AppConstants.defaultProfileImageUrl)!
+                
+                downloadProfileImage(from: imageURL) { [weak self] swiftUIImage in
+                    guard let self = self else { return }
+                    
+                    let myMarker = ProfileImageView(image: swiftUIImage)
+                    let mySymbolImage = myMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 40.667)))
+                    let myIconStyle = PoiIconStyle(symbol: mySymbolImage, anchorPoint: CGPoint(x: 0.5, y: 1))
+                    let myPoiStyle = PoiStyle(styleID: "myPoiStyle", styles: [
+                        PerLevelPoiStyle(iconStyle: myIconStyle, level: 12)
+                    ])
+                    
+                    manager.addPoiStyle(myPoiStyle)
+                    self.createdStyleIDs.insert("myPoiStyle")
+                    print("마커 스타일 추가됨: myPoiStyle")
+                    
+                    // 스타일 생성 완료 후 POI 생성
+                    self.createMyPoi()
+                }
             }
         }
 
+//        func createFriendPoiStyles() {
+//            guard let view = controller?.getView(mapViewName) as? KakaoMap else { return }
+//            let manager = view.getLabelManager()
+//            
+//            for (index, friend) in friendsLocation.enumerated() {
+//                let styleID = "friendPoiStyle_\(index)"
+//                if !createdStyleIDs.contains(styleID) {
+//                    let profileImageName = friend.member?.profileImage ?? "icon-profile-default"
+//                    let friendMarker = ProfileImageView(image: Image(profileImageName))
+//                    let friendSymbolImage = friendMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 40.667)))
+//                    let friendIconStyle = PoiIconStyle(symbol: friendSymbolImage, anchorPoint: CGPoint(x: 0.5, y: 1))
+//                    let friendPoiStyle = PoiStyle(styleID: styleID, styles: [
+//                        PerLevelPoiStyle(iconStyle: friendIconStyle, level: 12)
+//                    ])
+//                    manager.addPoiStyle(friendPoiStyle)
+//                    createdStyleIDs.insert(styleID)
+//                }
+//            }
+//        }
         func createFriendPoiStyles() {
             guard let view = controller?.getView(mapViewName) as? KakaoMap else { return }
             let manager = view.getLabelManager()
@@ -204,15 +252,38 @@ struct KakaoMapPinView: UIViewRepresentable {
             for (index, friend) in friendsLocation.enumerated() {
                 let styleID = "friendPoiStyle_\(index)"
                 if !createdStyleIDs.contains(styleID) {
-                    let profileImageName = friend.member?.profileImage ?? "icon-profile-default"
-                    let friendMarker = ProfileImageView(image: Image(profileImageName))
-                    let friendSymbolImage = friendMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 40.667)))
-                    let friendIconStyle = PoiIconStyle(symbol: friendSymbolImage, anchorPoint: CGPoint(x: 0.5, y: 1))
-                    let friendPoiStyle = PoiStyle(styleID: styleID, styles: [
-                        PerLevelPoiStyle(iconStyle: friendIconStyle, level: 12)
-                    ])
-                    manager.addPoiStyle(friendPoiStyle)
-                    createdStyleIDs.insert(styleID)
+                    let imageURL = URL(string: friend.member?.profileImage ?? AppConstants.defaultProfileImageUrl)!
+                    
+                    downloadProfileImage(from: imageURL) { [weak self] swiftUIImage in
+                        guard let self = self else { return }
+                        
+                        let friendMarker = ProfileImageView(image: swiftUIImage)
+                        let friendSymbolImage = friendMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 40.667)))
+                        let friendIconStyle = PoiIconStyle(symbol: friendSymbolImage, anchorPoint: CGPoint(x: 0.5, y: 1))
+                        let friendPoiStyle = PoiStyle(styleID: styleID, styles: [
+                            PerLevelPoiStyle(iconStyle: friendIconStyle, level: 12)
+                        ])
+                        
+                        manager.addPoiStyle(friendPoiStyle)
+                        createdStyleIDs.insert(styleID)
+                        print("마커 스타일 추가됨: myPoiStyle")
+                    }
+                }
+            }
+            
+            // 스타일 생성 완료 후 POI 생성
+            self.createMyPoi()
+        }
+        
+        private func downloadProfileImage(from url: URL, completion: @escaping (Image) -> Void) {
+            KingfisherManager.shared.retrieveImage(with: url) { result in
+                switch result {
+                case .success(let imageResult):
+                    let swiftUIImage = Image(uiImage: imageResult.image)
+                    completion(swiftUIImage)
+                case .failure:
+                    let defaultImage = Image("icon-profile-default")
+                    completion(defaultImage)
                 }
             }
         }

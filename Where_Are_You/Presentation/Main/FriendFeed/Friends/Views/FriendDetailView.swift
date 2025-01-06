@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct FriendDetailView: View {
     @Environment(\.dismiss) private var dismiss
@@ -81,13 +82,13 @@ struct FriendDetailView: View {
                 
                 Spacer()
                 
-                Image("icon-profile-default") // TODO: 추후 실제 프로필사진으로 변경
+                KFImage(URL(string: viewModel.friend?.profileImage ?? AppConstants.defaultProfileImageUrl))
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: LayoutAdapter.shared.scale(value: 100), height: LayoutAdapter.shared.scale(value: 100))
                     .clipShape(RoundedRectangle(cornerRadius: 36))
                 
-                Text((viewModel.isMyProfile ? "김주희" : viewModel.friend?.name) ?? "") // TODO: 추후 실제 이름으로 변경
+                Text((viewModel.isMyProfile ? UserDefaultsManager.shared.getUserName() : viewModel.friend?.name) ?? "유저 이름")
                     .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: 20)))
                     .foregroundStyle(Color.white)
                     .padding(.top, LayoutAdapter.shared.scale(value: 10))
