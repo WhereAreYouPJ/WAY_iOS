@@ -57,7 +57,6 @@ class ScheduleDropDown: UIView {
         layer.borderColor = UIColor.brandColor.cgColor
         scheduleDateLabel.isHidden = true
         scheduleLocationLabel.isHidden = true
-        
     }
 
     private func configureViewComponents() {

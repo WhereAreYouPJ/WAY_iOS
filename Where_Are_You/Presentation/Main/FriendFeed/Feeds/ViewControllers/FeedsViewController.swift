@@ -130,6 +130,10 @@ class FeedsViewController: UIViewController {
     private func editFeed(_ feed: Feed) {
         print("\(feed.title) 수정")
         optionsView.removeFromSuperview()
+        let controller = EditFeedViewController(feed: feed)
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
     }
     
     private func hideFeed(_ feed: Feed) {
