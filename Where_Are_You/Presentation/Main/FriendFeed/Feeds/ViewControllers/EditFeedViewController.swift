@@ -102,6 +102,8 @@ class EditFeedViewController: UIViewController {
                 case .success(let value):
                     DispatchQueue.main.async {
                         self?.selectedImages.append(value.image)
+                        self?.editFeedView.imagesCollectionView.isHidden = self?.selectedImages.isEmpty ?? true
+
                         self?.editFeedView.imagesCollectionView.reloadData()
                     }
                 case .failure(let error):
