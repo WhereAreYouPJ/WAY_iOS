@@ -20,6 +20,7 @@ class FeedsTableViewCell: UITableViewCell {
     weak var delegate: FeedsTableViewCellDelegate?
     
     private var feed: Feed?
+    private var profileImageURL: String = ""
     private var feedSeq: Int?
     private var isBookMarked: Bool = false
     private var imageUrls: [String] = []
@@ -90,6 +91,7 @@ class FeedsTableViewCell: UITableViewCell {
         feedImagesView.collectionView.delegate = self
         feedImagesView.collectionView.dataSource = self
         feedImagesView.collectionView.register(FeedImageCollectionViewCell.self, forCellWithReuseIdentifier: FeedImageCollectionViewCell.identifier)
+        feedImagesView.collectionView.register(NoFeedImageViewCell.self, forCellWithReuseIdentifier: NoFeedImageViewCell.identifier)
     }
     
     func configure(with feed: Feed) {
@@ -99,9 +101,14 @@ class FeedsTableViewCell: UITableViewCell {
         let feedImageInfos = feed.feedImageInfos ?? []
         self.imageUrls = feedImageInfos.map { $0.feedImageURL }
         feedImagesView.collectionView.reloadData()
-        feedImagesView.pageNumberLabel.text = "1/\(imageUrls.count)"
-        
+        if imageUrls.count <= 1 {
+            feedImagesView.pageNumberLabel.isHidden = true
+        } else {
+            feedImagesView.pageNumberLabel.isHidden = false
+            feedImagesView.pageNumberLabel.text = "1/\(imageUrls.count)"
+        }
         self.feed = feed
+        profileImageURL = feed.profileImageURL
         feedSeq = feed.feedSeq
         isBookMarked = feed.bookMark
         updateBookMarkUI()
@@ -131,16 +138,26 @@ class FeedsTableViewCell: UITableViewCell {
 
 extension FeedsTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIScrollViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageUrls.count
+        let noFeedImage = imageUrls.count == 0
+        return noFeedImage ? 1 : imageUrls.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedImageCollectionViewCell.identifier, for: indexPath) as? FeedImageCollectionViewCell else {
-            return UICollectionViewCell()
+        if imageUrls.count == 0 {
+            // 피드에 이미지가 없는 경우
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NoFeedImageViewCell.identifier, for: indexPath) as? NoFeedImageViewCell else {
+                return UICollectionViewCell()
+            }
+            cell.configureUI(profileImage: profileImageURL)
+            return cell
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedImageCollectionViewCell.identifier, for: indexPath) as? FeedImageCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            let imageUrlString = imageUrls[indexPath.item]
+            cell.configure(with: imageUrlString)
+            return cell
         }
-        let imageUrlString = imageUrls[indexPath.item]
-        cell.configure(with: imageUrlString)
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

@@ -12,7 +12,7 @@ struct SaveFeedRequest: Codable {
     let memberSeq: Int
     let title: String
     let content: String?
-    let feedImageOrders: [Int]
+    let feedImageOrders: [Int]?
 }
 
 struct ModifyFeedRequest: Codable {

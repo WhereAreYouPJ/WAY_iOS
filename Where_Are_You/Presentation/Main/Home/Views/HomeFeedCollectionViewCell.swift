@@ -10,14 +10,14 @@ import SnapKit
 
 class HomeFeedCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
-
+    
     static let identifier = "HomeFeedCollectionViewCell"
     
     let profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.layer.cornerRadius = 14
+        iv.layer.cornerRadius = LayoutAdapter.shared.scale(value: 14)
         return iv
     }()
     
@@ -74,7 +74,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
     }()
     
     // MARK: - Lifecycle
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureViewComponents()
@@ -86,7 +86,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - Helpers
-
+    
     private func configureViewComponents() {
         contentView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 16)
         contentView.layer.borderWidth = 1
@@ -105,6 +105,10 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
             make.width.equalTo(textStackView.snp.height)
         }
         
+        titleStackView.snp.makeConstraints { make in
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
+        }
+        
         feedContentStackView.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
         }
@@ -118,14 +122,32 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         profileImageView.setImage(from: feed.profileImageURL, placeholder: UIImage(named: "basic_profile_image"))
         locationLabel.text = feed.location
         titleLabel.text = feed.title
-        if feed.content == nil {
-            descriptionLabel.isHidden = true
-            feedContentView.isHidden = false
-            feedContentView.setImage(from: feed.feedImage)
-        } else {
+        if let content = feed.content {
             descriptionLabel.isHidden = false
             feedContentView.isHidden = true
             descriptionLabel.text = feed.content
+        } else {
+            descriptionLabel.isHidden = true
+            feedContentView.isHidden = false
+            
+            if let feedImage = feed.feedImage {
+                feedContentView.kf.setImage(with: URL(string: feedImage))
+            } else {
+                // Feed 이미지가 없는 경우 NoFeedImageView 사용
+                let noFeedImageView = NoFeedImageView(frame: feedContentView.bounds)
+                noFeedImageView.configureUI(profileImage: feed.profileImageURL)
+                
+                // NoFeedImageView를 UIImage로 변환
+                UIGraphicsBeginImageContextWithOptions(noFeedImageView.bounds.size, noFeedImageView.isOpaque, 0.0)
+                defer { UIGraphicsEndImageContext() }
+                noFeedImageView.layer.render(in: UIGraphicsGetCurrentContext()!)
+                
+                if let generatedImage = UIGraphicsGetImageFromCurrentImageContext() {
+                    feedContentView.image = generatedImage
+                } else {
+                    print("Failed to generate image from NoFeedImageView.")
+                }
+            }
         }
     }
 }

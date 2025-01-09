@@ -21,6 +21,7 @@ class EditFeedViewController: UIViewController {
             viewModel.selectedImages = selectedImages // 뷰모델에 선택된 이미지를 전달합니다.
         }
     }
+    var onFeedEdited: (() -> Void)?
     
     private var contentTextViewHeightConstraint: NSLayoutConstraint!
     
@@ -60,6 +61,7 @@ class EditFeedViewController: UIViewController {
     }
     
     private func buttonActions() {
+        editFeedView.addImages.addTarget(self, action: #selector(handleAddImagesTapped), for: .touchUpInside)
         editFeedView.creatFeedButton.button.addTarget(self, action: #selector(editFeedButtonTapped), for: .touchUpInside)
     }
     
@@ -121,6 +123,7 @@ class EditFeedViewController: UIViewController {
         guard let title = editFeedView.titleTextField.text, !title.isEmpty else { return }
         let content = editFeedView.contentTextView.text == "어떤 일이 있었나요?" ? nil : editFeedView.contentTextView.text
         viewModel.editFeed(feedSeq: feed.feedSeq, title: title, content: content)
+        self.onFeedEdited?()
     }
 }
 
@@ -157,8 +160,14 @@ extension EditFeedViewController: UITextViewDelegate {
 extension EditFeedViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, PHPickerViewControllerDelegate {
     
     @objc func handleAddImagesTapped() {
+        let remainingSelectionLimit = max(10 - selectedImages.count, 0) // 최대 10개 제한, 남은 선택 가능 수 계산
+        guard remainingSelectionLimit > 0 else {
+            print("최대 10개의 이미지만 추가할 수 있습니다.")
+            return
+        }
+        
         var configuration = PHPickerConfiguration()
-        configuration.selectionLimit = 10  // 최대 선택 가능 사진 수
+        configuration.selectionLimit = remainingSelectionLimit  // 최대 선택 가능 사진 수
         configuration.filter = .images  // 이미지만 선택할 수 있도록 설정
         
         let picker = PHPickerViewController(configuration: configuration)
@@ -176,14 +185,21 @@ extension EditFeedViewController: UIImagePickerControllerDelegate, UINavigationC
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true, completion: nil)
         
-        selectedImages.removeAll() // 초기화
+        let remainingCapacity = max(10 - selectedImages.count, 0) // 남은 이미지 추가 가능 수
+        let imagesToAdd = min(results.count, remainingCapacity) // 추가할 이미지 수 제한
         
+//        selectedImages.removeAll() // 초기화
+        var addedImages = 0
         let group = DispatchGroup()
+        
         for result in results {
+            if addedImages >= imagesToAdd { break } // 추가할 이미지 수를 초과하면 중지
+            
             group.enter()
             result.itemProvider.loadDataRepresentation(forTypeIdentifier: UTType.image.identifier) { [weak self] data, error in
                 if let data = data, let image = UIImage(data: data) {
                     self?.selectedImages.append(image)
+                    addedImages += 1
                 } else if let error = error {
                     print("이미지를 불러오는 중 오류 발생: \(error.localizedDescription)")
                 }

@@ -1,20 +1,20 @@
 //
-//  NoFeedImageView.swift
+//  NoFeedImageViewCell.swift
 //  Where_Are_You
 //
-//  Created by 오정석 on 18/12/2024.
+//  Created by 오정석 on 9/1/2025.
 //
 
 import UIKit
-import Kingfisher
 
-class NoFeedImageView: UIView {
-    // MARK: - Properties
-    
+class NoFeedImageViewCell: UICollectionViewCell {
+    static let identifier = "NoFeedImageViewCell"
+
     let backgroundImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 6)
         return imageView
     }()
     
@@ -27,11 +27,10 @@ class NoFeedImageView: UIView {
     
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleToFill
         imageView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 60) // 반지름 (원형)
         imageView.layer.masksToBounds = true
-        imageView.layer.borderWidth = 2
-        imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -42,15 +41,21 @@ class NoFeedImageView: UIView {
         setupConstraints()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        backgroundImage.image = nil
+        profileImageView.image = nil
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Helpers
     func configureViewComponents() {
-        addSubview(backgroundImage)
+        contentView.addSubview(backgroundImage)
         backgroundImage.addSubview(blurEffectView)
-        addSubview(profileImageView)
+        backgroundImage.addSubview(profileImageView)
     }
     
     func setupConstraints() {
@@ -73,10 +78,8 @@ class NoFeedImageView: UIView {
             print("Invalid profile image URL")
             return
         }
-        
         let placeholderImage = UIImage(named: "basic_profile_image")
         backgroundImage.kf.setImage(with: profileImageURL, placeholder: placeholderImage)
         profileImageView.kf.setImage(with: profileImageURL, placeholder: placeholderImage)
-        print("NoFeedImageView configured successfully with profile image.")
     }
 }

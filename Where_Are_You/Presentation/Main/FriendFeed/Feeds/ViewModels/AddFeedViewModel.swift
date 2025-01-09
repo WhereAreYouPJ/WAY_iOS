@@ -153,7 +153,7 @@ class AddFeedViewModel {
 //            }
 //        }
         
-        let feedImageOrders = Array(0..<selectedImages.count)
+        let feedImageOrders: [Int]? = selectedImages.isEmpty ? nil : Array(0..<selectedImages.count)
         
         let request = SaveFeedRequest(scheduleSeq: schedule.scheduleSeq,
                                       memberSeq: UserDefaultsManager.shared.getMemberSeq(),
