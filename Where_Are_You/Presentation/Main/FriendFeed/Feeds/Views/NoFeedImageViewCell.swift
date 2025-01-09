@@ -9,30 +9,8 @@ import UIKit
 
 class NoFeedImageViewCell: UICollectionViewCell {
     static let identifier = "NoFeedImageViewCell"
-
-    let backgroundImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleToFill
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 6)
-        return imageView
-    }()
     
-    private let blurEffectView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .regular)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.alpha = 0.8
-        return blurView
-    }()
-    
-    let profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleToFill
-        imageView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 60) // 반지름 (원형)
-        imageView.layer.masksToBounds = true
-        imageView.clipsToBounds = true
-        return imageView
-    }()
+    private let noFeedImageView = NoFeedImageView()
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {
@@ -43,8 +21,8 @@ class NoFeedImageViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        backgroundImage.image = nil
-        profileImageView.image = nil
+        noFeedImageView.backgroundImage.image = nil
+        noFeedImageView.profileImageView.image = nil
     }
     
     required init?(coder: NSCoder) {
@@ -53,33 +31,17 @@ class NoFeedImageViewCell: UICollectionViewCell {
     
     // MARK: - Helpers
     func configureViewComponents() {
-        contentView.addSubview(backgroundImage)
-        backgroundImage.addSubview(blurEffectView)
-        backgroundImage.addSubview(profileImageView)
+        noFeedImageView.backgroundImage.layer.cornerRadius = LayoutAdapter.shared.scale(value: 6)
+        contentView.addSubview(noFeedImageView)
     }
     
     func setupConstraints() {
-        backgroundImage.snp.makeConstraints { make in
+        noFeedImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-        }
-        
-        blurEffectView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        profileImageView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 120)) // 중앙 이미지 크기
         }
     }
     
     func configureUI(profileImage: String) {
-        guard let profileImageURL = URL(string: profileImage) else {
-            print("Invalid profile image URL")
-            return
-        }
-        let placeholderImage = UIImage(named: "basic_profile_image")
-        backgroundImage.kf.setImage(with: profileImageURL, placeholder: placeholderImage)
-        profileImageView.kf.setImage(with: profileImageURL, placeholder: placeholderImage)
+        noFeedImageView.configureUI(profileImage: profileImage)
     }
 }
