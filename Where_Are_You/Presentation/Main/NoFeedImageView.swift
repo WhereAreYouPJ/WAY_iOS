@@ -30,8 +30,6 @@ class NoFeedImageView: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 60) // 반지름 (원형)
         imageView.layer.masksToBounds = true
-        imageView.layer.borderWidth = 2
-        imageView.layer.borderColor = UIColor.white.cgColor
         return imageView
     }()
     

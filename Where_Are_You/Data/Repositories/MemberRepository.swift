@@ -9,7 +9,7 @@ import Alamofire
 
 protocol MemberRepositoryProtocol {
     func putUserName(userName: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func putProfileImage(images: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func putProfileImage(images: UIImage, completion: @escaping (Result<Void, Error>) -> Void)
     
     func postSignUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postMemberSns(request: MemberSnsBody, completion: @escaping (Result<Void, Error>) -> Void)
@@ -41,11 +41,11 @@ class MemberRepository: MemberRepositoryProtocol {
         memberService.putUserName(userName: userName, completion: completion)
     }
     
-    func putProfileImage(images: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func putProfileImage(images: UIImage, completion: @escaping (Result<Void, any Error>) -> Void) {
         memberService.putProfileImage(images: images) { result in
             switch result {
             case .success:
-                UserDefaultsManager.shared.saveProfileImage(images)
+//                UserDefaultsManager.shared.saveProfileImage(images)
                 completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))
