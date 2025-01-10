@@ -134,11 +134,21 @@ extension UIImage {
         }
     }
     
-    func toBase64() -> String? {
-        guard let imageData = self.jpegData(compressionQuality: 1.0) else {
+    func toURL() -> URL? {
+        // 로컬 임시 디렉토리에 저장할 파일 경로 생성
+        guard let data = self.jpegData(compressionQuality: 0.8) else { return nil }
+        let tempDirectory = FileManager.default.temporaryDirectory
+        let fileName = UUID().uuidString + ".jpg"
+        let fileURL = tempDirectory.appendingPathComponent(fileName)
+        
+        do {
+            // UIImage 데이터를 파일로 저장
+            try data.write(to: fileURL)
+            return fileURL
+        } catch {
+            print("이미지를 로컬 파일로 저장하는 중 오류 발생: \(error.localizedDescription)")
             return nil
         }
-        return imageData.base64EncodedString()
     }
 }
 

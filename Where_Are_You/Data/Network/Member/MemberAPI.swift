@@ -9,7 +9,7 @@ import Moya
 
 enum MemberAPI {
     case putUserName(memberSeq: Int, userName: String)
-    case putProfileImage(memberSeq: Int, images: String)
+    case putProfileImage(memberSeq: Int, images: UIImage)
     
     case postSignUp(request: SignUpBody)
     case postMemberSns(request: MemberSnsBody)
@@ -89,7 +89,8 @@ extension MemberAPI: TargetType {
         case .putUserName(let memberSeq, let userName):
             return .requestParameters(parameters: ["memberSeq": memberSeq, "userName": userName], encoding: JSONEncoding.default)
         case .putProfileImage(let memberSeq, let images):
-            return .requestParameters(parameters: ["memberSeq": memberSeq, "images": images], encoding: JSONEncoding.default)
+            let multipartData = MultipartFormDataHelper.createMultipartData(from: memberSeq, images: images)
+            return .uploadMultipart(multipartData)
             
         case .postSignUp(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
@@ -123,7 +124,12 @@ extension MemberAPI: TargetType {
     }
     
     var headers: [String: String]? {
-        return ["Content-Type": "application/json"]
+        switch self {
+        case .putProfileImage:
+            return ["Content-Type": "multipart/form-data"]
+        default:
+            return ["Content-Type": "application/json"]
+        }
     }
     
     var sampleData: Data {

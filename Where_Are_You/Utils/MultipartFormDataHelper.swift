@@ -32,4 +32,24 @@ class MultipartFormDataHelper {
         
         return multipartData
     }
+    
+    static func createMultipartData<T: Codable>(from request: T, images: UIImage) -> [MultipartFormData] {
+        var multipartData: [MultipartFormData] = []
+        
+        // JSON 데이터를 전체 하나의 필드로 추가
+        if let requestData = try? JSONEncoder().encode(request) {
+            let requestFormData = MultipartFormData(provider: .data(requestData), name: "memberSeq", mimeType: "application/json")
+            multipartData.append(requestFormData)
+        }
+        
+        // UIImage 배열을 feedImageList로 변환하여 추가
+        
+                if let imageData = images.jpegData(compressionQuality: 1.0) {
+                    let fileName = "image.jpg"
+                    let formData = MultipartFormData(provider: .data(imageData), name: "images", fileName: fileName, mimeType: "image/jpeg")
+                    multipartData.append(formData)
+                }
+        
+        return multipartData
+    }
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PhotosUI
 
 class MyPageViewController: UIViewController {
     // MARK: - Properties
@@ -43,7 +44,8 @@ class MyPageViewController: UIViewController {
         let memberRepository = MemberRepository(memberService: memberService)
         viewModel = MyPageViewModel(
             logoutUseCase: LogoutUseCaseImpl(memberRepository: memberRepository),
-            memberDetailsUseCase: MemberDetailsUseCaseImpl(memberRepository: memberRepository)
+            memberDetailsUseCase: MemberDetailsUseCaseImpl(memberRepository: memberRepository),
+            modifyProfileImageUseCase: ModifyProfileImageUseCaseImpl(memberRepository: memberRepository)
         )
     }
     
@@ -69,7 +71,19 @@ class MyPageViewController: UIViewController {
                 let member = Member(userName: memberDetails.userName,
                                     profileImage: memberDetails.profileImage,
                                     memberCode: memberCode)
+                self?.email = memberDetails.email
+                self?.userName = memberDetails.userName
                 self?.myPageView.configureUI(member: member)
+            }
+        }
+        
+        viewModel.onProfileImageUploadSuccess = { [weak self] in
+            DispatchQueue.main.async {
+                // 이미지 업로드 성공 시 UI 반영
+                if let updatedImage = self?.myPageView.profileImageView.image {
+                    self?.myPageView.profileImageView.image = updatedImage
+                    print("프로필 이미지가 성공적으로 업데이트되었습니다.")
+                }
             }
         }
     }
@@ -82,6 +96,10 @@ class MyPageViewController: UIViewController {
             window.rootViewController = navController
             window.makeKeyAndVisible()
         }
+    }
+    
+    private func moveToDetailController(controller: UIViewController) {
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     // MARK: - Selectors
@@ -99,11 +117,6 @@ class MyPageViewController: UIViewController {
     
     @objc private func editImage() {
         myPageView.moveToGallery.isHidden.toggle()
-    }
-    
-    @objc private func moveToGallery() {
-        // 갤러리 이동
-        print("갤러리 이동하기")
     }
     
     @objc private func buttonTapped(_ sender: UIButton) {
@@ -130,11 +143,7 @@ class MyPageViewController: UIViewController {
             break
         }
     }
-    
-    private func moveToDetailController(controller: UIViewController) {
-        navigationController?.pushViewController(controller, animated: true)
-    }
-    
+
     @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {
         let location = sender.location(in: myPageView)
         if !myPageView.moveToGallery.frame.contains(location) && !myPageView.imageEditButton.frame.contains(location) {
@@ -147,7 +156,46 @@ class MyPageViewController: UIViewController {
         viewModel.memberDetails()
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
+    @objc func moveToGallery() {
+        var configuration = PHPickerConfiguration()
+        configuration.selectionLimit = 1  // 최대 선택 가능 사진 수
+        configuration.filter = .images  // 이미지만 선택할 수 있도록 설정
+        
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        present(picker, animated: true, completion: nil)
+    }
+}
+
+// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate, PHPickerViewControllerDelegate
+
+extension MyPageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        guard let result = results.first else { return }
+        result.itemProvider.loadDataRepresentation(forTypeIdentifier: UTType.image.identifier) { [weak self] data, error in
+            guard let self = self else { return }
+            if let error = error {
+                print("이미지를 불러오는 중 오류 발생: \(error.localizedDescription)")
+                return
+            }
+            
+            if let data = data, let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    // UI에 선택된 이미지 반영
+                    self.myPageView.profileImageView.image = image
+                }
+                
+//                guard let imageURL = image.toURL() else {
+//                    print("이미지를 URL로 변환하는데 실패")
+//                    return
+//                }
+//                
+//                let image = imageURL.absoluteString
+                // 서버로 이미지 업로드
+                self.viewModel.modifyProfileImage(image: image)
+            }
+        }
     }
 }

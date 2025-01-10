@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import UIKit
 
 protocol ModifyProfileImageUseCase {
-    func execute(images: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func execute(images: UIImage, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class ModifyProfileImageUseCaseImpl: ModifyProfileImageUseCase {
@@ -17,7 +18,7 @@ class ModifyProfileImageUseCaseImpl: ModifyProfileImageUseCase {
     init(memberRepository: MemberRepositoryProtocol) {
         self.memberRepository = memberRepository
     }
-    func execute(images: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func execute(images: UIImage, completion: @escaping (Result<Void, any Error>) -> Void) {
         memberRepository.putProfileImage(images: images, completion: completion)
     }
 }

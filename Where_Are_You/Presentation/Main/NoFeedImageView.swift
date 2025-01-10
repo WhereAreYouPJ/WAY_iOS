@@ -21,7 +21,7 @@ class NoFeedImageView: UIView {
     private let blurEffectView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .regular)
         let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.alpha = 8
+        blurView.alpha = 0.8
         return blurView
     }()
     
@@ -30,8 +30,6 @@ class NoFeedImageView: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 60) // 반지름 (원형)
         imageView.layer.masksToBounds = true
-        imageView.layer.borderWidth = 2
-        imageView.layer.borderColor = UIColor.white.cgColor
         return imageView
     }()
     
@@ -73,8 +71,10 @@ class NoFeedImageView: UIView {
             print("Invalid profile image URL")
             return
         }
-        backgroundImage.kf.setImage(with: profileImageURL)
-        profileImageView.kf.setImage(with: profileImageURL)
+        
+        let placeholderImage = UIImage(named: "basic_profile_image")
+        backgroundImage.kf.setImage(with: profileImageURL, placeholder: placeholderImage)
+        profileImageView.kf.setImage(with: profileImageURL, placeholder: placeholderImage)
         print("NoFeedImageView configured successfully with profile image.")
     }
 }

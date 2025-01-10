@@ -131,6 +131,9 @@ class FeedsViewController: UIViewController {
         print("\(feed.title) 수정")
         optionsView.removeFromSuperview()
         let controller = EditFeedViewController(feed: feed)
+        controller.onFeedEdited = { [weak self] in
+            self?.viewModel.fetchFeeds()
+        }
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true, completion: nil)
