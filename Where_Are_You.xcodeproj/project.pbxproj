@@ -117,6 +117,12 @@
 		99C1403E2C6496BC00A706B6 /* NoDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C1403D2C6496BC00A706B6 /* NoDataView.swift */; };
 		99C140422C64A01A00A706B6 /* AddFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C140412C64A01A00A706B6 /* AddFeedView.swift */; };
 		99C403172D2F6483005CD989 /* NoFeedImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C403162D2F6483005CD989 /* NoFeedImageViewCell.swift */; };
+		99C5B9E32D30AE7700CD570F /* AgreementAcountDeletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9E22D30AE7700CD570F /* AgreementAcountDeletionView.swift */; };
+		99C5B9E52D30AEB200CD570F /* CommentAccountDeletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9E42D30AEB200CD570F /* CommentAccountDeletionView.swift */; };
+		99C5B9E72D310A2800CD570F /* CommonAccountBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9E62D310A2800CD570F /* CommonAccountBoxView.swift */; };
+		99C5B9EA2D32332E00CD570F /* AgreementAcountDeletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9E92D32332E00CD570F /* AgreementAcountDeletionViewController.swift */; };
+		99C5B9ED2D32340500CD570F /* AgreementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9EC2D32340500CD570F /* AgreementViewModel.swift */; };
+		99C5B9EF2D3248EF00CD570F /* CommentDeletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9EE2D3248EF00CD570F /* CommentDeletionViewController.swift */; };
 		99C68E3F2C64B11D00DEC1F1 /* FeedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E3E2C64B11D00DEC1F1 /* FeedRequest.swift */; };
 		99C68E432C64B28400DEC1F1 /* FeedAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E422C64B28400DEC1F1 /* FeedAPI.swift */; };
 		99C68E482C64B43900DEC1F1 /* FeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E472C64B43900DEC1F1 /* FeedService.swift */; };
@@ -426,6 +432,12 @@
 		99C1403D2C6496BC00A706B6 /* NoDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoDataView.swift; sourceTree = "<group>"; };
 		99C140412C64A01A00A706B6 /* AddFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFeedView.swift; sourceTree = "<group>"; };
 		99C403162D2F6483005CD989 /* NoFeedImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoFeedImageViewCell.swift; sourceTree = "<group>"; };
+		99C5B9E22D30AE7700CD570F /* AgreementAcountDeletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementAcountDeletionView.swift; sourceTree = "<group>"; };
+		99C5B9E42D30AEB200CD570F /* CommentAccountDeletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentAccountDeletionView.swift; sourceTree = "<group>"; };
+		99C5B9E62D310A2800CD570F /* CommonAccountBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonAccountBoxView.swift; sourceTree = "<group>"; };
+		99C5B9E92D32332E00CD570F /* AgreementAcountDeletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementAcountDeletionViewController.swift; sourceTree = "<group>"; };
+		99C5B9EC2D32340500CD570F /* AgreementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewModel.swift; sourceTree = "<group>"; };
+		99C5B9EE2D3248EF00CD570F /* CommentDeletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDeletionViewController.swift; sourceTree = "<group>"; };
 		99C68E3E2C64B11D00DEC1F1 /* FeedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRequest.swift; sourceTree = "<group>"; };
 		99C68E422C64B28400DEC1F1 /* FeedAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAPI.swift; sourceTree = "<group>"; };
 		99C68E472C64B43900DEC1F1 /* FeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedService.swift; sourceTree = "<group>"; };
@@ -968,6 +980,33 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
+		99C5B9E12D30AE6800CD570F /* AccountDelete */ = {
+			isa = PBXGroup;
+			children = (
+				99C5B9E62D310A2800CD570F /* CommonAccountBoxView.swift */,
+				99C5B9E22D30AE7700CD570F /* AgreementAcountDeletionView.swift */,
+				99C5B9E42D30AEB200CD570F /* CommentAccountDeletionView.swift */,
+			);
+			path = AccountDelete;
+			sourceTree = "<group>";
+		};
+		99C5B9E82D32331F00CD570F /* AccountDelete */ = {
+			isa = PBXGroup;
+			children = (
+				99C5B9E92D32332E00CD570F /* AgreementAcountDeletionViewController.swift */,
+				99C5B9EE2D3248EF00CD570F /* CommentDeletionViewController.swift */,
+			);
+			path = AccountDelete;
+			sourceTree = "<group>";
+		};
+		99C5B9EB2D3233F400CD570F /* AccountDelete */ = {
+			isa = PBXGroup;
+			children = (
+				99C5B9EC2D32340500CD570F /* AgreementViewModel.swift */,
+			);
+			path = AccountDelete;
+			sourceTree = "<group>";
+		};
 		99C68E442C64B3FC00DEC1F1 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
@@ -1120,6 +1159,7 @@
 		99CC5E662C52114D00A0509A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				99C5B9E12D30AE6800CD570F /* AccountDelete */,
 				995E3E5A2C507FE6006B4480 /* MyPageView.swift */,
 				9985AB962C786D0400D1442E /* MyDetailManageView.swift */,
 				995174FF2C7EF89B00E938DE /* LocationBookmarkView.swift */,
@@ -1131,6 +1171,7 @@
 		99CC5E672C52115200A0509A /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				99C5B9E82D32331F00CD570F /* AccountDelete */,
 				995E3E5D2C508039006B4480 /* MyPageViewController.swift */,
 				9985AB982C78802400D1442E /* MyDetailManageViewcontroller.swift */,
 				995174FD2C7EF89100E938DE /* LocationBookmarkViewController.swift */,
@@ -1143,6 +1184,7 @@
 		99CC5E682C52115900A0509A /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				99C5B9EB2D3233F400CD570F /* AccountDelete */,
 				99CC5E632C51EFAB00A0509A /* MyPageViewModel.swift */,
 				992381872C7DC8C900FFCBCB /* MyDetailManageViewModel.swift */,
 				995175012C7EF95100E938DE /* LocationBookmarkViewModel.swift */,
@@ -1951,6 +1993,7 @@
 				D512EC572CA6E56C001AC965 /* GetScheduleByDateResponse.swift in Sources */,
 				9910B8482C71B5A4005F7EEE /* DDayViewController.swift in Sources */,
 				9910B8472C71B59E005F7EEE /* AccountSearchView.swift in Sources */,
+				99C5B9E32D30AE7700CD570F /* AgreementAcountDeletionView.swift in Sources */,
 				D55C6C602CF71241005132DC /* PostFriendRequestUseCase.swift in Sources */,
 				99C140422C64A01A00A706B6 /* AddFeedView.swift in Sources */,
 				995174FE2C7EF89100E938DE /* LocationBookmarkViewController.swift in Sources */,
@@ -1980,6 +2023,7 @@
 				D55C6C492CF5D921005132DC /* AcceptFriendRequestBody.swift in Sources */,
 				99D8FBC22C3BA25B0062AF10 /* CustomTextField.swift in Sources */,
 				D55C6C402CF585F1005132DC /* AddFriendView.swift in Sources */,
+				99C5B9EA2D32332E00CD570F /* AgreementAcountDeletionViewController.swift in Sources */,
 				99D11EB12C06F56F006BE265 /* CustomButton.swift in Sources */,
 				9974EA1E2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift in Sources */,
 				D55C6C642CF712F5005132DC /* RefuseFriendRequestUseCase.swift in Sources */,
@@ -2057,6 +2101,7 @@
 				99949F492C587BA500AE0177 /* FriendsListView.swift in Sources */,
 				99F9FADE2C0B6187005B36B9 /* AccountSearchViewController.swift in Sources */,
 				995493F62CA3E2EF008BFA19 /* ScheduleList.swift in Sources */,
+				99C5B9E52D30AEB200CD570F /* CommentAccountDeletionView.swift in Sources */,
 				99933E942D2A56D3009D0C5A /* EditFeedView.swift in Sources */,
 				99949F4F2C58890C00AE0177 /* ProfileView.swift in Sources */,
 				99E7BA592C69A5D500F79C96 /* ImageUtility.swift in Sources */,
@@ -2095,11 +2140,13 @@
 				D5BA308C2CE744C400958BF5 /* FriendAPI.swift in Sources */,
 				99B7BD742C72E68E00EC1C4F /* AddFeedViewModel.swift in Sources */,
 				D517F25D2CEC8691003C5F60 /* FriendDetailView.swift in Sources */,
+				99C5B9EF2D3248EF00CD570F /* CommentDeletionViewController.swift in Sources */,
 				99FBA54E2C453924002EEEC7 /* BannerViewController.swift in Sources */,
 				990DE7682C65EAEB007B78C9 /* FeedImageCollectionViewCell.swift in Sources */,
 				99C1403A2C6494F000A706B6 /* FeedsView.swift in Sources */,
 				990DE7662C65E924007B78C9 /* FeedImagesView.swift in Sources */,
 				99CC5E642C51EFAB00A0509A /* MyPageViewModel.swift in Sources */,
+				99C5B9ED2D32340500CD570F /* AgreementViewModel.swift in Sources */,
 				D55C6C622CF712A8005132DC /* AcceptFriendRequestUseCase.swift in Sources */,
 				99C403172D2F6483005CD989 /* NoFeedImageViewCell.swift in Sources */,
 				9967C1542C566F2F00927277 /* NetworkAlert.swift in Sources */,
@@ -2170,6 +2217,7 @@
 				992F57CE2C5B28A800219C6B /* EmailVerifyBody.swift in Sources */,
 				99C1403C2C6496B400A706B6 /* FeedsTableViewCell.swift in Sources */,
 				D57B46F72C786AFD00657C51 /* MapView.swift in Sources */,
+				99C5B9E72D310A2800CD570F /* CommonAccountBoxView.swift in Sources */,
 				99D5FE3C2C88419300D224DA /* ModifyUserNameUseCase.swift in Sources */,
 				9911F98E2C3F913100D0FDC9 /* HomeFeedCollectionViewCell.swift in Sources */,
 				992F57C82C5B26D700219C6B /* ResetPasswordBody.swift in Sources */,

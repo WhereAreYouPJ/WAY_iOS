@@ -54,6 +54,7 @@ class MyPageViewController: UIViewController {
         myPageView.imageEditButton.addTarget(self, action: #selector(editImage), for: .touchUpInside)
         myPageView.moveToGallery.button.addTarget(self, action: #selector(moveToGallery), for: .touchUpInside)
         myPageView.logoutButton.button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+        myPageView.deleteAccountButton.button.addTarget(self, action: #selector(deleteAccountButtonTapped), for: .touchUpInside)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
         view.addGestureRecognizer(tapGesture)
     }
@@ -74,6 +75,9 @@ class MyPageViewController: UIViewController {
                 self?.email = memberDetails.email
                 self?.userName = memberDetails.userName
                 self?.myPageView.configureUI(member: member)
+                let memberSeq = UserDefaultsManager.shared.getMemberSeq()
+                let userName = member.userName
+                print("\(userName)의 memberSeq는: \(memberSeq)")
             }
         }
         
@@ -113,6 +117,15 @@ class MyPageViewController: UIViewController {
                 self?.viewModel.logout()
             }
         alert.showAlert(on: self)
+    }
+    
+    @objc func deleteAccountButtonTapped() {
+        // 회원탈퇴 버튼 눌림
+        let controller = AgreementAcountDeletionViewController(userName: userName)
+        let navController = UINavigationController(rootViewController: controller)
+        navController.modalPresentationStyle = .fullScreen // 전체 화면으로 전환
+        present(navController, animated: true, completion: nil)
+        print("deleteAccountButtonTapped")
     }
     
     @objc private func editImage() {
@@ -186,13 +199,6 @@ extension MyPageViewController: UIImagePickerControllerDelegate, UINavigationCon
                     // UI에 선택된 이미지 반영
                     self.myPageView.profileImageView.image = image
                 }
-                
-//                guard let imageURL = image.toURL() else {
-//                    print("이미지를 URL로 변환하는데 실패")
-//                    return
-//                }
-//                
-//                let image = imageURL.absoluteString
                 // 서버로 이미지 업로드
                 self.viewModel.modifyProfileImage(image: image)
             }
