@@ -47,7 +47,6 @@ class AccountDeletionReasonView: UIView {
     
     // MARK: - Helpers
     private func setupTableView() {
-        tableView.register(InputFieldTableViewCell.self, forCellReuseIdentifier: InputFieldTableViewCell.identifier)
         tableView.register(ReasonSelectionTableViewCell.self, forCellReuseIdentifier: ReasonSelectionTableViewCell.identifier)
         tableView.tableFooterView = UIView()
     }

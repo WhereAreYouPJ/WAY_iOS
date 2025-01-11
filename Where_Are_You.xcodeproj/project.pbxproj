@@ -123,7 +123,6 @@
 		99C5B9EA2D32332E00CD570F /* AgreementAcountDeletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9E92D32332E00CD570F /* AgreementAcountDeletionViewController.swift */; };
 		99C5B9ED2D32340500CD570F /* AgreementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9EC2D32340500CD570F /* AgreementViewModel.swift */; };
 		99C5B9EF2D3248EF00CD570F /* CommentDeletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9EE2D3248EF00CD570F /* CommentDeletionViewController.swift */; };
-		99C5B9F12D32590200CD570F /* InputFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9F02D32590200CD570F /* InputFieldTableViewCell.swift */; };
 		99C5B9F32D3261A900CD570F /* ReasonSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9F22D3261A900CD570F /* ReasonSelectionTableViewCell.swift */; };
 		99C68E3F2C64B11D00DEC1F1 /* FeedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E3E2C64B11D00DEC1F1 /* FeedRequest.swift */; };
 		99C68E432C64B28400DEC1F1 /* FeedAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E422C64B28400DEC1F1 /* FeedAPI.swift */; };
@@ -440,7 +439,6 @@
 		99C5B9E92D32332E00CD570F /* AgreementAcountDeletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementAcountDeletionViewController.swift; sourceTree = "<group>"; };
 		99C5B9EC2D32340500CD570F /* AgreementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewModel.swift; sourceTree = "<group>"; };
 		99C5B9EE2D3248EF00CD570F /* CommentDeletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDeletionViewController.swift; sourceTree = "<group>"; };
-		99C5B9F02D32590200CD570F /* InputFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldTableViewCell.swift; sourceTree = "<group>"; };
 		99C5B9F22D3261A900CD570F /* ReasonSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonSelectionTableViewCell.swift; sourceTree = "<group>"; };
 		99C68E3E2C64B11D00DEC1F1 /* FeedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRequest.swift; sourceTree = "<group>"; };
 		99C68E422C64B28400DEC1F1 /* FeedAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAPI.swift; sourceTree = "<group>"; };
@@ -990,7 +988,6 @@
 				99C5B9E62D310A2800CD570F /* CommonAccountBoxView.swift */,
 				99C5B9E22D30AE7700CD570F /* AgreementAcountDeletionView.swift */,
 				99C5B9E42D30AEB200CD570F /* CommentAccountDeletionView.swift */,
-				99C5B9F02D32590200CD570F /* InputFieldTableViewCell.swift */,
 				99C5B9F22D3261A900CD570F /* ReasonSelectionTableViewCell.swift */,
 			);
 			path = AccountDelete;
@@ -1980,7 +1977,6 @@
 				99960AB52CE1DE5B007D2B61 /* GetScheduleResponse.swift in Sources */,
 				99933E922D2A569E009D0C5A /* EditFeedViewModel.swift in Sources */,
 				9910B84C2C71B638005F7EEE /* DDayViewModel.swift in Sources */,
-				99C5B9F12D32590200CD570F /* InputFieldTableViewCell.swift in Sources */,
 				99DE2F022D0813B40087ACC9 /* FeedArchiveViewController.swift in Sources */,
 				99EFC76D2CD0B9630044DFC5 /* DeleteLocationUseCase.swift in Sources */,
 				99EDF5A22CE8BE520008B19A /* PostHideFeedUseCase.swift in Sources */,
