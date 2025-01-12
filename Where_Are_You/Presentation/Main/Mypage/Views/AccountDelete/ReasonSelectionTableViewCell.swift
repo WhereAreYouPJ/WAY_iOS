@@ -26,6 +26,9 @@ class ReasonSelectionTableViewCell: UITableViewCell {
         imageView.contentMode = .scaleAspectFit
         imageView.image = UIImage(systemName: "circle")
         imageView.tintColor = .color217
+        imageView.snp.makeConstraints { make in
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 22))
+        }
         return imageView
     }()
     
@@ -48,6 +51,20 @@ class ReasonSelectionTableViewCell: UITableViewCell {
         return tv
     }()
     
+    private lazy var titleStackView: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [checkmarkView, reasonLabel])
+        sv.axis = .horizontal
+        sv.spacing = LayoutAdapter.shared.scale(value: 10)
+        return sv
+    }()
+    
+    private lazy var stackView: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [titleStackView, textView])
+        sv.axis = .vertical
+        sv.spacing = LayoutAdapter.shared.scale(value: 10)
+        return sv
+    }()
+    
     var onTextChange: ((String) -> Void)?
     private let placeholderText = "기타(직접입력)" // Placeholder 텍스트
 
@@ -66,30 +83,22 @@ class ReasonSelectionTableViewCell: UITableViewCell {
     // MARK: - Helpers
     private func configureViewComponents() {
         contentView.addSubview(containerView)
-        containerView.addSubview(checkmarkView)
-        containerView.addSubview(reasonLabel)
-        containerView.addSubview(textView)
+        containerView.addSubview(stackView)
     }
     
     private func setupConstraints() {
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(5)
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
         }
         
-        checkmarkView.snp.makeConstraints { make in
+        stackView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 14))
             make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 14))
-        }
-        
-        reasonLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(checkmarkView)
-            make.leading.equalTo(checkmarkView.snp.trailing).offset(LayoutAdapter.shared.scale(value: 10))
+            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
         }
         
         textView.snp.makeConstraints { make in
-            make.top.equalTo(reasonLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 10))
-            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 305))
             make.height.equalTo(LayoutAdapter.shared.scale(value: 140))
         }
     }
@@ -99,16 +108,7 @@ class ReasonSelectionTableViewCell: UITableViewCell {
         checkmarkView.image = isSelected ? UIImage(systemName: "checkmark.circle.fill") : UIImage(systemName: "circle")
         checkmarkView.tintColor = isSelected ? .brandColor : .color217
         textView.isHidden = !isTextFieldVisible
-        if isTextFieldVisible {
-            containerView.snp.updateConstraints { make in
-                make.height.equalTo(LayoutAdapter.shared.scale(value: 212)) // 셀 높이 확장
-            }
-            textView.text = reason
-        } else {
-            containerView.snp.updateConstraints { make in
-                make.height.equalTo(LayoutAdapter.shared.scale(value: 50)) // 기본 높이
-            }
-        }
+        textView.text = reason
     }
 }
 

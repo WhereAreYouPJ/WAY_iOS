@@ -94,40 +94,50 @@ class AgreementAcountDeletionView: UIView {
             make.top.equalTo(desriptionLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 30))
             make.centerX.equalToSuperview()
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 123))
         }
         
         secondInfoBox.snp.makeConstraints { make in
             make.top.equalTo(firstInfoBox.snp.bottom).offset(LayoutAdapter.shared.scale(value: 10))
             make.centerX.equalToSuperview()
             make.leading.equalTo(firstInfoBox)
-            make.height.equalTo(firstInfoBox.snp.height)
         }
         
         buttonStackView.snp.makeConstraints { make in
-            make.top.equalTo(secondInfoBox.snp.bottom).offset(LayoutAdapter.shared.scale(value: 179))
+            make.bottom.equalTo(nextButton.snp.top).offset(LayoutAdapter.shared.scale(value: -18))
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
-            make.height.equalTo(20)
         }
         
         nextButton.snp.makeConstraints { make in
-            make.top.equalTo(buttonStackView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 18))
+            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 68))
             make.centerX.equalToSuperview()
             make.leading.equalTo(buttonStackView)
             make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
         }
     }
     
-    func configureUI(userName: String, isFirstAgreement: Bool) {
+    func configureUI(userName: String?, isFirstAgreement: Bool) {
         if isFirstAgreement {
+            guard let userName = userName else { return }
             titleLabel.text = "\(userName) 님, \n탈퇴하기 전에 꼭 확인해주세요."
             desriptionLabel.text = "탈퇴 후 재가입은 14일이 지나야 할 수 있어요."
             firstInfoBox.configureUI(title: "모든 피드와 일정 등 \n\(userName)님의 소중한 기록이 모두 사라져요.", description: "온마이웨이에서 계정 삭제 시 지금어디를 이용하며 기록된 모든 내용이 삭제돼요.")
             secondInfoBox.configureUI(title: "친구들로부터 \n\(userName)님의 계정이 사라져요.", description: "또한 다시 가입하더라도 친구를 다시 추가하려면 처음부터 친구 찾기와 요청 및 수락 확인을 다시 해야해요.")
         } else {
+            buttonStackView.isHidden = true
             titleLabel.text = "정말 계정을 삭제하시겠어요?"
             desriptionLabel.text = "아래 내용을 다시 한 번 확인해 주세요."
-            firstInfoBox.configureUI(title: "모든 피드와 일정 등 \n 소중한 기록이 모두 사라져요.", description: "계정 삭제 시 회원님의 프로필과 모든 콘텐츠는 \n즉시 영구적으로 삭제되며 다시 복구할 수 없습니다.")
+            
+            // Attributed string for red text in description
+            let descriptionText = "계정 삭제 시 회원님의 프로필과 모든 콘텐츠는 \n즉시 영구적으로 삭제되며 다시 복구할 수 없습니다."
+            let attributedDescription = NSMutableAttributedString(string: descriptionText)
+            
+            // Range of the text to color red
+            if let range = descriptionText.range(of: "즉시 영구적으로 삭제되며 다시 복구할 수 없습니다.") {
+                let nsRange = NSRange(range, in: descriptionText)
+                attributedDescription.addAttribute(.foregroundColor, value: UIColor.warningColor, range: nsRange)
+            }
+            
+            firstInfoBox.configureUI(title: "모든 피드와 일정 등 \n 소중한 기록이 모두 사라져요.", attributedDescription: attributedDescription)
             secondInfoBox.configureUI(title: "친구들로부터 계정이 사라져요.", description: "내 프로필 및 콘텐츠가 다른 친구에게 공개되지 않습니다.")
         }
     }

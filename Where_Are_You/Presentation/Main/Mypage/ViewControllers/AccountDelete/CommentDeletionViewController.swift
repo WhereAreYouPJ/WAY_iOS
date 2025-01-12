@@ -10,8 +10,8 @@ import UIKit
 class CommentDeletionViewController: UIViewController {
     // MARK: - Properties
     private let commentDeletionView = AccountDeletionReasonView()
-    private var viewModel: DeleteMemberViewModel!
-    
+ 
+    private var comment: String = ""
     private let reasons = [
         "사용 빈도가 낮아서",
         "기능이 부족해서",
@@ -66,7 +66,7 @@ class CommentDeletionViewController: UIViewController {
     private func updateNextButtonState() {
         let button = commentDeletionView.nextButton
         button.isEnabled = selectedReasonIndex != nil
-        button.backgroundColor = selectedReasonIndex != nil ? .purple : .gray
+        button.backgroundColor = selectedReasonIndex != nil ? .brandColor : .gray
     }
     
     private func handleInputFieldVisibility() {
@@ -79,15 +79,21 @@ class CommentDeletionViewController: UIViewController {
     
     // MARK: - Selectors
     @objc private func handleNextButtonTapped() {
+        guard let selectedIndex = selectedReasonIndex else {
+            // 선택된 이유가 없는 경우 처리
+            print("선택된 이유가 없습니다.")
+            return
+        }
+        
         if selectedReasonIndex == reasons.count - 1 {
-            print("직접 입력 내용: \(inputText)")
-            viewModel.comment = inputText
+            comment = inputText
         } else {
-            print("선택된 이유: \(reasons[selectedReasonIndex!])")
-            viewModel.comment = reasons[selectedReasonIndex!]
+            comment = reasons[selectedIndex]
         }
         
         // 회원탈퇴 조건 재확인뷰로 이동
+        let controller = ReagreementAcountDeletionViewController(comment: comment)
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     @objc func backButtonTapped() {
