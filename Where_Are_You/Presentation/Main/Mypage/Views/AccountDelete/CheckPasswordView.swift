@@ -61,6 +61,7 @@ class CheckPasswordView: UIView {
         deleteButton.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 68))
             make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
         }
     }
     

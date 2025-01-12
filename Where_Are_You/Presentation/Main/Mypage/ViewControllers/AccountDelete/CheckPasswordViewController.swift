@@ -55,7 +55,7 @@ class CheckPasswordViewController: UIViewController {
         viewModel.onDeleteAccount = { [weak self] deleteSucceed in
             if deleteSucceed {
                 let controller = CompleteDeleteViewController()
-                navigationController?.pushViewController(controller, animated: true)
+                self?.navigationController?.pushViewController(controller, animated: true)
             } else {
                 self?.updateStatus(label: self?.checkPasswordView.passwordErrorLabel,
                                    message: "비밀번호가 맞지 않습니다.",
