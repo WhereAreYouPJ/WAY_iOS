@@ -73,6 +73,11 @@
 		995493F62CA3E2EF008BFA19 /* ScheduleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995493F52CA3E2EF008BFA19 /* ScheduleList.swift */; };
 		995E3E5B2C507FE6006B4480 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995E3E5A2C507FE6006B4480 /* MyPageView.swift */; };
 		995E3E5E2C508039006B4480 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995E3E5D2C508039006B4480 /* MyPageViewController.swift */; };
+		99647EEB2D33A1A700D63B4B /* ReagreementAcountDeletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99647EEA2D33A1A700D63B4B /* ReagreementAcountDeletionViewController.swift */; };
+		99647EED2D33B7E100D63B4B /* CheckPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99647EEC2D33B7E100D63B4B /* CheckPasswordView.swift */; };
+		99647EEF2D33D83E00D63B4B /* CheckPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99647EEE2D33D83E00D63B4B /* CheckPasswordViewController.swift */; };
+		99647EF12D33DB2600D63B4B /* CompleteDeleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99647EF02D33DB2600D63B4B /* CompleteDeleteViewController.swift */; };
+		99647EF32D33DB3B00D63B4B /* CompleteDeleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99647EF22D33DB3B00D63B4B /* CompleteDeleteView.swift */; };
 		9967C1522C56467D00927277 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9967C1512C56467D00927277 /* CustomAlert.swift */; };
 		9967C1542C566F2F00927277 /* NetworkAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9967C1532C566F2F00927277 /* NetworkAlert.swift */; };
 		9974EA1E2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974EA1D2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift */; };
@@ -123,7 +128,6 @@
 		99C5B9EA2D32332E00CD570F /* AgreementAcountDeletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9E92D32332E00CD570F /* AgreementAcountDeletionViewController.swift */; };
 		99C5B9ED2D32340500CD570F /* AgreementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9EC2D32340500CD570F /* AgreementViewModel.swift */; };
 		99C5B9EF2D3248EF00CD570F /* CommentDeletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9EE2D3248EF00CD570F /* CommentDeletionViewController.swift */; };
-		99C5B9F12D32590200CD570F /* InputFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9F02D32590200CD570F /* InputFieldTableViewCell.swift */; };
 		99C5B9F32D3261A900CD570F /* ReasonSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9F22D3261A900CD570F /* ReasonSelectionTableViewCell.swift */; };
 		99C68E3F2C64B11D00DEC1F1 /* FeedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E3E2C64B11D00DEC1F1 /* FeedRequest.swift */; };
 		99C68E432C64B28400DEC1F1 /* FeedAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C68E422C64B28400DEC1F1 /* FeedAPI.swift */; };
@@ -390,6 +394,11 @@
 		995493F52CA3E2EF008BFA19 /* ScheduleList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleList.swift; sourceTree = "<group>"; };
 		995E3E5A2C507FE6006B4480 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		995E3E5D2C508039006B4480 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		99647EEA2D33A1A700D63B4B /* ReagreementAcountDeletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReagreementAcountDeletionViewController.swift; sourceTree = "<group>"; };
+		99647EEC2D33B7E100D63B4B /* CheckPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPasswordView.swift; sourceTree = "<group>"; };
+		99647EEE2D33D83E00D63B4B /* CheckPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPasswordViewController.swift; sourceTree = "<group>"; };
+		99647EF02D33DB2600D63B4B /* CompleteDeleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteDeleteViewController.swift; sourceTree = "<group>"; };
+		99647EF22D33DB3B00D63B4B /* CompleteDeleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteDeleteView.swift; sourceTree = "<group>"; };
 		9967C1512C56467D00927277 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		9967C1532C566F2F00927277 /* NetworkAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAlert.swift; sourceTree = "<group>"; };
 		9974EA1D2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreFeedCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -440,7 +449,6 @@
 		99C5B9E92D32332E00CD570F /* AgreementAcountDeletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementAcountDeletionViewController.swift; sourceTree = "<group>"; };
 		99C5B9EC2D32340500CD570F /* AgreementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewModel.swift; sourceTree = "<group>"; };
 		99C5B9EE2D3248EF00CD570F /* CommentDeletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDeletionViewController.swift; sourceTree = "<group>"; };
-		99C5B9F02D32590200CD570F /* InputFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldTableViewCell.swift; sourceTree = "<group>"; };
 		99C5B9F22D3261A900CD570F /* ReasonSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonSelectionTableViewCell.swift; sourceTree = "<group>"; };
 		99C68E3E2C64B11D00DEC1F1 /* FeedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRequest.swift; sourceTree = "<group>"; };
 		99C68E422C64B28400DEC1F1 /* FeedAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAPI.swift; sourceTree = "<group>"; };
@@ -990,8 +998,9 @@
 				99C5B9E62D310A2800CD570F /* CommonAccountBoxView.swift */,
 				99C5B9E22D30AE7700CD570F /* AgreementAcountDeletionView.swift */,
 				99C5B9E42D30AEB200CD570F /* CommentAccountDeletionView.swift */,
-				99C5B9F02D32590200CD570F /* InputFieldTableViewCell.swift */,
 				99C5B9F22D3261A900CD570F /* ReasonSelectionTableViewCell.swift */,
+				99647EEC2D33B7E100D63B4B /* CheckPasswordView.swift */,
+				99647EF22D33DB3B00D63B4B /* CompleteDeleteView.swift */,
 			);
 			path = AccountDelete;
 			sourceTree = "<group>";
@@ -1001,6 +1010,9 @@
 			children = (
 				99C5B9E92D32332E00CD570F /* AgreementAcountDeletionViewController.swift */,
 				99C5B9EE2D3248EF00CD570F /* CommentDeletionViewController.swift */,
+				99647EEA2D33A1A700D63B4B /* ReagreementAcountDeletionViewController.swift */,
+				99647EEE2D33D83E00D63B4B /* CheckPasswordViewController.swift */,
+				99647EF02D33DB2600D63B4B /* CompleteDeleteViewController.swift */,
 			);
 			path = AccountDelete;
 			sourceTree = "<group>";
@@ -1980,7 +1992,6 @@
 				99960AB52CE1DE5B007D2B61 /* GetScheduleResponse.swift in Sources */,
 				99933E922D2A569E009D0C5A /* EditFeedViewModel.swift in Sources */,
 				9910B84C2C71B638005F7EEE /* DDayViewModel.swift in Sources */,
-				99C5B9F12D32590200CD570F /* InputFieldTableViewCell.swift in Sources */,
 				99DE2F022D0813B40087ACC9 /* FeedArchiveViewController.swift in Sources */,
 				99EFC76D2CD0B9630044DFC5 /* DeleteLocationUseCase.swift in Sources */,
 				99EDF5A22CE8BE520008B19A /* PostHideFeedUseCase.swift in Sources */,
@@ -2017,6 +2028,7 @@
 				9910B8522C71EAA4005F7EEE /* ScheduleDropDownCell.swift in Sources */,
 				99EDF5822CE862120008B19A /* MemberSnsBody.swift in Sources */,
 				D534B0F92D06EFB6004864E0 /* PostCoordinateBody.swift in Sources */,
+				99647EEB2D33A1A700D63B4B /* ReagreementAcountDeletionViewController.swift in Sources */,
 				99D8FBBB2C3BA1D90062AF10 /* MainHomeViewController.swift in Sources */,
 				99D8FBB52C3B9F9F0062AF10 /* MainHomeView.swift in Sources */,
 				99C140382C64943F00A706B6 /* LayoutAdapter.swift in Sources */,
@@ -2052,6 +2064,7 @@
 				99EFC76B2CD0B9560044DFC5 /* PostLocationUseCase.swift in Sources */,
 				992F57DF2C5B614A00219C6B /* LogoutUseCase.swift in Sources */,
 				992F57E52C5B623F00219C6B /* CheckEmailUseCase.swift in Sources */,
+				99647EF12D33DB2600D63B4B /* CompleteDeleteViewController.swift in Sources */,
 				9911F9842C3F5AA600D0FDC9 /* BannerView.swift in Sources */,
 				99EDF5882CE874AB0008B19A /* SnsSignUpUseCase.swift in Sources */,
 				D5DCBF342C7435E2003F0246 /* SearchFriendsView.swift in Sources */,
@@ -2136,7 +2149,9 @@
 				99E401252D0D6CD900A63304 /* FeedOptionsHandler.swift in Sources */,
 				99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */,
 				99EDF5A42CE8BE5B0008B19A /* DeleteHideFeedUseCase.swift in Sources */,
+				99647EED2D33B7E100D63B4B /* CheckPasswordView.swift in Sources */,
 				D54C040C2C651832009CC419 /* Schedule.swift in Sources */,
+				99647EEF2D33D83E00D63B4B /* CheckPasswordViewController.swift in Sources */,
 				992BF70C2CAA9006008D3055 /* GetScheduleListUseCase.swift in Sources */,
 				995E3E5E2C508039006B4480 /* MyPageViewController.swift in Sources */,
 				D55C6C5C2CF70FF5005132DC /* GetListForReceiverUseCase.swift in Sources */,
@@ -2185,6 +2200,7 @@
 				D54C040E2C651B8A009CC419 /* ScheduleAPI.swift in Sources */,
 				D5BA30992CE74BF300958BF5 /* GetFriendUseCase.swift in Sources */,
 				99EDF5A02CE8BE4A0008B19A /* GetHideFeedUseCase.swift in Sources */,
+				99647EF32D33DB3B00D63B4B /* CompleteDeleteView.swift in Sources */,
 				9967C1522C56467D00927277 /* CustomAlert.swift in Sources */,
 				99A897D72CEB02E900E79BED /* ImageLoader.swift in Sources */,
 				99C68E482C64B43900DEC1F1 /* FeedService.swift in Sources */,

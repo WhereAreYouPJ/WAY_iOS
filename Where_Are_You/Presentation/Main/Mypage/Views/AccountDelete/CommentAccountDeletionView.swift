@@ -32,7 +32,6 @@ class AccountDeletionReasonView: UIView {
     let nextButton = CustomButton(title: "다음", backgroundColor: .color171, titleColor: .white, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
     
     // MARK: - Lifecycle
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
@@ -47,7 +46,6 @@ class AccountDeletionReasonView: UIView {
     
     // MARK: - Helpers
     private func setupTableView() {
-        tableView.register(InputFieldTableViewCell.self, forCellReuseIdentifier: InputFieldTableViewCell.identifier)
         tableView.register(ReasonSelectionTableViewCell.self, forCellReuseIdentifier: ReasonSelectionTableViewCell.identifier)
         tableView.tableFooterView = UIView()
     }
@@ -73,7 +71,7 @@ class AccountDeletionReasonView: UIView {
         tableView.snp.makeConstraints { make in
             make.top.equalTo(descriptionLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 30))
             make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
-            make.bottom.equalTo(nextButton.snp.top).inset(LayoutAdapter.shared.scale(value: 20))
+            make.bottom.equalTo(nextButton.snp.top).offset(LayoutAdapter.shared.scale(value: -14))
         }
         
         nextButton.snp.makeConstraints { make in

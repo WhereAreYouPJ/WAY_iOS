@@ -9,10 +9,8 @@ import Foundation
 
 class DeleteMemberViewModel {
     private let deleteAccountUseCase: DeleteMemberUseCase
-    
-    var comment: String = ""
-    
     var onDeleteAccount: ((Bool) -> Void)?
+    
     init(deleteAccountUseCase: DeleteMemberUseCase) {
         self.deleteAccountUseCase = deleteAccountUseCase
     }

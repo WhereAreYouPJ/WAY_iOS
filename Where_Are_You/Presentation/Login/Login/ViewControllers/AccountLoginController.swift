@@ -25,7 +25,7 @@ class AccountLoginController: UIViewController {
     }
     
     // MARK: - Helpers
-   private func setupUI() {
+    private func setupUI() {
         self.view = accountLoginView
         configureNavigationBar(title: "로그인", backButtonAction: #selector(backButtonTapped))
         accountLoginView.passwordTextField.isSecureTextEntry = true

@@ -10,8 +10,8 @@ import UIKit
 class CommentDeletionViewController: UIViewController {
     // MARK: - Properties
     private let commentDeletionView = AccountDeletionReasonView()
-    private var viewModel: DeleteMemberViewModel!
-    
+ 
+    private var comment: String = ""
     private let reasons = [
         "사용 빈도가 낮아서",
         "기능이 부족해서",
@@ -66,7 +66,7 @@ class CommentDeletionViewController: UIViewController {
     private func updateNextButtonState() {
         let button = commentDeletionView.nextButton
         button.isEnabled = selectedReasonIndex != nil
-        button.backgroundColor = selectedReasonIndex != nil ? .purple : .gray
+        button.backgroundColor = selectedReasonIndex != nil ? .brandColor : .gray
     }
     
     private func handleInputFieldVisibility() {
@@ -79,14 +79,21 @@ class CommentDeletionViewController: UIViewController {
     
     // MARK: - Selectors
     @objc private func handleNextButtonTapped() {
+        guard let selectedIndex = selectedReasonIndex else {
+            // 선택된 이유가 없는 경우 처리
+            print("선택된 이유가 없습니다.")
+            return
+        }
+        
         if selectedReasonIndex == reasons.count - 1 {
-            print("선택된 이유: \(reasons[selectedReasonIndex!])")
-            print("직접 입력 내용: \(inputText)")
+            comment = inputText
         } else {
-            print("선택된 이유: \(reasons[selectedReasonIndex!])")
+            comment = reasons[selectedIndex]
         }
         
         // 회원탈퇴 조건 재확인뷰로 이동
+        let controller = ReagreementAcountDeletionViewController(comment: comment)
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     @objc func backButtonTapped() {
@@ -97,27 +104,23 @@ class CommentDeletionViewController: UIViewController {
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension CommentDeletionViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return reasons.count + (isShowingInputField ? 1 : 0)
+        return reasons.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // "기타(직접입력)" 입력 필드 셀
-        if isShowingInputField && indexPath.row == reasons.count {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: InputFieldTableViewCell.identifier, for: indexPath) as? InputFieldTableViewCell else {
-                return UITableViewCell()
-            }
-            cell.configure(placeholder: "기타(직접입력)", text: inputText) { [weak self] text in
-                self?.inputText = text
-            }
-            return cell
-        }
-        
-        // 일반 이유 셀
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ReasonSelectionTableViewCell.identifier, for: indexPath) as? ReasonSelectionTableViewCell else {
             return UITableViewCell()
         }
+        
         let isSelected = selectedReasonIndex == indexPath.row
-        cell.configure(reason: reasons[indexPath.row], isSelected: isSelected)
+        let isTextFieldVisible = indexPath.row == reasons.count - 1 && isSelected // "기타(직접입력)"일 때만 텍스트 필드 표시
+        cell.configure(reason: reasons[indexPath.row], isSelected: isSelected, isTextFieldVisible: isTextFieldVisible)
+        
+        if indexPath.row == reasons.count - 1 { // "기타(직접입력)" 셀
+            cell.onTextChange = { [weak self] text in
+                self?.inputText = text
+            }
+        }
         return cell
     }
     
