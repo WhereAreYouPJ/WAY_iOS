@@ -87,7 +87,6 @@ class MemberRepository: MemberRepositoryProtocol {
             switch result {
             case .success:
                 UserDefaultsManager.shared.clearData()
-                UserDefaultsManager.shared.saveIsLoggedIn(false)
                 completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))
@@ -154,6 +153,13 @@ class MemberRepository: MemberRepositoryProtocol {
     // MARK: - DELETE
     
     func deleteMember(request: DeleteMemberBody, completion: @escaping (Result<Void, any Error>) -> Void) {
-        memberService.deleteMember(request: request, completion: completion)
+        memberService.deleteMember(request: request) { result in
+            switch result {
+            case .success:
+                UserDefaultsManager.shared.clearData()
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
 }

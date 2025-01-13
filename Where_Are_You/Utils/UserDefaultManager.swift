@@ -90,7 +90,6 @@ class UserDefaultsManager {
     }
     
     // MARK: - ClearData
-    
     func clearData() {
         UserDefaults.standard.removeObject(forKey: accessTokenKey)
         UserDefaults.standard.removeObject(forKey: refreshTokenKey)
@@ -98,5 +97,6 @@ class UserDefaultsManager {
         UserDefaults.standard.removeObject(forKey: memberCode)
         UserDefaults.standard.removeObject(forKey: userName)
         UserDefaults.standard.removeObject(forKey: profileImage)
+        UserDefaults.standard.removeObject(forKey: isLoggedIn)
     }
 }
