@@ -97,7 +97,7 @@ class CommentDeletionViewController: UIViewController {
     }
     
     @objc func backButtonTapped() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
 }
 

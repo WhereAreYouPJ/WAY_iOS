@@ -66,7 +66,7 @@ class CheckPasswordViewController: UIViewController {
     
     // MARK: - Selectors
     @objc private func backButtonTapped() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     // viewmodel에 로그인하기 버튼 활성화 비활성화 로직 추가하기

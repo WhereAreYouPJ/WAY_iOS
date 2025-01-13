@@ -22,7 +22,7 @@ class CompleteDeleteViewController: UIViewController {
 
     private func setupUI() {
         view = completeDeleteView
-        configureNavigationBar(title: "회원 탈퇴")
+        configureNavigationBar(title: "회원 탈퇴", showBackButton: false)
     }
     
     private func setupActions() {
