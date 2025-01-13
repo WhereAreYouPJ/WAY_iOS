@@ -8,6 +8,6 @@
 import Foundation
 
 struct DDay {
-    let date: String
+    let dDay: Int
     let title: String
 }

@@ -10,5 +10,5 @@ import Foundation
 struct DDayScheduleResponse: Codable {
     let scheduleSeq: Int
     let title: String
-    let dDay: String
+    let dDay: Int
 }

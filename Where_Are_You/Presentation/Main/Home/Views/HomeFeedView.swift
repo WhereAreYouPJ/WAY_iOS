@@ -66,7 +66,8 @@ class HomeFeedView: UIView {
         if feeds.isEmpty {
             addSubview(noFeedLabel)
             noFeedLabel.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
+                make.top.bottom.equalToSuperview()
+                make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 23))
             }
             collectionView.isHidden = true
         } else {
