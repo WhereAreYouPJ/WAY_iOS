@@ -8,8 +8,7 @@
 import Foundation
 
 protocol PostEcceptScheduleUseCase {
-    func execute(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
-
+    func execute(request: PostEcceptScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class PostEcceptScheduleUseCaseImpl: PostEcceptScheduleUseCase {
@@ -19,7 +18,7 @@ class PostEcceptScheduleUseCaseImpl: PostEcceptScheduleUseCase {
         self.scheduleRepository = scheduleRepository
     }
     
-    func execute(request: CreateScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func execute(request: PostEcceptScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
         scheduleRepository.postEcceptSchedule(request: request, completion: completion)
     }
 }
