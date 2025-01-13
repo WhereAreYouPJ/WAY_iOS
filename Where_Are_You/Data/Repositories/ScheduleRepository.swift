@@ -9,7 +9,7 @@ import Foundation
 
 protocol ScheduleRepositoryProtocol {
     func postSchedule(request: CreateScheduleBody, completion: @escaping (Result<GenericResponse<PostScheduleResponse>, Error>) -> Void)
-    func postEcceptSchedule(request: PostEcceptScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func postAcceptSchedule(request: PostAcceptScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     
     func getSchedule(scheduleSeq: Int, completion: @escaping (Result<GenericResponse<GetScheduleResponse>, Error>) -> Void)
     func getMonthlySchedule(yearMonth: String, completion: @escaping (Result<GenericResponse<[GetScheduleByMonthResponse]>, Error>) -> Void)
@@ -21,7 +21,7 @@ protocol ScheduleRepositoryProtocol {
     func putSchedule(request: PutScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     
     func deleteSchedule(request: DeleteScheduleBody, isCreator: Bool, completion: @escaping (Result<Void, Error>) -> Void)
-    func deleteInvitedSchedule(request: DeleteInvitedScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func refuseInvitedSchedule(request: RefuseInvitedScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 class ScheduleRepository: ScheduleRepositoryProtocol {
@@ -38,8 +38,8 @@ class ScheduleRepository: ScheduleRepositoryProtocol {
         scheduleService.postSchedule(request: request, completion: completion)
     }
     
-    func postEcceptSchedule(request: PostEcceptScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
-        scheduleService.postEcceptSchedule(request: request, completion: completion)
+    func postAcceptSchedule(request: PostAcceptScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+        scheduleService.postAcceptSchedule(request: request, completion: completion)
     }
     
     // MARK: GET
@@ -81,7 +81,7 @@ class ScheduleRepository: ScheduleRepositoryProtocol {
         }
     }
     
-    func deleteInvitedSchedule(request: DeleteInvitedScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
-        scheduleService.deleteInvitedSchedule(request: request, completion: completion)
+    func refuseInvitedSchedule(request: RefuseInvitedScheduleBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+        scheduleService.refuseInvitedSchedule(request: request, completion: completion)
     }
 }

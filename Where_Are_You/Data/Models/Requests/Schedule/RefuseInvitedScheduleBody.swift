@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DeleteInvitedScheduleBody: ParameterConvertible {
+struct RefuseInvitedScheduleBody: ParameterConvertible {
     let memberSeq: Int
     let scheduleSeq: Int
 }

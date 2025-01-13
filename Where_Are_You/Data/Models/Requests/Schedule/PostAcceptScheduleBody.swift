@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PostEcceptScheduleBody: ParameterConvertible {
+struct PostAcceptScheduleBody: ParameterConvertible {
     let scheduleSeq: Int
     let memberSeq: Int
 }
