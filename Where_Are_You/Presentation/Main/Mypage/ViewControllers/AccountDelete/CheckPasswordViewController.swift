@@ -55,7 +55,7 @@ class CheckPasswordViewController: UIViewController {
         viewModel.onDeleteAccount = { [weak self] deleteSucceed in
             if deleteSucceed {
                 let controller = CompleteDeleteViewController()
-                navigationController?.pushViewController(controller, animated: true)
+                self?.navigationController?.pushViewController(controller, animated: true)
             } else {
                 self?.updateStatus(label: self?.checkPasswordView.passwordErrorLabel,
                                    message: "비밀번호가 맞지 않습니다.",
@@ -66,7 +66,7 @@ class CheckPasswordViewController: UIViewController {
     
     // MARK: - Selectors
     @objc private func backButtonTapped() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     // viewmodel에 로그인하기 버튼 활성화 비활성화 로직 추가하기

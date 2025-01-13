@@ -29,6 +29,8 @@ class DDayViewController: UIViewController {
         setupBindings()
         setupCollectionView()
         
+        viewModel.fetchDDays()
+        
         // NotificationCenter를 통해 알림을 수신하는 옵저버를 추가합니다.
         NotificationCenter.default.addObserver(self, selector: #selector(scrollToDDayIndex(_:)), name: .scrollToDDayIndex, object: nil)
     }
@@ -89,11 +91,12 @@ extension DDayViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DDAyCell.identifier, for: indexPath) as? DDAyCell else { fatalError("Unable to dequeue DDayCell") }
         let dDays = viewModel.getDDays()
         let correctedIndex = (indexPath.item + dDays.count) % (dDays.count + 2)
-        if dDays.isEmpty {
+        let dDayExists = !dDays.isEmpty
+        dDayView.configureUI(dDayExists: dDayExists)
+        if !dDayExists {
             cell.configure(with: nil)
         } else {
             cell.configure(with: dDays[correctedIndex % dDays.count])
-            dDayView.layer.borderColor = UIColor.brandColor.cgColor
         }
         return cell
     }

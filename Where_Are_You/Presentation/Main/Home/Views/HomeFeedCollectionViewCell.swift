@@ -40,7 +40,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         return stackView
     }()
     
-    private let feedContentView: UIImageView = {
+    private let feedImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 6
@@ -59,7 +59,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
     }()
     
     private lazy var feedContentStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [feedContentView, descriptionLabel])
+        let stackView = UIStackView(arrangedSubviews: [feedImageView, descriptionLabel])
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.distribution = .fill
@@ -92,7 +92,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor.color212.cgColor
         contentView.addSubview(mainStack)
-        feedContentView.isHidden = true
+        feedImageView.isHidden = true
     }
     
     private func setupConstraints() {
@@ -113,7 +113,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
             make.bottom.equalToSuperview()
         }
         
-        feedContentView.snp.makeConstraints { make in
+        feedImageView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
         }
     }
@@ -124,17 +124,17 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         titleLabel.text = feed.title
         if let content = feed.content {
             descriptionLabel.isHidden = false
-            feedContentView.isHidden = true
+            feedImageView.isHidden = true
             descriptionLabel.text = feed.content
         } else {
             descriptionLabel.isHidden = true
-            feedContentView.isHidden = false
+            feedImageView.isHidden = false
             
             if let feedImage = feed.feedImage {
-                feedContentView.kf.setImage(with: URL(string: feedImage))
+                feedImageView.kf.setImage(with: URL(string: feedImage))
             } else {
                 // Feed 이미지가 없는 경우 NoFeedImageView 사용
-                let noFeedImageView = NoFeedImageView(frame: feedContentView.bounds)
+                let noFeedImageView = NoFeedImageView(frame: feedImageView.bounds)
                 noFeedImageView.configureUI(profileImage: feed.profileImageURL)
                 
                 // NoFeedImageView를 UIImage로 변환
@@ -143,7 +143,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
                 noFeedImageView.layer.render(in: UIGraphicsGetCurrentContext()!)
                 
                 if let generatedImage = UIGraphicsGetImageFromCurrentImageContext() {
-                    feedContentView.image = generatedImage
+                    feedImageView.image = generatedImage
                 } else {
                     print("Failed to generate image from NoFeedImageView.")
                 }

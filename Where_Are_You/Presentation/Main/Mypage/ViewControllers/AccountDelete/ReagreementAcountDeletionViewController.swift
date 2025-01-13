@@ -47,7 +47,7 @@ class ReagreementAcountDeletionViewController: UIViewController {
     
     // MARK: - Selectors
     @objc func backButtonTapped() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     @objc func nextButtonTapped() {
         let controller = CheckPasswordViewController(comment: comment)

@@ -111,17 +111,23 @@ class AddFeedViewModel {
                 completion()
             case .failure(let error):
                 print(error.localizedDescription)
+                completion()
             }
         }
     }
     
     // 참가자 정보 가져오기
     func getParticipants() -> String {
-        if participants.count > 3 {
-            let displayedNames = participants.prefix(3).joined(separator: ", ")
-            return "\(displayedNames) 외 \(participants.count - 3)명"
+        if participants.isEmpty {
+            print("participants is Empty")
+            return ""
         } else {
-            return participants.joined(separator: ", ")
+            if participants.count > 3 {
+                let displayedNames = participants.prefix(3).joined(separator: ", ")
+                return "\(displayedNames) 외 \(participants.count - 3)명"
+            } else {
+                return participants.joined(separator: ", ")
+            }
         }
     }
 
