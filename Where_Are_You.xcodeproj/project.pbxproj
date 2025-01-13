@@ -140,6 +140,9 @@
 		99C6D29E2C90379F009C0CF8 /* APIResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C6D29D2C90379F009C0CF8 /* APIResponseHandler.swift */; };
 		99C6D2A02C903EAF009C0CF8 /* ScheduleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C6D29F2C903EAF009C0CF8 /* ScheduleRepository.swift */; };
 		99C6D2A32C904006009C0CF8 /* GetDDayScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C6D2A22C904006009C0CF8 /* GetDDayScheduleUseCase.swift */; };
+		99C921392D34B50E00FC2333 /* TokenReissueResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C921382D34B50E00FC2333 /* TokenReissueResponse.swift */; };
+		99C9213B2D34B56500FC2333 /* TokenReissueBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9213A2D34B56500FC2333 /* TokenReissueBody.swift */; };
+		99C9213D2D34B72A00FC2333 /* TokenReissueUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9213C2D34B72A00FC2333 /* TokenReissueUseCase.swift */; };
 		99C9B2292C0197CA008D7CBD /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2282C0197CA008D7CBD /* Member.swift */; };
 		99C9B22C2C019C67008D7CBD /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B22B2C019C67008D7CBD /* LoginView.swift */; };
 		99C9B2322C01A45C008D7CBD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C9B2312C01A45C008D7CBD /* Extensions.swift */; };
@@ -461,6 +464,9 @@
 		99C6D29D2C90379F009C0CF8 /* APIResponseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseHandler.swift; sourceTree = "<group>"; };
 		99C6D29F2C903EAF009C0CF8 /* ScheduleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRepository.swift; sourceTree = "<group>"; };
 		99C6D2A22C904006009C0CF8 /* GetDDayScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDDayScheduleUseCase.swift; sourceTree = "<group>"; };
+		99C921382D34B50E00FC2333 /* TokenReissueResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReissueResponse.swift; sourceTree = "<group>"; };
+		99C9213A2D34B56500FC2333 /* TokenReissueBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReissueBody.swift; sourceTree = "<group>"; };
+		99C9213C2D34B72A00FC2333 /* TokenReissueUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReissueUseCase.swift; sourceTree = "<group>"; };
 		99C9B2282C0197CA008D7CBD /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		99C9B22B2C019C67008D7CBD /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		99C9B2312C01A45C008D7CBD /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -790,6 +796,7 @@
 				992F57D32C5B28E900219C6B /* MemberSearchParameters.swift */,
 				99EDF5812CE862120008B19A /* MemberSnsBody.swift */,
 				99EDF5832CE864180008B19A /* DeleteMemberBody.swift */,
+				99C9213A2D34B56500FC2333 /* TokenReissueBody.swift */,
 			);
 			path = Member;
 			sourceTree = "<group>";
@@ -1071,6 +1078,7 @@
 				990F57A22C27F9FE00F6E1AD /* MemberDetailsUseCase.swift */,
 				992F57E42C5B623F00219C6B /* CheckEmailUseCase.swift */,
 				99EDF58B2CE877BD0008B19A /* DeleteMemberUseCase.swift */,
+				99C9213C2D34B72A00FC2333 /* TokenReissueUseCase.swift */,
 			);
 			path = Member;
 			sourceTree = "<group>";
@@ -1350,6 +1358,7 @@
 				99D780DF2C60670E005A3F30 /* MemberSearchResponse.swift */,
 				99D780E12C606726005A3F30 /* MemberDetailsResponse.swift */,
 				99D780E32C606735005A3F30 /* CheckEmailResponse.swift */,
+				99C921382D34B50E00FC2333 /* TokenReissueResponse.swift */,
 			);
 			path = Member;
 			sourceTree = "<group>";
@@ -2059,6 +2068,7 @@
 				D5BA30922CE745A700958BF5 /* PostFavoriteFriendBody.swift in Sources */,
 				D5B79A162C5B83CD004EDDF2 /* (null) in Sources */,
 				D534B0FE2D06F0FD004864E0 /* CoordinateService.swift in Sources */,
+				99C9213D2D34B72A00FC2333 /* TokenReissueUseCase.swift in Sources */,
 				997916922CFEE2BA001DED84 /* FeedDataManager.swift in Sources */,
 				9953583D2C00C555005BF799 /* AppDelegate.swift in Sources */,
 				99EFC76B2CD0B9560044DFC5 /* PostLocationUseCase.swift in Sources */,
@@ -2130,6 +2140,7 @@
 				D55C6C422CF5B8D7005132DC /* NavigationBarModifier.swift in Sources */,
 				99EDF5962CE8AD980008B19A /* GetFeedDetailsUseCase.swift in Sources */,
 				9910B8502C71E5B5005F7EEE /* ScheduleDropDownView.swift in Sources */,
+				99C9213B2D34B56500FC2333 /* TokenReissueBody.swift in Sources */,
 				99C68E522C64B96E00DEC1F1 /* EditFeedUseCase.swift in Sources */,
 				99C6D29E2C90379F009C0CF8 /* APIResponseHandler.swift in Sources */,
 				D54C040A2C6516CB009CC419 /* CreateScheduleBody.swift in Sources */,
@@ -2156,6 +2167,7 @@
 				995E3E5E2C508039006B4480 /* MyPageViewController.swift in Sources */,
 				D55C6C5C2CF70FF5005132DC /* GetListForReceiverUseCase.swift in Sources */,
 				99C6D29C2C903526009C0CF8 /* DDayScheduleResponse.swift in Sources */,
+				99C921392D34B50E00FC2333 /* TokenReissueResponse.swift in Sources */,
 				99CEAD4C2C5397B1006B3D41 /* DeviceConfig.swift in Sources */,
 				99949F5B2C58B85E00AE0177 /* Friend.swift in Sources */,
 				D55C6C472CF5D8DC005132DC /* PostFriendRequestBody.swift in Sources */,

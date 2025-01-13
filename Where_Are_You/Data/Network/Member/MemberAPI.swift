@@ -12,6 +12,7 @@ enum MemberAPI {
     case putProfileImage(memberSeq: Int, images: UIImage)
     
     case postSignUp(request: SignUpBody)
+    case postTokenReissue(request: TokenReissueBody)
     case postMemberSns(request: MemberSnsBody)
     case postResetPassword(request: ResetPasswordBody)
     case postLogout(memberSeq: Int)
@@ -42,6 +43,8 @@ extension MemberAPI: TargetType {
             
         case .postSignUp:
             return "/member"
+        case .postTokenReissue:
+            return "/member/tokenReissue"
         case .postMemberSns:
             return "/member/sns"
         case .postResetPassword:
@@ -75,7 +78,7 @@ extension MemberAPI: TargetType {
         switch self {
         case .putUserName, .putProfileImage:
             return .put
-        case .postSignUp, .postMemberSns, .postResetPassword, .postLogout, .postLogin, .postMemberLink, .postEmailVerify, .postEmailVerifyPassword, .postEmailSend:
+        case .postSignUp, .postTokenReissue, .postMemberSns, .postResetPassword, .postLogout, .postLogin, .postMemberLink, .postEmailVerify, .postEmailVerifyPassword, .postEmailSend:
             return .post
         case .getMemberSearch, .getMemberDetails, .getCheckEmail:
             return .get
@@ -93,6 +96,8 @@ extension MemberAPI: TargetType {
             return .uploadMultipart(multipartData)
             
         case .postSignUp(let request):
+            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+        case .postTokenReissue(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .postMemberSns(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
