@@ -182,6 +182,10 @@
 		99DC75DE2D06782500C20857 /* DetailFeedslViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DC75DD2D06782500C20857 /* DetailFeedslViewController.swift */; };
 		99DE2F022D0813B40087ACC9 /* FeedArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DE2F012D0813B40087ACC9 /* FeedArchiveViewController.swift */; };
 		99DE2F042D0813EC0087ACC9 /* FeedArchiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DE2F032D0813EC0087ACC9 /* FeedArchiveViewModel.swift */; };
+		99E2EEE92D35FA630010F1F9 /* FeedDetailPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E2EEE82D35FA630010F1F9 /* FeedDetailPageViewController.swift */; };
+		99E2EEED2D35FACD0010F1F9 /* FeedDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E2EEEC2D35FACD0010F1F9 /* FeedDetailView.swift */; };
+		99E2EEEF2D35FFCC0010F1F9 /* FeedParticipantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E2EEEE2D35FFCC0010F1F9 /* FeedParticipantView.swift */; };
+		99E2EEF12D3633CD0010F1F9 /* MainNoFeedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E2EEF02D3633CD0010F1F9 /* MainNoFeedImageView.swift */; };
 		99E401252D0D6CD900A63304 /* FeedOptionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E401242D0D6CD900A63304 /* FeedOptionsHandler.swift */; };
 		99E755512C22E66F0016A0A6 /* MemberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E755502C22E66F0016A0A6 /* MemberService.swift */; };
 		99E7BA592C69A5D500F79C96 /* ImageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E7BA582C69A5D500F79C96 /* ImageUtility.swift */; };
@@ -507,6 +511,10 @@
 		99DC75DD2D06782500C20857 /* DetailFeedslViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFeedslViewController.swift; sourceTree = "<group>"; };
 		99DE2F012D0813B40087ACC9 /* FeedArchiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedArchiveViewController.swift; sourceTree = "<group>"; };
 		99DE2F032D0813EC0087ACC9 /* FeedArchiveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedArchiveViewModel.swift; sourceTree = "<group>"; };
+		99E2EEE82D35FA630010F1F9 /* FeedDetailPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailPageViewController.swift; sourceTree = "<group>"; };
+		99E2EEEC2D35FACD0010F1F9 /* FeedDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailView.swift; sourceTree = "<group>"; };
+		99E2EEEE2D35FFCC0010F1F9 /* FeedParticipantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedParticipantView.swift; sourceTree = "<group>"; };
+		99E2EEF02D3633CD0010F1F9 /* MainNoFeedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNoFeedImageView.swift; sourceTree = "<group>"; };
 		99E401242D0D6CD900A63304 /* FeedOptionsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedOptionsHandler.swift; sourceTree = "<group>"; };
 		99E755502C22E66F0016A0A6 /* MemberService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberService.swift; sourceTree = "<group>"; };
 		99E7BA582C69A5D500F79C96 /* ImageUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtility.swift; sourceTree = "<group>"; };
@@ -731,8 +739,8 @@
 		990DE7732C660A8F007B78C9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				99E2EEEA2D35FA690010F1F9 /* FeedDetail */,
 				99949F5E2C58BBAD00AE0177 /* FeedsViewController.swift */,
-				99DC75DD2D06782500C20857 /* DetailFeedslViewController.swift */,
 				9910B84D2C71B7F6005F7EEE /* AddFeedViewController.swift */,
 				99933E8F2D2A566D009D0C5A /* EditFeedViewController.swift */,
 			);
@@ -742,6 +750,7 @@
 		990DE7742C660A94007B78C9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				99E2EEEB2D35FAC60010F1F9 /* DetailFeed */,
 				99C403162D2F6483005CD989 /* NoFeedImageViewCell.swift */,
 				990DE7632C65E767007B78C9 /* FeedDetailBoxView.swift */,
 				990DE7672C65EAEB007B78C9 /* FeedImageCollectionViewCell.swift */,
@@ -1239,6 +1248,7 @@
 		99CC5E6A2C5211ED00A0509A /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				99E2EEF02D3633CD0010F1F9 /* MainNoFeedImageView.swift */,
 				99C1403D2C6496BC00A706B6 /* NoDataView.swift */,
 				99A814112D129DC5000FC5A3 /* NoFeedImageView.swift */,
 				99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */,
@@ -1432,6 +1442,24 @@
 				D55C6C3D2CF57E74005132DC /* CustomButtonSwiftUI.swift */,
 			);
 			path = Customs;
+			sourceTree = "<group>";
+		};
+		99E2EEEA2D35FA690010F1F9 /* FeedDetail */ = {
+			isa = PBXGroup;
+			children = (
+				99DC75DD2D06782500C20857 /* DetailFeedslViewController.swift */,
+				99E2EEE82D35FA630010F1F9 /* FeedDetailPageViewController.swift */,
+			);
+			path = FeedDetail;
+			sourceTree = "<group>";
+		};
+		99E2EEEB2D35FAC60010F1F9 /* DetailFeed */ = {
+			isa = PBXGroup;
+			children = (
+				99E2EEEC2D35FACD0010F1F9 /* FeedDetailView.swift */,
+				99E2EEEE2D35FFCC0010F1F9 /* FeedParticipantView.swift */,
+			);
+			path = DetailFeed;
 			sourceTree = "<group>";
 		};
 		99EC209F2C0D8DEC0018904D /* UseCases */ = {
@@ -2041,6 +2069,7 @@
 				99D8FBBB2C3BA1D90062AF10 /* MainHomeViewController.swift in Sources */,
 				99D8FBB52C3B9F9F0062AF10 /* MainHomeView.swift in Sources */,
 				99C140382C64943F00A706B6 /* LayoutAdapter.swift in Sources */,
+				99E2EEE92D35FA630010F1F9 /* FeedDetailPageViewController.swift in Sources */,
 				995358412C00C555005BF799 /* LoginViewController.swift in Sources */,
 				D55C6C4D2CF5D9B6005132DC /* CancelFriendRequestBody.swift in Sources */,
 				99CEAD4A2C539743006B3D41 /* SplashViewController.swift in Sources */,
@@ -2188,6 +2217,8 @@
 				D53A515C2CA1260400025AC8 /* ErrorResponse.swift in Sources */,
 				99EC78CE2C11DBA5007C4415 /* PasswordResetViewController.swift in Sources */,
 				99A814122D129DC5000FC5A3 /* NoFeedImageView.swift in Sources */,
+				99E2EEEF2D35FFCC0010F1F9 /* FeedParticipantView.swift in Sources */,
+				99E2EEF12D3633CD0010F1F9 /* MainNoFeedImageView.swift in Sources */,
 				99933E902D2A566D009D0C5A /* EditFeedViewController.swift in Sources */,
 				D55C6C572CF5DD10005132DC /* FriendRequestService.swift in Sources */,
 				99B397832C0C3E9D00D7A109 /* AccountCheckView.swift in Sources */,
@@ -2238,6 +2269,7 @@
 				D51AC99C2C849AB400D0AD2E /* LocationAPI.swift in Sources */,
 				9953583F2C00C555005BF799 /* SceneDelegate.swift in Sources */,
 				D517F2632CECAB06003C5F60 /* DeleteFavoriteFriendUseCase.swift in Sources */,
+				99E2EEED2D35FACD0010F1F9 /* FeedDetailView.swift in Sources */,
 				990F57B22C282C5900F6E1AD /* EmailSendUseCase.swift in Sources */,
 				99107EA52C6F3E4A007D129F /* Location.swift in Sources */,
 				D53E05F52CB97C4100F96346 /* PutScheduleBody.swift in Sources */,

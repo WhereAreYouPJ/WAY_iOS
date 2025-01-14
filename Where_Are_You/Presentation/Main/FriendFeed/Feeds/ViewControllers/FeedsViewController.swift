@@ -198,6 +198,11 @@ extension FeedsViewController: FeedsTableViewCellDelegate {
             feedsView.feedsTableView.reloadRows(at: [indexPath], with: .none)
         }
     }
+    
+    func didSelectFeed(feed: Feed) {
+        let detailVC = FeedDetailViewController(feed: feed)
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 // scheduleInfo 관련 내용들
 class FeedDetailBoxView: UIView {
@@ -47,7 +48,7 @@ class FeedDetailBoxView: UIView {
         view.layer.borderColor = UIColor.rgb(red: 200, green: 171, blue: 229).cgColor
         view.backgroundColor = UIColor.rgb(red: 238, green: 238, blue: 238).withAlphaComponent(8)
         view.layer.borderWidth = 1
-        view.layer.cornerRadius = LayoutAdapter.shared.scale(value: 50)
+        view.layer.cornerRadius = LayoutAdapter.shared.scale(value: 14)
         view.snp.makeConstraints { make in
             make.height.equalTo(LayoutAdapter.shared.scale(value: 30))
         }
@@ -124,7 +125,7 @@ class FeedDetailBoxView: UIView {
         
         participantBoxView.snp.makeConstraints { make in
             make.trailing.equalToSuperview()
-            make.top.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 8))
+            make.top.equalToSuperview().offset(LayoutAdapter.shared.scale(value: -8))
             make.height.equalTo(LayoutAdapter.shared.scale(value: 30))
         }
         
@@ -149,9 +150,9 @@ class FeedDetailBoxView: UIView {
     
     func configure(with feed: Feed) {
         let scheduleFriendInfos = feed.scheduleFriendInfos ?? []
-        let participants = scheduleFriendInfos.compactMap { $0.profileImageURL }
-        print("participants: \(participants)") // 디버깅용 출력
-        
+        let memberSeq = feed.memberSeq
+        let participants = scheduleFriendInfos.compactMap { $0 }.filter { $0.memberSeq != memberSeq }.map { $0.profileImageURL }
+
         configureParticipantImages(participants: participants)
         profileImage.kf.setImage(with: URL(string: feed.profileImageURL), placeholder: UIImage(named: "basic_profile_image"))
         dateLabel.text = feed.startTime.formattedDate(to: .yearMonthDate)
@@ -160,27 +161,26 @@ class FeedDetailBoxView: UIView {
     }
     
     func configureParticipantImages(participants: [String]) {
-        guard participants.count > 1 else {
+        if participants.isEmpty {
             participantBoxView.isHidden = true
-            return
-        }
-        
-        participantBoxView.isHidden = false
-        participantStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        
-        for (index, image) in participants.prefix(3).enumerated() {
-            let imageView = UIImageView()
-            imageView.setImage(from: image)
-            imageView.contentMode = .scaleAspectFill
-            imageView.clipsToBounds = true
-            imageView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 9)
-            imageView.layer.borderWidth = 1.6
-            imageView.layer.borderColor = UIColor.white.cgColor
-            imageView.snp.makeConstraints { make in
-                make.width.height.equalTo(LayoutAdapter.shared.scale(value: 26))
+        } else {
+            participantBoxView.isHidden = false
+            participantStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+            
+            for (index, image) in participants.prefix(3).enumerated() {
+                let imageView = UIImageView()
+                imageView.kf.setImage(with: URL(string: image))
+                imageView.contentMode = .scaleAspectFill
+                imageView.clipsToBounds = true
+                imageView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 9)
+                imageView.layer.borderWidth = 1.6
+                imageView.layer.borderColor = UIColor.white.cgColor
+                imageView.snp.makeConstraints { make in
+                    make.width.height.equalTo(LayoutAdapter.shared.scale(value: 26))
+                }
+                participantStackView.addArrangedSubview(imageView)
+                imageView.layer.zPosition = CGFloat(3 - index)
             }
-            participantStackView.addArrangedSubview(imageView)
-            imageView.layer.zPosition = CGFloat(3 - index)
         }
     }
 }

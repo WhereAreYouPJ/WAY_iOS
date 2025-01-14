@@ -80,8 +80,24 @@ extension HomeFeedViewController: UICollectionViewDataSource, UICollectionViewDe
 }
 
 extension HomeFeedViewController: UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//            // 섹션의 상단 마진을 설정
+//            return UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
+//        }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: feedView.frame.width - 30, height: collectionView.frame.height)
+        let feed = viewModel.getFeeds()[indexPath.item]
+        var height: CGFloat = 0
+        height += LayoutAdapter.shared.scale(value: 56) // 프로필 이미지 높이
+        if let content = feed.content, !content.isEmpty {
+            height += LayoutAdapter.shared.scale(value: 40)
+        } else {
+            height -= LayoutAdapter.shared.scale(value: 12)
+        }
+        
+        height += LayoutAdapter.shared.scale(value: 80)
+        height += LayoutAdapter.shared.scale(value: 56)
+        return CGSize(width: feedView.frame.width - 30, height: height)
     }
 }
 

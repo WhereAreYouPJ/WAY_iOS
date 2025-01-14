@@ -59,6 +59,25 @@ extension FeedContent {
             feedImageInfos: firstScheduleFeedInfo.feedImageInfos
         )
     }
+    
+    func toDetailFeeds() -> [Feed] {
+        var feeds: [Feed] = []
+        for i in scheduleFeedInfo {
+            feeds.append(Feed(
+                feedSeq: i.feedInfo.feedSeq,
+                memberSeq: i.memberInfo.memberSeq,
+                startTime: scheduleInfo.startTime,
+                profileImageURL: i.memberInfo.profileImageURL,
+                location: scheduleInfo.location,
+                title: i.feedInfo.title,
+                content: i.feedInfo.content,
+                bookMark: i.bookMarkInfo,
+                scheduleFriendInfos: scheduleFriendInfo,
+                feedImageInfos: i.feedImageInfos
+            ))
+        }
+        return feeds
+    }
 }
 
 extension BookMarkContent {

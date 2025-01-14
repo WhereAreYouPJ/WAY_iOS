@@ -24,6 +24,13 @@ class ScheduleDropDown: UIView {
     
     let scheduleLocationLabel: UILabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color68, fontSize: LayoutAdapter.shared.scale(value: 16))
     
+    lazy var scheduleStackView: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [scheduleDateLabel, scheduleLocationLabel])
+        sv.axis = .horizontal
+        sv.spacing = 0
+        return sv
+    }()
+    
     let dropDownButton: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "chevron.down")
@@ -63,14 +70,19 @@ class ScheduleDropDown: UIView {
         addSubview(scheduleDropDownView)
         scheduleDropDownView.addSubview(chooseScheduleLabel)
         scheduleDropDownView.addSubview(dropDownButton)
-        scheduleDropDownView.addSubview(scheduleDateLabel)
-        scheduleDropDownView.addSubview(scheduleLocationLabel)
+        scheduleDropDownView.addSubview(scheduleStackView)
         addSubview(dropDownTableView)
     }
     
     private func setupConstraints() {
         scheduleDropDownView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
+//            make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
+        }
+        
+        dropDownTableView.snp.makeConstraints { make in
+            make.top.equalTo(scheduleDropDownView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
         }
         
         chooseScheduleLabel.snp.makeConstraints { make in
@@ -81,23 +93,17 @@ class ScheduleDropDown: UIView {
         dropDownButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 18.25))
             make.centerY.equalToSuperview()
+            make.width.equalTo(16)
         }
         
         scheduleDateLabel.snp.makeConstraints { make in
-            make.width.equalTo(40)
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 40))
+        }
+        
+        scheduleStackView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 14))
-            make.centerY.equalToSuperview()
-        }
-        
-        scheduleLocationLabel.snp.makeConstraints { make in
-            make.leading.equalTo(scheduleDateLabel.snp.trailing)
-            make.top.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
             make.trailing.equalTo(dropDownButton.snp.leading)
-        }
-        
-        dropDownTableView.snp.makeConstraints { make in
-            make.top.equalTo(scheduleDropDownView.snp.bottom)
-            make.leading.trailing.bottom.equalToSuperview()
+            make.centerY.equalToSuperview()
         }
     }
 }
