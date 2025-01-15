@@ -9,26 +9,21 @@ import SwiftUI
 
 struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 당일 일정인 경우
     @StateObject var viewModel: ScheduleViewModel
-    @State private var selectedDate: Date?
+    
+    @State private var showNotification = false
     @State private var showOptionMenu = false
     @State private var showCreateSchedule = false
+    
+    @State private var selectedDate: Date?
     @State private var showDailySchedule = false
     @State private var showingDeleteAlert = false
     @State private var alertTitle = ""
     @State private var alertMessage = ""
     @State private var scheduleToDelete: Schedule?
     
-    var onNotificationTapped: (() -> Void)?
-    var onAddTapped: (() -> Void)?
-    
-    init(
-        onNotificationTapped: (() -> Void)? = nil,
-        onAddTapped: (() -> Void)? = nil
-    ) {
+    init() {
         let service = ScheduleService()
         _viewModel = StateObject(wrappedValue: ScheduleViewModel(service: service))
-        self.onNotificationTapped = onNotificationTapped
-        self.onAddTapped = onAddTapped
     }
     
     var body: some View {
@@ -40,7 +35,7 @@ struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 
                             Spacer()
                             HStack(spacing: 0) {
                                 Button(action: {
-                                    print("알림 페이지로 이동")
+                                    showNotification = true
                                 }, label: {
                                     Image("icon-notification")
                                         .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
@@ -87,6 +82,9 @@ struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 
                     }
                 }
             }
+        .fullScreenCover(isPresented: $showNotification, content: {
+            NotificationView()
+        })
         .sheet(isPresented: $showCreateSchedule, onDismiss: {
             viewModel.getMonthlySchedule()
         }) {

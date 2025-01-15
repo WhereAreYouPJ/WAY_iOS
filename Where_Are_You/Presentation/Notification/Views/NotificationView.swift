@@ -10,9 +10,31 @@ import Kingfisher
 
 struct NotificationView: View {
     @Environment(\.dismiss) private var dismiss
+    
     @State private var isScheduleSectionExpanded = true
     @State private var isFriendSectionExpanded = true
     @State private var isGeneralSectionExpanded = true
+    
+    @StateObject private var viewModel: NotificationViewModel = {
+        let scheduleRepo = ScheduleRepository(scheduleService: ScheduleService())
+        let getInvitedListUseCase = GetInvitedListUseCaseImpl(scheduleRepository: scheduleRepo)
+        let postAcceptScheduleUseCase = PostAcceptScheduleUseCaseImpl(scheduleRepository: scheduleRepo)
+        let refuseInvitedScheduleUseCase = RefuseInvitedScheduleUseCaseImpl(scheduleRepository: scheduleRepo)
+            
+        let friendRequestRepo = FriendRequestRepository(friendRequestService: FriendRequestService())
+        let getListForReceiverUseCase = GetListForReceiverUseCaseImpl(repository: friendRequestRepo)
+        let acceptFriendRequestUseCase = AcceptFriendRequestUseCaseImpl(repository: friendRequestRepo)
+        let refuseFriendRequestUseCase = RefuseFriendRequestUseCaseImpl(repository: friendRequestRepo)
+        
+        return NotificationViewModel(
+            getInvitedListUseCase: getInvitedListUseCase,
+            postAcceptScheduleUseCase: postAcceptScheduleUseCase,
+            refuseInvitedScheduleUseCase: refuseInvitedScheduleUseCase,
+            getListForReceiverUseCase: getListForReceiverUseCase,
+            acceptFriendRequestUseCase: acceptFriendRequestUseCase,
+            refuseFriendRequestUseCase: refuseFriendRequestUseCase
+        )
+    }()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -25,7 +47,7 @@ struct NotificationView: View {
                     .ignoresSafeArea()
                 
                 ScrollView {
-                    VStack(spacing: 18) {
+                    VStack(spacing: LayoutAdapter.shared.scale(value: 18)) {
                         scheduleSection()
                             .padding(.top, LayoutAdapter.shared.scale(value: 18))
                         
@@ -42,13 +64,17 @@ struct NotificationView: View {
             }
         }
         .padding(.horizontal, LayoutAdapter.shared.scale(value: 18))
-        .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 16)))
+        .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: LayoutAdapter.shared.scale(value: 16))))
+        .onAppear {
+            viewModel.getInvitedList()
+            viewModel.getFriendRequestList()
+        }
     }
     
     func topBar() -> some View {
         HStack {
             Text("알림")
-                .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: 20)))
+                .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 20))))
                 .foregroundStyle(Color(.color34))
             
             Spacer()
@@ -69,14 +95,21 @@ struct NotificationView: View {
         DisclosureGroup(
             isExpanded: $isScheduleSectionExpanded,
             content: {
-                invitedScheduleArticle()
-                
-                unconfirmedScheduleArticle()
+                if let schedules = viewModel.invitedSchedules, !schedules.isEmpty {
+                    VStack(spacing: LayoutAdapter.shared.scale(value: 16)) {
+                        ForEach(schedules, id: \.scheduleSeq) { schedule in
+                            invitedScheduleCard(schedule: schedule)
+                        }
+                    }
+                } else {
+                    emptyNotification()
+                }
             },
             label: {
                 HStack {
                     Text("일정")
                         .foregroundStyle(Color(.color153))
+                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
                     Spacer()
                 }
             }
@@ -88,14 +121,21 @@ struct NotificationView: View {
         DisclosureGroup(
             isExpanded: $isFriendSectionExpanded,
             content: {
-                acceptedFriendArticle()
-                
-                friendRequestArticle()
+                if let friendRequests = viewModel.friendRequests, !friendRequests.isEmpty {
+                    VStack(spacing: LayoutAdapter.shared.scale(value: 16)) {
+                        ForEach(friendRequests, id: \.friendRequestSeq) { friendRequest in
+                            friendRequestCard(friendRequest: friendRequest)
+                        }
+                    }
+                } else {
+                    emptyNotification()
+                }
             },
             label: {
                 HStack {
                     Text("친구")
                         .foregroundStyle(Color(.color153))
+                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
                     Spacer()
                 }
             }
@@ -113,6 +153,7 @@ struct NotificationView: View {
                 HStack {
                     Text("일반")
                         .foregroundStyle(Color(.color153))
+                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
                     Spacer()
                 }
             }
@@ -120,67 +161,75 @@ struct NotificationView: View {
         .accentColor(Color(.color153))
     }
     
-    // MARK: Schedule Section Articles
-    func invitedScheduleArticle() -> some View {
+    // MARK: 알림 없는 경우
+    func emptyNotification() -> some View {
+        VStack {
+            Text("알림이 없습니다.")
+                .foregroundStyle(Color(.color153))
+                .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
+        }
+    }
+    
+    // MARK: Schedule Section Cards
+    func invitedScheduleCard(schedule: Schedule) -> some View {
         VStack(spacing: LayoutAdapter.shared.scale(value: 16)) {
-            HStack {
-                Text("일정에 초대되었습니다.")
-                    .foregroundStyle(Color(.color34))
-                
-                Spacer()
-                
-                Text("0분 전")
-                    .foregroundStyle(Color(.color153))
-                    .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: 14)))
-            }
-            .padding(.top, LayoutAdapter.shared.scale(value: 16))
-            .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
-        
-            HStack {
-                VStack {
-                    Text("4월 5일")
-                        .foregroundStyle(Color(.brandColor))
-                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: 20)))
-                    
-                    Text("D - 5")
-                        .foregroundStyle(Color.red)
-                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: 14)))
-                        
-                }
-                .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
-                
-                VStack(alignment: .leading) {
-                    Text("한강공원")
+                HStack {
+                    Text("일정에 초대되었습니다.")
                         .foregroundStyle(Color(.color34))
                     
-                    Text("여의도 한강공원")
+                    Spacer()
+                    
+                    Text("0분 전")
                         .foregroundStyle(Color(.color153))
-                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: 14)))
+                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
                 }
-                
-                Spacer()
+                .padding(.top, LayoutAdapter.shared.scale(value: 16))
+                .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
+            
+                HStack {
+                    VStack {
+                        Text(schedule.startTime.formatted(to: .monthDay))
+                            .foregroundStyle(Color(.brandColor))
+                            .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 20))))
+                        
+                        Text("D - \(schedule.dDay ?? 0)")
+                            .foregroundStyle(Color.red)
+                            .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
+                    }
+                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
+                    
+                    VStack(alignment: .leading) {
+                        Text(schedule.title)
+                            .foregroundStyle(Color(.color34))
+                        
+                        Text(schedule.location?.location ?? "")
+                            .foregroundStyle(Color(.color153))
+                            .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
+                    }
+                    
+                    Spacer()
+                }
+                    
+                HStack {
+                    CustomButtonSwiftUI(title: "수락하기", backgroundColor: Color(.brandColor), titleColor: .white) {
+                        viewModel.ecceptSchedule(scheduleSeq: schedule.scheduleSeq)
+                    }
+                    .frame(width: LayoutAdapter.shared.scale(value: 152), height: LayoutAdapter.shared.scale(value: 46))
+                    
+                    CustomButtonSwiftUI(title: "거절하기", backgroundColor: .white, titleColor: Color(.color34)) {
+                        viewModel.refuseInvitedSchedule(scheduleSeq: schedule.scheduleSeq)
+                    }
+                    .frame(width: LayoutAdapter.shared.scale(value: 152), height: LayoutAdapter.shared.scale(value: 46))
+                }
+                .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
+                .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
             }
-                
-            HStack {
-                CustomButtonSwiftUI(title: "수락하기", backgroundColor: Color(.brandColor), titleColor: .white) {
-                    print("수락")
-                }
-                .frame(width: LayoutAdapter.shared.scale(value: 152), height: LayoutAdapter.shared.scale(value: 46))
-                
-                CustomButtonSwiftUI(title: "거절하기", backgroundColor: .white, titleColor: Color(.color34)) {
-                    print("수락")
-                }
-                .frame(width: LayoutAdapter.shared.scale(value: 152), height: LayoutAdapter.shared.scale(value: 46))
-            }
-            .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
-            .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
-        }
-        .background(
-            RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16))
-                .fill(Color(.white))
-                .strokeBorder(Color(.brandColor), lineWidth: 1)
-        )
-        .padding(.top, LayoutAdapter.shared.scale(value: 6))
+            .background(
+                RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16))
+                    .fill(Color(.white))
+                    .strokeBorder(Color(.brandColor), lineWidth: 1)
+            )
+            .padding(.top, LayoutAdapter.shared.scale(value: 6))
     }
     
     func unconfirmedScheduleArticle() -> some View {
@@ -193,7 +242,7 @@ struct NotificationView: View {
                 
                 Text("0분 전")
                     .foregroundStyle(Color(.color153))
-                    .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: 14)))
+                    .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
             }
             .padding(.top, LayoutAdapter.shared.scale(value: 16))
             .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
@@ -202,11 +251,11 @@ struct NotificationView: View {
                 VStack {
                     Text("4월 5일")
                         .foregroundStyle(Color(.brandColor))
-                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: 20)))
+                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 20))))
                     
                     Text("D - 5")
                         .foregroundStyle(Color.red)
-                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: 14)))
+                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
                         
                 }
                 .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
@@ -217,7 +266,7 @@ struct NotificationView: View {
                     
                     Text("회사")
                         .foregroundStyle(Color(.color153))
-                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: 14)))
+                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
                 }
                 
                 Spacer()
@@ -225,7 +274,7 @@ struct NotificationView: View {
                 CustomButtonSwiftUI(title: "일정 확인하기", backgroundColor: Color(.brandColor), titleColor: .white) {
                     print("수락")
                 }
-                .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: 14)))
+                .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
                 .frame(width: LayoutAdapter.shared.scale(value: 100), height: LayoutAdapter.shared.scale(value: 42))
                 .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
             }
@@ -238,35 +287,35 @@ struct NotificationView: View {
         )
     }
     
-    // MARK: Friend Section Articles
-    func acceptedFriendArticle() -> some View {
-        VStack(spacing: LayoutAdapter.shared.scale(value: 8)) {
-            HStack {
-                Text("친구수락이 되었습니다.")
-                    .foregroundStyle(Color(.color34))
-                
-                Spacer()
-                
-                Text("0분 전")
-                    .foregroundStyle(Color(.color153))
-                    .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: 14)))
-            }
-            .padding(.top, LayoutAdapter.shared.scale(value: 16))
-            .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
-        
-            profileView()
-                .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
-                .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
-        }
-        .background(
-            RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16))
-                .fill(Color(.white))
-                .strokeBorder(Color(.brandColor), lineWidth: 1)
-        )
-        .padding(.top, LayoutAdapter.shared.scale(value: 6))
-    }
+    // MARK: Friend Section Cards
+//    func acceptedFriendArticle() -> some View {
+//        VStack(spacing: LayoutAdapter.shared.scale(value: 8)) {
+//            HStack {
+//                Text("친구수락이 되었습니다.")
+//                    .foregroundStyle(Color(.color34))
+//                
+//                Spacer()
+//                
+//                Text("0분 전")
+//                    .foregroundStyle(Color(.color153))
+//                    .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
+//            }
+//            .padding(.top, LayoutAdapter.shared.scale(value: 16))
+//            .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
+//        
+//            profileView()
+//                .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
+//                .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
+//        }
+//        .background(
+//            RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16))
+//                .fill(Color(.white))
+//                .strokeBorder(Color(.brandColor), lineWidth: 1)
+//        )
+//        .padding(.top, LayoutAdapter.shared.scale(value: 6))
+//    }
     
-    func friendRequestArticle() -> some View {
+    func friendRequestCard(friendRequest: FriendRequest) -> some View {
         VStack(spacing: LayoutAdapter.shared.scale(value: 8)) {
             HStack {
                 Text("친구요청이 도착했습니다.")
@@ -276,12 +325,12 @@ struct NotificationView: View {
                 
                 Text("0분 전")
                     .foregroundStyle(Color(.color153))
-                    .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: 14)))
+                    .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
             }
             .padding(.top, LayoutAdapter.shared.scale(value: 16))
             .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
         
-            profileView()
+            profileView(friend: friendRequest.friend)
                 .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
                 
             HStack {
@@ -303,11 +352,12 @@ struct NotificationView: View {
                 .fill(Color(.white))
                 .strokeBorder(Color(.brandColor), lineWidth: 1)
         )
+        .padding(.top, LayoutAdapter.shared.scale(value: 6))
     }
     
-    func profileView() -> some View {
+    func profileView(friend: Friend) -> some View {
         HStack {
-            KFImage(URL(string: UserDefaultsManager.shared.getProfileImage()))
+            KFImage(URL(string: friend.profileImage))
                 .resizable()
                 .scaledToFill()
                 .frame(width: LayoutAdapter.shared.scale(value: 64), height: LayoutAdapter.shared.scale(value: 64))
@@ -315,12 +365,12 @@ struct NotificationView: View {
                 .padding(.leading, LayoutAdapter.shared.scale(value: -4))
             
             VStack(alignment: .leading) {
-                Text("김지원")
+                Text(friend.name)
                     .foregroundStyle(Color(.color34))
                 
-                Text("#1wee35")
+                Text("#1wee35") // TODO: 멤버코드 하드코딩 지우기
                     .foregroundStyle(Color(.color153))
-                    .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: 14)))
+                    .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
             }
             .padding(.leading, LayoutAdapter.shared.scale(value: 4))
             
@@ -340,7 +390,7 @@ struct NotificationView: View {
                 
                 Text("0분 전")
                     .foregroundStyle(Color(.color153))
-                    .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: 14)))
+                    .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
             }
             .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
             
@@ -350,6 +400,7 @@ struct NotificationView: View {
                 .foregroundStyle(Color(.color102))
                 .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
                 .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
+                .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
         }
         .background(
             RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16))

@@ -40,7 +40,7 @@ extension ScheduleAPI: TargetType {
         case .deleteScheduleByCreator:
             return "/schedule/creator"
         case .postAcceptSchedule:
-            return "/schedule/accept-schedule"
+            return "/schedule/accept"
         case .getMonthlySchedule:
             return "/schedule/month"
         case .getDailySchedule:

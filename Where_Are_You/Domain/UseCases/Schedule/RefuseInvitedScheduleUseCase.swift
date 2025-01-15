@@ -11,7 +11,7 @@ protocol RefuseInvitedScheduleUseCase {
     func execute(request: RefuseInvitedScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
-class DeleteInvitedScheduleUseCaseImpl: RefuseInvitedScheduleUseCase {
+class RefuseInvitedScheduleUseCaseImpl: RefuseInvitedScheduleUseCase {
     private let scheduleRepository: ScheduleRepositoryProtocol
     
     init(scheduleRepository: ScheduleRepositoryProtocol) {

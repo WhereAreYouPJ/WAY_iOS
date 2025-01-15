@@ -267,7 +267,10 @@ class FriendFeedViewController: UIViewController {
     }
     
     @objc private func handleNotification() {
-        print("알림 페이지로 이동")
+        let notificationView = NotificationView()
+        let hostingController = UIHostingController(rootView: notificationView)
+        hostingController.modalPresentationStyle = .fullScreen
+        present(hostingController, animated: true)
     }
     
     @objc private func handleAdd() {

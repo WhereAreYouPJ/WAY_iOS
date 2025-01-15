@@ -177,6 +177,7 @@ enum DateFormat: String {
     case serverSimple = "yyyy-MM-dd'T'HH:mm:ss"
     case yearMonthDate = "yy.MM.dd"                // "YY.MM.dd" 형태
     case yearMonth = "yyyy.MM"               // "YYYY.MM" 형태
+    case monthDay = "MM월 dd일"               // "MM월 dd일" 형태
 }
 
 extension String {
@@ -189,6 +190,12 @@ extension String {
     
     func toDate(from format: DateFormat = .serverSimple) -> Date? {
         return DateFormatter.formatter(for: format).date(from: self)
+    }
+}
+
+extension Date {
+    func formatted(to format: DateFormat) -> String {
+        return DateFormatter.formatter(for: format).string(from: self)
     }
 }
 

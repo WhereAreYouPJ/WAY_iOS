@@ -11,7 +11,7 @@ protocol PostAcceptScheduleUseCase {
     func execute(request: PostAcceptScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
-class PostEcceptScheduleUseCaseImpl: PostAcceptScheduleUseCase {
+class PostAcceptScheduleUseCaseImpl: PostAcceptScheduleUseCase {
     private let scheduleRepository: ScheduleRepositoryProtocol
     
     init(scheduleRepository: ScheduleRepositoryProtocol) {
