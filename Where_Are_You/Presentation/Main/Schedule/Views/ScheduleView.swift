@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 당일 일정인 경우
+    // TODO: 초대받은 일정 캘린더에 안뜸
     @StateObject var viewModel: ScheduleViewModel
     
     @State private var showNotification = false

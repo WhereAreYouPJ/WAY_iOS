@@ -38,13 +38,13 @@ class ManageFriendsViewModel: ObservableObject {
 //        getDummyData()
     }
     
-    func getDummyData() {
-        sentRequests.append(FriendRequest(friendRequestSeq: 1, createTime: DateFormatter().string(from: Date()), friend: .init(memberSeq: 1, profileImage: "", name: "고윤정", isFavorite: false)))
-        
-        receivedRequests.append(FriendRequest(friendRequestSeq: 1, createTime: DateFormatter().string(from: Date()), friend: .init(memberSeq: 1, profileImage: "", name: "김민정", isFavorite: false)))
-        receivedRequests.append(FriendRequest(friendRequestSeq: 1, createTime: DateFormatter().string(from: Date()), friend: .init(memberSeq: 1, profileImage: "", name: "이주헌", isFavorite: false)))
-        receivedRequests.append(FriendRequest(friendRequestSeq: 1, createTime: DateFormatter().string(from: Date()), friend: .init(memberSeq: 1, profileImage: "", name: "임창균", isFavorite: false)))
-    }
+//    func getDummyData() {
+//        sentRequests.append(FriendRequest(friendRequestSeq: 1, createTime: DateFormatter().string(from: Date()), friend: .init(memberSeq: 1, profileImage: "", name: "고윤정", isFavorite: false)))
+//        
+//        receivedRequests.append(FriendRequest(friendRequestSeq: 1, createTime: DateFormatter().string(from: Date()), friend: .init(memberSeq: 1, profileImage: "", name: "김민정", isFavorite: false)))
+//        receivedRequests.append(FriendRequest(friendRequestSeq: 1, createTime: DateFormatter().string(from: Date()), friend: .init(memberSeq: 1, profileImage: "", name: "이주헌", isFavorite: false)))
+//        receivedRequests.append(FriendRequest(friendRequestSeq: 1, createTime: DateFormatter().string(from: Date()), friend: .init(memberSeq: 1, profileImage: "", name: "임창균", isFavorite: false)))
+//    }
     
     func getSentRequests() {
         getListForSenderUseCase.execute { [weak self] result in
@@ -53,7 +53,7 @@ class ManageFriendsViewModel: ObservableObject {
                 case .success(let requests):
                     self?.sentRequests = requests.map { response in
                         FriendRequest(friendRequestSeq: response.friendRequestSeq,
-                                      createTime: response.createTime,
+                                      createTime: response.createTime.toDate(from: .server) ?? Date.now,
                                       friend: Friend(memberSeq: response.receiverSeq,
                                                      profileImage: response.profileImage ?? "",
                                                      name: response.userName,
@@ -75,7 +75,7 @@ class ManageFriendsViewModel: ObservableObject {
                 case .success(let requests):
                     self?.receivedRequests = requests.map { response in
                         FriendRequest(friendRequestSeq: response.friendRequestSeq,
-                                      createTime: response.createTime,
+                                      createTime: response.createTime.toDate(from: .server) ?? Date.now,
                                       friend: Friend(memberSeq: response.senderSeq,
                                                      profileImage: response.profileImage ?? "",
                                                      name: response.userName,

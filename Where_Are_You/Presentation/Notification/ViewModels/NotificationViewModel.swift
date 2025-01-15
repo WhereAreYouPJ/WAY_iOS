@@ -140,7 +140,7 @@ class NotificationViewModel: ObservableObject {
         return requestedLists.map { response in
             FriendRequest(
                 friendRequestSeq: response.friendRequestSeq,
-                createTime: response.createTime,
+                createTime: response.createTime.toDate(from: .server) ?? Date.now,
                 friend: Friend(
                     memberSeq: response.senderSeq,
                     profileImage: response.profileImage ?? AppConstants.defaultProfileImageUrl,

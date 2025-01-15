@@ -197,6 +197,26 @@ extension Date {
     func formatted(to format: DateFormat) -> String {
         return DateFormatter.formatter(for: format).string(from: self)
     }
+    
+    func timeAgoDisplay() -> String {
+        let calendar = Calendar.current
+        let now = Date()
+        let components = calendar.dateComponents([.minute, .hour, .day, .month, .year], from: self, to: now)
+        
+        if let day = components.day, day > 0 {
+            return day == 1 ? "1일 전" : "\(day)일 전"
+        }
+        
+        if let hour = components.hour, hour > 0 {
+            return hour == 1 ? "1시간 전" : "\(hour)시간 전"
+        }
+        
+        if let minute = components.minute, minute > 0 {
+            return minute == 1 ? "1분 전" : "\(minute)분 전"
+        }
+        
+        return "방금 전"
+    }
 }
 
 // MARK: - Notification

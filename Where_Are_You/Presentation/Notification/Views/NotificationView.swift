@@ -323,7 +323,7 @@ struct NotificationView: View {
                 
                 Spacer()
                 
-                Text("0분 전")
+                Text(friendRequest.createTime.timeAgoDisplay())
                     .foregroundStyle(Color(.color153))
                     .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
             }
