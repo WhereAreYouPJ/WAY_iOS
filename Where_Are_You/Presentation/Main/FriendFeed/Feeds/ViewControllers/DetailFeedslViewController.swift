@@ -10,6 +10,9 @@ import UIKit
 class FeedDetailViewController: UIViewController {
     // MARK: - Properties
     private let feedDetailView = FeedDetailView()
+    
+    private var optionsView = MultiCustomOptionsContainerView()
+    
     var feed: Feed
     private var participants: [Info] = [] // 참가자 정보
     
@@ -41,7 +44,7 @@ class FeedDetailViewController: UIViewController {
     }
     
     private func configureView() {
-//        feedDetailView.feedsView.configure
+        
     }
     
     private func fetchParticipants() {
@@ -49,7 +52,7 @@ class FeedDetailViewController: UIViewController {
         // 예제 코드
         participants = feed.scheduleFriendInfos ?? []
         sortParticipants()
-        feedDetailView.configureParticipantImages(participants: participants)
+        feedDetailView.configureParticipants(participants: participants)
     }
     
     private func sortParticipants() {
@@ -58,9 +61,9 @@ class FeedDetailViewController: UIViewController {
     }
 }
 
-extension FeedDetailViewController: FeedDetailDelegate {
+extension FeedDetailViewController: FeedParticipantDelegate {
     func didSelectParticipant(at index: Int) {
-//        let pageViewController = FeedDetailPageViewController(feeds: allFeeds, startIndex: index)
-//        navigationController?.pushViewController(pageViewController, animated: true)
+        print("Participant selected at index: \(index)")
+        // Implement logic to display the selected participant's feed
     }
 }

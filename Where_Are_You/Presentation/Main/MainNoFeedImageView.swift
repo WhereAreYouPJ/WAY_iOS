@@ -36,6 +36,7 @@ class MainNoFeedImageView: UIImageView {
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
+        contentMode = .scaleAspectFill
         configureViewComponents()
         setupConstraints()
     }

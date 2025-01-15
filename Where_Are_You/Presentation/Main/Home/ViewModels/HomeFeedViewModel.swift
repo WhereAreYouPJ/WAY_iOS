@@ -45,7 +45,7 @@ class HomeFeedViewModel {
                     self.onFeedsDataFetched?()
                 }
             case .failure(let error):
-                print(error)
+                print(error.localizedDescription)
             }
         }
     }

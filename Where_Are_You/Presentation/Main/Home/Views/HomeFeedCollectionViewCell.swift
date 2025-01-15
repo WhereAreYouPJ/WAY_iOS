@@ -53,7 +53,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
         label.textColor = .color118
-        label.adjustsFontForContentSizeCategory = true
+        label.isHidden = true
         label.lineBreakMode = .byCharWrapping
         label.numberOfLines = 2
         return label
@@ -82,6 +82,15 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         setupConstraints()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        // 상태 초기화
+        feedImageView.image = nil
+        feedImageView.subviews.forEach { $0.removeFromSuperview() }
+        descriptionLabel.text = nil
+        descriptionLabel.isHidden = true
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -105,16 +114,25 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
             make.width.equalTo(textStackView.snp.height)
         }
         
-        titleStackView.snp.makeConstraints { make in
+        profileImageView.snp.makeConstraints { make in
             make.height.equalTo(LayoutAdapter.shared.scale(value: 56))
         }
-        
+
         feedContentStackView.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
+        }
+        
+        descriptionLabel.snp.makeConstraints { make in
+            make.height.lessThanOrEqualTo(LayoutAdapter.shared.scale(value: 40))
+        }
+        
+        feedImageView.snp.makeConstraints { make in
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 80)).priority(UILayoutPriority(999))
         }
     }
     
     func configure(with feed: HomeFeedContent) {
+          
         profileImageView.kf.setImage(with: URL(string: feed.profileImageURL), placeholder: UIImage(named: "basic_profile_image"))
         locationLabel.text = feed.location
         titleLabel.text = feed.title
@@ -128,9 +146,6 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
                 let mainNoFeedImageView = MainNoFeedImageView(frame: CGRect(x: 0, y: 0, width: LayoutAdapter.shared.scale(value: 295), height: LayoutAdapter.shared.scale(value: 80)))
                 mainNoFeedImageView.configureUI(profileImage: feed.profileImageURL)
                 feedImageView.addSubview(mainNoFeedImageView)
-                mainNoFeedImageView.snp.makeConstraints { make in
-                    make.edges.equalToSuperview()
-                }
             }
         } else { // 피드 content가 없는 경우
             descriptionLabel.isHidden = true
@@ -140,9 +155,6 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
                 let mainNoFeedImageView = MainNoFeedImageView(frame: CGRect(x: 0, y: 0, width: LayoutAdapter.shared.scale(value: 295), height: LayoutAdapter.shared.scale(value: 80)))
                 mainNoFeedImageView.configureUI(profileImage: feed.profileImageURL)
                 feedImageView.addSubview(mainNoFeedImageView)
-                mainNoFeedImageView.snp.makeConstraints { make in
-                    make.edges.equalToSuperview()
-                }
             }
         }
     }

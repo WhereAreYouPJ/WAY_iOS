@@ -61,6 +61,7 @@ extension HomeFeedViewController: UICollectionViewDataSource, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let feedCount = viewModel.getFeeds().count
+
         if indexPath.item < feedCount {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeFeedCollectionViewCell.identifier, for: indexPath) as? HomeFeedCollectionViewCell else {
                 return UICollectionViewCell()
@@ -72,7 +73,8 @@ extension HomeFeedViewController: UICollectionViewDataSource, UICollectionViewDe
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoreFeedCollectionViewCell.identifier, for: indexPath) as? MoreFeedCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.profileImageView.setImage(from: "")
+            let profileImageURL = UserDefaultsManager.shared.getProfileImage()
+            cell.configureCell(profileImageURL: profileImageURL)
             cell.delegate = self
             return cell
         }
@@ -80,24 +82,24 @@ extension HomeFeedViewController: UICollectionViewDataSource, UICollectionViewDe
 }
 
 extension HomeFeedViewController: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//            // 섹션의 상단 마진을 설정
-//            return UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
-//        }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let feed = viewModel.getFeeds()[indexPath.item]
-        var height: CGFloat = 0
-        height += LayoutAdapter.shared.scale(value: 56) // 프로필 이미지 높이
-        if let content = feed.content, !content.isEmpty {
-            height += LayoutAdapter.shared.scale(value: 40)
+        let feedCount = viewModel.getFeeds().count
+        if indexPath.item < feedCount {
+            let feed = viewModel.getFeeds()[indexPath.item]
+            var height: CGFloat = 0
+            height += LayoutAdapter.shared.scale(value: 56) // 프로필 이미지 높이
+            if let content = feed.content, !content.isEmpty {
+                height += LayoutAdapter.shared.scale(value: 40) // 피드 content 높이
+            } else {
+                height -= LayoutAdapter.shared.scale(value: 12) // 피드 content 위 아래 padding 삭제(content가 없는 조건)
+            }
+            
+            height += LayoutAdapter.shared.scale(value: 80) // 피드 이미지뷰 높이
+            height += LayoutAdapter.shared.scale(value: 56) // 피드 여백 높이
+            return CGSize(width: feedView.frame.width - 30, height: height)
         } else {
-            height -= LayoutAdapter.shared.scale(value: 12)
+            return CGSize(width: LayoutAdapter.shared.scale(value: 270), height: LayoutAdapter.shared.scale(value: 160))
         }
-        
-        height += LayoutAdapter.shared.scale(value: 80)
-        height += LayoutAdapter.shared.scale(value: 56)
-        return CGSize(width: feedView.frame.width - 30, height: height)
     }
 }
 
