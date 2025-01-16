@@ -54,9 +54,7 @@ class HomeFeedViewController: UIViewController {
         viewModel.fetchFeeds { [weak self] feeds in
             DispatchQueue.main.async {
                 self?.feedView.feeds = feeds
-                self?.feedView.collectionView.reloadData()
-                
-                FeedCacheManager.shared.cachedFeeds = feeds
+                self?.feedView.collectionView.reloadData()                
             }
         }
     }

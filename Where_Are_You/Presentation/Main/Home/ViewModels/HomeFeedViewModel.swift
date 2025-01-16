@@ -10,21 +10,21 @@ import UIKit
 
 class HomeFeedViewModel {
     // MARK: - Properties
-    private let getFeedListUseCase: GetFeedListUseCase
+    private let getFeedMainUseCase: GetFeedMainUseCase
     
     var onFeedsDataFetched: (() -> Void)?
     private var rawFeedContent: [FeedContent] = []
     private var displayFeedContent: [Feed] = []
     
-    init(getFeedListUseCase: GetFeedListUseCase) {
-        self.getFeedListUseCase = getFeedListUseCase
+    init(getFeedMainUseCase: GetFeedMainUseCase) {
+        self.getFeedMainUseCase = getFeedMainUseCase
     }
     
     // MARK: - Helpers
     
     // 피드를 불러오는 메서드
     func fetchFeeds(completion: @escaping ([Feed]) -> Void) {
-        getFeedListUseCase.execute(page: 0) { [weak self] result in
+        getFeedMainUseCase.execute { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let data):

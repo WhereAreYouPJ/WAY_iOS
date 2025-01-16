@@ -21,6 +21,8 @@ class FeedDetailViewController: UIViewController {
     // MARK: - Lifecycle
     init(feed: Feed) {
         self.feed = feed
+        self.participants = feed.scheduleFriendInfos ?? []
+
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -31,6 +33,7 @@ class FeedDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         feedDetailView.delegate = self
+        setupNavigationBar()
         setupViewModel()
         setupView()
         configureView()
@@ -38,6 +41,10 @@ class FeedDetailViewController: UIViewController {
     }
     
     // MARK: - Helpers
+    private func setupNavigationBar() {
+        configureNavigationBar(title: "", backButtonAction: #selector(backButtonTapped))
+    }
+    
     private func setupViewModel() {
         let feedService = FeedService()
         let feedRepository = FeedRepository(feedService: feedService)
@@ -57,7 +64,6 @@ class FeedDetailViewController: UIViewController {
     
     private func fetchParticipants() {
         // 참가자 정보 로드 (뷰 모델 혹은 네트워크 호출)
-        participants = feed.scheduleFriendInfos ?? []
         feedDetailView.configureParticipants(participants: participants)
         
         // 상세 피드 데이터들 다 받아오기(사용자 경험 증진을 위해)
@@ -65,11 +71,14 @@ class FeedDetailViewController: UIViewController {
         guard let scheduleSeq = feed.scheduleSeq else { return }
         viewModel.fetchDetailFeeds(scheduleSeq: scheduleSeq, participantsMemberSeq: participantsMemberSeq)
     }
+    
+    @objc func backButtonTapped() {
+        dismiss(animated: true)
+    }
 }
 
 extension FeedDetailViewController: FeedParticipantDelegate {
     func didSelectParticipant(at index: Int) {
-        print("Participant selected at index: \(index)")
         self.displayFeed = viewModel.getParticipantFeed(index: index)
     }
 }

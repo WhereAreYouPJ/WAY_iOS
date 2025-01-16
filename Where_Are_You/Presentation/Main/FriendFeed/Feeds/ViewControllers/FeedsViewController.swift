@@ -27,13 +27,7 @@ class FeedsViewController: UIViewController {
         setupBindings()
         setupActions()
         
-        let cachedFeeds = FeedCacheManager.shared.cachedFeeds
-        if !cachedFeeds.isEmpty {
-            viewModel.displayFeedContent = cachedFeeds
-        }
-        
         viewModel.fetchFeeds()
-        
         feedsView.updateContentHeight()
     }
     
