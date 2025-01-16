@@ -29,7 +29,7 @@ class HomeFeedViewController: UIViewController {
         view = feedView
         setupBindings()
         setupCollectionView()
-        viewModel.fetchFeeds()
+        fetchInitialFeeds()
     }
     
     // MARK: - Helpers
@@ -49,6 +49,17 @@ class HomeFeedViewController: UIViewController {
         feedView.collectionView.register(HomeFeedCollectionViewCell.self, forCellWithReuseIdentifier: HomeFeedCollectionViewCell.identifier)
         feedView.collectionView.register(MoreFeedCollectionViewCell.self, forCellWithReuseIdentifier: MoreFeedCollectionViewCell.identifier)
     }
+    
+    private func fetchInitialFeeds() {
+        viewModel.fetchFeeds { [weak self] feeds in
+            DispatchQueue.main.async {
+                self?.feedView.feeds = feeds
+                self?.feedView.collectionView.reloadData()
+                
+                FeedCacheManager.shared.cachedFeeds = feeds
+            }
+        }
+    }
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
@@ -61,6 +72,7 @@ extension HomeFeedViewController: UICollectionViewDataSource, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let feedCount = viewModel.getFeeds().count
+
         if indexPath.item < feedCount {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeFeedCollectionViewCell.identifier, for: indexPath) as? HomeFeedCollectionViewCell else {
                 return UICollectionViewCell()
@@ -72,7 +84,8 @@ extension HomeFeedViewController: UICollectionViewDataSource, UICollectionViewDe
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoreFeedCollectionViewCell.identifier, for: indexPath) as? MoreFeedCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.profileImageView.setImage(from: "")
+            let profileImageURL = UserDefaultsManager.shared.getProfileImage()
+            cell.configureCell(profileImageURL: profileImageURL)
             cell.delegate = self
             return cell
         }
@@ -81,7 +94,23 @@ extension HomeFeedViewController: UICollectionViewDataSource, UICollectionViewDe
 
 extension HomeFeedViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: feedView.frame.width - 30, height: collectionView.frame.height)
+        let feedCount = viewModel.getFeeds().count
+        if indexPath.item < feedCount {
+            let feed = viewModel.getFeeds()[indexPath.item]
+            var height: CGFloat = 0
+            height += LayoutAdapter.shared.scale(value: 56) // 프로필 이미지 높이
+            if let content = feed.content, !content.isEmpty {
+                height += LayoutAdapter.shared.scale(value: 40) // 피드 content 높이
+            } else {
+                height -= LayoutAdapter.shared.scale(value: 12) // 피드 content 위 아래 padding 삭제(content가 없는 조건)
+            }
+            
+            height += LayoutAdapter.shared.scale(value: 80) // 피드 이미지뷰 높이
+            height += LayoutAdapter.shared.scale(value: 56) // 피드 여백 높이
+            return CGSize(width: feedView.frame.width - 30, height: height)
+        } else {
+            return CGSize(width: LayoutAdapter.shared.scale(value: 270), height: LayoutAdapter.shared.scale(value: 160))
+        }
     }
 }
 

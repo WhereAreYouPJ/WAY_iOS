@@ -17,11 +17,9 @@ class FeedViewModel {
     private let postBookMarkFeedUseCase: PostBookMarkFeedUseCase
     private let deleteBookMarkFeedUseCase: DeleteBookMarkFeedUseCase
     
-//    private let imageCache = ImageCache.default
     private let memberSeq = UserDefaultsManager.shared.getMemberSeq()
     
     var onFeedsDataFetched: (() -> Void)?
-    //    var onImageLoaded: ((Int) -> Void)?
     
     private(set) var currentIndex = 0
     
@@ -29,14 +27,12 @@ class FeedViewModel {
     private var isLoading = false
     
     private var rawFeedContent: [FeedContent] = []
-    private(set) var displayFeedContent: [Feed] = [] {
+    var displayFeedContent: [Feed] = [] {
         didSet {
             self.onFeedsDataFetched?()
         }
     }
-    
-    //    var cachedImages: [Int: [UIImage]] = [:]  이미지 캐싱 저장소 (feedSeq기반)
-    
+        
     // MARK: - Initializer
     init(getFeedListUseCase: GetFeedListUseCase,
          deleteFeedUseCase: DeleteFeedUseCase,
@@ -60,6 +56,7 @@ class FeedViewModel {
             case .success(let data):
                 self.rawFeedContent = data
                 self.displayFeedContent = data.compactMap { $0.toFeeds() }
+                FeedCacheManager.shared.cachedFeeds = self.displayFeedContent
             case .failure(let error):
                 print(error.localizedDescription)
             }

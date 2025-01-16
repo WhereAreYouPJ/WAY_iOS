@@ -82,7 +82,7 @@ class AddFeedViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.addFeedView.scheduleDropDown.dropDownTableView.reloadData()
                 // 선택된 일정의 정보를 표시
-                if let selectedSchedule = self?.viewModel.selectedSchedule {
+                if (self?.viewModel.selectedSchedule) != nil {
                     self?.addFeedView.scheduleDropDown.chooseScheduleLabel.isHidden = true
                 }
             }
@@ -185,7 +185,8 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return LayoutAdapter.shared.scale(value: 62)
+        tableView.estimatedRowHeight = LayoutAdapter.shared.scale(value: 62)
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -213,7 +214,15 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
             viewModel.selectSchedule(at: indexPath)
             
             // 선택된 일정의 정보로 label 업데이트
-            addFeedView.scheduleDropDown.scheduleDateLabel.text = schedule.startTime.prefix(10).replacingOccurrences(of: "-", with: ".")
+            let dateParts = schedule.startTime.prefix(10).split(separator: "-")
+            if dateParts.count == 3 {
+                let year = "\(dateParts[0])."  // 연도
+                let monthDay = "\(dateParts[1]).\(dateParts[2])"  // 월.일
+                
+                // 두 줄로 날짜 표시
+                addFeedView.scheduleDropDown.scheduleDateLabel.text = "\(year)\n\(monthDay)"
+            }
+            
             addFeedView.scheduleDropDown.scheduleLocationLabel.text = schedule.title
             
             // 선택된 일정 정보에 맞춰 라벨 보이기 설정
@@ -253,7 +262,7 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
     func updateDropDownHeight() {
         let rowHeight = LayoutAdapter.shared.scale(value: 62)
         let numberOfRows = viewModel.totalNumberOfRows()
-        let totalHeight = CGFloat(numberOfRows) * rowHeight
+        let totalHeight = CGFloat(numberOfRows) * rowHeight + LayoutAdapter.shared.scale(value: 50)
         let maxHeight = LayoutAdapter.shared.scale(value: 460)
         
         dropViewHeightConstraint.constant = min(totalHeight, maxHeight)

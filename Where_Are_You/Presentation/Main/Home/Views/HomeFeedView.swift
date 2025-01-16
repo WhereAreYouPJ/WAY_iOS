@@ -35,7 +35,7 @@ class HomeFeedView: UIView {
         return label
     }()
     
-    var feeds: [HomeFeedContent] = [] {
+    var feeds: [Feed] = [] {
         didSet {
             updateFeeds()
         }

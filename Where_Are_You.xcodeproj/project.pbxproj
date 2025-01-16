@@ -83,7 +83,7 @@
 		9974EA1E2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974EA1D2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift */; };
 		9974EA202C62196500826793 /* SnappingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974EA1F2C62196500826793 /* SnappingFlowLayout.swift */; };
 		9975A35B2C8055C100A0FF5C /* MemberDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57A22C27F9FE00F6E1AD /* MemberDetailsUseCase.swift */; };
-		997916922CFEE2BA001DED84 /* FeedDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997916912CFEE2BA001DED84 /* FeedDataManager.swift */; };
+		997916922CFEE2BA001DED84 /* FeedCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997916912CFEE2BA001DED84 /* FeedCacheManager.swift */; };
 		9979622D2C3E6B2200E95CA6 /* AccountLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979622C2C3E6B2200E95CA6 /* AccountLoginUseCase.swift */; };
 		997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997DC6562C3D253000EACA5F /* UserDefaultManager.swift */; };
 		9985AB972C786D0400D1442E /* MyDetailManageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985AB962C786D0400D1442E /* MyDetailManageView.swift */; };
@@ -175,13 +175,15 @@
 		99D8FBB52C3B9F9F0062AF10 /* MainHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8FBB42C3B9F9F0062AF10 /* MainHomeView.swift */; };
 		99D8FBB92C3BA1CD0062AF10 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */; };
 		99D8FBBB2C3BA1D90062AF10 /* MainHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8FBBA2C3BA1D90062AF10 /* MainHomeViewController.swift */; };
-		99D8FBBD2C3BA1E60062AF10 /* MainHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8FBBC2C3BA1E60062AF10 /* MainHomeViewModel.swift */; };
 		99D8FBC02C3BA2180062AF10 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8FBBF2C3BA2180062AF10 /* CustomLabel.swift */; };
 		99D8FBC22C3BA25B0062AF10 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D8FBC12C3BA25B0062AF10 /* CustomTextField.swift */; };
 		99DA18B92C4E132A00D5CDA6 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA18B82C4E132A00D5CDA6 /* TitleView.swift */; };
 		99DC75DE2D06782500C20857 /* DetailFeedslViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DC75DD2D06782500C20857 /* DetailFeedslViewController.swift */; };
 		99DE2F022D0813B40087ACC9 /* FeedArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DE2F012D0813B40087ACC9 /* FeedArchiveViewController.swift */; };
 		99DE2F042D0813EC0087ACC9 /* FeedArchiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DE2F032D0813EC0087ACC9 /* FeedArchiveViewModel.swift */; };
+		99E2EEED2D35FACD0010F1F9 /* FeedDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E2EEEC2D35FACD0010F1F9 /* FeedDetailView.swift */; };
+		99E2EEEF2D35FFCC0010F1F9 /* FeedParticipantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E2EEEE2D35FFCC0010F1F9 /* FeedParticipantView.swift */; };
+		99E2EEF12D3633CD0010F1F9 /* MainNoFeedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E2EEF02D3633CD0010F1F9 /* MainNoFeedImageView.swift */; };
 		99E401252D0D6CD900A63304 /* FeedOptionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E401242D0D6CD900A63304 /* FeedOptionsHandler.swift */; };
 		99E755512C22E66F0016A0A6 /* MemberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E755502C22E66F0016A0A6 /* MemberService.swift */; };
 		99E7BA592C69A5D500F79C96 /* ImageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E7BA582C69A5D500F79C96 /* ImageUtility.swift */; };
@@ -406,7 +408,7 @@
 		9967C1532C566F2F00927277 /* NetworkAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAlert.swift; sourceTree = "<group>"; };
 		9974EA1D2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreFeedCollectionViewCell.swift; sourceTree = "<group>"; };
 		9974EA1F2C62196500826793 /* SnappingFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnappingFlowLayout.swift; sourceTree = "<group>"; };
-		997916912CFEE2BA001DED84 /* FeedDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDataManager.swift; sourceTree = "<group>"; };
+		997916912CFEE2BA001DED84 /* FeedCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCacheManager.swift; sourceTree = "<group>"; };
 		9979622C2C3E6B2200E95CA6 /* AccountLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLoginUseCase.swift; sourceTree = "<group>"; };
 		997DC6562C3D253000EACA5F /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		9985AB962C786D0400D1442E /* MyDetailManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDetailManageView.swift; sourceTree = "<group>"; };
@@ -500,13 +502,15 @@
 		99D8FBB42C3B9F9F0062AF10 /* MainHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHomeView.swift; sourceTree = "<group>"; };
 		99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		99D8FBBA2C3BA1D90062AF10 /* MainHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHomeViewController.swift; sourceTree = "<group>"; };
-		99D8FBBC2C3BA1E60062AF10 /* MainHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHomeViewModel.swift; sourceTree = "<group>"; };
 		99D8FBBF2C3BA2180062AF10 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		99D8FBC12C3BA25B0062AF10 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		99DA18B82C4E132A00D5CDA6 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		99DC75DD2D06782500C20857 /* DetailFeedslViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFeedslViewController.swift; sourceTree = "<group>"; };
 		99DE2F012D0813B40087ACC9 /* FeedArchiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedArchiveViewController.swift; sourceTree = "<group>"; };
 		99DE2F032D0813EC0087ACC9 /* FeedArchiveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedArchiveViewModel.swift; sourceTree = "<group>"; };
+		99E2EEEC2D35FACD0010F1F9 /* FeedDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailView.swift; sourceTree = "<group>"; };
+		99E2EEEE2D35FFCC0010F1F9 /* FeedParticipantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedParticipantView.swift; sourceTree = "<group>"; };
+		99E2EEF02D3633CD0010F1F9 /* MainNoFeedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNoFeedImageView.swift; sourceTree = "<group>"; };
 		99E401242D0D6CD900A63304 /* FeedOptionsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedOptionsHandler.swift; sourceTree = "<group>"; };
 		99E755502C22E66F0016A0A6 /* MemberService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberService.swift; sourceTree = "<group>"; };
 		99E7BA582C69A5D500F79C96 /* ImageUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtility.swift; sourceTree = "<group>"; };
@@ -742,6 +746,7 @@
 		990DE7742C660A94007B78C9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				99E2EEEB2D35FAC60010F1F9 /* DetailFeed */,
 				99C403162D2F6483005CD989 /* NoFeedImageViewCell.swift */,
 				990DE7632C65E767007B78C9 /* FeedDetailBoxView.swift */,
 				990DE7672C65EAEB007B78C9 /* FeedImageCollectionViewCell.swift */,
@@ -927,7 +932,6 @@
 		9953583B2C00C555005BF799 /* Where_Are_You */ = {
 			isa = PBXGroup;
 			children = (
-				99BC80742CEEC6420040E44B /* CoreData */,
 				9953583C2C00C555005BF799 /* AppDelegate.swift */,
 				9953583E2C00C555005BF799 /* SceneDelegate.swift */,
 				99D11EBB2C07848B006BE265 /* Resources */,
@@ -989,14 +993,6 @@
 				99E9DC842CE48AA3007FFD91 /* FeedImageCell.swift */,
 			);
 			path = AddFeed;
-			sourceTree = "<group>";
-		};
-		99BC80742CEEC6420040E44B /* CoreData */ = {
-			isa = PBXGroup;
-			children = (
-				997916912CFEE2BA001DED84 /* FeedDataManager.swift */,
-			);
-			path = CoreData;
 			sourceTree = "<group>";
 		};
 		99C5B9E12D30AE6800CD570F /* AccountDelete */ = {
@@ -1128,6 +1124,7 @@
 		99C9B2262C019748008D7CBD /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				997916912CFEE2BA001DED84 /* FeedCacheManager.swift */,
 				D558CB652D28196100710808 /* AppConstants.swift */,
 				997DC6562C3D253000EACA5F /* UserDefaultManager.swift */,
 				99C140372C64943F00A706B6 /* LayoutAdapter.swift */,
@@ -1239,6 +1236,7 @@
 		99CC5E6A2C5211ED00A0509A /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				99E2EEF02D3633CD0010F1F9 /* MainNoFeedImageView.swift */,
 				99C1403D2C6496BC00A706B6 /* NoDataView.swift */,
 				99A814112D129DC5000FC5A3 /* NoFeedImageView.swift */,
 				99D8FBB82C3BA1CD0062AF10 /* MainTabBarController.swift */,
@@ -1412,7 +1410,6 @@
 		99D8FBB32C3B9F7D0062AF10 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				99D8FBBC2C3BA1E60062AF10 /* MainHomeViewModel.swift */,
 				99FBA54F2C45394E002EEEC7 /* BannerViewModel.swift */,
 				99FBA5532C453B6D002EEEC7 /* DDayViewModel.swift */,
 				99FBA5572C453C05002EEEC7 /* HomeFeedViewModel.swift */,
@@ -1432,6 +1429,15 @@
 				D55C6C3D2CF57E74005132DC /* CustomButtonSwiftUI.swift */,
 			);
 			path = Customs;
+			sourceTree = "<group>";
+		};
+		99E2EEEB2D35FAC60010F1F9 /* DetailFeed */ = {
+			isa = PBXGroup;
+			children = (
+				99E2EEEC2D35FACD0010F1F9 /* FeedDetailView.swift */,
+				99E2EEEE2D35FFCC0010F1F9 /* FeedParticipantView.swift */,
+			);
+			path = DetailFeed;
 			sourceTree = "<group>";
 		};
 		99EC209F2C0D8DEC0018904D /* UseCases */ = {
@@ -2069,7 +2075,7 @@
 				D5B79A162C5B83CD004EDDF2 /* (null) in Sources */,
 				D534B0FE2D06F0FD004864E0 /* CoordinateService.swift in Sources */,
 				99C9213D2D34B72A00FC2333 /* TokenReissueUseCase.swift in Sources */,
-				997916922CFEE2BA001DED84 /* FeedDataManager.swift in Sources */,
+				997916922CFEE2BA001DED84 /* FeedCacheManager.swift in Sources */,
 				9953583D2C00C555005BF799 /* AppDelegate.swift in Sources */,
 				99EFC76B2CD0B9560044DFC5 /* PostLocationUseCase.swift in Sources */,
 				992F57DF2C5B614A00219C6B /* LogoutUseCase.swift in Sources */,
@@ -2123,7 +2129,6 @@
 				99E8BC452C2D26CF00536B95 /* EmailVerifyUseCase.swift in Sources */,
 				D5BA30962CE7481D00958BF5 /* FriendRepository.swift in Sources */,
 				9913A44D2C7583D400309DBF /* CustomView.swift in Sources */,
-				99D8FBBD2C3BA1E60062AF10 /* MainHomeViewModel.swift in Sources */,
 				D564EDF22C8F07570002A4C5 /* ConfirmLocationViewModel.swift in Sources */,
 				992F57C62C5B265600219C6B /* SingUpBody.swift in Sources */,
 				990F57912C27ECDC00F6E1AD /* AccountSignUpUseCase.swift in Sources */,
@@ -2188,6 +2193,8 @@
 				D53A515C2CA1260400025AC8 /* ErrorResponse.swift in Sources */,
 				99EC78CE2C11DBA5007C4415 /* PasswordResetViewController.swift in Sources */,
 				99A814122D129DC5000FC5A3 /* NoFeedImageView.swift in Sources */,
+				99E2EEEF2D35FFCC0010F1F9 /* FeedParticipantView.swift in Sources */,
+				99E2EEF12D3633CD0010F1F9 /* MainNoFeedImageView.swift in Sources */,
 				99933E902D2A566D009D0C5A /* EditFeedViewController.swift in Sources */,
 				D55C6C572CF5DD10005132DC /* FriendRequestService.swift in Sources */,
 				99B397832C0C3E9D00D7A109 /* AccountCheckView.swift in Sources */,
@@ -2238,6 +2245,7 @@
 				D51AC99C2C849AB400D0AD2E /* LocationAPI.swift in Sources */,
 				9953583F2C00C555005BF799 /* SceneDelegate.swift in Sources */,
 				D517F2632CECAB06003C5F60 /* DeleteFavoriteFriendUseCase.swift in Sources */,
+				99E2EEED2D35FACD0010F1F9 /* FeedDetailView.swift in Sources */,
 				990F57B22C282C5900F6E1AD /* EmailSendUseCase.swift in Sources */,
 				99107EA52C6F3E4A007D129F /* Location.swift in Sources */,
 				D53E05F52CB97C4100F96346 /* PutScheduleBody.swift in Sources */,

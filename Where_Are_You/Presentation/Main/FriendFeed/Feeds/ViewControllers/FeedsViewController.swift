@@ -26,6 +26,12 @@ class FeedsViewController: UIViewController {
         setupTableView()
         setupBindings()
         setupActions()
+        
+        let cachedFeeds = FeedCacheManager.shared.cachedFeeds
+        if !cachedFeeds.isEmpty {
+            viewModel.displayFeedContent = cachedFeeds
+        }
+        
         viewModel.fetchFeeds()
         
         feedsView.updateContentHeight()
@@ -197,6 +203,13 @@ extension FeedsViewController: FeedsTableViewCellDelegate {
             let indexPath = IndexPath(row: index, section: 0)
             feedsView.feedsTableView.reloadRows(at: [indexPath], with: .none)
         }
+    }
+    
+    func didSelectFeed(feed: Feed) {
+        let detailVC = FeedDetailViewController(feed: feed)
+        let navController = UINavigationController(rootViewController: detailVC)
+        navController.modalPresentationStyle = .fullScreen // 전체 화면으로 전환
+        present(navController, animated: true, completion: nil)
     }
 }
 

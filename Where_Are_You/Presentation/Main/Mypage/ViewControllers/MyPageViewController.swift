@@ -125,7 +125,6 @@ class MyPageViewController: UIViewController {
         let navController = UINavigationController(rootViewController: controller)
         navController.modalPresentationStyle = .fullScreen // 전체 화면으로 전환
         present(navController, animated: true, completion: nil)
-        print("deleteAccountButtonTapped")
     }
     
     @objc private func editImage() {

@@ -11,6 +11,7 @@ import Kingfisher
 protocol FeedsTableViewCellDelegate: AnyObject {
     func didTapBookmarkButton(feedSeq: Int, isBookMarked: Bool)
     func didTapFeedFixButton(feed: Feed, buttonFrame: CGRect)
+    func didSelectFeed(feed: Feed)
 }
 
 class FeedsTableViewCell: UITableViewCell {
@@ -40,6 +41,7 @@ class FeedsTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureViewComponents()
+        setupActions()
         setupConstraints()
         setupCollectionView()
     }
@@ -58,8 +60,15 @@ class FeedsTableViewCell: UITableViewCell {
         
         descriptionLabel.backgroundColor = .color249
         
+        
+    }
+    
+    private func setupActions() {
         bookMarkButton.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
         detailBox.feedFixButton.addTarget(self, action: #selector(feedFixButtonTapped), for: .touchUpInside)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(detailBoxTapped))
+        detailBox.addGestureRecognizer(tapGesture)
+        detailBox.isUserInteractionEnabled = true // 터치 이벤트 활성화
     }
     
     private func setupConstraints() {
@@ -133,6 +142,11 @@ class FeedsTableViewCell: UITableViewCell {
         let buttonFrame = detailBox.feedFixButton.convert(detailBox.feedFixButton.bounds, to: self.window)
 
         delegate?.didTapFeedFixButton(feed: feed, buttonFrame: buttonFrame)
+    }
+    
+    @objc private func detailBoxTapped() {
+        guard let feed = feed else { return }
+        delegate?.didSelectFeed(feed: feed)
     }
 }
 

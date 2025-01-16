@@ -42,17 +42,20 @@ class ScheduleDropDownCell: UITableViewCell {
     private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 6))
-            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 6))
+            make.trailing.equalTo(checkmarkImageView.snp.leading).offset(LayoutAdapter.shared.scale(value: 6))
         }
         
         locationLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom)
+            make.top.equalTo(titleLabel.snp.bottom).inset(LayoutAdapter.shared.scale(value: 2))
+            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 8))
             make.leading.equalTo(titleLabel)
         }
         
         checkmarkImageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 19))
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 15.28))
         }
     }
     

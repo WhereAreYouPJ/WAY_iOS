@@ -40,11 +40,12 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         return stackView
     }()
     
-    private let feedImageView: UIImageView = {
+    private var feedImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 6
         iv.clipsToBounds = true
+        iv.backgroundColor = .white
         return iv
     }()
     
@@ -52,17 +53,18 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
         label.textColor = .color118
-        label.adjustsFontForContentSizeCategory = true
+        label.isHidden = true
         label.lineBreakMode = .byCharWrapping
-        label.numberOfLines = 4
+        label.numberOfLines = 2
         return label
     }()
     
     private lazy var feedContentStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [feedImageView, descriptionLabel])
+        let stackView = UIStackView(arrangedSubviews: [descriptionLabel, feedImageView])
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.distribution = .fill
+        stackView.spacing = LayoutAdapter.shared.scale(value: 12)
         return stackView
     }()
     
@@ -74,11 +76,19 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
     }()
     
     // MARK: - Lifecycle
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureViewComponents()
         setupConstraints()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        // 상태 초기화
+        feedImageView.image = nil
+        feedImageView.subviews.forEach { $0.removeFromSuperview() }
+        descriptionLabel.text = nil
+        descriptionLabel.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -92,61 +102,60 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor.color212.cgColor
         contentView.addSubview(mainStack)
-        feedImageView.isHidden = true
     }
     
     private func setupConstraints() {
         mainStack.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.top.leading.equalToSuperview().inset(12)
+            make.top.leading.equalToSuperview().inset(16)
         }
         
         profileImageView.snp.makeConstraints { make in
             make.width.equalTo(textStackView.snp.height)
         }
         
-        titleStackView.snp.makeConstraints { make in
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
+        profileImageView.snp.makeConstraints { make in
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 56))
         }
-        
+
         feedContentStackView.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
         }
         
+        descriptionLabel.snp.makeConstraints { make in
+            make.height.lessThanOrEqualTo(LayoutAdapter.shared.scale(value: 40))
+        }
+        
         feedImageView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 80)).priority(UILayoutPriority(999))
         }
     }
     
-    func configure(with feed: HomeFeedContent) {
-        profileImageView.setImage(from: feed.profileImageURL, placeholder: UIImage(named: "basic_profile_image"))
+    func configure(with feed: Feed) {
+          
+        profileImageView.kf.setImage(with: URL(string: feed.profileImageURL), placeholder: UIImage(named: "basic_profile_image"))
         locationLabel.text = feed.location
         titleLabel.text = feed.title
-        if let content = feed.content {
+        descriptionLabel.isHidden = true
+        let feedImageInfos = feed.feedImageInfos ?? []
+        if let content = feed.content { // 피드 content가 있는 경우
             descriptionLabel.isHidden = false
-            feedImageView.isHidden = true
-            descriptionLabel.text = feed.content
-        } else {
-            descriptionLabel.isHidden = true
-            feedImageView.isHidden = false
-            
-            if let feedImage = feed.feedImage {
+            descriptionLabel.text = content
+            if let feedImage = feedImageInfos.first?.feedImageURL {
                 feedImageView.kf.setImage(with: URL(string: feedImage))
             } else {
-                // Feed 이미지가 없는 경우 NoFeedImageView 사용
-                let noFeedImageView = NoFeedImageView(frame: feedImageView.bounds)
-                noFeedImageView.configureUI(profileImage: feed.profileImageURL)
-                
-                // NoFeedImageView를 UIImage로 변환
-                UIGraphicsBeginImageContextWithOptions(noFeedImageView.bounds.size, noFeedImageView.isOpaque, 0.0)
-                defer { UIGraphicsEndImageContext() }
-                noFeedImageView.layer.render(in: UIGraphicsGetCurrentContext()!)
-                
-                if let generatedImage = UIGraphicsGetImageFromCurrentImageContext() {
-                    feedImageView.image = generatedImage
-                } else {
-                    print("Failed to generate image from NoFeedImageView.")
-                }
+                let mainNoFeedImageView = MainNoFeedImageView(frame: CGRect(x: 0, y: 0, width: LayoutAdapter.shared.scale(value: 295), height: LayoutAdapter.shared.scale(value: 80)))
+                mainNoFeedImageView.configureUI(profileImage: feed.profileImageURL)
+                feedImageView.addSubview(mainNoFeedImageView)
+            }
+        } else { // 피드 content가 없는 경우
+            descriptionLabel.isHidden = true
+            if let feedImage = feedImageInfos.first?.feedImageURL { // 피드 content가 없는 경우 ,피드 이미지가 있는 경우
+                feedImageView.kf.setImage(with: URL(string: feedImage))
+            } else {
+                let mainNoFeedImageView = MainNoFeedImageView(frame: CGRect(x: 0, y: 0, width: LayoutAdapter.shared.scale(value: 295), height: LayoutAdapter.shared.scale(value: 80)))
+                mainNoFeedImageView.configureUI(profileImage: feed.profileImageURL)
+                feedImageView.addSubview(mainNoFeedImageView)
             }
         }
     }

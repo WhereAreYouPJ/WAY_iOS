@@ -11,6 +11,7 @@ import SwiftUI
 
 class FriendFeedViewController: UIViewController {
     // MARK: - Properties
+    
     private var friendsHostingController: UIHostingController<FriendsView>?
     private let feedsViewController = FeedsViewController()
     
