@@ -13,7 +13,7 @@ protocol FeedServiceProtocol {
     func putFeed(request: ModifyFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void)
     func deleteFeed(request: DeleteFeedRequest, completion: @escaping (Result<Void, Error>) -> Void)
     func getFeedList(page: Int32, completion: @escaping (Result<GenericResponse<GetFeedListResponse>, Error>) -> Void)
-    func getFeedDetails(scheduleSeq: Int, completion: @escaping (Result<GenericResponse<FeedContent>, Error>) -> Void)
+    func getFeedDetails(scheduleSeq: Int, memberSeq: Int, completion: @escaping (Result<GenericResponse<FeedContent>, Error>) -> Void)
 
     func getBookMarkFeed(page: Int32, completion: @escaping (Result<GenericResponse<GetBookMarkResponse>, Error>) -> Void)
     func postBookMarkFeed(request: BookMarkFeedRequest, completion: @escaping (Result<Void, Error>) -> Void)
@@ -62,7 +62,7 @@ class FeedService: FeedServiceProtocol {
         }
     }
     
-    func getFeedDetails(scheduleSeq: Int, completion: @escaping (Result<GenericResponse<FeedContent>, any Error>) -> Void) {
+    func getFeedDetails(scheduleSeq: Int, memberSeq: Int, completion: @escaping (Result<GenericResponse<FeedContent>, any Error>) -> Void) {
         provider.request(.getFeedDetails(memberSeq: memberSeq, scheduleSeq: scheduleSeq)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }

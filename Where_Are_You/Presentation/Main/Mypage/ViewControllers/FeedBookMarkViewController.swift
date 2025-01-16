@@ -154,6 +154,9 @@ class FeedBookMarkViewController: UIViewController {
 // MARK: - FeedsTableViewCellDelegate
 
 extension FeedBookMarkViewController: FeedsTableViewCellDelegate {
+    func didSelectFeed(feed: Feed) {
+    }
+    
     func didTapFixButton(feedSeq: Int, isOwner: Bool) {
         print("didTapFixButton")
     }

@@ -14,8 +14,10 @@ class FeedDetailViewController: UIViewController {
     private var optionsView = MultiCustomOptionsContainerView()
     
     var feed: Feed
+    var displayFeed: Feed?
     private var participants: [Info] = [] // 참가자 정보
-    
+    var viewModel: FeedDetailViewModel!
+
     // MARK: - Lifecycle
     init(feed: Feed) {
         self.feed = feed
@@ -29,13 +31,19 @@ class FeedDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         feedDetailView.delegate = self
-        
+        setupViewModel()
         setupView()
         configureView()
         fetchParticipants()
     }
     
     // MARK: - Helpers
+    private func setupViewModel() {
+        let feedService = FeedService()
+        let feedRepository = FeedRepository(feedService: feedService)
+        viewModel = FeedDetailViewModel(getFeedDetailsUseCase: GetFeedDetailsUseCaseImpl(feedRepository: feedRepository))
+    }
+    
     private func setupView() {
         view.addSubview(feedDetailView)
         feedDetailView.snp.makeConstraints { make in
@@ -49,21 +57,19 @@ class FeedDetailViewController: UIViewController {
     
     private func fetchParticipants() {
         // 참가자 정보 로드 (뷰 모델 혹은 네트워크 호출)
-        // 예제 코드
         participants = feed.scheduleFriendInfos ?? []
-        sortParticipants()
         feedDetailView.configureParticipants(participants: participants)
-    }
-    
-    private func sortParticipants() {
-        let memberSeq = UserDefaultsManager.shared.getMemberSeq()
-//        participants.sort { $0.memberSeq == memberSeq } // 내가 작성한 피드 우선 배치
+        
+        // 상세 피드 데이터들 다 받아오기(사용자 경험 증진을 위해)
+        let participantsMemberSeq = participants.compactMap { $0.memberSeq }
+        guard let scheduleSeq = feed.scheduleSeq else { return }
+        viewModel.fetchDetailFeeds(scheduleSeq: scheduleSeq, participantsMemberSeq: participantsMemberSeq)
     }
 }
 
 extension FeedDetailViewController: FeedParticipantDelegate {
     func didSelectParticipant(at index: Int) {
         print("Participant selected at index: \(index)")
-        // Implement logic to display the selected participant's feed
+        self.displayFeed = viewModel.getParticipantFeed(index: index)
     }
 }

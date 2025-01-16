@@ -131,16 +131,17 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func configure(with feed: HomeFeedContent) {
+    func configure(with feed: Feed) {
           
         profileImageView.kf.setImage(with: URL(string: feed.profileImageURL), placeholder: UIImage(named: "basic_profile_image"))
         locationLabel.text = feed.location
         titleLabel.text = feed.title
         descriptionLabel.isHidden = true
+        let feedImageInfos = feed.feedImageInfos ?? []
         if let content = feed.content { // 피드 content가 있는 경우
             descriptionLabel.isHidden = false
             descriptionLabel.text = content
-            if let feedImage = feed.feedImage {
+            if let feedImage = feedImageInfos.first?.feedImageURL {
                 feedImageView.kf.setImage(with: URL(string: feedImage))
             } else {
                 let mainNoFeedImageView = MainNoFeedImageView(frame: CGRect(x: 0, y: 0, width: LayoutAdapter.shared.scale(value: 295), height: LayoutAdapter.shared.scale(value: 80)))
@@ -149,7 +150,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
             }
         } else { // 피드 content가 없는 경우
             descriptionLabel.isHidden = true
-            if let feedImage = feed.feedImage { // 피드 content가 없는 경우 ,피드 이미지가 있는 경우
+            if let feedImage = feedImageInfos.first?.feedImageURL { // 피드 content가 없는 경우 ,피드 이미지가 있는 경우
                 feedImageView.kf.setImage(with: URL(string: feedImage))
             } else {
                 let mainNoFeedImageView = MainNoFeedImageView(frame: CGRect(x: 0, y: 0, width: LayoutAdapter.shared.scale(value: 295), height: LayoutAdapter.shared.scale(value: 80)))

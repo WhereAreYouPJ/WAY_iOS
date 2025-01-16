@@ -51,7 +51,7 @@ class FeedDetailView: UIView {
     
     // MARK: - Selectors
     
-    
+
 }
 
 extension FeedDetailView: FeedParticipantDelegate {

@@ -29,7 +29,7 @@ class HomeFeedViewController: UIViewController {
         view = feedView
         setupBindings()
         setupCollectionView()
-        viewModel.fetchFeeds()
+        fetchInitialFeeds()
     }
     
     // MARK: - Helpers
@@ -48,6 +48,17 @@ class HomeFeedViewController: UIViewController {
         feedView.collectionView.delegate = self
         feedView.collectionView.register(HomeFeedCollectionViewCell.self, forCellWithReuseIdentifier: HomeFeedCollectionViewCell.identifier)
         feedView.collectionView.register(MoreFeedCollectionViewCell.self, forCellWithReuseIdentifier: MoreFeedCollectionViewCell.identifier)
+    }
+    
+    private func fetchInitialFeeds() {
+        viewModel.fetchFeeds { [weak self] feeds in
+            DispatchQueue.main.async {
+                self?.feedView.feeds = feeds
+                self?.feedView.collectionView.reloadData()
+                
+                FeedCacheManager.shared.cachedFeeds = feeds
+            }
+        }
     }
 }
 
