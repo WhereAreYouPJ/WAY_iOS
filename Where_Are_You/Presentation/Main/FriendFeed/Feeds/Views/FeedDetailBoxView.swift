@@ -148,6 +148,13 @@ class FeedDetailBoxView: UIView {
         return stackView
     }
     
+    func resetUI() {
+        dateLabel.text = nil
+        locationLabel.text = nil
+        titleLabel.text = nil
+        profileImage.image = nil
+    }
+    
     func configure(with feed: Feed) {
         let scheduleFriendInfos = feed.scheduleFriendInfos ?? []
         let memberSeq = feed.memberSeq

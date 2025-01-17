@@ -8,6 +8,72 @@
 import UIKit
 import SwiftUI
 
+//extension UIButton {
+//    func applyGradientBackground(colors: [CGColor]) {
+//        // 기존 gradient layer 제거 (중복 방지)
+//        self.layer.sublayers?.filter { $0 is CAGradientLayer }.forEach { $0.removeFromSuperlayer() }
+//        
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.name = "gradientBackground"
+//        gradientLayer.colors = colors
+//        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5) // 시작점 (좌측 중앙)
+//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)   // 종료점 (우측 중앙)
+//        gradientLayer.frame = self.bounds
+//        gradientLayer.cornerRadius = self.layer.cornerRadius
+//        
+//        self.layer.insertSublayer(gradientLayer, at: 0)
+//    }
+//    
+//    func applyGradientBorder(colors: [CGColor], lineWidth: CGFloat) {
+//        // 기존 border layer 제거
+//        self.layer.sublayers?.filter { $0.name == "gradientBorder" }.forEach { $0.removeFromSuperlayer() }
+//        
+//        // Gradient Layer 생성
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.colors = colors
+//        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+//        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+//        gradientLayer.frame = self.bounds
+//        
+//        // Shape Layer로 border 형태 생성
+//        let shapeLayer = CAShapeLayer()
+//        shapeLayer.lineWidth = lineWidth
+//        shapeLayer.path = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.layer.cornerRadius).cgPath
+//        shapeLayer.fillColor = UIColor.clear.cgColor
+//        shapeLayer.strokeColor = UIColor.black.cgColor
+//        gradientLayer.mask = shapeLayer
+//        
+//        gradientLayer.name = "gradientBorder"
+//        self.layer.addSublayer(gradientLayer)
+//    }
+//}
+//
+//// MARK: - CALayer
+//
+//extension CALayer {
+//    func addGradientBorder(colors: [UIColor], width: CGFloat = 1) {
+//        DispatchQueue.main.async { [weak self] in
+//            guard let self = self else { return }
+//            
+//            let gradientLayer = CAGradientLayer()
+//            gradientLayer.frame = CGRect(origin: .zero, size: self.bounds.size)
+//            gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//            gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+//            gradientLayer.colors = colors.map { $0.cgColor }
+//            
+//            let shapeLayer = CAShapeLayer()
+//            shapeLayer.lineWidth = width
+//            shapeLayer.path = UIBezierPath(rect: self.bounds).cgPath
+//            shapeLayer.fillColor = nil
+//            shapeLayer.strokeColor = UIColor.black.cgColor
+//            
+//            gradientLayer.mask = shapeLayer
+//            
+//            self.addSublayer(gradientLayer)
+//        }
+//    }
+//}
+
 // MARK: - UIViewController
 
 enum FeedViewType {

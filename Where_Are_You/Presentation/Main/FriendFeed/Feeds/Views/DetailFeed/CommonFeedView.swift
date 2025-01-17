@@ -1,25 +1,22 @@
 //
-//  FeedsTableViewCell.swift
+//  CommonFeedView.swift
 //  Where_Are_You
 //
-//  Created by 오정석 on 8/8/2024.
+//  Created by 오정석 on 16/1/2025.
 //
 
 import UIKit
 import Kingfisher
 
-protocol FeedsTableViewCellDelegate: AnyObject {
+protocol CommonFeedViewDelegate: AnyObject {
     func didTapBookmarkButton(feedSeq: Int, isBookMarked: Bool)
     func didTapFeedFixButton(feed: Feed, buttonFrame: CGRect)
-    func didSelectFeed(feed: Feed)
 }
 
-class FeedsTableViewCell: UITableViewCell {
-    
+class CommonFeedView: UIView {
     // MARK: - Properties
-    static let identifier = "FeedsTableViewCell"
-    weak var delegate: FeedsTableViewCellDelegate?
-    
+    weak var delegate: CommonFeedViewDelegate?
+
     private var feed: Feed?
     private var profileImageURL: String = ""
     private var feedSeq: Int?
@@ -39,8 +36,8 @@ class FeedsTableViewCell: UITableViewCell {
     }()
     
     // MARK: - Lifecycle
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         configureViewComponents()
         setupActions()
         setupConstraints()
@@ -54,18 +51,15 @@ class FeedsTableViewCell: UITableViewCell {
     // MARK: - Helpers
     
     private func configureViewComponents() {
-        contentView.addSubview(detailBox)
-        contentView.addSubview(feedImagesView)
-        contentView.addSubview(bookMarkButton)
-        contentView.addSubview(descriptionLabel)
+        addSubview(detailBox)
+        addSubview(feedImagesView)
+        addSubview(bookMarkButton)
+        addSubview(descriptionLabel)
     }
     
     private func setupActions() {
         bookMarkButton.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
         detailBox.feedFixButton.addTarget(self, action: #selector(feedFixButtonTapped), for: .touchUpInside)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(detailBoxTapped))
-        detailBox.addGestureRecognizer(tapGesture)
-        detailBox.isUserInteractionEnabled = true // 터치 이벤트 활성화
     }
     
     private func setupConstraints() {
@@ -100,21 +94,11 @@ class FeedsTableViewCell: UITableViewCell {
         feedImagesView.collectionView.register(NoFeedImageViewCell.self, forCellWithReuseIdentifier: NoFeedImageViewCell.identifier)
     }
     
-    func resetUI() {
-        descriptionLabel.text = nil
-        feedImagesView.pageNumberLabel.text = nil
-        feedSeq = nil
-        isBookMarked = false
-        profileImageURL = ""
-    }
-    
     func configure(with feed: Feed) {
-        print("Configuring feed: \(feed)") // feed가 제대로 초기화되었는지 확인
-        resetUI()
-        
         descriptionLabel.isHidden = (feed.content == nil)
         descriptionLabel.text = feed.content
         detailBox.configure(with: feed)
+        detailBox.participantBoxView.isHidden = true
         let feedImageInfos = feed.feedImageInfos ?? []
         self.imageUrls = feedImageInfos.map { $0.feedImageURL }
         feedImagesView.collectionView.reloadData()
@@ -148,25 +132,12 @@ class FeedsTableViewCell: UITableViewCell {
     @objc private func feedFixButtonTapped() {
         guard let feed = feed else { return }
         let buttonFrame = detailBox.feedFixButton.convert(detailBox.feedFixButton.bounds, to: self.window)
-
+        
         delegate?.didTapFeedFixButton(feed: feed, buttonFrame: buttonFrame)
-    }
-    
-    @objc private func detailBoxTapped() {
-        guard let feed = feed else {
-            print("Feed is nil")
-            return
-        }
-        guard let scheduleSeq = feed.scheduleSeq else {
-            print("Feed's scheduleSeq is nil")
-            return
-        }
-
-        delegate?.didSelectFeed(feed: feed)
     }
 }
 
-extension FeedsTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIScrollViewDelegate {
+extension CommonFeedView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIScrollViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let noFeedImage = imageUrls.count == 0
         return noFeedImage ? 1 : imageUrls.count
