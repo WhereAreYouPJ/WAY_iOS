@@ -56,7 +56,6 @@ class FeedViewModel {
             case .success(let data):
                 self.rawFeedContent = data
                 self.displayFeedContent = data.compactMap { $0.toFeeds() }
-                FeedCacheManager.shared.cachedFeeds = self.displayFeedContent
             case .failure(let error):
                 print(error.localizedDescription)
             }

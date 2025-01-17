@@ -12,6 +12,7 @@ protocol FeedServiceProtocol {
     func postFeed(request: SaveFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void)
     func putFeed(request: ModifyFeedRequest, images: [UIImage]?, completion: @escaping (Result<Void, Error>) -> Void)
     func deleteFeed(request: DeleteFeedRequest, completion: @escaping (Result<Void, Error>) -> Void)
+    func getFeedMain(completion: @escaping (Result<GenericResponse<GetFeedListResponse>, Error>) -> Void)
     func getFeedList(page: Int32, completion: @escaping (Result<GenericResponse<GetFeedListResponse>, Error>) -> Void)
     func getFeedDetails(scheduleSeq: Int, memberSeq: Int, completion: @escaping (Result<GenericResponse<FeedContent>, Error>) -> Void)
 
@@ -50,8 +51,15 @@ class FeedService: FeedServiceProtocol {
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
+    
     func deleteFeed(request: DeleteFeedRequest, completion: @escaping (Result<Void, any Error>) -> Void) {
         provider.request(.deleteFeed(request: request)) { result in
+            APIResponseHandler.handleResponse(result, completion: completion)
+        }
+    }
+    
+    func getFeedMain(completion: @escaping (Result<GenericResponse<GetFeedListResponse>, any Error>) -> Void) {
+        provider.request(.getFeedMain(memberSeq: memberSeq)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }

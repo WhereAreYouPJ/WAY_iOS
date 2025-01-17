@@ -73,7 +73,12 @@ class DDAyCell: UICollectionViewCell {
             dDayLabel.isHidden = false
             titleLabel.isHidden = false
             emptyLabel.isHidden = true
-            dDayLabel.text = "D - \(dDay.dDay)"
+            if dDay.dDay == 0 {
+                dDayLabel.text = "D - Day"
+
+            } else {
+                dDayLabel.text = "D - \(dDay.dDay)"
+            }
             titleLabel.text = dDay.title
         } else {
             dDayLabel.isHidden = true

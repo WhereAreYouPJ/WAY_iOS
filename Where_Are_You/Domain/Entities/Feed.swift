@@ -30,7 +30,7 @@ struct MainFeedListContent {
 struct Feed {
     let scheduleSeq: Int?
     let feedSeq: Int
-    let memberSeq: Int?
+    let memberSeq: Int
     let startTime: String
     let profileImageURL: String
     let location: String
