@@ -34,7 +34,7 @@ class FeedsView: UIView {
         addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(feedsTableView)
-        
+        feedsTableView.separatorStyle = .none
         feedsTableView.isScrollEnabled = false
     }
     

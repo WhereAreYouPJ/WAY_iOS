@@ -15,7 +15,7 @@ protocol CommonFeedViewDelegate: AnyObject {
 
 class CommonFeedView: UIView {
     // MARK: - Properties
-    weak var delegate: CommonFeedViewDelegate?
+    weak var delegate2: CommonFeedViewDelegate?
 
     private var feed: Feed?
     private var profileImageURL: String = ""
@@ -38,6 +38,7 @@ class CommonFeedView: UIView {
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
+        descriptionLabel.isHidden = true
         configureViewComponents()
         setupActions()
         setupConstraints()
@@ -60,6 +61,7 @@ class CommonFeedView: UIView {
     private func setupActions() {
         bookMarkButton.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
         detailBox.feedFixButton.addTarget(self, action: #selector(feedFixButtonTapped), for: .touchUpInside)
+        detailBox.isUserInteractionEnabled = true // 터치 이벤트 활성화
     }
     
     private func setupConstraints() {
@@ -94,7 +96,9 @@ class CommonFeedView: UIView {
         feedImagesView.collectionView.register(NoFeedImageViewCell.self, forCellWithReuseIdentifier: NoFeedImageViewCell.identifier)
     }
     
-    func configure(with feed: Feed) {
+    func configure(with feed: Feed, delegate: CommonFeedViewDelegate?) {
+        self.delegate2 = delegate
+
         descriptionLabel.isHidden = (feed.content == nil)
         descriptionLabel.text = feed.content
         detailBox.configure(with: feed)
@@ -126,14 +130,13 @@ class CommonFeedView: UIView {
         guard let feedSeq = feedSeq else { return }
         self.isBookMarked.toggle()
         self.updateBookMarkUI()
-        delegate?.didTapBookmarkButton(feedSeq: feedSeq, isBookMarked: isBookMarked)
+        delegate2?.didTapBookmarkButton(feedSeq: feedSeq, isBookMarked: isBookMarked)
     }
     
     @objc private func feedFixButtonTapped() {
         guard let feed = feed else { return }
-        let buttonFrame = detailBox.feedFixButton.convert(detailBox.feedFixButton.bounds, to: self.window)
-        
-        delegate?.didTapFeedFixButton(feed: feed, buttonFrame: buttonFrame)
+        let buttonFrame = detailBox.feedFixButton.convert(detailBox.feedFixButton.bounds, to: self.superview)
+        delegate2?.didTapFeedFixButton(feed: feed, buttonFrame: buttonFrame)
     }
 }
 

@@ -141,7 +141,7 @@ class FeedBookMarkViewController: UIViewController {
     
     // MARK: - Selectors
     @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
     
     @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {
@@ -155,10 +155,6 @@ class FeedBookMarkViewController: UIViewController {
 
 extension FeedBookMarkViewController: FeedsTableViewCellDelegate {
     func didSelectFeed(feed: Feed) {
-    }
-    
-    func didTapFixButton(feedSeq: Int, isOwner: Bool) {
-        print("didTapFixButton")
     }
     
     func didTapBookmarkButton(feedSeq: Int, isBookMarked: Bool) {

@@ -24,7 +24,7 @@ struct HideFeedContent: Codable {
     let feedSeq: Int
     let profileImageURL, startTime, location, title: String
     let hideFeedImageInfos: [FeedImageInfo]
-    let content: String
+    let content: String?
     let bookMark: Bool
     let feedFriendInfos: [Info]
 }

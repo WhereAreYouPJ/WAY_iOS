@@ -17,7 +17,15 @@ class EditFeedView: AddFeedView {
         scheduleDropDown.scheduleDropDownView.isEnabled = true
         scheduleDropDown.dropDownButton.isHidden = true
         
-        scheduleDropDown.scheduleDateLabel.text = feed.startTime.prefix(10).replacingOccurrences(of: "-", with: ".")
+        // 선택된 일정의 정보로 label 업데이트
+        let dateParts = feed.startTime.prefix(10).split(separator: "-")
+        if dateParts.count == 3 {
+            let year = "\(dateParts[0])."  // 연도
+            let monthDay = "\(dateParts[1]).\(dateParts[2])"  // 월.일
+            
+            // 두 줄로 날짜 표시
+            scheduleDropDown.scheduleDateLabel.text = "\(year)\n\(monthDay)"
+        }
         scheduleDropDown.scheduleLocationLabel.text = feed.location
         
         titleTextField.text = feed.title

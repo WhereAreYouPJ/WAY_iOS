@@ -179,7 +179,7 @@ class LocationBookmarkViewController: UIViewController {
     }
     
     @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
     
     @objc private func plusButtonTapped() {

@@ -1024,14 +1024,6 @@
 			path = AccountDelete;
 			sourceTree = "<group>";
 		};
-		99C5B9EB2D3233F400CD570F /* AccountDelete */ = {
-			isa = PBXGroup;
-			children = (
-				99C5B9EC2D32340500CD570F /* AgreementViewModel.swift */,
-			);
-			path = AccountDelete;
-			sourceTree = "<group>";
-		};
 		99C68E442C64B3FC00DEC1F1 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
@@ -1210,12 +1202,12 @@
 		99CC5E682C52115900A0509A /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				99C5B9EB2D3233F400CD570F /* AccountDelete */,
 				99CC5E632C51EFAB00A0509A /* MyPageViewModel.swift */,
 				992381872C7DC8C900FFCBCB /* MyDetailManageViewModel.swift */,
 				995175012C7EF95100E938DE /* LocationBookmarkViewModel.swift */,
 				99A07CD32CF440E100A47796 /* FeedBookMarkViewModel.swift */,
 				99DE2F032D0813EC0087ACC9 /* FeedArchiveViewModel.swift */,
+				99C5B9EC2D32340500CD570F /* AgreementViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
