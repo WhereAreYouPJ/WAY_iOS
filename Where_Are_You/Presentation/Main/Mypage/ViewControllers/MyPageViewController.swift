@@ -103,7 +103,9 @@ class MyPageViewController: UIViewController {
     }
     
     private func moveToDetailController(controller: UIViewController) {
-        navigationController?.pushViewController(controller, animated: true)
+        let navController = UINavigationController(rootViewController: controller)
+        navController.modalPresentationStyle = .fullScreen // 전체 화면으로 전환
+        present(navController, animated: true, completion: nil)
     }
     
     // MARK: - Selectors

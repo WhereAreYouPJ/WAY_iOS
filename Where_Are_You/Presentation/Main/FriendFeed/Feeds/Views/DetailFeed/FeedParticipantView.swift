@@ -38,16 +38,6 @@ class FeedParticipantView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        guard selectedButton == nil else { return } // 초기 설정이 이미 완료된 경우 방지
-        
-        if let firstButton = participantStackView.arrangedSubviews.first as? GradientButton {
-            updateSelectedButton(firstButton) // 첫 번째 버튼을 기본 선택 상태로 설정
-        }
-    }
 
     // MARK: - Helpers
     private func configureViewComponents() {
@@ -101,7 +91,6 @@ class FeedParticipantView: UIView {
             // 버튼 클릭 이벤트
             button.addTarget(self, action: #selector(didTapParticipantButton(_:)), for: .touchUpInside)
                         
-            
             participantStackView.addArrangedSubview(button)
             button.layoutIfNeeded()
         }

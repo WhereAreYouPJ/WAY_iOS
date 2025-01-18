@@ -24,13 +24,14 @@ class FeedDetailViewModel {
     
     private let memberSeq = UserDefaultsManager.shared.getMemberSeq()
     
-    private(set) var displayFeedContent: [Feed] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.onFeedsDataFetched?()
-            }
-        }
-    }
+    private(set) var displayFeedContent: [Feed] = []
+//    {
+//        didSet {
+//            DispatchQueue.main.async {
+//                self.onFeedsDataFetched?()
+//            }
+//        }
+//    }
     
     private var participants: [Info] = []
     
@@ -116,7 +117,7 @@ class FeedDetailViewModel {
         }
     }
     
-    func hidFeed(feedSeq: Int) {
+    func hideFeed(feedSeq: Int) {
         postHideFeedUseCase.execute(feedSeq: feedSeq) { [weak self] result in
             guard let self = self else { return }
             switch result {

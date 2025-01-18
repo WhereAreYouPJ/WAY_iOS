@@ -77,7 +77,7 @@ class FeedViewModel {
         }
     }
     
-    func hidFeed(feedSeq: Int) {
+    func hideFeed(feedSeq: Int) {
         postHideFeedUseCase.execute(feedSeq: feedSeq) { [weak self] result in
             guard let self = self else { return }
             switch result {

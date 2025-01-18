@@ -75,6 +75,7 @@ class FeedDetailViewController: UIViewController {
         feedDetailView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
         plusOptionButton.isHidden = true
         view.addSubview(plusOptionButton)
         
@@ -148,7 +149,7 @@ class FeedDetailViewController: UIViewController {
             cancelTitle: "취소",
             actionTitle: "숨김"
         ) { [weak self] in
-            self?.viewModel.hidFeed(feedSeq: feed.feedSeq)
+            self?.viewModel.hideFeed(feedSeq: feed.feedSeq)
             self?.optionsView.removeFromSuperview()
             self?.feedDetailView.showNoFeedView()
             guard let scheduleSeq = feed.scheduleSeq else { return }
