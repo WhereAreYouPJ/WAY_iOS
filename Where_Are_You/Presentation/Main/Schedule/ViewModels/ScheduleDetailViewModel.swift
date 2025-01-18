@@ -68,7 +68,7 @@ class ScheduleDetailViewModel: ObservableObject {
                             memberSeq: memberInfo.memberSeq,
                             profileImage: "",
                             name: memberInfo.userName,
-                            isFavorite: false
+                            isFavorite: false, memberCode: ""
                         )
                     }
                 )

@@ -64,7 +64,7 @@ class FriendsViewModel: ObservableObject { // 친구 목록을 나중에는 iOS 
             memberSeq: response.memberSeq,
             profileImage: response.profileImage ?? "",
             name: response.userName,
-            isFavorite: response.favorites
+            isFavorite: response.favorites, memberCode: ""
         )
     }
     

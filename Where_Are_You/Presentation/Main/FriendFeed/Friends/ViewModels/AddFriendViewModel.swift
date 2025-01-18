@@ -27,7 +27,7 @@ class AddFriendViewModel: ObservableObject {
                 self.searchedMember = Friend(memberSeq: friend.memberSeq,
                                              profileImage: friend.profileImage ?? AppConstants.ImageAssets.defaultProfileIcon,
                                              name: friend.userName,
-                                             isFavorite: false)
+                                             isFavorite: false, memberCode: "")
                 self.showError = false
                 print("회원 검색 완료!")
             case .failure(let error):

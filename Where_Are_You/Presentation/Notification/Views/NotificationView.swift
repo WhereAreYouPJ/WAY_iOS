@@ -161,15 +161,6 @@ struct NotificationView: View {
         .accentColor(Color(.color153))
     }
     
-    // MARK: 알림 없는 경우
-    func emptyNotification() -> some View {
-        VStack {
-            Text("알림이 없습니다.")
-                .foregroundStyle(Color(.color153))
-                .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
-        }
-    }
-    
     // MARK: Schedule Section Cards
     func invitedScheduleCard(schedule: Schedule) -> some View {
         VStack(spacing: LayoutAdapter.shared.scale(value: 16)) {
@@ -232,60 +223,60 @@ struct NotificationView: View {
             .padding(.top, LayoutAdapter.shared.scale(value: 6))
     }
     
-    func unconfirmedScheduleArticle() -> some View {
-        VStack(spacing: LayoutAdapter.shared.scale(value: 16)) {
-            HStack {
-                Text("확인하지 않은 일정이 있습니다.")
-                    .foregroundStyle(Color(.color34))
-                
-                Spacer()
-                
-                Text("0분 전")
-                    .foregroundStyle(Color(.color153))
-                    .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
-            }
-            .padding(.top, LayoutAdapter.shared.scale(value: 16))
-            .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
-        
-            HStack {
-                VStack {
-                    Text("4월 5일")
-                        .foregroundStyle(Color(.brandColor))
-                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 20))))
-                    
-                    Text("D - 5")
-                        .foregroundStyle(Color.red)
-                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
-                        
-                }
-                .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
-                
-                VStack(alignment: .leading) {
-                    Text("기획 미팅")
-                        .foregroundStyle(Color(.color34))
-                    
-                    Text("회사")
-                        .foregroundStyle(Color(.color153))
-                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
-                }
-                
-                Spacer()
-                
-                CustomButtonSwiftUI(title: "일정 확인하기", backgroundColor: Color(.brandColor), titleColor: .white) {
-                    print("수락")
-                }
-                .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
-                .frame(width: LayoutAdapter.shared.scale(value: 100), height: LayoutAdapter.shared.scale(value: 42))
-                .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
-            }
-            .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
-        }
-        .background(
-            RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16))
-                .fill(Color(.white))
-                .strokeBorder(Color(.brandColor), lineWidth: 1)
-        )
-    }
+//    func unconfirmedScheduleArticle() -> some View {
+//        VStack(spacing: LayoutAdapter.shared.scale(value: 16)) {
+//            HStack {
+//                Text("확인하지 않은 일정이 있습니다.")
+//                    .foregroundStyle(Color(.color34))
+//                
+//                Spacer()
+//                
+//                Text("0분 전")
+//                    .foregroundStyle(Color(.color153))
+//                    .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
+//            }
+//            .padding(.top, LayoutAdapter.shared.scale(value: 16))
+//            .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
+//        
+//            HStack {
+//                VStack {
+//                    Text("4월 5일")
+//                        .foregroundStyle(Color(.brandColor))
+//                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 20))))
+//                    
+//                    Text("D - 5")
+//                        .foregroundStyle(Color.red)
+//                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
+//                        
+//                }
+//                .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
+//                
+//                VStack(alignment: .leading) {
+//                    Text("기획 미팅")
+//                        .foregroundStyle(Color(.color34))
+//                    
+//                    Text("회사")
+//                        .foregroundStyle(Color(.color153))
+//                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
+//                }
+//                
+//                Spacer()
+//                
+//                CustomButtonSwiftUI(title: "일정 확인하기", backgroundColor: Color(.brandColor), titleColor: .white) {
+//                    print("수락")
+//                }
+//                .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
+//                .frame(width: LayoutAdapter.shared.scale(value: 100), height: LayoutAdapter.shared.scale(value: 42))
+//                .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
+//            }
+//            .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
+//        }
+//        .background(
+//            RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16))
+//                .fill(Color(.white))
+//                .strokeBorder(Color(.brandColor), lineWidth: 1)
+//        )
+//    }
     
     // MARK: Friend Section Cards
 //    func acceptedFriendArticle() -> some View {
@@ -333,17 +324,18 @@ struct NotificationView: View {
             profileView(friend: friendRequest.friend)
                 .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
                 
-            HStack {
-                CustomButtonSwiftUI(title: "친구 수락하기", backgroundColor: Color(.brandColor), titleColor: .white) {
-                    print("수락")
-                }
-                .frame(width: LayoutAdapter.shared.scale(value: 152), height: LayoutAdapter.shared.scale(value: 46))
-                
-                CustomButtonSwiftUI(title: "친구 거절하기", backgroundColor: .white, titleColor: Color(.color34)) {
-                    print("수락")
-                }
-                .frame(width: LayoutAdapter.shared.scale(value: 152), height: LayoutAdapter.shared.scale(value: 46))
-            }
+//            HStack {
+//                CustomButtonSwiftUI(title: "친구 수락하기", backgroundColor: Color(.brandColor), titleColor: .white) {
+//                    print("수락")
+//                }
+//                .frame(width: LayoutAdapter.shared.scale(value: 152), height: LayoutAdapter.shared.scale(value: 46))
+//                
+//                CustomButtonSwiftUI(title: "친구 거절하기", backgroundColor: .white, titleColor: Color(.color34)) {
+//                    print("수락")
+//                }
+//                .frame(width: LayoutAdapter.shared.scale(value: 152), height: LayoutAdapter.shared.scale(value: 46))
+//            }
+            ButtonMergeView(friendRequest: friendRequest)
             .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
             .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
         }
@@ -368,7 +360,7 @@ struct NotificationView: View {
                 Text(friend.name)
                     .foregroundStyle(Color(.color34))
                 
-                Text("#1wee35") // TODO: 멤버코드 하드코딩 지우기
+                Text(friend.memberCode ?? "")
                     .foregroundStyle(Color(.color153))
                     .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
             }
@@ -408,6 +400,68 @@ struct NotificationView: View {
                 .strokeBorder(Color(.brandColor), lineWidth: 1)
         )
         .padding(.top, LayoutAdapter.shared.scale(value: 6))
+    }
+    
+    // 수락 or 거절 버튼 클릭시 하나로 합쳐짐
+    struct ButtonMergeView: View {
+        let friendRequest: FriendRequest
+        @State private var isAccepted = false
+        @State private var showMergedButton = false
+        
+        var body: some View {
+            ZStack {
+                if !showMergedButton {
+                    HStack {
+                        CustomButtonSwiftUI(title: "친구 수락하기",
+                                          backgroundColor: Color(.brandColor),
+                                          titleColor: .white) {
+                            withAnimation(.spring(duration: 0.5)) {
+                                isAccepted = true
+                                showMergedButton = true
+                            }
+                        }
+                        .frame(width: LayoutAdapter.shared.scale(value: 152),
+                              height: LayoutAdapter.shared.scale(value: 46))
+                        
+                        CustomButtonSwiftUI(title: "친구 거절하기",
+                                          backgroundColor: .white,
+                                          titleColor: Color(.color34)) {
+                            withAnimation(.spring(duration: 0.5)) {
+                                isAccepted = false
+                                showMergedButton = true
+                            }
+                        }
+                        .frame(width: LayoutAdapter.shared.scale(value: 152),
+                              height: LayoutAdapter.shared.scale(value: 46))
+                    }
+                } else {
+                    Button(action: {}) {
+                        HStack {
+                            Image(systemName: isAccepted ? "checkmark" : "xmark")
+                                .foregroundColor(isAccepted ? .white : Color(.color34))
+                        }
+                        .frame(maxWidth: .infinity)
+                        .frame(height: LayoutAdapter.shared.scale(value: 46))
+                        .background(isAccepted ? Color(.brandColor) : Color.white)
+                        .cornerRadius(LayoutAdapter.shared.scale(value: 12))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 12))
+                                .stroke(Color(.color34), lineWidth: isAccepted ? 0 : 1)
+                        )
+                    }
+                    .transition(.scale)
+                }
+            }
+        }
+    }
+    
+    // MARK: 알림 없는 경우
+    func emptyNotification() -> some View {
+        VStack {
+            Text("알림이 없습니다.")
+                .foregroundStyle(Color(.color153))
+                .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
+        }
     }
 }
 

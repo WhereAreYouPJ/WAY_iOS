@@ -57,7 +57,7 @@ class ManageFriendsViewModel: ObservableObject {
                                       friend: Friend(memberSeq: response.receiverSeq,
                                                      profileImage: response.profileImage ?? "",
                                                      name: response.userName,
-                                                     isFavorite: false)
+                                                     isFavorite: false, memberCode: "")
                         )
                     }
                     print("요청 보낸 목록 조회 성공")
@@ -79,7 +79,7 @@ class ManageFriendsViewModel: ObservableObject {
                                       friend: Friend(memberSeq: response.senderSeq,
                                                      profileImage: response.profileImage ?? "",
                                                      name: response.userName,
-                                                     isFavorite: false)
+                                                     isFavorite: false, memberCode: "")
                         )
                     }
                     print("요청 받은 목록 조회 성공")

@@ -170,7 +170,7 @@ struct CustomOptionButtonViewRepresentable: UIViewRepresentable {
 
 #Preview {
     // 친구 프로필 프리뷰
-    FriendDetailView(viewModel: FriendDetailViewModel(friend: Friend(memberSeq: 1, profileImage: "", name: "김철수", isFavorite: false), isMyProfile: false))
+    FriendDetailView(viewModel: FriendDetailViewModel(friend: Friend(memberSeq: 1, profileImage: "", name: "김철수", isFavorite: false, memberCode: "abc12"), isMyProfile: false))
 }
 
 #Preview {

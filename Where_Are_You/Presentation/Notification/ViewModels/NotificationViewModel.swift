@@ -145,7 +145,8 @@ class NotificationViewModel: ObservableObject {
                     memberSeq: response.senderSeq,
                     profileImage: response.profileImage ?? AppConstants.defaultProfileImageUrl,
                     name: response.userName,
-                    isFavorite: false
+                    isFavorite: false,
+                    memberCode: response.memberCode
                 )
             )
         }

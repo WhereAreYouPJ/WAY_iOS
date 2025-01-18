@@ -24,7 +24,7 @@ struct DailyScheduleView: View {
             location: Location(sequence: 1, location: "망원한강공원", streetName: "", x: 0, y: 0),
             color: "red",
             memo: "",
-            invitedMember: [Friend(memberSeq: 1, profileImage: "", name: "", isFavorite: false)]
+            invitedMember: [Friend(memberSeq: 1, profileImage: "", name: "", isFavorite: false, memberCode: "")]
         ),
         Schedule(
             scheduleSeq: 2,
@@ -79,7 +79,7 @@ struct DailyScheduleView: View {
             location: Location(sequence: 3, location: "강남역 레스토랑", streetName: "", x: 0, y: 0),
             color: "pink",
             memo: "",
-            invitedMember: [Friend(memberSeq: 2, profileImage: "", name: "김철수", isFavorite: false)]
+            invitedMember: [Friend(memberSeq: 2, profileImage: "", name: "김철수", isFavorite: false, memberCode: "")]
         )
     ]
     
