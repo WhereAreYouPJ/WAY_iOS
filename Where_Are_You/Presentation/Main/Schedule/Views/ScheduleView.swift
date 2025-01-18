@@ -17,9 +17,8 @@ struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 
     
     @State private var selectedDate: Date?
     @State private var showDailySchedule = false
-    @State private var showingDeleteAlert = false
-    @State private var alertTitle = ""
-    @State private var alertMessage = ""
+    
+    @State private var showDeleteAlert = false
     @State private var scheduleToDelete: Schedule?
     
     init() {
@@ -91,19 +90,52 @@ struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 
         }) {
             CreateScheduleView()
         }
-        .sheet(isPresented: $showDailySchedule, onDismiss: {
-            viewModel.getMonthlySchedule()
-        }) {
-            if let date = selectedDate {
-                DailyScheduleView(date: date, isPresented: $showDailySchedule, onDeleteSchedule: { schedule, title, message in
-                    scheduleToDelete = schedule
-                    alertTitle = title
-                    alertMessage = message
-                    showingDeleteAlert = true
-                })
-                .presentationDetents([.medium])
-            }
-        }
+//        .sheet(isPresented: $showDailySchedule, onDismiss: {
+//            viewModel.getMonthlySchedule()
+//        }) {
+//            if let date = selectedDate {
+//                DailyScheduleView(date: date, isPresented: $showDailySchedule, onDeleteSchedule: { schedule, title, message in
+//                    scheduleToDelete = schedule
+//                    alertTitle = title
+//                    alertMessage = message
+//                    showingDeleteAlert = true
+//                })
+//                .presentationDetents([.medium])
+//            }
+//        }
+        .sheet(isPresented: $showDailySchedule) {
+                    if let date = selectedDate {
+                        DailyScheduleView(
+                            date: date,
+                            isPresented: $showDailySchedule,
+                            onDeleteSchedule: { schedule in
+                                scheduleToDelete = schedule
+                                showDailySchedule = false
+                                showDeleteAlert = true
+                            }
+                        )
+                        .presentationDetents([.medium])
+                    }
+                }
+                .customAlert(
+                    isPresented: $showDeleteAlert,
+                    showDailySchedule: $showDailySchedule,
+                    title: "일정 삭제",
+                    message: "일정을 삭제합니다.\n연관된 피드가 있을 경우  같이 삭제됩니다.",
+                    cancelTitle: "취소",
+                    actionTitle: "삭제"
+                ) {
+                    if let schedule = scheduleToDelete {
+                        viewModel.deleteSchedule(schedule)
+                        scheduleToDelete = nil
+                        viewModel.getMonthlySchedule()
+                    }
+                }
+                .onChange(of: showDeleteAlert) { _, isShowing in
+                            if !isShowing {  // 알림창이 닫힐 때
+                                showDailySchedule = true  // 항상 DailyScheduleView 다시 열기
+                            }
+                        }
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
         .onAppear(perform: {
             viewModel.getMonthlySchedule()

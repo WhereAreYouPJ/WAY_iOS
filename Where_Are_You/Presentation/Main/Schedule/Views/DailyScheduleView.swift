@@ -12,6 +12,7 @@ struct DailyScheduleView: View {
     @State private var scheduleForDetail: Schedule?
     @Binding var isPresented: Bool
     private let formatter = DateFormatter()
+    let onDeleteSchedule: (Schedule) -> Void  // 삭제 요청만 전달하는 클로저
     
     // MARK: dummy data
     let schedules: [Schedule] = [
@@ -83,11 +84,12 @@ struct DailyScheduleView: View {
         )
     ]
     
-    init(date: Date, isPresented: Binding<Bool>, onDeleteSchedule: @escaping (Schedule, String, String) -> Void) {
+    init(date: Date, isPresented: Binding<Bool>, onDeleteSchedule: @escaping (Schedule) -> Void) {
         let service = ScheduleService()
         _viewModel = StateObject(wrappedValue: DailyScheduleViewModel(date: date, service: service))
         formatter.dateFormat = "MM월 dd일"
         self._isPresented = isPresented
+        self.onDeleteSchedule = onDeleteSchedule
     }
     
     var body: some View {
@@ -108,21 +110,21 @@ struct DailyScheduleView: View {
             .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
             .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
         }
-        .alert(isPresented: $viewModel.showingDeleteAlert) {
-            if let schedule = viewModel.selectedSchedule {
-                let (title, message) = viewModel.setAlertContent(for: schedule)
-                return Alert(
-                    title: Text(title),
-                    message: Text(message),
-                    primaryButton: .destructive(Text("삭제")) {
-                        viewModel.handleDeleteConfirmation()
-                    },
-                    secondaryButton: .cancel(Text("취소"))
-                )
-            } else {
-                return Alert(title: Text("Error"))
-            }
-        }
+//        .alert(isPresented: $viewModel.showingDeleteAlert) {
+//            if let schedule = viewModel.selectedSchedule {
+//                let (title, message) = viewModel.setAlertContent(for: schedule)
+//                return Alert(
+//                    title: Text(title),
+//                    message: Text(message),
+//                    primaryButton: .destructive(Text("삭제")) {
+//                        viewModel.handleDeleteConfirmation()
+//                    },
+//                    secondaryButton: .cancel(Text("취소"))
+//                )
+//            } else {
+//                return Alert(title: Text("Error"))
+//            }
+//        }
         .onAppear {
             viewModel.getDailySchedule()
         }
@@ -135,7 +137,7 @@ struct DailyScheduleView: View {
     
     private func scheduleListView() -> some View {
         // dummy test
-        //        ForEach(schedules, id: \.scheduleSeq) { schedule in
+//                ForEach(schedules, id: \.scheduleSeq) { schedule in
         ForEach(viewModel.schedules, id: \.scheduleSeq) { schedule in
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
@@ -150,7 +152,9 @@ struct DailyScheduleView: View {
                     
                     Button(
                         action: {
-                            viewModel.showDeleteAlert(for: schedule)
+//                            viewModel.showDeleteAlert(for: schedule)
+//                            isPresented = false
+                            onDeleteSchedule(schedule)
                         },
                         label: {
                             Text("삭제")
@@ -224,11 +228,13 @@ struct DailyScheduleView: View {
 }
 
 #Preview {
-    DailyScheduleView(date: Date.now, isPresented: .constant(true)) { schedule, title, message in
-        print("Delete requested for schedule: \(schedule.title)")
-        print("Alert Title: \(title)")
-        print("Alert Message: \(message)")
-    }
+    DailyScheduleView(
+            date: Calendar.current.date(byAdding: .day, value: 1, to: Date.now)!,
+            isPresented: .constant(true),
+            onDeleteSchedule: { schedule in
+                print("Deleting schedule: \(schedule.title)")
+            }
+        )
     .presentationDetents([.medium])
     .presentationBackground(.clear)
 }
