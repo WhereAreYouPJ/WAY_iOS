@@ -11,7 +11,7 @@ class FeedArchiveViewController: UIViewController {
     private let feedArchiveView = FeedsView()
     private let noDataView: NoDataView = {
         let view = NoDataView()
-        view.descriptionLabel.text = "아직은 숨긴 피드가 없어요. \n숨긴 피드는 이곳에서 복원이 가능해요."
+        view.configureUI(descriptionText: "아직은 숨긴 피드가 없어요. \n숨긴 피드는 이곳에서 복원이 가능해요.")
         return view
     }()
     private var optionsView = MultiCustomOptionsContainerView()

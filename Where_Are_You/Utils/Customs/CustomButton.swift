@@ -219,7 +219,7 @@ class BottomButtonView: UIView {
             make.top.equalTo(border.snp.bottom).offset(LayoutAdapter.shared.scale(value: 12))
             make.leading.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 15))
             make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
-            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 58))
         }
     }
 }

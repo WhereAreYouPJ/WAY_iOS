@@ -157,10 +157,6 @@ extension FeedBookMarkViewController: FeedsTableViewCellDelegate {
     func didSelectFeed(feed: Feed) {
     }
     
-    func didTapFixButton(feedSeq: Int, isOwner: Bool) {
-        print("didTapFixButton")
-    }
-    
     func didTapBookmarkButton(feedSeq: Int, isBookMarked: Bool) {
         viewModel.deleteBookMarkFeed(feedSeq: feedSeq)
         // 북마크 상태 변경 후 해당 셀만 업데이트

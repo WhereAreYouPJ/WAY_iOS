@@ -45,6 +45,8 @@ class FeedsTableViewCell: UITableViewCell {
         setupActions()
         setupConstraints()
         setupCollectionView()
+        
+        descriptionLabel.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -109,7 +111,6 @@ class FeedsTableViewCell: UITableViewCell {
     }
     
     func configure(with feed: Feed) {
-        print("Configuring feed: \(feed)") // feed가 제대로 초기화되었는지 확인
         resetUI()
         
         descriptionLabel.isHidden = (feed.content == nil)
@@ -155,10 +156,6 @@ class FeedsTableViewCell: UITableViewCell {
     @objc private func detailBoxTapped() {
         guard let feed = feed else {
             print("Feed is nil")
-            return
-        }
-        guard let scheduleSeq = feed.scheduleSeq else {
-            print("Feed's scheduleSeq is nil")
             return
         }
 

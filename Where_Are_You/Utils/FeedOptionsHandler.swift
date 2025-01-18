@@ -52,14 +52,14 @@ class FeedOptionsHandler {
         parentView.addSubview(optionsView)
         optionsView.snp.makeConstraints { make in
             make.top.equalTo(frame.maxY)
+//            make.top.equalTo(frame.origin.y + frame.height)
             make.width.equalTo(LayoutAdapter.shared.scale(value: 160))
             make.trailing.equalToSuperview().inset(11)
             make.height.equalTo(LayoutAdapter.shared.scale(value: CGFloat(31 * titles.count)))
         }
 
         // Trigger layout update
-        parentView.layoutIfNeeded()
-        
+        parentView.layoutIfNeeded() // 레이아웃 강제 업데이트
         return optionsView
     }
 }
