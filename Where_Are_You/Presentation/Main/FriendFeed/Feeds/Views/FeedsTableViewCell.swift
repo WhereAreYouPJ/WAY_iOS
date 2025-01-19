@@ -25,6 +25,7 @@ class FeedsTableViewCell: UITableViewCell {
     private var feedSeq: Int?
     private var isBookMarked: Bool = false
     private var imageUrls: [String] = []
+    var isExpanded: Bool = false
     
     let detailBox = FeedDetailBoxView()
     let feedImagesView = FeedImagesView()
@@ -32,8 +33,8 @@ class FeedsTableViewCell: UITableViewCell {
     
     let descriptionLabel: UILabel = {
         let label = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color34, fontSize: LayoutAdapter.shared.scale(value: 14))
-        label.numberOfLines = 3
-        label.lineBreakMode = .byTruncatingHead
+        label.isHidden = true
+        label.lineBreakMode = .byCharWrapping
         label.backgroundColor = .color249
         return label
     }()
@@ -45,8 +46,6 @@ class FeedsTableViewCell: UITableViewCell {
         setupActions()
         setupConstraints()
         setupCollectionView()
-        
-        descriptionLabel.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -65,9 +64,13 @@ class FeedsTableViewCell: UITableViewCell {
     private func setupActions() {
         bookMarkButton.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
         detailBox.feedFixButton.addTarget(self, action: #selector(feedFixButtonTapped), for: .touchUpInside)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(detailBoxTapped))
-        detailBox.addGestureRecognizer(tapGesture)
+        let detailBoxTapGesture = UITapGestureRecognizer(target: self, action: #selector(detailBoxTapped))
+        detailBox.addGestureRecognizer(detailBoxTapGesture)
         detailBox.isUserInteractionEnabled = true // 터치 이벤트 활성화
+        
+        let descriptionLabelTapGesture = UITapGestureRecognizer(target: self, action: #selector(descriptionLabelTapped))
+        descriptionLabel.isUserInteractionEnabled = true // UILabel에서 제스처를 받을 수 있도록 설정
+        descriptionLabel.addGestureRecognizer(descriptionLabelTapGesture)
     }
     
     private func setupConstraints() {
@@ -85,7 +88,7 @@ class FeedsTableViewCell: UITableViewCell {
         
         bookMarkButton.snp.makeConstraints { make in
             make.top.equalTo(feedImagesView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 6))
-            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 30))
+//            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 30))
             make.trailing.equalToSuperview()
         }
         
@@ -103,7 +106,6 @@ class FeedsTableViewCell: UITableViewCell {
     }
     
     func resetUI() {
-        descriptionLabel.text = nil
         feedImagesView.pageNumberLabel.text = nil
         feedSeq = nil
         isBookMarked = false
@@ -111,11 +113,25 @@ class FeedsTableViewCell: UITableViewCell {
     }
     
     func configure(with feed: Feed) {
+        print("configure FeedsTableViewCell")
         resetUI()
         
         descriptionLabel.isHidden = (feed.content == nil)
         descriptionLabel.text = feed.content
+        let readmoreFont = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
+        let readmoreFontColor = UIColor.color153
+        descriptionLabel.numberOfLines = isExpanded ? 0 : 3
+        
+        // 레이아웃을 강제로 갱신한 뒤 "더 보기" 추가
+        descriptionLabel.layoutIfNeeded()
+        if !isExpanded {
+            DispatchQueue.main.async {
+                self.descriptionLabel.addTrailing(with: "...", moreText: "  더 보기", moreTextFont: readmoreFont, moreTextColor: readmoreFontColor)
+            }
+        }
+        
         detailBox.configure(with: feed)
+        
         let feedImageInfos = feed.feedImageInfos ?? []
         self.imageUrls = feedImageInfos.map { $0.feedImageURL }
         feedImagesView.collectionView.reloadData()
@@ -125,11 +141,16 @@ class FeedsTableViewCell: UITableViewCell {
             feedImagesView.pageNumberLabel.isHidden = false
             feedImagesView.pageNumberLabel.text = "1/\(imageUrls.count)"
         }
+        
         self.feed = feed
         profileImageURL = feed.profileImageURL
         feedSeq = feed.feedSeq
         isBookMarked = feed.bookMark
         updateBookMarkUI()
+        
+        print("descriptionLabel frame: \(descriptionLabel.frame)")
+        print("cell frame: \(self.frame)")
+
     }
     
     private func updateBookMarkUI() {
@@ -149,20 +170,44 @@ class FeedsTableViewCell: UITableViewCell {
     @objc private func feedFixButtonTapped() {
         guard let feed = feed else { return }
         let buttonFrame = detailBox.feedFixButton.convert(detailBox.feedFixButton.bounds, to: self.window)
-
+        
         delegate?.didTapFeedFixButton(feed: feed, buttonFrame: buttonFrame)
     }
     
     @objc private func detailBoxTapped() {
-        guard let feed = feed else {
-            print("Feed is nil")
-            return
-        }
-
+        guard let feed = feed else { return }
+        
         delegate?.didSelectFeed(feed: feed)
     }
+    
+    @objc private func descriptionLabelTapped() {
+        //        if isExpanded {
+        //            descriptionLabel.numberOfLines = 0 // 모든 텍스트 표시
+        //        } else {
+        //            descriptionLabel.numberOfLines = 3 // 다시 3줄로 축소
+        //        }
+        //        // 부모 뷰에 알림을 보내 테이블뷰 높이 업데이트
+        //        if let tableView = superview as? UITableView {
+        //            if let indexPath = tableView.indexPath(for: self) {
+        //                tableView.reloadRows(at: [indexPath], with: .automatic) // 해당 셀만 업데이트
+        //            }
+        //        }
+        
+        guard !isExpanded else { return } // 이미 펼쳐졌다면 아무 작업도 하지 않음
+        
+        isExpanded = true // 상태 변경
+        descriptionLabel.numberOfLines = 0 // 텍스트 전체 표시
+        descriptionLabel.gestureRecognizers?.forEach { descriptionLabel.removeGestureRecognizer($0) } // "더보기" 제스처 제거
+ 
+        // 테이블뷰 레이아웃 업데이트
+        if let tableView = superview as? UITableView, let indexPath = tableView.indexPath(for: self) {
+            // 레이아웃 강제 업데이트
+            UIView.performWithoutAnimation { // 애니메이션 없이 즉시 갱신
+                tableView.reloadRows(at: [indexPath], with: .none) // 해당 셀 높이 갱신
+            }
+        }
+    }
 }
-
 extension FeedsTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIScrollViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let noFeedImage = imageUrls.count == 0

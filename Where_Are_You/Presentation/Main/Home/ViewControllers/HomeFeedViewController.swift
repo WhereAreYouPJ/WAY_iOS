@@ -77,6 +77,7 @@ extension HomeFeedViewController: UICollectionViewDataSource, UICollectionViewDe
             }
             let feed = viewModel.getFeeds()[indexPath.item]
             cell.configure(with: feed)
+            cell.delegate = self
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoreFeedCollectionViewCell.identifier, for: indexPath) as? MoreFeedCollectionViewCell else {
@@ -114,6 +115,15 @@ extension HomeFeedViewController: UICollectionViewDelegateFlowLayout {
 
 extension HomeFeedViewController: MoreFeedCollectionViewCellDelegate {
     func didTapMoreButton() {
+        // 더보기 버튼 눌러서 전체 피드 뷰 컨트롤러로 이동
+        if let tabBarController = self.tabBarController {
+            tabBarController.selectedIndex = 2
+        }
+    }
+}
+
+extension HomeFeedViewController: HomeFeedCollectionViewCellDelegate {
+    func didTapReadMoreButton() {
         // 더보기 버튼 눌러서 전체 피드 뷰 컨트롤러로 이동
         if let tabBarController = self.tabBarController {
             tabBarController.selectedIndex = 2
