@@ -8,72 +8,6 @@
 import UIKit
 import SwiftUI
 
-//extension UIButton {
-//    func applyGradientBackground(colors: [CGColor]) {
-//        // 기존 gradient layer 제거 (중복 방지)
-//        self.layer.sublayers?.filter { $0 is CAGradientLayer }.forEach { $0.removeFromSuperlayer() }
-//        
-//        let gradientLayer = CAGradientLayer()
-//        gradientLayer.name = "gradientBackground"
-//        gradientLayer.colors = colors
-//        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5) // 시작점 (좌측 중앙)
-//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)   // 종료점 (우측 중앙)
-//        gradientLayer.frame = self.bounds
-//        gradientLayer.cornerRadius = self.layer.cornerRadius
-//        
-//        self.layer.insertSublayer(gradientLayer, at: 0)
-//    }
-//    
-//    func applyGradientBorder(colors: [CGColor], lineWidth: CGFloat) {
-//        // 기존 border layer 제거
-//        self.layer.sublayers?.filter { $0.name == "gradientBorder" }.forEach { $0.removeFromSuperlayer() }
-//        
-//        // Gradient Layer 생성
-//        let gradientLayer = CAGradientLayer()
-//        gradientLayer.colors = colors
-//        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-//        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-//        gradientLayer.frame = self.bounds
-//        
-//        // Shape Layer로 border 형태 생성
-//        let shapeLayer = CAShapeLayer()
-//        shapeLayer.lineWidth = lineWidth
-//        shapeLayer.path = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.layer.cornerRadius).cgPath
-//        shapeLayer.fillColor = UIColor.clear.cgColor
-//        shapeLayer.strokeColor = UIColor.black.cgColor
-//        gradientLayer.mask = shapeLayer
-//        
-//        gradientLayer.name = "gradientBorder"
-//        self.layer.addSublayer(gradientLayer)
-//    }
-//}
-//
-//// MARK: - CALayer
-//
-//extension CALayer {
-//    func addGradientBorder(colors: [UIColor], width: CGFloat = 1) {
-//        DispatchQueue.main.async { [weak self] in
-//            guard let self = self else { return }
-//            
-//            let gradientLayer = CAGradientLayer()
-//            gradientLayer.frame = CGRect(origin: .zero, size: self.bounds.size)
-//            gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-//            gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-//            gradientLayer.colors = colors.map { $0.cgColor }
-//            
-//            let shapeLayer = CAShapeLayer()
-//            shapeLayer.lineWidth = width
-//            shapeLayer.path = UIBezierPath(rect: self.bounds).cgPath
-//            shapeLayer.fillColor = nil
-//            shapeLayer.strokeColor = UIColor.black.cgColor
-//            
-//            gradientLayer.mask = shapeLayer
-//            
-//            self.addSublayer(gradientLayer)
-//        }
-//    }
-//}
-
 // MARK: - UIViewController
 
 enum FeedViewType {
@@ -89,6 +23,7 @@ extension UIViewController {
 }
 
 // MARK: - UIColor
+
 extension UIColor {
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
         return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
@@ -172,6 +107,8 @@ extension UIFont {
     }
 }
 
+// MARK: - Font
+
 extension Font {
     static func pretendard(NotoSans weight: Font.Weight, fontSize: CGFloat) -> Font {
         let uiFontWeight: UIFont.Weight
@@ -185,6 +122,8 @@ extension Font {
         return Font(UIFont.pretendard(NotoSans: uiFontWeight, fontSize: fontSize))
     }
 }
+
+// MARK: - UIImage
 
 extension UIImage {
     func resized(toWidth width: CGFloat) -> UIImage? {
@@ -220,6 +159,7 @@ extension UIImage {
 }
 
 // MARK: - UIImageView
+
 extension UIImageView {
     func setImage(from urlString: String?, placeholder: UIImage? = UIImage(named: "basic_profile_image")) {
         // URL 검증 및 기본 이미지 설정
@@ -292,5 +232,95 @@ extension View {
         return renderer.image { _ in
             view?.drawHierarchy(in: controller.view.bounds, afterScreenUpdates: true)
         }
+    }
+}
+
+// MARK: - UILabel
+
+extension UILabel {
+
+    func addTrailing(with trailingText: String, moreText: String, moreTextFont: UIFont, moreTextColor: UIColor) {
+        guard let text = self.text, !text.isEmpty else { return }
+
+        // Calculate visible text length
+        let visibleLength = calculateVisibleTextLength()
+        guard visibleLength > 0, visibleLength < text.count else { return }
+
+        let trimmedText = (text as NSString).substring(to: visibleLength)
+        let trailing = trailingText + moreText
+
+        guard trimmedText.count > trailing.count else { return }
+
+        let finalText = (trimmedText as NSString).replacingCharacters(
+            in: NSRange(location: trimmedText.count - trailing.count, length: trailing.count),
+            with: trailingText
+        )
+
+        let attributedString = NSMutableAttributedString(string: finalText, attributes: [
+            .font: self.font ?? UIFont.systemFont(ofSize: 14),
+            .foregroundColor: self.textColor ?? UIColor.black
+        ])
+
+        let moreAttributedString = NSAttributedString(string: moreText, attributes: [
+            .font: moreTextFont,
+            .foregroundColor: moreTextColor
+        ])
+        attributedString.append(moreAttributedString)
+
+        self.attributedText = attributedString
+    }
+
+    private func calculateVisibleTextLength() -> Int {
+        guard let text = self.text, !text.isEmpty else { return 0 }
+
+        self.layoutIfNeeded()
+        
+        let sizeConstraint = CGSize(width: self.frame.width, height: CGFloat.greatestFiniteMagnitude)
+        let boundingRect = (text as NSString).boundingRect(
+            with: sizeConstraint,
+            options: .usesLineFragmentOrigin,
+            attributes: [.font: self.font!],
+            context: nil
+        )
+
+        if boundingRect.height <= self.frame.height {
+            return text.count
+        }
+
+        var index = 0
+        var prevIndex = 0
+        let characterSet = CharacterSet.whitespacesAndNewlines
+
+        repeat {
+            prevIndex = index
+            index = (text as NSString).rangeOfCharacter(from: characterSet, options: [], range: NSRange(location: index + 1, length: text.count - index - 1)).location
+
+            let substring = (text as NSString).substring(to: index)
+            let height = (substring as NSString).boundingRect(
+                with: sizeConstraint,
+                options: .usesLineFragmentOrigin,
+                attributes: [.font: self.font!],
+                context: nil
+            ).height
+
+            if height > self.frame.height {
+                break
+            }
+        } while index != NSNotFound
+
+        return prevIndex
+    }
+}
+
+extension UIView {
+    func superview<T>(of type: T.Type) -> T? {
+        var superview = self.superview
+        while superview != nil {
+            if let targetSuperview = superview as? T {
+                return targetSuperview
+            }
+            superview = superview?.superview
+        }
+        return nil
     }
 }
