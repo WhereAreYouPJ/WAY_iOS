@@ -19,12 +19,12 @@ class AccountLoginViewModel {
     }
     
     func login(email: String, password: String) {
-        accountLoginUseCase.execute(request: LoginBody(email: email, password: password)) { result in
+        accountLoginUseCase.execute(request: LoginBody(email: email, password: password, fcmToken: "ojs", loginType: "normal")) { result in
             switch result {
             case .success:
                 self.onLoginSuccess?()
             case .failure:
-                self.onLoginFailure?("입력한 정보를 다시 확인해주세요.", false)
+                self.onLoginFailure?("입력한 회원 정보를 다시 확인해주세요.", false)
             }
         }
     }

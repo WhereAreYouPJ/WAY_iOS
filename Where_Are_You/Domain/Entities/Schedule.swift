@@ -7,16 +7,15 @@
 
 import Foundation
 
-struct Schedule: Codable {
-    var title: String = ""
-    var startTime: String = ""
-    var endTime: String = ""
-    var location: String = ""
-    var streetName: String = ""
-    var x: Double = 0
-    var y: Double = 0
-    var color: String = ""
-    var memo: String = ""
-    var invitedMemberSeqs: [String] = []
-    var createMemberSeq: Int = 0
+struct Schedule: Identifiable {
+    let id = UUID()
+    let scheduleSeq: Int
+    var title: String
+    var startTime: Date
+    var endTime: Date
+    var isAllday: Bool?
+    var location: Location?
+    var color: String
+    var memo: String?
+    var invitedMember: [Friend]?
 }

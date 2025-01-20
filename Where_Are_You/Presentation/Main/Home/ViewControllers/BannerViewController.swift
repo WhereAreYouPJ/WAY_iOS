@@ -9,32 +9,39 @@ import UIKit
 
 class BannerViewController: UIViewController {
     // MARK: - Properties
-
     let bannerView = BannerView()
-    var viewModel: BannerViewModel!
+    var viewModel: BannerViewModel
     
-    // MARK: - Lifecycle
-
-    override func loadView() {
-        view = bannerView
+    // MARK: - Initializer
+    init(viewModel: BannerViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = BannerViewModel()
+        view = bannerView
+
         setupBindings()
         setupCollectionView()
+        
+        viewModel.fetchBannerImages()
         
         NotificationCenter.default.addObserver(self, selector: #selector(scrollToBannerIndex(_:)), name: .scrollToBannerIndex, object: nil)
     }
     
     // MARK: - Helpers
-    
     private func setupBindings() {
         viewModel.onBannerDataFetched = { [weak self] in
             DispatchQueue.main.async {
                 self?.bannerView.collectionView.reloadData()
                 self?.scrollToInitialPosition()
+                self?.updatePageNumber()
             }
         }
     }
@@ -42,6 +49,8 @@ class BannerViewController: UIViewController {
     private func setupCollectionView() {
         bannerView.collectionView.dataSource = self
         bannerView.collectionView.delegate = self
+        bannerView.collectionView.register(BannerCollectionViewCell.self,
+                                           forCellWithReuseIdentifier: BannerCollectionViewCell.identifier)
     }
     
     private func scrollToInitialPosition() {
@@ -59,7 +68,7 @@ class BannerViewController: UIViewController {
     
     // 배너 이미지를 업데이트하는 메서드 추가
     func updateBannerImages(_ images: [UIImage]) {
-        viewModel.setBanners(images)
+        viewModel.setBannerImages(images)
     }
     
     // MARK: - Selectors
@@ -68,7 +77,6 @@ class BannerViewController: UIViewController {
         if let userInfo = notification.userInfo, let indexPath = userInfo["indexPath"] as? IndexPath {
             bannerView.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
             viewModel.updateCurrentIndex(to: indexPath.item - 1) // -1 to adjust for fake cells
-            bannerView.pageControl.currentPage = viewModel.currentIndex
             updatePageNumber()
         }
     }
@@ -96,12 +104,10 @@ extension BannerViewController: UICollectionViewDataSource {
             if images.isEmpty {
                 // 예를 들어, 빈 셀에 대한 기본 이미지를 설정하거나 처리할 수 있습니다.
                 cell.configure(with: UIImage()) // 빈 이미지 또는 기본 이미지
-                return cell
+            } else {
+                let correctedIndex = (indexPath.item - 1 + images.count) % images.count
+                cell.configure(with: images[correctedIndex])
             }
-            
-            let correctedIndex = (indexPath.item - 1 + images.count) % images.count
-            cell.configure(with: images[correctedIndex])
-            
             return cell
     }
 }
@@ -137,7 +143,6 @@ extension BannerViewController: UICollectionViewDelegateFlowLayout {
         } else {
             viewModel.updateCurrentIndex(to: currentPage - 1)
         }
-        bannerView.pageControl.currentPage = viewModel.currentIndex
         updatePageNumber()
     }
 }

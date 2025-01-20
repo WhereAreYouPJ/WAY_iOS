@@ -63,9 +63,9 @@ class SignUpFormViewController: UIViewController {
             }
         }
         
-        viewModel.onUserNameValidationMessage = { [weak self] message, isAvailabe in
+        viewModel.onUserNameValidationMessage = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
-                self?.updateStatus(label: self?.signUpView.userNameErrorLabel, message: message, isAvailable: isAvailabe, textField: self?.signUpView.userNameTextField)
+                self?.updateStatus(label: self?.signUpView.userNameErrorLabel, message: message, isAvailable: isAvailable, textField: self?.signUpView.userNameTextField)
             }
         }
         
@@ -83,7 +83,7 @@ class SignUpFormViewController: UIViewController {
         
         viewModel.onEmailSendMessage = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
-                self?.updateStatus(label: self?.signUpView.emailErrorLabel, message: message, isAvailable: isAvailable, textField: nil)
+                self?.updateStatus(label: self?.signUpView.emailErrorLabel, message: message, isAvailable: isAvailable, textField: self?.signUpView.emailTextField)
                 self?.signUpView.authStack.isHidden = !isAvailable
                 if isAvailable == true {
                     self?.signUpView.emailCheckButton.updateTitle("인증요청 완료")
@@ -144,6 +144,7 @@ class SignUpFormViewController: UIViewController {
     }
     
     @objc func startButtonTapped() {
+        print("회원가입완료버튼 눌림")
         viewModel.signUp()
     }
     

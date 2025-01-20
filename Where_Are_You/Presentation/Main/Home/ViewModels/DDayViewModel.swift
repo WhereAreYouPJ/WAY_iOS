@@ -8,18 +8,35 @@
 import Foundation
 
 class DDayViewModel {
-    var onDDayDataFetched: (() -> Void)?
+    // MARK: - Properties
+
+    private let getDDayScheduleUseCase: GetDDayScheduleUseCase
+    
     private var dDays: [DDay] = []
     private var timer: Timer?
     private var currentIndex = 0
     
+    var onDDayDataFetched: (() -> Void)?
+
+    init(getDDayScheduleUseCase: GetDDayScheduleUseCase) {
+        self.getDDayScheduleUseCase = getDDayScheduleUseCase
+    }
+    
     // MARK: - Helpers
-    // 데이터 설정 메서드
-        func setDDays(_ dDays: [DDay]) {
-            self.dDays = dDays
-            onDDayDataFetched?()
-            startAutoScroll()
+    func fetchDDays() {
+        getDDayScheduleUseCase.execute { result in
+            switch result {
+            case .success(let data):
+                self.dDays = data.map { data in
+                    return DDay(dDay: data.dDay, title: data.title)
+                }
+                self.onDDayDataFetched?()
+                self.startAutoScroll()
+            case .failure(let error):
+                print(error)
+            }
         }
+    }
     
     func getDDays() -> [DDay] {
         return dDays
@@ -33,13 +50,6 @@ class DDayViewModel {
     func stopAutoScroll() {
         timer?.invalidate()
         timer = nil
-    }
-    
-    func daysUntil(date: Date) -> Int {
-        let calendar = Calendar.current
-        let now = Date()
-        let components = calendar.dateComponents([.day], from: now, to: date)
-        return components.day ?? 0
     }
     
     // MARK: - Selectors

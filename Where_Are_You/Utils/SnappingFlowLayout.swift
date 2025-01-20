@@ -10,11 +10,21 @@ import UIKit
 class SnappingFlowLayout: UICollectionViewFlowLayout {
     override func prepare() {
         super.prepare()
-        if let collectionView = collectionView {
-            minimumLineSpacing = 12 // 셀 사이의 간격을 12로 설정
-//            minimumInteritemSpacing = 0
-            sectionInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15) // 섹션의 시작과 끝에 간격 추가
+        minimumLineSpacing = 12 // 셀 사이의 간격을 12로 설정
+        sectionInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15) // 섹션의 시작과 끝에 간격 추가
+    }
+    
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        guard let attributes = super.layoutAttributesForElements(in: rect) else { return nil }
+        
+        // 셀을 위로 정렬
+        for attribute in attributes {
+            if attribute.representedElementCategory == .cell {
+                let frame = attribute.frame
+                attribute.frame = CGRect(x: frame.origin.x, y: 0, width: frame.width, height: frame.height)
+            }
         }
+        return attributes
     }
     
     override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {

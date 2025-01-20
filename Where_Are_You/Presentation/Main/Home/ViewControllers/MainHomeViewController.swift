@@ -9,30 +9,50 @@ import UIKit
 
 class MainHomeViewController: UIViewController {
     // MARK: - Properties
-    
     private var mainHomeView = MainHomeView()
-    private var mainHomeViewModel: MainHomeViewModel!
-    private var bannerViewController: BannerViewController!
-    private var dDayViewController: DDayViewController!
-    private var feedTableViewController: HomeFeedViewController!
-    
     private let titleView = TitleView()
     
-    // MARK: - Lifecycle
+    private let bannerViewController: BannerViewController
+    private let dDayViewController: DDayViewController
+    private let homeFeedViewController: HomeFeedViewController
     
+    // MARK: - Initializer
+    init(bannerViewModel: BannerViewModel,
+         dDayViewModel: DDayViewModel,
+         homeFeedViewModel: HomeFeedViewModel
+    ) {
+        self.bannerViewController = BannerViewController(viewModel: bannerViewModel)
+        self.dDayViewController = DDayViewController(viewModel: dDayViewModel)
+        self.homeFeedViewController = HomeFeedViewController(viewModel: homeFeedViewModel)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view = mainHomeView
-        mainHomeViewModel = MainHomeViewModel()
-        setupViewControllers()
-        setupBindings()
-        buttonActions()
+        setupUI()
         setupNavigationBar()
-        
-        mainHomeViewModel.loadData()
+        setupActions()
     }
     
     // MARK: - Helpers
+    private func setupUI() {
+        view.addSubview(mainHomeView)
+        mainHomeView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        // Add child view controllers
+        addAndLayoutChildViewController(bannerViewController, toView: mainHomeView.bannerView)
+        addAndLayoutChildViewController(dDayViewController, toView: mainHomeView.dDayView)
+        addAndLayoutChildViewController(homeFeedViewController, toView: mainHomeView.homeFeedView)
+    }
+    
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleView.titleLabel)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: titleView.iconStack)
@@ -40,90 +60,31 @@ class MainHomeViewController: UIViewController {
         // 화면을 스크롤 했을때 네비게이션바가 여전히 색상을 유지
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.backgroundColor = UIColor.white
-        // 네비게이션 분리선 없애기
-        navigationBarAppearance.shadowColor = .clear
+        navigationBarAppearance.shadowColor = .clear // 네비게이션 분리선 없애기
         navigationController?.navigationBar.standardAppearance = navigationBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
     }
     
-    private func setupViewControllers() {
-        // 서브뷰 컨트롤러 초기화
-        bannerViewController = BannerViewController()
-        dDayViewController = DDayViewController()
-        feedTableViewController = HomeFeedViewController()
-        
-        // 서브뷰 컨트롤러를 자식 컨트롤러로 추가
-        addChild(bannerViewController)
-        addChild(dDayViewController)
-        addChild(feedTableViewController)
-        
-        // 서브뷰 컨트롤러의 뷰가 부모 컨트롤러에 추가되었음을 알림
-        bannerViewController.didMove(toParent: self)
-        dDayViewController.didMove(toParent: self)
-        feedTableViewController.didMove(toParent: self)
-        
-        // 각 서브 뷰 컨트롤러의 뷰를 메인 뷰에 추가
-        mainHomeView.addSubview(bannerViewController.view)
-        mainHomeView.addSubview(dDayViewController.view)
-        mainHomeView.addSubview(feedTableViewController.view)
-        
-        // 레이아웃 설정
-        bannerViewController.view.snp.makeConstraints { make in
-            make.top.equalTo(mainHomeView.bannerView)
-            make.leading.trailing.equalTo(mainHomeView.bannerView)
-            make.height.equalTo(mainHomeView.bannerView.snp.height)
-        }
-        
-        dDayViewController.view.snp.makeConstraints { make in
-            make.top.equalTo(mainHomeView.dDayView)
-            make.leading.trailing.equalTo(mainHomeView.dDayView)
-            make.height.equalTo(mainHomeView.dDayView.snp.height)
-        }
-        
-        feedTableViewController.view.snp.makeConstraints { make in
-            make.top.equalTo(mainHomeView.homeFeedView)
-            make.leading.trailing.equalTo(mainHomeView.homeFeedView)
-            make.height.equalTo(mainHomeView.homeFeedView.snp.height)
-        }
-    }
-    
-    private func setupBindings() {
-        mainHomeViewModel.onBannerDataFetched = { [weak self] in
-            DispatchQueue.main.async {
-                guard let bannerImages = self?.mainHomeViewModel.getBannerImages() else {
-                    print("배너 이미지 로드 실패")
-                    return
-                }
-                self?.bannerViewController.viewModel.setBanners(bannerImages)
-            }
-        }
-        
-        mainHomeViewModel.onDDayDataFetched = { [weak self] in
-            DispatchQueue.main.async {
-                self?.dDayViewController.viewModel.setDDays(self?.mainHomeViewModel.getDDays() ?? [])
-            }
-        }
-        
-        mainHomeViewModel.onFeedsDataFetched = { [weak self] in
-            DispatchQueue.main.async {
-                self?.feedTableViewController.viewModel.setFeeds(self?.mainHomeViewModel.getFeeds() ?? [])
-            }
-        }
-    }
-    
-    private func buttonActions() {
+    private func setupActions() {
         titleView.notificationButton.addTarget(self, action: #selector(moveToNotification), for: .touchUpInside)
         titleView.profileButton.addTarget(self, action: #selector(moveToMyPage), for: .touchUpInside)
     }
     
+    private func addAndLayoutChildViewController(_ child: UIViewController, toView containerView: UIView) {
+        addChild(child)
+        containerView.addSubview(child.view)
+        child.didMove(toParent: self)
+        child.view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+
+    // MARK: - Selectors
     @objc private func moveToNotification() {
         // 알림 페이지로 이동
     }
     
     @objc private func moveToMyPage() {
-        // 마이 페이지 이동
-        if let tabBarController = self.tabBarController {
-            tabBarController.selectedIndex = 3
-        }
+        tabBarController?.selectedIndex = 3
     }
 }

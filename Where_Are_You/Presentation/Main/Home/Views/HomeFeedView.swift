@@ -1,5 +1,5 @@
 //
-//  FeedTableView.swift
+//  HomeFeedView.swift
 //  Where_Are_You
 //
 //  Created by 오정석 on 11/7/2024.
@@ -30,7 +30,7 @@ class HomeFeedView: UIView {
         label.textAlignment = .center        
         label.layer.borderColor = UIColor.color221.cgColor
         label.layer.borderWidth = 1
-        label.layer.cornerRadius = 15
+        label.layer.cornerRadius = LayoutAdapter.shared.scale(value: 15)
         label.clipsToBounds = true
         return label
     }()
@@ -58,18 +58,16 @@ class HomeFeedView: UIView {
         addSubview(collectionView)
         
         collectionView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.leading.trailing.equalToSuperview()/*.inset(15)*/
+            make.edges.equalToSuperview()
         }
-        
-//        collectionView.register(HomeFeedCollectionViewCell.self, forCellWithReuseIdentifier: HomeFeedCollectionViewCell.identifier)
     }
     
     private func updateFeeds() {
         if feeds.isEmpty {
             addSubview(noFeedLabel)
             noFeedLabel.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
+                make.top.bottom.equalToSuperview()
+                make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 23))
             }
             collectionView.isHidden = true
         } else {

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "apple1.png",
+      "filename" : "Frame 441.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "apple2.png",
+      "filename" : "Frame 442.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "apple3.png",
+      "filename" : "Frame 443.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

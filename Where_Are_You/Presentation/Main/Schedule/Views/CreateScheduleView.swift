@@ -7,48 +7,38 @@
 
 import SwiftUI
 
+enum Route: Hashable {
+    case searchPlace
+    case searchFriends
+    case confirmLocation(Location)
+}
+
 struct CreateScheduleView: View {
     @StateObject var viewModel: CreateScheduleViewModel
     @Environment(\.dismiss) private var dismiss
     @State private var path = NavigationPath()
     
-    @State private var schedule = Schedule()
-    @State private var isAllDay = true
-    @State private var startTime = Date()
-    @State private var endTime = Date()
-    
-    private let dateFormatter: DateFormatter
-    
     init() {
-        let calendar = Calendar.current
-        let now = Date()
-        let components = calendar.dateComponents([.year, .month, .day, .hour], from: now)
-        let startOfHour = calendar.date(from: components)!
-        
         _viewModel = StateObject(wrappedValue: CreateScheduleViewModel())
-        _startTime = State(initialValue: startOfHour)
-        _endTime = State(initialValue: calendar.date(byAdding: .hour, value: 1, to: startOfHour)!)
-        
-        dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy.MM.dd a hh:mm"
     }
     
     var body: some View {
         NavigationStack(path: $path) {
             VStack(alignment: .leading, content: {
-                TextField("", text: $schedule.title, prompt: Text("메모를 작성해주세요.").foregroundColor(Color(.color118)))
+                TextField("", text: $viewModel.title, prompt: Text("일정명을 작성해주세요.").foregroundColor(Color(.color118)))
+                
                 Divider()
                     .padding(.bottom, 16)
                 
-                DateAndTimeView(isAllDay: $isAllDay, startTime: $startTime, endTime: $endTime)
+                DateAndTimeView(isAllDay: $viewModel.isAllDay, startTime: $viewModel.startTime, endTime: $viewModel.endTime)
                 
-                AddPlaceView(location: $schedule.location, streetName: $schedule.streetName, x: $schedule.x, y: $schedule.y, path: $path)
+                AddPlaceView(viewModel: viewModel, path: $path)
                 
-                AddFriendsView()
+                AddFriendsView(selectedFriends: $viewModel.selectedFriends, path: $path)
                 
-                SetColorView()
+                SetColorView(color: $viewModel.color)
                 
-                MemoView()
+                MemoView(memo: $viewModel.memo)
             })
             .padding(15)
             .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
@@ -61,20 +51,37 @@ struct CreateScheduleView: View {
                 }
                 ToolbarItem(placement: .primaryAction) {
                     Button("추가") {
-                        viewModel.postSchedule(schedule: schedule)
-                        dismiss()
+                        viewModel.postSchedule()
+                        if viewModel.isSuccess {
+                            dismiss()
+                        } else {
+                            // TODO: 일정 생성 예외 처리 필요, 실패 경우 동작 구현
+                            dismiss()
+                        }
                     }
-                    .foregroundStyle(schedule.title.isEmpty ? Color.gray : Color.red)
-                    .disabled(schedule.title.isEmpty)
+                    .foregroundStyle(viewModel.title.isEmpty ? Color.gray : Color.red)
+                    .disabled(viewModel.title.isEmpty)
                 }
             }
             .navigationTitle("일정 추가")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(for: String.self) { route in
-                if route == "searchPlace" {
-                    SearchPlaceView(location: $schedule.location, streetName: $schedule.streetName, x: $schedule.x, y: $schedule.y, path: $path)
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case .searchPlace:
+                    SearchLocationView(selectedLocation: $viewModel.place, path: $path)
+                case .searchFriends:
+                    SearchFriendsView(selectedFriends: $viewModel.selectedFriends)
+                case .confirmLocation:
+                    ConfirmLocationView(location: $viewModel.place, path: $path)
+                        .onDisappear {
+                            viewModel.getFavoriteLocation()
+                        }
+                    
                 }
             }
+        }
+        .onAppear {
+            viewModel.getFavoriteLocation()
         }
     }
 }
@@ -98,144 +105,200 @@ struct DateAndTimeView: View {
             }
             .transition(.opacity.combined(with: .move(edge: .top)))
         }
+        
         Divider()
         
-        // TODO: 시각 hh(두 글자)로 포맷팅 필요, wheel 모달 창 띄우기
         DatePicker("시작", selection: $startTime, displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
             .environment(\.locale, Locale(identifier: "ko_KR"))
             .environment(\.calendar, Calendar(identifier: .gregorian))
+        
         Divider()
         
         DatePicker("종료", selection: $endTime, in: startTime..., displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
             .environment(\.locale, Locale(identifier: "ko_KR"))
             .environment(\.calendar, Calendar(identifier: .gregorian))
+        
         Divider()
             .padding(.bottom, 20)
     }
 }
 
 struct AddPlaceView: View {
-    @Binding var location: String
-    @Binding var streetName: String
-    @Binding var x: Double
-    @Binding var y: Double
+    @ObservedObject var viewModel: CreateScheduleViewModel
     @Binding var path: NavigationPath
     
     var body: some View {
         Text("위치추가")
-        Divider()
         
+        Divider()
         
         HStack {
             Image("icon-place")
-            if location.isEmpty {
+            if viewModel.place.location == "" {
                 Text("위치 추가")
                     .foregroundStyle(Color(.color118))
                     .onTapGesture {
-                        path.append("searchPlace")
+                        path.append(Route.searchPlace)
                     }
+                
             } else {
-                Text(location)
-                    .foregroundStyle(Color.primary)
+                HStack {
+                    Text(viewModel.place.location)
+                        .onTapGesture {
+                            path.append(Route.confirmLocation(viewModel.place))
+                        }
+                }
+                
+                Spacer()
+                
+                Button(action: {
+                    viewModel.place = Location(sequence: 0, location: "", streetName: "", x: 0, y: 0)
+                }, label: {
+                    CancellationView()
+                })
             }
         }
         
         ScrollView(.horizontal) {
             HStack {
-                let favPlaces = ["서울대", "여의도공원", "올림픽체조경기장", "재즈바", "신도림", "망원한강공원"]
-                ForEach(favPlaces, id: \.self) { place in
-                    Text(place)
-                        .padding(EdgeInsets(top: 4, leading: 14, bottom: 4, trailing: 14))
-                        .background(
-                            RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/, style: /*@START_MENU_TOKEN@*/.continuous/*@END_MENU_TOKEN@*/)
-                                .fill(Color(.color240))
-                        )
-                        .onTapGesture {
-                            location = place
-                            // Note: You might want to update streetName, x, and y here as well
+                ForEach(viewModel.favPlaces) { favPlace in
+                    FavoritePlaceCell(place: favPlace) {
+                        viewModel.geocodeSelectedLocation(favPlace) { geocodedLocation in
+                            viewModel.place = geocodedLocation
                         }
+                    }
                 }
-                
             }
             .padding(.bottom, 20)
         }
     }
 }
 
+struct FavoritePlaceCell: View {
+    let place: Location
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            Text(place.location)
+                .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(Color(.color240))
+                )
+                .foregroundColor(.primary)
+        }
+    }
+}
+
 struct AddFriendsView: View {
-    @State private var friends: [String] = [] // dump: "김민정", "임창균", "조승연", "김민지"
+    @Binding var selectedFriends: [Friend]
+    @Binding var path: NavigationPath
     
     var body: some View {
         Text("친구추가")
+        
         Divider()
         
-        // TODO: friends 배열 비어있을 때 처리 필요(현재 코드에서 배열 비워두면 오류 발생)
         HStack {
             Image("icon-friends")
-            if friends.isEmpty {
+            if selectedFriends.isEmpty {
                 Text("친구 추가")
                     .foregroundStyle(Color(.color118))
+                    .onTapGesture {
+                        path.append(Route.searchFriends)
+                    }
             } else {
-                let count = friends.count
+                let count = selectedFriends.count
                 ForEach(0..<min(3, count), id: \.self) { idx in
                     if idx < count - 1 {
-                        Text(friends[idx] + ", ")
+                        Text(selectedFriends[idx].name + ", ")
                     } else {
-                        Text(friends[idx])
+                        Text(selectedFriends[idx].name)
                     }
+                }
+                .onTapGesture {
+                    path.append(Route.searchFriends)
                 }
                 
                 if count > 3 {
                     Text("외 " + String(count - 3) + "명")
                 }
+                
+                Spacer()
+                
+                Button(action: {
+                    selectedFriends.removeAll()
+                }, label: {
+                    CancellationView()
+                })
             }
         }
         .padding(.bottom, 20)
     }
 }
 
+struct CancellationView: View {
+    var body: some View {
+        ZStack {
+            Circle()
+                .frame(width: LayoutAdapter.shared.scale(value: 18), height: LayoutAdapter.shared.scale(value: 18))
+                .foregroundColor(Color(.color235))
+            
+            Image("icon-delete")
+                .resizable()
+                .frame(width: LayoutAdapter.shared.scale(value: 18), height: LayoutAdapter.shared.scale(value: 18))
+                .opacity(0.8)
+        }
+        .padding(.trailing, 4)
+    }
+}
+
 struct SetColorView: View {
+    @Binding var color: String
+    
+    let colors: [(Color, String)] = [
+        (.colorRed, "red"),
+        (.colorYellow, "yellow"),
+        (.colorGreen, "green"),
+        (.colorBlue, "blue"),
+        (.colorViolet, "violet"),
+        (.colorPink, "pink")
+    ]
+    
     var body: some View {
         Text("일정컬러")
+        
         Divider()
         
         HStack {
-            Circle()
-                .fill(.colorRed)
-                .frame(width: 18, height: 18)
-            
-            Circle()
-                .fill(.colorYellow)
-                .frame(width: 18, height: 18)
-            
-            Circle()
-                .fill(.colorGreen)
-                .frame(width: 18, height: 18)
-            
-            Circle()
-                .fill(.colorBlue)
-                .frame(width: 18, height: 18)
-            
-            Circle()
-                .fill(.colorViolet)
-                .frame(width: 18, height: 18)
-            
-            Circle()
-                .fill(.colorPink)
-                .frame(width: 18, height: 18)
+            ForEach(colors, id: \.1) { colorPair in
+                Circle()
+                    .fill(colorPair.0)
+                    .frame(width: 18, height: 18)
+                    .onTapGesture {
+                        color = colorPair.1
+                    }
+                    .overlay(
+                        Circle()
+                            .stroke(Color.black, lineWidth: color == colorPair.1 ? 2 : 0)
+                    )
+            }
         }
         .padding(.bottom, 20)
     }
 }
 
 struct MemoView: View {
-    @State private var memo = ""
-    let maxLength = 10
+    @Binding var memo: String
+    let maxLength = 500
     
     var body: some View {
         HStack {
             Text("메모")
+            
             Spacer()
+            
             Text("\(memo.count)/\(maxLength)")
                 .foregroundColor(memo.count == maxLength ? .red : .gray)
         }
@@ -251,7 +314,7 @@ struct MemoView: View {
                     
                     TextEditor(text: $memo)
                         .modifier(MaxLengthModifier(text: $memo, maxLength: maxLength))
-                        .frame(height: geometry.size.height) // 상단 HStack의 높이를 고려하여 조정
+                        .frame(height: geometry.size.height)
                         .padding(2)
                         .opacity(memo.isEmpty ? 0.1 : 1)
                 }
@@ -270,7 +333,7 @@ struct MaxLengthModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .onChange(of: text) { newValue in
+            .onChange(of: text) { _, newValue in
                 if newValue.count > maxLength {
                     text = String(newValue.prefix(maxLength))
                 }
@@ -281,3 +344,4 @@ struct MaxLengthModifier: ViewModifier {
 #Preview {
     CreateScheduleView()
 }
+

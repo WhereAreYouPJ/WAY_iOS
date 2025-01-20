@@ -27,9 +27,9 @@ class SignUpFormView: UIView {
     
     private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "아래 내용을 작성해주세요", textColor: .color34, fontSize: 22)
     
-    private let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이름", textColor: .color51, fontSize: descriptionFontSize)
+    private let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이름", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
     
-    let userNameTextField = Utilities.inputContainerTextField(withPlaceholder: "이름", fontSize: textFieldFontSize)
+    let userNameTextField = Utilities.inputContainerTextField(withPlaceholder: "이름")
     
     let userNameErrorLabel: UILabel = {
         let label = UILabel()
@@ -46,9 +46,9 @@ class SignUpFormView: UIView {
         return stackView
     }()
     
-    private let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이메일", textColor: .color51, fontSize: descriptionFontSize)
+    private let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이메일", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
     
-    let emailTextField = Utilities.inputContainerTextField(withPlaceholder: "이메일", fontSize: textFieldFontSize)
+    let emailTextField = Utilities.inputContainerTextField(withPlaceholder: "이메일")
     
     let emailCheckButton = CustomButton(title: "인증요청", backgroundColor: .brandColor, titleColor: .white, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
     
@@ -74,7 +74,7 @@ class SignUpFormView: UIView {
         return stackView
     }()
     
-    let authCodeTextField = Utilities.inputContainerTextField(withPlaceholder: "인증코드", fontSize: textFieldFontSize)
+    let authCodeTextField = Utilities.inputContainerTextField(withPlaceholder: "인증코드")
     
     let timer: UILabel = {
         let label = UILabel()
@@ -108,9 +108,9 @@ class SignUpFormView: UIView {
         return stackView
     }()
     
-    let passwordLabel = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: descriptionFontSize)
+    let passwordLabel = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
     
-    let passwordTextField = Utilities.inputContainerTextField(withPlaceholder: "비밀번호", fontSize: textFieldFontSize)
+    let passwordTextField = Utilities.inputContainerTextField(withPlaceholder: "비밀번호")
     
     let passwordErrorLabel: UILabel = {
         let label = UILabel()
@@ -120,7 +120,7 @@ class SignUpFormView: UIView {
         return label
     }()
     
-    let checkPasswordTextField = Utilities.inputContainerTextField(withPlaceholder: "비밀번호 확인", fontSize: textFieldFontSize)
+    let checkPasswordTextField = Utilities.inputContainerTextField(withPlaceholder: "비밀번호 확인")
     
     let checkPasswordErrorLabel: UILabel = {
         let label = UILabel()
@@ -157,21 +157,24 @@ class SignUpFormView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
-        
         configureViewComponents()
         setupConstraints()
-        authStack.isHidden = true
-        passwordTextField.isSecureTextEntry = true
-        checkPasswordTextField.isSecureTextEntry = true
-        bottomButtonView.button.updateBackgroundColor(.color171)
-        bottomButtonView.button.isEnabled = false
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func configureViewComponents() {
+        authStack.isHidden = true
+        passwordTextField.isSecureTextEntry = true
+        checkPasswordTextField.isSecureTextEntry = true
+        bottomButtonView.button.updateBackgroundColor(.color171)
+        bottomButtonView.button.isEnabled = false
+        
+        emailTextField.keyboardType = .emailAddress
+        authCodeTextField.keyboardType = .numberPad
+        
         addSubview(progressBar)
         progressBar.addSubview(colorBar)
         addSubview(titleLabel)

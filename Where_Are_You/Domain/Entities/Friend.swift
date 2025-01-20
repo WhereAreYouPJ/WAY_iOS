@@ -7,7 +7,10 @@
 
 import Foundation
 
-struct Friend {
+struct Friend: Identifiable {
+    let id = UUID()
+    let memberSeq: Int
     let profileImage: String
     let name: String
+    var isFavorite: Bool
 }

@@ -19,16 +19,14 @@ class BannerView: UIView {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         return cv
     }()
-    
-    let pageControl = UIPageControl()
-    
+        
     var pageNumberLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.textColor = .white
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 12)
         label.backgroundColor = UIColor.color68.withAlphaComponent(0.6)
-        label.layer.cornerRadius = 8
+        label.layer.cornerRadius = LayoutAdapter.shared.scale(value: 10)
         label.clipsToBounds = true
         return label
     }()
@@ -45,7 +43,6 @@ class BannerView: UIView {
     }
     
     // MARK: - Helpers
-    
     private func setupViews() {
         layer.cornerRadius = 16
         layer.borderWidth = 1.5
@@ -58,22 +55,16 @@ class BannerView: UIView {
         collectionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: BannerCollectionViewCell.identifier)
         
         addSubview(collectionView)
-        addSubview(pageControl)
         addSubview(pageNumberLabel)
         
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        pageControl.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(-15)
-            make.centerX.equalToSuperview()
-        }
-        
         pageNumberLabel.snp.makeConstraints { make in
             make.bottom.trailing.equalToSuperview().offset(-12)
-            make.width.equalTo(42)
-            make.height.equalTo(17)
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 42))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 17))
         }
     }
 }
