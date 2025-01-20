@@ -46,6 +46,7 @@ struct AddFriendView: View { // TODO: 친구 신청 완료시 토스트 팝업
                     dismiss()
                 }
             )
+            .toast(isPresented: $viewModel.showToast, message: viewModel.toastText)
         }
     }
     

@@ -204,6 +204,7 @@
 		99FBA5562C453BDD002EEEC7 /* HomeFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5552C453BDD002EEEC7 /* HomeFeedViewController.swift */; };
 		99FBA5582C453C05002EEEC7 /* HomeFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5572C453C05002EEEC7 /* HomeFeedViewModel.swift */; };
 		99FDD0BD2C6DF72700B15026 /* MultipartFormDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */; };
+		D511A5742D3E8F7400CA6FE7 /* CustomToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511A5732D3E8F7400CA6FE7 /* CustomToast.swift */; };
 		D512EC572CA6E56C001AC965 /* GetScheduleByDateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512EC562CA6E56C001AC965 /* GetScheduleByDateResponse.swift */; };
 		D517F25D2CEC8691003C5F60 /* FriendDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D517F25C2CEC8691003C5F60 /* FriendDetailView.swift */; };
 		D517F25F2CECA902003C5F60 /* FriendDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D517F25E2CECA902003C5F60 /* FriendDetailViewModel.swift */; };
@@ -528,6 +529,7 @@
 		99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartFormDataHelper.swift; sourceTree = "<group>"; };
 		A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5015275FE458D5F6450041 /* Pods-Where_Are_You.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You.release.xcconfig"; path = "Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You.release.xcconfig"; sourceTree = "<group>"; };
+		D511A5732D3E8F7400CA6FE7 /* CustomToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToast.swift; sourceTree = "<group>"; };
 		D512EC562CA6E56C001AC965 /* GetScheduleByDateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetScheduleByDateResponse.swift; sourceTree = "<group>"; };
 		D517F25C2CEC8691003C5F60 /* FriendDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailView.swift; sourceTree = "<group>"; };
 		D517F25E2CECA902003C5F60 /* FriendDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailViewModel.swift; sourceTree = "<group>"; };
@@ -1347,6 +1349,7 @@
 				99D8FBC12C3BA25B0062AF10 /* CustomTextField.swift */,
 				D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */,
 				D55C6C3D2CF57E74005132DC /* CustomButtonSwiftUI.swift */,
+				D511A5732D3E8F7400CA6FE7 /* CustomToast.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -1991,6 +1994,7 @@
 				D55C6C552CF5DA9C005132DC /* FriendRequestAPI.swift in Sources */,
 				99E755512C22E66F0016A0A6 /* MemberService.swift in Sources */,
 				D534B1052D06F416004864E0 /* PostCoordinateUseCase.swift in Sources */,
+				D511A5742D3E8F7400CA6FE7 /* CustomToast.swift in Sources */,
 				D55C6C492CF5D921005132DC /* AcceptFriendRequestBody.swift in Sources */,
 				99D8FBC22C3BA25B0062AF10 /* CustomTextField.swift in Sources */,
 				D55C6C402CF585F1005132DC /* AddFriendView.swift in Sources */,

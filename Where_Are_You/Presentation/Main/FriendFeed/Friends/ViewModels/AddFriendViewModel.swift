@@ -13,8 +13,8 @@ class AddFriendViewModel: ObservableObject {
     
     @Published var showSearchError: Bool = false
     
-    @Published var isRequestSuccess: Bool = false
-    @Published var errorText: String = ""
+    @Published var showToast: Bool = false
+    @Published var toastText: String = ""
     
     private let memberSearchUseCase: MemberSearchUseCase
     private let postFriendRequestUseCase: PostFriendRequestUseCase
@@ -44,19 +44,24 @@ class AddFriendViewModel: ObservableObject {
     func postFriendRequest() {
         guard let searchedMember else { return }
         let memberSeq = UserDefaultsManager.shared.getMemberSeq()
-        postFriendRequestUseCase.execute(request: PostFriendRequestBody(memberSeq: memberSeq, friendSeq: searchedMember.memberSeq)) { result in
-            switch result {
-            case .success:
-                self.isRequestSuccess = true
-                print("친구 요청 완료!")
-            case .failure(let error):
-                self.isRequestSuccess = false
-                if let errorResponse = (error as NSError).userInfo["errorResponse"] as? ErrorResponse {
-                    self.errorText = errorResponse.message
-                } else {
-                    self.errorText = error.localizedDescription
+        postFriendRequestUseCase.execute(request: PostFriendRequestBody(memberSeq: memberSeq, friendSeq: searchedMember.memberSeq)) { [weak self] result in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self.toastText = "친구 신청이 완료되었습니다."
+                    self.showToast = true
+                    print("친구 요청 완료!")
+                case .failure(let error):
+                    if let errorResponse = (error as NSError).userInfo["errorResponse"] as? ErrorResponse {
+                        self.toastText = errorResponse.message
+                    } else {
+                        self.toastText = error.localizedDescription
+                    }
+                    self.showToast = true
+                    print("친구 요청 실패 - \(self.toastText)")
                 }
-                print("친구 요청 실패 - \(self.errorText)")
             }
         }
     }
