@@ -53,8 +53,16 @@ class APIResponseHandler {
                 let statusCode = response.statusCode
                 print("Response Status Code: \(statusCode)")
                 
-                _ = try response.filterSuccessfulStatusCodes()
-                completion(.success(()))
+                if (200...299).contains(statusCode) {
+                    completion(.success(()))
+                } else {
+                    // 에러 응답을 ErrorResponse로 디코딩
+                    let errorResponse = try JSONDecoder().decode(ErrorResponse.self, from: response.data)
+                    print("Error Response: \(errorResponse)")
+                    completion(.failure(NSError(domain: "",
+                                                code: statusCode,
+                                                userInfo: ["errorResponse": errorResponse])))
+                }
             } catch {
                 // 실패한 상태 코드에 대해 상세 정보 출력
                 if let moyaError = error as? MoyaError, let response = moyaError.response {
@@ -62,7 +70,11 @@ class APIResponseHandler {
                     let responseBody = String(data: response.data, encoding: .utf8) ?? "No Response Body"
                     print("Failed Status Code: \(statusCode)")
                     print("Response Body: \(responseBody)")
-                    completion(.failure(NSError(domain: "", code: statusCode, userInfo: [NSLocalizedDescriptionKey: "Failed with status code \(statusCode): \(responseBody)"])))
+                    
+                    // JSON 디코딩 실패 시 기본 에러 처리
+                    completion(.failure(NSError(domain: "",
+                                                code: statusCode,
+                                                userInfo: [NSLocalizedDescriptionKey: "Failed with status code \(statusCode): \(responseBody)"])))
                 } else {
                     completion(.failure(error))
                 }

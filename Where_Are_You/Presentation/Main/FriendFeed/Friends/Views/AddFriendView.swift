@@ -73,7 +73,7 @@ struct AddFriendView: View { // TODO: 친구 신청 완료시 토스트 팝업
                 .frame(width: LayoutAdapter.shared.scale(value: 100), height: LayoutAdapter.shared.scale(value: 42))
             }
             
-            if viewModel.showError {
+            if viewModel.showSearchError {
                 HStack {
                     Text("코드를 다시 한번 확인해 주세요.")
                         .foregroundStyle(Color.red)

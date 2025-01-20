@@ -10,7 +10,11 @@ import Foundation
 class AddFriendViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var searchedMember: Friend?
-    @Published var showError: Bool = false
+    
+    @Published var showSearchError: Bool = false
+    
+    @Published var isRequestSuccess: Bool = false
+    @Published var errorText: String = ""
     
     private let memberSearchUseCase: MemberSearchUseCase
     private let postFriendRequestUseCase: PostFriendRequestUseCase
@@ -28,10 +32,10 @@ class AddFriendViewModel: ObservableObject {
                                              profileImage: friend.profileImage ?? AppConstants.ImageAssets.defaultProfileIcon,
                                              name: friend.userName,
                                              isFavorite: false, memberCode: "")
-                self.showError = false
+                self.showSearchError = false
                 print("회원 검색 완료!")
             case .failure(let error):
-                self.showError = true
+                self.showSearchError = true
                 print("회원 검색 실패 - \(error.localizedDescription)")
             }
         }
@@ -43,9 +47,16 @@ class AddFriendViewModel: ObservableObject {
         postFriendRequestUseCase.execute(request: PostFriendRequestBody(memberSeq: memberSeq, friendSeq: searchedMember.memberSeq)) { result in
             switch result {
             case .success:
+                self.isRequestSuccess = true
                 print("친구 요청 완료!")
             case .failure(let error):
-                print("친구 요청 실패 - \(error.localizedDescription)")
+                self.isRequestSuccess = false
+                if let errorResponse = (error as NSError).userInfo["errorResponse"] as? ErrorResponse {
+                    self.errorText = errorResponse.message
+                } else {
+                    self.errorText = error.localizedDescription
+                }
+                print("친구 요청 실패 - \(self.errorText)")
             }
         }
     }
