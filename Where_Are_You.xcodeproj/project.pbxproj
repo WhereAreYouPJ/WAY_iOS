@@ -193,6 +193,7 @@
 		99E8BC452C2D26CF00536B95 /* EmailVerifyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E8BC442C2D26CF00536B95 /* EmailVerifyUseCase.swift */; };
 		99E9D39B2CF7F7FC00D2554A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E9D39A2CF7F7FC00D2554A /* User.swift */; };
 		99E9DC852CE48AA3007FFD91 /* FeedImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E9DC842CE48AA3007FFD91 /* FeedImageCell.swift */; };
+		99E9E1892D3E0DC3008A81BF /* SocialSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E9E1882D3E0DC1008A81BF /* SocialSignUpView.swift */; };
 		99EC20AB2C0D9D9D0018904D /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20AA2C0D9D9D0018904D /* SignUpViewModel.swift */; };
 		99EC20AD2C0D9DB50018904D /* AcoountSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC20AC2C0D9DB50018904D /* AcoountSearchViewModel.swift */; };
 		99EC78CE2C11DBA5007C4415 /* PasswordResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC78CD2C11DBA5007C4415 /* PasswordResetViewController.swift */; };
@@ -522,6 +523,8 @@
 		99E8BC442C2D26CF00536B95 /* EmailVerifyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerifyUseCase.swift; sourceTree = "<group>"; };
 		99E9D39A2CF7F7FC00D2554A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		99E9DC842CE48AA3007FFD91 /* FeedImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageCell.swift; sourceTree = "<group>"; };
+		99E9E1872D3DE756008A81BF /* Where_Are_You.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Where_Are_You.entitlements; sourceTree = "<group>"; };
+		99E9E1882D3E0DC1008A81BF /* SocialSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSignUpView.swift; sourceTree = "<group>"; };
 		99EC20AA2C0D9D9D0018904D /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		99EC20AC2C0D9DB50018904D /* AcoountSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcoountSearchViewModel.swift; sourceTree = "<group>"; };
 		99EC78CD2C11DBA5007C4415 /* PasswordResetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetViewController.swift; sourceTree = "<group>"; };
@@ -905,6 +908,7 @@
 				9950C64D2C102FB6003155A7 /* TermsAgreementView.swift */,
 				9950C6582C10B0DF003155A7 /* SignUpFormView.swift */,
 				99EC78D32C11E809007C4415 /* FinishRegisterview.swift */,
+				99E9E1882D3E0DC1008A81BF /* SocialSignUpView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -936,6 +940,7 @@
 		9953583B2C00C555005BF799 /* Where_Are_You */ = {
 			isa = PBXGroup;
 			children = (
+				99E9E1872D3DE756008A81BF /* Where_Are_You.entitlements */,
 				9953583C2C00C555005BF799 /* AppDelegate.swift */,
 				9953583E2C00C555005BF799 /* SceneDelegate.swift */,
 				99D11EBB2C07848B006BE265 /* Resources */,
@@ -2288,6 +2293,7 @@
 				990F579A2C27EEF400F6E1AD /* MemberRepository.swift in Sources */,
 				99C9B2502C0229CF008D7CBD /* AccountLoginView.swift in Sources */,
 				9985AB992C78802400D1442E /* MyDetailManageViewcontroller.swift in Sources */,
+				99E9E1892D3E0DC3008A81BF /* SocialSignUpView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2449,6 +2455,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Where_Are_You/Where_Are_You.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8CKPNKA3V9;
@@ -2468,8 +2476,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Ben.Where-Are-You";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ben.OMW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -2486,6 +2495,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Where_Are_You/Where_Are_You.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8CKPNKA3V9;
@@ -2505,8 +2516,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Ben.Where-Are-You";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ben.OMW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
