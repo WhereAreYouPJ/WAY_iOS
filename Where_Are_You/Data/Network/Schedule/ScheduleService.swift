@@ -18,7 +18,7 @@ protocol ScheduleServiceProtocol {
     func deleteScheduleByCreator(request: DeleteScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postEcceptSchedule(request: CreateScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     func getMonthlySchedule(yearMonth: String, completion: @escaping (Result<GenericResponse<[GetScheduleByMonthResponse]>, Error>) -> Void)
-    func getDailySchedule(date: String, completion: @escaping (Result<GenericResponse<[GetScheduleByDateResponse]>, Error>) -> Void)
+    func getDailySchedule(date: String, completion: @escaping (Result<GenericResponse<GetScheduleByDateResponse>, Error>) -> Void)
     func getDDaySchedule(completion: @escaping (Result<GenericResponse<[DDayScheduleResponse]>, Error>) -> Void)
     func getScheduleList(page: Int32, completion: @escaping (Result<GenericResponse<GetScheduleListResponse>, Error>) -> Void)
 }
@@ -82,7 +82,7 @@ class ScheduleService: ScheduleServiceProtocol {
         }
     }
     
-    func getDailySchedule(date: String, completion: @escaping (Result<GenericResponse<[GetScheduleByDateResponse]>, Error>) -> Void) {
+    func getDailySchedule(date: String, completion: @escaping (Result<GenericResponse<GetScheduleByDateResponse>, Error>) -> Void) {
         provider.request(.getDailySchedule(date: date, memberSeq: memberSeq)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
