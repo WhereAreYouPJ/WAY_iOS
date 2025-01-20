@@ -29,8 +29,7 @@ class CommonFeedView: UIView {
     
     let descriptionLabel: UILabel = {
         let label = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color34, fontSize: LayoutAdapter.shared.scale(value: 14))
-        label.numberOfLines = 3
-        label.lineBreakMode = .byTruncatingHead
+        label.numberOfLines = 0
         label.backgroundColor = .color249
         return label
     }()
