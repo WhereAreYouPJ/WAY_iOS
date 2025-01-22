@@ -17,11 +17,9 @@ class FeedViewModel {
     private let postBookMarkFeedUseCase: PostBookMarkFeedUseCase
     private let deleteBookMarkFeedUseCase: DeleteBookMarkFeedUseCase
     
-//    private let imageCache = ImageCache.default
     private let memberSeq = UserDefaultsManager.shared.getMemberSeq()
     
     var onFeedsDataFetched: (() -> Void)?
-    //    var onImageLoaded: ((Int) -> Void)?
     
     private(set) var currentIndex = 0
     
@@ -29,14 +27,12 @@ class FeedViewModel {
     private var isLoading = false
     
     private var rawFeedContent: [FeedContent] = []
-    private(set) var displayFeedContent: [Feed] = [] {
+    var displayFeedContent: [Feed] = [] {
         didSet {
             self.onFeedsDataFetched?()
         }
     }
-    
-    //    var cachedImages: [Int: [UIImage]] = [:]  이미지 캐싱 저장소 (feedSeq기반)
-    
+        
     // MARK: - Initializer
     init(getFeedListUseCase: GetFeedListUseCase,
          deleteFeedUseCase: DeleteFeedUseCase,
@@ -81,7 +77,7 @@ class FeedViewModel {
         }
     }
     
-    func hidFeed(feedSeq: Int) {
+    func hideFeed(feedSeq: Int) {
         postHideFeedUseCase.execute(feedSeq: feedSeq) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -122,39 +118,4 @@ class FeedViewModel {
             }
         }
     }
-    
-    // MARK: - Prefetch Images
-    //    private func prefetchImages() {
-    //        for feed in displayFeedContent {
-    //            let feedSeq = feed.feedSeq
-    //            // 피드의 이미지 배열 초기화
-    //            cachedImages[feedSeq] = []
-    //
-    //            // 각 이미지 URL에 대해 로드
-    //            for imageInfo in feed.feedImageInfos {
-    //                let imageUrlString = imageInfo.feedImageURL
-    //                guard let url = URL(string: imageUrlString) else { continue }
-    //
-    //                KingfisherManager.shared.retrieveImage(with: url) { [weak self] result in
-    //                    switch result {
-    //                    case .success(let imageResult):
-    //                        // 이미지를 배열에 추가
-    //                        self?.cachedImages[feedSeq]?.append(imageResult.image)
-    //                        self?.onImageLoaded?(feedSeq) // 이미지 로드 콜백 호출
-    //                    case .failure(let error):
-    //                        print("Failed to load image: \(error.localizedDescription)")
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    //
-    //    // MARK: - Get Image
-    //    func image(for feedSeq: Int, at index: Int) -> UIImage? {
-    //        return cachedImages[feedSeq]?[index]
-    //    }
-    //
-    //    private func updateFeedImagesForCurrentIndex() {
-    //
-    //    }
 }

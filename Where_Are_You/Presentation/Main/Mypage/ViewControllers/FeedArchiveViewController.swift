@@ -11,7 +11,7 @@ class FeedArchiveViewController: UIViewController {
     private let feedArchiveView = FeedsView()
     private let noDataView: NoDataView = {
         let view = NoDataView()
-        view.descriptionLabel.text = "아직은 숨긴 피드가 없어요. \n숨긴 피드는 이곳에서 복원이 가능해요."
+        view.configureUI(descriptionText: "아직은 숨긴 피드가 없어요. \n숨긴 피드는 이곳에서 복원이 가능해요.")
         return view
     }()
     private var optionsView = MultiCustomOptionsContainerView()
@@ -135,7 +135,7 @@ class FeedArchiveViewController: UIViewController {
     
     // MARK: - Selectors
     @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
     
     @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {
@@ -149,6 +149,9 @@ class FeedArchiveViewController: UIViewController {
 // MARK: - FeedsTableViewCellDelegate
 
 extension FeedArchiveViewController: FeedsTableViewCellDelegate {
+    func didSelectFeed(feed: Feed) {
+    }
+    
     func didTapBookmarkButton(feedSeq: Int, isBookMarked: Bool) {
         viewModel.deleteBookMarkFeed(feedSeq: feedSeq)
         // 북마크 상태 변경 후 해당 셀만 업데이트

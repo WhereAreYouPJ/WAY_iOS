@@ -28,8 +28,9 @@ struct MainFeedListContent {
 }
 
 struct Feed {
+    let scheduleSeq: Int?
     let feedSeq: Int
-    let memberSeq: Int?
+    let memberSeq: Int
     let startTime: String
     let profileImageURL: String
     let location: String
@@ -47,6 +48,7 @@ extension FeedContent {
         }
         
         return Feed(
+            scheduleSeq: scheduleInfo.scheduleSeq,
             feedSeq: firstScheduleFeedInfo.feedInfo.feedSeq,
             memberSeq: firstScheduleFeedInfo.memberInfo.memberSeq,
             startTime: scheduleInfo.startTime,
@@ -64,6 +66,7 @@ extension FeedContent {
 extension BookMarkContent {
     func toFeeds() -> Feed {
         return Feed(
+            scheduleSeq: nil,
             feedSeq: feedSeq,
             memberSeq: memberSeq,
             startTime: startTime,
@@ -81,6 +84,7 @@ extension BookMarkContent {
 extension HideFeedContent {
     func toFeeds() -> Feed {
         return Feed(
+            scheduleSeq: nil,
             feedSeq: feedSeq,
             memberSeq: memberSeq,
             startTime: startTime,

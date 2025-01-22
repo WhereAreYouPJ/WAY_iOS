@@ -9,9 +9,10 @@ import Alamofire
 
 protocol MemberRepositoryProtocol {
     func putUserName(userName: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func putProfileImage(images: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func putProfileImage(images: UIImage, completion: @escaping (Result<Void, Error>) -> Void)
     
     func postSignUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func postTokenReissue(request: TokenReissueBody, completion: @escaping (Result<GenericResponse<TokenReissueResponse>, Error>) -> Void)
     func postMemberSns(request: MemberSnsBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postResetPassword(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postLogout(completion: @escaping (Result<Void, Error>) -> Void)
@@ -41,11 +42,10 @@ class MemberRepository: MemberRepositoryProtocol {
         memberService.putUserName(userName: userName, completion: completion)
     }
     
-    func putProfileImage(images: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func putProfileImage(images: UIImage, completion: @escaping (Result<Void, any Error>) -> Void) {
         memberService.putProfileImage(images: images) { result in
             switch result {
             case .success:
-                UserDefaultsManager.shared.saveProfileImage(images)
                 completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))
@@ -57,6 +57,21 @@ class MemberRepository: MemberRepositoryProtocol {
     
     func postSignUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void) {
         memberService.postSignUp(request: request, completion: completion)
+    }
+    
+    func postTokenReissue(request: TokenReissueBody, completion: @escaping (Result<GenericResponse<TokenReissueResponse>, any Error>) -> Void) {
+        memberService.postTokenReissue(request: request) { result in
+            switch result {
+            case .success(let response):
+                let data = response.data
+                UserDefaultsManager.shared.saveRefreshToken(data.refreshToken)
+                UserDefaultsManager.shared.saveMemberSeq(data.memberSeq)
+                UserDefaultsManager.shared.saveAccessToken(data.accessToken)
+                completion(.success(response))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
     
     func postMemberSns(request: MemberSnsBody, completion: @escaping (Result<Void, any Error>) -> Void) {
@@ -72,7 +87,6 @@ class MemberRepository: MemberRepositoryProtocol {
             switch result {
             case .success:
                 UserDefaultsManager.shared.clearData()
-                UserDefaultsManager.shared.saveIsLoggedIn(false)
                 completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))
@@ -139,6 +153,13 @@ class MemberRepository: MemberRepositoryProtocol {
     // MARK: - DELETE
     
     func deleteMember(request: DeleteMemberBody, completion: @escaping (Result<Void, any Error>) -> Void) {
-        memberService.deleteMember(request: request, completion: completion)
+        memberService.deleteMember(request: request) { result in
+            switch result {
+            case .success:
+                UserDefaultsManager.shared.clearData()
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
 }

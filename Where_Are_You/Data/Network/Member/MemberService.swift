@@ -12,9 +12,10 @@ import Moya
 
 protocol MemberServiceProtocol {
     func putUserName(userName: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func putProfileImage(images: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func putProfileImage(images: UIImage, completion: @escaping (Result<Void, Error>) -> Void)
     
     func postSignUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func postTokenReissue(request: TokenReissueBody, completion: @escaping (Result<GenericResponse<TokenReissueResponse>, Error>) -> Void)
     func postMemberSns(request: MemberSnsBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postResetPassword(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postLogout(completion: @escaping (Result<Void, Error>) -> Void)
@@ -55,7 +56,7 @@ class MemberService: MemberServiceProtocol {
         }
     }
     
-    func putProfileImage(images: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func putProfileImage(images: UIImage, completion: @escaping (Result<Void, any Error>) -> Void) {
         provider.request(.putProfileImage(memberSeq: memberSeq, images: images)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
@@ -63,6 +64,12 @@ class MemberService: MemberServiceProtocol {
     
     func postSignUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void) {
         provider.request(.postSignUp(request: request)) { result in
+            APIResponseHandler.handleResponse(result, completion: completion)
+        }
+    }
+    
+    func postTokenReissue(request: TokenReissueBody, completion: @escaping (Result<GenericResponse<TokenReissueResponse>, any Error>) -> Void) {
+        provider.request(.postTokenReissue(request: request)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol GetFeedDetailsUseCase {
-    func execute(scheduleSeq: Int, completion: @escaping (Result<FeedContent, Error>) -> Void)
+    func execute(scheduleSeq: Int, memberSeq: Int, completion: @escaping (Result<FeedContent, Error>) -> Void)
 }
 
 class GetFeedDetailsUseCaseImpl: GetFeedDetailsUseCase {
@@ -18,8 +18,8 @@ class GetFeedDetailsUseCaseImpl: GetFeedDetailsUseCase {
         self.feedRepository = feedRepository
     }
     
-    func execute(scheduleSeq: Int, completion: @escaping (Result<FeedContent, any Error>) -> Void) {
-        feedRepository.getFeedDetails(scheduleSeq: scheduleSeq) { result in
+    func execute(scheduleSeq: Int, memberSeq: Int, completion: @escaping (Result<FeedContent, any Error>) -> Void) {
+        feedRepository.getFeedDetails(scheduleSeq: scheduleSeq, memberSeq: memberSeq) { result in
             switch result {
             case .success(let response):
                 completion(.success(response.data))

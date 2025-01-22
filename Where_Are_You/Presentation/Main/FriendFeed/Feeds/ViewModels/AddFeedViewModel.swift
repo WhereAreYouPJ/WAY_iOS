@@ -111,17 +111,23 @@ class AddFeedViewModel {
                 completion()
             case .failure(let error):
                 print(error.localizedDescription)
+                completion()
             }
         }
     }
     
     // 참가자 정보 가져오기
     func getParticipants() -> String {
-        if participants.count > 3 {
-            let displayedNames = participants.prefix(3).joined(separator: ", ")
-            return "\(displayedNames) 외 \(participants.count - 3)명"
+        if participants.isEmpty {
+            print("participants is Empty")
+            return ""
         } else {
-            return participants.joined(separator: ", ")
+            if participants.count > 3 {
+                let displayedNames = participants.prefix(3).joined(separator: ", ")
+                return "\(displayedNames) 외 \(participants.count - 3)명"
+            } else {
+                return participants.joined(separator: ", ")
+            }
         }
     }
 
@@ -132,28 +138,8 @@ class AddFeedViewModel {
     
     // MARK: - 피드 저장 메서드
     func saveFeed(title: String, content: String?) {
-        guard let schedule = selectedSchedule else { return }
-
-//        if selectedImages.isEmpty {
-//            let noFeedImageView = NoFeedImageView(frame: CGRect(x: 0, y: 0, width: 345, height: 290))
-//
-//            let profileImageURL = UserDefaultsManager.shared.getProfileImage()
-//            noFeedImageView.configureUI(profileImage: profileImageURL)
-//            
-//            // UIView를 UIImage로 변환
-//            UIGraphicsBeginImageContextWithOptions(noFeedImageView.bounds.size, noFeedImageView.isOpaque, 0.0)
-//            defer { UIGraphicsEndImageContext() }
-//            noFeedImageView.layer.render(in: UIGraphicsGetCurrentContext()!)
-//            
-//            if let generatedImage = UIGraphicsGetImageFromCurrentImageContext() {
-//                print("Generated Image: \(generatedImage)")
-//                selectedImages.append(generatedImage) // `selectedImages`에 추가
-//            } else {
-//                print("Failed to generate image from NoFeedImageView.")
-//            }
-//        }
-        
-        let feedImageOrders = Array(0..<selectedImages.count)
+        guard let schedule = selectedSchedule else { return }        
+        let feedImageOrders: [Int]? = selectedImages.isEmpty ? nil : Array(0..<selectedImages.count)
         
         let request = SaveFeedRequest(scheduleSeq: schedule.scheduleSeq,
                                       memberSeq: UserDefaultsManager.shared.getMemberSeq(),

@@ -8,7 +8,12 @@
 import UIKit
 
 class FeedDetailViewModel {
-    private let getFeedListUseCase: GetFeedListUseCase
+    private let getFeedDetailsUseCase: GetFeedDetailsUseCase
+    private let deleteFeedUseCase: DeleteFeedUseCase
+    private let postHideFeedUseCase: PostHideFeedUseCase
+    
+    private let postBookMarkFeedUseCase: PostBookMarkFeedUseCase
+    private let deleteBookMarkFeedUseCase: DeleteBookMarkFeedUseCase
     
     var onFeedsDataFetched: (() -> Void)?
     var onFeedImagesUpdated: (([UIImage]) -> Void)?
@@ -17,86 +22,140 @@ class FeedDetailViewModel {
     private var page: Int32 = 0
     private var isLoading = false
     
-    private(set) var feeds: [MainFeedListContent] = [] {
-        didSet {
-            self.onFeedsDataFetched?()
-            updateFeedImagesForCurrentIndex()
-        }
-    }
+    private let memberSeq = UserDefaultsManager.shared.getMemberSeq()
     
-    // 현재 피드의 인덱스
-    private(set) var currentFeedIndex = 0 {
-        didSet {
-            updateFeedImagesForCurrentIndex()
-        }
-    }
+    private(set) var displayFeedContent: [Feed] = []
+//    {
+//        didSet {
+//            DispatchQueue.main.async {
+//                self.onFeedsDataFetched?()
+//            }
+//        }
+//    }
     
-    private(set) var currentImageIndex = 0 {
-        didSet {
-            onCurrentImageIndexChanged?(currentImageIndex)
-        }
-    }
+    private var participants: [Info] = []
     
-    init(getFeedListUseCase: GetFeedListUseCase) {
-        self.getFeedListUseCase = getFeedListUseCase
+    // MARK: - Lifecycle
+    init(getFeedDetailsUseCase: GetFeedDetailsUseCase,
+         deleteFeedUseCase: DeleteFeedUseCase,
+         postHideFeedUseCase: PostHideFeedUseCase,
+         postBookMarkFeedUseCase: PostBookMarkFeedUseCase,
+         deleteBookMarkFeedUseCase: DeleteBookMarkFeedUseCase) {
+        self.getFeedDetailsUseCase = getFeedDetailsUseCase
+        self.deleteFeedUseCase = deleteFeedUseCase
+        self.postHideFeedUseCase = postHideFeedUseCase
+        self.postBookMarkFeedUseCase = postBookMarkFeedUseCase
+        self.deleteBookMarkFeedUseCase = deleteBookMarkFeedUseCase
     }
     
     // MARK: - Helpers
     
     // 서버에서 피드 데이터를 가져오는 메서드
-    func fetchFeeds() {
-        
-        updateFeedImagesForCurrentIndex()
+    func fetchDetailFeeds(scheduleSeq: Int) {
+        getFeedDetailsUseCase.execute(scheduleSeq: scheduleSeq, memberSeq: memberSeq) { result in
+            switch result {
+            case .success(let data):
+                let rawFeedContent: FeedContent = data
+                let scheduleFeedInfo = rawFeedContent.scheduleFeedInfo
+                self.participants = rawFeedContent.scheduleFriendInfo
+                self.displayFeedContent = scheduleFeedInfo.compactMap({
+                    return Feed(scheduleSeq: rawFeedContent.scheduleInfo.scheduleSeq,
+                                feedSeq: $0.feedInfo.feedSeq,
+                                memberSeq: $0.memberInfo.memberSeq,
+                                startTime: rawFeedContent.scheduleInfo.startTime,
+                                profileImageURL: $0.memberInfo.profileImageURL,
+                                location: rawFeedContent.scheduleInfo.location,
+                                title: $0.feedInfo.title,
+                                content: $0.feedInfo.content,
+                                bookMark: $0.bookMarkInfo,
+                                scheduleFriendInfos: rawFeedContent.scheduleFriendInfo,
+                                feedImageInfos: $0.feedImageInfos)
+                })
+                self.onFeedsDataFetched?()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
-    private func updateFeedImagesForCurrentIndex() {
-        guard currentFeedIndex < feeds.count else { return }
-//        let feedImages = feeds[currentFeedIndex].scheduleFeedInfo ?? []
-//        onFeedImagesUpdated?(feedImages)
+    //    func getParticipantFeed(index: Int) -> Feed {
+    //        return displayFeedContent[index]
+    //    }
+    
+    func getParticipants() -> [Info] {
+        return participants
     }
     
-    // 피드의 현재 인덱스를 업데이트하는 메서드
-    func setCurrentFeedIndex(_ index: Int) {
-        self.currentFeedIndex = index
+    // 특정 참가자의 피드 작성 여부 확인
+    func hasParticipantFeed(index: Int) -> Bool {
+        guard index < participants.count else { return false }
+        let participantSeq = participants[index].memberSeq
+        return displayFeedContent.contains { $0.memberSeq == participantSeq }
     }
     
-    // 이미지 인덱스 업데이트 메서드 추가
-    func updateImageIndex(to index: Int) {
-        currentImageIndex = index
+    // 특정 참가자의 피드 반환 (작성한 경우)
+    func getParticipantFeed(index: Int) -> Feed? {
+        guard index < participants.count else { return nil }
+        let participantSeq = participants[index].memberSeq
+        return displayFeedContent.first { $0.memberSeq == participantSeq }
+    }
+    
+    // MARK: - Delete, Hide, BookMark
+    
+    func deleteFeed(feedSeq: Int) {
+        deleteFeedUseCase.execute(request: DeleteFeedRequest(memberSeq: memberSeq, feedSeq: feedSeq)) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                if let index = self.displayFeedContent.firstIndex(where: { $0.feedSeq == feedSeq }) {
+                    self.displayFeedContent.remove(at: index)
+                }
+                self.onFeedsDataFetched?()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func hideFeed(feedSeq: Int) {
+        postHideFeedUseCase.execute(feedSeq: feedSeq) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                self.onFeedsDataFetched?()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func postFeedBookMark(feedSeq: Int) {
+        postBookMarkFeedUseCase.execute(request: BookMarkFeedRequest(feedSeq: feedSeq, memberSeq: memberSeq)) { [weak self] result in
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
+                    if let index = self?.displayFeedContent.firstIndex(where: { $0.feedSeq == feedSeq }) {
+                        self?.displayFeedContent[index].bookMark = true
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func deleteFeedBookMark(feedSeq: Int) {
+        deleteBookMarkFeedUseCase.execute(request: BookMarkFeedRequest(feedSeq: feedSeq, memberSeq: memberSeq)) { [weak self] result in
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
+                    if let index = self?.displayFeedContent.firstIndex(where: { $0.feedSeq == feedSeq }) {
+                        self?.displayFeedContent[index].bookMark = false
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
-    //    func fetchFeeds(completion: @escaping (Result<[FeedResponse], Error>) -> Void) {
-    //        // 실제 네트워크 요청을 통해 데이터를 가져오는 예제를 대신하여 모의 데이터를 사용합니다.
-    //        let feedResponses = [
-    //            FeedResponse(profileImage: "base64String1", date: "2024-08-12T02:25:28.272Z", location: "Seoul", title: "Title 1", feedImages: ["base64String2"], description: "Description 1")
-    //        ]
-    //
-    //        // 데이터를 성공적으로 가져온 경우
-    //        completion(.success(feedResponses))
-    //    }
-    
-    // 피드를 가져와서 변환하는 메서드
-    //    func loadFeeds() {
-    //        fetchFeeds { [weak self] result in
-    //            switch result {
-    //            case .success(let feedResponses):
-    //                // FeedResponse를 Feed로 변환
-    //                self?.feeds = feedResponses.map { self?.convertToFeed(from: $0) }.compactMap { $0 }
-    //                self?.feeds[0].profileImage = UIImage(named: "exampleProfileImage")!
-    //                self?.feeds[0].feedImages = [UIImage(named: "exampleFeedImage")!]
-    //                self?.onFeedsDataFetched?() // UI 업데이트를 위한 콜백 호출
-    //            case .failure(let error):
-    //                print("Error fetching feeds: \(error)")
-    //            }
-    //        }
-    //    }
-    //    private func convertToFeed(from response: FeedResponse) -> Feed {
-    //        let profileImage = response.profileImage.flatMap { ImageUtility.decodeBase64StringToImage($0) }!
-    //
-    //        let dateFormatter = ISO8601DateFormatter()
-    //        let date = dateFormatter.date(from: response.date) // ISO 8601 형식으로 변환
-    //
-    //        let feedImages = response.feedImages.compactMap { ImageUtility.decodeBase64StringToImage($0) }
-    //
-    //        return Feed(profileImage: profileImage, date: date, location: response.location, title: response.title, feedImages: feedImages, description: response.description)
-    //    }

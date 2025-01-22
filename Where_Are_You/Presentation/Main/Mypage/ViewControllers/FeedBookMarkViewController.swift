@@ -12,7 +12,7 @@ class FeedBookMarkViewController: UIViewController {
     private let feedBookMarkView = FeedsView()
     private let noDataView: NoDataView = {
         let view = NoDataView()
-        view.descriptionLabel.text = "아직은 피드에 책갈피를 하지 않았어요. \n특별한 추억을 오래도록 기억할 수 있게 \n피드를 책갈피 해보세요!"
+        view.configureUI(descriptionText: "아직은 피드에 책갈피를 하지 않았어요. \n특별한 추억을 오래도록 기억할 수 있게 \n피드를 책갈피 해보세요!")
         return view
     }()
     private var optionsView = MultiCustomOptionsContainerView()
@@ -141,7 +141,7 @@ class FeedBookMarkViewController: UIViewController {
     
     // MARK: - Selectors
     @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
     
     @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {
@@ -154,8 +154,7 @@ class FeedBookMarkViewController: UIViewController {
 // MARK: - FeedsTableViewCellDelegate
 
 extension FeedBookMarkViewController: FeedsTableViewCellDelegate {
-    func didTapFixButton(feedSeq: Int, isOwner: Bool) {
-        print("didTapFixButton")
+    func didSelectFeed(feed: Feed) {
     }
     
     func didTapBookmarkButton(feedSeq: Int, isBookMarked: Bool) {

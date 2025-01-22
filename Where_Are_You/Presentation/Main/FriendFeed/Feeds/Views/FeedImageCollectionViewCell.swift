@@ -38,6 +38,8 @@ class FeedImageCollectionViewCell: UICollectionViewCell {
     // MARK: - Helpers
     
     func configure(with imageUrlString: String) {
+        imageView.image = nil
+        
         let imageUrl = URL(string: imageUrlString)
         imageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "basic_profile_image"))
         imageView.isHidden = (imageUrl == nil)

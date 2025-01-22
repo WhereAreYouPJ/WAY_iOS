@@ -10,47 +10,37 @@ import UIKit
 
 class HomeFeedViewModel {
     // MARK: - Properties
-    
-    private let getFeedListUseCase: GetFeedListUseCase
+    private let getFeedMainUseCase: GetFeedMainUseCase
     
     var onFeedsDataFetched: (() -> Void)?
     private var rawFeedContent: [FeedContent] = []
-    private var displayFeedContent: [HomeFeedContent] = []
+    private var displayFeedContent: [Feed] = []
     
-    init(getFeedListUseCase: GetFeedListUseCase) {
-        self.getFeedListUseCase = getFeedListUseCase
+    init(getFeedMainUseCase: GetFeedMainUseCase) {
+        self.getFeedMainUseCase = getFeedMainUseCase
     }
     
     // MARK: - Helpers
     
     // 피드를 불러오는 메서드
-    func fetchFeeds() {
-        getFeedListUseCase.execute(page: 0) { [weak self] result in
+    func fetchFeeds(completion: @escaping ([Feed]) -> Void) {
+        getFeedMainUseCase.execute { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let data):
                 self.rawFeedContent = data
-                self.displayFeedContent = rawFeedContent.compactMap { feedContent in
-                    guard let scheduleFeedInfo = feedContent.scheduleFeedInfo.first else { return nil }
-                    
-                    return HomeFeedContent(
-                        profileImageURL: scheduleFeedInfo.memberInfo.profileImageURL,
-                        location: feedContent.scheduleInfo.location,
-                        title: scheduleFeedInfo.feedInfo.title,
-                        content: scheduleFeedInfo.feedInfo.content,
-                        feedImage: scheduleFeedInfo.feedImageInfos.first?.feedImageURL
-                    )
-                }
+                self.displayFeedContent = rawFeedContent.compactMap { $0.toFeeds() }
                 DispatchQueue.main.async {
                     self.onFeedsDataFetched?()
+                    completion(self.displayFeedContent)
                 }
             case .failure(let error):
-                print(error)
+                print(error.localizedDescription)
             }
         }
     }
     
-    func getFeeds() -> [HomeFeedContent] {
+    func getFeeds() -> [Feed] {
         return displayFeedContent
     }
     

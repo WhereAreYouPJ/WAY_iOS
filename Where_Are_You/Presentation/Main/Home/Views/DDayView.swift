@@ -13,6 +13,15 @@ class DDayView: UIView {
     
     var collectionView: UICollectionView
     
+    let containerView: UIView = {
+        let view = UIView()
+        view.layer.borderColor = UIColor.color118.cgColor
+        view.layer.borderWidth = 1
+        view.layer.cornerRadius = LayoutAdapter.shared.scale(value: 10)
+        view.clipsToBounds = true
+        return view
+    }()
+    
     // MARK: - Lifecycle
     
     override init(frame: CGRect) {
@@ -21,6 +30,7 @@ class DDayView: UIView {
         layout.minimumLineSpacing = 0
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         super.init(frame: frame)
+        setupCollectionView()
         setupViews()
     }
     
@@ -29,19 +39,14 @@ class DDayView: UIView {
     }
     
     // MARK: - Helpers
-    
-    private func setupViews() {
-        let containerView = UIView()
-        containerView.layer.borderColor = UIColor.color118.cgColor
-        containerView.layer.borderWidth = 1
-        containerView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 10)
-        containerView.clipsToBounds = true
-        
+    private func setupCollectionView() {
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.isScrollEnabled = false // 스크롤 비활성화
         collectionView.register(DDAyCell.self, forCellWithReuseIdentifier: DDAyCell.identifier)
-        
+    }
+    
+    private func setupViews() {
         addSubview(containerView)
         containerView.addSubview(collectionView)
         
@@ -52,5 +57,9 @@ class DDayView: UIView {
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+    }
+    
+    func configureUI(dDayExists: Bool) {
+        containerView.layer.borderColor = dDayExists ? UIColor.brandColor.cgColor : UIColor.color118.cgColor
     }
 }

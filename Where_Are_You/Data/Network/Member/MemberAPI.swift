@@ -9,9 +9,10 @@ import Moya
 
 enum MemberAPI {
     case putUserName(memberSeq: Int, userName: String)
-    case putProfileImage(memberSeq: Int, images: String)
+    case putProfileImage(memberSeq: Int, images: UIImage)
     
     case postSignUp(request: SignUpBody)
+    case postTokenReissue(request: TokenReissueBody)
     case postMemberSns(request: MemberSnsBody)
     case postResetPassword(request: ResetPasswordBody)
     case postLogout(memberSeq: Int)
@@ -42,6 +43,8 @@ extension MemberAPI: TargetType {
             
         case .postSignUp:
             return "/member"
+        case .postTokenReissue:
+            return "/member/tokenReissue"
         case .postMemberSns:
             return "/member/sns"
         case .postResetPassword:
@@ -75,7 +78,7 @@ extension MemberAPI: TargetType {
         switch self {
         case .putUserName, .putProfileImage:
             return .put
-        case .postSignUp, .postMemberSns, .postResetPassword, .postLogout, .postLogin, .postMemberLink, .postEmailVerify, .postEmailVerifyPassword, .postEmailSend:
+        case .postSignUp, .postTokenReissue, .postMemberSns, .postResetPassword, .postLogout, .postLogin, .postMemberLink, .postEmailVerify, .postEmailVerifyPassword, .postEmailSend:
             return .post
         case .getMemberSearch, .getMemberDetails, .getCheckEmail:
             return .get
@@ -89,9 +92,12 @@ extension MemberAPI: TargetType {
         case .putUserName(let memberSeq, let userName):
             return .requestParameters(parameters: ["memberSeq": memberSeq, "userName": userName], encoding: JSONEncoding.default)
         case .putProfileImage(let memberSeq, let images):
-            return .requestParameters(parameters: ["memberSeq": memberSeq, "images": images], encoding: JSONEncoding.default)
+            let multipartData = MultipartFormDataHelper.createMultipartData(from: memberSeq, images: images)
+            return .uploadMultipart(multipartData)
             
         case .postSignUp(let request):
+            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+        case .postTokenReissue(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .postMemberSns(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
@@ -123,7 +129,12 @@ extension MemberAPI: TargetType {
     }
     
     var headers: [String: String]? {
-        return ["Content-Type": "application/json"]
+        switch self {
+        case .putProfileImage:
+            return ["Content-Type": "multipart/form-data"]
+        default:
+            return ["Content-Type": "application/json"]
+        }
     }
     
     var sampleData: Data {

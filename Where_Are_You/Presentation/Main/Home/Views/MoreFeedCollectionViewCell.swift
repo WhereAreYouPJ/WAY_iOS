@@ -12,12 +12,13 @@ protocol MoreFeedCollectionViewCellDelegate: AnyObject {
 }
 
 class MoreFeedCollectionViewCell: UICollectionViewCell {
-    
+    // MARK: - Properties
+
     weak var delegate: MoreFeedCollectionViewCellDelegate?
 
     static let identifier = "MoreFeedCollectionViewCell"
     
-    let borderView: UIView = {
+    private let borderView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = LayoutAdapter.shared.scale(value: 16)
         view.layer.borderColor = UIColor.color212.cgColor
@@ -25,12 +26,11 @@ class MoreFeedCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    let profileImageView: UIImageView = {
+    private let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 14)
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
-        imageView.image = UIImage(named: "exampleProfileImage")
         return imageView
     }()
     
@@ -43,7 +43,7 @@ class MoreFeedCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    let moreFeedButton: UIButton = {
+    private let moreFeedButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.letterBrandColor, for: .normal)
         button.setTitle("더 보기", for: .normal)
@@ -64,10 +64,14 @@ class MoreFeedCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func moreFeedButtonTapped() {
+    // MARK: - Selectors
+
+    @objc private func moreFeedButtonTapped() {
         delegate?.didTapMoreButton()
     }
     
+    // MARK: - Helpers
+
     private func configureViewComponents() {
         contentView.addSubview(borderView)
         borderView.addSubview(profileImageView)
@@ -98,5 +102,9 @@ class MoreFeedCollectionViewCell: UICollectionViewCell {
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().inset(16)
         }
+    }
+    
+    func configureCell(profileImageURL: String) {
+        profileImageView.kf.setImage(with: URL(string: profileImageURL))
     }
 }

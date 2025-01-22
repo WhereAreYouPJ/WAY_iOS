@@ -26,8 +26,8 @@ class FeedsViewController: UIViewController {
         setupTableView()
         setupBindings()
         setupActions()
-        viewModel.fetchFeeds()
         
+        viewModel.fetchFeeds()
         feedsView.updateContentHeight()
     }
     
@@ -131,6 +131,9 @@ class FeedsViewController: UIViewController {
         print("\(feed.title) 수정")
         optionsView.removeFromSuperview()
         let controller = EditFeedViewController(feed: feed)
+        controller.onFeedEdited = { [weak self] in
+            self?.viewModel.fetchFeeds()
+        }
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true, completion: nil)
@@ -143,7 +146,7 @@ class FeedsViewController: UIViewController {
             cancelTitle: "취소",
             actionTitle: "숨김"
         ) { [weak self] in
-            self?.viewModel.hidFeed(feedSeq: feed.feedSeq)
+            self?.viewModel.hideFeed(feedSeq: feed.feedSeq)
             self?.optionsView.removeFromSuperview()
             self?.feedsView.feedsTableView.reloadData()
         }
@@ -194,6 +197,13 @@ extension FeedsViewController: FeedsTableViewCellDelegate {
             let indexPath = IndexPath(row: index, section: 0)
             feedsView.feedsTableView.reloadRows(at: [indexPath], with: .none)
         }
+    }
+    
+    func didSelectFeed(feed: Feed) {
+        let detailVC = FeedDetailViewController(feed: feed)
+        let navController = UINavigationController(rootViewController: detailVC)
+        navController.modalPresentationStyle = .fullScreen // 전체 화면으로 전환
+        present(navController, animated: true, completion: nil)
     }
 }
 

@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import AuthenticationServices
 
 class LoginView: UIView {
     // MARK: - Properties
@@ -25,11 +26,17 @@ class LoginView: UIView {
         return button
     }()
     
-    let appleLogin: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .brandColor
-        button.setImage(UIImage(named: "appleLogin"), for: .normal)
-        button.layer.cornerRadius = LayoutAdapter.shared.scale(value: 6)
+//    let appleLogin: UIButton = {
+//        let button = UIButton()
+//        button.backgroundColor = .brandColor
+//        button.setImage(UIImage(named: "appleLogin"), for: .normal)
+//        button.layer.cornerRadius = LayoutAdapter.shared.scale(value: 6)
+//        return button
+//    }()
+    
+    let appleLogin: ASAuthorizationAppleIDButton = {
+        let button  = ASAuthorizationAppleIDButton(type: .default, style: .whiteOutline)
+        button.cornerRadius = 6
         return button
     }()
     

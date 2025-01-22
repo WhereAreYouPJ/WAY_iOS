@@ -11,6 +11,7 @@ enum FeedAPI {
     case putFeed(request: ModifyFeedRequest, images: [UIImage]?)
     case postFeed(request: SaveFeedRequest, images: [UIImage]?)
     case deleteFeed(request: DeleteFeedRequest)
+    case getFeedMain(memberSeq: Int)
     case getFeedList(memberSeq: Int, page: Int32)
     case getFeedDetails(memberSeq: Int, scheduleSeq: Int)
     
@@ -33,6 +34,8 @@ extension FeedAPI: TargetType {
         switch self {
         case .putFeed, .postFeed, .deleteFeed:
             return "/feed"
+        case .getFeedMain:
+            return "/feed/main"
         case .getFeedList:
             return "/feed/list"
         case .getFeedDetails:
@@ -50,7 +53,7 @@ extension FeedAPI: TargetType {
             return .put
         case .postFeed, .postBookMarkFeed, .postHideFeed:
             return .post
-        case .getBookMarkFeed, .getFeedList, .getFeedDetails, .getHideFeed:
+        case .getBookMarkFeed, .getFeedMain, .getFeedList, .getFeedDetails, .getHideFeed:
             return .get
         case .deleteBookMarkFeed, .deleteFeed, .deleteHideFeed:
             return .delete
@@ -67,10 +70,12 @@ extension FeedAPI: TargetType {
             return .uploadMultipart(multipartData)
         case .deleteFeed(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+        case .getFeedMain(let memberSeq):
+            return .requestParameters(parameters: ["memberSeq": memberSeq], encoding: URLEncoding.queryString)
         case .getFeedList(let memberSeq, let page):
             return .requestParameters(parameters: ["memberSeq": memberSeq, "page": page], encoding: URLEncoding.queryString)
         case .getFeedDetails(let memberSeq, let scheduleSeq):
-            return .requestParameters(parameters: ["memberSeq": memberSeq, "scheduleSeq": scheduleSeq], encoding: JSONEncoding.default)
+            return .requestParameters(parameters: ["memberSeq": memberSeq, "scheduleSeq": scheduleSeq], encoding: URLEncoding.queryString)
             
         case .getBookMarkFeed(let memberSeq, let page):
             return .requestParameters(parameters: ["memberSeq": memberSeq, "page": page], encoding: URLEncoding.queryString)

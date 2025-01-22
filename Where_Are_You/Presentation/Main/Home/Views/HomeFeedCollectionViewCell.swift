@@ -8,16 +8,21 @@
 import UIKit
 import SnapKit
 
+protocol HomeFeedCollectionViewCellDelegate: AnyObject {
+    func didTapReadMoreButton()
+}
+
 class HomeFeedCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
-
+    
     static let identifier = "HomeFeedCollectionViewCell"
+    weak var delegate: HomeFeedCollectionViewCellDelegate?
     
     let profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.layer.cornerRadius = 14
+        iv.layer.cornerRadius = LayoutAdapter.shared.scale(value: 14)
         return iv
     }()
     
@@ -40,11 +45,12 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         return stackView
     }()
     
-    private let feedContentView: UIImageView = {
+    private var feedImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 6
         iv.clipsToBounds = true
+        iv.backgroundColor = .white
         return iv
     }()
     
@@ -52,17 +58,18 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
         label.textColor = .color118
-        label.adjustsFontForContentSizeCategory = true
+        label.isHidden = true
         label.lineBreakMode = .byCharWrapping
-        label.numberOfLines = 4
+        label.numberOfLines = 2
         return label
     }()
     
     private lazy var feedContentStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [feedContentView, descriptionLabel])
+        let stackView = UIStackView(arrangedSubviews: [descriptionLabel, feedImageView])
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.distribution = .fill
+        stackView.spacing = LayoutAdapter.shared.scale(value: 12)
         return stackView
     }()
     
@@ -74,11 +81,20 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
     }()
     
     // MARK: - Lifecycle
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureViewComponents()
         setupConstraints()
+        setupActions()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        // 상태 초기화
+        feedImageView.image = nil
+        feedImageView.subviews.forEach { $0.removeFromSuperview() }
+        descriptionLabel.text = nil
+        descriptionLabel.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -86,46 +102,90 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - Helpers
-
+    
     private func configureViewComponents() {
         contentView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 16)
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor.color212.cgColor
         contentView.addSubview(mainStack)
-        feedContentView.isHidden = true
     }
     
     private func setupConstraints() {
         mainStack.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.top.leading.equalToSuperview().inset(12)
+            make.top.leading.equalToSuperview().inset(16)
         }
         
         profileImageView.snp.makeConstraints { make in
             make.width.equalTo(textStackView.snp.height)
         }
         
+        profileImageView.snp.makeConstraints { make in
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 56))
+        }
+
         feedContentStackView.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
         }
         
-        feedContentView.snp.makeConstraints { make in
+        descriptionLabel.snp.makeConstraints { make in
+            make.height.lessThanOrEqualTo(LayoutAdapter.shared.scale(value: 40))
+        }
+        
+        feedImageView.snp.makeConstraints { make in
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 80)).priority(UILayoutPriority(999))
             make.leading.trailing.equalToSuperview()
         }
     }
     
-    func configure(with feed: HomeFeedContent) {
-        profileImageView.setImage(from: feed.profileImageURL, placeholder: UIImage(named: "basic_profile_image"))
+    func configure(with feed: Feed) {
+          
+        profileImageView.kf.setImage(with: URL(string: feed.profileImageURL), placeholder: UIImage(named: "basic_profile_image"))
         locationLabel.text = feed.location
         titleLabel.text = feed.title
-        if feed.content == nil {
-            descriptionLabel.isHidden = true
-            feedContentView.isHidden = false
-            feedContentView.setImage(from: feed.feedImage)
-        } else {
+        descriptionLabel.isHidden = true
+        let feedImageInfos = feed.feedImageInfos ?? []
+        if let content = feed.content { // 피드 content가 있는 경우
             descriptionLabel.isHidden = false
-            feedContentView.isHidden = true
-            descriptionLabel.text = feed.content
+            descriptionLabel.text = content
+            let readmoreFont = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
+            let readmoreFontColor = UIColor.brandColor
+            DispatchQueue.main.async {
+                self.descriptionLabel.addTrailing(with: "...", moreText: "  더 보기", moreTextFont: readmoreFont, moreTextColor: readmoreFontColor)
+            }
+            
+            if let feedImage = feedImageInfos.first?.feedImageURL {
+                feedImageView.kf.setImage(with: URL(string: feedImage))
+            } else {
+                let mainNoFeedImageView = MainNoFeedImageView(frame: CGRect(x: 0, y: 0, width: LayoutAdapter.shared.scale(value: 295), height: LayoutAdapter.shared.scale(value: 80)))
+                mainNoFeedImageView.configureUI(profileImage: feed.profileImageURL)
+                feedImageView.addSubview(mainNoFeedImageView)
+                mainNoFeedImageView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
+            }
+        } else { // 피드 content가 없는 경우
+            descriptionLabel.isHidden = true
+            if let feedImage = feedImageInfos.first?.feedImageURL { // 피드 content가 없는 경우 ,피드 이미지가 있는 경우
+                feedImageView.kf.setImage(with: URL(string: feedImage))
+            } else {
+                let mainNoFeedImageView = MainNoFeedImageView(frame: CGRect(x: 0, y: 0, width: LayoutAdapter.shared.scale(value: 295), height: LayoutAdapter.shared.scale(value: 80)))
+                mainNoFeedImageView.configureUI(profileImage: feed.profileImageURL)
+                feedImageView.addSubview(mainNoFeedImageView)
+                mainNoFeedImageView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
+            }
         }
+    }
+    
+    func setupActions() {
+        let descriptionLabelTapGesture = UITapGestureRecognizer(target: self, action: #selector(descriptionLabelTapped))
+        descriptionLabel.isUserInteractionEnabled = true // UILabel에서 제스처를 받을 수 있도록 설정
+        descriptionLabel.addGestureRecognizer(descriptionLabelTapGesture)
+    }
+    
+    @objc private func descriptionLabelTapped() {
+        delegate?.didTapReadMoreButton()
     }
 }

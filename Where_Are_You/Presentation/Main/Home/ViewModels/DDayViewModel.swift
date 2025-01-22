@@ -28,7 +28,7 @@ class DDayViewModel {
             switch result {
             case .success(let data):
                 self.dDays = data.map { data in
-                    return DDay(date: data.dDay, title: data.title)
+                    return DDay(dDay: data.dDay, title: data.title)
                 }
                 self.onDDayDataFetched?()
                 self.startAutoScroll()
@@ -50,13 +50,6 @@ class DDayViewModel {
     func stopAutoScroll() {
         timer?.invalidate()
         timer = nil
-    }
-    
-    func daysUntil(date: Date) -> Int {
-        let calendar = Calendar.current
-        let now = Date()
-        let components = calendar.dateComponents([.day], from: now, to: date)
-        return components.day ?? 0
     }
     
     // MARK: - Selectors
