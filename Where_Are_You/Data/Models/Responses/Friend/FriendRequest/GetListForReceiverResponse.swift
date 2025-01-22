@@ -13,4 +13,5 @@ struct GetListForReceiverResponse: Codable {
     let createTime: String
     let profileImage: String?
     let userName: String
+    let memberCode: String
 }

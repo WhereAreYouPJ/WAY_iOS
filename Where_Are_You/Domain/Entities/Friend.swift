@@ -13,4 +13,5 @@ struct Friend: Identifiable {
     let profileImage: String
     let name: String
     var isFavorite: Bool
+    let memberCode: String
 }

@@ -10,15 +10,20 @@ import Moya
 
 enum ScheduleAPI {
     case postSchedule(request: CreateScheduleBody)
+    case postAcceptSchedule(request: PostAcceptScheduleBody)
+    
     case getSchedule(scheduleSeq: Int, memberSeq: Int)
-    case putSchedule(request: PutScheduleBody)
-    case deleteScheduleByInvitee(request: DeleteScheduleBody)
-    case deleteScheduleByCreator(request: DeleteScheduleBody)
-    case postEcceptSchedule(request: CreateScheduleBody)
     case getMonthlySchedule(yearMonth: String, memberSeq: Int)
     case getDailySchedule(date: String, memberSeq: Int)
     case getDDaySchedule(memberSeq: Int)
     case getScheduleList(memberSeq: Int, page: Int32)
+    case getInvitedList(memberSeq: Int)
+    
+    case putSchedule(request: PutScheduleBody)
+    
+    case deleteScheduleByInvitee(request: DeleteScheduleBody)
+    case deleteScheduleByCreator(request: DeleteScheduleBody)
+    case refuseInvitedSchedule(request: RefuseInvitedScheduleBody)
 }
 
 extension ScheduleAPI: TargetType {
@@ -34,8 +39,8 @@ extension ScheduleAPI: TargetType {
             return "/schedule/invited"
         case .deleteScheduleByCreator:
             return "/schedule/creator"
-        case .postEcceptSchedule:
-            return "/schedule/accept-schedule"
+        case .postAcceptSchedule:
+            return "/schedule/accept"
         case .getMonthlySchedule:
             return "/schedule/month"
         case .getDailySchedule:
@@ -44,18 +49,22 @@ extension ScheduleAPI: TargetType {
             return "/schedule/dday"
         case .getScheduleList:
             return "/schedule/list"
+        case .getInvitedList:
+            return "/schedule/invited-list"
+        case .refuseInvitedSchedule:
+            return "/schedule/refuse"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .postSchedule, .postEcceptSchedule:
+        case .postSchedule, .postAcceptSchedule:
             return .post
-        case .getSchedule, .getMonthlySchedule, .getDailySchedule, .getDDaySchedule, .getScheduleList:
+        case .getSchedule, .getMonthlySchedule, .getDailySchedule, .getDDaySchedule, .getScheduleList, .getInvitedList:
             return .get
         case .putSchedule:
             return .put
-        case .deleteScheduleByInvitee, .deleteScheduleByCreator:
+        case .deleteScheduleByInvitee, .deleteScheduleByCreator, .refuseInvitedSchedule:
             return .delete
         }
     }
@@ -64,7 +73,7 @@ extension ScheduleAPI: TargetType {
         switch self {
         case .postSchedule(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .postEcceptSchedule(request: let request):
+        case .postAcceptSchedule(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
             
         case .getSchedule(let scheduleSeq, let memberSeq):
@@ -77,6 +86,8 @@ extension ScheduleAPI: TargetType {
             return .requestParameters(parameters: ["memberSeq": memberSeq], encoding: URLEncoding.queryString)
         case .getScheduleList(let memberSeq, let page):
             return .requestParameters(parameters: ["memberSeq": memberSeq, "page": page], encoding: URLEncoding.queryString)
+        case .getInvitedList(let memberSeq):
+            return .requestParameters(parameters: ["memberSeq": memberSeq], encoding: URLEncoding.queryString)
             
         case .putSchedule(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
@@ -84,6 +95,8 @@ extension ScheduleAPI: TargetType {
         case .deleteScheduleByInvitee(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .deleteScheduleByCreator(request: let request):
+            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+        case .refuseInvitedSchedule(request: let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         }
     }

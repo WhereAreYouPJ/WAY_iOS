@@ -10,6 +10,6 @@ import Foundation
 struct FriendRequest: Identifiable {
     let id: UUID = UUID()
     let friendRequestSeq: Int
-    let createTime: String
+    let createTime: Date
     let friend: Friend
 }
