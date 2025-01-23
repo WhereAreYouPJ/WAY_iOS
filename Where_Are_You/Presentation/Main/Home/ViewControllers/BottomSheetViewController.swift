@@ -65,11 +65,8 @@ class BottomSheetViewController: UIViewController {
     }
     
     @objc func headerButtonTapped() {
-        bottomSheetView.contentStackView.isHidden = false
-
-        bottomSheetView.snp.makeConstraints { make in
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 420))
-        }
+        isExpanded.toggle()
+        bottomSheetView.showExpandView(isExpand: isExpanded)
     }
 }
 
