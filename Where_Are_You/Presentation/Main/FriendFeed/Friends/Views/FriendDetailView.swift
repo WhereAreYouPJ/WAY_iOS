@@ -11,8 +11,10 @@ import Kingfisher
 struct FriendDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject var viewModel: FriendDetailViewModel
+    
     @State private var showOptions = false
     @State private var menuPosition: CGPoint = .zero
+    @State private var showDeleteAlert = false
     
     var onDelete: (() -> Void)?
     
@@ -104,15 +106,25 @@ struct FriendDetailView: View {
                 
                 CustomMenuView(
                     isPresented: $showOptions,
-                    position: menuPosition
-                ) {
-                    viewModel.deleteFriend { // TODO: 커스텀 팝업창 띄워 삭제 확인
-                        onDelete?()
-                        dismiss()
-                    }
-                }
+                    position: menuPosition,
+                    showDeleteAlert: $showDeleteAlert
+                )
             }
         }
+        .customAlert(
+            isPresented: $showDeleteAlert,
+            showDailySchedule: .constant(false),
+            title: "친구 삭제하기",
+            message: "친구를 삭제합니다.\n일정에 추가된 경우 자동 삭제처리됩니다.\n삭제된 친구는 친구 추가에서 다시 추가할 수 있습니다.",
+            cancelTitle: "취소",
+            actionTitle: "삭제",
+            action: {
+                viewModel.deleteFriend {
+                    onDelete?()
+                    dismiss()
+                }
+            }
+        )
     }
 }
 
@@ -120,12 +132,15 @@ struct FriendDetailView: View {
 struct CustomMenuView: View {
     @Binding var isPresented: Bool
     let position: CGPoint
-    let onDelete: () -> Void
+    @Binding var showDeleteAlert: Bool
     
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
-                CustomOptionButtonViewRepresentable(title: "친구 삭제", action: onDelete)
+                CustomOptionButtonViewRepresentable(title: "친구 삭제", action: {
+                    isPresented = false
+                    showDeleteAlert = true
+                })
                     .frame(height: LayoutAdapter.shared.scale(value: 44))
             }
             .frame(width: LayoutAdapter.shared.scale(value: 140))
@@ -170,7 +185,7 @@ struct CustomOptionButtonViewRepresentable: UIViewRepresentable {
 
 #Preview {
     // 친구 프로필 프리뷰
-    FriendDetailView(viewModel: FriendDetailViewModel(friend: Friend(memberSeq: 1, profileImage: "", name: "김철수", isFavorite: false), isMyProfile: false))
+    FriendDetailView(viewModel: FriendDetailViewModel(friend: Friend(memberSeq: 1, profileImage: "", name: "김철수", isFavorite: false, memberCode: "abc12"), isMyProfile: false))
 }
 
 #Preview {

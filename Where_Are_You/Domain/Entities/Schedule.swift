@@ -18,4 +18,5 @@ struct Schedule: Identifiable {
     var color: String
     var memo: String?
     var invitedMember: [Friend]?
+    var dDay: Int?
 }

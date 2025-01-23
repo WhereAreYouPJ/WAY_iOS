@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class MainHomeViewController: UIViewController {
     // MARK: - Properties
@@ -84,7 +85,10 @@ class MainHomeViewController: UIViewController {
 
     // MARK: - Selectors
     @objc private func moveToNotification() {
-        // 알림 페이지로 이동
+        let notificationView = NotificationView()
+        let hostingController = UIHostingController(rootView: notificationView)
+        hostingController.modalPresentationStyle = .fullScreen
+        present(hostingController, animated: true)
     }
     
     @objc private func moveToMyPage() {
