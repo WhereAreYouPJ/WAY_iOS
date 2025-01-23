@@ -37,17 +37,6 @@ class LoginView: UIView {
         return button
     }()
     
-//    let accountLogin: UIButton = {
-//        let button = UIButton()
-//        button.setAttributedTitle(UIFont.CustomFont.button3(text: "이메일 로그인"), for: .normal)
-//        button.setTitleColor(.brandDark, for: .normal)
-//        button.layer.borderWidth = 1.5
-//        button.layer.borderColor = UIColor.brandMain.cgColor
-//        button.layer.cornerRadius = 8
-//        button.titleLabel?.textAlignment = .center
-//        return button
-//    }()
-    
     let accountLogin = TitleButton(title: UIFont.CustomFont.button3(text: "이메일 로그인"), backgroundColor: .white, titleColor: .brandDark, borderColor: UIColor.brandMain.cgColor, cornerRadius: 8)
 
     private lazy var loginStack: UIStackView = {
@@ -107,6 +96,18 @@ class LoginView: UIView {
         loginStack.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(subtitleLabel.snp.bottom).offset(46)
+        }
+        
+        kakaoLogin.snp.makeConstraints { make in
+            make.height.equalTo(48)
+        }
+        
+        appleLogin.snp.makeConstraints { make in
+            make.height.equalTo(48)
+        }
+        
+        accountLogin.snp.makeConstraints { make in
+            make.height.equalTo(48)
         }
         
         separatorLabel.snp.makeConstraints { make in

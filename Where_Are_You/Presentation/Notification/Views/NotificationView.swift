@@ -75,7 +75,7 @@ struct NotificationView: View {
         HStack {
             Text("알림")
                 .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 20))))
-                .foregroundStyle(Color(.color34))
+                .foregroundStyle(Color(.black22))
             
             Spacer()
             
@@ -83,7 +83,7 @@ struct NotificationView: View {
                 dismiss()
             }, label: {
                 Image(systemName: "xmark")
-                    .foregroundStyle(Color(.color102))
+                    .foregroundStyle(Color(.black66))
                     .frame(width: LayoutAdapter.shared.scale(value: 14), height: LayoutAdapter.shared.scale(value: 14))
             })
         }
@@ -166,7 +166,7 @@ struct NotificationView: View {
         VStack(spacing: LayoutAdapter.shared.scale(value: 16)) {
                 HStack {
                     Text("일정에 초대되었습니다.")
-                        .foregroundStyle(Color(.color34))
+                        .foregroundStyle(Color(.black22))
                     
                     Spacer()
                     
@@ -191,7 +191,7 @@ struct NotificationView: View {
                     
                     VStack(alignment: .leading) {
                         Text(schedule.title)
-                            .foregroundStyle(Color(.color34))
+                            .foregroundStyle(Color(.black66))
                         
                         Text(schedule.location?.location ?? "")
                             .foregroundStyle(Color(.color153))
@@ -207,7 +207,7 @@ struct NotificationView: View {
                     }
                     .frame(width: LayoutAdapter.shared.scale(value: 152), height: LayoutAdapter.shared.scale(value: 46))
                     
-                    CustomButtonSwiftUI(title: "거절하기", backgroundColor: .white, titleColor: Color(.color34)) {
+                    CustomButtonSwiftUI(title: "거절하기", backgroundColor: .white, titleColor: Color(.black22)) {
                         viewModel.refuseInvitedSchedule(scheduleSeq: schedule.scheduleSeq)
                     }
                     .frame(width: LayoutAdapter.shared.scale(value: 152), height: LayoutAdapter.shared.scale(value: 46))
@@ -310,7 +310,7 @@ struct NotificationView: View {
         VStack(spacing: LayoutAdapter.shared.scale(value: 8)) {
             HStack {
                 Text("친구요청이 도착했습니다.")
-                    .foregroundStyle(Color(.color34))
+                    .foregroundStyle(Color(.black22))
                 
                 Spacer()
                 
@@ -358,7 +358,7 @@ struct NotificationView: View {
             
             VStack(alignment: .leading) {
                 Text(friend.name)
-                    .foregroundStyle(Color(.color34))
+                    .foregroundStyle(Color(.black22))
                 
                 Text(friend.memberCode ?? "")
                     .foregroundStyle(Color(.color153))
@@ -375,7 +375,7 @@ struct NotificationView: View {
         VStack(spacing: LayoutAdapter.shared.scale(value: 8)) {
             HStack {
                 Text("온마이웨이 리뉴얼 관련안내")
-                    .foregroundStyle(Color(.color34))
+                    .foregroundStyle(Color(.black22))
                     .padding(.top, LayoutAdapter.shared.scale(value: 16))
                 
                 Spacer()
@@ -389,7 +389,7 @@ struct NotificationView: View {
             Text("온마이웨이 리뉴얼 안내사항 전달드립니다. 이번 리뉴얼 어쩌고 한줄만 보이게")
                 .lineLimit(1)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundStyle(Color(.color102))
+                .foregroundStyle(Color(.black66))
                 .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
                 .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
                 .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
@@ -425,7 +425,7 @@ struct NotificationView: View {
                         
                         CustomButtonSwiftUI(title: "친구 거절하기",
                                           backgroundColor: .white,
-                                          titleColor: Color(.color34)) {
+                                          titleColor: Color(.black22)) {
                             withAnimation(.spring(duration: 0.5)) {
                                 isAccepted = false
                                 showMergedButton = true
@@ -438,7 +438,7 @@ struct NotificationView: View {
                     Button(action: {}) {
                         HStack {
                             Image(systemName: isAccepted ? "checkmark" : "xmark")
-                                .foregroundColor(isAccepted ? .white : Color(.color34))
+                                .foregroundColor(isAccepted ? .white : Color(.black66))
                         }
                         .frame(maxWidth: .infinity)
                         .frame(height: LayoutAdapter.shared.scale(value: 46))
@@ -446,7 +446,7 @@ struct NotificationView: View {
                         .cornerRadius(LayoutAdapter.shared.scale(value: 12))
                         .overlay(
                             RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 12))
-                                .stroke(Color(.color34), lineWidth: isAccepted ? 0 : 1)
+                                .stroke(Color(.black66), lineWidth: isAccepted ? 0 : 1)
                         )
                     }
                     .transition(.scale)

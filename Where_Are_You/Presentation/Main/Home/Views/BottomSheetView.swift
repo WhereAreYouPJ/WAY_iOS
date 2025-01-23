@@ -33,13 +33,6 @@ class BottomSheetView: UIView {
     
     let tableView = UITableView()
     
-    lazy var contentStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [sheetHeaderView, tableView])
-        sv.axis = .vertical
-        sv.spacing = LayoutAdapter.shared.scale(value: 8)
-        return sv
-    }()
-    
     // MARK: - Initializer
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -53,6 +46,12 @@ class BottomSheetView: UIView {
     }
     
     // MARK: - Helpers
+    func showExpandView(isExpand: Bool) {
+        sheetHeaderView.isHidden = !isExpand
+        tableView.isHidden = !isExpand
+        dateTitle.isHidden = !isExpand
+    }
+    
     private func formattedDate() -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR") // 한국어 포맷
@@ -69,8 +68,9 @@ class BottomSheetView: UIView {
         
         addSubview(sheetHeaderButton)
         sheetHeaderButton.addSubview(grabberView)
+        addSubview(sheetHeaderView)
         sheetHeaderView.addSubview(dateTitle)
-        addSubview(contentStackView)
+        addSubview(tableView)
 
         sheetHeaderButton.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -85,6 +85,7 @@ class BottomSheetView: UIView {
         }
         
         sheetHeaderView.snp.makeConstraints { make in
+            make.top.equalTo(sheetHeaderButton.snp.bottom)
             make.height.equalTo(LayoutAdapter.shared.scale(value: 49))
         }
         
@@ -93,8 +94,8 @@ class BottomSheetView: UIView {
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 28))
         }
         
-        contentStackView.snp.makeConstraints { make in
-            make.top.equalTo(sheetHeaderButton.snp.bottom)
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(sheetHeaderView.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
         }
     }

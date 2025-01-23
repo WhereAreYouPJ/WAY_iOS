@@ -36,18 +36,12 @@ class TitleButton: UIButton {
     
     // MARK: - Setup Button
     private func setupButton() {
-//        textLabel.attributedText = buttonTitle
-//        textLabel.textColor = buttonTitleColor
         backgroundColor = buttonBackgroundColor
         layer.borderColor = borderColor
         layer.borderWidth = 1.5
         setAttributedTitle(buttonTitle, for: .normal)
         setTitleColor(buttonTitleColor, for: .normal)
-//        addSubview(textLabel)
-//        textLabel.snp.makeConstraints { make in
-//            make.center.equalToSuperview()
-//        }
-        
+
         // 버튼 모서리 둥글게
         layer.cornerRadius = cornerRadius
         clipsToBounds = true

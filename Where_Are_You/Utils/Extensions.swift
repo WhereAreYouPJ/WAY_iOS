@@ -99,7 +99,7 @@ extension UIFont {
                 text: text,
                 font: UIFont(name: "Paperlogy-6SemiBold", size: 22)!,
                 lineHeight: 1.3,
-                letterSpacing: -1
+                letterSpacing: -2
             )
         }
         
@@ -169,7 +169,7 @@ extension UIFont {
         static func button1(text: String) -> NSAttributedString {
             return attributedFont(
                 text: text,
-                font: UIFont(name: "Pretendard-SemiBold", size: 18)!,
+                font: UIFont(name: "Paperlogy-6SemiBold", size: 18)!,
                 lineHeight: 1.3,
                 letterSpacing: 1.25
             )
@@ -178,7 +178,7 @@ extension UIFont {
         static func button2(text: String) -> NSAttributedString {
             return attributedFont(
                 text: text,
-                font: UIFont(name: "Pretendard-SemiBold", size: 16)!,
+                font: UIFont(name: "Paperlogy-6SemiBold", size: 16)!,
                 lineHeight: 1.3,
                 letterSpacing: 4
             )
@@ -187,7 +187,7 @@ extension UIFont {
         static func button3(text: String) -> NSAttributedString {
             return attributedFont(
                 text: text,
-                font: UIFont(name: "Pretendard-SemiBold", size: 14)!,
+                font: UIFont(name: "Paperlogy-6SemiBold", size: 14)!,
                 lineHeight: 1.3,
                 letterSpacing: -0.5
             )
