@@ -11,7 +11,7 @@ class ScheduleDropDownCell: UITableViewCell {
     
     static let identifier = "ScheduleDropDownCell"
     
-    let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color68, fontSize: LayoutAdapter.shared.scale(value: 16))
+    let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .black44, fontSize: LayoutAdapter.shared.scale(value: 16))
     
     let locationLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color153, fontSize: LayoutAdapter.shared.scale(value: 14))
    

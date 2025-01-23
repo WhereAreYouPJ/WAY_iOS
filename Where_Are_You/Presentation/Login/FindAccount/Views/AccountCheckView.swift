@@ -11,9 +11,9 @@ import SnapKit
 class AccountCheckView: UIView {
     // MARK: - Properties
     
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "회원님의 가입정보를 \n확인해주세요", textColor: .color34, fontSize: 22)
+    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "회원님의 가입정보를 \n확인해주세요", textColor: .black22, fontSize: 22)
     
-    private let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "회원님의 가입정보와 일치하는 이메일 주소는", textColor: .color34, fontSize: 14)
+    private let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "회원님의 가입정보와 일치하는 이메일 주소는", textColor: .black22, fontSize: 14)
     
     let accountImage: UIImageView = {
         let imageView = UIImageView()
@@ -23,7 +23,7 @@ class AccountCheckView: UIView {
     
     var emailDescriptionLabel = CustomLabel(UILabel_NotoSans: .bold, text: "", textColor: .letterBrandColor, fontSize: 18)
     
-    private let emailLabel2 = CustomLabel(UILabel_NotoSans: .medium, text: "입니다.", textColor: .color34, fontSize: 14)
+    private let emailLabel2 = CustomLabel(UILabel_NotoSans: .medium, text: "입니다.", textColor: .black22, fontSize: 14)
     
     private lazy var emailDescriptionStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [accountImage, emailDescriptionLabel, emailLabel2])
@@ -37,7 +37,7 @@ class AccountCheckView: UIView {
         return view
     }()
     
-    private let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: "로그인 또는 비밀번호 찾기 버튼을 눌러주세요.", textColor: .color102, fontSize: 14)
+    private let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: "로그인 또는 비밀번호 찾기 버튼을 눌러주세요.", textColor: .black66, fontSize: 14)
     
     let loginButton = CustomButton(title: "로그인하기", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
     

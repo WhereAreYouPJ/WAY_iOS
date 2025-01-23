@@ -50,7 +50,7 @@ class AddFeedView: UIView {
     
     let addImages: UIButton = {
         let button = UIButton()
-        let view = CustomView(image: "icon-Gallery", text: "사진 추가", textColor: .color102, separatorHidden: false)
+        let view = CustomView(image: "icon-Gallery", text: "사진 추가", textColor: .black66, separatorHidden: false)
         button.addSubview(view)
         view.isUserInteractionEnabled = false
         view.snp.makeConstraints { make in
@@ -59,7 +59,7 @@ class AddFeedView: UIView {
         return button
     }()
     
-    let membersInfo = CustomView(image: "icon-users", text: "", textColor: .color34, separatorHidden: true)
+    let membersInfo = CustomView(image: "icon-users", text: "", textColor: .black22, separatorHidden: true)
     
     lazy var addStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [addImages, membersInfo])

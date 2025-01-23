@@ -12,7 +12,7 @@ import SnapKit
 class AccountSearchView: UIView {
     // MARK: - Properties
     
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "지금어디에 가입했던 이메일을 입력해주세요.", textColor: .color34, fontSize: 22)
+    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "지금어디에 가입했던 이메일을 입력해주세요.", textColor: .black22, fontSize: 22)
     
     private let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이메일 주소", textColor: .color51, fontSize: 12)
     
@@ -44,7 +44,7 @@ class AccountSearchView: UIView {
     
     let timer: UILabel = {
         let label = UILabel()
-        label.textColor = .warningColor
+        label.textColor = .error
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
         label.adjustsFontForContentSizeCategory = true
         return label

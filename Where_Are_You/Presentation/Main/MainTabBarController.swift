@@ -33,8 +33,9 @@ class MainTabBarController: UITabBarController {
         let bannerViewModel = BannerViewModel()
         let dDayViewModel = DDayViewModel(getDDayScheduleUseCase: GetDDayScheduleUseCaseImpl(scheduleRepository: scheduleRepository))
         let homeFeedViewModel = HomeFeedViewModel(getFeedMainUseCase: GetFeedMainUseCaseImpl(feedRepository: feedRepository))
+        let bottomSheetViewModel = BottomSheetViewModel(getDailyScheduleUseCase: GetDailyScheduleUseCaseImpl(scheduleRepository: scheduleRepository))
             
-        let mainVC = createNavController(viewController: MainHomeViewController(bannerViewModel: bannerViewModel, dDayViewModel: dDayViewModel, homeFeedViewModel: homeFeedViewModel), title: "홈", imageName: "icon-home", selectedImageName: "icon-home-filled")
+        let mainVC = createNavController(viewController: MainHomeViewController(bannerViewModel: bannerViewModel, dDayViewModel: dDayViewModel, homeFeedViewModel: homeFeedViewModel, bottomSheetViewModel: bottomSheetViewModel), title: "홈", imageName: "icon-home", selectedImageName: "icon-home-filled")
         let friendsVC = createNavController(viewController: FriendFeedViewController(), title: "피드", imageName: "icon-friends", selectedImageName: "icon-friends-filled")
         
         let scheduleHostingVC = UIHostingController(rootView: ScheduleView())
@@ -52,8 +53,8 @@ class MainTabBarController: UITabBarController {
         viewControllers = [mainVC, scheduleHostingVC, friendsVC, myPageVC]
         
         // 탭바 색상 (선택, 비선택)
-        self.tabBar.tintColor = .color34
-        self.tabBar.unselectedItemTintColor = .color34
+        self.tabBar.tintColor = .black22
+        self.tabBar.unselectedItemTintColor = .black22
         tabBar.backgroundColor = .white
         
         navigationController?.navigationBar.isHidden = true

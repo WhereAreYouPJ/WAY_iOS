@@ -32,7 +32,7 @@ class FeedsTableViewCell: UITableViewCell {
     let bookMarkButton = UIButton()
     
     let descriptionLabel: UILabel = {
-        let label = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color34, fontSize: LayoutAdapter.shared.scale(value: 14))
+        let label = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .black22, fontSize: LayoutAdapter.shared.scale(value: 14))
         label.isHidden = true
         label.lineBreakMode = .byCharWrapping
         label.backgroundColor = .color249
@@ -181,18 +181,6 @@ class FeedsTableViewCell: UITableViewCell {
     }
     
     @objc private func descriptionLabelTapped() {
-        //        if isExpanded {
-        //            descriptionLabel.numberOfLines = 0 // 모든 텍스트 표시
-        //        } else {
-        //            descriptionLabel.numberOfLines = 3 // 다시 3줄로 축소
-        //        }
-        //        // 부모 뷰에 알림을 보내 테이블뷰 높이 업데이트
-        //        if let tableView = superview as? UITableView {
-        //            if let indexPath = tableView.indexPath(for: self) {
-        //                tableView.reloadRows(at: [indexPath], with: .automatic) // 해당 셀만 업데이트
-        //            }
-        //        }
-        
         guard !isExpanded else { return } // 이미 펼쳐졌다면 아무 작업도 하지 않음
         
         isExpanded = true // 상태 변경

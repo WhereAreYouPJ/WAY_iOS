@@ -56,7 +56,7 @@ class HomeFeedView: UIView {
 
     private func setupViews() {
         addSubview(collectionView)
-        
+        backgroundColor = .blackF8
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -66,8 +66,9 @@ class HomeFeedView: UIView {
         if feeds.isEmpty {
             addSubview(noFeedLabel)
             noFeedLabel.snp.makeConstraints { make in
-                make.top.bottom.equalToSuperview()
-                make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 23))
+                make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 20))
+                make.height.equalTo(LayoutAdapter.shared.scale(value: 160))
+                make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
             }
             collectionView.isHidden = true
         } else {

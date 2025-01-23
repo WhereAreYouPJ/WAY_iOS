@@ -12,17 +12,17 @@ class ScheduleDropDown: UIView {
 
     let scheduleDropDownView = UIButton()
     
-    let chooseScheduleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "일정 선택", textColor: .color102, fontSize: LayoutAdapter.shared.scale(value: 16))
+    let chooseScheduleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "일정 선택", textColor: .black66, fontSize: LayoutAdapter.shared.scale(value: 16))
     
     let scheduleDateLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 12))
-        label.textColor = .color68
+        label.textColor = .black44
         label.numberOfLines = 2
         return label
     }()
     
-    let scheduleLocationLabel: UILabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color68, fontSize: LayoutAdapter.shared.scale(value: 16))
+    let scheduleLocationLabel: UILabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .black44, fontSize: LayoutAdapter.shared.scale(value: 16))
     
     lazy var scheduleStackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [scheduleDateLabel, scheduleLocationLabel])
@@ -34,7 +34,7 @@ class ScheduleDropDown: UIView {
     let dropDownButton: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "chevron.down")
-        imageView.tintColor = .color172
+        imageView.tintColor = .blackAC
         return imageView
     }()
     

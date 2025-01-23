@@ -24,6 +24,9 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Pretendard-Medium.otf</string>
+		<string>Pretendard-SemiBold.otf</string>
+		<string>Paperlogy-6SemiBold.ttf</string>
 		<string>Ttangsbudaejjigae-Bold.otf</string>
 		<string>Ttangsbudaejjigae-Light.otf</string>
 		<string>Ttangsbudaejjigae-Medium.otf</string>

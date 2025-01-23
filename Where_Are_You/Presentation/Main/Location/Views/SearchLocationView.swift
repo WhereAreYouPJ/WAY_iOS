@@ -50,7 +50,7 @@ struct SearchLocationView: View {
                     Button("전체삭제") {
                         viewModel.clearRecentSearches()
                     }
-                    .foregroundStyle(Color(.color102))
+                    .foregroundStyle(Color(.black66))
                     .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 12)))
                 }
                 .padding(.horizontal, 25)
@@ -78,7 +78,7 @@ struct SearchLocationView: View {
         .navigationTitle("장소 검색")
         .navigationBarTitleDisplayMode(.inline)
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
-        .foregroundStyle(Color(.color34))
+        .foregroundStyle(Color(.black22))
         .onChange(of: viewModel.searchText) { _, _ in
             showRecentSearch = (viewModel.searchText == "")
         }

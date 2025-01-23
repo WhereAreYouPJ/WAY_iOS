@@ -33,7 +33,7 @@ class EditFeedView: AddFeedView {
             contentTextView.textColor = .color118
             contentTextView.text = "어떤 일이 있었나요?"
         } else {
-            contentTextView.textColor = .color34
+            contentTextView.textColor = .black22
             contentTextView.text = feed.content
         }
     }
