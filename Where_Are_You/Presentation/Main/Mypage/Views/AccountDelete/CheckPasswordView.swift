@@ -15,7 +15,7 @@ class CheckPasswordView: UIView {
 
     let passwordTextField = Utilities.inputContainerTextField(withPlaceholder: "비밀번호") // 로그인에서 참고하기
     
-    let passwordErrorLabel = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호가 맞지 않습니다.", textColor: .warningColor, fontSize: 12)
+    let passwordErrorLabel = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호가 맞지 않습니다.", textColor: .error, fontSize: 12)
     
     private lazy var stackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [passwordTitle, passwordTextField, passwordErrorLabel])

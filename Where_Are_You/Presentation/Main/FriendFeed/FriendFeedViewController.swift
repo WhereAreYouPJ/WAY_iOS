@@ -22,11 +22,11 @@ class FriendFeedViewController: UIViewController {
         sc.selectedSegmentIndex = 0
         
         sc.setTitleTextAttributes([
-            NSAttributedString.Key.foregroundColor: UIColor.color102,
+            NSAttributedString.Key.foregroundColor: UIColor.black66,
             NSAttributedString.Key.font: UIFont.pretendard(NotoSans: .medium, fontSize: 20)
         ], for: .normal)
         sc.setTitleTextAttributes([
-            NSAttributedString.Key.foregroundColor: UIColor.color34,
+            NSAttributedString.Key.foregroundColor: UIColor.black22,
             NSAttributedString.Key.font: UIFont.pretendard(NotoSans: .medium, fontSize: 20)
         ], for: .selected)
         

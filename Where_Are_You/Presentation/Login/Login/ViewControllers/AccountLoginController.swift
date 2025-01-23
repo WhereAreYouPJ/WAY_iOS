@@ -97,7 +97,7 @@ class AccountLoginController: UIViewController {
     
     private func updateStatus(label: UILabel?, message: String, isAvailable: Bool, textField: UITextField?) {
         label?.text = message
-        label?.textColor = isAvailable ? .brandColor : .warningColor
-        textField?.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
+        label?.textColor = isAvailable ? .brandColor : .error
+        textField?.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.error.cgColor
     }
 }

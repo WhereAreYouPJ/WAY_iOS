@@ -12,7 +12,7 @@ class MyDetailManageView: UIView {
     let modifyButton = CustomOptionButtonView(title: "수정하기")
     let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이름", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
     let userNameTextField = Utilities.inputContainerTextField(withPlaceholder: "")
-    let userNameErrorLabel = CustomLabel(UILabel_NotoSans: .medium, text: "최소 1자 이상 입력해 주세요.", textColor: .warningColor, fontSize: LayoutAdapter.shared.scale(value: 12))
+    let userNameErrorLabel = CustomLabel(UILabel_NotoSans: .medium, text: "최소 1자 이상 입력해 주세요.", textColor: .error, fontSize: LayoutAdapter.shared.scale(value: 12))
     
     lazy var userNameStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [userNameTextField, userNameErrorLabel])

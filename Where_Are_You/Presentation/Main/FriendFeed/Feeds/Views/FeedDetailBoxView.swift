@@ -32,7 +32,7 @@ class FeedDetailBoxView: UIView {
     
     var locationLabel = CustomLabel(UILabel_NotoSans: .medium, text: "locationLabel", textColor: .color153, fontSize: LayoutAdapter.shared.scale(value: 14))
     
-    var titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "titleLabel", textColor: .color34, fontSize: LayoutAdapter.shared.scale(value: 16))
+    var titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "titleLabel", textColor: .black22, fontSize: LayoutAdapter.shared.scale(value: 16))
     
     // 스케쥴 날짜, 스케쥴 장소
     lazy var dateLocationStack = createStackView(subviews: [dateLabel, locationLabel], axis: .horizontal, spacing: 0)

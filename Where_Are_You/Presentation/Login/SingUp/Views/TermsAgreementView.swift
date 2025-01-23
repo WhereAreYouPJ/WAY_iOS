@@ -26,7 +26,7 @@ class TermsAgreementView: UIView {
         return view
     }()
     
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "회원가입에 필요한\n약관에 동의해주세요", textColor: .color34, fontSize: 22)
+    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "회원가입에 필요한\n약관에 동의해주세요", textColor: .black22, fontSize: 22)
     
     private let agreeView: UIView = {
         let view = UIView()
@@ -84,14 +84,14 @@ class TermsAgreementView: UIView {
         
         agreeView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+            make.bottom.equalToSuperview()
             make.leading.equalToSuperview()
         }
         
         bottomButtonView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.leading.equalToSuperview()
-            make.bottom.equalTo(agreeView.snp.bottom)
+            make.bottom.equalToSuperview()
         }
     }
 }

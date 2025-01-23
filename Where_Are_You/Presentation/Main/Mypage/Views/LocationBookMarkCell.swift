@@ -36,7 +36,7 @@ class LocationBookMarkCell: UITableViewCell {
     }
     
     private func configureCell() {
-        locationLabel.textColor = .color34
+        locationLabel.textColor = .black22
         locationLabel.font = UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 16))
         
         contentView.addSubview(locationLabel)

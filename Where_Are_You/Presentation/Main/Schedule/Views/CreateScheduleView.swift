@@ -184,7 +184,7 @@ struct FavoritePlaceCell: View {
                 .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
                 .background(
                     RoundedRectangle(cornerRadius: 20)
-                        .fill(Color(.color240))
+                        .fill(Color(.blackF0))
                 )
                 .foregroundColor(.primary)
         }

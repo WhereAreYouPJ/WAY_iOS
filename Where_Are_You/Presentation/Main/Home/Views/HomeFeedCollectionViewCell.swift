@@ -26,9 +26,9 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         return iv
     }()
     
-    private let locationLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color102, fontSize: 14)
+    private let locationLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .black66, fontSize: 14)
     
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color34, fontSize: 16)
+    private let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .black22, fontSize: 16)
     
     // 장소, 타이틀
     private lazy var textStackView: UIStackView = {
@@ -149,7 +149,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
             descriptionLabel.isHidden = false
             descriptionLabel.text = content
             let readmoreFont = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
-            let readmoreFontColor = UIColor.brandColor
+            let readmoreFontColor = UIColor.brandLight
             DispatchQueue.main.async {
                 self.descriptionLabel.addTrailing(with: "...", moreText: "  더 보기", moreTextFont: readmoreFont, moreTextColor: readmoreFontColor)
             }

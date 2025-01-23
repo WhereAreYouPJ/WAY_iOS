@@ -59,7 +59,7 @@ class PasswordResetViewController: UIViewController {
                 self?.isPasswordValidate = result
                 self?.passwordResetView.resetPasswordDescription.text = message
                 if result == false {
-                    self?.passwordResetView.resetPasswordDescription.textColor = .warningColor
+                    self?.passwordResetView.resetPasswordDescription.textColor = .error
 
                 }
                 self?.updateResetButtonState()
@@ -71,7 +71,7 @@ class PasswordResetViewController: UIViewController {
                 self?.isPasswordCheck = result
                 self?.passwordResetView.checkPasswordDescription.text = message
                 if result == false {
-                    self?.passwordResetView.checkPasswordDescription.textColor = .warningColor
+                    self?.passwordResetView.checkPasswordDescription.textColor = .error
                 }
                 self?.updateResetButtonState()
             }

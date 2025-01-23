@@ -28,11 +28,39 @@ extension UIColor {
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
         return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
     }
+    static let brandMain = UIColor.rgb(red: 129, green: 97, blue: 246)
+    static let brandDark = UIColor.rgb(red: 115, green: 78, blue: 227)
+    static let brandDark2 = UIColor.rgb(red: 116, green: 92, blue: 200)
+    static let brandLight = UIColor.rgb(red: 191, green: 173, blue: 255)
+    static let brandHighLight1 = UIColor.rgb(red: 240, green: 235, blue: 255)
+    static let brandHighLight2 = UIColor.rgb(red: 245, green: 242, blue: 255)
+
+    static let black22 = UIColor.rgb(red: 34, green: 34, blue: 34)
+    static let black44 = UIColor.rgb(red: 68, green: 68, blue: 68)
+    static let black66 = UIColor.rgb(red: 102, green: 102, blue: 102)
+    static let blackAC = UIColor.rgb(red: 172, green: 172, blue: 172)
+    static let blackD4 = UIColor.rgb(red: 201, green: 201, blue: 201)
+    static let blackF0 = UIColor.rgb(red: 240, green: 240, blue: 240)
+    static let blackF8 = UIColor.rgb(red: 248, green: 248, blue: 248)
+
+    static let calendarRed = UIColor.rgb(red: 248, green: 173, blue: 174)
+    static let calendarOrange = UIColor.rgb(red: 250, green: 209, blue: 127)
+    static let calendarYellow = UIColor.rgb(red: 244, green: 244, blue: 162)
+    static let calendarGreen = UIColor.rgb(red: 207, green: 234, blue: 152)
+    static let calendarMint = UIColor.rgb(red: 161, green: 226, blue: 204)
+    static let calendarBlue = UIColor.rgb(red: 178, green: 209, blue: 255)
+    static let calendarPink = UIColor.rgb(red: 246, green: 171, blue: 224)
+    static let calendarPurple = UIColor.rgb(red: 184, green: 168, blue: 255)
+
+    static let error = UIColor.rgb(red: 225, green: 49, blue: 49)
     
+    static let secondaryNormal = UIColor.rgb(red: 255, green: 226, blue: 83)
+    static let secondaryDark = UIColor.rgb(red: 242, green: 206, blue: 0)
+    static let secondaryLight = UIColor.rgb(red: 255, green: 238, blue: 156)
+
     static let brandColor = UIColor.rgb(red: 123, green: 80, blue: 255)
     static let letterBrandColor = UIColor.rgb(red: 98, green: 54, blue: 233)
     static let lightpurple = UIColor.rgb(red: 146, green: 134, blue: 255)
-    static let warningColor = UIColor.rgb(red: 225, green: 49, blue: 49)
     static let scheduleDateColor = UIColor.rgb(red: 252, green: 47, blue: 47)
     static let popupButtonColor = UIColor.rgb(red: 81, green: 70, blue: 117)
     static let alertActionButtonColor = UIColor.rgb(red: 212, green: 158, blue: 255)
@@ -40,18 +68,14 @@ extension UIColor {
     static let color5 = UIColor.rgb(red: 5, green: 5, blue: 5)
     static let color17 = UIColor.rgb(red: 17, green: 17, blue: 17)
     static let color29 = UIColor.rgb(red: 29, green: 29, blue: 29)
-    static let color34 = UIColor.rgb(red: 34, green: 34, blue: 34)
     static let color51 = UIColor.rgb(red: 51, green: 51, blue: 51)
     static let color5769 = UIColor.rgb(red: 57, green: 69, blue: 255)
     static let color57125 = UIColor.rgb(red: 57, green: 125, blue: 255)
-    static let color68 = UIColor.rgb(red: 68, green: 68, blue: 68)
     static let color81 = UIColor.rgb(red: 81, green: 70, blue: 117)
-    static let color102 = UIColor.rgb(red: 102, green: 102, blue: 102)
     static let color118 = UIColor.rgb(red: 118, green: 118, blue: 118)
     static let color153 = UIColor.rgb(red: 153, green: 153, blue: 153)
     static let color160 = UIColor.rgb(red: 160, green: 160, blue: 160)
     static let color171 = UIColor.rgb(red: 171, green: 171, blue: 171)
-    static let color172 = UIColor.rgb(red: 172, green: 172, blue: 172)
     static let color190 = UIColor.rgb(red: 190, green: 190, blue: 190)
     static let color191 = UIColor.rgb(red: 191, green: 191, blue: 191)
     static let color212 = UIColor.rgb(red: 212, green: 212, blue: 212)
@@ -60,7 +84,6 @@ extension UIColor {
     static let color223 = UIColor.rgb(red: 223, green: 223, blue: 223)
     static let color231 = UIColor.rgb(red: 231, green: 231, blue: 231)
     static let color235 = UIColor.rgb(red: 235, green: 235, blue: 235)
-    static let color240 = UIColor.rgb(red: 240, green: 240, blue: 240)
     static let color242 = UIColor.rgb(red: 242, green: 242, blue: 242)
     static let color249 = UIColor.rgb(red: 249, green: 249, blue: 249)
     static let color255125 = UIColor.rgb(red: 255, green: 125, blue: 150)
@@ -70,6 +93,129 @@ extension UIColor {
 // MARK: - UIFont
 
 extension UIFont {
+    struct CustomFont {
+        static func titleH1(text: String) -> NSAttributedString {
+            return attributedFont(
+                text: text,
+                font: UIFont(name: "Paperlogy-6SemiBold", size: 22)!,
+                lineHeight: 1.3,
+                letterSpacing: -1
+            )
+        }
+        
+        static func titleH2(text: String) -> NSAttributedString {
+            return attributedFont(
+                text: text,
+                font: UIFont(name: "Paperlogy-6SemiBold", size: 20)!,
+                lineHeight: 1.3,
+                letterSpacing: -2
+            )
+        }
+        
+        static func titleH3(text: String) -> NSAttributedString {
+            return attributedFont(
+                text: text,
+                font: UIFont(name: "Paperlogy-6SemiBold", size: 18)!,
+                lineHeight: 1.3,
+                letterSpacing: -1
+            )
+        }
+        
+        static func bodyP1(text: String) -> NSAttributedString {
+            return attributedFont(
+                text: text,
+                font: UIFont(name: "Pretendard-Medium", size: 20)!,
+                lineHeight: 1.4,
+                letterSpacing: -1
+            )
+        }
+        
+        static func bodyP2(text: String) -> NSAttributedString {
+            return attributedFont(
+                text: text,
+                font: UIFont(name: "Pretendard-SemiBold", size: 18)!,
+                lineHeight: 1.4,
+                letterSpacing: 0
+            )
+        }
+        
+        static func bodyP3(text: String) -> NSAttributedString {
+            return attributedFont(
+                text: text,
+                font: UIFont(name: "Pretendard-Medium", size: 16)!,
+                lineHeight: 1.4,
+                letterSpacing: -0.5
+            )
+        }
+        
+        static func bodyP4(text: String) -> NSAttributedString {
+            return attributedFont(
+                text: text,
+                font: UIFont(name: "Pretendard-Medium", size: 14)!,
+                lineHeight: 1.4,
+                letterSpacing: -0.5
+            )
+        }
+        
+        static func bodyP5(text: String) -> NSAttributedString {
+            return attributedFont(
+                text: text,
+                font: UIFont(name: "Pretendard-Medium", size: 12)!,
+                lineHeight: 1.3,
+                letterSpacing: -1.25
+            )
+        }
+        
+        static func button1(text: String) -> NSAttributedString {
+            return attributedFont(
+                text: text,
+                font: UIFont(name: "Pretendard-SemiBold", size: 18)!,
+                lineHeight: 1.3,
+                letterSpacing: 1.25
+            )
+        }
+        
+        static func button2(text: String) -> NSAttributedString {
+            return attributedFont(
+                text: text,
+                font: UIFont(name: "Pretendard-SemiBold", size: 16)!,
+                lineHeight: 1.3,
+                letterSpacing: 4
+            )
+        }
+        
+        static func button3(text: String) -> NSAttributedString {
+            return attributedFont(
+                text: text,
+                font: UIFont(name: "Pretendard-SemiBold", size: 14)!,
+                lineHeight: 1.3,
+                letterSpacing: -0.5
+            )
+        }
+        
+        private static func attributedFont(
+            text: String,
+            font: UIFont,
+            lineHeight: CGFloat,
+            letterSpacing: CGFloat
+        ) -> NSAttributedString {
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.maximumLineHeight = font.lineHeight * lineHeight
+            paragraphStyle.minimumLineHeight = font.lineHeight * lineHeight
+
+            // https://sujinnaljin.medium.com/swift-label%EC%9D%98-line-height-%EC%84%A4%EC%A0%95-%EB%B0%8F-%EA%B0%80%EC%9A%B4%EB%8D%B0-%EC%A0%95%EB%A0%AC-962f7c6e7512여기서 LineHeight설정시 아래에 깔리는 문제 해결
+            return NSAttributedString(
+                string: text,
+                attributes: [
+                    .font: font,
+                    .paragraphStyle: paragraphStyle,
+                    .kern: letterSpacing,
+                    .baselineOffset: (font.lineHeight * lineHeight - font.lineHeight) / 2
+                ]
+            )
+        }
+    }
+    
     static func pretendard(Ttangsbudae weight: UIFont.Weight, fontSize: CGFloat) -> UIFont {
         
         var weightString: String

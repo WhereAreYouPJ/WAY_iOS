@@ -7,13 +7,15 @@
 
 import Foundation
 
-class HomeDailyScheduleViewModel {
+class BottomSheetViewModel {
     private let getDailyScheduleUseCase: GetDailyScheduleUseCase
     let date: Date
     private let dateFormatterS2D: DateFormatter
     private let dateFormatterD2S: DateFormatter
     
-    var displyScheduleData: [Schedule] = []
+    var onDailyScheduleDataFetched: (() -> Void)?
+
+    var displayScheduleData: [Schedule] = []
     
     init(getDailyScheduleUseCase: GetDailyScheduleUseCase, date: Date = Date()) {
         self.getDailyScheduleUseCase = getDailyScheduleUseCase
@@ -32,7 +34,7 @@ class HomeDailyScheduleViewModel {
             switch result {
             case .success(let data):
                 
-                self.displyScheduleData = data.map { schedule in
+                self.displayScheduleData = data.compactMap { schedule in
                     return Schedule(scheduleSeq: schedule.scheduleSeq,
                                     title: schedule.title,
                                     startTime: self.dateFormatterS2D.date(from: schedule.startTime) ?? Date.now,
@@ -47,9 +49,14 @@ class HomeDailyScheduleViewModel {
                                     memo: "",
                                     invitedMember: nil)
                 }
+                self.onDailyScheduleDataFetched?()
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    func getSchedules() -> [Schedule] {
+        return displayScheduleData
     }
 }

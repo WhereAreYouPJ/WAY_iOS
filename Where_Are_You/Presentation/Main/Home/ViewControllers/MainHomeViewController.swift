@@ -12,6 +12,7 @@ class MainHomeViewController: UIViewController {
     private var mainHomeView = MainHomeView()
     private let titleView = TitleView()
     
+    private let bottomSheetViewController: BottomSheetViewController
     private let bannerViewController: BannerViewController
     private let dDayViewController: DDayViewController
     private let homeFeedViewController: HomeFeedViewController
@@ -19,11 +20,13 @@ class MainHomeViewController: UIViewController {
     // MARK: - Initializer
     init(bannerViewModel: BannerViewModel,
          dDayViewModel: DDayViewModel,
-         homeFeedViewModel: HomeFeedViewModel
+         homeFeedViewModel: HomeFeedViewModel,
+         bottomSheetViewModel: BottomSheetViewModel
     ) {
         self.bannerViewController = BannerViewController(viewModel: bannerViewModel)
         self.dDayViewController = DDayViewController(viewModel: dDayViewModel)
         self.homeFeedViewController = HomeFeedViewController(viewModel: homeFeedViewModel)
+        self.bottomSheetViewController = BottomSheetViewController(viewModel: bottomSheetViewModel)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -43,14 +46,14 @@ class MainHomeViewController: UIViewController {
     private func setupUI() {
         view.addSubview(mainHomeView)
         mainHomeView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.leading.trailing.bottom.equalToSuperview()
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
         // Add child view controllers
         addAndLayoutChildViewController(bannerViewController, toView: mainHomeView.bannerView)
         addAndLayoutChildViewController(dDayViewController, toView: mainHomeView.dDayView)
         addAndLayoutChildViewController(homeFeedViewController, toView: mainHomeView.homeFeedView)
+        addAndLayoutChildViewController(bottomSheetViewController, toView: mainHomeView.bottomSheetView)
     }
     
     private func setupNavigationBar() {

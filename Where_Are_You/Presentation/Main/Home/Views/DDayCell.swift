@@ -22,7 +22,7 @@ class DDAyCell: UICollectionViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .color34
+        label.textColor = .black22
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 16)
         return label
     }()
