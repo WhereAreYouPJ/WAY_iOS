@@ -9,10 +9,39 @@ import SwiftUI
 
 struct DailyScheduleView: View {
     @StateObject private var viewModel: DailyScheduleViewModel
+    
     @State private var scheduleForDetail: Schedule?
     @Binding var isPresented: Bool
-    private let formatter = DateFormatter()
     let onDeleteSchedule: (Schedule) -> Void  // 삭제 요청만 전달하는 클로저
+    
+    init(
+        viewModel: DailyScheduleViewModel,
+        isPresented: Binding<Bool>,
+        onDeleteSchedule: @escaping (Schedule) -> Void
+    ) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+        self._isPresented = isPresented
+        self.onDeleteSchedule = onDeleteSchedule
+    }
+    
+    init(date: Date, isPresented: Binding<Bool>, onDeleteSchedule: @escaping (Schedule) -> Void) {
+        let service = ScheduleService()
+        let repository = ScheduleRepository(scheduleService: service)
+        let getDailyScheduleUseCase = GetDailyScheduleUseCaseImpl(scheduleRepository: repository)
+        let deleteScheduleUseCase = DeleteScheduleUseCaseImpl(scheduleRepository: repository)
+        
+        let viewModel = DailyScheduleViewModel(
+            getDailyScheduleUseCase: getDailyScheduleUseCase,
+            deleteScheduleUseCase: deleteScheduleUseCase,
+            date: date
+        )
+        
+        self.init(
+            viewModel: viewModel,
+            isPresented: isPresented,
+            onDeleteSchedule: onDeleteSchedule
+        )
+    }
     
     // MARK: dummy data
     let schedules: [Schedule] = [
@@ -84,19 +113,11 @@ struct DailyScheduleView: View {
         )
     ]
     
-    init(date: Date, isPresented: Binding<Bool>, onDeleteSchedule: @escaping (Schedule) -> Void) {
-        let service = ScheduleService()
-        _viewModel = StateObject(wrappedValue: DailyScheduleViewModel(date: date, service: service))
-        formatter.dateFormat = "MM월 dd일"
-        self._isPresented = isPresented
-        self.onDeleteSchedule = onDeleteSchedule
-    }
-    
     var body: some View {
         ScrollView {
             VStack {
                 HStack {
-                    Text(formatter.string(from: viewModel.date))
+                    Text(viewModel.date.formatted(to: .monthDay))
                         .foregroundStyle(Color(.letterBrandColor))
                         .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 22))))
                     

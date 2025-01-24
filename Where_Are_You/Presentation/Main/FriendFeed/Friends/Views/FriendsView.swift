@@ -83,7 +83,7 @@ struct FriendsView: View {
                 .frame(width: UIScreen.main.bounds.width * 0.14, height: UIScreen.main.bounds.width * 0.14)
                 .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16)))
             
-            Text(UserDefaultsManager.shared.getUserName() ?? "유저 이름")
+            Text(UserDefaultsManager.shared.getUserName() ?? "나")
                 .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 17))))
                 .foregroundColor(Color(.black22))
                 .padding(LayoutAdapter.shared.scale(value: 8))

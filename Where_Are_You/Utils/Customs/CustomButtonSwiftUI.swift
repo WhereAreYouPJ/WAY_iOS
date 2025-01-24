@@ -53,6 +53,7 @@ struct CustomButtonSwiftUI: View {
 
 struct BottomButtonSwiftUIView: View {
     let title: String
+    let background: Color
     let action: () -> Void
     
     var body: some View {
@@ -67,7 +68,7 @@ struct BottomButtonSwiftUIView: View {
                     .foregroundColor(Color(.color242))
                     .frame(maxWidth: .infinity)
                     .frame(height: LayoutAdapter.shared.scale(value: 50))
-                    .background(Color(.brandColor))
+                    .background(background)
                     .cornerRadius(LayoutAdapter.shared.scale(value: 6))
             }
             .padding(.horizontal, LayoutAdapter.shared.scale(value: 15))
@@ -159,7 +160,7 @@ struct RoundedCorner: Shape {
 }
 
 #Preview {
-    BottomButtonSwiftUIView(title: "버튼 제목") {
+    BottomButtonSwiftUIView(title: "버튼 제목", background: Color(.brandColor)) {
         print("버튼 탭됨")
     }
 }
