@@ -42,7 +42,7 @@ class AgreementAcountDeletionView: UIView {
         let label = UILabel()
         label.text = "모든 내용을 확인했으며 동의합니다."
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
-        label.textColor = .color34
+        label.textColor = .black22
         return label
     }()
     
@@ -134,7 +134,7 @@ class AgreementAcountDeletionView: UIView {
             // Range of the text to color red
             if let range = descriptionText.range(of: "즉시 영구적으로 삭제되며 다시 복구할 수 없습니다.") {
                 let nsRange = NSRange(range, in: descriptionText)
-                attributedDescription.addAttribute(.foregroundColor, value: UIColor.warningColor, range: nsRange)
+                attributedDescription.addAttribute(.foregroundColor, value: UIColor.error, range: nsRange)
             }
             
             firstInfoBox.configureUI(title: "모든 피드와 일정 등 \n 소중한 기록이 모두 사라져요.", attributedDescription: attributedDescription)

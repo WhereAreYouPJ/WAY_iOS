@@ -35,7 +35,7 @@ class ReasonSelectionTableViewCell: UITableViewCell {
     private let reasonLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
-        label.textColor = .color34
+        label.textColor = .black22
         return label
     }()
     
@@ -43,7 +43,7 @@ class ReasonSelectionTableViewCell: UITableViewCell {
         let tv = UITextView()
         tv.layer.cornerRadius = 6
         tv.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
-        tv.textColor = .color34
+        tv.textColor = .black22
         tv.backgroundColor = UIColor.rgb(red: 238, green: 238, blue: 238)
         tv.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10) // 내부 여백
         tv.isHidden = true

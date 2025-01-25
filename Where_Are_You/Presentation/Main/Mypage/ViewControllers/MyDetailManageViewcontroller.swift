@@ -75,7 +75,7 @@ class MyDetailManageViewcontroller: UIViewController {
     private func configureInitialState() {
         if isEditingMode {
             mydetailManageView.userNameTextField.isUserInteractionEnabled = true
-            mydetailManageView.userNameTextField.textColor = .color34
+            mydetailManageView.userNameTextField.textColor = .black22
             mydetailManageView.emailTextfield.isUserInteractionEnabled = false
             mydetailManageView.emailLabel.textColor = .color153
             mydetailManageView.emailTextfield.textColor = .color153
@@ -86,10 +86,10 @@ class MyDetailManageViewcontroller: UIViewController {
             }
         } else {
             mydetailManageView.userNameTextField.text = userName
-            mydetailManageView.userNameTextField.textColor = .color102
+            mydetailManageView.userNameTextField.textColor = .black66
             mydetailManageView.userNameTextField.isUserInteractionEnabled = false
             mydetailManageView.emailTextfield.text = email
-            mydetailManageView.emailTextfield.textColor = .color102
+            mydetailManageView.emailTextfield.textColor = .black66
             mydetailManageView.emailTextfield.isUserInteractionEnabled = false
             mydetailManageView.updateDetailButton.isHidden = true
             addButton.isHidden = false
@@ -149,7 +149,7 @@ class MyDetailManageViewcontroller: UIViewController {
     // 이름 조건 확인 -> 상태 변경
     private func updateStatus(label: UILabel?, isAvailable: Bool, textField: UITextField?) {
         label?.isHidden = isAvailable
-        textField?.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.warningColor.cgColor
+        textField?.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.error.cgColor
         mydetailManageView.updateDetailButton.isEnabled = !isAvailable
         mydetailManageView.updateDetailButton.backgroundColor = isAvailable ? .brandColor : .color171
     }

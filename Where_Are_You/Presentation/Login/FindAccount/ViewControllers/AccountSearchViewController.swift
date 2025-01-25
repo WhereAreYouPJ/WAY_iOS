@@ -55,7 +55,7 @@ class AccountSearchViewController: UIViewController {
         viewModel.onRequestCodeFailure = { [weak self] message in
             DispatchQueue.main.async {
                 self?.accountSearchView.emailErrorLabel.text = message
-                self?.accountSearchView.emailErrorLabel.textColor = .warningColor
+                self?.accountSearchView.emailErrorLabel.textColor = .error
             }
         }
         
@@ -76,7 +76,7 @@ class AccountSearchViewController: UIViewController {
         viewModel.onVerifyCodeFailure = { [weak self] message in
             DispatchQueue.main.async {
                 self?.accountSearchView.authNumberErrorLabel.text = message
-                self?.accountSearchView.authNumberErrorLabel.textColor = .warningColor
+                self?.accountSearchView.authNumberErrorLabel.textColor = .error
             }
         }
         

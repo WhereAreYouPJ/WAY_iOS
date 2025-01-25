@@ -30,7 +30,7 @@ class Utilities {
                                              style: .plain,
                                              target: viewController,
                                              action: backButtonAction)
-            backButton.tintColor = .color172
+            backButton.tintColor = .blackAC
             viewController.navigationItem.leftBarButtonItem = backButton
         }
         
@@ -45,19 +45,19 @@ class Utilities {
     static func inputContainerTextField(withPlaceholder placeholder: String) -> CustomTextField {
         let tf = CustomTextField(placeholder: placeholder)
         tf.adjustsFontForContentSizeCategory = true
-        tf.textColor = .color34
+        tf.textColor = .black22
         tf.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14)))
-        tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.color102])
+        tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black66])
         return tf
     }
     
     // TextField with placeholder
     static func textField(withPlaceholder placeholder: String, fontSize: CGFloat) -> UITextField {
         let tf = UITextField()
-        tf.textColor = .color34
+        tf.textColor = .black22
         tf.adjustsFontForContentSizeCategory = true
         tf.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: fontSize))
-        tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.color102])
+        tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black66])
         return tf
     }
     
@@ -67,7 +67,7 @@ class Utilities {
         
         let attributedTitle = NSMutableAttributedString(string: firstPart, attributes: [NSAttributedString.Key.font: UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14)), NSAttributedString.Key.foregroundColor: UIColor.color153])
         
-        attributedTitle.append(NSAttributedString(string: secondPart, attributes: [NSAttributedString.Key.font: UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14)), NSAttributedString.Key.foregroundColor: UIColor.color102]))
+        attributedTitle.append(NSAttributedString(string: secondPart, attributes: [NSAttributedString.Key.font: UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14)), NSAttributedString.Key.foregroundColor: UIColor.black66]))
         
         button.setAttributedTitle(attributedTitle, for: .normal)
         button.titleLabel?.adjustsFontForContentSizeCategory = true

@@ -61,7 +61,7 @@ struct DismissButtonView: View {
                             .shadow(color: Color(.color153), radius: 5, x: 3, y: 3)
                         
                         Image(systemName: "arrow.backward")
-                            .foregroundColor(Color(.color34))
+                            .foregroundColor(Color(.black22))
                     }
                 }
                 Spacer()

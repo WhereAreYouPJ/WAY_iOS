@@ -21,11 +21,11 @@ class NetworkAlert: UIView {
         return imageView
     }()
     
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "인터넷 연결을 확인해주세요.", textColor: .color34, fontSize: 16)
+    private let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "인터넷 연결을 확인해주세요.", textColor: .black22, fontSize: 16)
     
     private let closeButton: UIButton = {
         let button = UIButton()
-        button.setTitleColor(.color34, for: .normal)
+        button.setTitleColor(.black22, for: .normal)
         button.setTitle("닫기", for: .normal)
         button.titleLabel?.font = UIFont.pretendard(NotoSans: .medium, fontSize: 16)
         button.layer.cornerRadius = 6

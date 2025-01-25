@@ -13,7 +13,7 @@ struct CustomToast: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 12))
-                .foregroundStyle(Color(.color68))
+                .foregroundStyle(Color(.black44))
                 .opacity(0.7)
                 .frame(width: LayoutAdapter.shared.scale(value: 324), height: LayoutAdapter.shared.scale(value: 48))
             

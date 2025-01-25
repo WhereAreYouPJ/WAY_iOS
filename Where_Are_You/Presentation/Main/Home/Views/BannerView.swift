@@ -25,7 +25,7 @@ class BannerView: UIView {
         label.textAlignment = .center
         label.textColor = .white
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 12)
-        label.backgroundColor = UIColor.color68.withAlphaComponent(0.6)
+        label.backgroundColor = UIColor.black44.withAlphaComponent(0.6)
         label.layer.cornerRadius = LayoutAdapter.shared.scale(value: 10)
         label.clipsToBounds = true
         return label

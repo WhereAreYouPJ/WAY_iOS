@@ -40,7 +40,7 @@ struct NavigationBarModifier: ViewModifier {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text(title)
-                        .foregroundColor(Color(.color34))
+                        .foregroundColor(Color(.black22))
                 }
                 
                 if showBackButton {
@@ -49,7 +49,7 @@ struct NavigationBarModifier: ViewModifier {
                             backButtonAction?()
                         }, label: {
                             Image(systemName: "arrow.backward")
-                                .foregroundColor(Color(.color172))
+                                .foregroundColor(Color(.blackAC))
                         })
                     }
                 }
@@ -96,7 +96,7 @@ struct NavigationBarPreview: View {
                                 print("오른쪽 버튼 탭")
                             }) {
                                 Image(systemName: "gear")
-                                    .foregroundColor(Color(.color172))
+                                    .foregroundColor(Color(.blackAC))
                             }
                         )
                     },

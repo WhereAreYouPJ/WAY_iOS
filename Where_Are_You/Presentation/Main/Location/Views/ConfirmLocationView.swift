@@ -35,7 +35,7 @@ struct ConfirmLocationView: View { // TODO: 뒤로가기 버튼
                 VStack(alignment: .leading) {
                     Text(location.location)
                         .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 20)))
-                        .foregroundColor(Color(.color68))
+                        .foregroundColor(Color(.black44))
                     Text(location.streetName)
                         .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 14)))
                         .foregroundColor(Color(.color153))

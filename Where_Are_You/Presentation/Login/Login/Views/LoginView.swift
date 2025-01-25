@@ -17,40 +17,28 @@ class LoginView: UIView {
         return imageView
     }()
     
-    private let subtitleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "위치기반 일정관리 플랫폼", textColor: .color68, fontSize: 14)
+    private let subtitleLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = UIFont.CustomFont.bodyP4(text: "위치기반 일정관리 플랫폼")
+        label.textColor = .black22
+        return label
+    }()
     
     let kakaoLogin: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "kakaoLogin"), for: .normal)
-        button.layer.cornerRadius = LayoutAdapter.shared.scale(value: 6)
+        button.layer.cornerRadius = 8
         return button
     }()
-    
-//    let appleLogin: UIButton = {
-//        let button = UIButton()
-//        button.backgroundColor = .brandColor
-//        button.setImage(UIImage(named: "appleLogin"), for: .normal)
-//        button.layer.cornerRadius = LayoutAdapter.shared.scale(value: 6)
-//        return button
-//    }()
     
     let appleLogin: ASAuthorizationAppleIDButton = {
-        let button  = ASAuthorizationAppleIDButton(type: .default, style: .whiteOutline)
-        button.cornerRadius = 6
+        let button  = ASAuthorizationAppleIDButton(type: .default, style: .black)
+        button.cornerRadius = 8
         return button
     }()
     
-    let accountLogin: UIButton = {
-        let button = UIButton()
-        button.setTitle("이메일 로그인", for: .normal)
-        button.setTitleColor(.letterBrandColor, for: .normal)
-        button.titleLabel?.font = UIFont.pretendard(NotoSans: .bold, fontSize: 14)
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.brandColor.cgColor
-        button.layer.cornerRadius = LayoutAdapter.shared.scale(value: 6)
-        return button
-    }()
-    
+    let accountLogin = TitleButton(title: UIFont.CustomFont.button3(text: "이메일 로그인"), backgroundColor: .white, titleColor: .brandDark, borderColor: UIColor.brandMain.cgColor, cornerRadius: 8)
+
     private lazy var loginStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [kakaoLogin, appleLogin, accountLogin])
         stackView.axis = .vertical
@@ -59,11 +47,11 @@ class LoginView: UIView {
         return stackView
     }()
     
-    let separatorLabel = CustomLabel(UILabel_NotoSans: .medium, text: "또는", textColor: .color102, fontSize: 14)
+    let separatorLabel = CustomLabel(UILabel_NotoSans: .medium, text: "또는", textColor: .black66, fontSize: 14)
     
-    let signupButton = CustomButtonView(text: "회원가입", weight: .medium, textColor: .color102, fontSize: 14)
-    let findAccountButton = CustomButtonView(text: "계정찾기", weight: .medium, textColor: .color102, fontSize: 14)
-    let inquiryButton = CustomButtonView(text: "문의하기", weight: .medium, textColor: .color102, fontSize: 14)
+    let signupButton = CustomButtonView(text: "회원가입", weight: .medium, textColor: .black66, fontSize: 14)
+    let findAccountButton = CustomButtonView(text: "계정찾기", weight: .medium, textColor: .black66, fontSize: 14)
+    let inquiryButton = CustomButtonView(text: "문의하기", weight: .medium, textColor: .black66, fontSize: 14)
    
     private lazy var buttonStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [signupButton, findAccountButton, inquiryButton])
@@ -108,6 +96,18 @@ class LoginView: UIView {
         loginStack.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(subtitleLabel.snp.bottom).offset(46)
+        }
+        
+        kakaoLogin.snp.makeConstraints { make in
+            make.height.equalTo(48)
+        }
+        
+        appleLogin.snp.makeConstraints { make in
+            make.height.equalTo(48)
+        }
+        
+        accountLogin.snp.makeConstraints { make in
+            make.height.equalTo(48)
         }
         
         separatorLabel.snp.makeConstraints { make in

@@ -85,13 +85,13 @@ struct ManageFriendsView: View { // TODO: 친구 요청 수락/거절의 경우 
                     
                     Text(request.friend.name)
                         .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 17)))
-                        .foregroundColor(Color(.color34))
+                        .foregroundColor(Color(.black22))
                         .padding(LayoutAdapter.shared.scale(value: 8))
                     
                     Spacer()
                     
                     if isSentRequest {
-                        CustomButtonSwiftUI(title: "취소", backgroundColor: Color.white, titleColor: Color(.color34)) {
+                        CustomButtonSwiftUI(title: "취소", backgroundColor: Color.white, titleColor: Color(.black22)) {
                             viewModel.cancelRequest(requestSeq: request.friendRequestSeq)
                         }
                         .frame(width: LayoutAdapter.shared.scale(value: 90), height: LayoutAdapter.shared.scale(value: 36))
@@ -101,7 +101,7 @@ struct ManageFriendsView: View { // TODO: 친구 요청 수락/거절의 경우 
                         }
                         .frame(width: LayoutAdapter.shared.scale(value: 90), height: LayoutAdapter.shared.scale(value: 36))
                         
-                        CustomButtonSwiftUI(title: "거절", backgroundColor: Color.white, titleColor: Color(.color34)) {
+                        CustomButtonSwiftUI(title: "거절", backgroundColor: Color.white, titleColor: Color(.black22)) {
                             viewModel.refuseRequest(requestSeq: request.friendRequestSeq)
                         }
                         .frame(width: LayoutAdapter.shared.scale(value: 90), height: LayoutAdapter.shared.scale(value: 36))

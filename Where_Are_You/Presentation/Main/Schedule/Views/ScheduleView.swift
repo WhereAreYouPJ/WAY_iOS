@@ -188,7 +188,7 @@ struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 
         switch index {
         case 1: return Color(.color255125)  // 일요일
         case 7: return Color(.color57125) // 토요일
-        default: return Color(.color102)
+        default: return Color(.black66)
         }
     }
     

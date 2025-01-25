@@ -85,7 +85,7 @@ class CheckPasswordViewController: UIViewController {
    
     private func updateStatus(label: UILabel?, message: String, textField: UITextField?) {
         label?.text = message
-        label?.textColor = .warningColor
-        textField?.layer.borderColor = UIColor.warningColor.cgColor
+        label?.textColor = .error
+        textField?.layer.borderColor = UIColor.error.cgColor
     }
 }

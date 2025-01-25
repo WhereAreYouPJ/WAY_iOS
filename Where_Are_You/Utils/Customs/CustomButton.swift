@@ -7,9 +7,59 @@
 
 import UIKit
 import SnapKit
-import Foundation
+
+// MARK: - Box Button
+
+class TitleButton: UIButton {
+    let textLabel = UILabel()
+    // MARK: - Properties
+    private var buttonTitle: NSAttributedString
+    private var buttonBackgroundColor: UIColor
+    private var buttonTitleColor: UIColor
+    private var borderColor: CGColor?
+    private var cornerRadius: CGFloat
+    
+    // MARK: - Initializer
+    init(title: NSAttributedString, backgroundColor: UIColor, titleColor: UIColor, borderColor: CGColor?, cornerRadius: CGFloat?) {
+        self.buttonTitle = title
+        self.buttonBackgroundColor = backgroundColor
+        self.buttonTitleColor = titleColor
+        self.borderColor = borderColor
+        self.cornerRadius = cornerRadius ?? 0
+        super.init(frame: .zero)
+        setupButton()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Setup Button
+    private func setupButton() {
+        backgroundColor = buttonBackgroundColor
+        layer.borderColor = borderColor
+        layer.borderWidth = 1.5
+        setAttributedTitle(buttonTitle, for: .normal)
+        setTitleColor(buttonTitleColor, for: .normal)
+
+        // 버튼 모서리 둥글게
+        layer.cornerRadius = cornerRadius
+        clipsToBounds = true
+    }
+    
+    // MARK: - Public Methods
+    func updateTitle(_ title: NSAttributedString) {
+        self.textLabel.attributedText = title
+    }
+    
+    func updateBackgroundColor(_ color: UIColor) {
+        self.buttonBackgroundColor = color
+        backgroundColor = color
+    }
+}
 
 // MARK: - 추가 옵션버튼뷰(여러개)
+
 class MultiCustomOptionsContainerView: UIView {
     private var buttons: [MultiCustomOptionButtonView] = []
     private var actions: [() -> Void] = []

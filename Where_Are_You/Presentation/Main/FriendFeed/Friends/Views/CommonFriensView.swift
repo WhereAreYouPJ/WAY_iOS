@@ -145,7 +145,7 @@ struct FriendCell: View {
             
             Text(friend.name)
                 .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 17)))
-                .foregroundColor(Color(.color34))
+                .foregroundColor(Color(.black22))
                 .padding(8)
             
             Spacer()

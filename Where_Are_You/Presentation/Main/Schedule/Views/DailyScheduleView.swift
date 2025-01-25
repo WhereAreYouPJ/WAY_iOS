@@ -188,7 +188,7 @@ struct DailyScheduleView: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
                 Text(schedule.title)
-                    .foregroundStyle(Color(.color34))
+                    .foregroundStyle(Color(.black22))
                     .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 16))))
                     .padding(.bottom, LayoutAdapter.shared.scale(value: 4))
                 

@@ -133,7 +133,7 @@ extension EditFeedViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         guard textView.textColor == .color118 else { return }
         textView.text = nil
-        textView.textColor = .color34
+        textView.textColor = .black22
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {

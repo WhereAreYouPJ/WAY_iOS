@@ -75,7 +75,7 @@ class FeedParticipantView: UIView {
                 make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 4))
             }
             
-            let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: participant.userName, textColor: .color34, fontSize: 12)
+            let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: participant.userName, textColor: .black22, fontSize: 12)
             button.addSubview(userNameLabel)
             userNameLabel.snp.makeConstraints { make in
                 make.leading.equalTo(profileImage.snp.trailing).offset(LayoutAdapter.shared.scale(value: 2))

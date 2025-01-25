@@ -93,7 +93,7 @@ class MyPageView: UIView {
     // MARK: - Helpers
     
     func configureViewComponents() {
-        backgroundColor = .color240
+        backgroundColor = .blackF0
         
         addSubview(profileBackgroundView)
         profileBackgroundView.addSubview(profileImageView)
@@ -210,7 +210,7 @@ class MyPageView: UIView {
     
     private func createButton(withTitle title: String) -> UIButton {
         let button = UIButton()
-        let label = CustomLabel(UILabel_NotoSans: .medium, text: title, textColor: .color34, fontSize: 16)
+        let label = CustomLabel(UILabel_NotoSans: .medium, text: title, textColor: .black22, fontSize: 16)
         button.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerY.equalToSuperview()

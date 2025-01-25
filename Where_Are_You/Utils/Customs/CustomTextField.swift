@@ -38,12 +38,12 @@ class CustomTextField: UITextField {
     
     private func setupTextField() {
         adjustsFontForContentSizeCategory = true
-        textColor = .color34
+        textColor = .black22
         font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14)))
         
         // Set placeholder with color
         if let placeholderText = placeholderText {
-            attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: [NSAttributedString.Key.foregroundColor: UIColor.color102])
+            attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black66])
         }
     }
     

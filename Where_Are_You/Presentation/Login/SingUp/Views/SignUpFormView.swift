@@ -25,7 +25,7 @@ class SignUpFormView: UIView {
         return view
     }()
     
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "아래 내용을 작성해주세요", textColor: .color34, fontSize: 22)
+    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "아래 내용을 작성해주세요", textColor: .black22, fontSize: 22)
     
     private let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이름", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
     
@@ -78,7 +78,7 @@ class SignUpFormView: UIView {
     
     let timer: UILabel = {
         let label = UILabel()
-        label.textColor = .warningColor
+        label.textColor = .error
         label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
         label.adjustsFontForContentSizeCategory = true
         return label

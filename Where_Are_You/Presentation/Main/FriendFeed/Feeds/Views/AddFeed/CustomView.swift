@@ -14,7 +14,7 @@ class CustomView: UIView {
     private let separator2 = UIView()
     let imageView = UIImageView()
     
-    let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color102, fontSize: 16)
+    let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .black66, fontSize: 16)
     
     // MARK: - Lifecycle
 
@@ -35,7 +35,7 @@ class CustomView: UIView {
         imageView.image = UIImage(named: image)
         descriptionLabel.text = text
         descriptionLabel.textColor = textColor
-        imageView.tintColor = .color172
+        imageView.tintColor = .blackAC
         separator1.backgroundColor = .color221
         separator2.backgroundColor = .color221
         separator1.isHidden = separatorHidden
