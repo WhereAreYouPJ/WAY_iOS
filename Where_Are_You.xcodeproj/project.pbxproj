@@ -306,6 +306,7 @@
 		D5A20AF42CE4DCD50048281A /* GetFriendResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A20AF32CE4DCD50048281A /* GetFriendResponse.swift */; };
 		D5A91D5B2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */; };
 		D5B3B5392CB3DE63004353F6 /* DailyScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */; };
+		D5B4420A2D45391800BD00BB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5B442092D45391800BD00BB /* GoogleService-Info.plist */; };
 		D5B79A162C5B83CD004EDDF2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D5BA308C2CE744C400958BF5 /* FriendAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308B2CE744C400958BF5 /* FriendAPI.swift */; };
 		D5BA308E2CE744CA00958BF5 /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308D2CE744CA00958BF5 /* FriendService.swift */; };
@@ -662,6 +663,7 @@
 		D5A20AF32CE4DCD50048281A /* GetFriendResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFriendResponse.swift; sourceTree = "<group>"; };
 		D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertSwiftUI.swift; sourceTree = "<group>"; };
 		D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyScheduleViewModel.swift; sourceTree = "<group>"; };
+		D5B442092D45391800BD00BB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D5BA308B2CE744C400958BF5 /* FriendAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendAPI.swift; sourceTree = "<group>"; };
 		D5BA308D2CE744CA00958BF5 /* FriendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendService.swift; sourceTree = "<group>"; };
 		D5BA308F2CE7453900958BF5 /* DeleteFriendBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFriendBody.swift; sourceTree = "<group>"; };
@@ -1325,6 +1327,7 @@
 				9967C1502C56465B00927277 /* LaunchScreen */,
 				99C9B22D2C019E16008D7CBD /* Fonts */,
 				9953584D2C00C558005BF799 /* Info.plist */,
+				D5B442092D45391800BD00BB /* GoogleService-Info.plist */,
 				995358482C00C558005BF799 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -1928,6 +1931,7 @@
 				99C9B23F2C01ACBE008D7CBD /* Ttangsbudaejjigae-Light.otf in Resources */,
 				99C9B23D2C01ACBE008D7CBD /* Ttangsbudaejjigae-Medium.otf in Resources */,
 				995358492C00C558005BF799 /* Assets.xcassets in Resources */,
+				D5B4420A2D45391800BD00BB /* GoogleService-Info.plist in Resources */,
 				D549C8452C6366A400DDAD5A /* .gitattributes in Resources */,
 				D59ACC9C2CFF2DF900B3F877 /* MyLocation.gpx in Resources */,
 				9953584C2C00C558005BF799 /* Base in Resources */,
