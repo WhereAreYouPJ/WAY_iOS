@@ -90,7 +90,7 @@ struct FriendDetailView: View {
                     .frame(width: LayoutAdapter.shared.scale(value: 100), height: LayoutAdapter.shared.scale(value: 100))
                     .clipShape(RoundedRectangle(cornerRadius: 36))
                 
-                Text((viewModel.isMyProfile ? UserDefaultsManager.shared.getUserName() : viewModel.friend?.name) ?? "유저 이름")
+                Text((viewModel.isMyProfile ? UserDefaultsManager.shared.getUserName() : viewModel.friend?.name) ?? "이름")
                     .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: 20)))
                     .foregroundStyle(Color.white)
                     .padding(.top, LayoutAdapter.shared.scale(value: 10))

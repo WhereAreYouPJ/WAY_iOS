@@ -12,4 +12,5 @@ struct LoginResponse: Codable {
     let refreshToken: String
     let memberSeq: Int
     let memberCode: String
+    let profileImage: String
 }

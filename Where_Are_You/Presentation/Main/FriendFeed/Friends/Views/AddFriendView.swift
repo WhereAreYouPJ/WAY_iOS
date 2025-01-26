@@ -33,9 +33,11 @@ struct AddFriendView: View { // TODO: 친구 신청 완료시 토스트 팝업
                 Spacer()
                 
                 if viewModel.searchedMember != nil {
-                    BottomButtonSwiftUIView(title: "친구 신청하기") {
+                    var background = viewModel.disabledButton ? Color(.color171) : Color(.brandColor)
+                    BottomButtonSwiftUIView(title: "친구 신청하기", background: background) {
                         viewModel.postFriendRequest()
                     }
+                    .disabled(viewModel.disabledButton)
                 }
             }
             .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))

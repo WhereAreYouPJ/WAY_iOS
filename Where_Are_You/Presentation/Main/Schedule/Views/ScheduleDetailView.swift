@@ -8,19 +8,47 @@
 import SwiftUI
 
 struct ScheduleDetailView: View {
-    @ObservedObject var viewModel: ScheduleDetailViewModel
+    @StateObject var viewModel: ScheduleDetailViewModel
+    @StateObject var createViewModel: CreateScheduleViewModel
     @Environment(\.dismiss) private var dismiss
     @State private var path = NavigationPath()
     @State private var showFriendsLocation = false // MARK: 친구 위치 실시간 확인 테스트용
     
     var schedule: Schedule
     
-    init(schedule: Schedule) {
+    init(
+        schedule: Schedule,
+        viewModel: ScheduleDetailViewModel? = nil,
+        createViewModel: CreateScheduleViewModel? = nil
+    ) {
         self.schedule = schedule
+        
         let scheduleRepository = ScheduleRepository(scheduleService: ScheduleService())
         let getScheduleUseCase = GetScheduleUseCaseImpl(scheduleRepository: scheduleRepository)
+        let putScheduleUseCase = PutScheduleUseCaseImpl(scheduleRepository: scheduleRepository)
         
-        _viewModel = ObservedObject(wrappedValue: ScheduleDetailViewModel(schedule: schedule, getScheduleUseCase: getScheduleUseCase))
+        let defaultViewModel = ScheduleDetailViewModel(
+            schedule: schedule,
+            getScheduleUseCase: getScheduleUseCase,
+            putScheduleUseCase: putScheduleUseCase
+        )
+        
+        _viewModel = StateObject(wrappedValue: ScheduleDetailViewModel(schedule: schedule, getScheduleUseCase: getScheduleUseCase, putScheduleUseCase: putScheduleUseCase))
+        
+        let postScheduleUseCase = PostScheduleUseCaseImpl(scheduleRepository: scheduleRepository)
+        
+        let locationRepository = LocationRepository(locationService: LocationService())
+        let getFavoriteLocationUseCase = GetLocationUseCaseImpl(locationRepository: locationRepository)
+        
+        let geocodeLocationUseCase = GeocodeLocationUseCaseImpl()
+        
+        let defaultCreateViewModel = CreateScheduleViewModel(
+            postScheduleUseCase: postScheduleUseCase,
+            getFavoriteLocationUseCase: getFavoriteLocationUseCase,
+            geocodeLocationUseCase: geocodeLocationUseCase
+        )
+        
+        _createViewModel = StateObject(wrappedValue: createViewModel ?? defaultCreateViewModel)
     }
     
     var body: some View {
@@ -67,16 +95,16 @@ struct ScheduleDetailView: View {
                 //                )
                 //                .disabled(!viewModel.isEditable)
                 
-                AddPlaceView(viewModel: viewModel.createViewModel, path: $path)
+                AddPlaceView(viewModel: createViewModel, path: $path)
                     .disabled(!viewModel.isEditable)
                 
-                AddFriendsView(selectedFriends: $viewModel.createViewModel.selectedFriends, path: $path)
+                AddFriendsView(selectedFriends: $createViewModel.selectedFriends, path: $path)
                     .disabled(!viewModel.isEditable)
                 
-                SetColorView(color: $viewModel.createViewModel.color)
+                SetColorView(color: $createViewModel.color)
                     .disabled(!viewModel.isEditable)
                 
-                MemoView(memo: $viewModel.createViewModel.memo)
+                MemoView(memo: $createViewModel.memo)
                     .disabled(!viewModel.isEditable)
                 
                 // MARK: 친구 위치 실시간 확인 테스트용
@@ -115,13 +143,13 @@ struct ScheduleDetailView: View {
             .navigationDestination(for: Route.self) { route in
                 switch route {
                 case .searchPlace:
-                    SearchLocationView(selectedLocation: $viewModel.createViewModel.place, path: $path)
+                    SearchLocationView(selectedLocation: $createViewModel.place, path: $path)
                 case .searchFriends:
-                    SearchFriendsView(selectedFriends: $viewModel.createViewModel.selectedFriends)
+                    SearchFriendsView(selectedFriends: $createViewModel.selectedFriends)
                 case .confirmLocation:
-                    ConfirmLocationView(location: $viewModel.createViewModel.place, path: $path)
+                    ConfirmLocationView(location: $createViewModel.place, path: $path)
                         .onDisappear {
-                            viewModel.createViewModel.getFavoriteLocation()
+                            createViewModel.getFavoriteLocation()
                         }
                     
                 }
@@ -129,7 +157,7 @@ struct ScheduleDetailView: View {
         }
         .onAppear {
             viewModel.getScheduleDetail()
-            viewModel.createViewModel.getFavoriteLocation()
+            createViewModel.getFavoriteLocation()
         }
     }
 }

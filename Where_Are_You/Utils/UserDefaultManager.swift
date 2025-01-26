@@ -61,8 +61,8 @@ class UserDefaultsManager {
     
     // MARK: - UserName
     
-    func saveUserName(_ userName: String) {
-        UserDefaults.standard.set(userName, forKey: userName)
+    func saveUserName(_ name: String) {
+        UserDefaults.standard.set(name, forKey: userName)
     }
     
     func getUserName() -> String? {

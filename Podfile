@@ -13,7 +13,7 @@ target 'Where_Are_You' do
 	pod 'KakaoSDK'
 	pod 'KakaoMapsSDK'
 	pod 'Kingfisher', '~> 7.0'
-
+	pod 'FirebaseAnalytics'
 
 	target 'Where_Are_You_Tests' do
 	  inherit! :search_paths

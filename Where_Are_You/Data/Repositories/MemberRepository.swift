@@ -103,6 +103,7 @@ class MemberRepository: MemberRepositoryProtocol {
                 UserDefaultsManager.shared.saveRefreshToken(loginData.refreshToken)
                 UserDefaultsManager.shared.saveMemberSeq(loginData.memberSeq)
                 UserDefaultsManager.shared.saveMemberCode(loginData.memberCode)
+                UserDefaultsManager.shared.saveProfileImage(loginData.profileImage)
                 UserDefaultsManager.shared.saveIsLoggedIn(true)
                 completion(.success(()))
             case .failure(let error):
@@ -138,7 +139,9 @@ class MemberRepository: MemberRepositoryProtocol {
             switch result {
             case .success(let response):
                 let memberDetailData = response.data
+                UserDefaultsManager.shared.saveUserName(memberDetailData.userName)
                 UserDefaultsManager.shared.saveProfileImage(memberDetailData.profileImage)
+                print("saving userName(\(String(describing: UserDefaultsManager.shared.getUserName()))) and profileImage succeed!")
                 completion(.success(response))
             case .failure(let error):
                 completion(.failure(error))
