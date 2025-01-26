@@ -9,6 +9,22 @@ import Foundation
 import UIKit
 
 // MARK: - CustomLabel
+class StandardLabel: UILabel {
+    init(UIFont text: NSAttributedString, textColor: UIColor) {
+        super.init(frame: .zero)
+        // NSAttributedString에 새로운 텍스트 컬러 적용
+        let mutableAttributedString = NSMutableAttributedString(attributedString: text)
+        let fullRange = NSRange(location: 0, length: text.length)
+        mutableAttributedString.addAttribute(.foregroundColor, value: textColor, range: fullRange)
+        
+        self.attributedText = mutableAttributedString
+        self.numberOfLines = 0
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
 
 // inputContainerLabel
 class CustomLabel: UILabel {

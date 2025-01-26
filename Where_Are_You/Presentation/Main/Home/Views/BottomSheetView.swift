@@ -31,14 +31,30 @@ class BottomSheetView: UIView {
     
     let dateTitle = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .brandDark, fontSize: 22)
     
+    let scrollView = UIScrollView()
+    
     let tableView = UITableView()
+    
+    lazy var contentStackView: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [sheetHeaderView, scrollView])
+        sv.axis = .vertical
+        return sv
+    }()
+    
+    lazy var sheetStackView: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [sheetHeaderButton, contentStackView])
+        sv.axis = .vertical
+        sv.spacing = 0
+        return sv
+    }()
     
     // MARK: - Initializer
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+        
+        dateTitle.text = formattedDate()
         sheetHeaderView.isHidden = true
-        tableView.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -47,9 +63,19 @@ class BottomSheetView: UIView {
     
     // MARK: - Helpers
     func showExpandView(isExpand: Bool) {
+        contentStackView.isHidden = !isExpand
         sheetHeaderView.isHidden = !isExpand
         tableView.isHidden = !isExpand
-        dateTitle.isHidden = !isExpand
+        
+        sheetStackView.snp.remakeConstraints { make in
+            make.edges.equalToSuperview()
+            make.height.equalTo(isExpand ? LayoutAdapter.shared.scale(value: 420) : LayoutAdapter.shared.scale(value: 30))
+        }
+        
+        // 레이아웃 업데이트
+        UIView.animate(withDuration: 0.3) {
+            self.layoutIfNeeded()
+        }
     }
     
     private func formattedDate() -> String {
@@ -64,14 +90,19 @@ class BottomSheetView: UIView {
         layer.cornerRadius = 15
         layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         clipsToBounds = true
-        dateTitle.text = formattedDate()
         
+//        addSubview(dimView)
+        addSubview(sheetStackView)
         addSubview(sheetHeaderButton)
         sheetHeaderButton.addSubview(grabberView)
-        addSubview(sheetHeaderView)
+        addSubview(contentStackView)
+        scrollView.addSubview(tableView)
         sheetHeaderView.addSubview(dateTitle)
-        addSubview(tableView)
-
+        
+        sheetStackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
         sheetHeaderButton.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview()
@@ -84,19 +115,26 @@ class BottomSheetView: UIView {
             make.height.equalTo(4)
         }
         
-        sheetHeaderView.snp.makeConstraints { make in
+        contentStackView.snp.makeConstraints { make in
             make.top.equalTo(sheetHeaderButton.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        sheetHeaderView.snp.makeConstraints { make in
             make.height.equalTo(LayoutAdapter.shared.scale(value: 49))
         }
         
         dateTitle.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 8))
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 28))
         }
+
         
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(sheetHeaderView.snp.bottom)
-            make.leading.trailing.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
         }
+//        tableView.snp.makeConstraints { make in
+//            make.leading.trailing.bottom.equalToSuperview()
+//        }
     }
 }
