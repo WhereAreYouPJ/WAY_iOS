@@ -15,7 +15,6 @@ class MainHomeView: UIView {
     let reminderLabel = CustomLabel(UILabel_NotoSans: .medium, text: "함께한 추억을 확인해보세요!", textColor: .black22, fontSize: LayoutAdapter.shared.scale(value: 20))
     let homeFeedView = HomeFeedView()
     let bottomSheetView = BottomSheetView()
-    let backgroundDimView = UIView() // 회색 배경
     
     // MARK: - Lifecycle
     
@@ -34,22 +33,16 @@ class MainHomeView: UIView {
     private func configureViewComponents() {
         backgroundColor = .white
         
-        backgroundDimView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        backgroundDimView.isHidden = true // 기본은 숨김
-        addSubview(backgroundDimView)
-        
         addSubview(bannerView)
         addSubview(dDayView)
         addSubview(reminderLabel)
         addSubview(homeFeedView)
+        
+//        addSubview(dimView)
         addSubview(bottomSheetView)
     }
     
     private func setupConstraints() {
-        backgroundDimView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
         bannerView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(10)
             make.leading.trailing.equalToSuperview().inset(15)
@@ -73,9 +66,12 @@ class MainHomeView: UIView {
             make.height.equalTo(LayoutAdapter.shared.scale(value: 272))
         }
         
+//        dimView.snp.makeConstraints { make in
+//            make.edges.equalToSuperview()
+//        }
+        
         bottomSheetView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
-//            make.height.equalTo(LayoutAdapter.shared.scale(value: 30))
         }
     }
 }

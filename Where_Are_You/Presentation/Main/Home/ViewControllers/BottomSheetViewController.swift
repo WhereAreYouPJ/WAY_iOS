@@ -1,5 +1,5 @@
 //
-//  DailyScheduleViewController.swift
+//  BottomSheetViewController.swift
 //  Where_Are_You
 //
 //  Created by 오정석 on 21/1/2025.
@@ -12,9 +12,8 @@ class BottomSheetViewController: UIViewController {
     private var isExpanded = false
     
     let bottomSheetView = BottomSheetView()
-
     let viewModel: BottomSheetViewModel
-    
+
     var schedules: [Schedule] = [] {
         didSet {
             bottomSheetView.tableView.reloadData()
@@ -47,6 +46,7 @@ class BottomSheetViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.schedules = self?.viewModel.getSchedules() ?? []
                 self?.bottomSheetView.tableView.reloadData()
+                self?.setupUI()
             }
         }
     }
@@ -60,12 +60,26 @@ class BottomSheetViewController: UIViewController {
         bottomSheetView.tableView.separatorStyle = .none
     }
     
+    private func setupUI() {
+        if viewModel.getSchedules().isEmpty {
+            bottomSheetView.sheetHeaderButton.isHidden = true
+        } else {
+            bottomSheetView.sheetHeaderButton.isHidden = false
+        }
+    }
+    
     private func setupGesture() {
         bottomSheetView.sheetHeaderButton.addTarget(self, action: #selector(headerButtonTapped), for: .touchUpInside)
-    }
+      }
     
     @objc func headerButtonTapped() {
         isExpanded.toggle()
+        bottomSheetView.showExpandView(isExpand: isExpanded)
+        bottomSheetView.tableView.reloadData()
+    }
+    
+    @objc func dimViewTapped() {
+        isExpanded = false
         bottomSheetView.showExpandView(isExpand: isExpanded)
     }
 }
