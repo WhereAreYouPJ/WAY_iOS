@@ -117,7 +117,9 @@ class FeedsTableViewCell: UITableViewCell {
         resetUI()
         
         descriptionLabel.isHidden = (feed.content == nil)
-        descriptionLabel.text = feed.content
+//        descriptionLabel.text = feed.content
+        guard let feedcontent = feed.content else { return }
+        descriptionLabel.attributedText = UIFont.CustomFont.bodyP4(text: feedcontent)
         let readmoreFont = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
         let readmoreFontColor = UIColor.color153
         descriptionLabel.numberOfLines = isExpanded ? 0 : 3

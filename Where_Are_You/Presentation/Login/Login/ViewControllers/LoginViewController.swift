@@ -33,9 +33,9 @@ class LoginViewController: UIViewController {
         loginView.kakaoLogin.addTarget(self, action: #selector(kakaoLoginTapped), for: .touchUpInside)
         loginView.appleLogin.addTarget(self, action: #selector(handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
         loginView.accountLogin.addTarget(self, action: #selector(accountLoginTapped), for: .touchUpInside)
-        loginView.signupButton.button.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
-        loginView.findAccountButton.button.addTarget(self, action: #selector(findAccountButtonTapped), for: .touchUpInside)
-        loginView.inquiryButton.button.addTarget(self, action: #selector(inquiryButtonTapped), for: .touchUpInside)
+        loginView.signupButton.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
+        loginView.findAccountButton.addTarget(self, action: #selector(findAccountButtonTapped), for: .touchUpInside)
+        loginView.inquiryButton.addTarget(self, action: #selector(inquiryButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Selectors

@@ -166,7 +166,7 @@ extension UIFont {
             )
         }
         
-        static func button1(text: String) -> NSAttributedString {
+        static func button18(text: String) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Paperlogy-6SemiBold", size: 18)!,
@@ -175,7 +175,7 @@ extension UIFont {
             )
         }
         
-        static func button2(text: String) -> NSAttributedString {
+        static func button16(text: String) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Paperlogy-6SemiBold", size: 16)!,
@@ -184,7 +184,7 @@ extension UIFont {
             )
         }
         
-        static func button3(text: String) -> NSAttributedString {
+        static func button14(text: String) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Paperlogy-6SemiBold", size: 14)!,
@@ -202,14 +202,16 @@ extension UIFont {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.maximumLineHeight = font.lineHeight * lineHeight
             paragraphStyle.minimumLineHeight = font.lineHeight * lineHeight
-
             // https://sujinnaljin.medium.com/swift-label%EC%9D%98-line-height-%EC%84%A4%EC%A0%95-%EB%B0%8F-%EA%B0%80%EC%9A%B4%EB%8D%B0-%EC%A0%95%EB%A0%AC-962f7c6e7512여기서 LineHeight설정시 아래에 깔리는 문제 해결
+            let kernValue = letterSpacing * font.pointSize
+            let letterSpacingPt = letterSpacing / UIScreen.main.scale // px -> pt 변환
+
             return NSAttributedString(
                 string: text,
                 attributes: [
                     .font: font,
                     .paragraphStyle: paragraphStyle,
-                    .kern: letterSpacing,
+                    .kern: letterSpacingPt,
                     .baselineOffset: (font.lineHeight * lineHeight - font.lineHeight) / 2
                 ]
             )

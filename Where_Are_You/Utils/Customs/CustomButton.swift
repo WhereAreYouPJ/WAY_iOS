@@ -8,6 +8,21 @@
 import UIKit
 import SnapKit
 
+class StandardButton: UIButton {
+    init(text: NSAttributedString, textColor: UIColor) {
+        super.init(frame: .zero)
+        let mutableAttributedString = NSMutableAttributedString(attributedString: text)
+        let fullRange = NSRange(location: 0, length: text.length)
+        mutableAttributedString.addAttribute(.foregroundColor, value: textColor, range: fullRange)
+        
+        self.setAttributedTitle(mutableAttributedString, for: .normal)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 // MARK: - Box Button
 
 class TitleButton: UIButton {
@@ -358,7 +373,7 @@ class CustomButtonView: UIView {
     func setupUI() {
         addSubview(button)
         button.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 4, left: 6, bottom: 4, right: 6))
+            make.edges.equalToSuperview()
         }
     }
 }
