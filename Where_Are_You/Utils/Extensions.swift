@@ -94,102 +94,113 @@ extension UIColor {
 
 extension UIFont {
     struct CustomFont {
-        static func titleH1(text: String) -> NSAttributedString {
+        static func titleH1(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Paperlogy-6SemiBold", size: 22)!,
                 lineHeight: 1.3,
-                letterSpacing: -2
+                letterSpacing: -2,
+                textColor: textColor
             )
         }
         
-        static func titleH2(text: String) -> NSAttributedString {
+        static func titleH2(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Paperlogy-6SemiBold", size: 20)!,
                 lineHeight: 1.3,
-                letterSpacing: -2
+                letterSpacing: -2,
+                textColor: textColor
             )
         }
         
-        static func titleH3(text: String) -> NSAttributedString {
+        static func titleH3(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Paperlogy-6SemiBold", size: 18)!,
                 lineHeight: 1.3,
-                letterSpacing: -1
+                letterSpacing: -1,
+                textColor: textColor
             )
         }
         
-        static func bodyP1(text: String) -> NSAttributedString {
+        static func bodyP1(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Pretendard-Medium", size: 20)!,
                 lineHeight: 1.4,
-                letterSpacing: -1
+                letterSpacing: -1,
+                textColor: textColor
             )
         }
         
-        static func bodyP2(text: String) -> NSAttributedString {
+        static func bodyP2(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Pretendard-SemiBold", size: 18)!,
                 lineHeight: 1.4,
-                letterSpacing: 0
+                letterSpacing: 0,
+                textColor: textColor
             )
         }
         
-        static func bodyP3(text: String) -> NSAttributedString {
+        static func bodyP3(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Pretendard-Medium", size: 16)!,
                 lineHeight: 1.4,
-                letterSpacing: -0.5
+                letterSpacing: -0.5,
+                textColor: textColor
             )
         }
         
-        static func bodyP4(text: String) -> NSAttributedString {
+        static func bodyP4(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Pretendard-Medium", size: 14)!,
                 lineHeight: 1.4,
-                letterSpacing: -0.5
+                letterSpacing: -0.5,
+                textColor: textColor
             )
         }
         
-        static func bodyP5(text: String) -> NSAttributedString {
+        static func bodyP5(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Pretendard-Medium", size: 12)!,
                 lineHeight: 1.3,
-                letterSpacing: -1.25
+                letterSpacing: -1.25,
+                textColor: textColor
             )
         }
         
-        static func button18(text: String) -> NSAttributedString {
+        static func button18(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Paperlogy-6SemiBold", size: 18)!,
                 lineHeight: 1.3,
-                letterSpacing: 1.25
+                letterSpacing: 1.25,
+                textColor: textColor
             )
         }
         
-        static func button16(text: String) -> NSAttributedString {
+        static func button16(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Paperlogy-6SemiBold", size: 16)!,
                 lineHeight: 1.3,
-                letterSpacing: 4
+                letterSpacing: 4,
+                textColor: textColor
             )
         }
         
-        static func button14(text: String) -> NSAttributedString {
+        static func button14(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Paperlogy-6SemiBold", size: 14)!,
                 lineHeight: 1.3,
-                letterSpacing: -0.5
+                letterSpacing: -0.5,
+                textColor: textColor
             )
         }
         
@@ -197,13 +208,13 @@ extension UIFont {
             text: String,
             font: UIFont,
             lineHeight: CGFloat,
-            letterSpacing: CGFloat
+            letterSpacing: CGFloat,
+            textColor: UIColor
         ) -> NSAttributedString {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.maximumLineHeight = font.lineHeight * lineHeight
             paragraphStyle.minimumLineHeight = font.lineHeight * lineHeight
             // https://sujinnaljin.medium.com/swift-label%EC%9D%98-line-height-%EC%84%A4%EC%A0%95-%EB%B0%8F-%EA%B0%80%EC%9A%B4%EB%8D%B0-%EC%A0%95%EB%A0%AC-962f7c6e7512여기서 LineHeight설정시 아래에 깔리는 문제 해결
-            let kernValue = letterSpacing * font.pointSize
             let letterSpacingPt = letterSpacing / UIScreen.main.scale // px -> pt 변환
 
             return NSAttributedString(
@@ -212,6 +223,7 @@ extension UIFont {
                     .font: font,
                     .paragraphStyle: paragraphStyle,
                     .kern: letterSpacingPt,
+                    .foregroundColor: textColor,
                     .baselineOffset: (font.lineHeight * lineHeight - font.lineHeight) / 2
                 ]
             )

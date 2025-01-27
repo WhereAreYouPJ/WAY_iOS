@@ -13,7 +13,8 @@ class CheckPasswordView: UIView {
     
     private let passwordTitle = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: 12)
 
-    let passwordTextField = Utilities.inputContainerTextField(withPlaceholder: "비밀번호") // 로그인에서 참고하기
+    let passwordTextField = CustomTextField(placeholder: "비밀번호")
+//    Utilities.inputContainerTextField(withPlaceholder: "비밀번호") // 로그인에서 참고하기
     
     let passwordErrorLabel = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호가 맞지 않습니다.", textColor: .error, fontSize: 12)
     

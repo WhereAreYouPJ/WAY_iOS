@@ -10,14 +10,10 @@ import UIKit
 
 // MARK: - CustomLabel
 class StandardLabel: UILabel {
-    init(UIFont text: NSAttributedString, textColor: UIColor) {
+    init(UIFont text: NSAttributedString) {
         super.init(frame: .zero)
-        // NSAttributedString에 새로운 텍스트 컬러 적용
-        let mutableAttributedString = NSMutableAttributedString(attributedString: text)
-        let fullRange = NSRange(location: 0, length: text.length)
-        mutableAttributedString.addAttribute(.foregroundColor, value: textColor, range: fullRange)
         
-        self.attributedText = mutableAttributedString
+        self.attributedText = text
         self.numberOfLines = 0
     }
     

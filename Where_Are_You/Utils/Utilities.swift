@@ -41,16 +41,6 @@ class Utilities {
         viewController.navigationItem.title = title
     }
     
-    // TextField with layer and placeholder
-    static func inputContainerTextField(withPlaceholder placeholder: String) -> CustomTextField {
-        let tf = CustomTextField(placeholder: placeholder)
-        tf.adjustsFontForContentSizeCategory = true
-        tf.textColor = .black22
-        tf.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14)))
-        tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black66])
-        return tf
-    }
-    
     // TextField with placeholder
     static func textField(withPlaceholder placeholder: String, fontSize: CGFloat) -> UITextField {
         let tf = UITextField()
@@ -65,9 +55,18 @@ class Utilities {
     static func attributedButton(_ firstPart: String, _ secondPart: String) -> UIButton {
         let button = UIButton(type: .system)
         
-        let attributedTitle = NSMutableAttributedString(string: firstPart, attributes: [NSAttributedString.Key.font: UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14)), NSAttributedString.Key.foregroundColor: UIColor.color153])
+        // CustomFont 사용
+        let firstAttributedString = UIFont.CustomFont.bodyP4(text: firstPart, textColor: .blackAC)
+        let secondAttributedString = UIFont.CustomFont.bodyP4(text: secondPart, textColor: .black66)
         
-        attributedTitle.append(NSAttributedString(string: secondPart, attributes: [NSAttributedString.Key.font: UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14)), NSAttributedString.Key.foregroundColor: UIColor.black66]))
+        // NSAttributedString을 NSMutableAttributedString으로 변환 후 조합
+        let attributedTitle = NSMutableAttributedString(attributedString: firstAttributedString)
+        attributedTitle.append(NSAttributedString(attributedString: secondAttributedString))
+        
+        
+//        let attributedTitle = NSMutableAttributedString(string: firstPart, attributes: [NSAttributedString.Key.font: UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14)), NSAttributedString.Key.foregroundColor: UIColor.color153])
+//        
+//        attributedTitle.append(NSAttributedString(string: secondPart, attributes: [NSAttributedString.Key.font: UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14)), NSAttributedString.Key.foregroundColor: UIColor.black66]))
         
         button.setAttributedTitle(attributedTitle, for: .normal)
         button.titleLabel?.adjustsFontForContentSizeCategory = true

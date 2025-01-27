@@ -17,27 +17,48 @@ class LoginView: UIView {
         return imageView
     }()
     
-    private let subtitleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "위치기반 일정관리 플랫폼"), textColor: .black22)
+    private let subtitleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "위치기반 일정관리 플랫폼", textColor: .black22))
     
     let kakaoLogin: UIButton = {
         let button = UIButton()
-        let label = StandardLabel(UIFont: UIFont.CustomFont.button16(text: "카카오로 시작하기"), textColor: .black22)
-        let iconImage = UIImage(systemName: "message.fill")
-        button.setImage(iconImage, for: .normal)
-        button.setAttributedTitle(UIFont.CustomFont.button16(text: "카카오로 시작하기"), for: .normal)
+        var configuration = UIButton.Configuration.plain()
+        
+        configuration.image = UIImage(named: "kakao")
+        configuration.imagePlacement = .leading
+        configuration.imagePadding = 10
+        
+        let nsAttributedString = UIFont.CustomFont.button16(text: "카카오로 시작하기", textColor: .black22)
+        configuration.attributedTitle = AttributedString(nsAttributedString)
+        configuration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10)
+
+        button.configuration = configuration
         button.backgroundColor = .secondaryNormal
         button.layer.cornerRadius = 8
+        button.clipsToBounds = true
         return button
     }()
     
-    let appleLogin: ASAuthorizationAppleIDButton = {
-        let button  = ASAuthorizationAppleIDButton(type: .default, style: .black)
+    let appleLogin: UIButton = {
+        let button = UIButton()
+        var configuration = UIButton.Configuration.plain()
         
-        button.cornerRadius = 8
+        configuration.image = UIImage(systemName: "apple.logo")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+        
+        configuration.imagePlacement = .leading
+        configuration.imagePadding = 10
+
+        let nsAttributedString = UIFont.CustomFont.button16(text: "Apple로 로그인", textColor: .white)
+        configuration.attributedTitle = AttributedString(nsAttributedString)
+        configuration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10)
+
+        button.configuration = configuration
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 8
+        button.clipsToBounds = true
         return button
     }()
     
-    let accountLogin = TitleButton(title: UIFont.CustomFont.button14(text: "이메일 로그인"), backgroundColor: .white, titleColor: .brandDark, borderColor: UIColor.brandMain.cgColor, cornerRadius: 8)
+    let accountLogin = TitleButton(title: UIFont.CustomFont.button14(text: "이메일 로그인", textColor: .brandDark), backgroundColor: .white, borderColor: UIColor.brandMain.cgColor, cornerRadius: 8)
 
     private lazy var loginStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [kakaoLogin, appleLogin, accountLogin])
@@ -47,11 +68,11 @@ class LoginView: UIView {
         return stackView
     }()
     
-    let separatorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "또는"), textColor: .black66)
+    let separatorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "또는", textColor: .black66))
     
-    let signupButton = StandardButton(text: UIFont.CustomFont.bodyP4(text: "회원가입"), textColor: .black66)
-    let findAccountButton = StandardButton(text: UIFont.CustomFont.bodyP4(text: "계정찾기"), textColor: .black66)
-    let inquiryButton = StandardButton(text: UIFont.CustomFont.bodyP4(text: "문의하기"), textColor: .black66)
+    let signupButton = StandardButton(text: UIFont.CustomFont.bodyP4(text: "회원가입", textColor: .black66))
+    let findAccountButton = StandardButton(text: UIFont.CustomFont.bodyP4(text: "계정찾기", textColor: .black66))
+    let inquiryButton = StandardButton(text: UIFont.CustomFont.bodyP4(text: "문의하기", textColor: .black66))
    
     private lazy var buttonStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [signupButton, findAccountButton, inquiryButton])

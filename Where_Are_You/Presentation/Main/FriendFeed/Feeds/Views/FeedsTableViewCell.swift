@@ -119,7 +119,7 @@ class FeedsTableViewCell: UITableViewCell {
         descriptionLabel.isHidden = (feed.content == nil)
 //        descriptionLabel.text = feed.content
         guard let feedcontent = feed.content else { return }
-        descriptionLabel.attributedText = UIFont.CustomFont.bodyP4(text: feedcontent)
+        descriptionLabel.attributedText = UIFont.CustomFont.bodyP4(text: feedcontent, textColor: .black66)
         let readmoreFont = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
         let readmoreFontColor = UIColor.color153
         descriptionLabel.numberOfLines = isExpanded ? 0 : 3
@@ -137,13 +137,7 @@ class FeedsTableViewCell: UITableViewCell {
         let feedImageInfos = feed.feedImageInfos ?? []
         self.imageUrls = feedImageInfos.map { $0.feedImageURL }
         feedImagesView.collectionView.reloadData()
-        if imageUrls.count <= 1 {
-            feedImagesView.pageNumberLabel.isHidden = true
-        } else {
-            feedImagesView.pageNumberLabel.isHidden = false
-            feedImagesView.pageNumberLabel.text = "1/\(imageUrls.count)"
-        }
-        
+        feedImagesView.pageNumberLabel.text = "1/\(imageUrls.count)"
         self.feed = feed
         profileImageURL = feed.profileImageURL
         feedSeq = feed.feedSeq

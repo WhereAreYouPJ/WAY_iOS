@@ -106,6 +106,6 @@ extension BottomSheetViewController: UITableViewDataSource, UITableViewDelegate 
 
 extension BottomSheetViewController: DailyScheduleTableViewCellDelegate {
     func didTapCheckLocationButton(schedule: Schedule) {
-        
+        let notificationView = NotificationView()
     }
 }
