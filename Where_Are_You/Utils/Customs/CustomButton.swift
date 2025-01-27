@@ -9,13 +9,9 @@ import UIKit
 import SnapKit
 
 class StandardButton: UIButton {
-    init(text: NSAttributedString, textColor: UIColor) {
+    init(text: NSAttributedString) {
         super.init(frame: .zero)
-        let mutableAttributedString = NSMutableAttributedString(attributedString: text)
-        let fullRange = NSRange(location: 0, length: text.length)
-        mutableAttributedString.addAttribute(.foregroundColor, value: textColor, range: fullRange)
-        
-        self.setAttributedTitle(mutableAttributedString, for: .normal)
+        self.setAttributedTitle(text, for: .normal)
     }
     
     required init?(coder: NSCoder) {
@@ -30,15 +26,13 @@ class TitleButton: UIButton {
     // MARK: - Properties
     private var buttonTitle: NSAttributedString
     private var buttonBackgroundColor: UIColor
-    private var buttonTitleColor: UIColor
     private var borderColor: CGColor?
     private var cornerRadius: CGFloat
     
     // MARK: - Initializer
-    init(title: NSAttributedString, backgroundColor: UIColor, titleColor: UIColor, borderColor: CGColor?, cornerRadius: CGFloat?) {
+    init(title: NSAttributedString, backgroundColor: UIColor, borderColor: CGColor?, cornerRadius: CGFloat?) {
         self.buttonTitle = title
         self.buttonBackgroundColor = backgroundColor
-        self.buttonTitleColor = titleColor
         self.borderColor = borderColor
         self.cornerRadius = cornerRadius ?? 0
         super.init(frame: .zero)
@@ -52,10 +46,11 @@ class TitleButton: UIButton {
     // MARK: - Setup Button
     private func setupButton() {
         backgroundColor = buttonBackgroundColor
-        layer.borderColor = borderColor
-        layer.borderWidth = 1.5
+        if borderColor != nil {
+            layer.borderColor = borderColor
+            layer.borderWidth = 1.5
+        }
         setAttributedTitle(buttonTitle, for: .normal)
-        setTitleColor(buttonTitleColor, for: .normal)
 
         // 버튼 모서리 둥글게
         layer.cornerRadius = cornerRadius

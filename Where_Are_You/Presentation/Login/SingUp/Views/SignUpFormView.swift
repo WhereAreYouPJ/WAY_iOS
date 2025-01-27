@@ -29,7 +29,8 @@ class SignUpFormView: UIView {
     
     private let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이름", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
     
-    let userNameTextField = Utilities.inputContainerTextField(withPlaceholder: "이름")
+    let userNameTextField = CustomTextField(placeholder: "이름")
+//    Utilities.inputContainerTextField(withPlaceholder: "이름")
     
     let userNameErrorLabel: UILabel = {
         let label = UILabel()
@@ -48,7 +49,8 @@ class SignUpFormView: UIView {
     
     private let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이메일", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
     
-    let emailTextField = Utilities.inputContainerTextField(withPlaceholder: "이메일")
+    let emailTextField = CustomTextField(placeholder: "이메일")
+//    Utilities.inputContainerTextField(withPlaceholder: "이메일")
     
     let emailCheckButton = CustomButton(title: "인증요청", backgroundColor: .brandColor, titleColor: .white, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
     
@@ -74,7 +76,8 @@ class SignUpFormView: UIView {
         return stackView
     }()
     
-    let authCodeTextField = Utilities.inputContainerTextField(withPlaceholder: "인증코드")
+    let authCodeTextField = CustomTextField(placeholder: "인증코드")
+//                                                Utilities.inputContainerTextField(withPlaceholder: "인증코드")
     
     let timer: UILabel = {
         let label = UILabel()
@@ -110,7 +113,8 @@ class SignUpFormView: UIView {
     
     let passwordLabel = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
     
-    let passwordTextField = Utilities.inputContainerTextField(withPlaceholder: "비밀번호")
+    let passwordTextField = CustomTextField(placeholder: "비밀번호")
+//    Utilities.inputContainerTextField(withPlaceholder: "비밀번호")
     
     let passwordErrorLabel: UILabel = {
         let label = UILabel()
@@ -120,7 +124,8 @@ class SignUpFormView: UIView {
         return label
     }()
     
-    let checkPasswordTextField = Utilities.inputContainerTextField(withPlaceholder: "비밀번호 확인")
+    let checkPasswordTextField = CustomTextField(placeholder: "비밀번호 확인")
+//    Utilities.inputContainerTextField(withPlaceholder: "비밀번호 확인")
     
     let checkPasswordErrorLabel: UILabel = {
         let label = UILabel()

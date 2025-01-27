@@ -160,12 +160,6 @@ class LocationBookmarkViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
     }
     
-//    private func setupOutsideTap() {
-//        view.hideWhenTappedOutside(ignoreViews: [locationBookmarkView.editingButton]) {
-//            self.locationBookmarkView.editingButton.isHidden = true
-//        }
-//    }
-    
     private func updateServerOrder() {
         viewModel.putLocation()
     }

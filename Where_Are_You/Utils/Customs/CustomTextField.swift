@@ -13,45 +13,41 @@ import UIKit
 class CustomTextField: UITextField {
     
     private var textPadding: UIEdgeInsets
-    private var placeholderText: String?
     private var hasBorder: Bool
     
-    init(textPadding: UIEdgeInsets = UIEdgeInsets(top: 12, left: 8, bottom: 12, right: 8),
+    init(textPadding: UIEdgeInsets = UIEdgeInsets(top: 14, left: 12, bottom: 14, right: 12),
          placeholder: String,
-         hasBorder: Bool = true,
-         fontSize: CGFloat = LayoutAdapter.shared.scale(value: 14)) {
+         hasBorder: Bool = true) {
         self.textPadding = textPadding
         self.hasBorder = hasBorder
-        self.placeholderText = placeholder
         super.init(frame: .zero)
-        setupTextField()
+        setupTextField(placeholder: placeholder)
         setupBorder()
     }
     
     required init?(coder: NSCoder) {
-        self.textPadding = UIEdgeInsets(top: 12, left: 8, bottom: 12, right: 8)
+        self.textPadding = UIEdgeInsets(top: 14, left: 12, bottom: 14, right: 12)
         self.hasBorder = true
         super.init(coder: coder)
-        setupTextField()
+        setupTextField(placeholder: nil)
         setupBorder()
     }
     
-    private func setupTextField() {
+    private func setupTextField(placeholder: String?) {
         adjustsFontForContentSizeCategory = true
-        textColor = .black22
-        font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14)))
+        font = UIFont(name: "Pretendard-Medium", size: 14)
         
         // Set placeholder with color
-        if let placeholderText = placeholderText {
-            attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black66])
+        if let placeholderText = placeholder {
+            attributedPlaceholder = UIFont.CustomFont.bodyP4(text: placeholderText, textColor: .black66)
         }
     }
     
     private func setupBorder() {
         if hasBorder {
-            layer.borderColor = UIColor.color212.cgColor
-            layer.borderWidth = 1.0
-            layer.cornerRadius = LayoutAdapter.shared.scale(value: 6)
+            layer.borderColor = UIColor.blackD4.cgColor
+            layer.borderWidth = 1.5
+            layer.cornerRadius = 8
         } else {
             layer.borderWidth = 0
         }
