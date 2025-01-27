@@ -17,8 +17,8 @@ enum FeedViewType {
 }
 
 extension UIViewController {
-    func configureNavigationBar(title: String, backButtonAction: Selector? = nil, showBackButton: Bool = true) {
-        Utilities.createNavigationBar(for: self, title: title, backButtonAction: backButtonAction, showBackButton: showBackButton)
+    func configureNavigationBar(title: String, backButtonAction: Selector? = nil, showBackButton: Bool = true, rightButton: UIBarButtonItem? = nil) {
+        Utilities.createNavigationBar(for: self, title: title, backButtonAction: backButtonAction, showBackButton: showBackButton, rightButton: rightButton)
     }
 }
 
@@ -299,42 +299,6 @@ extension UIImage {
             draw(in: CGRect(origin: .zero, size: size))
         }
     }
-    
-    func toURL() -> URL? {
-        // 로컬 임시 디렉토리에 저장할 파일 경로 생성
-        guard let data = self.jpegData(compressionQuality: 0.8) else { return nil }
-        let tempDirectory = FileManager.default.temporaryDirectory
-        let fileName = UUID().uuidString + ".jpg"
-        let fileURL = tempDirectory.appendingPathComponent(fileName)
-        
-        do {
-            // UIImage 데이터를 파일로 저장
-            try data.write(to: fileURL)
-            return fileURL
-        } catch {
-            print("이미지를 로컬 파일로 저장하는 중 오류 발생: \(error.localizedDescription)")
-            return nil
-        }
-    }
-}
-
-// MARK: - UIImageView
-
-extension UIImageView {
-    func setImage(from urlString: String?, placeholder: UIImage? = UIImage(named: "basic_profile_image")) {
-        // URL 검증 및 기본 이미지 설정
-        guard let urlString = urlString, !urlString.isEmpty else {
-            self.image = placeholder
-            return
-        }
-        
-        // ImageLoader를 통해 이미지 로드
-        ImageLoader.shared.loadImage(from: urlString) { [weak self] loadedImage in
-            DispatchQueue.main.async {
-                self?.image = loadedImage ?? placeholder
-            }
-        }
-    }
 }
 
 // MARK: - DateFormatter
@@ -426,7 +390,7 @@ extension View {
 // MARK: - UILabel
 
 extension UILabel {
-
+    // "... 더보기" 관련 로직
     func addTrailing(with trailingText: String, moreText: String, moreTextFont: UIFont, moreTextColor: UIColor) {
         guard let text = self.text, !text.isEmpty else { return }
 

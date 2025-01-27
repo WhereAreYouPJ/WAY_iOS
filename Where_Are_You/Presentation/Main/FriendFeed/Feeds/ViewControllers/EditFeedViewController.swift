@@ -57,7 +57,7 @@ class EditFeedViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        Utilities.createNavigationBar(for: self, title: "피드 수정", backButtonAction: #selector(backButtonTapped))
+        configureNavigationBar(title: "피드 수정", backButtonAction: #selector(backButtonTapped))
     }
     
     private func buttonActions() {

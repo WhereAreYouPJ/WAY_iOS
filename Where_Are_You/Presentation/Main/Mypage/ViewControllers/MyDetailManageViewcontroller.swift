@@ -57,8 +57,7 @@ class MyDetailManageViewcontroller: UIViewController {
     }
     
     private func setupNavigationBar() {
-        Utilities.createNavigationBar(for: self, title: "내 정보 관리", backButtonAction: #selector(backButtonTapped))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
+        configureNavigationBar(title: "내 정보 관리", backButtonAction: #selector(backButtonTapped), rightButton: UIBarButtonItem(customView: addButton))
     }
     
     private func buttonActions() {
