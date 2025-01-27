@@ -18,8 +18,22 @@ struct CreateScheduleView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var path = NavigationPath()
     
-    init() {
-        _viewModel = StateObject(wrappedValue: CreateScheduleViewModel())
+    init(viewModel: CreateScheduleViewModel? = nil) {
+        let scheduleRepository = ScheduleRepository(scheduleService: ScheduleService())
+        let postScheduleUseCase = PostScheduleUseCaseImpl(scheduleRepository: scheduleRepository)
+        
+        let locationRepository = LocationRepository(locationService: LocationService())
+        let getFavoriteLocationUseCase = GetLocationUseCaseImpl(locationRepository: locationRepository)
+        
+        let geocodeLocationUseCase = GeocodeLocationUseCaseImpl()
+        
+        let defaultViewModel = CreateScheduleViewModel(
+            postScheduleUseCase: postScheduleUseCase,
+            getFavoriteLocationUseCase: getFavoriteLocationUseCase,
+            geocodeLocationUseCase: geocodeLocationUseCase
+        )
+        
+        _viewModel = StateObject(wrappedValue: viewModel ?? defaultViewModel)
     }
     
     var body: some View {

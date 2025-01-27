@@ -360,7 +360,7 @@ struct NotificationView: View {
                 Text(friend.name)
                     .foregroundStyle(Color(.black22))
                 
-                Text(friend.memberCode ?? "")
+                Text(friend.memberCode)
                     .foregroundStyle(Color(.color153))
                     .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
             }

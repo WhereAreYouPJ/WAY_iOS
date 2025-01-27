@@ -52,7 +52,7 @@ class ConfirmLocationViewModel: ObservableObject {
                     completion(false)
                 }
             case .failure(let error):
-                print("요청 실패: \(error.localizedDescription)")
+                print("isFavoriteLocation 요청 실패: \(error.localizedDescription)")
                 completion(false)
             }
         }
@@ -102,7 +102,7 @@ class ConfirmLocationViewModel: ObservableObject {
                     completion(false, nil)
                 }
             case .failure(let error):
-                print("요청 실패: \(error.localizedDescription)")
+                print("addFavorite 요청 실패: \(error.localizedDescription)")
                 completion(false, nil)
             }
         }
@@ -126,7 +126,7 @@ class ConfirmLocationViewModel: ObservableObject {
                     completion(false)
                 }
             case .failure(let error):
-                print("요청 실패: \(error.localizedDescription)")
+                print("deleteFavorite 요청 실패: \(error.localizedDescription)")
                 completion(false)
             }
         }

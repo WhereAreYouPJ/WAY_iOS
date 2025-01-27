@@ -9,8 +9,10 @@ import Foundation
 import Moya
 
 class FriendsViewModel: ObservableObject { // 친구 목록을 나중에는 iOS 자체 DB에 저장해뒀다가 새로고침 or 특정 시각에 업데이트
-    // TODO: UserDefaults 세팅 완료되면 해당 프로퍼티 삭제
-    @Published var user = User(userName: nil, profileImage: UserDefaultsManager.shared.getProfileImage(), memberSeq: UserDefaultsManager.shared.getMemberSeq())
+    @Published var user = User(
+        userName: UserDefaultsManager.shared.getUserName(),
+        profileImage: UserDefaultsManager.shared.getProfileImage()
+    )
     @Published var favorites: [Friend] = []
     @Published var friends: [Friend] = []
     @Published var searchText: String = ""
@@ -25,16 +27,17 @@ class FriendsViewModel: ObservableObject { // 친구 목록을 나중에는 iOS 
         self.memberDetailsUseCase = memberDetailsUseCase
     }
     
-    // TODO: UserDefaults 세팅 완료되면 해당 메서드 삭제
     func getUserDetail() {
-        memberDetailsUseCase.execute { result in
-            switch result {
-            case .success(let member):
-                self.user.userName = member.userName
-                self.user.profileImage = member.profileImage
-            case .failure(let error):
-                print("Error getting user: \(error.localizedDescription)")
-                self.hasError = true
+        if self.user.userName == nil {
+            memberDetailsUseCase.execute { result in
+                switch result {
+                case .success(let member):
+                    self.user.userName = member.userName
+                    self.user.profileImage = member.profileImage
+                case .failure(let error):
+                    print("Error getting user: \(error.localizedDescription)")
+                    self.hasError = true
+                }
             }
         }
     }

@@ -6,106 +6,103 @@
 //
 
 import Foundation
-import Moya
 import SwiftUICore
 
 class DailyScheduleViewModel: ObservableObject {
     @Published var schedules: [Schedule] = []
-    @Published var shouldDismissView = false
-    @Published var showingDeleteAlert = false
     @Published var selectedSchedule: Schedule?
     
+    @Published var shouldDismissView = false
+    @Published var showingDeleteAlert = false
     @Published var isLoading = false
     @Published var errorMessage: String?
     
-    private let service: ScheduleServiceProtocol
-    private let provider = MoyaProvider<ScheduleAPI>()
+    private var getDailyScheduleUseCase: GetDailyScheduleUseCase
+    private var deleteScheduleUseCase: DeleteScheduleUseCase
+    
     private var memberSeq = UserDefaultsManager.shared.getMemberSeq()
     let date: Date
-    private let dateFormatterS2D: DateFormatter
-    private let dateFormatterD2S: DateFormatter
+//    private let dateFormatterS2D: DateFormatter
+//    private let dateFormatterD2S: DateFormatter
     
-    init(date: Date, service: ScheduleServiceProtocol) {
+    init(
+        getDailyScheduleUseCase: GetDailyScheduleUseCase,
+        deleteScheduleUseCase: DeleteScheduleUseCase,
+        date: Date
+    ) {
+        self.getDailyScheduleUseCase = getDailyScheduleUseCase
+        self.deleteScheduleUseCase = deleteScheduleUseCase
         self.date = date
-        self.service = service
         
-        dateFormatterS2D = DateFormatter()
-        dateFormatterS2D.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        
-        dateFormatterD2S = DateFormatter()
-        dateFormatterD2S.dateFormat = "yyyy-MM-dd"
+//        dateFormatterS2D = DateFormatter()
+//        dateFormatterS2D.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+//        
+//        dateFormatterD2S = DateFormatter()
+//        dateFormatterD2S.dateFormat = "yyyy-MM-dd"
     }
     
     func getDailySchedule() {
-        let date = dateFormatterD2S.string(from: date)
-        provider.request(.getDailySchedule(date: date, memberSeq: memberSeq)) { result in
+        getDailyScheduleUseCase.execute(date: date.formatted(to: .yearMonthDateHyphen)) { [weak self] result in
             switch result {
-            case .success(let response):
-                if response.statusCode == 200 {
-                    do {
-                        let decoder = JSONDecoder()
-                        let genericResponse = try decoder.decode(GenericResponse<GetScheduleByDateResponse>.self, from: response.data)
-                        
-                        DispatchQueue.main.async {
-                            self.schedules = genericResponse.data.map { schedule in
-                                Schedule(scheduleSeq: schedule.scheduleSeq,
-                                         title: schedule.title,
-                                         startTime: self.dateFormatterS2D.date(from: schedule.startTime) ?? Date.now,
-                                         endTime: self.dateFormatterS2D.date(from: schedule.endTime) ?? Date.now,
-                                         isAllday: schedule.allDay,
-                                         location: Location(sequence: 0,
-                                                            location: schedule.location ?? "",
-                                                            streetName: "",
-                                                            x: 0,
-                                                            y: 0),
-                                         color: schedule.color,
-                                         memo: "",
-                                         invitedMember: nil)
-                            }
-                            
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                self.shouldDismissView = self.schedules.isEmpty
-                            }
-                            
-                            print("일간 일정 로드 성공: \(self.schedules.count)개의 일정을 받았습니다.")
-                        }
-                    } catch {
-                        print("JSON 디코딩 실패: \(error.localizedDescription)")
-                    }
-                } else {
-                    print("서버 오류: \(response.statusCode)")
-                    if let json = try? response.mapJSON() as? [String: Any],
-                       let detail = json["detail"] as? String {
-                        print("상세 메시지: \(detail)")
-                    }
+            case .success(let dailySchedules):
+                DispatchQueue.main.async {
+                    self?.schedules = self?.convertToSchedules(from: dailySchedules) ?? []
+                    print("초대된 일정 \(self?.schedules.count ?? 0)개 조회 완료!")
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self?.shouldDismissView = self?.schedules.isEmpty ?? true
                 }
             case .failure(let error):
-                print("요청 실패: \(error.localizedDescription)")
+                print("Error getDailySchedule: \(error.localizedDescription)")
             }
         }
     }
     
     func deleteSchedule(_ schedule: Schedule, completion: @escaping (Bool) -> Void) {
-        isLoading = true
+        self.isLoading = true
         
-        let deleteRequest = DeleteScheduleBody(scheduleSeq: schedule.scheduleSeq, memberSeq: memberSeq)
+        let deleteScheduleBody = DeleteScheduleBody(scheduleSeq: schedule.scheduleSeq, memberSeq: memberSeq)
         let isCreator = !(schedule.invitedMember?.contains(where: { $0.memberSeq == memberSeq }) ?? false)
         
-        let deleteMethod = isCreator ? service.deleteScheduleByCreator : service.deleteScheduleByInvitee
-        
-        deleteMethod(deleteRequest) { [weak self] result in
-            DispatchQueue.main.async {
-                self?.isLoading = false
-                switch result {
-                case .success:
-                    print("Schedule successfully deleted")
-                    self?.getDailySchedule()
-                    completion(true)
-                case .failure(let error):
-                    print("Failed to delete schedule: \(error.localizedDescription)")
-                    completion(false)
-                }
+        deleteScheduleUseCase.execute(request: deleteScheduleBody, isCreator: isCreator) { result in
+            switch result {
+            case .success:
+                print("일정 삭제 성공!")
+            case .failure(let error):
+                print("일정 삭제 실패 - \(error.localizedDescription)")
             }
+        }
+    }
+    
+    private func convertToSchedules(from schedules: GetScheduleByDateResponse) -> [Schedule] {
+        return schedules.compactMap { response -> Schedule? in
+            guard let startTime = response.startTime.toDate(from: .serverSimple) else {
+                print("startTime 변환 실패: \(response.startTime)")
+                return nil
+            }
+            guard let endTime = response.endTime.toDate(from: .serverSimple) else {
+                print("endTime 변환 실패: \(response.endTime)")
+                return nil
+            }
+            
+            return Schedule(
+                scheduleSeq: response.scheduleSeq,
+                title: response.title,
+                startTime: startTime,
+                endTime: endTime,
+                isAllday: response.allDay,
+                location: Location(
+                    sequence: 0,
+                    location: response.location ?? "",
+                    streetName: "",
+                    x: 0,
+                    y: 0
+                ),
+                color: response.color,
+                memo: "",
+                invitedMember: nil
+            )
         }
     }
     
@@ -187,7 +184,7 @@ class DailyScheduleViewModel: ObservableObject {
 
 extension DailyScheduleViewModel {
     func createScheduleDetailViewModel(for schedule: Schedule) -> ScheduleDetailViewModel {
-        let detailViewModel = ScheduleDetailViewModel(schedule: schedule, getScheduleUseCase: GetScheduleUseCaseImpl(scheduleRepository: ScheduleRepository(scheduleService: ScheduleService())))
+        let detailViewModel = ScheduleDetailViewModel(schedule: schedule, getScheduleUseCase: GetScheduleUseCaseImpl(scheduleRepository: ScheduleRepository(scheduleService: ScheduleService())), putScheduleUseCase: PutScheduleUseCaseImpl(scheduleRepository: ScheduleRepository(scheduleService: ScheduleService())))
         
         detailViewModel.$isSuccess
             .sink { [weak self] success in

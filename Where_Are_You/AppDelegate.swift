@@ -11,12 +11,16 @@ import KakaoSDKCommon
 import KakaoSDKAuth
 import KakaoMapsSDK
 import Kingfisher
+import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         SDKInitializer.InitSDK(appKey: Config.kakaoAppKey)
         KakaoSDK.initSDK(appKey: Config.kakaoAppKey)
+        
+        FirebaseApp.configure()
+        
         return true
     }
 

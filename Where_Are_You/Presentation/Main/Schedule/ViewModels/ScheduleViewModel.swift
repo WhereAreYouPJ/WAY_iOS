@@ -64,7 +64,7 @@ class ScheduleViewModel: ObservableObject {
                     }
                 }
             case .failure(let error):
-                print("요청 실패: \(error.localizedDescription)")
+                print("getMonthlySchedule 요청 실패: \(error.localizedDescription)")
             }
         }
     }

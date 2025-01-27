@@ -13,6 +13,7 @@ class AddFriendViewModel: ObservableObject {
     
     @Published var showSearchError: Bool = false
     
+    @Published var disabledButton: Bool = false
     @Published var showToast: Bool = false
     @Published var toastText: String = ""
     
@@ -25,6 +26,8 @@ class AddFriendViewModel: ObservableObject {
     }
     
     func searchMember() {
+        self.disabledButton = false
+        
         memberSearchUseCase.execute(memberCode: searchText) { result in
             switch result {
             case .success(let friend):
@@ -42,6 +45,8 @@ class AddFriendViewModel: ObservableObject {
     }
     
     func postFriendRequest() {
+        self.disabledButton = true
+        
         guard let searchedMember else { return }
         let memberSeq = UserDefaultsManager.shared.getMemberSeq()
         postFriendRequestUseCase.execute(request: PostFriendRequestBody(memberSeq: memberSeq, friendSeq: searchedMember.memberSeq)) { [weak self] result in
