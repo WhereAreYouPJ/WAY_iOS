@@ -79,8 +79,7 @@ class LocationBookmarkViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        Utilities.createNavigationBar(for: self, title: "위치 즐겨찾기", backButtonAction: #selector(backButtonTapped))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
+        configureNavigationBar(title: "위치 즐겨찾기", backButtonAction: #selector(backButtonTapped), rightButton: UIBarButtonItem(customView: addButton))
     }
     
     private func setupBindings() {
