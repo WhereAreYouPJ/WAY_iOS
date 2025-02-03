@@ -14,6 +14,7 @@ target 'Where_Are_You' do
 	pod 'KakaoMapsSDK'
 	pod 'Kingfisher', '~> 7.0'
 	pod 'FirebaseAnalytics'
+	pod 'Firebase/Messaging'
 
 	target 'Where_Are_You_Tests' do
 	  inherit! :search_paths
