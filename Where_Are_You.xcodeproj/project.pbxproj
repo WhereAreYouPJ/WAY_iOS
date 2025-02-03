@@ -290,6 +290,7 @@
 		D564EE882CF4DF540033DBD3 /* MapPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D564EE872CF4DF540033DBD3 /* MapPinView.swift */; };
 		D567A9D02CF85B54009F6451 /* ManageFriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D567A9CF2CF85B54009F6451 /* ManageFriendsViewModel.swift */; };
 		D567A9D42CF86081009F6451 /* FriendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D567A9D32CF86081009F6451 /* FriendRequest.swift */; };
+		D56C07BE2D50B225002FB5CB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D56C07BD2D50B225002FB5CB /* GoogleService-Info.plist */; };
 		D57AC3B12C8B6336006AE7D7 /* KakaoLocalResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57AC3B02C8B6336006AE7D7 /* KakaoLocalResponse.swift */; };
 		D57B46F72C786AFD00657C51 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57B46F62C786AFD00657C51 /* MapView.swift */; };
 		D5819AE42CFB4F25004E717C /* FriendsLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5819AE32CFB4F25004E717C /* FriendsLocationViewModel.swift */; };
@@ -304,7 +305,6 @@
 		D5A20AF42CE4DCD50048281A /* GetFriendResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A20AF32CE4DCD50048281A /* GetFriendResponse.swift */; };
 		D5A91D5B2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */; };
 		D5B3B5392CB3DE63004353F6 /* DailyScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */; };
-		D5B4420A2D45391800BD00BB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5B442092D45391800BD00BB /* GoogleService-Info.plist */; };
 		D5B79A162C5B83CD004EDDF2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D5BA308C2CE744C400958BF5 /* FriendAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308B2CE744C400958BF5 /* FriendAPI.swift */; };
 		D5BA308E2CE744CA00958BF5 /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308D2CE744CA00958BF5 /* FriendService.swift */; };
@@ -645,6 +645,7 @@
 		D564EE872CF4DF540033DBD3 /* MapPinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPinView.swift; sourceTree = "<group>"; };
 		D567A9CF2CF85B54009F6451 /* ManageFriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFriendsViewModel.swift; sourceTree = "<group>"; };
 		D567A9D32CF86081009F6451 /* FriendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequest.swift; sourceTree = "<group>"; };
+		D56C07BD2D50B225002FB5CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D57AC3B02C8B6336006AE7D7 /* KakaoLocalResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLocalResponse.swift; sourceTree = "<group>"; };
 		D57B46F62C786AFD00657C51 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		D5819AE32CFB4F25004E717C /* FriendsLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsLocationViewModel.swift; sourceTree = "<group>"; };
@@ -659,7 +660,6 @@
 		D5A20AF32CE4DCD50048281A /* GetFriendResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFriendResponse.swift; sourceTree = "<group>"; };
 		D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertSwiftUI.swift; sourceTree = "<group>"; };
 		D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyScheduleViewModel.swift; sourceTree = "<group>"; };
-		D5B442092D45391800BD00BB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D5BA308B2CE744C400958BF5 /* FriendAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendAPI.swift; sourceTree = "<group>"; };
 		D5BA308D2CE744CA00958BF5 /* FriendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendService.swift; sourceTree = "<group>"; };
 		D5BA308F2CE7453900958BF5 /* DeleteFriendBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFriendBody.swift; sourceTree = "<group>"; };
@@ -1321,8 +1321,8 @@
 				9967C1502C56465B00927277 /* LaunchScreen */,
 				99C9B22D2C019E16008D7CBD /* Fonts */,
 				9953584D2C00C558005BF799 /* Info.plist */,
-				D5B442092D45391800BD00BB /* GoogleService-Info.plist */,
 				995358482C00C558005BF799 /* Assets.xcassets */,
+				D56C07BD2D50B225002FB5CB /* GoogleService-Info.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1922,10 +1922,10 @@
 				99D2BEEE2D42152000DE22A2 /* Pretendard-Medium.otf in Resources */,
 				99D2BEEF2D42152000DE22A2 /* Pretendard-SemiBold.otf in Resources */,
 				99C9B24E2C01ECCE008D7CBD /* NotoSansKR-Medium.ttf in Resources */,
+				D56C07BE2D50B225002FB5CB /* GoogleService-Info.plist in Resources */,
 				99C9B23F2C01ACBE008D7CBD /* Ttangsbudaejjigae-Light.otf in Resources */,
 				99C9B23D2C01ACBE008D7CBD /* Ttangsbudaejjigae-Medium.otf in Resources */,
 				995358492C00C558005BF799 /* Assets.xcassets in Resources */,
-				D5B4420A2D45391800BD00BB /* GoogleService-Info.plist in Resources */,
 				D549C8452C6366A400DDAD5A /* .gitattributes in Resources */,
 				D59ACC9C2CFF2DF900B3F877 /* MyLocation.gpx in Resources */,
 				9953584C2C00C558005BF799 /* Base in Resources */,
@@ -2513,9 +2513,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Where_Are_You/Where_Are_You.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = P88B2BYA36;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8CKPNKA3V9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Where_Are_You/Resources/Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 접근 권한";
@@ -2535,6 +2537,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omw.on-my-way";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "OMW Release";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -2553,9 +2556,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Where_Are_You/Where_Are_You.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = P88B2BYA36;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8CKPNKA3V9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Where_Are_You/Resources/Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 접근 권한";
@@ -2575,6 +2580,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omw.on-my-way";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "OMW Release";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
