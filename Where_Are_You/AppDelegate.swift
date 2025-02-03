@@ -11,7 +11,10 @@ import KakaoSDKCommon
 import KakaoSDKAuth
 import KakaoMapsSDK
 import Kingfisher
-import FirebaseCore
+import Firebase
+import FirebaseMessaging
+import AVFoundation
+
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,7 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SDKInitializer.InitSDK(appKey: Config.kakaoAppKey)
         KakaoSDK.initSDK(appKey: Config.kakaoAppKey)
         
+        // 파이어베이스 설정
         FirebaseApp.configure()
+        
+        registerForPushNotifications()
+        application.registerForRemoteNotifications()
         
         return true
     }
@@ -94,5 +101,78 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+}
+
+extension AppDelegate {
+    private func registerForPushNotifications() {
+        UNUserNotificationCenter.current()
+            .requestAuthorization(options: [.alert, .sound, .badge]) { granted, _ in
+                print("##### Permission granted: \(granted)")
+                // 추가
+                guard granted else { return }
+                self.getNotificationSettings()
+            }
+        
+    }
+    
+    private func getNotificationSettings() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            print("##### Notification settings: \(settings)")
+        }
+    }
+    
+}
+
+// MARK: UNUserNotificationCenterDelegate
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func application(application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("🔐didRegisterForRemoteNotificationsWithDeviceToken deviceToken : \(deviceToken)")
+    }
+    
+    public func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        let userInfo = notification.request.content.userInfo
+        print("🔐userNotificationCenter willPresent : \(userInfo)")
+        UNUserNotificationCenter.current().setBadgeCount(0) { error in
+            if let error = error {
+                print("Failed to set badge count: \(error)")
+            }
+        }
+        
+        completionHandler([.banner, .badge, .sound])
+    }
+    
+    //    Function that the app is called while background or not running
+    public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        UNUserNotificationCenter.current().setBadgeCount(0) { error in
+            if let error = error {
+                print("Failed to set badge count: \(error)")
+            }
+        }
+        
+        let userInfo = response.notification.request.content.userInfo
+        print("🔐userNotificationCenter didReceive : \(userInfo)")
+        
+        completionHandler()
+    }
+}
+
+// MARK: MessagingDelegate
+extension AppDelegate: MessagingDelegate {
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        print("🔐Firebase registration token: \(String(describing: fcmToken))")
+        
+        if let token = fcmToken {
+            print("🔐FCM Token : \(token)")
+            UserDefaults.standard.set(token, forKey: "fcmToken")
+            UserDefaults.standard.synchronize()
+        }
+        // TODO: If necessary send token to application server.
+        // Note: This callback is fired at each app startup and whenever a new token is generated.
+    }
+    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingDelegate) {
+        print("🔐Received data message: \(remoteMessage.description)")
     }
 }
