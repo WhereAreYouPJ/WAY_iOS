@@ -38,7 +38,10 @@ class Utilities {
             viewController.navigationItem.rightBarButtonItem = rightButton
         }
         
-        viewController.navigationItem.title = title
+        let titleLabel = UILabel()
+        titleLabel.attributedText = UIFont.CustomFont.bodyP2(text: title, textColor: .black22) // 원하는 텍스트 색상 적용
+        titleLabel.sizeToFit()
+        viewController.navigationItem.titleView = titleLabel
     }
     
     // TextField with placeholder
