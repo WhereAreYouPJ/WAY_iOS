@@ -2523,7 +2523,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8CKPNKA3V9;
+				DEVELOPMENT_TEAM = P88B2BYA36;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Where_Are_You/Resources/Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 접근 권한";
@@ -2563,7 +2563,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8CKPNKA3V9;
+				DEVELOPMENT_TEAM = P88B2BYA36;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Where_Are_You/Resources/Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 접근 권한";
