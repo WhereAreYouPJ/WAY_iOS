@@ -24,8 +24,9 @@ class BannerView: UIView {
         let label = UILabel()
         label.textAlignment = .center
         label.textColor = .white
-        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 12)
-        label.backgroundColor = UIColor.black44.withAlphaComponent(0.6)
+        label.attributedText = UIFont.CustomFont.bodyP5(text: "", textColor: .white)
+//        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 12)
+        label.backgroundColor = UIColor.black44.withAlphaComponent(0.4)
         label.layer.cornerRadius = LayoutAdapter.shared.scale(value: 10)
         label.clipsToBounds = true
         return label
@@ -62,9 +63,10 @@ class BannerView: UIView {
         }
         
         pageNumberLabel.snp.makeConstraints { make in
-            make.bottom.trailing.equalToSuperview().offset(-12)
-            make.width.equalTo(LayoutAdapter.shared.scale(value: 42))
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 17))
+            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
+            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 20))
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 37))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 20))
         }
     }
 }

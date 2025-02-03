@@ -17,12 +17,7 @@ class AccountLoginView: UIView {
     
     let emailTextField = CustomTextField(placeholder: "이메일을 입력해주세요.")
     
-    let emailErrorLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
-        label.adjustsFontForContentSizeCategory = true
-        return label
-    }()
+    let emailErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error))
     
     lazy var idStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [emailLabel, emailTextField, emailErrorLabel])
@@ -35,8 +30,10 @@ class AccountLoginView: UIView {
     
     let passwordTextField = CustomTextField(placeholder: "비밀번호를 입력해주세요.")
     
+    let passwordErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error))
+
     lazy var passwordStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField])
+        let stack = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField, passwordErrorLabel])
         stack.axis = .vertical
         stack.spacing = LayoutAdapter.shared.scale(value: 4)
         return stack
@@ -44,7 +41,7 @@ class AccountLoginView: UIView {
     
     lazy var stack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [idStack, passwordStack])
-        stack.spacing = LayoutAdapter.shared.scale(value: 16)
+        stack.spacing = LayoutAdapter.shared.scale(value: 14)
         stack.axis = .vertical
         return stack
     }()

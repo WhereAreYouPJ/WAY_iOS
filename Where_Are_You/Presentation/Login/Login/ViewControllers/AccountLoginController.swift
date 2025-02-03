@@ -57,10 +57,21 @@ class AccountLoginController: UIViewController {
         // 로그인 실패
         viewModel.onLoginFailure = { [weak self] message, isAvailable in
             // 로그인 실패
-            self?.updateStatus(label: self?.accountLoginView.emailErrorLabel,
-                               message: message,
-                               isAvailable: isAvailable,
-                               textField: self?.accountLoginView.emailTextField)
+            if message == "비밀번호가 옳지 않습니다." {
+                self?.updateStatus(label: self?.accountLoginView.passwordErrorLabel,
+                                   message: message,
+                                   isAvailable: isAvailable,
+                                   textField: self?.accountLoginView.passwordTextField)
+                self?.updateStatus(label: self?.accountLoginView.emailErrorLabel,
+                                   message: "",
+                                   isAvailable: !isAvailable,
+                                   textField: self?.accountLoginView.emailTextField)
+            } else {
+                self?.updateStatus(label: self?.accountLoginView.emailErrorLabel,
+                                   message: message,
+                                   isAvailable: isAvailable,
+                                   textField: self?.accountLoginView.emailTextField)
+            }
         }
     }
     

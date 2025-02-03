@@ -22,6 +22,7 @@ class MainHomeView: UIView {
         super.init(frame: frame)
         configureViewComponents()
         setupConstraints()
+        bottomSheetView.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -63,7 +64,7 @@ class MainHomeView: UIView {
         homeFeedView.snp.makeConstraints { make in
             make.top.equalTo(reminderLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 15))
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 272))
+            make.bottom.equalToSuperview()
         }
         
 //        dimView.snp.makeConstraints { make in

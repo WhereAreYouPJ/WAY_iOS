@@ -13,10 +13,11 @@ class APIResponseHandler {
         switch result {
         case .success(let response):
             do {
-                // TODO: 앱 개발 완료후 지우기(받는 데이터 정보 확인용)
+                // 서버 응답 JSON 확인 (디버깅용)
                 if let json = try? response.mapJSON() {
                     print("Response JSON: \(json)")
                 }
+                
                 let statusCode = response.response?.statusCode ?? 0
                 print("Response Status Code: \(statusCode)")
                 
@@ -25,12 +26,14 @@ class APIResponseHandler {
                     let data = try response.map(T.self)
                     completion(.success(data))
                 } else {
-                    print("Failed Status Code: \(statusCode)")
-                    completion(.failure(NSError(domain: "", code: statusCode, userInfo: [NSLocalizedDescriptionKey: "Failed with status code \(statusCode)"])))
+                    // 서버 오류 응답을 ServerError 모델로 변환
+                    let serverError = try? JSONDecoder().decode(ServerError.self, from: response.data)
+                    if let serverError = serverError {
+                        completion(.failure(APIError(code: serverError.code, message: serverError.message)))
+                    } else {
+                        completion(.failure(NSError(domain: "", code: statusCode, userInfo: [NSLocalizedDescriptionKey: "알 수 없는 오류가 발생했습니다."])))
+                    }
                 }
-            } catch DecodingError.valueNotFound(let type, let context) {
-                print("Value not found for type \(type): \(context.debugDescription)")
-                completion(.failure(DecodingError.valueNotFound(type, context)))
             } catch {
                 completion(.failure(error))
             }
