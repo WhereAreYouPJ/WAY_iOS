@@ -111,7 +111,6 @@
 		99A07CD42CF440E100A47796 /* FeedBookMarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A07CD32CF440E100A47796 /* FeedBookMarkViewModel.swift */; };
 		99A7D7E42C999897002BCD21 /* LocationBookMarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A7D7E32C999897002BCD21 /* LocationBookMarkCell.swift */; };
 		99A814122D129DC5000FC5A3 /* NoFeedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A814112D129DC5000FC5A3 /* NoFeedImageView.swift */; };
-		99A897D72CEB02E900E79BED /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A897D62CEB02E900E79BED /* ImageLoader.swift */; };
 		99AE53472D3F5F13003AD774 /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AE53462D3F5F13003AD774 /* BottomSheetViewController.swift */; };
 		99AE53492D3F61E0003AD774 /* DailyScheduleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AE53482D3F61E0003AD774 /* DailyScheduleTableViewCell.swift */; };
 		99AE534B2D408719003AD774 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AE534A2D408719003AD774 /* BottomSheetView.swift */; };
@@ -194,7 +193,6 @@
 		99E2EEF12D3633CD0010F1F9 /* MainNoFeedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E2EEF02D3633CD0010F1F9 /* MainNoFeedImageView.swift */; };
 		99E401252D0D6CD900A63304 /* FeedOptionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E401242D0D6CD900A63304 /* FeedOptionsHandler.swift */; };
 		99E755512C22E66F0016A0A6 /* MemberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E755502C22E66F0016A0A6 /* MemberService.swift */; };
-		99E7BA592C69A5D500F79C96 /* ImageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E7BA582C69A5D500F79C96 /* ImageUtility.swift */; };
 		99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */; };
 		99E8BC452C2D26CF00536B95 /* EmailVerifyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E8BC442C2D26CF00536B95 /* EmailVerifyUseCase.swift */; };
 		99E9D39B2CF7F7FC00D2554A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E9D39A2CF7F7FC00D2554A /* User.swift */; };
@@ -458,7 +456,6 @@
 		99A07CD32CF440E100A47796 /* FeedBookMarkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedBookMarkViewModel.swift; sourceTree = "<group>"; };
 		99A7D7E32C999897002BCD21 /* LocationBookMarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationBookMarkCell.swift; sourceTree = "<group>"; };
 		99A814112D129DC5000FC5A3 /* NoFeedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoFeedImageView.swift; sourceTree = "<group>"; };
-		99A897D62CEB02E900E79BED /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		99AE53462D3F5F13003AD774 /* BottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewController.swift; sourceTree = "<group>"; };
 		99AE53482D3F61E0003AD774 /* DailyScheduleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyScheduleTableViewCell.swift; sourceTree = "<group>"; };
 		99AE534A2D408719003AD774 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
@@ -542,7 +539,6 @@
 		99E2EEF02D3633CD0010F1F9 /* MainNoFeedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNoFeedImageView.swift; sourceTree = "<group>"; };
 		99E401242D0D6CD900A63304 /* FeedOptionsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedOptionsHandler.swift; sourceTree = "<group>"; };
 		99E755502C22E66F0016A0A6 /* MemberService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberService.swift; sourceTree = "<group>"; };
-		99E7BA582C69A5D500F79C96 /* ImageUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtility.swift; sourceTree = "<group>"; };
 		99E8BC3E2C2CEB1D00536B95 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
 		99E8BC442C2D26CF00536B95 /* EmailVerifyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerifyUseCase.swift; sourceTree = "<group>"; };
 		99E9D39A2CF7F7FC00D2554A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -1177,10 +1173,8 @@
 				99149FEA2C4F97C300136097 /* ValidationHelper.swift */,
 				99149FEC2C4F97EA00136097 /* TimeHelper.swift */,
 				9974EA1F2C62196500826793 /* SnappingFlowLayout.swift */,
-				99E7BA582C69A5D500F79C96 /* ImageUtility.swift */,
 				99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */,
 				D55C6C412CF5B8D7005132DC /* NavigationBarModifier.swift */,
-				99A897D62CEB02E900E79BED /* ImageLoader.swift */,
 				99E401242D0D6CD900A63304 /* FeedOptionsHandler.swift */,
 				D59ACC9B2CFF2DF900B3F877 /* MyLocation.gpx */,
 			);
@@ -2200,7 +2194,6 @@
 				99C5B9E52D30AEB200CD570F /* CommentAccountDeletionView.swift in Sources */,
 				99933E942D2A56D3009D0C5A /* EditFeedView.swift in Sources */,
 				99949F4F2C58890C00AE0177 /* ProfileView.swift in Sources */,
-				99E7BA592C69A5D500F79C96 /* ImageUtility.swift in Sources */,
 				99C1403E2C6496BC00A706B6 /* NoDataView.swift in Sources */,
 				D55C6C422CF5B8D7005132DC /* NavigationBarModifier.swift in Sources */,
 				99EDF5962CE8AD980008B19A /* GetFeedDetailsUseCase.swift in Sources */,
@@ -2287,7 +2280,6 @@
 				99EDF5A02CE8BE4A0008B19A /* GetHideFeedUseCase.swift in Sources */,
 				99647EF32D33DB3B00D63B4B /* CompleteDeleteView.swift in Sources */,
 				9967C1522C56467D00927277 /* CustomAlert.swift in Sources */,
-				99A897D72CEB02E900E79BED /* ImageLoader.swift in Sources */,
 				99C68E482C64B43900DEC1F1 /* FeedService.swift in Sources */,
 				99949F572C58B1CE00AE0177 /* FriendsListViewController.swift in Sources */,
 				D5BA308E2CE744CA00958BF5 /* FriendService.swift in Sources */,
@@ -2540,7 +2532,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ben.OMW;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omw.on-my-way";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -2580,7 +2572,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ben.OMW;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omw.on-my-way";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

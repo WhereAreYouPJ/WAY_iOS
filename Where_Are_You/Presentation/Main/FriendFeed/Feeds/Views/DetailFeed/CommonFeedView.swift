@@ -105,12 +105,7 @@ class CommonFeedView: UIView {
         let feedImageInfos = feed.feedImageInfos ?? []
         self.imageUrls = feedImageInfos.map { $0.feedImageURL }
         feedImagesView.collectionView.reloadData()
-        if imageUrls.count <= 1 {
-            feedImagesView.pageNumberLabel.isHidden = true
-        } else {
-            feedImagesView.pageNumberLabel.isHidden = false
-            feedImagesView.pageNumberLabel.text = "1/\(imageUrls.count)"
-        }
+        feedImagesView.pageNumberLabel.text = "1/\(imageUrls.count)"
         self.feed = feed
         profileImageURL = feed.profileImageURL
         feedSeq = feed.feedSeq

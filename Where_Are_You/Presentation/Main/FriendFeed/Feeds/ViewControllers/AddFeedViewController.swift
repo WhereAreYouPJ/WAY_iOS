@@ -59,7 +59,7 @@ class AddFeedViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        Utilities.createNavigationBar(for: self, title: "새 피드 작성", backButtonAction: #selector(backButtonTapped), showBackButton: true)
+        configureNavigationBar(title: "새 피드 작성", backButtonAction: #selector(backButtonTapped))
     }
     
     private func setupUI() {

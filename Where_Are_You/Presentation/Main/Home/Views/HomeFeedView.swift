@@ -28,9 +28,10 @@ class HomeFeedView: UIView {
         label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
         label.numberOfLines = 0
         label.textAlignment = .center        
-        label.layer.borderColor = UIColor.color221.cgColor
-        label.layer.borderWidth = 1
-        label.layer.cornerRadius = LayoutAdapter.shared.scale(value: 15)
+        label.layer.borderColor = UIColor.blackF0.cgColor
+        label.backgroundColor = .white
+        label.layer.borderWidth = 1.5
+        label.layer.cornerRadius = LayoutAdapter.shared.scale(value: 12)
         label.clipsToBounds = true
         return label
     }()

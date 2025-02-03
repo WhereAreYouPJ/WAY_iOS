@@ -11,11 +11,11 @@ import SnapKit
 class AccountLoginView: UIView {
     // MARK: - Properties
     
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "로그인하기", textColor: .black22, fontSize: 22)
+    private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "로그인하기", textColor: .black22))
     
-    private let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이메일 주소", textColor: .color51, fontSize: 12)
+    private let emailLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 이메일 주소", textColor: .black22))
     
-    let emailTextField = Utilities.inputContainerTextField(withPlaceholder: "이메일을 입력해주세요.")
+    let emailTextField = CustomTextField(placeholder: "이메일을 입력해주세요.")
     
     let emailErrorLabel: UILabel = {
         let label = UILabel()
@@ -27,29 +27,31 @@ class AccountLoginView: UIView {
     lazy var idStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [emailLabel, emailTextField, emailErrorLabel])
         stack.axis = .vertical
+        stack.spacing = LayoutAdapter.shared.scale(value: 4)
         return stack
     }()
     
-    private let passwordLabel = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: 12)
+    private let passwordLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 비밀번호", textColor: .black22))
     
-    let passwordTextField = Utilities.inputContainerTextField(withPlaceholder: "비밀번호를 입력해주세요.")
+    let passwordTextField = CustomTextField(placeholder: "비밀번호를 입력해주세요.")
     
     lazy var passwordStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField])
         stack.axis = .vertical
+        stack.spacing = LayoutAdapter.shared.scale(value: 4)
         return stack
     }()
     
     lazy var stack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [idStack, passwordStack])
-        stack.spacing = 10
+        stack.spacing = LayoutAdapter.shared.scale(value: 16)
         stack.axis = .vertical
         return stack
     }()
     
-    let loginButton = CustomButton(title: "로그인하기", backgroundColor: .color171, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
+    let loginButton = TitleButton(title: UIFont.CustomFont.button18(text: "로그인하기", textColor: .white), backgroundColor: .blackAC, borderColor: nil, cornerRadius: 8)
     
-    let findAccountButton = CustomButtonView(text: "계정찾기", weight: .medium, textColor: .black66, fontSize: 14)
+    let findAccountButton = StandardButton(text: UIFont.CustomFont.bodyP4(text: "계정찾기", textColor: .black66))
     
     let signupButton = Utilities.attributedButton("계정이 없으신가요?", "  가입하기")
     
@@ -79,30 +81,30 @@ class AccountLoginView: UIView {
     
     private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(34)
-            make.leading.equalToSuperview().offset(21)
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 54))
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
         }
         
         stack.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(30)
-            make.leading.equalToSuperview().offset(21)
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
         }
         
         loginButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(stack.snp.bottom).offset(30)
+            make.top.equalTo(stack.snp.bottom).offset(LayoutAdapter.shared.scale(value: 68))
             make.leading.equalTo(stack.snp.leading)
-            make.height.equalTo(loginButton.snp.width).multipliedBy(0.145)
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 48))
         }
         
         findAccountButton.snp.makeConstraints { make in
-            make.top.equalTo(loginButton.snp.bottom).offset(26)
+            make.top.equalTo(loginButton.snp.bottom).offset(LayoutAdapter.shared.scale(value: 31))
             make.centerX.equalToSuperview()
         }
         
         signupButton.snp.makeConstraints { make in
-            make.top.equalTo(findAccountButton.snp.bottom).offset(14)
+            make.top.equalTo(findAccountButton.snp.bottom).offset(LayoutAdapter.shared.scale(value: 20))
             make.centerX.equalToSuperview()
         }
     }
@@ -112,10 +114,10 @@ class AccountLoginView: UIView {
         let isPasswordEntered = !(passwordTextField.text?.isEmpty ?? true)
         
         if isUserIdEntered && isPasswordEntered {
-            loginButton.updateBackgroundColor(.brandColor)
+            loginButton.updateBackgroundColor(.brandMain)
             loginButton.isEnabled = true
         } else {
-            loginButton.updateBackgroundColor(.color171)
+            loginButton.updateBackgroundColor(.blackAC)
             loginButton.isEnabled = false
         }
     }

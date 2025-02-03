@@ -59,7 +59,7 @@ class MainHomeViewController: UIViewController {
     
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleView.titleLabel)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: titleView.iconStack)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: titleView.notificationButton)
         
         // 화면을 스크롤 했을때 네비게이션바가 여전히 색상을 유지
         let navigationBarAppearance = UINavigationBarAppearance()
@@ -71,7 +71,6 @@ class MainHomeViewController: UIViewController {
     
     private func setupActions() {
         titleView.notificationButton.addTarget(self, action: #selector(moveToNotification), for: .touchUpInside)
-        titleView.profileButton.addTarget(self, action: #selector(moveToMyPage), for: .touchUpInside)
     }
     
     private func addAndLayoutChildViewController(_ child: UIViewController, toView containerView: UIView) {
@@ -89,9 +88,5 @@ class MainHomeViewController: UIViewController {
         let hostingController = UIHostingController(rootView: notificationView)
         hostingController.modalPresentationStyle = .fullScreen
         present(hostingController, animated: true)
-    }
-    
-    @objc private func moveToMyPage() {
-        tabBarController?.selectedIndex = 3
     }
 }

@@ -28,19 +28,4 @@ class TitleView: UIView {
         }
         return button
     }()
-    
-    let profileButton: UIButton = {
-        let button = UIButton()
-        button.snp.makeConstraints { make in
-            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 34))
-        }
-        button.setImage(UIImage(named: "icon-mypage"), for: .normal)
-        return button
-    }()
-    
-    lazy var iconStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [notificationButton, profileButton])
-        stackView.axis = .horizontal
-        return stackView
-    }()
 }

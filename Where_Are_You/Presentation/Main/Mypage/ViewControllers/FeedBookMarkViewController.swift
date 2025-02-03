@@ -35,7 +35,7 @@ class FeedBookMarkViewController: UIViewController {
     
     // MARK: - Helpers
     private func setupNavigationBar() {
-        Utilities.createNavigationBar(for: self, title: "피드 책갈피", backButtonAction: #selector(backButtonTapped))
+        configureNavigationBar(title: "피드 책갈피", backButtonAction: #selector(backButtonTapped))
     }
     
     private func setupViewModel() {

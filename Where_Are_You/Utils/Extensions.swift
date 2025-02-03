@@ -17,8 +17,8 @@ enum FeedViewType {
 }
 
 extension UIViewController {
-    func configureNavigationBar(title: String, backButtonAction: Selector? = nil, showBackButton: Bool = true) {
-        Utilities.createNavigationBar(for: self, title: title, backButtonAction: backButtonAction, showBackButton: showBackButton)
+    func configureNavigationBar(title: String, backButtonAction: Selector? = nil, showBackButton: Bool = true, rightButton: UIBarButtonItem? = nil) {
+        Utilities.createNavigationBar(for: self, title: title, backButtonAction: backButtonAction, showBackButton: showBackButton, rightButton: rightButton)
     }
 }
 
@@ -94,102 +94,113 @@ extension UIColor {
 
 extension UIFont {
     struct CustomFont {
-        static func titleH1(text: String) -> NSAttributedString {
+        static func titleH1(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Paperlogy-6SemiBold", size: 22)!,
                 lineHeight: 1.3,
-                letterSpacing: -2
+                letterSpacing: -2,
+                textColor: textColor
             )
         }
         
-        static func titleH2(text: String) -> NSAttributedString {
+        static func titleH2(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Paperlogy-6SemiBold", size: 20)!,
                 lineHeight: 1.3,
-                letterSpacing: -2
+                letterSpacing: -2,
+                textColor: textColor
             )
         }
         
-        static func titleH3(text: String) -> NSAttributedString {
+        static func titleH3(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Paperlogy-6SemiBold", size: 18)!,
                 lineHeight: 1.3,
-                letterSpacing: -1
+                letterSpacing: -1,
+                textColor: textColor
             )
         }
         
-        static func bodyP1(text: String) -> NSAttributedString {
+        static func bodyP1(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Pretendard-Medium", size: 20)!,
                 lineHeight: 1.4,
-                letterSpacing: -1
+                letterSpacing: -1,
+                textColor: textColor
             )
         }
         
-        static func bodyP2(text: String) -> NSAttributedString {
+        static func bodyP2(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Pretendard-SemiBold", size: 18)!,
                 lineHeight: 1.4,
-                letterSpacing: 0
+                letterSpacing: 0,
+                textColor: textColor
             )
         }
         
-        static func bodyP3(text: String) -> NSAttributedString {
+        static func bodyP3(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Pretendard-Medium", size: 16)!,
                 lineHeight: 1.4,
-                letterSpacing: -0.5
+                letterSpacing: -0.5,
+                textColor: textColor
             )
         }
         
-        static func bodyP4(text: String) -> NSAttributedString {
+        static func bodyP4(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Pretendard-Medium", size: 14)!,
                 lineHeight: 1.4,
-                letterSpacing: -0.5
+                letterSpacing: -0.5,
+                textColor: textColor
             )
         }
         
-        static func bodyP5(text: String) -> NSAttributedString {
+        static func bodyP5(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Pretendard-Medium", size: 12)!,
                 lineHeight: 1.3,
-                letterSpacing: -1.25
+                letterSpacing: -1.25,
+                textColor: textColor
             )
         }
         
-        static func button18(text: String) -> NSAttributedString {
+        static func button18(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Paperlogy-6SemiBold", size: 18)!,
                 lineHeight: 1.3,
-                letterSpacing: 1.25
+                letterSpacing: 1.25,
+                textColor: textColor
             )
         }
         
-        static func button16(text: String) -> NSAttributedString {
+        static func button16(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Paperlogy-6SemiBold", size: 16)!,
                 lineHeight: 1.3,
-                letterSpacing: 4
+                letterSpacing: 4,
+                textColor: textColor
             )
         }
         
-        static func button14(text: String) -> NSAttributedString {
+        static func button14(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
                 font: UIFont(name: "Paperlogy-6SemiBold", size: 14)!,
                 lineHeight: 1.3,
-                letterSpacing: -0.5
+                letterSpacing: -0.5,
+                textColor: textColor
             )
         }
         
@@ -197,13 +208,13 @@ extension UIFont {
             text: String,
             font: UIFont,
             lineHeight: CGFloat,
-            letterSpacing: CGFloat
+            letterSpacing: CGFloat,
+            textColor: UIColor
         ) -> NSAttributedString {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.maximumLineHeight = font.lineHeight * lineHeight
             paragraphStyle.minimumLineHeight = font.lineHeight * lineHeight
             // https://sujinnaljin.medium.com/swift-label%EC%9D%98-line-height-%EC%84%A4%EC%A0%95-%EB%B0%8F-%EA%B0%80%EC%9A%B4%EB%8D%B0-%EC%A0%95%EB%A0%AC-962f7c6e7512여기서 LineHeight설정시 아래에 깔리는 문제 해결
-            let kernValue = letterSpacing * font.pointSize
             let letterSpacingPt = letterSpacing / UIScreen.main.scale // px -> pt 변환
 
             return NSAttributedString(
@@ -212,6 +223,7 @@ extension UIFont {
                     .font: font,
                     .paragraphStyle: paragraphStyle,
                     .kern: letterSpacingPt,
+                    .foregroundColor: textColor,
                     .baselineOffset: (font.lineHeight * lineHeight - font.lineHeight) / 2
                 ]
             )
@@ -285,42 +297,6 @@ extension UIImage {
     func resizedForProfile(to size: CGSize) -> UIImage {
         return UIGraphicsImageRenderer(size: size).image { _ in
             draw(in: CGRect(origin: .zero, size: size))
-        }
-    }
-    
-    func toURL() -> URL? {
-        // 로컬 임시 디렉토리에 저장할 파일 경로 생성
-        guard let data = self.jpegData(compressionQuality: 0.8) else { return nil }
-        let tempDirectory = FileManager.default.temporaryDirectory
-        let fileName = UUID().uuidString + ".jpg"
-        let fileURL = tempDirectory.appendingPathComponent(fileName)
-        
-        do {
-            // UIImage 데이터를 파일로 저장
-            try data.write(to: fileURL)
-            return fileURL
-        } catch {
-            print("이미지를 로컬 파일로 저장하는 중 오류 발생: \(error.localizedDescription)")
-            return nil
-        }
-    }
-}
-
-// MARK: - UIImageView
-
-extension UIImageView {
-    func setImage(from urlString: String?, placeholder: UIImage? = UIImage(named: "basic_profile_image")) {
-        // URL 검증 및 기본 이미지 설정
-        guard let urlString = urlString, !urlString.isEmpty else {
-            self.image = placeholder
-            return
-        }
-        
-        // ImageLoader를 통해 이미지 로드
-        ImageLoader.shared.loadImage(from: urlString) { [weak self] loadedImage in
-            DispatchQueue.main.async {
-                self?.image = loadedImage ?? placeholder
-            }
         }
     }
 }
@@ -414,7 +390,7 @@ extension View {
 // MARK: - UILabel
 
 extension UILabel {
-
+    // "... 더보기" 관련 로직
     func addTrailing(with trailingText: String, moreText: String, moreTextFont: UIFont, moreTextColor: UIColor) {
         guard let text = self.text, !text.isEmpty else { return }
 

@@ -33,7 +33,7 @@ class AccountLoginController: UIViewController {
     
     private func setupActions() {
         accountLoginView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
-        accountLoginView.findAccountButton.button.addTarget(self, action: #selector(findAccountButtonTapped), for: .touchUpInside)
+        accountLoginView.findAccountButton.addTarget(self, action: #selector(findAccountButtonTapped), for: .touchUpInside)
         accountLoginView.signupButton.addTarget(self, action: #selector(registerAccountButtonTapped), for: .touchUpInside)
         
         accountLoginView.emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -98,6 +98,6 @@ class AccountLoginController: UIViewController {
     private func updateStatus(label: UILabel?, message: String, isAvailable: Bool, textField: UITextField?) {
         label?.text = message
         label?.textColor = isAvailable ? .brandColor : .error
-        textField?.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.error.cgColor
+        textField?.layer.borderColor = isAvailable ? UIColor.brandMain.cgColor : UIColor.error.cgColor
     }
 }

@@ -34,7 +34,7 @@ class FeedArchiveViewController: UIViewController {
     
     // MARK: - Helpers
     private func setupNavigationBar() {
-        Utilities.createNavigationBar(for: self, title: "피드 보관함", backButtonAction: #selector(backButtonTapped))
+        configureNavigationBar(title: "피드 보관함", backButtonAction: #selector(backButtonTapped))
     }
     
     private func setupViewModel() {

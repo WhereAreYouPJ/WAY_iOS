@@ -79,8 +79,7 @@ class LocationBookmarkViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        Utilities.createNavigationBar(for: self, title: "위치 즐겨찾기", backButtonAction: #selector(backButtonTapped))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addButton)
+        configureNavigationBar(title: "위치 즐겨찾기", backButtonAction: #selector(backButtonTapped), rightButton: UIBarButtonItem(customView: addButton))
     }
     
     private func setupBindings() {
@@ -159,12 +158,6 @@ class LocationBookmarkViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
         view.addGestureRecognizer(tapGesture)
     }
-    
-//    private func setupOutsideTap() {
-//        view.hideWhenTappedOutside(ignoreViews: [locationBookmarkView.editingButton]) {
-//            self.locationBookmarkView.editingButton.isHidden = true
-//        }
-//    }
     
     private func updateServerOrder() {
         viewModel.putLocation()
