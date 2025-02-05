@@ -12,10 +12,12 @@ class CheckIDViewController: UIViewController {
     // MARK: - Propeties
     let accountCheckView = AccountCheckView()
     var email: String = ""
+    var emailType: [String] = []
     
     // MARK: - Lifecycle
-    init(email: String) {
+    init(email: String, emailType: [String]) {
         self.email = email
+        self.emailType = emailType
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -33,7 +35,7 @@ class CheckIDViewController: UIViewController {
     
     func setupUI() {
         configureNavigationBar(title: "계정 찾기", showBackButton: false)
-        accountCheckView.emailDescriptionLabel.text = email
+        accountCheckView.setupLogoImage(email: email, emailType: emailType)
     }
     
     func buttonActions() {

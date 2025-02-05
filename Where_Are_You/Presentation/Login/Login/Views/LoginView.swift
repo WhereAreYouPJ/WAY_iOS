@@ -58,7 +58,7 @@ class LoginView: UIView {
         return button
     }()
     
-    let accountLogin = TitleButton(title: UIFont.CustomFont.button16(text: "이메일 로그인", textColor: .brandDark), backgroundColor: .white, borderColor: UIColor.brandMain.cgColor, cornerRadius: 8)
+    let accountLogin = TitleButton(title: UIFont.CustomFont.button16(text: "이메일 로그인", textColor: .brandDark), backgroundColor: .white, borderColor: UIColor.brandMain.cgColor)
 
     private lazy var loginStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [kakaoLogin, appleLogin, accountLogin])

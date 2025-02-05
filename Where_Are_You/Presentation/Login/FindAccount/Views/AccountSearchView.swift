@@ -12,14 +12,13 @@ import SnapKit
 class AccountSearchView: UIView {
     // MARK: - Properties
     
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "지금어디에 가입했던 이메일을 입력해주세요.", textColor: .black22, fontSize: 22)
+    private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "온마이웨이에 가입했던 이메일을 \n입력해주세요.", textColor: .black22))
     
-    private let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이메일 주소", textColor: .color51, fontSize: 12)
+    private let emailLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 이메일 주소", textColor: .black22))
     
     let emailTextField = CustomTextField(placeholder: "이메일")
-//    Utilities.inputContainerTextField(withPlaceholder: "이메일")
     
-    let requestAuthButton = CustomButton(title: "인증요청", backgroundColor: .brandColor, titleColor: .white, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
+    let requestAuthButton = TitleButton(title: UIFont.CustomFont.button16(text: "인증요청", textColor: .white), backgroundColor: .brandMain, borderColor: nil)
     
     private lazy var emailBoxStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [emailTextField, requestAuthButton])
@@ -28,12 +27,7 @@ class AccountSearchView: UIView {
         return stackView
     }()
     
-    let emailErrorLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
-        label.adjustsFontForContentSizeCategory = true
-        return label
-    }()
+    let emailErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .black22))
     
     private lazy var emailStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [emailLabel, emailBoxStack, emailErrorLabel])
@@ -42,7 +36,6 @@ class AccountSearchView: UIView {
     }()
     
     let authNumberTextField = CustomTextField(placeholder: "인증코드 입력")
-//    Utilities.inputContainerTextField(withPlaceholder: "인증코드 입력")
     
     let timer: UILabel = {
         let label = UILabel()
@@ -52,7 +45,7 @@ class AccountSearchView: UIView {
         return label
     }()
     
-    let authNumberCheckButton = CustomButton(title: "확인", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
+    let authNumberCheckButton = TitleButton(title: UIFont.CustomFont.button16(text: "확인", textColor: .white), backgroundColor: .brandMain, borderColor: nil)
     
     private lazy var authBoxStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [authNumberTextField, authNumberCheckButton])
@@ -61,12 +54,7 @@ class AccountSearchView: UIView {
         return stackView
     }()
     
-    let authNumberErrorLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
-        label.adjustsFontForContentSizeCategory = true
-        return label
-    }()
+    let authNumberErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error))
     
     lazy var authStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [authBoxStack, authNumberErrorLabel])
@@ -81,7 +69,7 @@ class AccountSearchView: UIView {
         return stackView
     }()
     
-    let bottomButtonView = BottomButtonView(title: "확인")
+    let bottomButtonView = TitleButton(title: UIFont.CustomFont.button18(text: "확인", textColor: .white), backgroundColor: .brandMain, borderColor: nil)
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {
@@ -97,8 +85,8 @@ class AccountSearchView: UIView {
     
     private func configureViewComponents() {
         authStack.isHidden = true
-        bottomButtonView.button.updateBackgroundColor(.color171)
-        bottomButtonView.button.isEnabled = false
+        bottomButtonView.updateBackgroundColor(.color171)
+        bottomButtonView.isEnabled = false
         
         emailTextField.keyboardType = .emailAddress
         authNumberTextField.keyboardType = .numberPad
@@ -111,24 +99,23 @@ class AccountSearchView: UIView {
     
     private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(34)
-            make.leading.equalToSuperview().offset(15)
-            make.width.equalToSuperview().multipliedBy(0.763)
+            make.top.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 54))
+            make.leading.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 24))
         }
         
         timer.snp.makeConstraints { make in
             make.centerY.equalTo(authNumberTextField)
-            make.trailing.equalTo(authNumberTextField.snp.trailing).inset(11)
+            make.trailing.equalTo(authNumberTextField.snp.trailing).inset(LayoutAdapter.shared.scale(value: 11))
         }
         
         stack.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(30)
+            make.top.equalTo(titleLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 50))
             make.centerX.equalToSuperview()
             make.leading.equalTo(titleLabel)
         }
         
         requestAuthButton.snp.makeConstraints { make in
-            make.width.equalTo(stack).multipliedBy(0.29)
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 91))
         }
         
         authNumberCheckButton.snp.makeConstraints { make in
@@ -137,8 +124,9 @@ class AccountSearchView: UIView {
         
         bottomButtonView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(LayoutAdapter.shared.scale(value: 24))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 48))
         }
     }
 }

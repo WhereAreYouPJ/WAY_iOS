@@ -66,7 +66,7 @@ class TermsAgreementView: UIView {
         return stackView
     }()
     
-    let bottomButtonView = TitleButton(title: UIFont.CustomFont.button18(text: "동의하고 시작하기", textColor: .white), backgroundColor: .brandMain, borderColor: nil, cornerRadius: 8)
+    let bottomButtonView = TitleButton(title: UIFont.CustomFont.button18(text: "동의하고 시작하기", textColor: .white), backgroundColor: .brandMain, borderColor: nil)
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {

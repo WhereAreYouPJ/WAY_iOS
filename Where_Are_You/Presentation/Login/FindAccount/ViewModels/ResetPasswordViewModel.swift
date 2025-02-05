@@ -39,13 +39,13 @@ class ResetPasswordViewModel {
         if ValidationHelper.isValidPassword(pw) {
             onPasswordValidation?("", true)
         } else {
-            onPasswordValidation?("영문 대문자, 소문자로 시작하는 6~20자의 영문 대문자, 소문자, 숫자를 포함해 입력해주세요.", false)
+            onPasswordValidation?(" 영문 대문자, 소문자로 시작하는 6~20자의 영문 대문자, 소문자, 숫자를 \n 포함해 입력해주세요.", false)
         }
     }
     
     func checkSamePassword(pw: String, checkpw: String) {
         if ValidationHelper.isPasswordSame(pw, checkpw: checkpw) {
-            onPasswordCheck?("", true)
+            onPasswordCheck?("비밀번호가 일치합니다.", true)
         } else {
             onPasswordCheck?("비밀번호가 일치하지 않습니다.", false)
         }

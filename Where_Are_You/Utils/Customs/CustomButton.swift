@@ -27,14 +27,12 @@ class TitleButton: UIButton {
     private var buttonTitle: NSAttributedString
     private var buttonBackgroundColor: UIColor
     private var borderColor: CGColor?
-    private var cornerRadius: CGFloat
     
     // MARK: - Initializer
-    init(title: NSAttributedString, backgroundColor: UIColor, borderColor: CGColor?, cornerRadius: CGFloat?) {
+    init(title: NSAttributedString, backgroundColor: UIColor, borderColor: CGColor?) {
         self.buttonTitle = title
         self.buttonBackgroundColor = backgroundColor
         self.borderColor = borderColor
-        self.cornerRadius = cornerRadius ?? 0
         super.init(frame: .zero)
         setupButton()
     }
@@ -53,13 +51,21 @@ class TitleButton: UIButton {
         setAttributedTitle(buttonTitle, for: .normal)
 
         // 버튼 모서리 둥글게
-        layer.cornerRadius = cornerRadius
+        layer.cornerRadius = 8
         clipsToBounds = true
     }
     
     // MARK: - Public Methods
-    func updateTitle(_ title: NSAttributedString) {
-        self.textLabel.attributedText = title
+    func updateTitle(_ text: String) {
+        if let currentAttributedTitle = self.attributedTitle(for: .normal) {
+            // 현재 attributed title의 첫 번째 문자의 속성을 가져옴 (전체 텍스트에 동일한 속성이 적용되어 있다고 가정)
+            let attributes = currentAttributedTitle.attributes(at: 0, effectiveRange: nil)
+            let newAttributedTitle = NSAttributedString(string: text, attributes: attributes)
+            self.setAttributedTitle(newAttributedTitle, for: .normal)
+        } else {
+            // 만약 기존의 attributed title이 없다면 기본 설정으로 새 문자열 설정
+            self.setTitle(text, for: .normal)
+        }
     }
     
     func updateBackgroundColor(_ color: UIColor) {

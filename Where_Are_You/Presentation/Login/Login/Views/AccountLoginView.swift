@@ -46,7 +46,7 @@ class AccountLoginView: UIView {
         return stack
     }()
     
-    let loginButton = TitleButton(title: UIFont.CustomFont.button18(text: "로그인하기", textColor: .white), backgroundColor: .blackAC, borderColor: nil, cornerRadius: 8)
+    let loginButton = TitleButton(title: UIFont.CustomFont.button18(text: "로그인하기", textColor: .white), backgroundColor: .blackAC, borderColor: nil)
     
     let findAccountButton = StandardButton(text: UIFont.CustomFont.bodyP4(text: "계정찾기", textColor: .black66))
     

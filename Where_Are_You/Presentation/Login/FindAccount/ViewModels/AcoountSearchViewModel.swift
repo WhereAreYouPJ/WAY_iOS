@@ -15,13 +15,14 @@ class AcoountSearchViewModel {
     private let checkEmailUseCase: CheckEmailUseCase
     private let timerHelper = TimerHelper()
     private var email: String = ""
+    private var emailType: [String] = []
     
     // Output
     var onRequestCodeSuccess: ((String) -> Void)?
     var onRequestCodeFailure: ((String) -> Void)?
     var onVerifyCodeSuccess: ((String) -> Void)?
     var onVerifyCodeFailure: ((String) -> Void)?
-    var onAccountSearchSuccess: ((String) -> Void)?
+    var onAccountSearchSuccess: ((String, [String]) -> Void)?
     var onAccountSearchFailure: (() -> Void)?
     
     var onUpdateTimer: ((String) -> Void)?
@@ -46,11 +47,12 @@ class AcoountSearchViewModel {
     func checkEmailAvailability(email: String) {
         checkEmailUseCase.execute(email: email) { result in
             switch result {
-            case .success:
-                self.onRequestCodeFailure?("\(ValidationError.invalidEmailFormat)")
-            case .failure:
+            case .success(let data):
                 self.timerHelper.startTimer()
-                self.requestEmailCode(email: email)
+                self.requestEmailCode(email: data.email)
+                self.emailType = data.type
+            case .failure:
+                self.onRequestCodeFailure?("\(ValidationError.invalidEmailFormat)")
             }
         }
     }
@@ -59,25 +61,25 @@ class AcoountSearchViewModel {
         emailSendUseCase.execute(email: email) { [weak self] result in
             switch result {
             case .success:
-                self?.onRequestCodeSuccess?("인증코드가 전송되었습니다.")
+                self?.onRequestCodeSuccess?(" 인증코드가 전송되었습니다.")
                 self?.email = email
                 self?.timerHelper.startTimer()
             case .failure:
-                self?.onRequestCodeFailure?("입력한 이메일 주소를 다시 확인해주세요.")
+                self?.onRequestCodeFailure?(" 입력한 이메일 주소를 다시 확인해주세요.")
             }
         }
     }
     
     func verifyEmailCode(code: String) {
         if timerHelper.timerCount == 0 {
-            self.onVerifyCodeFailure?("이메일 재인증 요청이 필요합니다.")
+            self.onVerifyCodeFailure?(" 이메일 재인증 요청이 필요합니다.")
         } else {
             emailVerifyUseCase.execute(request: EmailVerifyBody(email: email, code: code)) { result in
                 switch result {
                 case .success:
-                    self.onVerifyCodeSuccess?("인증코드가 확인되었습니다.")
+                    self.onVerifyCodeSuccess?(" 인증코드가 확인되었습니다.")
                 case .failure:
-                    self.onVerifyCodeFailure?("인증코드가 알맞지 않습니다.")
+                    self.onVerifyCodeFailure?(" 인증코드가 알맞지 않습니다.")
                 }
             }
         }
@@ -85,8 +87,7 @@ class AcoountSearchViewModel {
     
     func okayToMove() {
         if !email.isEmpty {
-            // TODO: 추후에 어떤 방식으로 회원가입을 했는지 확인하는 API추가해서 그 정보를 다음페이지로 넘기기
-            onAccountSearchSuccess?(email)
+            onAccountSearchSuccess?(email, emailType)
         } else {
             onAccountSearchFailure?()
         }
