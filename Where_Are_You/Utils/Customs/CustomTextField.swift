@@ -15,7 +15,7 @@ class CustomTextField: UITextField {
     private var textPadding: UIEdgeInsets
     private var hasBorder: Bool
     
-    init(textPadding: UIEdgeInsets = UIEdgeInsets(top: 14, left: 12, bottom: 14, right: 12),
+    init(textPadding: UIEdgeInsets = UIEdgeInsets(top: 0, left: LayoutAdapter.shared.scale(value: 12), bottom: 0, right: LayoutAdapter.shared.scale(value: 12)),
          placeholder: String,
          hasBorder: Bool = true) {
         self.textPadding = textPadding
@@ -26,7 +26,7 @@ class CustomTextField: UITextField {
     }
     
     required init?(coder: NSCoder) {
-        self.textPadding = UIEdgeInsets(top: 14, left: 12, bottom: 14, right: 12)
+        self.textPadding = UIEdgeInsets(top: 0, left: LayoutAdapter.shared.scale(value: 12), bottom: 0, right: LayoutAdapter.shared.scale(value: 12))
         self.hasBorder = true
         super.init(coder: coder)
         setupTextField(placeholder: nil)
@@ -53,8 +53,31 @@ class CustomTextField: UITextField {
         }
     }
     
+    // MARK: - 포커스 상태에 따른 border 색상 변경
+    override func becomeFirstResponder() -> Bool {
+        let result = super.becomeFirstResponder()
+        if result && hasBorder {
+            // 텍스트 필드가 포커스를 받으면 border 색상을 brandMain 컬러로 변경
+            layer.borderColor = UIColor.brandMain.cgColor
+        }
+        return result
+    }
+    
+    override func resignFirstResponder() -> Bool {
+        let result = super.resignFirstResponder()
+        if result && hasBorder {
+            // 텍스트 필드의 포커스가 해제되면 border 색상을 기본인 blackD4 컬러로 변경
+            layer.borderColor = UIColor.blackD4.cgColor
+        }
+        return result
+    }
+    
     func setBorderColor(_ color: UIColor) {
         layer.borderColor = color.cgColor
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: UIView.noIntrinsicMetric, height: LayoutAdapter.shared.scale(value: 44))
     }
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {

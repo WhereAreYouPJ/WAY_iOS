@@ -42,11 +42,9 @@ class AccountSearchViewController: UIViewController {
         // 인증코드 요청 성공
         viewModel.onRequestCodeSuccess = { [weak self] message in
             DispatchQueue.main.async {
-                self?.accountSearchView.emailErrorLabel.text = message
-                self?.accountSearchView.emailErrorLabel.textColor = .brandColor
+                self?.accountSearchView.emailErrorLabel.updateText(UIFont.CustomFont.bodyP5(text: message, textColor: .brandMain))
                 self?.accountSearchView.authStack.isHidden = false
-                self?.accountSearchView.requestAuthButton.updateTitle("인증요청 완료")
-                self?.accountSearchView.requestAuthButton.updateBackgroundColor(.color171)
+                self?.accountSearchView.requestAuthButton.updateBackgroundColor(.blackAC)
                 self?.accountSearchView.requestAuthButton.isEnabled = false
             }
         }
@@ -54,36 +52,35 @@ class AccountSearchViewController: UIViewController {
         // 인증코드 요청 실패
         viewModel.onRequestCodeFailure = { [weak self] message in
             DispatchQueue.main.async {
-                self?.accountSearchView.emailErrorLabel.text = message
-                self?.accountSearchView.emailErrorLabel.textColor = .error
+                self?.accountSearchView.emailErrorLabel.updateText(UIFont.CustomFont.bodyP5(text: message, textColor: .error))
             }
         }
         
         // 인증코드 확인 성공
         viewModel.onVerifyCodeSuccess = { [weak self] message in
             DispatchQueue.main.async {
-                self?.accountSearchView.authNumberErrorLabel.text = message
-                self?.accountSearchView.authNumberErrorLabel.textColor = .brandColor
+                self?.accountSearchView.authNumberErrorLabel.updateText(UIFont.CustomFont.bodyP5(text: message, textColor: .brandMain))
+                self?.accountSearchView.authNumberTextField.layer.borderColor = UIColor.brandMain.cgColor
                 self?.accountSearchView.authNumberCheckButton.updateTitle("인증 완료")
-                self?.accountSearchView.authNumberCheckButton.updateBackgroundColor(.color171)
+                self?.accountSearchView.authNumberCheckButton.updateBackgroundColor(.blackAC)
                 self?.accountSearchView.authNumberCheckButton.isEnabled = false
-                self?.accountSearchView.bottomButtonView.button.isEnabled = true
-                self?.accountSearchView.bottomButtonView.button.updateBackgroundColor(.brandColor)
+                self?.accountSearchView.bottomButtonView.isEnabled = true
+                self?.accountSearchView.bottomButtonView.updateBackgroundColor(.brandMain)
             }
         }
         
         // 인증코드 확인 실패
         viewModel.onVerifyCodeFailure = { [weak self] message in
             DispatchQueue.main.async {
-                self?.accountSearchView.authNumberErrorLabel.text = message
-                self?.accountSearchView.authNumberErrorLabel.textColor = .error
+                self?.accountSearchView.authNumberErrorLabel.updateText(UIFont.CustomFont.bodyP5(text: message, textColor: .error))
+                self?.accountSearchView.authNumberTextField.layer.borderColor = UIColor.error.cgColor
             }
         }
         
         // 아이디 찾기 성공
-        viewModel.onAccountSearchSuccess = { [weak self] email in
+        viewModel.onAccountSearchSuccess = { [weak self] email, emailType in
             DispatchQueue.main.async {
-                let controller = CheckIDViewController(email: email)
+                let controller = CheckIDViewController(email: email, emailType: emailType)
                 let nav = UINavigationController(rootViewController: controller)
                 nav.modalPresentationStyle = .fullScreen
                 self?.present(nav, animated: true, completion: nil)
@@ -99,7 +96,7 @@ class AccountSearchViewController: UIViewController {
     }
     
     private func setupActions() {
-        accountSearchView.bottomButtonView.button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
+        accountSearchView.bottomButtonView.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
         accountSearchView.requestAuthButton.addTarget(self, action: #selector(requestAuthCodeTapped), for: .touchUpInside)
         accountSearchView.authNumberCheckButton.addTarget(self, action: #selector(findUserId), for: .touchUpInside)
     }

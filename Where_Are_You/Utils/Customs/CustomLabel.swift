@@ -20,6 +20,10 @@ class StandardLabel: UILabel {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func updateText(_ text: NSAttributedString) {
+        self.attributedText = text
+    }
 }
 
 // inputContainerLabel

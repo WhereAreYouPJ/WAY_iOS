@@ -97,7 +97,7 @@ extension UIFont {
         static func titleH1(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
-                font: UIFont(name: "Paperlogy-6SemiBold", size: LayoutAdapter.shared.scale(value: 22))!,
+                font: UIFont(name: "Paperlogy-6SemiBold", size: 22)!,
                 lineHeight: 1.3,
                 letterSpacing: -2,
                 textColor: textColor
@@ -107,7 +107,7 @@ extension UIFont {
         static func titleH2(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
-                font: UIFont(name: "Paperlogy-6SemiBold", size: LayoutAdapter.shared.scale(value: 20))!,
+                font: UIFont(name: "Paperlogy-6SemiBold", size: 20)!,
                 lineHeight: 1.3,
                 letterSpacing: -2,
                 textColor: textColor
@@ -117,7 +117,7 @@ extension UIFont {
         static func titleH3(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
-                font: UIFont(name: "Paperlogy-6SemiBold", size: LayoutAdapter.shared.scale(value: 18))!,
+                font: UIFont(name: "Paperlogy-6SemiBold", size: 18)!,
                 lineHeight: 1.3,
                 letterSpacing: -1,
                 textColor: textColor
@@ -127,7 +127,7 @@ extension UIFont {
         static func bodyP1(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
-                font: UIFont(name: "Pretendard-Medium", size: LayoutAdapter.shared.scale(value: 20))!,
+                font: UIFont(name: "Pretendard-Medium", size: 20)!,
                 lineHeight: 1.4,
                 letterSpacing: -1,
                 textColor: textColor
@@ -137,7 +137,7 @@ extension UIFont {
         static func bodyP2(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
-                font: UIFont(name: "Pretendard-SemiBold", size: LayoutAdapter.shared.scale(value: 18))!,
+                font: UIFont(name: "Pretendard-SemiBold", size: 18)!,
                 lineHeight: 1.4,
                 letterSpacing: 0,
                 textColor: textColor
@@ -147,7 +147,7 @@ extension UIFont {
         static func bodyP3(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
-                font: UIFont(name: "Pretendard-Medium", size: LayoutAdapter.shared.scale(value: 16))!,
+                font: UIFont(name: "Pretendard-Medium", size: 16)!,
                 lineHeight: 1.4,
                 letterSpacing: -0.5,
                 textColor: textColor
@@ -157,7 +157,7 @@ extension UIFont {
         static func bodyP4(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
-                font: UIFont(name: "Pretendard-Medium", size: LayoutAdapter.shared.scale(value: 14))!,
+                font: UIFont(name: "Pretendard-Medium", size: 14)!,
                 lineHeight: 1.4,
                 letterSpacing: -0.5,
                 textColor: textColor
@@ -167,7 +167,7 @@ extension UIFont {
         static func bodyP5(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
-                font: UIFont(name: "Pretendard-Medium", size: LayoutAdapter.shared.scale(value: 12))!,
+                font: UIFont(name: "Pretendard-Medium", size: 12)!,
                 lineHeight: 1.3,
                 letterSpacing: -1.25,
                 textColor: textColor
@@ -177,7 +177,7 @@ extension UIFont {
         static func button18(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
-                font: UIFont(name: "Paperlogy-6SemiBold", size: LayoutAdapter.shared.scale(value: 18))!,
+                font: UIFont(name: "Paperlogy-6SemiBold", size: 18)!,
                 lineHeight: 1.3,
                 letterSpacing: 1.25,
                 textColor: textColor
@@ -187,7 +187,7 @@ extension UIFont {
         static func button16(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
-                font: UIFont(name: "Paperlogy-6SemiBold", size: LayoutAdapter.shared.scale(value: 16))!,
+                font: UIFont(name: "Paperlogy-6SemiBold", size: 16)!,
                 lineHeight: 1.3,
                 letterSpacing: 4,
                 textColor: textColor
@@ -197,7 +197,7 @@ extension UIFont {
         static func button14(text: String, textColor: UIColor) -> NSAttributedString {
             return attributedFont(
                 text: text,
-                font: UIFont(name: "Paperlogy-6SemiBold", size: LayoutAdapter.shared.scale(value: 14))!,
+                font: UIFont(name: "Paperlogy-6SemiBold", size: 14)!,
                 lineHeight: 1.3,
                 letterSpacing: -0.5,
                 textColor: textColor

@@ -66,11 +66,6 @@ class Utilities {
         let attributedTitle = NSMutableAttributedString(attributedString: firstAttributedString)
         attributedTitle.append(NSAttributedString(attributedString: secondAttributedString))
         
-        
-//        let attributedTitle = NSMutableAttributedString(string: firstPart, attributes: [NSAttributedString.Key.font: UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14)), NSAttributedString.Key.foregroundColor: UIColor.color153])
-//        
-//        attributedTitle.append(NSAttributedString(string: secondPart, attributes: [NSAttributedString.Key.font: UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14)), NSAttributedString.Key.foregroundColor: UIColor.black66]))
-        
         button.setAttributedTitle(attributedTitle, for: .normal)
         button.titleLabel?.adjustsFontForContentSizeCategory = true
         return button

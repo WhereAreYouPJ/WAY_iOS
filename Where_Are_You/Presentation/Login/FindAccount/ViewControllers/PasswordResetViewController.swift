@@ -41,8 +41,9 @@ class PasswordResetViewController: UIViewController {
     private func setupUI() {
         view = passwordResetView
         configureNavigationBar(title: "비밀번호 재설정", backButtonAction: #selector(backButtonTapped))
-        passwordResetView.bottomButtonView.button.isEnabled = false
-        passwordResetView.bottomButtonView.button.backgroundColor = .color171
+        passwordResetView.checkStack.isHidden = true
+        passwordResetView.bottomButtonView.isEnabled = false
+        passwordResetView.bottomButtonView.backgroundColor = .color171
     }
     
     private func setupViewmodel() {
@@ -57,11 +58,9 @@ class PasswordResetViewController: UIViewController {
         viewModel.onPasswordValidation = { [weak self] message, result in
             DispatchQueue.main.async {
                 self?.isPasswordValidate = result
-                self?.passwordResetView.resetPasswordDescription.text = message
-                if result == false {
-                    self?.passwordResetView.resetPasswordDescription.textColor = .error
-
-                }
+                self?.passwordResetView.resetPasswordDescription.updateText(UIFont.CustomFont.bodyP5(text: message, textColor: result == false ? .error : .brandMain))
+                self?.passwordResetView.resetPasswordTextField.layer.borderColor = result == false ? UIColor.error.cgColor : UIColor.blackD4.cgColor
+                self?.passwordResetView.checkStack.isHidden = !result
                 self?.updateResetButtonState()
             }
         }
@@ -69,10 +68,8 @@ class PasswordResetViewController: UIViewController {
         viewModel.onPasswordCheck = { [weak self] message, result in
             DispatchQueue.main.async {
                 self?.isPasswordCheck = result
-                self?.passwordResetView.checkPasswordDescription.text = message
-                if result == false {
-                    self?.passwordResetView.checkPasswordDescription.textColor = .error
-                }
+                self?.passwordResetView.checkPasswordDescription.updateText(UIFont.CustomFont.bodyP5(text: message, textColor: result == false ? .error : .brandMain))
+                self?.passwordResetView.checkPasswordTextField.layer.borderColor = result == false ? UIColor.error.cgColor : UIColor.brandMain.cgColor
                 self?.updateResetButtonState()
             }
         }
@@ -88,7 +85,7 @@ class PasswordResetViewController: UIViewController {
     private func setupActions() {
         passwordResetView.resetPasswordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         passwordResetView.checkPasswordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        passwordResetView.bottomButtonView.button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
+        passwordResetView.bottomButtonView.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Selectors
@@ -119,11 +116,11 @@ class PasswordResetViewController: UIViewController {
     
     private func updateResetButtonState() {
         if isPasswordValidate && isPasswordCheck {
-            passwordResetView.bottomButtonView.button.backgroundColor = .brandColor
-            passwordResetView.bottomButtonView.button.isEnabled = true
+            passwordResetView.bottomButtonView.updateBackgroundColor(.brandMain)
+            passwordResetView.bottomButtonView.isEnabled = true
         } else {
-            passwordResetView.bottomButtonView.button.backgroundColor = .color171
-            passwordResetView.bottomButtonView.button.isEnabled = false
+            passwordResetView.bottomButtonView.updateBackgroundColor(.blackAC)
+            passwordResetView.bottomButtonView.isEnabled = false
         }
     }
 }
