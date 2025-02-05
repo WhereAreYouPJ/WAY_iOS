@@ -10,9 +10,11 @@ import UIKit
 class MyDetailManageView: UIView {
     // MARK: - Properties
     let modifyButton = CustomOptionButtonView(title: "수정하기")
+    
     let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이름", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
+    
     let userNameTextField = CustomTextField(placeholder: "")
-//    Utilities.inputContainerTextField(withPlaceholder: "")
+
     let userNameErrorLabel = CustomLabel(UILabel_NotoSans: .medium, text: "최소 1자 이상 입력해 주세요.", textColor: .error, fontSize: LayoutAdapter.shared.scale(value: 12))
     
     lazy var userNameStack: UIStackView = {
@@ -22,8 +24,9 @@ class MyDetailManageView: UIView {
     }()
     
     let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이메일 주소", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
+    
     let emailTextfield =  CustomTextField(placeholder: "")
-//    Utilities.inputContainerTextField(withPlaceholder: "")
+    
     let updateDetailButton = CustomButton(title: "수정하기", backgroundColor: .color171, titleColor: .white, font: UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 18)))
     
     // MARK: - Lifecycle
