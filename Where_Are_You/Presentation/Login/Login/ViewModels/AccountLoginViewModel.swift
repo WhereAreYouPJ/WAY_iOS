@@ -23,8 +23,10 @@ class AccountLoginViewModel {
             switch result {
             case .success:
                 self.onLoginSuccess?()
-            case .failure:
-                self.onLoginFailure?("입력한 회원 정보를 다시 확인해주세요.", false)
+            case .failure(let error):
+                if let apiError = error as? APIError {
+                    self.onLoginFailure?(apiError.localizedDescription, false)
+                }
             }
         }
     }

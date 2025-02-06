@@ -11,9 +11,9 @@ import SnapKit
 class AccountCheckView: UIView {
     // MARK: - Properties
     
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "회원님의 가입정보를 \n확인해주세요", textColor: .black22, fontSize: 22)
+    private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "회원님의 가입정보를 \n확인해주세요", textColor: .black22))
     
-    private let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "회원님의 가입정보와 일치하는 이메일 주소는", textColor: .black22, fontSize: 14)
+    private let emailLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "회원님의 가입정보와 일치하는 이메일 주소는", textColor: .black22))
     
     let accountImage: UIImageView = {
         let imageView = UIImageView()
@@ -21,32 +21,28 @@ class AccountCheckView: UIView {
         return imageView
     }()
     
-    var emailDescriptionLabel = CustomLabel(UILabel_NotoSans: .bold, text: "", textColor: .letterBrandColor, fontSize: 18)
+    var emailDescriptionLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "", textColor: .brandDark))
     
-    private let emailLabel2 = CustomLabel(UILabel_NotoSans: .medium, text: "입니다.", textColor: .black22, fontSize: 14)
+    private let emailLabel2 = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "입니다.", textColor: .black22))
     
     private lazy var emailDescriptionStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [accountImage, emailDescriptionLabel, emailLabel2])
         stackView.axis = .horizontal
+        stackView.spacing = 5
         return stackView
     }()
     
     private let separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = .color231
+        view.backgroundColor = .blackD4
         return view
     }()
     
-    private let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: "로그인 또는 비밀번호 찾기 버튼을 눌러주세요.", textColor: .black66, fontSize: 14)
+    private let descriptionLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "로그인 또는 비밀번호 찾기 버튼을 눌러주세요.", textColor: .black66))
     
-    let loginButton = CustomButton(title: "로그인하기", backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
+    let loginButton = TitleButton(title: UIFont.CustomFont.button18(text: "로그인하기", textColor: .white), backgroundColor: .brandMain, borderColor: nil)
     
-    let searchPasswordButton: UIButton = {
-        let button = CustomButton(title: "비밀번호 재설정", backgroundColor: .white, titleColor: .letterBrandColor, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
-        button.layer.borderColor = UIColor.brandColor.cgColor
-        button.layer.borderWidth = 1
-        return button
-    }()
+    let searchPasswordButton = TitleButton(title: UIFont.CustomFont.button18(text: "비밀번호 재설정", textColor: .brandDark), backgroundColor: .white, borderColor: UIColor.brandMain.cgColor)
     
     private lazy var buttonStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [loginButton, searchPasswordButton])
@@ -81,44 +77,49 @@ class AccountCheckView: UIView {
     
     private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(34)
-            make.leading.equalToSuperview().offset(15)
-//            make.width.equalToSuperview().multipliedBy(0.48)
+            make.top.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 54))
+            make.leading.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 24))
         }
         
         emailLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(41)
-            make.leading.equalToSuperview().inset(15)
+            make.top.equalTo(titleLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 40))
+            make.leading.equalTo(titleLabel.snp.leading)
         }
         
         emailDescriptionStack.snp.makeConstraints { make in
-            make.top.equalTo(emailLabel.snp.bottom)
+            make.top.equalTo(emailLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 10))
             make.leading.equalTo(emailLabel.snp.leading)
         }
         
         accountImage.snp.makeConstraints { make in
-            make.height.width.equalTo(40)
+            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 32))
         }
         
         separatorView.snp.makeConstraints { make in
             make.height.equalTo(1)
             make.centerX.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(15)
-            make.top.equalTo(emailDescriptionStack.snp.bottom).offset(6)
+            make.leading.equalTo(titleLabel.snp.leading)
+            make.top.equalTo(emailDescriptionStack.snp.bottom).offset(LayoutAdapter.shared.scale(value: 12))
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(separatorView.snp.bottom).offset(12)
-            make.leading.equalToSuperview().inset(15)
+            make.top.equalTo(separatorView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 12))
+            make.leading.equalTo(titleLabel.snp.leading)
         }
         
         loginButton.snp.makeConstraints { make in
-            make.height.equalTo(buttonStack.snp.width).multipliedBy(0.14)
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 48))
         }
         
         buttonStack.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(15)
+            make.centerX.equalToSuperview()
+            make.leading.equalTo(titleLabel.snp.leading)
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(24)
         }
+    }
+    
+    func setupLogoImage(email: String, emailType: [String]) {
+        emailDescriptionLabel.attributedText = UIFont.CustomFont.bodyP3(text: email, textColor: .brandDark)
+        // TODO: checkEmail에서 받아오는 emailType으로 어떤 로고가 떠야하는지 기획, 디자인쪽 결정 나면 추가하기
     }
 }

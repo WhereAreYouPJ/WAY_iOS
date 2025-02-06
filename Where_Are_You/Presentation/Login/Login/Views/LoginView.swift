@@ -58,12 +58,12 @@ class LoginView: UIView {
         return button
     }()
     
-    let accountLogin = TitleButton(title: UIFont.CustomFont.button14(text: "이메일 로그인", textColor: .brandDark), backgroundColor: .white, borderColor: UIColor.brandMain.cgColor, cornerRadius: 8)
+    let accountLogin = TitleButton(title: UIFont.CustomFont.button16(text: "이메일 로그인", textColor: .brandDark), backgroundColor: .white, borderColor: UIColor.brandMain.cgColor)
 
     private lazy var loginStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [kakaoLogin, appleLogin, accountLogin])
         stackView.axis = .vertical
-        stackView.spacing = 10
+        stackView.spacing = 9
         stackView.distribution = .fillEqually
         return stackView
     }()
@@ -106,35 +106,27 @@ class LoginView: UIView {
     private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(safeAreaLayoutGuide).offset(LayoutAdapter.shared.scale(value: 150))
+            make.top.equalTo(safeAreaLayoutGuide).offset(LayoutAdapter.shared.scale(value: 141))
         }
         
         subtitleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(titleLabel.snp.bottom)
+            make.top.equalTo(titleLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 12))
         }
         
         loginStack.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(subtitleLabel.snp.bottom).offset(46)
-            make.leading.equalToSuperview().inset(24)
+            make.top.equalTo(subtitleLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 41.8))
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
         }
         
         kakaoLogin.snp.makeConstraints { make in
-            make.height.equalTo(48)
-        }
-        
-        appleLogin.snp.makeConstraints { make in
-            make.height.equalTo(48)
-        }
-        
-        accountLogin.snp.makeConstraints { make in
-            make.height.equalTo(48)
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 48))
         }
         
         separatorLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(loginStack.snp.bottom).offset(20)
+            make.top.equalTo(loginStack.snp.bottom).offset(LayoutAdapter.shared.scale(value: 52))
         }
         
         setupLine(relatedView: separatorLabel, anchor: .leading, height: 1, width: LayoutAdapter.shared.scale(value: 100))
@@ -142,7 +134,7 @@ class LoginView: UIView {
         
         buttonStack.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(separatorLabel.snp.bottom).offset(16)
+            make.top.equalTo(separatorLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 18))
         }
         
         setupLine(relatedView: findAccountButton, anchor: .leading, height: 14, width: 1)

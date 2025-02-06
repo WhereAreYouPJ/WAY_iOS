@@ -11,50 +11,40 @@ import SnapKit
 class PasswordResetView: UIView {
     // MARK: - Properties
     
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "회원님의 비밀번호를 재설정해주세요", textColor: .black22, fontSize: 22)
+    private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "회원님의 비밀번호를 재설정해주세요.", textColor: .black22))
     
-    private let passwordLabel = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: 12)
+    private let passwordLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "비밀번호", textColor: .black22))
     
     let resetPasswordTextField = CustomTextField(placeholder: "비밀번호")
-//    Utilities.inputContainerTextField(withPlaceholder: "비밀번호")
     
-    let resetPasswordDescription: UILabel = {
-        let label = UILabel()
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
-        label.adjustsFontForContentSizeCategory = true
-        return label
-    }()
+    let resetPasswordDescription = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 영문 대소문자로 시작하는 6~20자의 영문 대소문자, 숫자를 \n 포함해 입력해주세요.", textColor: .brandMain))
     
     private lazy var resetStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [passwordLabel, resetPasswordTextField, resetPasswordDescription])
         stackView.axis = .vertical
+        stackView.spacing = 4
         return stackView
     }()
     
     let checkPasswordTextField = CustomTextField(placeholder: "비밀번호 확인")
-//    Utilities.inputContainerTextField(withPlaceholder: "비밀번호 확인")
     
-    let checkPasswordDescription: UILabel = {
-        let label = UILabel()
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
-        label.adjustsFontForContentSizeCategory = true
-        return label
-    }()
+    let checkPasswordDescription = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "비밀번호가 일치하지 않습니다.", textColor: .error))
     
-    private lazy var checkStack: UIStackView = {
+    lazy var checkStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [checkPasswordTextField, checkPasswordDescription])
         stackView.axis = .vertical
+        stackView.spacing = 4
         return stackView
     }()
     
     private lazy var stack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [resetStack, checkStack])
-        stackView.spacing = 10
+        stackView.spacing = 6
         stackView.axis = .vertical
         return stackView
     }()
     
-    let bottomButtonView = BottomButtonView(title: "확인")
+    let bottomButtonView = TitleButton(title: UIFont.CustomFont.button18(text: "확인", textColor: .white), backgroundColor: .blackAC, borderColor: nil)
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {
@@ -80,21 +70,21 @@ class PasswordResetView: UIView {
     
     private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(34)
-            make.leading.equalToSuperview().offset(15)
-            make.width.equalToSuperview().multipliedBy(0.533)
+            make.top.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 54))
+            make.leading.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 24))
         }
         
         stack.snp.makeConstraints { make in
-            make.leading.equalTo(titleLabel)
+            make.leading.equalTo(titleLabel.snp.leading)
             make.centerX.equalToSuperview()
-            make.top.equalTo(titleLabel.snp.bottom).offset(30)
+            make.top.equalTo(titleLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 50))
         }
         
         bottomButtonView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+            make.leading.equalTo(titleLabel.snp.leading)
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 48))
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(24)
         }
     }
 }

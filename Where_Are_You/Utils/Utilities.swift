@@ -38,7 +38,10 @@ class Utilities {
             viewController.navigationItem.rightBarButtonItem = rightButton
         }
         
-        viewController.navigationItem.title = title
+        let titleLabel = UILabel()
+        titleLabel.attributedText = UIFont.CustomFont.bodyP2(text: title, textColor: .black22) // 원하는 텍스트 색상 적용
+        titleLabel.sizeToFit()
+        viewController.navigationItem.titleView = titleLabel
     }
     
     // TextField with placeholder
@@ -62,11 +65,6 @@ class Utilities {
         // NSAttributedString을 NSMutableAttributedString으로 변환 후 조합
         let attributedTitle = NSMutableAttributedString(attributedString: firstAttributedString)
         attributedTitle.append(NSAttributedString(attributedString: secondAttributedString))
-        
-        
-//        let attributedTitle = NSMutableAttributedString(string: firstPart, attributes: [NSAttributedString.Key.font: UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14)), NSAttributedString.Key.foregroundColor: UIColor.color153])
-//        
-//        attributedTitle.append(NSAttributedString(string: secondPart, attributes: [NSAttributedString.Key.font: UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14)), NSAttributedString.Key.foregroundColor: UIColor.black66]))
         
         button.setAttributedTitle(attributedTitle, for: .normal)
         button.titleLabel?.adjustsFontForContentSizeCategory = true

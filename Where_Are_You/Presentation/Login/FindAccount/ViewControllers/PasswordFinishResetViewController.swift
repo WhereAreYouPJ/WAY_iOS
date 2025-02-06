@@ -31,7 +31,6 @@ class PasswordFinishResetViewController: UIViewController {
     // MARK: - Helpers
 
     func buttonActions() {
-        passwordFinishResetView.bottomButtonView.button.addTarget(self, action: #selector(goToLogin), for: .touchUpInside)
+        passwordFinishResetView.bottomButtonView.addTarget(self, action: #selector(goToLogin), for: .touchUpInside)
     }
-    
 }

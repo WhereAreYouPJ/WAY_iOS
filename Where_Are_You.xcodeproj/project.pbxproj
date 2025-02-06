@@ -207,6 +207,8 @@
 		99EC78D22C11E437007C4415 /* PasswordFinishResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC78D12C11E437007C4415 /* PasswordFinishResetViewController.swift */; };
 		99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC78D32C11E809007C4415 /* FinishRegisterview.swift */; };
 		99EC78D62C11E8A3007C4415 /* FinishRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EC78D52C11E8A3007C4415 /* FinishRegisterViewController.swift */; };
+		99EDD14F2D49EE5C005164FB /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDD14E2D49EE5B005164FB /* APIError.swift */; };
+		99EDD1512D49F003005164FB /* ServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDD1502D49F003005164FB /* ServerError.swift */; };
 		99EDF5822CE862120008B19A /* MemberSnsBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF5812CE862120008B19A /* MemberSnsBody.swift */; };
 		99EDF5842CE864180008B19A /* DeleteMemberBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF5832CE864180008B19A /* DeleteMemberBody.swift */; };
 		99EDF5862CE873EB0008B19A /* ModifyProfileImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF5852CE873EB0008B19A /* ModifyProfileImageUseCase.swift */; };
@@ -554,6 +556,8 @@
 		99EC78D12C11E437007C4415 /* PasswordFinishResetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordFinishResetViewController.swift; sourceTree = "<group>"; };
 		99EC78D32C11E809007C4415 /* FinishRegisterview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishRegisterview.swift; sourceTree = "<group>"; };
 		99EC78D52C11E8A3007C4415 /* FinishRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishRegisterViewController.swift; sourceTree = "<group>"; };
+		99EDD14E2D49EE5B005164FB /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		99EDD1502D49F003005164FB /* ServerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerError.swift; sourceTree = "<group>"; };
 		99EDF5812CE862120008B19A /* MemberSnsBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSnsBody.swift; sourceTree = "<group>"; };
 		99EDF5832CE864180008B19A /* DeleteMemberBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteMemberBody.swift; sourceTree = "<group>"; };
 		99EDF5852CE873EB0008B19A /* ModifyProfileImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyProfileImageUseCase.swift; sourceTree = "<group>"; };
@@ -1177,6 +1181,8 @@
 				D55C6C412CF5B8D7005132DC /* NavigationBarModifier.swift */,
 				99E401242D0D6CD900A63304 /* FeedOptionsHandler.swift */,
 				D5AB2EE12D548E0D009E6741 /* MyLocation.gpx */,
+				99EDD14E2D49EE5B005164FB /* APIError.swift */,
+				99EDD1502D49F003005164FB /* ServerError.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2092,6 +2098,7 @@
 				9910B8522C71EAA4005F7EEE /* ScheduleDropDownCell.swift in Sources */,
 				99EDF5822CE862120008B19A /* MemberSnsBody.swift in Sources */,
 				D534B0F92D06EFB6004864E0 /* PostCoordinateBody.swift in Sources */,
+				99EDD14F2D49EE5C005164FB /* APIError.swift in Sources */,
 				99647EEB2D33A1A700D63B4B /* ReagreementAcountDeletionViewController.swift in Sources */,
 				99D8FBBB2C3BA1D90062AF10 /* MainHomeViewController.swift in Sources */,
 				99D8FBB52C3B9F9F0062AF10 /* MainHomeView.swift in Sources */,
@@ -2252,6 +2259,7 @@
 				99A814122D129DC5000FC5A3 /* NoFeedImageView.swift in Sources */,
 				99E2EEEF2D35FFCC0010F1F9 /* FeedParticipantView.swift in Sources */,
 				99E2EEF12D3633CD0010F1F9 /* MainNoFeedImageView.swift in Sources */,
+				99EDD1512D49F003005164FB /* ServerError.swift in Sources */,
 				99933E902D2A566D009D0C5A /* EditFeedViewController.swift in Sources */,
 				D55C6C572CF5DD10005132DC /* FriendRequestService.swift in Sources */,
 				99B397832C0C3E9D00D7A109 /* AccountCheckView.swift in Sources */,

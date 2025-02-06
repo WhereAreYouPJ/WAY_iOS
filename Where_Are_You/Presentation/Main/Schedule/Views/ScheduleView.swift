@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 당일 일정인 경우
+struct ScheduleView: View {
+    // TODO: 일정 생성 후 뷰 업데이트 안됨: 당일 일정인 경우
     // TODO: 초대받은 일정 캘린더에 안뜸
     @StateObject var viewModel: ScheduleViewModel
     
@@ -280,7 +281,7 @@ struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 
 }
 
 // MARK: - CellView
-private struct CellView: View { // TODO: 각 날짜에 맞게 일정 보여주기
+private struct CellView: View {
     private var day: Int
     private var clicked: Bool
     private var isToday: Bool
