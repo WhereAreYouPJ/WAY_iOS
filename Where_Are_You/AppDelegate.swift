@@ -15,7 +15,6 @@ import Firebase
 import FirebaseMessaging
 import AVFoundation
 
-
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -24,6 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 파이어베이스 설정
         FirebaseApp.configure()
+        
+        // FCM 델리게이트 설정 추가
+        Messaging.messaging().delegate = self
+        UNUserNotificationCenter.current().delegate = self
         
         registerForPushNotifications()
         application.registerForRemoteNotifications()
@@ -121,14 +124,23 @@ extension AppDelegate {
             print("##### Notification settings: \(settings)")
         }
     }
-    
 }
 
 // MARK: UNUserNotificationCenterDelegate
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    func application(application: UIApplication,
-                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        print("🔐didRegisterForRemoteNotificationsWithDeviceToken deviceToken : \(deviceToken)")
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+//        print("🔐didRegisterForRemoteNotificationsWithDeviceToken deviceToken : \(deviceToken)")
+        let token = deviceToken.reduce("") {
+            $0 + String(format: "%02X", $1)
+        }
+        print("🔐didRegisterForRemoteNotificationsWithDeviceToken deviceToken : \(token)")
+        
+        Messaging.messaging().apnsToken = deviceToken
+    }
+    
+    // fcm 토큰 받지 못했을 때의 예외 처리
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failed to register for remote notifications: \(error)")
     }
     
     public func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -165,13 +177,11 @@ extension AppDelegate: MessagingDelegate {
         print("🔐Firebase registration token: \(String(describing: fcmToken))")
         
         if let token = fcmToken {
-            print("🔐FCM Token : \(token)")
-            UserDefaults.standard.set(token, forKey: "fcmToken")
-            UserDefaults.standard.synchronize()
+            UserDefaultsManager.shared.saveFcmToken(token)
         }
-        // TODO: If necessary send token to application server.
-        // Note: This callback is fired at each app startup and whenever a new token is generated.
+        print("🔐FCM Token : \(UserDefaultsManager.shared.getFcmToken())")
     }
+    
     func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingDelegate) {
         print("🔐Received data message: \(remoteMessage.description)")
     }

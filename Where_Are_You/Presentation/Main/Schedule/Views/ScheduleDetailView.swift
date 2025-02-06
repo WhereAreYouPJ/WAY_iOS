@@ -13,6 +13,7 @@ struct ScheduleDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var path = NavigationPath()
     @State private var showFriendsLocation = false // MARK: 친구 위치 실시간 확인 테스트용
+    @State private var showToast = false
     
     var schedule: Schedule
     
@@ -43,6 +44,7 @@ struct ScheduleDetailView: View {
         let geocodeLocationUseCase = GeocodeLocationUseCaseImpl()
         
         let defaultCreateViewModel = CreateScheduleViewModel(
+            schedule: schedule,
             postScheduleUseCase: postScheduleUseCase,
             getFavoriteLocationUseCase: getFavoriteLocationUseCase,
             geocodeLocationUseCase: geocodeLocationUseCase
@@ -57,13 +59,13 @@ struct ScheduleDetailView: View {
                 TextField("",
                           text: Binding(get: { viewModel.schedule.title },
                                         set: { viewModel.schedule.title = $0 }),
-                          prompt: Text("메모를 작성해주세요.").foregroundColor(Color(.color118)))
+                          prompt: Text("일정명을 작성해주세요.").foregroundColor(Color(.color118)))
                 .disabled(!viewModel.isEditable)
                 
                 Divider()
                     .padding(.bottom, 16)
-                
-                ReadonlyDateTimeContainer(
+
+                DateAndTimeView(
                     isAllDay: Binding(
                         get: { viewModel.schedule.isAllday ?? false },
                         set: { viewModel.schedule.isAllday = $0 }
@@ -75,30 +77,20 @@ struct ScheduleDetailView: View {
                     endTime: Binding(
                         get: { viewModel.schedule.endTime },
                         set: { viewModel.schedule.endTime = $0 }
-                    ),
-                    isEditable: viewModel.isEditable
+                    )
                 )
-                
-                //                DateAndTimeView(
-                //                    isAllDay: Binding(
-                //                        get: { viewModel.schedule.isAllday ?? false },
-                //                        set: { viewModel.schedule.isAllday = $0 }
-                //                    ),
-                //                    startTime: Binding(
-                //                        get: { viewModel.schedule.startTime },
-                //                        set: { viewModel.schedule.startTime = $0 }
-                //                    ),
-                //                    endTime: Binding(
-                //                        get: { viewModel.schedule.endTime },
-                //                        set: { viewModel.schedule.endTime = $0 }
-                //                    )
-                //                )
-                //                .disabled(!viewModel.isEditable)
+                .disabled(!viewModel.isEditable)
                 
                 AddPlaceView(viewModel: createViewModel, path: $path)
                     .disabled(!viewModel.isEditable)
                 
-                AddFriendsView(selectedFriends: $createViewModel.selectedFriends, path: $path)
+                AddFriendsView(
+                    selectedFriends: Binding(
+                        get: { viewModel.schedule.invitedMember ?? [] },
+                        set: { viewModel.schedule.invitedMember = $0 }
+                    ),
+                    path: $path
+                )
                     .disabled(!viewModel.isEditable)
                 
                 SetColorView(color: $createViewModel.color)
@@ -115,6 +107,11 @@ struct ScheduleDetailView: View {
                 }
                 .padding(.vertical, 20)
             })
+            .onTapGesture {
+                if !viewModel.isEditable {
+                    showToast = true
+                }
+            }
             .fullScreenCover(isPresented: $showFriendsLocation) {
                 FriendsLocationView(isShownView: $showFriendsLocation, schedule: $viewModel.schedule)
             }
@@ -146,84 +143,20 @@ struct ScheduleDetailView: View {
                     SearchLocationView(selectedLocation: $createViewModel.place, path: $path)
                 case .searchFriends:
                     SearchFriendsView(selectedFriends: $createViewModel.selectedFriends)
-                case .confirmLocation:
-                    ConfirmLocationView(location: $createViewModel.place, path: $path)
-                        .onDisappear {
-                            createViewModel.getFavoriteLocation()
-                        }
-                    
+                case let .confirmLocation(location):
+                    if let location = location {
+                        ConfirmLocationView(location: .constant(location), path: $path)
+                            .onDisappear {
+                                createViewModel.getFavoriteLocation()
+                            }
+                    }
                 }
             }
+            .toast(isPresented: $showToast, message: "일정을 수정할 수 없습니다.")
         }
         .onAppear {
             viewModel.getScheduleDetail()
             createViewModel.getFavoriteLocation()
-        }
-    }
-}
-
-struct ReadonlyDateTimeContainer: View {
-    @Binding var isAllDay: Bool
-    @Binding var startTime: Date
-    @Binding var endTime: Date
-    var isEditable: Bool
-    @State private var showingFeedback = false
-    
-    private var allDayBinding: Binding<Bool> {
-            Binding(
-                get: { isAllDay },
-                set: { newValue in
-                    if isEditable {
-                        isAllDay = newValue
-                    }
-                }
-            )
-        }
-    
-    var body: some View {
-        ZStack {
-            VStack {
-                DateAndTimeView(
-                    isAllDay: allDayBinding,
-                    startTime: $startTime,
-                    endTime: $endTime
-                )
-            }
-            // 편집 불가능할 때만 오버레이 추가
-            if !isEditable {
-                // Toggle 부분을 제외한 DatePicker 영역만 커버하는 오버레이
-                VStack {
-                    // Toggle 높이만큼 투명 공간
-                    Color.clear
-                        .frame(height: 50)
-                    
-                    // DatePicker 영역 커버
-                    Rectangle()
-                        .fill(Color.white.opacity(0.001))
-                        .allowsHitTesting(true)
-                        .onTapGesture {
-                            showingFeedback = true
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                showingFeedback = false
-                            }
-                        }
-                }
-                
-                // 피드백 메시지
-                if showingFeedback {
-                    VStack {
-                        Spacer()
-                        HStack {
-                            Image("icon-information")
-                            Text("그룹 일정은 생성자만 수정할 수 있습니다")
-                                .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 12)))
-                                .foregroundStyle(.red)
-                        }
-                        .transition(.opacity)
-                        .animation(.easeInOut, value: showingFeedback)
-                    }
-                }
-            }
         }
     }
 }

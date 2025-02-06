@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchLocationView: View {
     @StateObject private var viewModel = SearchLocationViewModel()
-    @Binding var selectedLocation: Location
+    @Binding var selectedLocation: Location?
     @Binding var path: NavigationPath
     @Environment(\.presentationMode) var presentationMode
     

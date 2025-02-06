@@ -8,7 +8,7 @@
 import SwiftUI
 import Kingfisher
 
-struct AddFriendView: View { // TODO: 친구 신청 완료시 토스트 팝업
+struct AddFriendView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel: AddFriendViewModel = {
         let memberRepository = MemberRepository(memberService: MemberService())
@@ -33,7 +33,7 @@ struct AddFriendView: View { // TODO: 친구 신청 완료시 토스트 팝업
                 Spacer()
                 
                 if viewModel.searchedMember != nil {
-                    var background = viewModel.disabledButton ? Color(.color171) : Color(.brandColor)
+                    let background = viewModel.disabledButton ? Color(.color171) : Color(.brandColor)
                     BottomButtonSwiftUIView(title: "친구 신청하기", background: background) {
                         viewModel.postFriendRequest()
                     }

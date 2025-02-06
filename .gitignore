@@ -15,6 +15,9 @@ Pods/
 # Config.swift 파일 제외
 Config/Config.swift
 
+# Firebase 관련 info.plist 파일 제외
+Where_Are_You/Resources/GoogleService-Info.plist
+
 ### macOS ###
 # General
 .DS_Store

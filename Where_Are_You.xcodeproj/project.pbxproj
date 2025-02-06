@@ -300,10 +300,10 @@
 		D592D8EF2C7DE3B100736D93 /* SearchFriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */; };
 		D593CCC82C82318F00A862FF /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D593CCC72C82318F00A862FF /* ScheduleViewModel.swift */; };
 		D5954FCC2CB62F8800ADB877 /* DeleteScheduleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5954FCB2CB62F8800ADB877 /* DeleteScheduleBody.swift */; };
-		D59ACC9C2CFF2DF900B3F877 /* MyLocation.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D59ACC9B2CFF2DF900B3F877 /* MyLocation.gpx */; };
 		D5A20AF02CE4A6110048281A /* PutScheduleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A20AEF2CE4A60A0048281A /* PutScheduleResponse.swift */; };
 		D5A20AF42CE4DCD50048281A /* GetFriendResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A20AF32CE4DCD50048281A /* GetFriendResponse.swift */; };
 		D5A91D5B2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */; };
+		D5AB2EE22D548E0D009E6741 /* MyLocation.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D5AB2EE12D548E0D009E6741 /* MyLocation.gpx */; };
 		D5B3B5392CB3DE63004353F6 /* DailyScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */; };
 		D5B79A162C5B83CD004EDDF2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D5BA308C2CE744C400958BF5 /* FriendAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308B2CE744C400958BF5 /* FriendAPI.swift */; };
@@ -655,10 +655,10 @@
 		D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendsViewModel.swift; sourceTree = "<group>"; };
 		D593CCC72C82318F00A862FF /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
 		D5954FCB2CB62F8800ADB877 /* DeleteScheduleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteScheduleBody.swift; sourceTree = "<group>"; };
-		D59ACC9B2CFF2DF900B3F877 /* MyLocation.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = MyLocation.gpx; sourceTree = "<group>"; };
 		D5A20AEF2CE4A60A0048281A /* PutScheduleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutScheduleResponse.swift; sourceTree = "<group>"; };
 		D5A20AF32CE4DCD50048281A /* GetFriendResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFriendResponse.swift; sourceTree = "<group>"; };
 		D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertSwiftUI.swift; sourceTree = "<group>"; };
+		D5AB2EE12D548E0D009E6741 /* MyLocation.gpx */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyLocation.gpx; sourceTree = "<group>"; };
 		D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyScheduleViewModel.swift; sourceTree = "<group>"; };
 		D5BA308B2CE744C400958BF5 /* FriendAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendAPI.swift; sourceTree = "<group>"; };
 		D5BA308D2CE744CA00958BF5 /* FriendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendService.swift; sourceTree = "<group>"; };
@@ -1176,7 +1176,7 @@
 				99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */,
 				D55C6C412CF5B8D7005132DC /* NavigationBarModifier.swift */,
 				99E401242D0D6CD900A63304 /* FeedOptionsHandler.swift */,
-				D59ACC9B2CFF2DF900B3F877 /* MyLocation.gpx */,
+				D5AB2EE12D548E0D009E6741 /* MyLocation.gpx */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1927,9 +1927,9 @@
 				99C9B23D2C01ACBE008D7CBD /* Ttangsbudaejjigae-Medium.otf in Resources */,
 				995358492C00C558005BF799 /* Assets.xcassets in Resources */,
 				D549C8452C6366A400DDAD5A /* .gitattributes in Resources */,
-				D59ACC9C2CFF2DF900B3F877 /* MyLocation.gpx in Resources */,
 				9953584C2C00C558005BF799 /* Base in Resources */,
 				99C9B24D2C01ECCB008D7CBD /* NotoSansKR-Bold.ttf in Resources */,
+				D5AB2EE22D548E0D009E6741 /* MyLocation.gpx in Resources */,
 				992F1EC62C37ED400042CB1A /* .gitignore in Resources */,
 				99C9B23E2C01ACBE008D7CBD /* Ttangsbudaejjigae-Bold.otf in Resources */,
 			);
