@@ -293,10 +293,12 @@
 		D567A9D02CF85B54009F6451 /* ManageFriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D567A9CF2CF85B54009F6451 /* ManageFriendsViewModel.swift */; };
 		D567A9D42CF86081009F6451 /* FriendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D567A9D32CF86081009F6451 /* FriendRequest.swift */; };
 		D56C07BE2D50B225002FB5CB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D56C07BD2D50B225002FB5CB /* GoogleService-Info.plist */; };
+		D57A6C112D56006600C2B822 /* CustomAlertModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A6C102D56006600C2B822 /* CustomAlertModifier.swift */; };
 		D57AC3B12C8B6336006AE7D7 /* KakaoLocalResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57AC3B02C8B6336006AE7D7 /* KakaoLocalResponse.swift */; };
 		D57B46F72C786AFD00657C51 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57B46F62C786AFD00657C51 /* MapView.swift */; };
 		D5819AE42CFB4F25004E717C /* FriendsLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5819AE32CFB4F25004E717C /* FriendsLocationViewModel.swift */; };
 		D585E2872C82F6C600C16A14 /* GetScheduleByMonthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D585E2862C82F6C600C16A14 /* GetScheduleByMonthResponse.swift */; };
+		D588498C2D55FAE900DE82E9 /* CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = D588498B2D55FAE900DE82E9 /* CornerRadius.swift */; };
 		D58EC0692C633217001BC030 /* SearchLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58EC0682C633217001BC030 /* SearchLocationView.swift */; };
 		D58F5A502C9332220048C23A /* GetMonthlyScheduleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58F5A4F2C9332220048C23A /* GetMonthlyScheduleBody.swift */; };
 		D592D8EF2C7DE3B100736D93 /* SearchFriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */; };
@@ -650,10 +652,12 @@
 		D567A9CF2CF85B54009F6451 /* ManageFriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFriendsViewModel.swift; sourceTree = "<group>"; };
 		D567A9D32CF86081009F6451 /* FriendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequest.swift; sourceTree = "<group>"; };
 		D56C07BD2D50B225002FB5CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D57A6C102D56006600C2B822 /* CustomAlertModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertModifier.swift; sourceTree = "<group>"; };
 		D57AC3B02C8B6336006AE7D7 /* KakaoLocalResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLocalResponse.swift; sourceTree = "<group>"; };
 		D57B46F62C786AFD00657C51 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		D5819AE32CFB4F25004E717C /* FriendsLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsLocationViewModel.swift; sourceTree = "<group>"; };
 		D585E2862C82F6C600C16A14 /* GetScheduleByMonthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetScheduleByMonthResponse.swift; sourceTree = "<group>"; };
+		D588498B2D55FAE900DE82E9 /* CornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadius.swift; sourceTree = "<group>"; };
 		D58EC0682C633217001BC030 /* SearchLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationView.swift; sourceTree = "<group>"; };
 		D58F5A4F2C9332220048C23A /* GetMonthlyScheduleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMonthlyScheduleBody.swift; sourceTree = "<group>"; };
 		D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendsViewModel.swift; sourceTree = "<group>"; };
@@ -1448,6 +1452,8 @@
 				D55C6C3D2CF57E74005132DC /* CustomButtonSwiftUI.swift */,
 				D511A5732D3E8F7400CA6FE7 /* CustomToast.swift */,
 				99D353E22D3A33CC0098B52E /* GradientButton.swift */,
+				D588498B2D55FAE900DE82E9 /* CornerRadius.swift */,
+				D57A6C102D56006600C2B822 /* CustomAlertModifier.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -2314,6 +2320,7 @@
 				D517F2632CECAB06003C5F60 /* DeleteFavoriteFriendUseCase.swift in Sources */,
 				99E2EEED2D35FACD0010F1F9 /* FeedDetailView.swift in Sources */,
 				990F57B22C282C5900F6E1AD /* EmailSendUseCase.swift in Sources */,
+				D588498C2D55FAE900DE82E9 /* CornerRadius.swift in Sources */,
 				99107EA52C6F3E4A007D129F /* Location.swift in Sources */,
 				D53E05F52CB97C4100F96346 /* PutScheduleBody.swift in Sources */,
 				992381882C7DC8C900FFCBCB /* MyDetailManageViewModel.swift in Sources */,
@@ -2354,6 +2361,7 @@
 				99C68E4C2C64B83D00DEC1F1 /* FeedRepository.swift in Sources */,
 				99EC78D62C11E8A3007C4415 /* FinishRegisterViewController.swift in Sources */,
 				99C9B2322C01A45C008D7CBD /* Extensions.swift in Sources */,
+				D57A6C112D56006600C2B822 /* CustomAlertModifier.swift in Sources */,
 				990F579A2C27EEF400F6E1AD /* MemberRepository.swift in Sources */,
 				99C9B2502C0229CF008D7CBD /* AccountLoginView.swift in Sources */,
 				9985AB992C78802400D1442E /* MyDetailManageViewcontroller.swift in Sources */,
