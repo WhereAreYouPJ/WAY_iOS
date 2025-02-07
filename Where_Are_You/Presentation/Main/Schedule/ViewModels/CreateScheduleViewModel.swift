@@ -106,7 +106,20 @@ final class CreateScheduleViewModel: ObservableObject {
     
     func postSchedule() {
         let invitedMemberSeqs = selectedFriends.map { $0.memberSeq }
-        let body = CreateScheduleBody(title: title, startTime: startTime.formatted(to: .serverSimple), endTime: endTime.formatted(to: .serverSimple), location: place?.location, streetName: place?.streetName, x: place?.x, y: place?.y, color: color, memo: memo, allDay: isAllDay, invitedMemberSeqs: invitedMemberSeqs, createMemberSeq: memberSeq)
+        let body = CreateScheduleBody(
+            title: title,
+            startTime: startTime.formatted(to: .serverSimple),
+            endTime: endTime.formatted(to: .serverSimple),
+            location: place?.location,
+            streetName: place?.streetName,
+            x: place?.x,
+            y: place?.y,
+            color: color,
+            memo: memo,
+            allDay: isAllDay,
+            invitedMemberSeqs: invitedMemberSeqs,
+            createMemberSeq: memberSeq
+        )
         
         postScheduleUseCase.execute(request: body) { [weak self] result in
             guard let self = self else { return }

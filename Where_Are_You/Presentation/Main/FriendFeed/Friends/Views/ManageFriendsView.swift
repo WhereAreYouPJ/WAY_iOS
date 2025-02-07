@@ -8,7 +8,7 @@
 import SwiftUI
 import Kingfisher
 
-struct ManageFriendsView: View { // TODO: 친구 요청 수락/거절의 경우 체크버튼 전환 애니메이션 필요
+struct ManageFriendsView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel: ManageFriendsViewModel = {
         let repository = FriendRequestRepository(friendRequestService: FriendRequestService())
@@ -96,19 +96,59 @@ struct ManageFriendsView: View { // TODO: 친구 요청 수락/거절의 경우 
                         }
                         .frame(width: LayoutAdapter.shared.scale(value: 90), height: LayoutAdapter.shared.scale(value: 36))
                     } else {
-                        CustomButtonSwiftUI(title: "수락", backgroundColor: Color(.brandColor), titleColor: .white) {
-                            viewModel.acceptRequest(request: request)
-                        }
-                        .frame(width: LayoutAdapter.shared.scale(value: 90), height: LayoutAdapter.shared.scale(value: 36))
-                        
-                        CustomButtonSwiftUI(title: "거절", backgroundColor: Color.white, titleColor: Color(.black22)) {
-                            viewModel.refuseRequest(requestSeq: request.friendRequestSeq)
-                        }
-                        .frame(width: LayoutAdapter.shared.scale(value: 90), height: LayoutAdapter.shared.scale(value: 36))
+                        buttonMergeView(for: request)
                     }
                 }
             }
         }
+    }
+
+    func buttonMergeView(for request: FriendRequest) -> some View {
+        let state = viewModel.requestStates[request.friendRequestSeq]
+        
+        return ZStack {
+            if state == nil {
+                HStack {
+                    CustomButtonSwiftUI(title: "수락",
+                                      backgroundColor: Color(.brandColor),
+                                      titleColor: .white) {
+                        withAnimation(.spring(duration: 0.5)) {
+                            viewModel.acceptRequest(request: request)
+                        }
+                    }
+                    .frame(width: LayoutAdapter.shared.scale(value: 90),
+                          height: LayoutAdapter.shared.scale(value: 36))
+                    
+                    CustomButtonSwiftUI(title: "거절",
+                                      backgroundColor: .white,
+                                      titleColor: Color(.black22)) {
+                        withAnimation(.spring(duration: 0.5)) {
+                            viewModel.refuseRequest(requestSeq: request.friendRequestSeq)
+                        }
+                    }
+                    .frame(width: LayoutAdapter.shared.scale(value: 90),
+                          height: LayoutAdapter.shared.scale(value: 36))
+                }
+            } else {
+                Button(action: {}) {
+                    HStack {
+                        Image(systemName: state == .accepted ? "checkmark" : "xmark")
+                            .foregroundColor(state == .accepted ? .white : Color(.black66))
+                    }
+                    .frame(maxWidth: .infinity)
+                    .frame(height: LayoutAdapter.shared.scale(value: 36))
+                    .background(state == .accepted ? Color(.brandColor) : Color.white)
+                    .cornerRadius(LayoutAdapter.shared.scale(value: 12))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 12))
+                            .stroke(Color(.black66), lineWidth: state == .accepted ? 0 : 1)
+                    )
+                }
+                .frame(width: LayoutAdapter.shared.scale(value: 180))  // 두 버튼의 너비 합
+                .transition(.scale)
+            }
+        }
+        .animation(.spring(duration: 0.5), value: state)
     }
 }
 

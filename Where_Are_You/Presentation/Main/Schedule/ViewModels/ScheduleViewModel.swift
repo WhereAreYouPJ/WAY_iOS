@@ -37,6 +37,24 @@ class ScheduleViewModel: ObservableObject {
         }
     }
     
+    func setDeleteAlertContent(for schedule: Schedule) -> (String, String) {
+        print("invitedMember 수: \(schedule.invitedMember?.count ?? 0)")
+        if schedule.isGroup == true {
+            return ("그룹 일정 삭제", "그룹 일정을 삭제합니다.\n모든 참여자의 일정에서 삭제되며, 연관된 피드도 함께 삭제됩니다.")
+        } else {
+            return ("일정 삭제", "일정을 삭제합니다.\n연관된 피드가 있을 경우 함께 삭제됩니다.")
+        }
+    }
+    
+    func hasSchedules(for date: Date) -> Bool {
+        let dayStart = Calendar.current.startOfDay(for: date)
+        return monthlySchedules.contains { schedule in
+            let scheduleStartDate = Calendar.current.startOfDay(for: schedule.startTime)
+            let scheduleEndDate = Calendar.current.startOfDay(for: schedule.endTime)
+            return (scheduleStartDate...scheduleEndDate).contains(dayStart)
+        }
+    }
+    
     func getMonthlySchedule() {
         let yearMonth = dateFormatterD2S.string(from: month)
         provider.request(.getMonthlySchedule(yearMonth: yearMonth, memberSeq: memberSeq)) { result in
@@ -49,7 +67,16 @@ class ScheduleViewModel: ObservableObject {
                         
                         DispatchQueue.main.async {
                             self.monthlySchedules = genericResponse.data.map { schedule in
-                                Schedule(scheduleSeq: schedule.scheduleSeq, title: schedule.title, startTime: self.dateFormatterS2D.date(from: schedule.startTime) ?? Date.now, endTime: self.dateFormatterS2D.date(from: schedule.endTime) ?? Date.now, isAllday: schedule.allDay, location: Location(sequence: 0, location: schedule.location ?? "", streetName: schedule.streetName ?? "", x: schedule.x ?? 0, y: schedule.y ?? 0), color: schedule.color, memo: schedule.memo, invitedMember: nil)
+                                Schedule(
+                                    scheduleSeq: schedule.scheduleSeq,
+                                    title: schedule.title,
+                                    startTime: self.dateFormatterS2D.date(from: schedule.startTime) ?? Date.now,
+                                    endTime: self.dateFormatterS2D.date(from: schedule.endTime) ?? Date.now,
+                                    isAllday: schedule.allDay,
+                                    location: Location(sequence: 0, location: schedule.location ?? "", streetName: schedule.streetName ?? "", x: schedule.x ?? 0, y: schedule.y ?? 0),
+                                    color: schedule.color,
+                                    memo: schedule.memo,
+                                    invitedMember: nil)
                             }
                             print("월간 일정 로드 성공: \(self.monthlySchedules.count)개의 일정을 받았습니다.")
                         }
@@ -69,7 +96,7 @@ class ScheduleViewModel: ObservableObject {
         }
     }
     
-    func deleteSchedule(_ schedule: Schedule) {
+    func deleteSchedule(_ schedule: Schedule, completion: @escaping () -> Void) {
         isLoading = true
         
         let deleteRequest = DeleteScheduleBody(scheduleSeq: schedule.scheduleSeq, memberSeq: memberSeq)
@@ -83,6 +110,8 @@ class ScheduleViewModel: ObservableObject {
                 switch result {
                 case .success:
                     print("Schedule successfully deleted")
+                    self?.getMonthlySchedule()  // 삭제 성공 후 바로 데이터 갱신
+                    completion()  // 완료 콜백 호출
                 case .failure(let error):
                     print("Failed to delete schedule: \(error.localizedDescription)")
                 }

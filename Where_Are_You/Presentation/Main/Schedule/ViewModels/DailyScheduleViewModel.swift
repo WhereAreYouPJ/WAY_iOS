@@ -22,8 +22,6 @@ class DailyScheduleViewModel: ObservableObject {
     
     private var memberSeq = UserDefaultsManager.shared.getMemberSeq()
     let date: Date
-//    private let dateFormatterS2D: DateFormatter
-//    private let dateFormatterD2S: DateFormatter
     
     init(
         getDailyScheduleUseCase: GetDailyScheduleUseCase,
@@ -33,12 +31,6 @@ class DailyScheduleViewModel: ObservableObject {
         self.getDailyScheduleUseCase = getDailyScheduleUseCase
         self.deleteScheduleUseCase = deleteScheduleUseCase
         self.date = date
-        
-//        dateFormatterS2D = DateFormatter()
-//        dateFormatterS2D.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-//        
-//        dateFormatterD2S = DateFormatter()
-//        dateFormatterD2S.dateFormat = "yyyy-MM-dd"
     }
     
     func getDailySchedule() {
@@ -101,16 +93,9 @@ class DailyScheduleViewModel: ObservableObject {
                 ),
                 color: response.color,
                 memo: "",
-                invitedMember: nil
+                invitedMember: nil,
+                isGroup: response.group
             )
-        }
-    }
-    
-    func setAlertContent(for schedule: Schedule) -> (String, String) {
-        if schedule.invitedMember?.count ?? 0 > 0 {
-            return ("그룹 일정 삭제", "그룹 일정을 삭제합니다.\n모든 참여자의 일정에서 삭제되며, 연관된 피드도 함께 삭제됩니다.")
-        } else {
-            return ("일정 삭제", "일정을 삭제합니다.\n연관된 피드가 있을 경우 함께 삭제됩니다.")
         }
     }
     

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ScheduleView: View {
-    // TODO: 일정 생성 후 뷰 업데이트 안됨: 당일 일정인 경우
     // TODO: 초대받은 일정 캘린더에 안뜸
     @StateObject var viewModel: ScheduleViewModel
     
@@ -110,20 +109,19 @@ struct ScheduleView: View {
         .customAlertModifier(
             isPresented: $showDeleteAlert,
             showDailySchedule: $showDailySchedule,
-            title: "일정 삭제",
-            message: "일정을 삭제합니다.\n연관된 피드가 있을 경우 같이 삭제됩니다.",
+            title: scheduleToDelete.map { viewModel.setDeleteAlertContent(for: $0).0 } ?? "일정 삭제",
+            message: {
+                let message = scheduleToDelete.map(viewModel.setDeleteAlertContent)?.1 ?? ""
+                    print("Alert message: \(message)")  // 실제 메시지 확인
+                    return message
+                }(),
             cancelTitle: "취소",
             actionTitle: "삭제"
         ) {
             if let schedule = scheduleToDelete {
-                viewModel.deleteSchedule(schedule)
-                scheduleToDelete = nil
-                viewModel.getMonthlySchedule()
-            }
-        }
-        .onChange(of: showDeleteAlert) { _, isShowing in
-            if !isShowing {  // 알림창이 닫힐 때
-                showDailySchedule = true  // 항상 DailyScheduleView 다시 열기
+                viewModel.deleteSchedule(schedule) {
+                    scheduleToDelete = nil
+                }
             }
         }
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))

@@ -107,6 +107,8 @@ struct CustomAlertModifier: ViewModifier {
                     Text(message)
                         .foregroundColor(Color(.color160))
                         .padding(.bottom, LayoutAdapter.shared.scale(value: 24))
+                        .fixedSize(horizontal: false, vertical: true)
+                        .multilineTextAlignment(.leading)
                     
                     Spacer()
                 }

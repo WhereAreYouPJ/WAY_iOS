@@ -131,26 +131,17 @@ struct DailyScheduleView: View {
             .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
             .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
         }
-//        .alert(isPresented: $viewModel.showingDeleteAlert) {
-//            if let schedule = viewModel.selectedSchedule {
-//                let (title, message) = viewModel.setAlertContent(for: schedule)
-//                return Alert(
-//                    title: Text(title),
-//                    message: Text(message),
-//                    primaryButton: .destructive(Text("삭제")) {
-//                        viewModel.handleDeleteConfirmation()
-//                    },
-//                    secondaryButton: .cancel(Text("취소"))
-//                )
-//            } else {
-//                return Alert(title: Text("Error"))
-//            }
-//        }
         .onAppear {
             viewModel.getDailySchedule()
         }
         .onChange(of: viewModel.shouldDismissView) { _, shouldDismiss in
             if shouldDismiss {
+                isPresented = false
+            }
+        }
+        .onChange(of: viewModel.schedules.count) { _, count in
+            // 일정이 없으면 뷰를 닫음
+            if count == 0 {
                 isPresented = false
             }
         }

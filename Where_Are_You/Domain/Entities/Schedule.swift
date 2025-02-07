@@ -20,4 +20,5 @@ struct Schedule: Identifiable {
     var invitedMember: [Friend]?
     var dDay: Int?
     var createdAt: Date?
+    var isGroup: Bool?
 }

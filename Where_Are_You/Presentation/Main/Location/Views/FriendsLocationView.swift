@@ -24,7 +24,9 @@ struct FriendsLocationView: View { // TODO: 앱을 재시작해야만 일정에 
         ZStack {
             MapPinView(myLocation: $viewModel.myLocation, friendsLocation: $viewModel.friendsLocation)
             
-            DismissButtonView(isShownView: $isShownView)
+            DismissButtonView(isShownView: $isShownView) {
+                self.isShownView.toggle()
+            }
         }
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
         .onAppear {
@@ -46,13 +48,12 @@ struct FriendsLocationView: View { // TODO: 앱을 재시작해야만 일정에 
 
 struct DismissButtonView: View {
     @Binding var isShownView: Bool
+    var action: () -> Void
     
     var body: some View {
         HStack {
             VStack {
-                Button {
-                    self.isShownView.toggle()
-                } label: {
+                Button(action: action) {
                     ZStack {
                         RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 4))
                             .stroke(Color(.brandColor), lineWidth: LayoutAdapter.shared.scale(value: 1.5))
