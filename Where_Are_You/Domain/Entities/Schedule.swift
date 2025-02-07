@@ -19,4 +19,5 @@ struct Schedule: Identifiable {
     var memo: String?
     var invitedMember: [Friend]?
     var dDay: Int?
+    var createdAt: Date?
 }

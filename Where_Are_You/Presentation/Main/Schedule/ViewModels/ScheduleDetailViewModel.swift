@@ -69,9 +69,11 @@ class ScheduleDetailViewModel: ObservableObject {
                             memberSeq: memberInfo.memberSeq,
                             profileImage: "",
                             name: memberInfo.userName,
-                            isFavorite: false, memberCode: ""
+                            isFavorite: false, 
+                            memberCode: ""
                         )
                     }
+                    .filter { $0.memberSeq != self.memberSeq }
                 )
                 print("일정 상세정보 받기 완료! \(self.schedule)")
             case .failure(let error):

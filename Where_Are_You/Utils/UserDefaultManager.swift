@@ -16,6 +16,7 @@ class UserDefaultsManager {
     private let userName = "userName"
     private let profileImage = "profileImage"
     private let isLoggedIn = "isLoggedIn"
+    private let fcmToken = "fcmToken"
     
     private init() {}
     
@@ -89,6 +90,16 @@ class UserDefaultsManager {
         return UserDefaults.standard.bool(forKey: isLoggedIn)
     }
     
+    // MARK: - FcmToken
+    
+    func saveFcmToken(_ token: String) {
+        UserDefaults.standard.set(token, forKey: fcmToken)
+    }
+    
+    func getFcmToken() -> String {
+        return UserDefaults.standard.string(forKey: fcmToken) ?? ""
+    }
+    
     // MARK: - ClearData
     func clearData() {
         UserDefaults.standard.removeObject(forKey: accessTokenKey)
@@ -98,5 +109,6 @@ class UserDefaultsManager {
         UserDefaults.standard.removeObject(forKey: userName)
         UserDefaults.standard.removeObject(forKey: profileImage)
         UserDefaults.standard.removeObject(forKey: isLoggedIn)
+        UserDefaults.standard.removeObject(forKey: fcmToken)
     }
 }

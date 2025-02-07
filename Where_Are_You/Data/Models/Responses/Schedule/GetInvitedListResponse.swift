@@ -9,6 +9,7 @@ import Foundation
 
 struct GetInvitedList: Codable {
     let scheduleSeq: Int
+    let createdAt: String
     let startTime: String
     let title: String
     let location: String

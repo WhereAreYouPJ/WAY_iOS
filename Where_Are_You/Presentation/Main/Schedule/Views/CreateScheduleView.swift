@@ -10,7 +10,7 @@ import SwiftUI
 enum Route: Hashable {
     case searchPlace
     case searchFriends
-    case confirmLocation(Location)
+    case confirmLocation(Location?)
 }
 
 struct CreateScheduleView: View {
@@ -83,14 +83,15 @@ struct CreateScheduleView: View {
                 switch route {
                 case .searchPlace:
                     SearchLocationView(selectedLocation: $viewModel.place, path: $path)
+                case let .confirmLocation(location):
+                    if let location = location {
+                        ConfirmLocationView(location: .constant(location), path: $path)
+                            .onDisappear {
+                                viewModel.getFavoriteLocation()
+                            }
+                    }
                 case .searchFriends:
                     SearchFriendsView(selectedFriends: $viewModel.selectedFriends)
-                case .confirmLocation:
-                    ConfirmLocationView(location: $viewModel.place, path: $path)
-                        .onDisappear {
-                            viewModel.getFavoriteLocation()
-                        }
-                    
                 }
             }
         }
@@ -148,28 +149,27 @@ struct AddPlaceView: View {
         
         HStack {
             Image("icon-place")
-            if viewModel.place.location == "" {
-                Text("위치 추가")
-                    .foregroundStyle(Color(.color118))
-                    .onTapGesture {
-                        path.append(Route.searchPlace)
-                    }
-                
-            } else {
+            if let selectedPlace = viewModel.place { // 위치가 선택된 경우
                 HStack {
-                    Text(viewModel.place.location)
+                    Text(selectedPlace.location)
                         .onTapGesture {
-                            path.append(Route.confirmLocation(viewModel.place))
+                            path.append(Route.confirmLocation(selectedPlace))
                         }
                 }
                 
                 Spacer()
                 
-                Button(action: {
-                    viewModel.place = Location(sequence: 0, location: "", streetName: "", x: 0, y: 0)
+                Button(action: { // 위치 선택 취소
+                    viewModel.place = nil
                 }, label: {
                     CancellationView()
                 })
+            } else { // 위치가 선택되지 않은 경우
+                Text("위치 추가")
+                    .foregroundStyle(Color(.color118))
+                    .onTapGesture {
+                        path.append(Route.searchPlace)
+                    }
             }
         }
         
