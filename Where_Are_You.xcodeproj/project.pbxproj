@@ -55,6 +55,11 @@
 		992F57DF2C5B614A00219C6B /* LogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57DE2C5B614A00219C6B /* LogoutUseCase.swift */; };
 		992F57E32C5B618D00219C6B /* MemberSearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57E22C5B618D00219C6B /* MemberSearchUseCase.swift */; };
 		992F57E52C5B623F00219C6B /* CheckEmailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992F57E42C5B623F00219C6B /* CheckEmailUseCase.swift */; };
+		993AA53B2D53307100B0C9F6 /* SocialSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993AA53A2D53307100B0C9F6 /* SocialSignUpViewController.swift */; };
+		993AA53D2D5331F200B0C9F6 /* SocialSignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993AA53C2D5331F200B0C9F6 /* SocialSignUpViewModel.swift */; };
+		993AA53F2D5351B400B0C9F6 /* SocialLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993AA53E2D5351B400B0C9F6 /* SocialLinkView.swift */; };
+		993AA5412D5351C900B0C9F6 /* SocialLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993AA5402D5351C900B0C9F6 /* SocialLinkViewController.swift */; };
+		993AA5432D5351D100B0C9F6 /* SocialLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993AA5422D5351D100B0C9F6 /* SocialLinkViewModel.swift */; };
 		995009792CE9A6E10069151D /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995009782CE9A6E10069151D /* FeedViewModel.swift */; };
 		9950097B2CE9B07A0069151D /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950097A2CE9B07A0069151D /* FeedView.swift */; };
 		9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C64D2C102FB6003155A7 /* TermsAgreementView.swift */; };
@@ -401,6 +406,11 @@
 		992F57DE2C5B614A00219C6B /* LogoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUseCase.swift; sourceTree = "<group>"; };
 		992F57E22C5B618D00219C6B /* MemberSearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSearchUseCase.swift; sourceTree = "<group>"; };
 		992F57E42C5B623F00219C6B /* CheckEmailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailUseCase.swift; sourceTree = "<group>"; };
+		993AA53A2D53307100B0C9F6 /* SocialSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSignUpViewController.swift; sourceTree = "<group>"; };
+		993AA53C2D5331F200B0C9F6 /* SocialSignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSignUpViewModel.swift; sourceTree = "<group>"; };
+		993AA53E2D5351B400B0C9F6 /* SocialLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLinkView.swift; sourceTree = "<group>"; };
+		993AA5402D5351C900B0C9F6 /* SocialLinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLinkViewController.swift; sourceTree = "<group>"; };
+		993AA5422D5351D100B0C9F6 /* SocialLinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLinkViewModel.swift; sourceTree = "<group>"; };
 		995009782CE9A6E10069151D /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		9950097A2CE9B07A0069151D /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		9950C64D2C102FB6003155A7 /* TermsAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAgreementView.swift; sourceTree = "<group>"; };
@@ -938,6 +948,8 @@
 				9950C6562C1040FD003155A7 /* TermsAgreementViewController.swift */,
 				9950C65A2C10B0F5003155A7 /* SignUpFormViewController.swift */,
 				99EC78D52C11E8A3007C4415 /* FinishRegisterViewController.swift */,
+				993AA53A2D53307100B0C9F6 /* SocialSignUpViewController.swift */,
+				993AA5402D5351C900B0C9F6 /* SocialLinkViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -949,6 +961,7 @@
 				9950C6582C10B0DF003155A7 /* SignUpFormView.swift */,
 				99EC78D32C11E809007C4415 /* FinishRegisterview.swift */,
 				99E9E1882D3E0DC1008A81BF /* SocialSignUpView.swift */,
+				993AA53E2D5351B400B0C9F6 /* SocialLinkView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1408,6 +1421,8 @@
 			isa = PBXGroup;
 			children = (
 				99EC20AA2C0D9D9D0018904D /* SignUpViewModel.swift */,
+				993AA53C2D5331F200B0C9F6 /* SocialSignUpViewModel.swift */,
+				993AA5422D5351D100B0C9F6 /* SocialLinkViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2071,6 +2086,7 @@
 				99EDF5A22CE8BE520008B19A /* PostHideFeedUseCase.swift in Sources */,
 				D53620912C8AE1010017B279 /* SearchLocationViewModel.swift in Sources */,
 				9910B84B2C71B62E005F7EEE /* PasswordResetView.swift in Sources */,
+				993AA53F2D5351B400B0C9F6 /* SocialLinkView.swift in Sources */,
 				D5819AE42CFB4F25004E717C /* FriendsLocationViewModel.swift in Sources */,
 				99CF9C012CD343620079BE81 /* GetBookMarkFeedUseCase.swift in Sources */,
 				D5A91D5B2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift in Sources */,
@@ -2151,6 +2167,7 @@
 				99960AAD2CE1D875007D2B61 /* PostScheduleUseCase.swift in Sources */,
 				99C9B2422C01CE4C008D7CBD /* AccountLoginViewModel.swift in Sources */,
 				99107EA12C6F2C94007D129F /* SaveFeedResponse.swift in Sources */,
+				993AA53D2D5331F200B0C9F6 /* SocialSignUpViewModel.swift in Sources */,
 				99E8BC3F2C2CEB1D00536B95 /* GenericResponse.swift in Sources */,
 				D585E2872C82F6C600C16A14 /* GetScheduleByMonthResponse.swift in Sources */,
 				9911F9882C3F63D500D0FDC9 /* Feed.swift in Sources */,
@@ -2251,6 +2268,7 @@
 				99C5B9EF2D3248EF00CD570F /* CommentDeletionViewController.swift in Sources */,
 				99FBA54E2C453924002EEEC7 /* BannerViewController.swift in Sources */,
 				990DE7682C65EAEB007B78C9 /* FeedImageCollectionViewCell.swift in Sources */,
+				993AA53B2D53307100B0C9F6 /* SocialSignUpViewController.swift in Sources */,
 				99C1403A2C6494F000A706B6 /* FeedsView.swift in Sources */,
 				990DE7662C65E924007B78C9 /* FeedImagesView.swift in Sources */,
 				99CC5E642C51EFAB00A0509A /* MyPageViewModel.swift in Sources */,
@@ -2355,10 +2373,12 @@
 				D5DB6C6F2CDA2A0900D89360 /* ScheduleDetailViewModel.swift in Sources */,
 				99EDF5922CE8AD2A0008B19A /* DeleteFeedUseCase.swift in Sources */,
 				99CA4F262C33B704007C027C /* ResetPasswordViewModel.swift in Sources */,
+				993AA5412D5351C900B0C9F6 /* SocialLinkViewController.swift in Sources */,
 				99D23FF42C6889BA00CFD4F0 /* FeedDetailViewModel.swift in Sources */,
 				99DA18B92C4E132A00D5CDA6 /* TitleView.swift in Sources */,
 				D55C6C592CF5DD33005132DC /* FriendRequestRepository.swift in Sources */,
 				99C68E4C2C64B83D00DEC1F1 /* FeedRepository.swift in Sources */,
+				993AA5432D5351D100B0C9F6 /* SocialLinkViewModel.swift in Sources */,
 				99EC78D62C11E8A3007C4415 /* FinishRegisterViewController.swift in Sources */,
 				99C9B2322C01A45C008D7CBD /* Extensions.swift in Sources */,
 				D57A6C112D56006600C2B822 /* CustomAlertModifier.swift in Sources */,
@@ -2529,7 +2549,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Where_Are_You/Where_Are_You.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -2553,7 +2573,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omw.on-my-way";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "OMW Release";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "OMW Debug";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -2572,7 +2592,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Where_Are_You/Where_Are_You.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -2596,7 +2616,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omw.on-my-way";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "OMW Release";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "OMW Debug";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
