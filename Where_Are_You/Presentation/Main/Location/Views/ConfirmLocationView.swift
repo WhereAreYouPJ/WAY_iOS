@@ -7,20 +7,27 @@
 
 import SwiftUI
 
-struct ConfirmLocationView: View { // TODO: 뒤로가기 버튼
+struct ConfirmLocationView: View {
     @StateObject var viewModel = ConfirmLocationViewModel()
     @Environment(\.presentationMode) var presentationMode
     @Binding var location: Location
     @Binding var path: NavigationPath
     
     var body: some View {
-        VStack {
-            MapView(location: $location)
+        ZStack {
+            VStack {
+                MapView(location: $location)
+                
+                Spacer()
+                
+                locationDetailsView()
+            }
             
-            Spacer()
-            
-            locationDetailsView()
+            DismissButtonView(isShownView: .constant(true)) {
+                path.removeLast()
+            }
         }
+        .navigationBarBackButtonHidden()
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
         .onAppear {
             viewModel.isFavoriteLocation(location: location) { isFavorite in
@@ -50,9 +57,9 @@ struct ConfirmLocationView: View { // TODO: 뒤로가기 버튼
                             print("즐겨찾기 토글 실패")
                         }
                     }
-                }) {
+                }, label: {
                     Image(viewModel.isFavorite ? "icon-bookmark-filled" : "icon-bookmark")
-                }
+                })
             }
             
             Divider()
@@ -60,7 +67,7 @@ struct ConfirmLocationView: View { // TODO: 뒤로가기 버튼
             
             Button(action: {
                 path.removeLast(path.count)
-            }) {
+            }, label: {
                 Text("확인")
                     .font(Font(UIFont.pretendard(NotoSans: .semibold, fontSize: 18)))
                     .frame(maxWidth: .infinity)
@@ -68,7 +75,7 @@ struct ConfirmLocationView: View { // TODO: 뒤로가기 버튼
                     .background(Color(.brandColor))
                     .foregroundColor(.white)
                     .cornerRadius(6)
-            }
+            })
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 10)

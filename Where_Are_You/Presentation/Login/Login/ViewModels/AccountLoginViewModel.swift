@@ -19,7 +19,7 @@ class AccountLoginViewModel {
     }
     
     func login(email: String, password: String) {
-        accountLoginUseCase.execute(request: LoginBody(email: email, password: password, fcmToken: "ojs", loginType: "normal")) { result in
+        accountLoginUseCase.execute(request: LoginBody(email: email, password: password, fcmToken: UserDefaultsManager.shared.getFcmToken(), loginType: "normal")) { result in
             switch result {
             case .success:
                 self.onLoginSuccess?()

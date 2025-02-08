@@ -25,7 +25,7 @@ final class CreateScheduleViewModel: ObservableObject {
     }
     @Published var endTime: Date
     @Published var selectedFriends: [Friend] = []
-    @Published var place: Location = Location(sequence: 0, location: "", streetName: "", x: 0, y: 0) // TODO: 서버 nullable 값 수정 필요?
+    @Published var place: Location?
     @Published var favPlaces: [Location] = []
     @Published var color: String = "red"
     @Published var memo: String = ""
@@ -106,7 +106,20 @@ final class CreateScheduleViewModel: ObservableObject {
     
     func postSchedule() {
         let invitedMemberSeqs = selectedFriends.map { $0.memberSeq }
-        let body = CreateScheduleBody(title: title, startTime: startTime.formatted(to: .serverSimple), endTime: endTime.formatted(to: .serverSimple), location: place.location, streetName: place.streetName, x: place.x, y: place.y, color: color, memo: memo, allDay: isAllDay, invitedMemberSeqs: invitedMemberSeqs, createMemberSeq: memberSeq)
+        let body = CreateScheduleBody(
+            title: title,
+            startTime: startTime.formatted(to: .serverSimple),
+            endTime: endTime.formatted(to: .serverSimple),
+            location: place?.location,
+            streetName: place?.streetName,
+            x: place?.x,
+            y: place?.y,
+            color: color,
+            memo: memo,
+            allDay: isAllDay,
+            invitedMemberSeqs: invitedMemberSeqs,
+            createMemberSeq: memberSeq
+        )
         
         postScheduleUseCase.execute(request: body) { [weak self] result in
             guard let self = self else { return }

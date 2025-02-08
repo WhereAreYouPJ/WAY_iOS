@@ -11,9 +11,14 @@ import Kingfisher
 struct NotificationView: View {
     @Environment(\.dismiss) private var dismiss
     
+    // 일정 섹션
     @State private var isScheduleSectionExpanded = true
     @State private var isFriendSectionExpanded = true
     @State private var isGeneralSectionExpanded = true
+    
+    // 친구 섹션
+    @State private var isAccepted = false
+    @State private var showMergedButton = false
     
     @StateObject private var viewModel: NotificationViewModel = {
         let scheduleRepo = ScheduleRepository(scheduleService: ScheduleService())
@@ -147,7 +152,8 @@ struct NotificationView: View {
         DisclosureGroup(
             isExpanded: $isGeneralSectionExpanded,
             content: {
-                generalArticle()
+//                generalArticle()
+                emptyNotification()
             },
             label: {
                 HStack {
@@ -170,7 +176,7 @@ struct NotificationView: View {
                     
                     Spacer()
                     
-                    Text("0분 전")
+                    Text(schedule.createdAt?.timeAgoDisplay() ?? "")
                         .foregroundStyle(Color(.color153))
                         .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
                 }
@@ -335,9 +341,9 @@ struct NotificationView: View {
 //                }
 //                .frame(width: LayoutAdapter.shared.scale(value: 152), height: LayoutAdapter.shared.scale(value: 46))
 //            }
-            ButtonMergeView(friendRequest: friendRequest)
-            .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
-            .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
+            buttonMergeView(friendRequest: friendRequest)
+                .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
+                .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
         }
         .background(
             RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16))
@@ -403,57 +409,105 @@ struct NotificationView: View {
     }
     
     // 수락 or 거절 버튼 클릭시 하나로 합쳐짐
-    struct ButtonMergeView: View {
-        let friendRequest: FriendRequest
-        @State private var isAccepted = false
-        @State private var showMergedButton = false
-        
-        var body: some View {
-            ZStack {
-                if !showMergedButton {
-                    HStack {
-                        CustomButtonSwiftUI(title: "친구 수락하기",
-                                          backgroundColor: Color(.brandColor),
-                                          titleColor: .white) {
-                            withAnimation(.spring(duration: 0.5)) {
-                                isAccepted = true
-                                showMergedButton = true
-                            }
+    // TODO: Utils로 struct 재사용 가능하게 수정하기. ManageFriendsView에서도 사용함
+    func buttonMergeView(friendRequest: FriendRequest) -> some View {
+        ZStack {
+            if !showMergedButton {
+                HStack {
+                    CustomButtonSwiftUI(title: "친구 수락하기",
+                                      backgroundColor: Color(.brandColor),
+                                      titleColor: .white) {
+                        withAnimation(.spring(duration: 0.5)) {
+                            isAccepted = true
+                            showMergedButton = true
+                            viewModel.acceptFriendRequest(friendRequest: friendRequest)
                         }
-                        .frame(width: LayoutAdapter.shared.scale(value: 152),
-                              height: LayoutAdapter.shared.scale(value: 46))
-                        
-                        CustomButtonSwiftUI(title: "친구 거절하기",
-                                          backgroundColor: .white,
-                                          titleColor: Color(.black22)) {
-                            withAnimation(.spring(duration: 0.5)) {
-                                isAccepted = false
-                                showMergedButton = true
-                            }
-                        }
-                        .frame(width: LayoutAdapter.shared.scale(value: 152),
-                              height: LayoutAdapter.shared.scale(value: 46))
                     }
-                } else {
-                    Button(action: {}) {
-                        HStack {
-                            Image(systemName: isAccepted ? "checkmark" : "xmark")
-                                .foregroundColor(isAccepted ? .white : Color(.black66))
+                    .frame(width: LayoutAdapter.shared.scale(value: 152),
+                          height: LayoutAdapter.shared.scale(value: 46))
+                    
+                    CustomButtonSwiftUI(title: "친구 거절하기",
+                                      backgroundColor: .white,
+                                      titleColor: Color(.black22)) {
+                        withAnimation(.spring(duration: 0.5)) {
+                            isAccepted = false
+                            showMergedButton = true
+                            viewModel.refuseFriendRequest(friendRequestSeq: friendRequest.friendRequestSeq)
                         }
-                        .frame(maxWidth: .infinity)
-                        .frame(height: LayoutAdapter.shared.scale(value: 46))
-                        .background(isAccepted ? Color(.brandColor) : Color.white)
-                        .cornerRadius(LayoutAdapter.shared.scale(value: 12))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 12))
-                                .stroke(Color(.black66), lineWidth: isAccepted ? 0 : 1)
-                        )
                     }
-                    .transition(.scale)
+                    .frame(width: LayoutAdapter.shared.scale(value: 152),
+                          height: LayoutAdapter.shared.scale(value: 46))
                 }
+            } else {
+                Button(action: {}) {
+                    HStack {
+                        Image(systemName: isAccepted ? "checkmark" : "xmark")
+                            .foregroundColor(isAccepted ? .white : Color(.black66))
+                    }
+                    .frame(maxWidth: .infinity)
+                    .frame(height: LayoutAdapter.shared.scale(value: 46))
+                    .background(isAccepted ? Color(.brandColor) : Color.white)
+                    .cornerRadius(LayoutAdapter.shared.scale(value: 12))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 12))
+                            .stroke(Color(.black66), lineWidth: isAccepted ? 0 : 1)
+                    )
+                }
+                .transition(.scale)
             }
         }
     }
+//    struct ButtonMergeView: View {
+//        let friendRequest: FriendRequest
+//        @State private var isAccepted = false
+//        @State private var showMergedButton = false
+//        
+//        var body: some View {
+//            ZStack {
+//                if !showMergedButton {
+//                    HStack {
+//                        CustomButtonSwiftUI(title: "친구 수락하기",
+//                                          backgroundColor: Color(.brandColor),
+//                                          titleColor: .white) {
+//                            withAnimation(.spring(duration: 0.5)) {
+//                                isAccepted = true
+//                                showMergedButton = true
+//                            }
+//                        }
+//                        .frame(width: LayoutAdapter.shared.scale(value: 152),
+//                              height: LayoutAdapter.shared.scale(value: 46))
+//                        
+//                        CustomButtonSwiftUI(title: "친구 거절하기",
+//                                          backgroundColor: .white,
+//                                          titleColor: Color(.black22)) {
+//                            withAnimation(.spring(duration: 0.5)) {
+//                                isAccepted = false
+//                                showMergedButton = true
+//                            }
+//                        }
+//                        .frame(width: LayoutAdapter.shared.scale(value: 152),
+//                              height: LayoutAdapter.shared.scale(value: 46))
+//                    }
+//                } else {
+//                    Button(action: {}) {
+//                        HStack {
+//                            Image(systemName: isAccepted ? "checkmark" : "xmark")
+//                                .foregroundColor(isAccepted ? .white : Color(.black66))
+//                        }
+//                        .frame(maxWidth: .infinity)
+//                        .frame(height: LayoutAdapter.shared.scale(value: 46))
+//                        .background(isAccepted ? Color(.brandColor) : Color.white)
+//                        .cornerRadius(LayoutAdapter.shared.scale(value: 12))
+//                        .overlay(
+//                            RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 12))
+//                                .stroke(Color(.black66), lineWidth: isAccepted ? 0 : 1)
+//                        )
+//                    }
+//                    .transition(.scale)
+//                }
+//            }
+//        }
+//    }
     
     // MARK: 알림 없는 경우
     func emptyNotification() -> some View {

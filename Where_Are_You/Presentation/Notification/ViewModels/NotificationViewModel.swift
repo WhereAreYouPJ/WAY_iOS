@@ -80,7 +80,7 @@ class NotificationViewModel: ObservableObject {
     
     private func convertToSchedules(from invitedLists: GetInvitedListResponse) -> [Schedule] {
         return invitedLists.compactMap { response -> Schedule? in
-            guard let startDate = response.startTime.toDate(from: .server) else {
+            guard let startDate = response.startTime.toDate(from: .serverSimple) else {
                 print("Date 변환 실패: \(response.startTime)")
                 return nil
             }

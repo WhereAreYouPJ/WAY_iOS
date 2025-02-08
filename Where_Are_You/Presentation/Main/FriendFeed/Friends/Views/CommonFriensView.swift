@@ -15,27 +15,28 @@ struct SearchBarView: View {
     
     var body: some View {
         TextField("검색", text: $searchText)
-            .padding(7)
-            .padding(.horizontal, 25)
+            .frame(height: LayoutAdapter.shared.scale(value: 30))
+            .padding(LayoutAdapter.shared.scale(value: 7))
+            .padding(.horizontal, LayoutAdapter.shared.scale(value: 25))
             .background(Color(.systemGray6))
-            .cornerRadius(8)
+            .cornerRadius(LayoutAdapter.shared.scale(value: 8))
             .overlay(
                 HStack {
                     Image(systemName: "magnifyingglass")
                         .foregroundColor(.gray)
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading, 8)
+                        .padding(.leading, LayoutAdapter.shared.scale(value: 8))
                     
                     if !searchText.isEmpty {
                         Button(action: onClear) {
                             Image(systemName: "multiply.circle.fill")
                                 .foregroundStyle(.gray)
-                                .padding(.trailing, 8)
+                                .padding(.trailing, LayoutAdapter.shared.scale(value: 8))
                         }
                     }
                 }
             )
-            .padding(.horizontal)
+//            .padding(.horizontal)
     }
 }
 
@@ -49,15 +50,16 @@ struct FriendListView: View {
     
     var body: some View {
         ZStack {
-            if viewModel.isLoading {
-                ProgressView()
-                    .scaleEffect(1.5)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else if viewModel.hasError {
-                ErrorView {
-                    //                    viewModel.retry()
-                }
-            } else if viewModel.favorites.isEmpty && viewModel.friends.isEmpty {
+//            if viewModel.isLoading {
+//                ProgressView()
+//                    .scaleEffect(1.5)
+//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+//            } else if viewModel.hasError {
+//                ErrorView {
+//                    //                    viewModel.retry()
+//                }
+//            } else
+            if viewModel.favorites.isEmpty && viewModel.friends.isEmpty {
                 EmptyFriendsView()
             } else {
                 ScrollView {

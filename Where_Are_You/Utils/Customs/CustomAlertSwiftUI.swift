@@ -19,7 +19,7 @@ struct CustomAlertSwiftUI: View {
     var body: some View {
         ZStack {
             Color.black.opacity(0.3)
-                .ignoresSafeArea()
+                .ignoresSafeArea(.all)
                 .onTapGesture {
                     isPresented = false
                 }

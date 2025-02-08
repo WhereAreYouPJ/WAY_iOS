@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 당일 일정인 경우
+struct ScheduleView: View {
     // TODO: 초대받은 일정 캘린더에 안뜸
     @StateObject var viewModel: ScheduleViewModel
     
@@ -27,7 +27,8 @@ struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 
     }
     
     var body: some View {
-        GeometryReader { geometry in
+//        ZStack(alignment: .bottom) { // 전체 뷰를 ZStack으로 감싸기
+            GeometryReader { geometry in
                 ZStack(alignment: .top) {
                     VStack(spacing: 0) {
                         HStack(alignment: .center) {
@@ -58,7 +59,7 @@ struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 
                         calendarGridView(in: geometry)
                     }
                     .padding(.horizontal, LayoutAdapter.shared.scale(value: 10))
-
+                    
                     if showOptionMenu {
                         // 배경 터치시 메뉴 닫기
                         Color.clear
@@ -86,56 +87,43 @@ struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 
             NotificationView()
         })
         .sheet(isPresented: $showCreateSchedule, onDismiss: {
-            viewModel.getMonthlySchedule()
-        }) {
-            CreateScheduleView()
-        }
-//        .sheet(isPresented: $showDailySchedule, onDismiss: {
-//            viewModel.getMonthlySchedule()
-//        }) {
-//            if let date = selectedDate {
-//                DailyScheduleView(date: date, isPresented: $showDailySchedule, onDeleteSchedule: { schedule, title, message in
-//                    scheduleToDelete = schedule
-//                    alertTitle = title
-//                    alertMessage = message
-//                    showingDeleteAlert = true
-//                })
-//                .presentationDetents([.medium])
-//            }
-//        }
+                viewModel.getMonthlySchedule()
+            }, content: {
+                CreateScheduleView()
+            }
+        )
         .sheet(isPresented: $showDailySchedule) {
-                    if let date = selectedDate {
-                        DailyScheduleView(
-                            date: date,
-                            isPresented: $showDailySchedule,
-                            onDeleteSchedule: { schedule in
-                                scheduleToDelete = schedule
-                                showDailySchedule = false
-                                showDeleteAlert = true
-                            }
-                        )
-                        .presentationDetents([.medium])
+            if let date = selectedDate {
+                DailyScheduleView(
+                    date: date,
+                    isPresented: $showDailySchedule,
+                    onDeleteSchedule: { schedule in
+                        scheduleToDelete = schedule
+                        showDailySchedule = false
+                        showDeleteAlert = true
                     }
+                )
+                .presentationDetents([.medium])
+            }
+        }
+        .customAlertModifier(
+            isPresented: $showDeleteAlert,
+            showDailySchedule: $showDailySchedule,
+            title: scheduleToDelete.map { viewModel.setDeleteAlertContent(for: $0).0 } ?? "일정 삭제",
+            message: {
+                let message = scheduleToDelete.map(viewModel.setDeleteAlertContent)?.1 ?? ""
+                    print("Alert message: \(message)")  // 실제 메시지 확인
+                    return message
+                }(),
+            cancelTitle: "취소",
+            actionTitle: "삭제"
+        ) {
+            if let schedule = scheduleToDelete {
+                viewModel.deleteSchedule(schedule) {
+                    scheduleToDelete = nil
                 }
-                .customAlert(
-                    isPresented: $showDeleteAlert,
-                    showDailySchedule: $showDailySchedule,
-                    title: "일정 삭제",
-                    message: "일정을 삭제합니다.\n연관된 피드가 있을 경우  같이 삭제됩니다.",
-                    cancelTitle: "취소",
-                    actionTitle: "삭제"
-                ) {
-                    if let schedule = scheduleToDelete {
-                        viewModel.deleteSchedule(schedule)
-                        scheduleToDelete = nil
-                        viewModel.getMonthlySchedule()
-                    }
-                }
-                .onChange(of: showDeleteAlert) { _, isShowing in
-                            if !isShowing {  // 알림창이 닫힐 때
-                                showDailySchedule = true  // 항상 DailyScheduleView 다시 열기
-                            }
-                        }
+            }
+        }
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
         .onAppear(perform: {
             viewModel.getMonthlySchedule()
@@ -280,7 +268,7 @@ struct ScheduleView: View { // TODO: 일정 생성 후 뷰 업데이트 안됨: 
 }
 
 // MARK: - CellView
-private struct CellView: View { // TODO: 각 날짜에 맞게 일정 보여주기
+private struct CellView: View {
     private var day: Int
     private var clicked: Bool
     private var isToday: Bool
@@ -526,6 +514,36 @@ extension Date {
     
     var formattedCalendarDayDate: String {
         return Date.calendarDayDateFormatter.string(from: self)
+    }
+}
+
+// TabBar에 접근하기 위한 헬퍼 구조체
+struct TabBarAccessor: UIViewRepresentable {
+    let callback: (UITabBar) -> Void
+    
+    func makeUIView(context: Context) -> UIView {
+        let view = UIView()
+        DispatchQueue.main.async {
+            if let tabBar = self.findTabBar(view: view) {
+                self.callback(tabBar)
+            }
+        }
+        return view
+    }
+    
+    func updateUIView(_ uiView: UIView, context: Context) {}
+    
+    private func findTabBar(view: UIView) -> UITabBar? {
+        if let tabBar = view.superview?.superview as? UITabBar {
+            return tabBar
+        }
+        
+        for subview in view.subviews {
+            if let tabBar = findTabBar(view: subview) {
+                return tabBar
+            }
+        }
+        return nil
     }
 }
 

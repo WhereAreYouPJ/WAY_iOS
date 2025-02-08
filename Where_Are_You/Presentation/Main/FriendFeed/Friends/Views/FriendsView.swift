@@ -22,27 +22,32 @@ struct FriendsView: View {
     @Environment(\.dismiss) private var dismiss
     @Binding var showSearchBar: Bool
     @State private var selectedFriend: Friend?
+    @State private var showMyProfile = true
     @State private var showFriendDetail = false
     @State private var isMyProfileSelected = false
     @State private var shouldRefreshList = false
     
     var body: some View {
         VStack(spacing: 0) {
-            if showSearchBar {
-                SearchBarView(searchText: $viewModel.searchText,
-                              onClear: {
-                    viewModel.clearSearch()
-                    showSearchBar = false
-                })
-                .transition(.move(edge: .top))
-                .animation(.easeInOut, value: showSearchBar)
-            }
-            
-            myProfileView()
-                .onTapGesture {
-                    isMyProfileSelected = true
-                    showFriendDetail = true
+            ZStack {
+                if showSearchBar {
+                    SearchBarView(searchText: $viewModel.searchText,
+                                  onClear: {
+                        viewModel.clearSearch()
+                        showSearchBar = false
+                    })
+                    .frame(height: UIScreen.main.bounds.width * 0.14 + LayoutAdapter.shared.scale(value: 18))
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+                } else {
+                    myProfileView()
+                        .onTapGesture {
+                            isMyProfileSelected = true
+                            showFriendDetail = true
+                        }
+                        .transition(.opacity.combined(with: .move(edge: .bottom)))
                 }
+            }
+            .animation(.spring(response: 0.3), value: showSearchBar)
             
             FriendListView(
                 viewModel: viewModel,
