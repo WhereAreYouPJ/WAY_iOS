@@ -20,6 +20,8 @@ class SignUpFormViewController: UIViewController {
         setupViewModel()
         setupBindings()
         setupActions()
+        
+        hideKeyboardWhenTappedAround()
     }
     
     // MARK: - Helpers

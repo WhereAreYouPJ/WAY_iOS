@@ -36,6 +36,7 @@ class SocialSignUpViewController: UIViewController {
         setupViewModel()
         setupBindings()
         setupActions()
+        hideKeyboardWhenTappedAround()
     }
     
     // MARK: - Helpers
