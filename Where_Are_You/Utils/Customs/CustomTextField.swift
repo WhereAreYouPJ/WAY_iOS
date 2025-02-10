@@ -14,6 +14,7 @@ class CustomTextField: UITextField {
     
     private var textPadding: UIEdgeInsets
     private var hasBorder: Bool
+    private var errorState: Bool = false
     
     init(textPadding: UIEdgeInsets = UIEdgeInsets(top: 0, left: LayoutAdapter.shared.scale(value: 12), bottom: 0, right: LayoutAdapter.shared.scale(value: 12)),
          placeholder: String,
@@ -35,7 +36,7 @@ class CustomTextField: UITextField {
     
     private func setupTextField(placeholder: String?) {
         adjustsFontForContentSizeCategory = true
-        font = UIFont(name: "Pretendard-Medium", size: 14)
+        font = UIFont(name: "Pretendard-Medium", size: 16)
         
         // Set placeholder with color
         if let placeholderText = placeholder {
@@ -53,12 +54,37 @@ class CustomTextField: UITextField {
         }
     }
     
-    // MARK: - 포커스 상태에 따른 border 색상 변경
+    // MARK: - 에러 상태 업데이트 메서드
+    /// 외부에서 조건에 따라 에러 상태를 설정하거나 해제할 때 호출
+    func setErrorState(_ isError: Bool) {
+        self.errorState = isError
+        if isError {
+            // 에러인 경우 즉시 border 색상을 error 색상으로 변경
+            layer.borderColor = UIColor.error.cgColor
+        } else {
+            // 에러가 해제되면 현재 포커스 상태에 따라 색상 업데이트
+            if isFirstResponder {
+                layer.borderColor = UIColor.brandMain.cgColor
+            } else {
+                layer.borderColor = UIColor.blackD4.cgColor
+            }
+        }
+    }
+    
+    // MARK: - 포커스 상태에 따른 border 색상 변경 (에러 상태 고려)
     override func becomeFirstResponder() -> Bool {
         let result = super.becomeFirstResponder()
         if result && hasBorder {
-            // 텍스트 필드가 포커스를 받으면 border 색상을 brandMain 컬러로 변경
-            layer.borderColor = UIColor.brandMain.cgColor
+            // 에러 상태가 아니라면 포커스 시 brandMain, 에러 상태면 그대로 error 색상 유지
+            if !errorState {
+                layer.borderColor = UIColor.brandMain.cgColor
+            }
+        }
+        // 포커스를 받은 후 전체 선택을 해제하고 커서를 텍스트 끝으로 이동
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self, let currentText = self.text, !currentText.isEmpty else { return }
+            let endPosition = self.endOfDocument
+            self.selectedTextRange = self.textRange(from: endPosition, to: endPosition)
         }
         return result
     }
@@ -66,8 +92,12 @@ class CustomTextField: UITextField {
     override func resignFirstResponder() -> Bool {
         let result = super.resignFirstResponder()
         if result && hasBorder {
-            // 텍스트 필드의 포커스가 해제되면 border 색상을 기본인 blackD4 컬러로 변경
-            layer.borderColor = UIColor.blackD4.cgColor
+            // 에러 상태이면 error 색상, 아니라면 기본 색상으로 변경
+            if errorState {
+                layer.borderColor = UIColor.error.cgColor
+            } else {
+                layer.borderColor = UIColor.blackD4.cgColor
+            }
         }
         return result
     }

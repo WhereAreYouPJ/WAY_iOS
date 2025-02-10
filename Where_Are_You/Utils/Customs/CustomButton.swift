@@ -27,6 +27,14 @@ class TitleButton: UIButton {
     private var buttonTitle: NSAttributedString
     private var buttonBackgroundColor: UIColor
     private var borderColor: CGColor?
+    private var savedTitle: NSAttributedString?
+
+    private var spinner: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.hidesWhenStopped = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
     
     // MARK: - Initializer
     init(title: NSAttributedString, backgroundColor: UIColor, borderColor: CGColor?) {
@@ -35,10 +43,27 @@ class TitleButton: UIButton {
         self.borderColor = borderColor
         super.init(frame: .zero)
         setupButton()
+        setupSpinner()
+    }
+
+    // 초기화 시 스피너 추가
+    override init(frame: CGRect) {
+            // 기본값을 제공하여 초기화
+            self.buttonTitle = NSAttributedString(string: "")
+            self.buttonBackgroundColor = .clear
+            self.borderColor = nil
+            super.init(frame: frame)
+            setupButton()
+            setupSpinner()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        self.buttonTitle = NSAttributedString(string: "")
+        self.buttonBackgroundColor = .clear
+        self.borderColor = nil
+        super.init(coder: coder)
+        setupButton()
+        setupSpinner()
     }
     
     // MARK: - Setup Button
@@ -71,6 +96,34 @@ class TitleButton: UIButton {
     func updateBackgroundColor(_ color: UIColor) {
         self.buttonBackgroundColor = color
         backgroundColor = color
+    }
+    
+    private func setupSpinner() {
+        addSubview(spinner)
+        // 스피너를 버튼 중앙에 위치시킵니다.
+        NSLayoutConstraint.activate([
+            spinner.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+        ])
+    }
+    
+    /// 로딩 상태 시작: 타이틀을 숨기고 스피너를 시작합니다.
+    func showLoading() {
+        if let currentTitle = self.attributedTitle(for: .normal) {
+            savedTitle = currentTitle
+        }
+        setTitle("", for: .normal)
+        spinner.startAnimating()
+    }
+    
+    /// 로딩 상태 종료: 스피너를 멈추고 원래 타이틀을 복원합니다.
+    func hideLoading() {
+        spinner.stopAnimating()
+        // 저장해둔 타이틀이 있다면 복원, 없으면 기본값으로 설정
+        if let restoredTitle = savedTitle {
+            self.setAttributedTitle(restoredTitle, for: .normal)
+        }
+        savedTitle = nil
     }
 }
 

@@ -11,7 +11,7 @@ import Foundation
 
 class ValidationHelper {
     static func isValidUserName(_ userName: String) -> Bool {
-        let nameRegex = "^[가-힣a-zA-Z\\d@$!%*?&]{1,}$"
+        let nameRegex = "^[가-힣]{1,4}$"
         let userNamePred = NSPredicate(format: "SELF MATCHES %@", nameRegex)
         return userNamePred.evaluate(with: userName)
     }
