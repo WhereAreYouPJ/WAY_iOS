@@ -27,70 +27,69 @@ struct ScheduleView: View {
     }
     
     var body: some View {
-//        ZStack(alignment: .bottom) { // 전체 뷰를 ZStack으로 감싸기
-            GeometryReader { geometry in
-                ZStack(alignment: .top) {
-                    VStack(spacing: 0) {
-                        HStack(alignment: .center) {
-                            yearMonthView
-                            Spacer()
-                            HStack(spacing: 0) {
-                                Button(action: {
-                                    showNotification = true
-                                }, label: {
-                                    Image("icon-notification")
-                                        .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
-                                })
-                                .padding(0)
-                                
-                                Button(action: {
-                                    showOptionMenu.toggle()
-                                }, label: {
-                                    Image("icon-plus")
-                                        .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
-                                })
-                            }
+        GeometryReader { geometry in
+            ZStack(alignment: .top) {
+                VStack(spacing: 0) {
+                    HStack(alignment: .center) {
+                        yearMonthView
+                        Spacer()
+                        HStack(spacing: 0) {
+                            Button(action: {
+                                showNotification = true
+                            }, label: {
+                                Image("icon-notification")
+                                    .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
+                            })
+                            .padding(0)
+                            
+                            Button(action: {
+                                showOptionMenu.toggle()
+                            }, label: {
+                                Image("icon-plus")
+                                    .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
+                            })
                         }
-                        .padding(.horizontal, LayoutAdapter.shared.scale(value: 4))
-                        .padding(.top, LayoutAdapter.shared.scale(value: -2))
-                        .padding(.bottom, LayoutAdapter.shared.scale(value: 8))
-                        
-                        weekdayView
-                        calendarGridView(in: geometry)
                     }
-                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 10))
+                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 4))
+                    .padding(.top, LayoutAdapter.shared.scale(value: -2))
+                    .padding(.bottom, LayoutAdapter.shared.scale(value: 8))
                     
-                    if showOptionMenu {
-                        // 배경 터치시 메뉴 닫기
-                        Color.clear
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                showOptionMenu = false
-                            }
-                        
-                        MultiOptionButtonView {
-                            OptionButton(
-                                title: "일정 추가",
-                                position: .single
-                            ) {
-                                showOptionMenu = false
-                                showCreateSchedule.toggle()
-                            }
+                    weekdayView
+                    calendarGridView(in: geometry)
+                }
+                .padding(.horizontal, LayoutAdapter.shared.scale(value: 10))
+                
+                if showOptionMenu {
+                    // 배경 터치시 메뉴 닫기
+                    Color.clear
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            showOptionMenu = false
                         }
-                        .offset(y: LayoutAdapter.shared.scale(value: 44))
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        .padding(.trailing, LayoutAdapter.shared.scale(value: 15))
+                    
+                    MultiOptionButtonView {
+                        OptionButton(
+                            title: "일정 추가",
+                            position: .single
+                        ) {
+                            showOptionMenu = false
+                            showCreateSchedule.toggle()
+                        }
                     }
+                    .offset(y: LayoutAdapter.shared.scale(value: 44))
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .padding(.trailing, LayoutAdapter.shared.scale(value: 15))
                 }
             }
+        }
         .fullScreenCover(isPresented: $showNotification, content: {
             NotificationView()
         })
         .sheet(isPresented: $showCreateSchedule, onDismiss: {
-                viewModel.getMonthlySchedule()
-            }, content: {
-                CreateScheduleView()
-            }
+            viewModel.getMonthlySchedule()
+        }, content: {
+            CreateScheduleView()
+        }
         )
         .sheet(isPresented: $showDailySchedule) {
             if let date = selectedDate {
@@ -112,9 +111,9 @@ struct ScheduleView: View {
             title: scheduleToDelete.map { viewModel.setDeleteAlertContent(for: $0).0 } ?? "일정 삭제",
             message: {
                 let message = scheduleToDelete.map(viewModel.setDeleteAlertContent)?.1 ?? ""
-                    print("Alert message: \(message)")  // 실제 메시지 확인
-                    return message
-                }(),
+                print("Alert message: \(message)")  // 실제 메시지 확인
+                return message
+            }(),
             cancelTitle: "취소",
             actionTitle: "삭제"
         ) {

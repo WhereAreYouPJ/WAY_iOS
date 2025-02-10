@@ -31,6 +31,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         registerForPushNotifications()
         application.registerForRemoteNotifications()
         
+        // 네비게이션 바 스타일 설정 추가
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white
+        
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        
         return true
     }
 

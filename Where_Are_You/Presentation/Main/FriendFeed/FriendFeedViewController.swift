@@ -225,10 +225,12 @@ class FriendFeedViewController: UIViewController {
         searchFriendButton.addTarget(self, action: #selector(handleSearch), for: .touchUpInside)
         notificationButton.addTarget(self, action: #selector(handleNotification), for: .touchUpInside)
         addButton.addTarget(self, action: #selector(handleAdd), for: .touchUpInside)
-//        plusOptionButton.button.addTarget(self, action: #selector(plusOptionButtonTapped), for: .touchUpInside)
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
-//        view.addGestureRecognizer(tapGesture)
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
     }
+    
     
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
@@ -287,6 +289,13 @@ class FriendFeedViewController: UIViewController {
             if !friendOptionView.view.isHidden {
                 view.bringSubviewToFront(friendOptionView.view)
             }
+        }
+    }
+    
+    @objc private func handleOutsideTap(_ gesture: UITapGestureRecognizer) {
+        let location = gesture.location(in: view)
+        if !friendOptionView.view.frame.contains(location) {
+            friendOptionView.view.isHidden = true
         }
     }
 }
