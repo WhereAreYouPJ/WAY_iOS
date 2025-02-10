@@ -26,7 +26,7 @@ class TermsAgreementView: UIView {
         return view
     }()
     
-    private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "회원가입에 필요한\n약관에 동의해주세요", textColor: .black22))
+    private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "회원가입에 필요한 \n약관에 동의해주세요", textColor: .black22))
     
     private let agreeView: UIView = {
         let view = UIView()

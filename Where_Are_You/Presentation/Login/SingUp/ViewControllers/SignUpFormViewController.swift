@@ -42,11 +42,12 @@ class SignUpFormViewController: UIViewController {
     }
     
     private func setupActions() {
-        signUpView.bottomButtonView.button.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
+        signUpView.bottomButtonView.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
         signUpView.emailCheckButton.addTarget(self, action: #selector(authRequestButtonTapped), for: .touchUpInside)
         signUpView.authCheckButton.addTarget(self, action: #selector(authCheckButtonTapped), for: .touchUpInside)
         
-        signUpView.userNameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingDidEnd)
+        signUpView.userNameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        signUpView.emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         signUpView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         signUpView.checkPasswordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
@@ -60,8 +61,8 @@ class SignUpFormViewController: UIViewController {
         
         viewModel.onSignUpButtonState = { [weak self] isAvailable in
             DispatchQueue.main.async {
-                self?.signUpView.bottomButtonView.button.isEnabled = isAvailable
-                self?.signUpView.bottomButtonView.button.backgroundColor = isAvailable ? .brandColor : .color171
+                self?.signUpView.bottomButtonView.isEnabled = isAvailable
+                self?.signUpView.bottomButtonView.backgroundColor = isAvailable ? .brandMain : .blackAC
             }
         }
         
@@ -86,9 +87,9 @@ class SignUpFormViewController: UIViewController {
         viewModel.onEmailSendMessage = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
                 self?.updateStatus(label: self?.signUpView.emailErrorLabel, message: message, isAvailable: isAvailable, textField: self?.signUpView.emailTextField)
+                self?.signUpView.emailCheckButton.hideLoading()
                 self?.signUpView.authStack.isHidden = !isAvailable
                 if isAvailable == true {
-                    self?.signUpView.emailCheckButton.updateTitle("인증요청 완료")
                     self?.signUpView.emailCheckButton.updateBackgroundColor(.color171)
                     self?.signUpView.emailCheckButton.isEnabled = isAvailable
                 }
@@ -109,7 +110,7 @@ class SignUpFormViewController: UIViewController {
         // 타이머 업데이트
         viewModel.onUpdateTimer = { [weak self] timeString in
             DispatchQueue.main.async {
-                self?.signUpView.timer.text = timeString
+                self?.signUpView.timer.attributedText = UIFont.CustomFont.bodyP4(text: timeString, textColor: .error)
             }
         }
     }
@@ -124,6 +125,13 @@ class SignUpFormViewController: UIViewController {
         switch textField {
         case signUpView.userNameTextField:
             viewModel.checkUserNameValidation(userName: userName)
+        case signUpView.emailTextField:
+            signUpView.emailCheckButton.updateBackgroundColor(.brandMain)
+            signUpView.emailCheckButton.isEnabled = true
+            signUpView.authCheckButton.updateBackgroundColor(.brandMain)
+            signUpView.authCheckButton.isEnabled = true
+            viewModel.signUpBody.email = nil
+            signUpView.authCheckButton.updateTitle("확인")
         case signUpView.passwordTextField:
             viewModel.checkPasswordAvailability(password: pw)
         case signUpView.checkPasswordTextField:
@@ -138,6 +146,7 @@ class SignUpFormViewController: UIViewController {
     }
     
     @objc func authRequestButtonTapped() {
+        signUpView.emailCheckButton.showLoading()
         viewModel.checkEmailAvailability(email: signUpView.emailTextField.text ?? "")
     }
     
@@ -146,7 +155,6 @@ class SignUpFormViewController: UIViewController {
     }
     
     @objc func startButtonTapped() {
-        print("회원가입완료버튼 눌림")
         viewModel.signUp()
     }
     
@@ -158,8 +166,12 @@ class SignUpFormViewController: UIViewController {
     }
     
     private func updateStatus(label: UILabel?, message: String, isAvailable: Bool, textField: UITextField?) {
-        label?.text = message
-        label?.textColor = isAvailable ? .brandMain : .error
-        textField?.layer.borderColor = isAvailable ? UIColor.blackD4.cgColor : UIColor.error.cgColor
+        label?.attributedText = UIFont.CustomFont.bodyP5(text: message, textColor: isAvailable ? .brandMain : .error)
+        if let customTF = textField as? CustomTextField {
+            // 조건이 맞지 않으면 error 상태를 유지하도록 설정
+            customTF.setErrorState(!isAvailable)
+        } else {
+            textField?.layer.borderColor = isAvailable ? UIColor.blackD4.cgColor : UIColor.error.cgColor
+        }
     }
 }
