@@ -20,6 +20,7 @@ class AccountSearchViewController: UIViewController {
         setupViewModel()
         setupBindings()
         setupActions()
+        hideKeyboardWhenTappedAround()
     }
     
     // MARK: - Helpers

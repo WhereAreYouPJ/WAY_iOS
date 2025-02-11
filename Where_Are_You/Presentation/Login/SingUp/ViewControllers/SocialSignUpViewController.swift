@@ -16,6 +16,7 @@ class SocialSignUpViewController: UIViewController {
     private var userIdentifier: String = ""
     private var userName: String = ""
     private var loginType: String = ""
+    private var linkLoginType: [String] = []
     
     // MARK: - Lifecycle
     init(email: String, userIdentifier: String, userName: String, loginType: String) {
@@ -63,8 +64,9 @@ class SocialSignUpViewController: UIViewController {
             }
         }
         
-        viewModel.onEmailDuplicate = { [weak self] in
+        viewModel.onEmailDuplicate = { [weak self] linkLoginType in
             DispatchQueue.main.async {
+                self?.linkLoginType = linkLoginType
                 self?.moveToSocialLink()
             }
         }
@@ -85,6 +87,9 @@ class SocialSignUpViewController: UIViewController {
     
     private func moveToSocialLink() {
         // 소셜 연동 뷰로 이동
+        guard let userName = socialSignUpView.userNameTextField.text else { return }
+        let controller = SocialLinkViewController(email: email, userIdentifier: userIdentifier, userName: userName, loginType: loginType, linkLoginType: linkLoginType)
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     private func moveToSignUpSuccess() {

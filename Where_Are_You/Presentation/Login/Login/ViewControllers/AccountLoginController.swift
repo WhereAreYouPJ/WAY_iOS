@@ -22,6 +22,8 @@ class AccountLoginController: UIViewController {
         setupActions()
         setupViewModel()
         setupBindings()
+        hideKeyboardWhenTappedAround()
+        registerForKeyboardNotifications()
     }
     
     // MARK: - Helpers
@@ -110,5 +112,9 @@ class AccountLoginController: UIViewController {
         label?.text = message
         label?.textColor = isAvailable ? .brandColor : .error
         textField?.layer.borderColor = isAvailable ? UIColor.brandMain.cgColor : UIColor.error.cgColor
+    }
+    
+    deinit {
+        deregisterFromKeyboardNotifications()
     }
 }
