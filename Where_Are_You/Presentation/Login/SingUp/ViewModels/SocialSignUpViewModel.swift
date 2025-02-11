@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 class SocialSignUpViewModel {
     
     // MARK: - Properties
@@ -16,7 +15,7 @@ class SocialSignUpViewModel {
 
     var signUpBody = MemberSnsBody()
     
-    var onEmailDuplicate: (() -> Void)?
+    var onEmailDuplicate: (([String]) -> Void)?
     var onSignUpSuccess: (() -> Void)?
     var onSignUpButtonState: ((Bool) -> Void)?
     
@@ -35,8 +34,8 @@ class SocialSignUpViewModel {
             switch result {
             case .success:
                 self.onSignUpSuccess?()
-            case .failure:
-                break
+            case .failure(let error):
+                print(error.localizedDescription)
             }
         }
     }
@@ -57,8 +56,7 @@ class SocialSignUpViewModel {
         checkEmailUseCase.execute(email: email) { result in
             switch result {
             case .success(let data):
-                // 이메일 중복 체크 해서 있으면 해당 데이터를 다음 화면에 연동시킬지 말지 띄우기
-                self.onEmailDuplicate?()
+                self.onEmailDuplicate?(data.type)
             case .failure:
                 // 이메일 중복된게 없으니 바로 회원가입 화면으로 이동
                 self.signUp()

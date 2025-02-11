@@ -13,7 +13,7 @@ class FinishRegisterview: UIView {
     
     private let progressBar: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightpurple
+        view.backgroundColor = .brandMain
         return view
     }()
     

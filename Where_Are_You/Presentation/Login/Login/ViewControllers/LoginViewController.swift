@@ -14,7 +14,8 @@ class LoginViewController: UIViewController {
     
     // MARK: - Properties
     private let loginView = LoginView()
-    
+    private var viewModel: AccountLoginViewModel!
+
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -24,7 +25,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = loginView
-        
+        setupViewModel()
         buttonAction()
     }
     
@@ -38,6 +39,11 @@ class LoginViewController: UIViewController {
         loginView.inquiryButton.addTarget(self, action: #selector(inquiryButtonTapped), for: .touchUpInside)
     }
     
+    private func setupViewModel() {
+        let memberService = MemberService()
+        let memberRepository = MemberRepository(memberService: memberService)
+        viewModel = AccountLoginViewModel(accountLoginUseCase: AccountLoginUseCaseImpl(memberRepository: memberRepository))
+    }
     // MARK: - Selectors
     
     @objc func kakaoLoginTapped() {
@@ -84,7 +90,7 @@ class LoginViewController: UIViewController {
     }
     
     @objc func inquiryButtonTapped() {
-
+        
     }
     
     // MARK: Kakao Login
@@ -96,7 +102,7 @@ class LoginViewController: UIViewController {
             } else {
                 print("loginWithKakaoTalk() success.")
                 
-                //do something
+                // do something
                 _ = oauthToken
             }
         }
@@ -109,20 +115,20 @@ class LoginViewController: UIViewController {
             } else {
                 print("loginWithKakaoAccount() success.")
                 
-                //do something
+                // do something
                 _ = oauthToken
             }
         }
     }
 }
 
-extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding{
-  func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
     }
-
+    
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-    //로그인 성공
+        // 로그인 성공
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
             // You can create an account in your system.
@@ -148,7 +154,20 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             //let validVC = SignValidViewController()
             //validVC.modalPresentationStyle = .fullScreen
             //present(validVC, animated: true, completion: nil)
-            
+            if let email = email {
+                // email 값이 있으면 신규 회원가입으로 간주하거나,
+                // 백엔드에서 회원 존재 여부를 체크하는 API를 호출합니다.
+                // 예를 들어, 신규 회원가입 화면으로 이동합니다.
+                let signUpVC = SocialSignUpViewController(email: email,
+                                                          userIdentifier: userIdentifier,
+                                                          userName: fullName?.givenName ?? "",
+                                                          loginType: "apple")
+                self.navigationController?.pushViewController(signUpVC, animated: true)
+            } else {
+                // email 값이 nil이면 이미 가입된 계정으로 간주합니다.
+                // 이 경우, 백엔드 API 호출을 통해 로그인 처리를 진행하거나 바로 메인 화면으로 이동합니다.
+//                viewModel.login(email: email, password: userIdentifier)
+            }
         case let passwordCredential as ASPasswordCredential:
             // Sign in using an existing iCloud Keychain credential.
             let username = passwordCredential.user
@@ -162,7 +181,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
         }
     }
     
-
+    
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         // 로그인 실패(유저의 취소도 포함)
         print("login failed - \(error.localizedDescription)")
