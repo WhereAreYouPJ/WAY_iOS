@@ -55,104 +55,106 @@ struct ScheduleDetailView: View {
     
     var body: some View {
         NavigationStack(path: $path) {
-            VStack(alignment: .leading, content: {
-                TextField("",
-                          text: Binding(get: { viewModel.schedule.title },
-                                        set: { viewModel.schedule.title = $0 }),
-                          prompt: Text("일정명을 작성해주세요.").foregroundColor(Color(.color118)))
-                .disabled(!viewModel.isEditable)
-                
-                Divider()
-                    .padding(.bottom, 16)
-
-                DateAndTimeView(
-                    isAllDay: Binding(
-                        get: { viewModel.schedule.isAllday ?? false },
-                        set: { viewModel.schedule.isAllday = $0 }
-                    ),
-                    startTime: Binding(
-                        get: { viewModel.schedule.startTime },
-                        set: { viewModel.schedule.startTime = $0 }
-                    ),
-                    endTime: Binding(
-                        get: { viewModel.schedule.endTime },
-                        set: { viewModel.schedule.endTime = $0 }
+            ScrollView {
+                VStack(alignment: .leading, content: {
+                    TextField("",
+                              text: Binding(get: { viewModel.schedule.title },
+                                            set: { viewModel.schedule.title = $0 }),
+                              prompt: Text("일정명을 작성해주세요.").foregroundColor(Color(.color118)))
+                    .disabled(!viewModel.isEditable)
+                    
+                    Divider()
+                        .padding(.bottom, 16)
+                    
+                    DateAndTimeView(
+                        isAllDay: Binding(
+                            get: { viewModel.schedule.isAllday ?? false },
+                            set: { viewModel.schedule.isAllday = $0 }
+                        ),
+                        startTime: Binding(
+                            get: { viewModel.schedule.startTime },
+                            set: { viewModel.schedule.startTime = $0 }
+                        ),
+                        endTime: Binding(
+                            get: { viewModel.schedule.endTime },
+                            set: { viewModel.schedule.endTime = $0 }
+                        )
                     )
-                )
-                .disabled(!viewModel.isEditable)
-                
-                AddPlaceView(viewModel: createViewModel, path: $path)
                     .disabled(!viewModel.isEditable)
-                
-                AddFriendsView(
-                    selectedFriends: Binding(
-                        get: { viewModel.schedule.invitedMember ?? [] },
-                        set: { viewModel.schedule.invitedMember = $0 }
-                    ),
-                    path: $path
-                )
+                    
+                    AddPlaceView(viewModel: createViewModel, path: $path)
+                        .disabled(!viewModel.isEditable)
+                    
+                    AddFriendsView(
+                        selectedFriends: Binding(
+                            get: { viewModel.schedule.invitedMember ?? [] },
+                            set: { viewModel.schedule.invitedMember = $0 }
+                        ),
+                        path: $path
+                    )
                     .disabled(!viewModel.isEditable)
-                
-                SetColorView(color: $createViewModel.color)
-                    .disabled(!viewModel.isEditable)
-                
-                MemoView(memo: $createViewModel.memo)
-                    .disabled(!viewModel.isEditable)
-                
-                // MARK: 친구 위치 실시간 확인 테스트용
-                Button {
-                    self.showFriendsLocation.toggle()
-                } label: {
-                    Text("실시간 위치 확인")
-                }
-                .padding(.vertical, 20)
-            })
-            .onTapGesture {
-                if !viewModel.isEditable {
-                    showToast = true
-                }
-            }
-            .fullScreenCover(isPresented: $showFriendsLocation) {
-                FriendsLocationView(isShownView: $showFriendsLocation, schedule: $viewModel.schedule)
-            }
-            .padding(15)
-            .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("취소", role: .cancel) {
-                        dismiss()
+                    
+                    SetColorView(color: $createViewModel.color)
+                        .disabled(!viewModel.isEditable)
+                    
+                    MemoView(memo: $createViewModel.memo)
+                        .disabled(!viewModel.isEditable)
+                    
+                    // TODO: 친구 위치 실시간 확인 테스트용. 홈화면에서 기능 추가시 삭제 필요
+                    Button {
+                        self.showFriendsLocation.toggle()
+                    } label: {
+                        Text("실시간 위치 확인")
                     }
-                    .foregroundStyle(Color.red)
+                    .padding(.vertical, 20)
+                })
+                .onTapGesture {
+                    if !viewModel.isEditable {
+                        showToast = true
+                    }
                 }
-                ToolbarItem(placement: .primaryAction) {
-                    if viewModel.isEditable {
-                        Button("수정") {
-                            viewModel.updateSchedule()
+                .fullScreenCover(isPresented: $showFriendsLocation) {
+                    FriendsLocationView(isShownView: $showFriendsLocation, schedule: $viewModel.schedule)
+                }
+                .padding(15)
+                .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("취소", role: .cancel) {
                             dismiss()
                         }
-                        .foregroundStyle(viewModel.schedule.title.isEmpty ? Color.gray : Color.red)
-                        .disabled(viewModel.schedule.title.isEmpty)
+                        .foregroundStyle(Color.red)
                     }
-                }
-            }
-            .navigationTitle("일정 수정")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(for: Route.self) { route in
-                switch route {
-                case .searchPlace:
-                    SearchLocationView(selectedLocation: $createViewModel.place, path: $path)
-                case .searchFriends:
-                    SearchFriendsView(selectedFriends: $createViewModel.selectedFriends)
-                case let .confirmLocation(location):
-                    if let location = location {
-                        ConfirmLocationView(location: .constant(location), path: $path)
-                            .onDisappear {
-                                createViewModel.getFavoriteLocation()
+                    ToolbarItem(placement: .primaryAction) {
+                        if viewModel.isEditable {
+                            Button("수정") {
+                                viewModel.updateSchedule()
+                                dismiss()
                             }
+                            .foregroundStyle(viewModel.schedule.title.isEmpty ? Color.gray : Color.red)
+                            .disabled(viewModel.schedule.title.isEmpty)
+                        }
                     }
                 }
+                .navigationTitle("일정 수정")
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationDestination(for: Route.self) { route in
+                    switch route {
+                    case .searchPlace:
+                        SearchLocationView(selectedLocation: $createViewModel.place, path: $path)
+                    case .searchFriends:
+                        SearchFriendsView(selectedFriends: $createViewModel.selectedFriends)
+                    case let .confirmLocation(location):
+                        if let location = location {
+                            ConfirmLocationView(location: .constant(location), path: $path)
+                                .onDisappear {
+                                    createViewModel.getFavoriteLocation()
+                                }
+                        }
+                    }
+                }
+                .toast(isPresented: $showToast, message: "일정을 수정할 수 없습니다.")
             }
-            .toast(isPresented: $showToast, message: "일정을 수정할 수 없습니다.")
         }
         .onAppear {
             viewModel.getScheduleDetail()
