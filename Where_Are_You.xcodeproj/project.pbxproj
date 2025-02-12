@@ -947,9 +947,9 @@
 			children = (
 				9950C6562C1040FD003155A7 /* TermsAgreementViewController.swift */,
 				9950C65A2C10B0F5003155A7 /* SignUpFormViewController.swift */,
-				99EC78D52C11E8A3007C4415 /* FinishRegisterViewController.swift */,
 				993AA53A2D53307100B0C9F6 /* SocialSignUpViewController.swift */,
 				993AA5402D5351C900B0C9F6 /* SocialLinkViewController.swift */,
+				99EC78D52C11E8A3007C4415 /* FinishRegisterViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -959,9 +959,9 @@
 			children = (
 				9950C64D2C102FB6003155A7 /* TermsAgreementView.swift */,
 				9950C6582C10B0DF003155A7 /* SignUpFormView.swift */,
-				99EC78D32C11E809007C4415 /* FinishRegisterview.swift */,
 				99E9E1882D3E0DC1008A81BF /* SocialSignUpView.swift */,
 				993AA53E2D5351B400B0C9F6 /* SocialLinkView.swift */,
+				99EC78D32C11E809007C4415 /* FinishRegisterview.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2551,7 +2551,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8CKPNKA3V9;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2594,7 +2594,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8CKPNKA3V9;
 				GENERATE_INFOPLIST_FILE = YES;

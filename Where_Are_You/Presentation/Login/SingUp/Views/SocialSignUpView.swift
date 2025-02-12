@@ -12,13 +12,13 @@ class SocialSignUpView: UIView {
     
     private let progressBar: UIView = {
         let view = UIView()
-        view.backgroundColor = .color235
+        view.backgroundColor = .blackF0
         return view
     }()
     
     private let colorBar: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightpurple
+        view.backgroundColor = .brandMain
         view.layer.cornerRadius = 3
         view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
         return view

@@ -145,6 +145,7 @@ class SignUpViewModel {
                 switch result {
                 case .success:
                     self.signUpBody.email = self.email
+                    self.timerHelper.stopTimer()
                     self.onEmailVerifyCodeMessage?(emailVerifySuccessMessage, true)
                 case .failure(let error):
                     self.onEmailVerifyCodeMessage?(error.localizedDescription, false)

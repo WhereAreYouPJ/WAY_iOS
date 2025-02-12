@@ -34,6 +34,7 @@ class PasswordResetViewController: UIViewController {
         setupActions()
         setupViewmodel()
         setupBindings()
+        hideKeyboardWhenTappedAround()
     }
     
     // MARK: - Helpers

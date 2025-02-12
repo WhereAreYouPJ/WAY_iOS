@@ -14,19 +14,19 @@ class TermsAgreementView: UIView {
     
     private let progressBar: UIView = {
         let view = UIView()
-        view.backgroundColor = .color235
+        view.backgroundColor = .blackF0
         return view
     }()
     
     private let colorBar: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightpurple
+        view.backgroundColor = .brandMain
         view.layer.cornerRadius = 3
         view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
         return view
     }()
     
-    private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "회원가입에 필요한\n약관에 동의해주세요", textColor: .black22))
+    private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "회원가입에 필요한 \n약관에 동의해주세요", textColor: .black22))
     
     private let agreeView: UIView = {
         let view = UIView()

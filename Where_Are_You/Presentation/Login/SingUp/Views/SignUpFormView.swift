@@ -13,32 +13,25 @@ class SignUpFormView: UIView {
     
     private let progressBar: UIView = {
         let view = UIView()
-        view.backgroundColor = .color235
+        view.backgroundColor = .blackF0
         return view
     }()
     
     private let colorBar: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightpurple
+        view.backgroundColor = .brandMain
         view.layer.cornerRadius = 3
         view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
         return view
     }()
     
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "아래 내용을 작성해주세요", textColor: .black22, fontSize: 22)
+    private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "아래 내용을 작성해주세요", textColor: .black22))
     
-    private let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이름", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
+    private let userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "이름", textColor: .black22))
     
     let userNameTextField = CustomTextField(placeholder: "이름")
-//    Utilities.inputContainerTextField(withPlaceholder: "이름")
     
-    let userNameErrorLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
-        label.adjustsFontForContentSizeCategory = true
-        return label
-    }()
+    let userNameErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error))
     
     // 이름 + 이름tf
     lazy var usernameStack: UIStackView = {
@@ -47,20 +40,13 @@ class SignUpFormView: UIView {
         return stackView
     }()
     
-    private let emailLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이메일", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
+    private let emailLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "이메일", textColor: .black22))
     
     let emailTextField = CustomTextField(placeholder: "이메일")
-//    Utilities.inputContainerTextField(withPlaceholder: "이메일")
     
-    let emailCheckButton = CustomButton(title: "인증요청", backgroundColor: .brandColor, titleColor: .white, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
+    let emailCheckButton = TitleButton(title: UIFont.CustomFont.button16(text: "인증요청", textColor: .white), backgroundColor: .brandMain, borderColor: nil)
     
-    let emailErrorLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
-        label.adjustsFontForContentSizeCategory = true
-        return label
-    }()
+    let emailErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error))
     
     // 이메일 + 이메일tf + 이메일 중복버튼 + description
     lazy var emailCheckStack: UIStackView = {
@@ -77,17 +63,10 @@ class SignUpFormView: UIView {
     }()
     
     let authCodeTextField = CustomTextField(placeholder: "인증코드")
-//                                                Utilities.inputContainerTextField(withPlaceholder: "인증코드")
     
-    let timer: UILabel = {
-        let label = UILabel()
-        label.textColor = .error
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
-        label.adjustsFontForContentSizeCategory = true
-        return label
-    }()
+    let timer = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error))
     
-    let authCheckButton = CustomButton(title: "확인", backgroundColor: .brandColor, titleColor: .white, font: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
+    let authCheckButton = TitleButton(title: UIFont.CustomFont.button16(text: "확인", textColor: .white), backgroundColor: .brandMain, borderColor: nil)
     
     // 인증코드tf + 인증코드 확인버튼
     lazy var authCheckStack: UIStackView = {
@@ -97,13 +76,7 @@ class SignUpFormView: UIView {
         return stackView
     }()
     
-    let authCodeErrorLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
-        label.adjustsFontForContentSizeCategory = true
-        return label
-    }()
+    let authCodeErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error))
     
     lazy var authStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [authCheckStack, authCodeErrorLabel])
@@ -111,10 +84,9 @@ class SignUpFormView: UIView {
         return stackView
     }()
     
-    let passwordLabel = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
+    let passwordLabel =  StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "비밀번호", textColor: .black22))
     
     let passwordTextField = CustomTextField(placeholder: "비밀번호")
-//    Utilities.inputContainerTextField(withPlaceholder: "비밀번호")
     
     let passwordErrorLabel: UILabel = {
         let label = UILabel()
@@ -125,7 +97,6 @@ class SignUpFormView: UIView {
     }()
     
     let checkPasswordTextField = CustomTextField(placeholder: "비밀번호 확인")
-//    Utilities.inputContainerTextField(withPlaceholder: "비밀번호 확인")
     
     let checkPasswordErrorLabel: UILabel = {
         let label = UILabel()
@@ -155,7 +126,7 @@ class SignUpFormView: UIView {
         return stackView
     }()
     
-    let bottomButtonView = BottomButtonView(title: "시작하기")
+    let bottomButtonView = TitleButton(title: UIFont.CustomFont.button18(text: "시작하기", textColor: .white), backgroundColor: .blackAC, borderColor: nil)
     
     // MARK: - Lifecycle
     
@@ -174,8 +145,8 @@ class SignUpFormView: UIView {
         authStack.isHidden = true
         passwordTextField.isSecureTextEntry = true
         checkPasswordTextField.isSecureTextEntry = true
-        bottomButtonView.button.updateBackgroundColor(.color171)
-        bottomButtonView.button.isEnabled = false
+        bottomButtonView.updateBackgroundColor(.color171)
+        bottomButtonView.isEnabled = false
         
         emailTextField.keyboardType = .emailAddress
         authCodeTextField.keyboardType = .numberPad
@@ -232,8 +203,9 @@ class SignUpFormView: UIView {
         
         bottomButtonView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(LayoutAdapter.shared.scale(value: 24))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 48))
         }
     }
 }
