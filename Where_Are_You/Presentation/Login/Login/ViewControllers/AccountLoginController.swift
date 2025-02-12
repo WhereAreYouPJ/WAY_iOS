@@ -23,7 +23,7 @@ class AccountLoginController: UIViewController {
         setupViewModel()
         setupBindings()
         hideKeyboardWhenTappedAround()
-        registerForKeyboardNotifications()
+//        registerKeyboardNotifications(for: accountLoginView.scrollView)
     }
     
     // MARK: - Helpers
@@ -114,7 +114,7 @@ class AccountLoginController: UIViewController {
         textField?.layer.borderColor = isAvailable ? UIColor.brandMain.cgColor : UIColor.error.cgColor
     }
     
-    deinit {
-        deregisterFromKeyboardNotifications()
-    }
+//    deinit {
+//        deregisterKeyboardNotifications()
+//    }
 }

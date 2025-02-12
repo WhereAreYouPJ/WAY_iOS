@@ -32,56 +32,146 @@ extension UIViewController {
         view.endEditing(true)
     }
     
-    func registerForKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillShow(notification:)),
-                                               name: UIResponder.keyboardWillShowNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillHide(notification:)),
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
-    }
+//    func registerForKeyboardNotifications() {
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(keyboardWillShow(notification:)),
+//                                               name: UIResponder.keyboardWillShowNotification,
+//                                               object: nil)
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(keyboardWillHide(notification:)),
+//                                               name: UIResponder.keyboardWillHideNotification,
+//                                               object: nil)
+//    }
+//    
+//    func deregisterFromKeyboardNotifications() {
+//        NotificationCenter.default.removeObserver(self,
+//                                                  name: UIResponder.keyboardWillShowNotification,
+//                                                  object: nil)
+//        NotificationCenter.default.removeObserver(self,
+//                                                  name: UIResponder.keyboardWillHideNotification,
+//                                                  object: nil)
+//    }
+//    
+//    @objc func keyboardWillShow(notification: NSNotification) {
+//        // 키보드의 크기를 가져옵니다.
+//        guard let userInfo = notification.userInfo,
+//              let keyboardFrameValue = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
+//            return
+//        }
+//        let keyboardFrame = keyboardFrameValue.cgRectValue
+//        let keyboardHeight = keyboardFrame.height
+//        
+//        // 애니메이션 시간 및 옵션을 가져옵니다.
+//        let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0.3
+//        let curveRaw = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt ?? 0
+//        let curve = UIView.AnimationOptions(rawValue: curveRaw)
+//        
+//        // 뷰의 y좌표를 조정하여 키보드 위로 올라오게 합니다.
+//        UIView.animate(withDuration: duration, delay: 0, options: curve, animations: {
+//            self.view.frame.origin.y = -keyboardHeight
+//        }, completion: nil)
+//    }
+//    
+//    @objc func keyboardWillHide(notification: NSNotification) {
+//        guard let userInfo = notification.userInfo else { return }
+//        let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0.3
+//        let curveRaw = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt ?? 0
+//        let curve = UIView.AnimationOptions(rawValue: curveRaw)
+//        
+//        UIView.animate(withDuration: duration, delay: 0, options: curve, animations: {
+//            self.view.frame.origin.y = 0
+//        }, completion: nil)
+//    }
     
-    func deregisterFromKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(self,
-                                                  name: UIResponder.keyboardWillShowNotification,
-                                                  object: nil)
-        NotificationCenter.default.removeObserver(self,
-                                                  name: UIResponder.keyboardWillHideNotification,
-                                                  object: nil)
-    }
-    
-    @objc func keyboardWillShow(notification: NSNotification) {
-        // 키보드의 크기를 가져옵니다.
-        guard let userInfo = notification.userInfo,
-              let keyboardFrameValue = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
-            return
+    func registerKeyboardNotifications(for scrollView: UIScrollView) {
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification,
+                                                   object: nil,
+                                                   queue: .main) { notification in
+                guard let userInfo = notification.userInfo,
+                      let keyboardFrameValue = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+                      let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else {
+                    return
+                }
+                let keyboardFrame = keyboardFrameValue.cgRectValue
+                let keyboardHeight = keyboardFrame.height
+                
+                UIView.animate(withDuration: duration) {
+                    scrollView.contentInset.bottom = keyboardHeight
+                    var verticalInsets = scrollView.verticalScrollIndicatorInsets
+                    verticalInsets.bottom = keyboardHeight
+                    scrollView.verticalScrollIndicatorInsets = verticalInsets
+                }
+                
+                // 현재 포커스된 텍스트 필드가 있다면 해당 필드가 보이도록 스크롤합니다.
+                if let activeField = self.view.currentFirstResponder() as? UIView {
+                    // activeField의 frame이 scrollView의 좌표계에 맞춰져 있는지 확인하고 스크롤합니다.
+                    let convertedFrame = activeField.convert(activeField.bounds, to: scrollView)
+                    scrollView.scrollRectToVisible(convertedFrame, animated: true)
+                }
+            }
+            
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification,
+                                                   object: nil,
+                                                   queue: .main) { notification in
+                guard let userInfo = notification.userInfo,
+                      let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else {
+                    return
+                }
+                UIView.animate(withDuration: duration) {
+                    scrollView.contentInset.bottom = 0
+                    var verticalInsets = scrollView.verticalScrollIndicatorInsets
+                    verticalInsets.bottom = 0
+                    scrollView.verticalScrollIndicatorInsets = verticalInsets
+                }
+            }
         }
-        let keyboardFrame = keyboardFrameValue.cgRectValue
-        let keyboardHeight = keyboardFrame.height
         
-        // 애니메이션 시간 및 옵션을 가져옵니다.
-        let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0.3
-        let curveRaw = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt ?? 0
-        let curve = UIView.AnimationOptions(rawValue: curveRaw)
-        
-        // 뷰의 y좌표를 조정하여 키보드 위로 올라오게 합니다.
-        UIView.animate(withDuration: duration, delay: 0, options: curve, animations: {
-            self.view.frame.origin.y = -keyboardHeight
-        }, completion: nil)
-    }
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
-        guard let userInfo = notification.userInfo else { return }
-        let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0.3
-        let curveRaw = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt ?? 0
-        let curve = UIView.AnimationOptions(rawValue: curveRaw)
-        
-        UIView.animate(withDuration: duration, delay: 0, options: curve, animations: {
-            self.view.frame.origin.y = 0
-        }, completion: nil)
-    }
+        func deregisterKeyboardNotifications() {
+            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        }
+//
+//    func registerKeyboardNotifications(for scrollView: UIScrollView) {
+//        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification,
+//                                               object: nil,
+//                                               queue: .main) { notification in
+//            guard let userInfo = notification.userInfo,
+//                  let keyboardFrameValue = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+//                  let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else {
+//                return
+//            }
+//            let keyboardFrame = keyboardFrameValue.cgRectValue
+//            let keyboardHeight = keyboardFrame.height
+//            
+//            UIView.animate(withDuration: duration) {
+//                scrollView.contentInset.bottom = keyboardHeight
+//                // 기존 scrollIndicatorInsets 대신 verticalScrollIndicatorInsets를 사용합니다.
+//                var verticalInsets = scrollView.verticalScrollIndicatorInsets
+//                verticalInsets.bottom = keyboardHeight
+//                scrollView.verticalScrollIndicatorInsets = verticalInsets
+//            }
+//        }
+//        
+//        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification,
+//                                               object: nil,
+//                                               queue: .main) { notification in
+//            guard let userInfo = notification.userInfo,
+//                  let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else {
+//                return
+//            }
+//            UIView.animate(withDuration: duration) {
+//                scrollView.contentInset.bottom = 0
+//                var verticalInsets = scrollView.verticalScrollIndicatorInsets
+//                verticalInsets.bottom = 0
+//                scrollView.verticalScrollIndicatorInsets = verticalInsets
+//            }
+//        }
+//    }
+//    
+//    func deregisterKeyboardNotifications() {
+//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+//    }
 }
 
 // MARK: - UIColor
@@ -537,4 +627,16 @@ extension UIView {
         }
         return nil
     }
+    
+    func currentFirstResponder() -> UIResponder? {
+            if self.isFirstResponder {
+                return self
+            }
+            for subview in self.subviews {
+                if let responder = subview.currentFirstResponder() {
+                    return responder
+                }
+            }
+            return nil
+        }
 }
