@@ -38,60 +38,62 @@ struct CreateScheduleView: View {
     
     var body: some View {
         NavigationStack(path: $path) {
-            VStack(alignment: .leading, content: {
-                TextField("", text: $viewModel.title, prompt: Text("일정명을 작성해주세요.").foregroundColor(Color(.color118)))
-                
-                Divider()
-                    .padding(.bottom, 16)
-                
-                DateAndTimeView(isAllDay: $viewModel.isAllDay, startTime: $viewModel.startTime, endTime: $viewModel.endTime)
-                
-                AddPlaceView(viewModel: viewModel, path: $path)
-                
-                AddFriendsView(selectedFriends: $viewModel.selectedFriends, path: $path)
-                
-                SetColorView(color: $viewModel.color)
-                
-                MemoView(memo: $viewModel.memo)
-            })
-            .padding(15)
-            .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("취소", role: .cancel) {
-                        dismiss()
-                    }
-                    .foregroundStyle(Color.red)
-                }
-                ToolbarItem(placement: .primaryAction) {
-                    Button("추가") {
-                        viewModel.postSchedule()
-                        if viewModel.isSuccess {
-                            dismiss()
-                        } else {
-                            // TODO: 일정 생성 예외 처리 필요, 실패 경우 동작 구현
+            ScrollView {
+                VStack(alignment: .leading, content: {
+                    TextField("", text: $viewModel.title, prompt: Text("일정명을 작성해주세요.").foregroundColor(Color(.color118)))
+                    
+                    Divider()
+                        .padding(.bottom, 16)
+                    
+                    DateAndTimeView(isAllDay: $viewModel.isAllDay, startTime: $viewModel.startTime, endTime: $viewModel.endTime)
+                    
+                    AddPlaceView(viewModel: viewModel, path: $path)
+                    
+                    AddFriendsView(selectedFriends: $viewModel.selectedFriends, path: $path)
+                    
+                    SetColorView(color: $viewModel.color)
+                    
+                    MemoView(memo: $viewModel.memo)
+                })
+                .padding(15)
+                .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("취소", role: .cancel) {
                             dismiss()
                         }
+                        .foregroundStyle(Color.red)
                     }
-                    .foregroundStyle(viewModel.title.isEmpty ? Color.gray : Color.red)
-                    .disabled(viewModel.title.isEmpty)
-                }
-            }
-            .navigationTitle("일정 추가")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(for: Route.self) { route in
-                switch route {
-                case .searchPlace:
-                    SearchLocationView(selectedLocation: $viewModel.place, path: $path)
-                case let .confirmLocation(location):
-                    if let location = location {
-                        ConfirmLocationView(location: .constant(location), path: $path)
-                            .onDisappear {
-                                viewModel.getFavoriteLocation()
+                    ToolbarItem(placement: .primaryAction) {
+                        Button("추가") {
+                            viewModel.postSchedule()
+                            if viewModel.isSuccess {
+                                dismiss()
+                            } else {
+                                // TODO: 일정 생성 예외 처리 필요, 실패 경우 동작 구현
+                                dismiss()
                             }
+                        }
+                        .foregroundStyle(viewModel.title.isEmpty ? Color.gray : Color.red)
+                        .disabled(viewModel.title.isEmpty)
                     }
-                case .searchFriends:
-                    SearchFriendsView(selectedFriends: $viewModel.selectedFriends)
+                }
+                .navigationTitle("일정 추가")
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationDestination(for: Route.self) { route in
+                    switch route {
+                    case .searchPlace:
+                        SearchLocationView(selectedLocation: $viewModel.place, path: $path)
+                    case let .confirmLocation(location):
+                        if let location = location {
+                            ConfirmLocationView(location: .constant(location), path: $path)
+                                .onDisappear {
+                                    viewModel.getFavoriteLocation()
+                                }
+                        }
+                    case .searchFriends:
+                        SearchFriendsView(selectedFriends: $viewModel.selectedFriends)
+                    }
                 }
             }
         }
@@ -317,26 +319,25 @@ struct MemoView: View {
                 .foregroundColor(memo.count == maxLength ? .red : .gray)
         }
         Divider()
-        GeometryReader { geometry in
-            VStack(spacing: 0) {
-                ZStack(alignment: .topLeading) {
-                    if memo.isEmpty {
-                        Text("메모를 작성해주세요.")
-                            .foregroundStyle(memo.isEmpty ? Color(.color118) : .clear)
-                            .padding(10)
-                    }
-                    
-                    TextEditor(text: $memo)
-                        .modifier(MaxLengthModifier(text: $memo, maxLength: maxLength))
-                        .frame(height: geometry.size.height)
-                        .padding(2)
-                        .opacity(memo.isEmpty ? 0.1 : 1)
+        
+        ScrollView {
+            ZStack(alignment: .topLeading) {
+                if memo.isEmpty {
+                    Text("메모를 작성해주세요.")
+                        .foregroundStyle(memo.isEmpty ? Color(.color118) : .clear)
+                        .padding(10)
                 }
-                .overlay(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(Color(.color212))
-                )
+                
+                TextEditor(text: $memo)
+                    .modifier(MaxLengthModifier(text: $memo, maxLength: maxLength))
+                    .frame(height: LayoutAdapter.shared.scale(value: 100))
+                    .padding(2)
+                    .opacity(memo.isEmpty ? 0.1 : 1)
             }
+            .overlay(
+                RoundedRectangle(cornerRadius: 6)
+                    .stroke(Color(.color212))
+            )
         }
     }
 }

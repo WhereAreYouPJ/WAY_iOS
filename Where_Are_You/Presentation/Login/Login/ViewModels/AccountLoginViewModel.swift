@@ -16,9 +16,10 @@ class AccountLoginViewModel {
     
     init(accountLoginUseCase: AccountLoginUseCase) {
         self.accountLoginUseCase = accountLoginUseCase
-    }
+    }   
     
     func login(email: String, password: String) {
+        print("🔐FCM Token : \(UserDefaultsManager.shared.getFcmToken())")
         accountLoginUseCase.execute(request: LoginBody(email: email, password: password, fcmToken: UserDefaultsManager.shared.getFcmToken(), loginType: "normal")) { result in
             switch result {
             case .success:
