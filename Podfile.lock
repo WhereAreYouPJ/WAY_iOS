@@ -93,6 +93,7 @@ PODS:
   - GoogleUtilities/UserDefaults (8.0.2):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
+  - IQKeyboardManager (6.5.19)
   - KakaoMapsSDK (2.12.2)
   - KakaoSDK (2.22.7):
     - KakaoSDKAuth (= 2.22.7)
@@ -151,6 +152,7 @@ DEPENDENCIES:
   - Alamofire (~> 5.6)
   - Firebase/Messaging
   - FirebaseAnalytics
+  - IQKeyboardManager
   - KakaoMapsSDK
   - KakaoSDK
   - Kingfisher (~> 7.0)
@@ -170,6 +172,7 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleUtilities
+    - IQKeyboardManager
     - KakaoMapsSDK
     - KakaoSDK
     - KakaoSDKAuth
@@ -201,6 +204,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 6a9e6317b6a6d810ad03d4a66564ca6c4c5818a3
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
+  IQKeyboardManager: c8665b3396bd0b79402b4c573eac345a31c7d485
   KakaoMapsSDK: 0716f807bd2fcc0f6faadd54e619cc2d34925899
   KakaoSDK: dc4f9062a42e6f7e8e2aacb620a0480996dcb62b
   KakaoSDKAuth: 45204252ff7c379c0f86c5573f97ec36885afca0
@@ -221,6 +225,6 @@ SPEC CHECKSUMS:
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   SwiftLint: 92196976e597b9afec5dbe374810103e6c1d9d7c
 
-PODFILE CHECKSUM: a40d0b6359e79378711c808b168b6c7e12774b17
+PODFILE CHECKSUM: 456e82e4e2b1a658b67bf057c00b1e04330276dd
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

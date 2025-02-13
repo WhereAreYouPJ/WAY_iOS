@@ -11,6 +11,7 @@ class SignUpFormViewController: UIViewController {
     // MARK: - Properties
     let signUpView = SignUpFormView()
     private var viewModel: SignUpViewModel!
+    var type: [String] = []
     
     // MARK: - Lifecycle
     
@@ -20,8 +21,6 @@ class SignUpFormViewController: UIViewController {
         setupViewModel()
         setupBindings()
         setupActions()
-        
-        hideKeyboardWhenTappedAround()
     }
     
     // MARK: - Helpers
@@ -96,6 +95,10 @@ class SignUpFormViewController: UIViewController {
             }
         }
         
+        viewModel.onCheckEmailDuplicate = { [weak self] type in
+            self?.type = type
+        }
+        
         viewModel.onEmailVerifyCodeMessage = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
                 self?.updateStatus(label: self?.signUpView.authCodeErrorLabel, message: message, isAvailable: isAvailable, textField: self?.signUpView.authCodeTextField)
@@ -155,7 +158,14 @@ class SignUpFormViewController: UIViewController {
     }
     
     @objc func startButtonTapped() {
-        viewModel.signUp()
+        if type.isEmpty {
+            viewModel.signUp()
+        } else {
+            let email = viewModel.email
+            guard let password = viewModel.signUpBody.password, let userName = viewModel.signUpBody.userName else { return }
+            let controller = SocialLinkViewController(email: email, password: password, userName: userName, loginType: "normal", linkLoginType: type)
+            navigationController?.pushViewController(controller, animated: true)
+        }
     }
     
     // MARK: - Helpers

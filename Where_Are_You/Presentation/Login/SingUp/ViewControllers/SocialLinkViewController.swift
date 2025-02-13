@@ -13,16 +13,16 @@ class SocialLinkViewController: UIViewController {
     private var viewModel: SocialLinkViewModel!
     
     var email: String = ""
-    private var userIdentifier: String = ""
+    private var password: String = ""
     private var userName: String = ""
     private var loginType: String = ""
     private var linkLoginType: [String] = []
     
     // MARK: - Lifecycle
-    init(email: String, userIdentifier: String, userName: String, loginType: String, linkLoginType: [String]) {
+    init(email: String, password: String, userName: String, loginType: String, linkLoginType: [String]) {
         super.init(nibName: nil, bundle: nil)
         self.email = email
-        self.userIdentifier = userIdentifier
+        self.password = password
         self.userName = userName
         self.loginType = loginType
         self.linkLoginType = linkLoginType
@@ -43,7 +43,15 @@ class SocialLinkViewController: UIViewController {
     // MARK: - Helpers
     
     private func setupUI() {
+        view = socialLinkView
         socialLinkView.configureAccountView(snsAccounts: linkLoginType, email: email)
+        if linkLoginType.count == 1 {
+            if linkLoginType.first == loginType {
+                socialLinkView.linkButton.isHidden = true
+            }
+        }
+        
+        configureNavigationBar(title: "회원가입")
     }
     
     private func setupViewModel() {
@@ -79,6 +87,6 @@ class SocialLinkViewController: UIViewController {
     }
     
     @objc private func accountLinkButtonTapped() {
-        viewModel.linkAccount(userName: userName, email: email, password: userIdentifier, loginType: loginType)
+        viewModel.linkAccount(userName: userName, email: email, password: password, loginType: loginType)
     }
 }

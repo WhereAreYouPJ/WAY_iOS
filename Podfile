@@ -15,6 +15,7 @@ target 'Where_Are_You' do
 	pod 'Kingfisher', '~> 7.0'
 	pod 'FirebaseAnalytics'
 	pod 'Firebase/Messaging'
+	pod 'IQKeyboardManager'
 
 	target 'Where_Are_You_Tests' do
 	  inherit! :search_paths

@@ -17,11 +17,11 @@ class FinishRegisterview: UIView {
         return view
     }()
     
-    let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "회원가입이 \n완료되었습니다", textColor: .black22, fontSize: 22)
+    let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "회원가입이 \n완료되었습니다", textColor: .black22))
     
-    let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: "시작화면에서 로그인해주세요.\n최초 로그인 이후 접속 시, 자동 로그인이 활성화됩니다.", textColor: .black66, fontSize: 14)
-    
-    let bottomButtonView = BottomButtonView(title: "로그인하기")
+    let descriptionLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "시작화면에서 로그인해주세요.\n최초 로그인 이후 접속 시, 자동 로그인이 활성화됩니다.", textColor: .black66))
+        
+    let bottomButtonView = TitleButton(title: UIFont.CustomFont.button18(text: "시작하기", textColor: .white), backgroundColor: .brandMain, borderColor: nil)
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {
@@ -36,6 +36,10 @@ class FinishRegisterview: UIView {
     
     func constraints() {
         addSubview(progressBar)
+        addSubview(titleLabel)
+        addSubview(descriptionLabel)
+        addSubview(bottomButtonView)
+
         progressBar.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.equalToSuperview()
@@ -43,7 +47,6 @@ class FinishRegisterview: UIView {
             make.height.equalTo(4)
         }
         
-        addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(progressBar).offset(30)
             make.leading.equalToSuperview().offset(15)
@@ -51,18 +54,17 @@ class FinishRegisterview: UIView {
             make.height.equalTo(titleLabel.snp.width).multipliedBy(0.402)
         }
         
-        addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(26)
             make.leading.equalTo(titleLabel)
         }
         
-        addSubview(bottomButtonView)
         bottomButtonView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.leading.equalToSuperview()    
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(LayoutAdapter.shared.scale(value: 24))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 48))
         }
     }
 }

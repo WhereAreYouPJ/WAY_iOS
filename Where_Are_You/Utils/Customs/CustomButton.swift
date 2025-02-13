@@ -22,7 +22,6 @@ class StandardButton: UIButton {
 // MARK: - Box Button
 
 class TitleButton: UIButton {
-    let textLabel = UILabel()
     // MARK: - Properties
     private var buttonTitle: NSAttributedString
     private var buttonBackgroundColor: UIColor
@@ -73,6 +72,7 @@ class TitleButton: UIButton {
             layer.borderColor = borderColor
             layer.borderWidth = 1.5
         }
+        titleLabel?.numberOfLines = 0
         setAttributedTitle(buttonTitle, for: .normal)
 
         // 버튼 모서리 둥글게

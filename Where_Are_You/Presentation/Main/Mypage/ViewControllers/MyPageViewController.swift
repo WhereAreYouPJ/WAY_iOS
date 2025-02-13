@@ -114,7 +114,7 @@ class MyPageViewController: UIViewController {
             title: "로그아웃",
             message: "로그아웃을 진행하시겠습니까?",
             cancelTitle: "취소",
-            actionTitle: "학인"
+            actionTitle: "확인"
         ) { [weak self] in
                 self?.viewModel.logout()
             }
@@ -171,6 +171,8 @@ class MyPageViewController: UIViewController {
     }
     
     @objc func moveToGallery() {
+        myPageView.moveToGallery.isHidden = true
+
         var configuration = PHPickerConfiguration()
         configuration.selectionLimit = 1  // 최대 선택 가능 사진 수
         configuration.filter = .images  // 이미지만 선택할 수 있도록 설정

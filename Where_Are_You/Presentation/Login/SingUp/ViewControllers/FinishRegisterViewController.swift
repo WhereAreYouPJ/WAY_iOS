@@ -25,7 +25,7 @@ class FinishRegisterViewController: UIViewController {
     // MARK: - Helpers
     
     func buttonActions() {
-        finishView.bottomButtonView.button.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        finishView.bottomButtonView.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
     }
 
     // MARK: - Selectors

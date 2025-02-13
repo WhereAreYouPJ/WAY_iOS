@@ -36,9 +36,9 @@ class SocialLinkView: UIView {
         return sv
     }()
     
-    let returnButton = TitleButton(title: UIFont.CustomFont.button18(text: "이전으로\n돌아가기", textColor: .black22), backgroundColor: .white, borderColor: UIColor.blackD4.cgColor)
+    let returnButton = TitleButton(title: UIFont.CustomFont.button18(text: "이전으로 \n돌아가기", textColor: .black22), backgroundColor: .white, borderColor: UIColor.blackD4.cgColor)
     
-    let linkButton = TitleButton(title: UIFont.CustomFont.button18(text: "기존 계정과\n연동하기", textColor: .black22), backgroundColor: .white, borderColor: UIColor.blackD4.cgColor)
+    let linkButton = TitleButton(title: UIFont.CustomFont.button18(text: "기존 계정과 \n연동하기", textColor: .black22), backgroundColor: .white, borderColor: UIColor.blackD4.cgColor)
     
     lazy var buttonStackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [returnButton, linkButton])
@@ -112,11 +112,12 @@ class SocialLinkView: UIView {
         verticalStack.spacing = 10
         
         for sns in snsAccounts {
-            let rowStack = UIStackView()
-            rowStack.axis = .horizontal
-            rowStack.spacing = 8
-            rowStack.alignment = .leading
-            
+//            let rowStack = UIStackView()
+//            rowStack.axis = .horizontal
+//            rowStack.spacing = 8
+//            rowStack.alignment = .leading
+//
+            let contentView = UIView()
             let logoImageView = UIImageView()
             logoImageView.contentMode = .scaleAspectFit
             // SNS 종류에 따라 로고 이미지 설정 (프로젝트에 맞게 이미지 이름 수정)
@@ -128,17 +129,26 @@ class SocialLinkView: UIView {
             default:
                 logoImageView.image = UIImage(named: "icon-account")
             }
-            logoImageView.translatesAutoresizingMaskIntoConstraints = false
             logoImageView.snp.makeConstraints { make in
                 make.height.width.equalTo(LayoutAdapter.shared.scale(value: 32))
             }
             
             let emailLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: email, textColor: .brandDark))
             
-            rowStack.addArrangedSubview(logoImageView)
-            rowStack.addArrangedSubview(emailLabel)
-            
-            verticalStack.addArrangedSubview(rowStack)
+            contentView.addSubview(logoImageView)
+            contentView.addSubview(emailLabel)
+            logoImageView.snp.makeConstraints { make in
+                make.top.leading.bottom.equalToSuperview()
+            }
+            emailLabel.snp.makeConstraints { make in
+                make.centerY.equalTo(logoImageView)
+                make.leading.equalTo(logoImageView.snp.trailing).offset(LayoutAdapter.shared.scale(value: 8))
+                make.trailing.equalToSuperview()
+            }
+//            rowStack.addArrangedSubview(logoImageView)
+//            rowStack.addArrangedSubview(emailLabel)
+//            
+            verticalStack.addArrangedSubview(contentView)
         }
         
         accountView.addSubview(verticalStack)

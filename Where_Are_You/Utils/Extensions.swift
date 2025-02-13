@@ -20,68 +20,6 @@ extension UIViewController {
     func configureNavigationBar(title: String, backButtonAction: Selector? = nil, showBackButton: Bool = true, rightButton: UIBarButtonItem? = nil) {
         Utilities.createNavigationBar(for: self, title: title, backButtonAction: backButtonAction, showBackButton: showBackButton, rightButton: rightButton)
     }
-    
-    func hideKeyboardWhenTappedAround() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        // 터치 이벤트가 다른 뷰에도 전달되도록 함
-        tapGesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(tapGesture)
-    }
-    
-    @objc private func dismissKeyboard() {
-        view.endEditing(true)
-    }
-    
-    func registerForKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillShow(notification:)),
-                                               name: UIResponder.keyboardWillShowNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillHide(notification:)),
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
-    }
-    
-    func deregisterFromKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(self,
-                                                  name: UIResponder.keyboardWillShowNotification,
-                                                  object: nil)
-        NotificationCenter.default.removeObserver(self,
-                                                  name: UIResponder.keyboardWillHideNotification,
-                                                  object: nil)
-    }
-    
-    @objc func keyboardWillShow(notification: NSNotification) {
-        // 키보드의 크기를 가져옵니다.
-        guard let userInfo = notification.userInfo,
-              let keyboardFrameValue = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
-            return
-        }
-        let keyboardFrame = keyboardFrameValue.cgRectValue
-        let keyboardHeight = keyboardFrame.height
-        
-        // 애니메이션 시간 및 옵션을 가져옵니다.
-        let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0.3
-        let curveRaw = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt ?? 0
-        let curve = UIView.AnimationOptions(rawValue: curveRaw)
-        
-        // 뷰의 y좌표를 조정하여 키보드 위로 올라오게 합니다.
-        UIView.animate(withDuration: duration, delay: 0, options: curve, animations: {
-            self.view.frame.origin.y = -keyboardHeight
-        }, completion: nil)
-    }
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
-        guard let userInfo = notification.userInfo else { return }
-        let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0.3
-        let curveRaw = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt ?? 0
-        let curve = UIView.AnimationOptions(rawValue: curveRaw)
-        
-        UIView.animate(withDuration: duration, delay: 0, options: curve, animations: {
-            self.view.frame.origin.y = 0
-        }, completion: nil)
-    }
 }
 
 // MARK: - UIColor
@@ -537,4 +475,16 @@ extension UIView {
         }
         return nil
     }
+    
+    func currentFirstResponder() -> UIResponder? {
+            if self.isFirstResponder {
+                return self
+            }
+            for subview in self.subviews {
+                if let responder = subview.currentFirstResponder() {
+                    return responder
+                }
+            }
+            return nil
+        }
 }

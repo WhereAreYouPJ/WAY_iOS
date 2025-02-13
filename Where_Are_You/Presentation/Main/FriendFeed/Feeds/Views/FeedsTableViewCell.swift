@@ -137,7 +137,11 @@ class FeedsTableViewCell: UITableViewCell {
         let feedImageInfos = feed.feedImageInfos ?? []
         self.imageUrls = feedImageInfos.map { $0.feedImageURL }
         feedImagesView.collectionView.reloadData()
-        feedImagesView.pageNumberLabel.text = "1/\(imageUrls.count)"
+        if imageUrls.count == 0 {
+            feedImagesView.pageNumberLabel.text = "1/1"
+        } else {
+            feedImagesView.pageNumberLabel.text = "1/\(imageUrls.count)"
+        }
         self.feed = feed
         profileImageURL = feed.profileImageURL
         feedSeq = feed.feedSeq
