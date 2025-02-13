@@ -37,16 +37,17 @@ class SocialSignUpViewController: UIViewController {
         setupViewModel()
         setupBindings()
         setupActions()
-        hideKeyboardWhenTappedAround()
     }
     
     // MARK: - Helpers
     private func setupUI() {
+        view = socialSignUpView
         viewModel.signUpBody.password = userIdentifier
         viewModel.signUpBody.fcmToken = userName
         viewModel.signUpBody.loginType = loginType
 
         socialSignUpView.emailTextField.attributedText = UIFont.CustomFont.bodyP3(text: email, textColor: .black66)
+        configureNavigationBar(title: "회원가입", backButtonAction: #selector(backButtonTapped))
     }
     
     private func setupViewModel() {
@@ -88,7 +89,7 @@ class SocialSignUpViewController: UIViewController {
     private func moveToSocialLink() {
         // 소셜 연동 뷰로 이동
         guard let userName = socialSignUpView.userNameTextField.text else { return }
-        let controller = SocialLinkViewController(email: email, userIdentifier: userIdentifier, userName: userName, loginType: loginType, linkLoginType: linkLoginType)
+        let controller = SocialLinkViewController(email: email, password: userIdentifier, userName: userName, loginType: loginType, linkLoginType: linkLoginType)
         navigationController?.pushViewController(controller, animated: true)
     }
     
@@ -111,5 +112,12 @@ class SocialSignUpViewController: UIViewController {
     
     @objc private func signupButtonTapped() {
         viewModel.checkEmailAvailability(email: email)
+    }
+    
+    @objc private func backButtonTapped() {
+        let controller = LoginViewController()
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        self.present(nav, animated: true, completion: nil)
     }
 }

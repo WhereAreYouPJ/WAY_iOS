@@ -35,7 +35,6 @@ class AddFeedViewController: UIViewController {
         setupBindings()
         setupUI()
         setupTableView()
-        hideKeyboardWhenTappedAround()
         viewModel.delegate = self
         viewModel.fetchSchedules()
     }

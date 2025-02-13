@@ -34,6 +34,7 @@ class SignUpViewModel {
     var onUserNameValidationMessage: ((String, Bool) -> Void)?
     
     var onEmailSendMessage: ((String, Bool) -> Void)?
+    var onCheckEmailDuplicate: (([String]) -> Void)?
     var onEmailVerifyCodeMessage: ((String, Bool) -> Void)?
     
     var onPasswordFormatMessage: ((String, Bool) -> Void)?
@@ -115,10 +116,11 @@ class SignUpViewModel {
         checkEmailUseCase.execute(email: email) { result in
             switch result {
             case .success(let data):
+                self.onCheckEmailDuplicate?(data.type)
                 self.timerHelper.startTimer()
                 self.sendEmailVerificationCode(email: data.email)
-            case .failure:
-                self.onEmailSendMessage?("중복된 이메일입니다.", false)
+            case .failure(let error):
+                self.onEmailSendMessage?(error.localizedDescription, false)
             }
         }
     }
