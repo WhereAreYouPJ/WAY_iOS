@@ -30,6 +30,7 @@ class SocialSignUpViewModel {
     
     // MARK: - Helpers
     func signUp() {
+        print(signUpBody)
         snsSignUpUseCase.execute(request: signUpBody) { result in
             switch result {
             case .success:
@@ -56,10 +57,14 @@ class SocialSignUpViewModel {
         checkEmailUseCase.execute(email: email) { result in
             switch result {
             case .success(let data):
-                self.onEmailDuplicate?(data.type)
-            case .failure:
+                if data.type.isEmpty {
+                    self.signUp()
+                } else {
+                    self.onEmailDuplicate?(data.type)
+                }
+            case .failure(let error):
                 // 이메일 중복된게 없으니 바로 회원가입 화면으로 이동
-                self.signUp()
+                print(error.localizedDescription)
             }
         }
     }
