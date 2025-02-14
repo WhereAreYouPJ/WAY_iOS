@@ -42,11 +42,9 @@ class SocialSignUpViewController: UIViewController {
     // MARK: - Helpers
     private func setupUI() {
         view = socialSignUpView
-        viewModel.signUpBody.password = userIdentifier
-        viewModel.signUpBody.fcmToken = userName
-        viewModel.signUpBody.loginType = loginType
-
+        socialSignUpView.userNameTextField.attributedText = UIFont.CustomFont.bodyP3(text: userName, textColor: .black22)
         socialSignUpView.emailTextField.attributedText = UIFont.CustomFont.bodyP3(text: email, textColor: .black66)
+        socialSignUpView.emailTextField.isEnabled = false
         configureNavigationBar(title: "회원가입", backButtonAction: #selector(backButtonTapped))
     }
     
@@ -75,7 +73,7 @@ class SocialSignUpViewController: UIViewController {
         viewModel.onUserNameValidationMessage = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
                 self?.updateStatus(label: self?.socialSignUpView.userNameErrorLabel, message: message, isAvailable: isAvailable, textField: self?.socialSignUpView.userNameTextField)
-                self?.socialSignUpView.bottomButtonView.isEnabled = !isAvailable
+                self?.socialSignUpView.bottomButtonView.isEnabled = isAvailable
                 self?.socialSignUpView.bottomButtonView.backgroundColor = isAvailable ? .brandMain : .blackAC
             }
         }
@@ -99,8 +97,7 @@ class SocialSignUpViewController: UIViewController {
     }
     
     private func updateStatus(label: UILabel?, message: String, isAvailable: Bool, textField: UITextField?) {
-        label?.text = message
-        label?.textColor = isAvailable ? .brandMain : .error
+        label?.attributedText = UIFont.CustomFont.bodyP5(text: message, textColor: isAvailable ? .brandMain : .error)
         textField?.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.error.cgColor
     }
     
@@ -111,6 +108,9 @@ class SocialSignUpViewController: UIViewController {
     }
     
     @objc private func signupButtonTapped() {
+        viewModel.signUpBody.password = userIdentifier
+        viewModel.signUpBody.fcmToken = userName
+        viewModel.signUpBody.loginType = loginType
         viewModel.checkEmailAvailability(email: email)
     }
     

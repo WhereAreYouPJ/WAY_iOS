@@ -40,7 +40,7 @@ class CustomTextField: UITextField {
         
         // Set placeholder with color
         if let placeholderText = placeholder {
-            attributedPlaceholder = UIFont.CustomFont.bodyP4(text: placeholderText, textColor: .black66)
+            attributedPlaceholder = UIFont.CustomFont.bodyP3(text: placeholderText, textColor: .black66)
         }
     }
     
