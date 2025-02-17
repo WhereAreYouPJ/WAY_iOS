@@ -148,9 +148,14 @@ class MyDetailManageViewcontroller: UIViewController {
     // 이름 조건 확인 -> 상태 변경
     private func updateStatus(label: UILabel?, isAvailable: Bool, textField: UITextField?) {
         label?.isHidden = isAvailable
-        textField?.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.error.cgColor
+        if let customTF = textField as? CustomTextField {
+            // 조건이 맞지 않으면 error 상태를 유지하도록 설정
+            customTF.setErrorState(!isAvailable)
+        } else {
+            textField?.layer.borderColor = isAvailable ? UIColor.blackD4.cgColor : UIColor.error.cgColor
+        }
         mydetailManageView.updateDetailButton.isEnabled = !isAvailable
-        mydetailManageView.updateDetailButton.backgroundColor = isAvailable ? .brandColor : .color171
+        mydetailManageView.updateDetailButton.backgroundColor = isAvailable ? .brandMain : .blackAC
     }
 }
 

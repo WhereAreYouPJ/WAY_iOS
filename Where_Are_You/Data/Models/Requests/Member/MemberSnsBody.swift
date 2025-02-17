@@ -8,9 +8,9 @@
 import Foundation
 
 struct MemberSnsBody: ParameterConvertible {
-    var userName: String?
-    var email: String?
-    var password: String?
-    var loginType: String?
-    var fcmToken: String?
+    var userName: String
+    var email: String
+    var password: String
+    var loginType: String
+    var fcmToken: String
 }

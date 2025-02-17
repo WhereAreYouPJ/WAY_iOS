@@ -97,7 +97,7 @@ class AddFeedViewController: UIViewController {
     private func buttonActions() {
         addFeedView.scheduleDropDown.scheduleDropDownView.addTarget(self, action: #selector(dropDownButtonTapped), for: .touchUpInside)
         addFeedView.addImages.addTarget(self, action: #selector(handleAddImagesTapped), for: .touchUpInside)
-        addFeedView.creatFeedButton.button.addTarget(self, action: #selector(createFeed), for: .touchUpInside)
+        addFeedView.creatFeedButton.addTarget(self, action: #selector(createFeed), for: .touchUpInside)
     }
     
     // MARK: - Selectors
