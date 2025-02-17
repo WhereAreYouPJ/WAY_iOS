@@ -57,7 +57,7 @@ class AccountLoginController: UIViewController {
         // 로그인 실패
         viewModel.onLoginFailure = { [weak self] message, isAvailable in
             // 로그인 실패
-            if message == "비밀번호가 옳지 않습니다." {
+            if message == " 비밀번호가 옳지 않습니다." {
                 self?.updateStatus(label: self?.accountLoginView.passwordErrorLabel,
                                    message: message,
                                    isAvailable: isAvailable,
@@ -107,8 +107,12 @@ class AccountLoginController: UIViewController {
     }
     
     private func updateStatus(label: UILabel?, message: String, isAvailable: Bool, textField: UITextField?) {
-        label?.text = message
-        label?.textColor = isAvailable ? .brandColor : .error
-        textField?.layer.borderColor = isAvailable ? UIColor.brandMain.cgColor : UIColor.error.cgColor
+        label?.attributedText = UIFont.CustomFont.bodyP5(text: message, textColor: isAvailable ? .brandMain : .error)
+        if let customTF = textField as? CustomTextField {
+            // 조건이 맞지 않으면 error 상태를 유지하도록 설정
+            customTF.setErrorState(!isAvailable)
+        } else {
+            textField?.layer.borderColor = isAvailable ? UIColor.blackD4.cgColor : UIColor.error.cgColor
+        }
     }
 }

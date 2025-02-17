@@ -68,7 +68,7 @@ class AddFeedView: UIView {
         return stackView
     }()
     
-    let creatFeedButton = BottomButtonView(title: "게시하기")
+    let creatFeedButton = TitleButton(title: UIFont.CustomFont.button18(text: "게시하기", textColor: .white), backgroundColor: .brandMain, borderColor: nil)
     
     // MARK: - Lifecycle
     

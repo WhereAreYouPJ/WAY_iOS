@@ -91,6 +91,11 @@ class SignUpFormViewController: UIViewController {
                 if isAvailable == true {
                     self?.signUpView.emailCheckButton.updateBackgroundColor(.color171)
                     self?.signUpView.emailCheckButton.isEnabled = isAvailable
+                    
+                    self?.signUpView.authCodeTextField.backgroundColor = .white
+                    self?.signUpView.authCodeTextField.isEnabled = isAvailable
+                    self?.signUpView.authCodeTextField.attributedText = nil
+                    self?.signUpView.authCodeTextField.setupTextField(placeholder: "인증코드 입력")
                 }
             }
         }
@@ -105,6 +110,8 @@ class SignUpFormViewController: UIViewController {
                 if isAvailable == true {
                     self?.signUpView.authCheckButton.updateTitle("인증 완료")
                     self?.signUpView.authCheckButton.updateBackgroundColor(.color171)
+                    self?.signUpView.authCodeTextField.backgroundColor = .blackF0
+                    self?.signUpView.authCodeTextField.isEnabled = isAvailable
                     self?.signUpView.authCheckButton.isEnabled = isAvailable
                 }
             }

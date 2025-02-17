@@ -14,7 +14,7 @@ class AcoountSearchViewModel {
     private let emailVerifyUseCase: EmailVerifyUseCase
     private let checkEmailUseCase: CheckEmailUseCase
     private let timerHelper = TimerHelper()
-    private var email: String = ""
+    var email: String = ""
     private var emailType: [String] = []
     
     // Output
@@ -45,6 +45,11 @@ class AcoountSearchViewModel {
     
     // 이메일 중복체크
     func checkEmailAvailability(email: String) {
+        guard ValidationHelper.isValidEmail(email) else {
+            onRequestCodeFailure?(invalidEmailMessage)
+            return
+        }
+        
         checkEmailUseCase.execute(email: email) { result in
             switch result {
             case .success(let data):
@@ -78,6 +83,7 @@ class AcoountSearchViewModel {
                 switch result {
                 case .success:
                     self.onVerifyCodeSuccess?(" 인증코드가 확인되었습니다.")
+                    self.timerHelper.stopTimer()
                 case .failure:
                     self.onVerifyCodeFailure?(" 인증코드가 알맞지 않습니다.")
                 }

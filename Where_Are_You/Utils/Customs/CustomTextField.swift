@@ -34,7 +34,7 @@ class CustomTextField: UITextField {
         setupBorder()
     }
     
-    private func setupTextField(placeholder: String?) {
+    func setupTextField(placeholder: String?) {
         adjustsFontForContentSizeCategory = true
         font = UIFont(name: "Pretendard-Medium", size: 16)
         

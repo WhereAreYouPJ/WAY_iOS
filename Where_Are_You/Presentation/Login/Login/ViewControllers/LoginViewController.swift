@@ -147,13 +147,9 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             }
             
             print("useridentifier: \(userIdentifier)")
-            print("fullName: \(fullName)")
-            print("email: \(email)")
+            print("fullName: \(String(describing: fullName))")
+            print("email: \(String(describing: email))")
             
-            //Move to MainPage
-            //let validVC = SignValidViewController()
-//            validVC.modalPresentationStyle = .fullScreen
-//            present(validVC, animated: true, completion: nil)
             if let email = email {
                 // email 값이 있으면 신규 회원가입으로 간주하거나,
                 // 백엔드에서 회원 존재 여부를 체크하는 API를 호출합니다.
@@ -162,8 +158,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
                                                           userIdentifier: userIdentifier,
                                                           userName: fullName?.givenName ?? "",
                                                           loginType: "apple")
-//                signUpVC.modalPresentationStyle = .fullScreen
-//                present(signUpVC, animated: true, completion: nil)
                 let nav = UINavigationController(rootViewController: signUpVC)
                 nav.modalPresentationStyle = .fullScreen
                 self.present(nav, animated: true, completion: nil)
@@ -184,7 +178,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             break
         }
     }
-    
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         // 로그인 실패(유저의 취소도 포함)

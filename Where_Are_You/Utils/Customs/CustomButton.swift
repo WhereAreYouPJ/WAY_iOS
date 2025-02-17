@@ -301,47 +301,47 @@ class CustomOptionButtonView: UIView {
     }
 }
 
-// MARK: - 자주 사용하는 하단의 inputcontainer 버튼 한개
-class BottomButtonView: UIView {
-    
-    let border: UIView = {
-        let view = UIView()
-        view.backgroundColor = .color221
-        return view
-    }()
-    
-    var button: CustomButton
-    
-    init(title: String) {
-        self.button = CustomButton(title: title, backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: LayoutAdapter.shared.scale(value: 18)))
-        super.init(frame: .zero)
-        backgroundColor = .white
-        setupView(title: title)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupView(title: String) {
-        addSubview(border)
-        border.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.centerX.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.height.equalTo(1)
-        }
-        
-        addSubview(button)
-        button.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(border.snp.bottom).offset(LayoutAdapter.shared.scale(value: 12))
-            make.leading.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 15))
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
-            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 58))
-        }
-    }
-}
+//// MARK: - 자주 사용하는 하단의 inputcontainer 버튼 한개
+//class BottomButtonView: UIView {
+//    
+//    let border: UIView = {
+//        let view = UIView()
+//        view.backgroundColor = .color221
+//        return view
+//    }()
+//    
+//    var button: CustomButton
+//    
+//    init(title: String) {
+//        self.button = CustomButton(title: title, backgroundColor: .brandColor, titleColor: .color242, font: UIFont.pretendard(NotoSans: .bold, fontSize: LayoutAdapter.shared.scale(value: 18)))
+//        super.init(frame: .zero)
+//        backgroundColor = .white
+//        setupView(title: title)
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//    
+//    func setupView(title: String) {
+//        addSubview(border)
+//        border.snp.makeConstraints { make in
+//            make.top.equalToSuperview()
+//            make.centerX.equalToSuperview()
+//            make.leading.equalToSuperview()
+//            make.height.equalTo(1)
+//        }
+//        
+//        addSubview(button)
+//        button.snp.makeConstraints { make in
+//            make.centerX.equalToSuperview()
+//            make.top.equalTo(border.snp.bottom).offset(LayoutAdapter.shared.scale(value: 12))
+//            make.leading.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 15))
+//            make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
+//            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 58))
+//        }
+//    }
+//}
 
 // MARK: - Box Button
 class CustomButton: UIButton {

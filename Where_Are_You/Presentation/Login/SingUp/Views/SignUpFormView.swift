@@ -27,7 +27,7 @@ class SignUpFormView: UIView {
     
     private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "아래 내용을 작성해주세요", textColor: .black22))
     
-    private let userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "이름", textColor: .black22))
+    private let userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 이름", textColor: .black22))
     
     let userNameTextField = CustomTextField(placeholder: "이름")
     
@@ -40,7 +40,7 @@ class SignUpFormView: UIView {
         return stackView
     }()
     
-    private let emailLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "이메일", textColor: .black22))
+    private let emailLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 이메일", textColor: .black22))
     
     let emailTextField = CustomTextField(placeholder: "이메일")
     
@@ -84,7 +84,7 @@ class SignUpFormView: UIView {
         return stackView
     }()
     
-    let passwordLabel =  StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "비밀번호", textColor: .black22))
+    let passwordLabel =  StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 비밀번호", textColor: .black22))
     
     let passwordTextField = CustomTextField(placeholder: "비밀번호")
     

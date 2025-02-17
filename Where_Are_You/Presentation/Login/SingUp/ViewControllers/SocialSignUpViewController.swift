@@ -43,7 +43,7 @@ class SocialSignUpViewController: UIViewController {
     private func setupUI() {
         view = socialSignUpView
         socialSignUpView.userNameTextField.attributedText = UIFont.CustomFont.bodyP3(text: userName, textColor: .black22)
-        socialSignUpView.emailTextField.attributedText = UIFont.CustomFont.bodyP3(text: email, textColor: .black66)
+        socialSignUpView.emailTextField.setupTextField(placeholder: email)
         socialSignUpView.emailTextField.isEnabled = false
         configureNavigationBar(title: "회원가입", backButtonAction: #selector(backButtonTapped))
     }
@@ -98,7 +98,10 @@ class SocialSignUpViewController: UIViewController {
     
     private func updateStatus(label: UILabel?, message: String, isAvailable: Bool, textField: UITextField?) {
         label?.attributedText = UIFont.CustomFont.bodyP5(text: message, textColor: isAvailable ? .brandMain : .error)
-        textField?.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.error.cgColor
+        if let customTF = textField as? CustomTextField {
+            // 조건이 맞지 않으면 error 상태를 유지하도록 설정
+            customTF.setErrorState(!isAvailable)
+        }
     }
     
     // MARK: - Selectors
@@ -108,10 +111,7 @@ class SocialSignUpViewController: UIViewController {
     }
     
     @objc private func signupButtonTapped() {
-        viewModel.signUpBody.password = userIdentifier
-        viewModel.signUpBody.fcmToken = userName
-        viewModel.signUpBody.loginType = loginType
-        viewModel.checkEmailAvailability(email: email)
+        viewModel.checkEmailAvailability(userName: userName, email: email, password: userIdentifier, loginType: loginType)
     }
     
     @objc private func backButtonTapped() {

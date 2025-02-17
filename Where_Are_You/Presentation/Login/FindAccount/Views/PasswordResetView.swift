@@ -82,9 +82,9 @@ class PasswordResetView: UIView {
         
         bottomButtonView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.leading.equalTo(titleLabel.snp.leading)
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(LayoutAdapter.shared.scale(value: 24))
             make.height.equalTo(LayoutAdapter.shared.scale(value: 48))
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(24)
         }
     }
 }

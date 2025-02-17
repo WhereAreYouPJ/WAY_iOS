@@ -14,8 +14,8 @@ class MyDetailManageView: UIView {
     let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "이름", textColor: .color51, fontSize: LayoutAdapter.shared.scale(value: 12))
     
     let userNameTextField = CustomTextField(placeholder: "")
-
-    let userNameErrorLabel = CustomLabel(UILabel_NotoSans: .medium, text: "최소 1자 이상 입력해 주세요.", textColor: .error, fontSize: LayoutAdapter.shared.scale(value: 12))
+    
+    let userNameErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "최소 1자 이상 입력해 주세요.", textColor: .error))
     
     lazy var userNameStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [userNameTextField, userNameErrorLabel])
@@ -43,7 +43,7 @@ class MyDetailManageView: UIView {
     }
     
     // MARK: - Helpers
-
+    
     private func configureViewComponents() {
         addSubview(userNameLabel)
         addSubview(userNameStack)
@@ -55,7 +55,7 @@ class MyDetailManageView: UIView {
         modifyButton.isHidden = true
     }
     
-    private func setupConstraints() {        
+    private func setupConstraints() {
         modifyButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
             make.top.equalToSuperview()

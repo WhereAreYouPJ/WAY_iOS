@@ -9,9 +9,7 @@ import Foundation
 
 class SocialLinkViewModel {
     private let accountLinkUseCase: AccountLinkUseCase
-    
-    var accountLinkBody = MemberSnsBody()
-    
+        
     var onSignUpSuccess: (() -> Void)?
     // MARK: - LifeCycle
     init(accountLinkUseCase: AccountLinkUseCase) {
