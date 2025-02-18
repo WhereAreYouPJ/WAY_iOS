@@ -14,40 +14,31 @@ class CustomAlert: UIView {
     
     private let backgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = .color5.withAlphaComponent(0.3)
+        view.backgroundColor = .black.withAlphaComponent(0.3)
         view.alpha = 0
         return view
     }()
     
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .bold, text: "", textColor: .white, fontSize: LayoutAdapter.shared.scale(value: 18))
+    private var titleLabel = UILabel()
     
-    private let messageLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color160, fontSize: LayoutAdapter.shared.scale(value: 14))
+    private var messageLabel = UILabel()
     
     private lazy var labelStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [titleLabel, messageLabel])
         stackView.axis = .vertical
+        stackView.spacing = 10
         return stackView
     }()
     
-    private let cancelButton: UIButton = {
-        let button = UIButton()
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))
-        return button
-    }()
+    private var cancelButton = UIButton()
     
-    private let actionButton: UIButton = {
-        let button = UIButton()
-        button.setTitleColor(.alertActionButtonColor, for: .normal)
-        button.titleLabel?.font = UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))
-        return button
-    }()
+    private var actionButton = UIButton()
     
     private lazy var buttonStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [cancelButton, actionButton])
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
-        stackView.spacing = LayoutAdapter.shared.scale(value: 24)
+        stackView.spacing = 16
         return stackView
     }()
     
@@ -56,16 +47,18 @@ class CustomAlert: UIView {
     init(title: String, message: String, cancelTitle: String, actionTitle: String, action: @escaping () -> Void) {
         super.init(frame: .zero)
         
-        backgroundColor = .color51
+        backgroundColor = .black44
         layer.cornerRadius = LayoutAdapter.shared.scale(value: 12)
         clipsToBounds = true
                 
-        titleLabel.text = title
+        titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH3(text: title, textColor: .white))
+        
         messageLabel.lineBreakMode = .byCharWrapping
 
-        messageLabel.text = message
-        cancelButton.setTitle(cancelTitle, for: .normal)
-        actionButton.setTitle(actionTitle, for: .normal)
+        messageLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: message, textColor: .blackD4))
+        
+        cancelButton = StandardButton(text: UIFont.CustomFont.bodyP4(text: cancelTitle, textColor: .white))
+        actionButton = StandardButton(text: UIFont.CustomFont.bodyP4(text: actionTitle, textColor: .secondaryDark))
         
         cancelButton.addTarget(self, action: #selector(dismissAlert), for: .touchUpInside)
         actionButton.addTarget(self, action: #selector(actionTapped), for: .touchUpInside)
@@ -88,14 +81,14 @@ class CustomAlert: UIView {
     
     private func setupConstraints() {
         labelStack.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 20))
-            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
+            make.top.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 26))
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 20))
         }
         
         buttonStack.snp.makeConstraints { make in
-            make.top.equalTo(labelStack.snp.bottom).offset(LayoutAdapter.shared.scale(value: 28))
-            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 26))
-            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 14))
+            make.top.equalTo(labelStack.snp.bottom).offset(LayoutAdapter.shared.scale(value: 11))
+            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 20))
+            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 18))
         }
     }
     
@@ -126,8 +119,8 @@ class CustomAlert: UIView {
         // 알림 뷰 추가
         window.addSubview(self)
         self.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 16))
-            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 210))
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 240))
         }
         
         // 배경 뷰와 알림 뷰에 애니메이션 적용

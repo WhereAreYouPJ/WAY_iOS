@@ -73,9 +73,7 @@ class FriendFeedViewController: UIViewController {
         stackView.distribution = .fillEqually
         return stackView
     }()
-    
-//    private var plusOptionButton = CustomOptionButtonView(title: "새 피드 작성", image: nil)
-    
+        
     // 1. 친구 관련 옵션 버튼 추가
     private let friendOptionView: UIHostingController = {
         let view = MultiOptionButtonView {
