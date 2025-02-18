@@ -97,12 +97,14 @@ class SignUpViewModel {
     
     // 비밀번호 일치체크
     func checkSamePassword(password: String, checkPassword: String) {
-        if ValidationHelper.isPasswordSame(password, checkpw: checkPassword) {
-            onCheckPasswordFormatMessage?("", true)
-            signUpBody.password = checkPassword
-        } else {
-            onCheckPasswordFormatMessage?("비밀번호가 일치하지 않습니다.", false)
-            signUpBody.password = nil
+        if !checkPassword.isEmpty {
+            if ValidationHelper.isPasswordSame(password, checkpw: checkPassword) {
+                onCheckPasswordFormatMessage?("", true)
+                signUpBody.password = checkPassword
+            } else {
+                onCheckPasswordFormatMessage?("비밀번호가 일치하지 않습니다.", false)
+                signUpBody.password = nil
+            }
         }
     }
     

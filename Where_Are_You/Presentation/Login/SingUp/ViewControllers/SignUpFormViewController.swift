@@ -88,15 +88,8 @@ class SignUpFormViewController: UIViewController {
                 self?.updateStatus(label: self?.signUpView.emailErrorLabel, message: message, isAvailable: isAvailable, textField: self?.signUpView.emailTextField)
                 self?.signUpView.emailCheckButton.hideLoading()
                 self?.signUpView.authStack.isHidden = !isAvailable
-                if isAvailable == true {
-                    self?.signUpView.emailCheckButton.updateBackgroundColor(.color171)
-                    self?.signUpView.emailCheckButton.isEnabled = isAvailable
-                    
-                    self?.signUpView.authCodeTextField.backgroundColor = .white
-                    self?.signUpView.authCodeTextField.isEnabled = isAvailable
-                    self?.signUpView.authCodeTextField.attributedText = nil
-                    self?.signUpView.authCodeTextField.setupTextField(placeholder: "인증코드 입력")
-                }
+                self?.signUpView.emailCheckButton.isEnabled = !isAvailable
+                self?.signUpView.emailCheckButton.updateBackgroundColor(isAvailable ? .color171 : .brandMain)
             }
         }
         
@@ -111,8 +104,9 @@ class SignUpFormViewController: UIViewController {
                     self?.signUpView.authCheckButton.updateTitle("인증 완료")
                     self?.signUpView.authCheckButton.updateBackgroundColor(.color171)
                     self?.signUpView.authCodeTextField.backgroundColor = .blackF0
-                    self?.signUpView.authCodeTextField.isEnabled = isAvailable
-                    self?.signUpView.authCheckButton.isEnabled = isAvailable
+                    self?.signUpView.authCodeTextField.isEnabled = !isAvailable
+                    self?.signUpView.authCheckButton.isEnabled = !isAvailable
+                    self?.signUpView.timer.attributedText = UIFont.CustomFont.bodyP4(text: "", textColor: .error)
                 }
             }
         }
@@ -136,14 +130,10 @@ class SignUpFormViewController: UIViewController {
         case signUpView.userNameTextField:
             viewModel.checkUserNameValidation(userName: userName)
         case signUpView.emailTextField:
-            signUpView.emailCheckButton.updateBackgroundColor(.brandMain)
-            signUpView.emailCheckButton.isEnabled = true
-            signUpView.authCheckButton.updateBackgroundColor(.brandMain)
-            signUpView.authCheckButton.isEnabled = true
-            viewModel.signUpBody.email = nil
-            signUpView.authCheckButton.updateTitle("확인")
+            resetAuthUI()
         case signUpView.passwordTextField:
             viewModel.checkPasswordAvailability(password: pw)
+            viewModel.checkSamePassword(password: pw, checkPassword: checkpw)
         case signUpView.checkPasswordTextField:
             viewModel.checkSamePassword(password: pw, checkPassword: checkpw)
         default:
@@ -180,6 +170,26 @@ class SignUpFormViewController: UIViewController {
     private func navigateToNextScreen() {
         let controller = FinishRegisterViewController()
         navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    private func resetAuthUI() {
+        signUpView.emailCheckButton.updateBackgroundColor(.brandMain)
+        signUpView.emailCheckButton.isEnabled = true
+        
+        signUpView.authCheckButton.updateBackgroundColor(.brandMain)
+        signUpView.authCheckButton.isEnabled = true
+        signUpView.authCheckButton.updateTitle("확인")
+        
+        signUpView.authCodeTextField.setupTextField(placeholder: "인증코드 입력")
+        signUpView.authCodeTextField.backgroundColor = .white
+        signUpView.authCodeTextField.isEnabled = true
+        signUpView.authCodeTextField.attributedText = nil
+        
+        signUpView.authCodeErrorLabel.attributedText = UIFont.CustomFont.bodyP5(text: "", textColor: .brandMain)
+        
+        signUpView.authStack.isHidden = true
+
+        viewModel.signUpBody.email = nil
     }
     
     private func updateStatus(label: UILabel?, message: String, isAvailable: Bool, textField: UITextField?) {
