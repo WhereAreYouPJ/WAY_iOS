@@ -53,8 +53,8 @@ class MyPageViewController: UIViewController {
         myPageView.setButtonActions(target: self, action: #selector(buttonTapped(_:)))
         myPageView.imageEditButton.addTarget(self, action: #selector(editImage), for: .touchUpInside)
         myPageView.moveToGallery.button.addTarget(self, action: #selector(moveToGallery), for: .touchUpInside)
-        myPageView.logoutButton.button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
-        myPageView.deleteAccountButton.button.addTarget(self, action: #selector(deleteAccountButtonTapped), for: .touchUpInside)
+        myPageView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+        myPageView.deleteAccountButton.addTarget(self, action: #selector(deleteAccountButtonTapped), for: .touchUpInside)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
         view.addGestureRecognizer(tapGesture)
     }
