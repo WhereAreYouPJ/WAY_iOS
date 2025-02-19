@@ -37,7 +37,7 @@ class CustomTextField: UITextField {
     func setupTextField(placeholder: String?) {
         adjustsFontForContentSizeCategory = true
         font = UIFont(name: "Pretendard-Medium", size: 16)
-        
+
         // Set placeholder with color
         if let placeholderText = placeholder {
             attributedPlaceholder = UIFont.CustomFont.bodyP3(text: placeholderText, textColor: .black66)
