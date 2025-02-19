@@ -11,8 +11,8 @@ class MyDetailManageViewcontroller: UIViewController {
     private let mydetailManageView = MyDetailManageView()
     private var isEditingMode = false
     
-    var userName: String?
-    var email: String?
+    var userName: String
+    var email: String
         
     private let addButton: UIButton = {
         let button = UIButton()
@@ -27,7 +27,7 @@ class MyDetailManageViewcontroller: UIViewController {
     var viewModel: MyDetailManageViewModel!
     
     // MARK: - Lifecycle
-    init(userName: String? = nil, email: String? = nil) {
+    init(userName: String, email: String) {
         self.userName = userName
         self.email = email
         super.init(nibName: nil, bundle: nil)
@@ -45,6 +45,7 @@ class MyDetailManageViewcontroller: UIViewController {
         setupNavigationBar()
         buttonActions()
         setupBindings()
+        
     }
     
     // MARK: - Helpers
@@ -72,35 +73,23 @@ class MyDetailManageViewcontroller: UIViewController {
    
     // 초기 설정
     private func configureInitialState() {
-        if isEditingMode {
-            mydetailManageView.userNameTextField.isUserInteractionEnabled = true
-            mydetailManageView.userNameTextField.textColor = .black22
-            mydetailManageView.emailTextfield.isUserInteractionEnabled = false
-            mydetailManageView.emailLabel.textColor = .color153
-            mydetailManageView.emailTextfield.textColor = .color153
-            mydetailManageView.updateDetailButton.isHidden = false
-            addButton.isHidden = true
-            mydetailManageView.updateDetailButton.snp.makeConstraints { make in
-                make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
-            }
-        } else {
-            mydetailManageView.userNameTextField.text = userName
-            mydetailManageView.userNameTextField.textColor = .black66
-            mydetailManageView.userNameTextField.isUserInteractionEnabled = false
-            mydetailManageView.emailTextfield.text = email
-            mydetailManageView.emailTextfield.textColor = .black66
-            mydetailManageView.emailTextfield.isUserInteractionEnabled = false
-            mydetailManageView.updateDetailButton.isHidden = true
-            addButton.isHidden = false
-        }
+        mydetailManageView.emailTextfield.attributedText = UIFont.CustomFont.bodyP3(text: email, textColor: .black66)
+        mydetailManageView.emailTextfield.isUserInteractionEnabled = false
+        mydetailManageView.emailTextfield.backgroundColor = .blackF0
+        mydetailManageView.userNameTextField.isUserInteractionEnabled = isEditingMode
+        mydetailManageView.updateDetailButton.isHidden = !isEditingMode
+        addButton.isHidden = isEditingMode
+        mydetailManageView.userNameTextField.attributedText = UIFont.CustomFont.bodyP3(text: userName, textColor: isEditingMode ? .black22 : .black66)
     }
     
     private func setupBindings() {
         viewModel.onChangeNameSuccess = { [weak self] userName in
             DispatchQueue.main.async {
-                self?.isEditingMode = false
                 self?.userName = userName
-                self?.configureInitialState()
+                self?.mydetailManageView.userNameTextField.attributedText = UIFont.CustomFont.bodyP3(text: userName, textColor: .black66)
+                self?.mydetailManageView.userNameTextField.isEnabled = false
+                self?.mydetailManageView.updateDetailButton.updateTitle("수정되었습니다")
+                self?.mydetailManageView.updateDetailButton.updateBackgroundColor(.blackAC)
             }
         }
         
@@ -128,7 +117,6 @@ class MyDetailManageViewcontroller: UIViewController {
     }
     
     @objc private func updateDetailButtonTapped() {
-        isEditingMode.toggle()
         guard let userName = mydetailManageView.userNameTextField.text else { return }
         viewModel.modifyUserName(userName: userName)
     }
@@ -151,11 +139,9 @@ class MyDetailManageViewcontroller: UIViewController {
         if let customTF = textField as? CustomTextField {
             // 조건이 맞지 않으면 error 상태를 유지하도록 설정
             customTF.setErrorState(!isAvailable)
-        } else {
-            textField?.layer.borderColor = isAvailable ? UIColor.blackD4.cgColor : UIColor.error.cgColor
         }
-        mydetailManageView.updateDetailButton.isEnabled = !isAvailable
-        mydetailManageView.updateDetailButton.backgroundColor = isAvailable ? .brandMain : .blackAC
+        mydetailManageView.updateDetailButton.isEnabled = isAvailable
+        mydetailManageView.updateDetailButton.updateBackgroundColor(isAvailable ? .brandMain : .blackAC)
     }
 }
 

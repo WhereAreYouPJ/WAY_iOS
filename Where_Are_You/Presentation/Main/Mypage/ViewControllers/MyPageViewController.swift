@@ -12,8 +12,8 @@ class MyPageViewController: UIViewController {
     // MARK: - Properties
     private let myPageView = MyPageView()
     private var viewModel: MyPageViewModel!
-    private var userName: String?
-    private var email: String?
+    private var userName: String = ""
+    private var email: String = ""
     
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
@@ -75,9 +75,7 @@ class MyPageViewController: UIViewController {
                 self?.email = memberDetails.email
                 self?.userName = memberDetails.userName
                 self?.myPageView.configureUI(member: member)
-                let memberSeq = UserDefaultsManager.shared.getMemberSeq()
-                let userName = member.userName
-                print("\(userName)의 memberSeq는: \(memberSeq)")
+                print("\(member.userName)의 memberSeq는: \(UserDefaultsManager.shared.getMemberSeq())")
             }
         }
         
