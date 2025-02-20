@@ -9,7 +9,8 @@ import Foundation
 
 class DeleteMemberViewModel {
     private let deleteAccountUseCase: DeleteMemberUseCase
-    var onDeleteAccount: ((Bool) -> Void)?
+    var onSucceedDeleteAccount: (() -> Void)?
+    var onFailureDeleteAccount: (() -> Void)?
     
     init(deleteAccountUseCase: DeleteMemberUseCase) {
         self.deleteAccountUseCase = deleteAccountUseCase
@@ -24,10 +25,11 @@ class DeleteMemberViewModel {
         deleteAccountUseCase.execute(request: request) { result in
             switch result {
             case .success:
-                self.onDeleteAccount?(true)
+                print("usecasesucceed")
+                self.onSucceedDeleteAccount?()
             case .failure(let error):
                 print(error.localizedDescription)
-                self.onDeleteAccount?(false)
+                self.onFailureDeleteAccount?()
             }
         }
     }

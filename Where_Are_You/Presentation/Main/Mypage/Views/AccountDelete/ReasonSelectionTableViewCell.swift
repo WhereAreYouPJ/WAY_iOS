@@ -14,9 +14,9 @@ class ReasonSelectionTableViewCell: UITableViewCell {
     
     private let containerView: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = 10
+        view.layer.cornerRadius = 8
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.color221.cgColor
+        view.layer.borderColor = UIColor.blackAC.cgColor
         view.backgroundColor = .white
         return view
     }()
@@ -27,24 +27,18 @@ class ReasonSelectionTableViewCell: UITableViewCell {
         imageView.image = UIImage(systemName: "circle")
         imageView.tintColor = .color217
         imageView.snp.makeConstraints { make in
-            make.width.equalTo(LayoutAdapter.shared.scale(value: 22))
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 20))
         }
         return imageView
     }()
     
-    private let reasonLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
-        label.textColor = .black22
-        return label
-    }()
+    private let reasonLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "", textColor: .black22))
     
     private let textView: UITextView = {
         let tv = UITextView()
         tv.layer.cornerRadius = 6
-        tv.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
-        tv.textColor = .black22
-        tv.backgroundColor = UIColor.rgb(red: 238, green: 238, blue: 238)
+        tv.attributedText = UIFont.CustomFont.bodyP4(text: "", textColor: .black22)
+        tv.backgroundColor = .blackF8
         tv.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10) // 내부 여백
         tv.isHidden = true
         tv.isScrollEnabled = false
@@ -54,14 +48,14 @@ class ReasonSelectionTableViewCell: UITableViewCell {
     private lazy var titleStackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [checkmarkView, reasonLabel])
         sv.axis = .horizontal
-        sv.spacing = LayoutAdapter.shared.scale(value: 10)
+        sv.spacing = 8
         return sv
     }()
     
     private lazy var stackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [titleStackView, textView])
         sv.axis = .vertical
-        sv.spacing = LayoutAdapter.shared.scale(value: 10)
+        sv.spacing = 10
         return sv
     }()
     
@@ -93,22 +87,22 @@ class ReasonSelectionTableViewCell: UITableViewCell {
         
         stackView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 14))
-            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 14))
-            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 12))
+            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 14))
         }
         
         textView.snp.makeConstraints { make in
-            make.width.equalTo(LayoutAdapter.shared.scale(value: 305))
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 303))
             make.height.equalTo(LayoutAdapter.shared.scale(value: 140))
         }
     }
     
     func configure(reason: String, isSelected: Bool, isTextFieldVisible: Bool) {
-        reasonLabel.text = reason
+        reasonLabel.attributedText = UIFont.CustomFont.bodyP4(text: reason, textColor: .black22)
         checkmarkView.image = isSelected ? UIImage(systemName: "checkmark.circle.fill") : UIImage(systemName: "circle")
         checkmarkView.tintColor = isSelected ? .brandColor : .color217
         textView.isHidden = !isTextFieldVisible
-        textView.text = reason
+        textView.attributedText = UIFont.CustomFont.bodyP4(text: reason, textColor: .black22)
     }
 }
 
@@ -117,14 +111,14 @@ extension ReasonSelectionTableViewCell: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == placeholderText {
             // Placeholder 제거
-            textView.text = ""
+            textView.attributedText = UIFont.CustomFont.bodyP4(text: "", textColor: .black22)
         }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             // Placeholder 활성화
-            textView.text = placeholderText
+            textView.attributedText = UIFont.CustomFont.bodyP4(text: placeholderText, textColor: .black66)
         }
     }
     

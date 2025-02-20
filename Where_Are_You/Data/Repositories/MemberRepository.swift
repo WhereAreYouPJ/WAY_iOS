@@ -160,6 +160,7 @@ class MemberRepository: MemberRepositoryProtocol {
             switch result {
             case .success:
                 UserDefaultsManager.shared.clearData()
+                completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))
             }

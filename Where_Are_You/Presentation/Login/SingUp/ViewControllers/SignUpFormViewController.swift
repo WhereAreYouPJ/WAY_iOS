@@ -197,8 +197,6 @@ class SignUpFormViewController: UIViewController {
         if let customTF = textField as? CustomTextField {
             // 조건이 맞지 않으면 error 상태를 유지하도록 설정
             customTF.setErrorState(!isAvailable)
-        } else {
-            textField?.layer.borderColor = isAvailable ? UIColor.blackD4.cgColor : UIColor.error.cgColor
         }
     }
 }
