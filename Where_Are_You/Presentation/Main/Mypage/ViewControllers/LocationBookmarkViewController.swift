@@ -16,7 +16,7 @@ class LocationBookmarkViewController: UIViewController {
     
     private let noDataView: NoDataView = {
         let view = NoDataView()
-        view.configureUI(descriptionText: "아직은 즐겨찾기한 위치가 없어요. \n목록을 생성하여 좀 더 편리하게 \n일정 추가 시 위치를 선택할 수 있어요.")
+        view.configureUI(descriptionText: "아직은 즐겨찾기한 위치가 없어요. \n즐겨찾기를 생성하여 일정 추가시 \n더 편리하게 위치를 선택할 수 있어요.")
         return view
     }()
     

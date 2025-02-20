@@ -18,7 +18,7 @@ class CustomView: UIView {
     
     // MARK: - Lifecycle
 
-    init(image: String, text: String, textColor: UIColor, separatorHidden: Bool) {
+    init(image: String, text: String, textColor: UIColor, separatorHidden: Bool, imageTintColor: UIColor) {
         super.init(frame: .zero)
         setupView(image: image, text: text, textColor: textColor, separatorHidden: separatorHidden)
         configureViewComponents()

@@ -39,6 +39,7 @@ struct Feed {
     var bookMark: Bool
     let scheduleFriendInfos: [Info]?
     let feedImageInfos: [FeedImageInfo]?
+    let userName: String
 }
 
 extension FeedContent {
@@ -58,7 +59,8 @@ extension FeedContent {
             content: firstScheduleFeedInfo.feedInfo.content,
             bookMark: firstScheduleFeedInfo.bookMarkInfo,
             scheduleFriendInfos: scheduleFriendInfo,
-            feedImageInfos: firstScheduleFeedInfo.feedImageInfos
+            feedImageInfos: firstScheduleFeedInfo.feedImageInfos,
+            userName: firstScheduleFeedInfo.memberInfo.userName
         )
     }
 }
@@ -76,7 +78,8 @@ extension BookMarkContent {
             content: content,
             bookMark: bookMark,
             scheduleFriendInfos: bookMarkFriendInfos,
-            feedImageInfos: bookMarkImageInfos
+            feedImageInfos: bookMarkImageInfos,
+            userName: bookMarkFriendInfos.first?.userName ?? ""
         )
     }
 }
@@ -94,7 +97,8 @@ extension HideFeedContent {
             content: content,
             bookMark: bookMark,
             scheduleFriendInfos: feedFriendInfos,
-            feedImageInfos: hideFeedImageInfos
+            feedImageInfos: hideFeedImageInfos,
+            userName: feedFriendInfos.first?.userName ?? ""
         )
     }
 }

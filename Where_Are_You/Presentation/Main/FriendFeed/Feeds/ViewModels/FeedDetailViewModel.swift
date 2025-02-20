@@ -69,7 +69,8 @@ class FeedDetailViewModel {
                                 content: $0.feedInfo.content,
                                 bookMark: $0.bookMarkInfo,
                                 scheduleFriendInfos: rawFeedContent.scheduleFriendInfo,
-                                feedImageInfos: $0.feedImageInfos)
+                                feedImageInfos: $0.feedImageInfos,
+                                userName: $0.memberInfo.userName)
                 })
                 self.onFeedsDataFetched?()
             case .failure(let error):
