@@ -12,9 +12,9 @@ class NoDataView: UIView {
 
     private let borderView: UIView = {
         let view = UIView()
-        view.layer.borderWidth = 2
-        view.layer.borderColor = UIColor.color221.cgColor
-        view.layer.cornerRadius = LayoutAdapter.shared.scale(value: 15)
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.blackD4.cgColor
+        view.layer.cornerRadius = LayoutAdapter.shared.scale(value: 12)
         view.backgroundColor = .white
         return view
     }()
@@ -25,7 +25,7 @@ class NoDataView: UIView {
         return imageView
     }()
     
-    private let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: "오늘 하루 수고했던 일은 \n어떤 경험을 남기게 했나요? \n\n하루의 소중한 시간을 기록하고 \n오래 기억될 수 있도록 간직해보세요!", textColor: .color118, fontSize: 14)
+    private let descriptionLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "오늘 하루 수고했던 일은 \n어떤 경험을 남기게 했나요? \n\n하루의 소중한 시간을 기록하고 \n오래 기억될 수 있도록 간직해보세요!", textColor: .blackAC))
     
     // MARK: - Lifecycle
     
@@ -52,24 +52,24 @@ class NoDataView: UIView {
     
     private func setupConstraints() {
         borderView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 134))
-            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 22))
+            make.top.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 120))
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 37))
         }
         
         logoImage.snp.makeConstraints { make in
             make.centerY.equalTo(borderView.snp.top)
             make.centerX.equalTo(borderView)
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 56.26))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 56))
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 50))
-            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 36))
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 42))
+            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 26))
             make.centerX.equalToSuperview()
         }
     }
     
     func configureUI(descriptionText: String) {
-        descriptionLabel.text = descriptionText
+        descriptionLabel.attributedText = UIFont.CustomFont.bodyP4(text: descriptionText, textColor: .blackAC)
     }
 }

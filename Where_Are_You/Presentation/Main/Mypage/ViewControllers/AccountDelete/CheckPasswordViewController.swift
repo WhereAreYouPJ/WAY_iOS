@@ -52,16 +52,23 @@ class CheckPasswordViewController: UIViewController {
     }
     
     private func setupBindings() {
-        viewModel.onDeleteAccount = { [weak self] deleteSucceed in
-            if deleteSucceed {
-                let controller = CompleteDeleteViewController()
-                self?.navigationController?.pushViewController(controller, animated: true)
-            } else {
-                self?.updateStatus(label: self?.checkPasswordView.passwordErrorLabel,
-                                   message: "비밀번호가 맞지 않습니다.",
-                                   textField: self?.checkPasswordView.passwordTextField)
+        viewModel.onSucceedDeleteAccount = { [weak self] in
+            DispatchQueue.main.async {
+                    self?.succeedDelete()
             }
         }
+        
+        viewModel.onFailureDeleteAccount = { [weak self] in
+            self?.updateStatus(label: self?.checkPasswordView.passwordErrorLabel,
+                               message: "비밀번호가 맞지 않습니다.",
+                               textField: self?.checkPasswordView.passwordTextField)
+        }
+    }
+    
+    private func succeedDelete() {
+        UserDefaultsManager.shared.clearData()
+        let controller = CompleteDeleteViewController()
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     // MARK: - Selectors
@@ -85,6 +92,9 @@ class CheckPasswordViewController: UIViewController {
    
     private func updateStatus(label: UILabel?, message: String, textField: UITextField?) {
         label?.attributedText = UIFont.CustomFont.bodyP5(text: message, textColor: .error)
-        textField?.layer.borderColor = UIColor.error.cgColor
+        if let customTF = textField as? CustomTextField {
+            // 조건이 맞지 않으면 error 상태를 유지하도록 설정
+            customTF.setErrorState(true)
+        }
     }
 }

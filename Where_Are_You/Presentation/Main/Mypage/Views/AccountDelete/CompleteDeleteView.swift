@@ -8,9 +8,9 @@
 import UIKit
 
 class CompleteDeleteView: UIView {
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "회원탈퇴가 완료되었어요.", textColor: .black, fontSize: 20)
+    private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP1(text: "회원탈퇴가 완료되었어요.", textColor: .black22))
     
-    private let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: "온마이웨이를 이용해주셔서 감사했습니다. \n더 좋은 서비스를 제공하는 온마이웨이가 되겠습니다. \n나중에 다시 만나요!", textColor: .color118, fontSize: 14)
+    private let descriptionLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "온마이웨이를 이용해주셔서 감사합니다. \n더 좋은 서비스를 제공하는 온마이웨이가 되겠습니다. \n나중에 다시 만나요!", textColor: .black66))
     
     private let omwImageView: UIImageView = {
         let iv = UIImageView()
@@ -18,7 +18,7 @@ class CompleteDeleteView: UIView {
         return iv
     }()
     
-    let completeButton = CustomButton(title: "확인", backgroundColor: .brandColor, titleColor: .white, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
+    let completeButton = TitleButton(title: UIFont.CustomFont.button18(text: "확인", textColor: .white), backgroundColor: .brandMain, borderColor: nil)
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {
@@ -44,26 +44,27 @@ class CompleteDeleteView: UIView {
 
     private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 30))
-            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 12))
+            make.top.equalTo(titleLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 8))
             make.leading.equalTo(titleLabel)
         }
         
         omwImageView.snp.makeConstraints { make in
-            make.top.equalTo(descriptionLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 200))
+            make.top.equalTo(descriptionLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 216))
             make.centerX.equalToSuperview()
             make.width.equalTo(LayoutAdapter.shared.scale(value: 212))
             make.height.equalTo(LayoutAdapter.shared.scale(value: 194))
         }
         
         completeButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 68))
-            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
+            make.centerX.equalToSuperview()
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(LayoutAdapter.shared.scale(value: 24))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 48))
         }
     }
 }

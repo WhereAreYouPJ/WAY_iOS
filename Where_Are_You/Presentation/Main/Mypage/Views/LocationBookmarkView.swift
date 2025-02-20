@@ -20,7 +20,7 @@ class LocationBookmarkView: UIView {
         return stackView
     }()
     
-    let deleteButton = CustomButton(title: "삭제하기", backgroundColor: .color171, titleColor: .white, font: UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 18)))
+    let deleteButton = TitleButton(title: UIFont.CustomFont.button18(text: "삭제하기", textColor: .white), backgroundColor: .blackAC, borderColor: nil)
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {
@@ -42,25 +42,25 @@ class LocationBookmarkView: UIView {
     
     func updateDeleteButtonState(isEnabled: Bool) {
         deleteButton.isEnabled = isEnabled
-        deleteButton.backgroundColor = isEnabled ? .brandColor : .color171 // 선택 여부에 따라 색상 변경
+        deleteButton.backgroundColor = isEnabled ? .brandMain : .blackAC // 선택 여부에 따라 색상 변경
     }
     
     private func setupConstraints() {
         editingButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
+            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
             make.top.equalToSuperview()
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 38))
-            make.width.equalTo(LayoutAdapter.shared.scale(value: 160))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 40))
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 180))
         }
         
         stackView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 20))
-            make.bottom.equalTo(safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 20))
-            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))            
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(LayoutAdapter.shared.scale(value: 24))
         }
         
         deleteButton.snp.makeConstraints { make in
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 48))
         }
     }
 }

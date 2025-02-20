@@ -9,23 +9,22 @@ import UIKit
 
 class CheckPasswordView: UIView {
     // MARK: - Properties
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "계정 삭제를 위해 \n비밀번호를 입력해주세요.", textColor: .black, fontSize: 20)
+    private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP1(text: "계정 삭제를 위해 \n비밀번호를 입력해주세요.", textColor: .black22))
     
-    private let passwordTitle = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호", textColor: .color51, fontSize: 12)
+    private let passwordTitle = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 비밀번호", textColor: .black22))
 
-    let passwordTextField = CustomTextField(placeholder: "비밀번호")
-//    Utilities.inputContainerTextField(withPlaceholder: "비밀번호") // 로그인에서 참고하기
+    let passwordTextField = CustomTextField(placeholder: "비밀번호를 입력해주세요.")
     
-    let passwordErrorLabel = CustomLabel(UILabel_NotoSans: .medium, text: "비밀번호가 맞지 않습니다.", textColor: .error, fontSize: 12)
+    let passwordErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "비밀번호가 맞지 않습니다.", textColor: .error))
     
     private lazy var stackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [passwordTitle, passwordTextField, passwordErrorLabel])
         sv.axis = .vertical
-        sv.spacing = 2
+        sv.spacing = 4
         return sv
     }()
     
-    let deleteButton = CustomButton(title: "회원 탈퇴하기", backgroundColor: .color171, titleColor: .white, font: UIFont.pretendard(NotoSans: .bold, fontSize: 18))
+    let deleteButton = TitleButton(title: UIFont.CustomFont.button18(text: "회원 탈퇴하기", textColor: .white), backgroundColor: .blackAC, borderColor: nil)
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {
@@ -50,19 +49,20 @@ class CheckPasswordView: UIView {
     
     private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 30))
-            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
         }
         
         stackView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 30))
-            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
+            make.top.equalTo(titleLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 40))
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
         }
         
         deleteButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 68))
-            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
+            make.centerX.equalToSuperview()
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(LayoutAdapter.shared.scale(value: 24))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 48))
         }
     }
     
@@ -70,10 +70,10 @@ class CheckPasswordView: UIView {
         let isPasswordEntered = !(passwordTextField.text?.isEmpty ?? true)
         
         if isPasswordEntered {
-            deleteButton.updateBackgroundColor(.brandColor)
+            deleteButton.updateBackgroundColor(.brandMain)
             deleteButton.isEnabled = true
         } else {
-            deleteButton.updateBackgroundColor(.color171)
+            deleteButton.updateBackgroundColor(.blackAC)
             deleteButton.isEnabled = false
         }
     }
