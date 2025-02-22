@@ -11,6 +11,8 @@ struct PostFavoriteLocationBody: ParameterConvertible {
     let memberSeq: Int
     let location: String
     let streetName: String
+    let x: Double
+    let y: Double
 }
 
 struct DeleteFavoriteLocationBody: ParameterConvertible {

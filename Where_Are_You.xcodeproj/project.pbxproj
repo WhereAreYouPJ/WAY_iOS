@@ -323,6 +323,7 @@
 		D5BA30962CE7481D00958BF5 /* FriendRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA30952CE7481D00958BF5 /* FriendRepository.swift */; };
 		D5BA30992CE74BF300958BF5 /* GetFriendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA30982CE74BF300958BF5 /* GetFriendUseCase.swift */; };
 		D5C2D6742CC8C273002F5607 /* CustomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C2D6732CC8C26D002F5607 /* CustomAlertViewController.swift */; };
+		D5CC04172D63551D00FE6369 /* PostFavLocationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CC04162D63551D00FE6369 /* PostFavLocationResponse.swift */; };
 		D5CCD96F2CB0217E008497AD /* DailyScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CCD96E2CB0217E008497AD /* DailyScheduleView.swift */; };
 		D5CD68A42D351EA000B790E9 /* RefuseInvitedScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CD68A32D351EA000B790E9 /* RefuseInvitedScheduleUseCase.swift */; };
 		D5CD68A62D351FD500B790E9 /* GetInvitedListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CD68A52D351FD500B790E9 /* GetInvitedListUseCase.swift */; };
@@ -335,6 +336,7 @@
 		D5DCBF342C7435E2003F0246 /* SearchFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DCBF332C7435E2003F0246 /* SearchFriendsView.swift */; };
 		D5E3D7D82C63BF730041B28D /* CreateScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */; };
 		D5FC8ED42CE31151000A08C2 /* PostScheduleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FC8ED32CE31151000A08C2 /* PostScheduleResponse.swift */; };
+		D5FFF2A22D6734830067C3FE /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFF2A12D6734830067C3FE /* LocationManager.swift */; };
 		D79EFAD9E5409233E5338E46 /* Pods_Where_Are_You.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */; };
 /* End PBXBuildFile section */
 
@@ -686,6 +688,7 @@
 		D5BA30952CE7481D00958BF5 /* FriendRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRepository.swift; sourceTree = "<group>"; };
 		D5BA30982CE74BF300958BF5 /* GetFriendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFriendUseCase.swift; sourceTree = "<group>"; };
 		D5C2D6732CC8C26D002F5607 /* CustomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewController.swift; sourceTree = "<group>"; };
+		D5CC04162D63551D00FE6369 /* PostFavLocationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFavLocationResponse.swift; sourceTree = "<group>"; };
 		D5CCD96E2CB0217E008497AD /* DailyScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyScheduleView.swift; sourceTree = "<group>"; };
 		D5CD68A32D351EA000B790E9 /* RefuseInvitedScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefuseInvitedScheduleUseCase.swift; sourceTree = "<group>"; };
 		D5CD68A52D351FD500B790E9 /* GetInvitedListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInvitedListUseCase.swift; sourceTree = "<group>"; };
@@ -698,6 +701,7 @@
 		D5DCBF332C7435E2003F0246 /* SearchFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendsView.swift; sourceTree = "<group>"; };
 		D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleViewModel.swift; sourceTree = "<group>"; };
 		D5FC8ED32CE31151000A08C2 /* PostScheduleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostScheduleResponse.swift; sourceTree = "<group>"; };
+		D5FFF2A12D6734830067C3FE /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		EF2914052EE4B6C83BE57C93 /* Pods-Where_Are_You_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Where_Are_You_Tests/Pods-Where_Are_You_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1200,6 +1204,7 @@
 				D5AB2EE12D548E0D009E6741 /* MyLocation.gpx */,
 				99EDD14E2D49EE5B005164FB /* APIError.swift */,
 				99EDD1502D49F003005164FB /* ServerError.swift */,
+				D5FFF2A12D6734830067C3FE /* LocationManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1585,6 +1590,7 @@
 			children = (
 				D51AC99E2C84A0AD00D0AD2E /* FavLocationResponse.swift */,
 				D57AC3B02C8B6336006AE7D7 /* KakaoLocalResponse.swift */,
+				D5CC04162D63551D00FE6369 /* PostFavLocationResponse.swift */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -2262,6 +2268,7 @@
 				99949F5B2C58B85E00AE0177 /* Friend.swift in Sources */,
 				D55C6C472CF5D8DC005132DC /* PostFriendRequestBody.swift in Sources */,
 				99DE2F042D0813EC0087ACC9 /* FeedArchiveViewModel.swift in Sources */,
+				D5CC04172D63551D00FE6369 /* PostFavLocationResponse.swift in Sources */,
 				D5BA308C2CE744C400958BF5 /* FriendAPI.swift in Sources */,
 				99B7BD742C72E68E00EC1C4F /* AddFeedViewModel.swift in Sources */,
 				D517F25D2CEC8691003C5F60 /* FriendDetailView.swift in Sources */,
@@ -2314,6 +2321,7 @@
 				9967C1522C56467D00927277 /* CustomAlert.swift in Sources */,
 				99C68E482C64B43900DEC1F1 /* FeedService.swift in Sources */,
 				99949F572C58B1CE00AE0177 /* FriendsListViewController.swift in Sources */,
+				D5FFF2A22D6734830067C3FE /* LocationManager.swift in Sources */,
 				D5BA308E2CE744CA00958BF5 /* FriendService.swift in Sources */,
 				D517F2612CECAAF1003C5F60 /* DeleteFriendUseCase.swift in Sources */,
 				99149FEB2C4F97C300136097 /* ValidationHelper.swift in Sources */,
@@ -2549,7 +2557,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Where_Are_You/Where_Are_You.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = "";
@@ -2573,7 +2581,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omw.on-my-way";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "OMW Debug";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "OMW Release";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -2592,7 +2600,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Where_Are_You/Where_Are_You.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = "";
@@ -2616,7 +2624,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omw.on-my-way";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "OMW Debug";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "OMW Release";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

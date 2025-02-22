@@ -25,7 +25,7 @@ struct ProfileImageView: View {
                 .resizable()
                 .scaledToFill()
                 .frame(width: LayoutAdapter.shared.scale(value: 45), height: LayoutAdapter.shared.scale(value: 45))
-                .frame(width: LayoutAdapter.shared.scale(value: 35), height: LayoutAdapter.shared.scale(value: 35))  // 추가
+                .frame(width: LayoutAdapter.shared.scale(value: 35), height: LayoutAdapter.shared.scale(value: 35))
                 .clipShape(Circle())
                 .padding(.bottom, 10)
         }

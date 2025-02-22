@@ -86,7 +86,7 @@ struct CreateScheduleView: View {
                         SearchLocationView(selectedLocation: $viewModel.place, path: $path)
                     case let .confirmLocation(location):
                         if let location = location {
-                            ConfirmLocationView(location: .constant(location), path: $path)
+                            ConfirmLocationView(location: location, path: $path)
                                 .onDisappear {
                                     viewModel.getFavoriteLocation()
                                 }
@@ -154,6 +154,7 @@ struct AddPlaceView: View {
             if let selectedPlace = viewModel.place { // 위치가 선택된 경우
                 HStack {
                     Text(selectedPlace.location)
+                        .lineLimit(1)
                         .onTapGesture {
                             path.append(Route.confirmLocation(selectedPlace))
                         }

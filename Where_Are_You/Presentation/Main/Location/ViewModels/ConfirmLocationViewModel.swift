@@ -6,127 +6,117 @@
 //
 
 import Foundation
-import Moya
 
-class ConfirmLocationViewModel: ObservableObject {
+class ConfirmLocationViewModel: ObservableObject { // TODO: 위치 시퀀스 오류. 직전에 선택한 장소 말고 이전에 즐겨찾기해둔 장소 선택하면 시퀀스 0으로 뜨는 문제
     @Published var isFavorite = false
+    @Published var location: Location
     
-    let provider = MoyaProvider<LocationAPI>()
     let memberSeq = UserDefaultsManager.shared.getMemberSeq()
-    private var currentLocationSeq: Int?
     
-    func isFavoriteLocation(location: Location, completion: @escaping (Bool) -> Void) {
-        provider.request(.getLocation(memberSeq: memberSeq)) { result in
-            switch result {
-            case .success(let response):
-                if response.statusCode == 200 {
-                    do {
-                        let decoder = JSONDecoder()
-                        let genericResponse = try decoder.decode(GenericResponse<GetFavLocationResponse>.self, from: response.data)
-                        
-                        let favLocations = genericResponse.data
-                        print("즐겨찾기 위치 로드 성공: \(favLocations.count)개의 위치를 받았습니다.")
-                        if let matchingLocation = favLocations.first(where: { $0.streetName == location.streetName }) {
-                            self.currentLocationSeq = matchingLocation.locationSeq
-                            DispatchQueue.main.async {
-                                self.isFavorite = true
-                                completion(true)
-                            }
-                        } else {
-                            DispatchQueue.main.async {
-                                self.isFavorite = false
-                                self.currentLocationSeq = nil
-                                completion(false)
-                            }
-                        }
-                    } catch {
-                        print("JSON 디코딩 실패: \(error.localizedDescription)")
-                        completion(false)
+    private let getFavoriteLocationUseCase: GetLocationUseCase
+    private let postFavoriteLocationUseCase: PostLocationUseCase
+    private let deleteFavoriteLocationUseCase: DeleteLocationUseCase
+    
+    init(
+        location: Location,
+        getFavoriteLocationUseCase: GetLocationUseCase,
+        postFavoriteLocationUseCase: PostLocationUseCase,
+        deleteFavoriteLocationUseCase: DeleteLocationUseCase
+    ) {
+        self.location = location
+        self.getFavoriteLocationUseCase = getFavoriteLocationUseCase
+        self.postFavoriteLocationUseCase = postFavoriteLocationUseCase
+        self.deleteFavoriteLocationUseCase = deleteFavoriteLocationUseCase
+    }
+    
+    func isFavoriteLocation() {
+        getFavoriteLocationUseCase.execute { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let favLocations):
+                    if let matchedLocation = favLocations.first(where: {
+                        $0.streetName == self?.location.streetName &&
+                        $0.location == self?.location.location
+                    }) {
+                        self?.location = Location(
+                            locationSeq: matchedLocation.locationSeq,
+                            sequence: matchedLocation.sequence,
+                            location: matchedLocation.location,
+                            streetName: matchedLocation.streetName,
+                            x: matchedLocation.x,
+                            y: matchedLocation.y
+                        )
+                        self?.isFavorite = true
+                    } else {
+                        self?.isFavorite = false
                     }
-                } else {
-                    print("서버 오류: \(response.statusCode)")
-                    if let json = try? response.mapJSON() as? [String: Any],
-                       let detail = json["detail"] as? String {
-                        print("상세 메시지: \(detail)")
-                    }
-                    completion(false)
+                    print("isFavoriteLocation 조회 성공")
+                case .failure:
+                    print("isFavoriteLocation 조회 실패")
                 }
-            case .failure(let error):
-                print("isFavoriteLocation 요청 실패: \(error.localizedDescription)")
-                completion(false)
             }
         }
     }
     
-    func toggleFavorite(location: Location, completion: @escaping (Bool) -> Void) {
+    func toggleFavorite() {
+        print("위치 시퀀스: \(self.location.sequence)")
         if isFavorite {
             deleteFavorite { success in
                 DispatchQueue.main.async {
                     if success {
                         self.isFavorite = false
-                        self.currentLocationSeq = nil
                     }
-                    completion(success)
                 }
             }
         } else {
-            addFavorite(location: location) { success, newSeq in
+            addFavorite { success in
                 DispatchQueue.main.async {
                     if success {
                         self.isFavorite = true
-                        self.currentLocationSeq = newSeq
                     }
-                    completion(success)
                 }
             }
         }
     }
     
-    private func addFavorite(location: Location, completion: @escaping (Bool, Int?) -> Void) {
-        provider.request(.postLocation(request: PostFavoriteLocationBody(memberSeq: memberSeq, location: location.location, streetName: location.streetName))) { result in
-            switch result {
-            case .success(let response):
-                if response.statusCode == 200 {
-                    do {
-                        let decoder = JSONDecoder()
-                        let genericResponse = try decoder.decode(GenericResponse<PostFavLocation>.self, from: response.data)
-                        let newSeq = genericResponse.data.locationSeq
-                        print("즐겨찾기 추가 성공. 새 locationSeq: \(newSeq)")
-                        completion(true, newSeq)
-                    } catch {
-                        print("JSON 디코딩 실패: \(error.localizedDescription)")
-                        completion(false, nil)
-                    }
-                } else {
-                    print("서버 오류: \(response.statusCode)")
-                    completion(false, nil)
+    private func addFavorite(completion: @escaping (Bool) -> Void) {
+        let postBody = PostFavoriteLocationBody(
+            memberSeq: self.memberSeq,
+            location: location.location,
+            streetName: location.streetName,
+            x: location.x,
+            y: location.y
+        )
+        
+        postFavoriteLocationUseCase.execute(request: postBody) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    self.location.locationSeq = response.data.locationSeq
+                    self.location.sequence = 0
+                    print("즐겨찾기 추가 성공! 위치 시퀀스: \(self.location.locationSeq ?? 0)")
+                    completion(true)
+                case .failure:
+                    print("즐겨찾기 추가 실패")
+                    completion(false)
                 }
-            case .failure(let error):
-                print("addFavorite 요청 실패: \(error.localizedDescription)")
-                completion(false, nil)
             }
         }
     }
     
     private func deleteFavorite(completion: @escaping (Bool) -> Void) {
-        guard let locationSeq = currentLocationSeq else {
-            print("삭제할 locationSeq가 없습니다.")
-            completion(false)
-            return
-        }
+        let deleteBody = DeleteFavoriteLocationBody(
+            memberSeq: self.memberSeq,
+            locationSeqs: [self.location.locationSeq ?? 0]
+        )
         
-        provider.request(.deleteLocation(request: DeleteFavoriteLocationBody(memberSeq: memberSeq, locationSeqs: [locationSeq]))) { result in
+        deleteFavoriteLocationUseCase.execute(request: deleteBody) { result in
             switch result {
-            case .success(let response):
-                if response.statusCode == 200 {
-                    print("즐겨찾기 삭제 성공. 삭제된 locationSeq: \(locationSeq)")
-                    completion(true)
-                } else {
-                    print("서버 오류: \(response.statusCode)")
-                    completion(false)
-                }
-            case .failure(let error):
-                print("deleteFavorite 요청 실패: \(error.localizedDescription)")
+            case .success:
+                print("즐겨찾기 삭제 성공")
+                completion(true)
+            case .failure:
+                print("즐겨찾기 삭제 실패")
                 completion(false)
             }
         }

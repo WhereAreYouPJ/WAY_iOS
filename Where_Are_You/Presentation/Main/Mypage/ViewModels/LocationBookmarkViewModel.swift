@@ -41,7 +41,7 @@ class LocationBookmarkViewModel {
     // MARK: - GET
     
     func getLocationBookMark() {
-        getLocationUseCase.execute(memberSeq: memberSeq) { result in
+        getLocationUseCase.execute { result in
             switch result {
             case .success(let data):
                 if data.isEmpty {
