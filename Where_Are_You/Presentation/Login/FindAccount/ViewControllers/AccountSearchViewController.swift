@@ -20,7 +20,6 @@ class AccountSearchViewController: UIViewController {
         setupViewModel()
         setupBindings()
         setupActions()
-        hideKeyboardWhenTappedAround()
     }
     
     // MARK: - Helpers
@@ -61,9 +60,9 @@ class AccountSearchViewController: UIViewController {
         viewModel.onVerifyCodeSuccess = { [weak self] message in
             DispatchQueue.main.async {
                 self?.accountSearchView.authNumberErrorLabel.updateText(UIFont.CustomFont.bodyP5(text: message, textColor: .brandMain))
-                self?.accountSearchView.authNumberTextField.layer.borderColor = UIColor.brandMain.cgColor
                 self?.accountSearchView.authNumberCheckButton.updateTitle("인증 완료")
                 self?.accountSearchView.authNumberCheckButton.updateBackgroundColor(.blackAC)
+                self?.accountSearchView.authNumberTextField.setErrorState(false)
                 self?.accountSearchView.authNumberCheckButton.isEnabled = false
                 self?.accountSearchView.bottomButtonView.isEnabled = true
                 self?.accountSearchView.bottomButtonView.updateBackgroundColor(.brandMain)
@@ -74,7 +73,8 @@ class AccountSearchViewController: UIViewController {
         viewModel.onVerifyCodeFailure = { [weak self] message in
             DispatchQueue.main.async {
                 self?.accountSearchView.authNumberErrorLabel.updateText(UIFont.CustomFont.bodyP5(text: message, textColor: .error))
-                self?.accountSearchView.authNumberTextField.layer.borderColor = UIColor.error.cgColor
+                
+                self?.accountSearchView.authNumberTextField.setErrorState(true)
             }
         }
         
@@ -100,6 +100,7 @@ class AccountSearchViewController: UIViewController {
         accountSearchView.bottomButtonView.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
         accountSearchView.requestAuthButton.addTarget(self, action: #selector(requestAuthCodeTapped), for: .touchUpInside)
         accountSearchView.authNumberCheckButton.addTarget(self, action: #selector(findUserId), for: .touchUpInside)
+        accountSearchView.emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     // MARK: - Selectors
@@ -119,5 +120,20 @@ class AccountSearchViewController: UIViewController {
     
     @objc func confirmButtonTapped() {
         viewModel.okayToMove()
+    }
+    
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        switch textField {
+        case accountSearchView.emailTextField:
+            accountSearchView.requestAuthButton.updateBackgroundColor(.brandMain)
+            accountSearchView.requestAuthButton.isEnabled = true            
+            accountSearchView.authNumberCheckButton.updateTitle("확인")
+            accountSearchView.authNumberCheckButton.updateBackgroundColor(.brandMain)
+            accountSearchView.authNumberCheckButton.isEnabled = true
+            accountSearchView.bottomButtonView.updateBackgroundColor(.blackAC)
+            accountSearchView.bottomButtonView.isEnabled = false
+        default:
+            break
+        }
     }
 }

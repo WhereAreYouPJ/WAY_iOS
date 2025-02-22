@@ -18,7 +18,7 @@ class DeleteMemberUseCaseImpl: DeleteMemberUseCase {
         self.memberRepository = memberRepository
     }
     
-    func execute(request: DeleteMemberBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func execute(request: DeleteMemberBody, completion: @escaping (Result<Void, Error>) -> Void) {
         memberRepository.deleteMember(request: request, completion: completion)
     }
 }

@@ -31,11 +31,11 @@ class MyPageView: UIView {
     let imageEditButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "icon-Camera_Rotate"), for: .normal)
-        button.layer.cornerRadius = LayoutAdapter.shared.scale(value: 10)
+        button.layer.cornerRadius = LayoutAdapter.shared.scale(value: 12)
         return button
     }()
     
-    let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .white, fontSize: 20)
+    let userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP2(text: "유저 이름", textColor: .white))
     
     // 유저코드(친추용)
     let userCodeBackgroundView: UIView = {
@@ -46,7 +46,9 @@ class MyPageView: UIView {
         return view
     }()
     
-    let userCodeLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .letterBrandColor, fontSize: 14)
+    let myCodeLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "내 코드", textColor: .black22))
+    
+    let userCodeLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "유저 코드", textColor: .brandDark))
     
     // 내정보관리, 위치 즐겨찾기, 피드책갈피, 피드보관함
     private lazy var manageStackView: UIStackView = createStackView(buttonTitles: ["내 정보 관리", "위치 즐겨찾기", "피드 책갈피", "피드 보관함"], startingTag: 0)
@@ -55,13 +57,13 @@ class MyPageView: UIView {
     private lazy var supportStackView: UIStackView = createStackView(buttonTitles: ["공지사항", "1:1 이용문의"], startingTag: 4)
     
     // 로그아웃, 회원탈퇴
-    let logoutButton = CustomButtonView(text: "로그아웃", weight: .medium, textColor: .color190, fontSize: 14)
+    let logoutButton = StandardButton(text: UIFont.CustomFont.bodyP4(text: "로그아웃", textColor: .blackAC))
     
-    let deleteAccountButton = CustomButtonView(text: "회원탈퇴", weight: .medium, textColor: .color190, fontSize: 14)
+    let deleteAccountButton = StandardButton(text: UIFont.CustomFont.bodyP4(text: "회원탈퇴", textColor: .blackAC))
     
     private lazy var logoutDeleteStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [logoutButton, deleteAccountButton])
-        stack.spacing = 4
+        stack.spacing = 20
         stack.axis = .horizontal
         stack.distribution = .fillEqually
         return stack
@@ -69,12 +71,12 @@ class MyPageView: UIView {
     
     private let separatorview: UIView = {
         let view = UIView()
-        view.backgroundColor = .color190
+        view.backgroundColor = .blackD4
         return view
     }()
     
     // 추가 옵션 뷰
-    let moveToGallery = CustomOptionButtonView(title: "사진 보관함", image: UIImage(named: "icon-Gallery"))
+    let moveToGallery = CustomOptionButtonView(title: "프로필 업로드", image: UIImage(named: "icon-Gallery"))
     
     // MARK: - Lifecycle
     
@@ -102,8 +104,9 @@ class MyPageView: UIView {
         profileBackgroundView.addSubview(moveToGallery)
         
         addSubview(userCodeBackgroundView)
+        userCodeBackgroundView.addSubview(myCodeLabel)
         userCodeBackgroundView.addSubview(userCodeLabel)
-        
+
         addSubview(manageStackView)
         addSubview(supportStackView)
         
@@ -115,56 +118,63 @@ class MyPageView: UIView {
         // 유저프로필
         profileBackgroundView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 280))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 270))
         }
         
         profileImageView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 100))
+            make.top.equalTo(LayoutAdapter.shared.scale(value: 86))
+            make.centerX.equalToSuperview()
+            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 88))
         }
         
         // 편집 버튼
         imageEditButton.snp.makeConstraints { make in
             make.width.height.equalTo(LayoutAdapter.shared.scale(value: 24))
-            make.trailing.equalTo(profileImageView.snp.trailing).offset(LayoutAdapter.shared.scale(value: 6))
+            make.trailing.equalTo(profileImageView.snp.trailing).inset(LayoutAdapter.shared.scale(value: -2))
             make.bottom.equalTo(profileImageView.snp.bottom)
         }
         
         // 추가 옵션 뷰
         moveToGallery.snp.makeConstraints { make in
             make.centerX.equalTo(profileImageView)
-            make.top.equalTo(profileImageView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 13))
-            make.width.equalTo(190)
-            make.height.equalTo(38)
+            make.top.equalTo(profileImageView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 11))
+            make.width.equalTo(200)
+            make.height.equalTo(44)
         }
         
         userNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(profileImageView.snp.bottom).offset(6)
+            make.top.equalTo(profileImageView.snp.bottom).offset(8)
             make.centerX.equalToSuperview()
         }
         
         userCodeBackgroundView.snp.makeConstraints { make in
             make.centerY.equalTo(profileBackgroundView.snp.bottom)
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 57))
-            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 17))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 62))
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+        }
+        
+        myCodeLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 111))
+            make.centerY.equalToSuperview()
         }
         
         userCodeLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+            make.leading.equalTo(myCodeLabel.snp.trailing).offset(LayoutAdapter.shared.scale(value: 8))
+            make.centerY.equalToSuperview()
         }
         
         // 내정보관리, 위치 즐겨찾기, 피드책갈피, 피드보관함
         manageStackView.snp.makeConstraints { make in
-            make.top.equalTo(userCodeBackgroundView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 14))
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 192))
-            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 17))
+            make.top.equalTo(userCodeBackgroundView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 16))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 196))
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
         }
         
         // 공지사항, 1:1이용문의
         supportStackView.snp.makeConstraints { make in
             make.top.equalTo(manageStackView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 12))
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 102))
-            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 17))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 104))
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
         }
         
         // 로그아웃, 회원탈퇴 버튼
@@ -210,18 +220,18 @@ class MyPageView: UIView {
     
     private func createButton(withTitle title: String) -> UIButton {
         let button = UIButton()
-        let label = CustomLabel(UILabel_NotoSans: .medium, text: title, textColor: .black22, fontSize: 16)
+        let label = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: title, textColor: .black22))
         button.addSubview(label)
         label.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 12))
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 16))
         }
         return button
     }
     
     private func createSeparator() -> UIView {
         let separator = UIView()
-        separator.backgroundColor = .color221
+        separator.backgroundColor = .blackF0
         separator.snp.makeConstraints { make in
             make.height.equalTo(1)
         }
@@ -246,7 +256,7 @@ class MyPageView: UIView {
     func configureUI(member: Member) {
         print("Configuring UI with member: \(member)")
         self.profileImageView.kf.setImage(with: URL(string: member.profileImage))
-        self.userNameLabel.text = member.userName
-        self.userCodeLabel.text = member.memberCode
+        self.userNameLabel.attributedText = UIFont.CustomFont.bodyP2(text: member.userName, textColor: .white)
+        self.userCodeLabel.attributedText = UIFont.CustomFont.bodyP3(text: member.memberCode ?? "", textColor: .brandDark)
     }
 }

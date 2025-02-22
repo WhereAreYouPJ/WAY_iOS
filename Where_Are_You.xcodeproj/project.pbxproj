@@ -132,7 +132,7 @@
 		99C5B9E52D30AEB200CD570F /* CommentAccountDeletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9E42D30AEB200CD570F /* CommentAccountDeletionView.swift */; };
 		99C5B9E72D310A2800CD570F /* CommonAccountBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9E62D310A2800CD570F /* CommonAccountBoxView.swift */; };
 		99C5B9EA2D32332E00CD570F /* AgreementAcountDeletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9E92D32332E00CD570F /* AgreementAcountDeletionViewController.swift */; };
-		99C5B9ED2D32340500CD570F /* AgreementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9EC2D32340500CD570F /* AgreementViewModel.swift */; };
+		99C5B9ED2D32340500CD570F /* DeleteMemberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9EC2D32340500CD570F /* DeleteMemberViewModel.swift */; };
 		99C5B9EF2D3248EF00CD570F /* CommentDeletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9EE2D3248EF00CD570F /* CommentDeletionViewController.swift */; };
 		99C5B9F32D3261A900CD570F /* ReasonSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5B9F22D3261A900CD570F /* ReasonSelectionTableViewCell.swift */; };
 		99C6009A2D38F43F0027702E /* GetFeedMainUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C600992D38F43F0027702E /* GetFeedMainUseCase.swift */; };
@@ -488,7 +488,7 @@
 		99C5B9E42D30AEB200CD570F /* CommentAccountDeletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentAccountDeletionView.swift; sourceTree = "<group>"; };
 		99C5B9E62D310A2800CD570F /* CommonAccountBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonAccountBoxView.swift; sourceTree = "<group>"; };
 		99C5B9E92D32332E00CD570F /* AgreementAcountDeletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementAcountDeletionViewController.swift; sourceTree = "<group>"; };
-		99C5B9EC2D32340500CD570F /* AgreementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewModel.swift; sourceTree = "<group>"; };
+		99C5B9EC2D32340500CD570F /* DeleteMemberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteMemberViewModel.swift; sourceTree = "<group>"; };
 		99C5B9EE2D3248EF00CD570F /* CommentDeletionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDeletionViewController.swift; sourceTree = "<group>"; };
 		99C5B9F22D3261A900CD570F /* ReasonSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonSelectionTableViewCell.swift; sourceTree = "<group>"; };
 		99C600992D38F43F0027702E /* GetFeedMainUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFeedMainUseCase.swift; sourceTree = "<group>"; };
@@ -1278,7 +1278,7 @@
 				995175012C7EF95100E938DE /* LocationBookmarkViewModel.swift */,
 				99A07CD32CF440E100A47796 /* FeedBookMarkViewModel.swift */,
 				99DE2F032D0813EC0087ACC9 /* FeedArchiveViewModel.swift */,
-				99C5B9EC2D32340500CD570F /* AgreementViewModel.swift */,
+				99C5B9EC2D32340500CD570F /* DeleteMemberViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2279,7 +2279,7 @@
 				99C1403A2C6494F000A706B6 /* FeedsView.swift in Sources */,
 				990DE7662C65E924007B78C9 /* FeedImagesView.swift in Sources */,
 				99CC5E642C51EFAB00A0509A /* MyPageViewModel.swift in Sources */,
-				99C5B9ED2D32340500CD570F /* AgreementViewModel.swift in Sources */,
+				99C5B9ED2D32340500CD570F /* DeleteMemberViewModel.swift in Sources */,
 				D55C6C622CF712A8005132DC /* AcceptFriendRequestUseCase.swift in Sources */,
 				99C403172D2F6483005CD989 /* NoFeedImageViewCell.swift in Sources */,
 				9967C1542C566F2F00927277 /* NetworkAlert.swift in Sources */,
@@ -2559,7 +2559,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8CKPNKA3V9;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2602,7 +2602,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8CKPNKA3V9;
 				GENERATE_INFOPLIST_FILE = YES;

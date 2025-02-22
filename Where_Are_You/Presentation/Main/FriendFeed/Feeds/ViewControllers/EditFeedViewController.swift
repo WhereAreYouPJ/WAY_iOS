@@ -62,7 +62,7 @@ class EditFeedViewController: UIViewController {
     
     private func buttonActions() {
         editFeedView.addImages.addTarget(self, action: #selector(handleAddImagesTapped), for: .touchUpInside)
-        editFeedView.creatFeedButton.button.addTarget(self, action: #selector(editFeedButtonTapped), for: .touchUpInside)
+        editFeedView.creatFeedButton.addTarget(self, action: #selector(editFeedButtonTapped), for: .touchUpInside)
     }
     
     private func setupBindings() {

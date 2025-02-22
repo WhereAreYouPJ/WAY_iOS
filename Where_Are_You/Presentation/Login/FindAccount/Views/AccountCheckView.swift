@@ -113,8 +113,8 @@ class AccountCheckView: UIView {
         
         buttonStack.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.leading.equalTo(titleLabel.snp.leading)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(24)
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(LayoutAdapter.shared.scale(value: 24))
         }
     }
     

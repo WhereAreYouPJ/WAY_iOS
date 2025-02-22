@@ -34,6 +34,7 @@ class SignUpViewModel {
     var onUserNameValidationMessage: ((String, Bool) -> Void)?
     
     var onEmailSendMessage: ((String, Bool) -> Void)?
+    var onCheckEmailDuplicate: (([String]) -> Void)?
     var onEmailVerifyCodeMessage: ((String, Bool) -> Void)?
     
     var onPasswordFormatMessage: ((String, Bool) -> Void)?
@@ -96,12 +97,14 @@ class SignUpViewModel {
     
     // 비밀번호 일치체크
     func checkSamePassword(password: String, checkPassword: String) {
-        if ValidationHelper.isPasswordSame(password, checkpw: checkPassword) {
-            onCheckPasswordFormatMessage?("", true)
-            signUpBody.password = checkPassword
-        } else {
-            onCheckPasswordFormatMessage?("비밀번호가 일치하지 않습니다.", false)
-            signUpBody.password = nil
+        if !checkPassword.isEmpty {
+            if ValidationHelper.isPasswordSame(password, checkpw: checkPassword) {
+                onCheckPasswordFormatMessage?("", true)
+                signUpBody.password = checkPassword
+            } else {
+                onCheckPasswordFormatMessage?("비밀번호가 일치하지 않습니다.", false)
+                signUpBody.password = nil
+            }
         }
     }
     
@@ -115,10 +118,11 @@ class SignUpViewModel {
         checkEmailUseCase.execute(email: email) { result in
             switch result {
             case .success(let data):
+                self.onCheckEmailDuplicate?(data.type)
                 self.timerHelper.startTimer()
                 self.sendEmailVerificationCode(email: data.email)
-            case .failure:
-                self.onEmailSendMessage?("중복된 이메일입니다.", false)
+            case .failure(let error):
+                self.onEmailSendMessage?(error.localizedDescription, false)
             }
         }
     }
@@ -147,8 +151,8 @@ class SignUpViewModel {
                     self.signUpBody.email = self.email
                     self.timerHelper.stopTimer()
                     self.onEmailVerifyCodeMessage?(emailVerifySuccessMessage, true)
-                case .failure(let error):
-                    self.onEmailVerifyCodeMessage?(error.localizedDescription, false)
+                case .failure:
+                    self.onEmailVerifyCodeMessage?("인증코드가 알맞지 않습니다.", false)
                     self.signUpBody.email = nil
                 }
             }

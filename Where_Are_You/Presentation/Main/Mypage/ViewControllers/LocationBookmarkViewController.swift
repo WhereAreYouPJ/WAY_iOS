@@ -35,13 +35,12 @@ class LocationBookmarkViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .white
         setupViewModel()
         setupActions()
         setupTableView()
         setupBindings()
         setupNavigationBar()
-//        setupOutsideTap()
         setupViews()
     }
     
@@ -50,15 +49,8 @@ class LocationBookmarkViewController: UIViewController {
         locationBookmarkView.translatesAutoresizingMaskIntoConstraints = false
         noDataView.translatesAutoresizingMaskIntoConstraints = false
         
-        // 테이블뷰 왼쪽 여백 지우는 코드
-        locationBookmarkView.bookMarkTableView.separatorInset = .zero
-        
-        // tableHeaderView에 빈 뷰 추가하여 최상단 분리선 숨기기
-        locationBookmarkView.bookMarkTableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: locationBookmarkView.bookMarkTableView.bounds.width, height: 1))
-        
         viewModel.getLocationBookMark()
         locationBookmarkView.bookMarkTableView.reloadData()
-        
         locationBookmarkView.updateDeleteButtonState(isEnabled: false)
     }
     
@@ -70,6 +62,12 @@ class LocationBookmarkViewController: UIViewController {
         locationBookmarkView.bookMarkTableView.allowsSelectionDuringEditing = true
         locationBookmarkView.bookMarkTableView.allowsSelection = false
         locationBookmarkView.bookMarkTableView.setEditing(true, animated: false)
+        
+        // 테이블뷰 왼쪽 여백 지우는 코드
+        locationBookmarkView.bookMarkTableView.separatorInset = .zero
+        
+        // tableHeaderView에 빈 뷰 추가하여 최상단 분리선 숨기기
+        locationBookmarkView.bookMarkTableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: locationBookmarkView.bookMarkTableView.bounds.width, height: 1))
     }
     
     private func setupViewModel() {

@@ -12,8 +12,8 @@ class MyPageViewController: UIViewController {
     // MARK: - Properties
     private let myPageView = MyPageView()
     private var viewModel: MyPageViewModel!
-    private var userName: String?
-    private var email: String?
+    private var userName: String = ""
+    private var email: String = ""
     
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
@@ -53,8 +53,8 @@ class MyPageViewController: UIViewController {
         myPageView.setButtonActions(target: self, action: #selector(buttonTapped(_:)))
         myPageView.imageEditButton.addTarget(self, action: #selector(editImage), for: .touchUpInside)
         myPageView.moveToGallery.button.addTarget(self, action: #selector(moveToGallery), for: .touchUpInside)
-        myPageView.logoutButton.button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
-        myPageView.deleteAccountButton.button.addTarget(self, action: #selector(deleteAccountButtonTapped), for: .touchUpInside)
+        myPageView.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+        myPageView.deleteAccountButton.addTarget(self, action: #selector(deleteAccountButtonTapped), for: .touchUpInside)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
         view.addGestureRecognizer(tapGesture)
     }
@@ -75,9 +75,7 @@ class MyPageViewController: UIViewController {
                 self?.email = memberDetails.email
                 self?.userName = memberDetails.userName
                 self?.myPageView.configureUI(member: member)
-                let memberSeq = UserDefaultsManager.shared.getMemberSeq()
-                let userName = member.userName
-                print("\(userName)의 memberSeq는: \(memberSeq)")
+                print("\(member.userName)의 memberSeq는: \(UserDefaultsManager.shared.getMemberSeq())")
             }
         }
         
@@ -114,7 +112,7 @@ class MyPageViewController: UIViewController {
             title: "로그아웃",
             message: "로그아웃을 진행하시겠습니까?",
             cancelTitle: "취소",
-            actionTitle: "학인"
+            actionTitle: "확인"
         ) { [weak self] in
                 self?.viewModel.logout()
             }
@@ -171,6 +169,8 @@ class MyPageViewController: UIViewController {
     }
     
     @objc func moveToGallery() {
+        myPageView.moveToGallery.isHidden = true
+
         var configuration = PHPickerConfiguration()
         configuration.selectionLimit = 1  // 최대 선택 가능 사진 수
         configuration.filter = .images  // 이미지만 선택할 수 있도록 설정

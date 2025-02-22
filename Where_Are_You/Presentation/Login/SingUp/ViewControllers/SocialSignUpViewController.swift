@@ -37,16 +37,15 @@ class SocialSignUpViewController: UIViewController {
         setupViewModel()
         setupBindings()
         setupActions()
-        hideKeyboardWhenTappedAround()
     }
     
     // MARK: - Helpers
     private func setupUI() {
-        viewModel.signUpBody.password = userIdentifier
-        viewModel.signUpBody.fcmToken = userName
-        viewModel.signUpBody.loginType = loginType
-
-        socialSignUpView.emailTextField.attributedText = UIFont.CustomFont.bodyP3(text: email, textColor: .black66)
+        view = socialSignUpView
+        socialSignUpView.userNameTextField.attributedText = UIFont.CustomFont.bodyP3(text: userName, textColor: .black22)
+        socialSignUpView.emailTextField.setupTextField(placeholder: email)
+        socialSignUpView.emailTextField.isEnabled = false
+        configureNavigationBar(title: "회원가입", backButtonAction: #selector(backButtonTapped))
     }
     
     private func setupViewModel() {
@@ -74,7 +73,7 @@ class SocialSignUpViewController: UIViewController {
         viewModel.onUserNameValidationMessage = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
                 self?.updateStatus(label: self?.socialSignUpView.userNameErrorLabel, message: message, isAvailable: isAvailable, textField: self?.socialSignUpView.userNameTextField)
-                self?.socialSignUpView.bottomButtonView.isEnabled = !isAvailable
+                self?.socialSignUpView.bottomButtonView.isEnabled = isAvailable
                 self?.socialSignUpView.bottomButtonView.backgroundColor = isAvailable ? .brandMain : .blackAC
             }
         }
@@ -88,7 +87,7 @@ class SocialSignUpViewController: UIViewController {
     private func moveToSocialLink() {
         // 소셜 연동 뷰로 이동
         guard let userName = socialSignUpView.userNameTextField.text else { return }
-        let controller = SocialLinkViewController(email: email, userIdentifier: userIdentifier, userName: userName, loginType: loginType, linkLoginType: linkLoginType)
+        let controller = SocialLinkViewController(email: email, password: userIdentifier, userName: userName, loginType: loginType, linkLoginType: linkLoginType)
         navigationController?.pushViewController(controller, animated: true)
     }
     
@@ -98,9 +97,11 @@ class SocialSignUpViewController: UIViewController {
     }
     
     private func updateStatus(label: UILabel?, message: String, isAvailable: Bool, textField: UITextField?) {
-        label?.text = message
-        label?.textColor = isAvailable ? .brandMain : .error
-        textField?.layer.borderColor = isAvailable ? UIColor.color212.cgColor : UIColor.error.cgColor
+        label?.attributedText = UIFont.CustomFont.bodyP5(text: message, textColor: isAvailable ? .brandMain : .error)
+        if let customTF = textField as? CustomTextField {
+            // 조건이 맞지 않으면 error 상태를 유지하도록 설정
+            customTF.setErrorState(!isAvailable)
+        }
     }
     
     // MARK: - Selectors
@@ -110,6 +111,13 @@ class SocialSignUpViewController: UIViewController {
     }
     
     @objc private func signupButtonTapped() {
-        viewModel.checkEmailAvailability(email: email)
+        viewModel.checkEmailAvailability(userName: userName, email: email, password: userIdentifier, loginType: loginType)
+    }
+    
+    @objc private func backButtonTapped() {
+        let controller = LoginViewController()
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        self.present(nav, animated: true, completion: nil)
     }
 }

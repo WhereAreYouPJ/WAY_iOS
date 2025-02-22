@@ -11,6 +11,7 @@ class SignUpFormViewController: UIViewController {
     // MARK: - Properties
     let signUpView = SignUpFormView()
     private var viewModel: SignUpViewModel!
+    var type: [String] = []
     
     // MARK: - Lifecycle
     
@@ -20,8 +21,6 @@ class SignUpFormViewController: UIViewController {
         setupViewModel()
         setupBindings()
         setupActions()
-        
-        hideKeyboardWhenTappedAround()
     }
     
     // MARK: - Helpers
@@ -89,11 +88,13 @@ class SignUpFormViewController: UIViewController {
                 self?.updateStatus(label: self?.signUpView.emailErrorLabel, message: message, isAvailable: isAvailable, textField: self?.signUpView.emailTextField)
                 self?.signUpView.emailCheckButton.hideLoading()
                 self?.signUpView.authStack.isHidden = !isAvailable
-                if isAvailable == true {
-                    self?.signUpView.emailCheckButton.updateBackgroundColor(.color171)
-                    self?.signUpView.emailCheckButton.isEnabled = isAvailable
-                }
+                self?.signUpView.emailCheckButton.isEnabled = !isAvailable
+                self?.signUpView.emailCheckButton.updateBackgroundColor(isAvailable ? .color171 : .brandMain)
             }
+        }
+        
+        viewModel.onCheckEmailDuplicate = { [weak self] type in
+            self?.type = type
         }
         
         viewModel.onEmailVerifyCodeMessage = { [weak self] message, isAvailable in
@@ -102,7 +103,10 @@ class SignUpFormViewController: UIViewController {
                 if isAvailable == true {
                     self?.signUpView.authCheckButton.updateTitle("인증 완료")
                     self?.signUpView.authCheckButton.updateBackgroundColor(.color171)
-                    self?.signUpView.authCheckButton.isEnabled = isAvailable
+                    self?.signUpView.authCodeTextField.backgroundColor = .blackF0
+                    self?.signUpView.authCodeTextField.isEnabled = !isAvailable
+                    self?.signUpView.authCheckButton.isEnabled = !isAvailable
+                    self?.signUpView.timer.attributedText = UIFont.CustomFont.bodyP4(text: "", textColor: .error)
                 }
             }
         }
@@ -126,14 +130,10 @@ class SignUpFormViewController: UIViewController {
         case signUpView.userNameTextField:
             viewModel.checkUserNameValidation(userName: userName)
         case signUpView.emailTextField:
-            signUpView.emailCheckButton.updateBackgroundColor(.brandMain)
-            signUpView.emailCheckButton.isEnabled = true
-            signUpView.authCheckButton.updateBackgroundColor(.brandMain)
-            signUpView.authCheckButton.isEnabled = true
-            viewModel.signUpBody.email = nil
-            signUpView.authCheckButton.updateTitle("확인")
+            resetAuthUI()
         case signUpView.passwordTextField:
             viewModel.checkPasswordAvailability(password: pw)
+            viewModel.checkSamePassword(password: pw, checkPassword: checkpw)
         case signUpView.checkPasswordTextField:
             viewModel.checkSamePassword(password: pw, checkPassword: checkpw)
         default:
@@ -155,7 +155,14 @@ class SignUpFormViewController: UIViewController {
     }
     
     @objc func startButtonTapped() {
-        viewModel.signUp()
+        if type.isEmpty {
+            viewModel.signUp()
+        } else {
+            let email = viewModel.email
+            guard let password = viewModel.signUpBody.password, let userName = viewModel.signUpBody.userName else { return }
+            let controller = SocialLinkViewController(email: email, password: password, userName: userName, loginType: "normal", linkLoginType: type)
+            navigationController?.pushViewController(controller, animated: true)
+        }
     }
     
     // MARK: - Helpers
@@ -165,13 +172,31 @@ class SignUpFormViewController: UIViewController {
         navigationController?.pushViewController(controller, animated: true)
     }
     
+    private func resetAuthUI() {
+        signUpView.emailCheckButton.updateBackgroundColor(.brandMain)
+        signUpView.emailCheckButton.isEnabled = true
+        
+        signUpView.authCheckButton.updateBackgroundColor(.brandMain)
+        signUpView.authCheckButton.isEnabled = true
+        signUpView.authCheckButton.updateTitle("확인")
+        
+        signUpView.authCodeTextField.setupTextField(placeholder: "인증코드 입력")
+        signUpView.authCodeTextField.backgroundColor = .white
+        signUpView.authCodeTextField.isEnabled = true
+        signUpView.authCodeTextField.attributedText = nil
+        
+        signUpView.authCodeErrorLabel.attributedText = UIFont.CustomFont.bodyP5(text: "", textColor: .brandMain)
+        
+        signUpView.authStack.isHidden = true
+
+        viewModel.signUpBody.email = nil
+    }
+    
     private func updateStatus(label: UILabel?, message: String, isAvailable: Bool, textField: UITextField?) {
         label?.attributedText = UIFont.CustomFont.bodyP5(text: message, textColor: isAvailable ? .brandMain : .error)
         if let customTF = textField as? CustomTextField {
             // 조건이 맞지 않으면 error 상태를 유지하도록 설정
             customTF.setErrorState(!isAvailable)
-        } else {
-            textField?.layer.borderColor = isAvailable ? UIColor.blackD4.cgColor : UIColor.error.cgColor
         }
     }
 }

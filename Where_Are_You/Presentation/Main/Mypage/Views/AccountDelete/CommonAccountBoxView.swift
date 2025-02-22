@@ -10,21 +10,9 @@ import UIKit
 class CommonAccountBoxView: UIView {
     // MARK: - Properties
     
-    private let infoTitleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 16)
-        label.textColor = .black
-        label.numberOfLines = 0
-        return label
-    }()
+    private let infoTitleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "", textColor: .black22))
     
-    private let infoDescriptionLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 12)
-        label.textColor = .color118
-        label.numberOfLines = 0
-        return label
-    }()
+    private let infoDescriptionLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .black66))
     
     // MARK: - Lifecycle
     
@@ -41,35 +29,35 @@ class CommonAccountBoxView: UIView {
     // MARK: - Helpers
     
     private func configureViewComponents() {
-        layer.cornerRadius = 10
+        layer.cornerRadius = 12
         layer.borderWidth = 1
-        layer.borderColor = UIColor.color221.cgColor
+        layer.borderColor = UIColor.blackD4.cgColor
         addSubview(infoTitleLabel)
         addSubview(infoDescriptionLabel)
     }
     
     private func setupConstraints() {
         infoTitleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 20))
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 18))
             make.centerX.equalToSuperview()
-            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 16))
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 12))
         }
         
         infoDescriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(infoTitleLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 7))
-            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 22))
+            make.top.equalTo(infoTitleLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 8))
+            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 18))
             make.centerX.equalToSuperview()
-            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 16))
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 12))
         }
     }
     
     func configureUI(title: String, description: String) {
-        infoTitleLabel.text = title
-        infoDescriptionLabel.text = description
+        infoTitleLabel.attributedText = UIFont.CustomFont.bodyP3(text: title, textColor: .black22)
+        infoDescriptionLabel.attributedText = UIFont.CustomFont.bodyP5(text: description, textColor: .black66)
     }
     
     func configureUI(title: String, attributedDescription: NSAttributedString) {
-        infoTitleLabel.text = title
+        infoTitleLabel.attributedText = UIFont.CustomFont.bodyP3(text: title, textColor: .black22)
         infoDescriptionLabel.attributedText = attributedDescription
     }
 }

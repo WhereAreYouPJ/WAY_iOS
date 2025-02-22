@@ -12,8 +12,6 @@ class SocialSignUpViewModel {
     // MARK: - Properties
     private let snsSignUpUseCase: SnsSignUpUseCase
     private let checkEmailUseCase: CheckEmailUseCase
-
-    var signUpBody = MemberSnsBody()
     
     var onEmailDuplicate: (([String]) -> Void)?
     var onSignUpSuccess: (() -> Void)?
@@ -29,8 +27,8 @@ class SocialSignUpViewModel {
     }
     
     // MARK: - Helpers
-    func signUp() {
-        snsSignUpUseCase.execute(request: signUpBody) { result in
+    func signUp(userName: String, email: String, password: String, loginType: String) {
+        snsSignUpUseCase.execute(request: MemberSnsBody(userName: userName, email: email, password: password, loginType: loginType, fcmToken: UserDefaultsManager.shared.getFcmToken())) { result in
             switch result {
             case .success:
                 self.onSignUpSuccess?()
@@ -44,22 +42,24 @@ class SocialSignUpViewModel {
     func checkUserNameValidation(userName: String) {
         if ValidationHelper.isValidUserName(userName) {
             onUserNameValidationMessage?("", true)
-            signUpBody.userName = userName
         } else {
             onUserNameValidationMessage?(invalidUserNameMessage, false)
-            signUpBody.userName = nil
         }
     }
     
     // 이메일 중복체크
-    func checkEmailAvailability(email: String) {
+    func checkEmailAvailability(userName: String, email: String, password: String, loginType: String) {
         checkEmailUseCase.execute(email: email) { result in
             switch result {
             case .success(let data):
-                self.onEmailDuplicate?(data.type)
-            case .failure:
+                if data.type.isEmpty {
+                    self.signUp(userName: userName, email: email, password: password, loginType: loginType)
+                } else {
+                    self.onEmailDuplicate?(data.type)
+                }
+            case .failure(let error):
                 // 이메일 중복된게 없으니 바로 회원가입 화면으로 이동
-                self.signUp()
+                print(error.localizedDescription)
             }
         }
     }

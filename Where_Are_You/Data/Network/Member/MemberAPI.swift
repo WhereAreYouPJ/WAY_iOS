@@ -37,7 +37,7 @@ extension MemberAPI: TargetType {
     var path: String {
         switch self {
         case .putUserName:
-            return "/member/modify/userName"
+            return "/member/user-name"
         case .putProfileImage:
             return "/member/profile-image"
             

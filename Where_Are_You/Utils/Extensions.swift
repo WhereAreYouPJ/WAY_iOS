@@ -20,68 +20,6 @@ extension UIViewController {
     func configureNavigationBar(title: String, backButtonAction: Selector? = nil, showBackButton: Bool = true, rightButton: UIBarButtonItem? = nil) {
         Utilities.createNavigationBar(for: self, title: title, backButtonAction: backButtonAction, showBackButton: showBackButton, rightButton: rightButton)
     }
-    
-    func hideKeyboardWhenTappedAround() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        // 터치 이벤트가 다른 뷰에도 전달되도록 함
-        tapGesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(tapGesture)
-    }
-    
-    @objc private func dismissKeyboard() {
-        view.endEditing(true)
-    }
-    
-    func registerForKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillShow(notification:)),
-                                               name: UIResponder.keyboardWillShowNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillHide(notification:)),
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
-    }
-    
-    func deregisterFromKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(self,
-                                                  name: UIResponder.keyboardWillShowNotification,
-                                                  object: nil)
-        NotificationCenter.default.removeObserver(self,
-                                                  name: UIResponder.keyboardWillHideNotification,
-                                                  object: nil)
-    }
-    
-    @objc func keyboardWillShow(notification: NSNotification) {
-        // 키보드의 크기를 가져옵니다.
-        guard let userInfo = notification.userInfo,
-              let keyboardFrameValue = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
-            return
-        }
-        let keyboardFrame = keyboardFrameValue.cgRectValue
-        let keyboardHeight = keyboardFrame.height
-        
-        // 애니메이션 시간 및 옵션을 가져옵니다.
-        let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0.3
-        let curveRaw = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt ?? 0
-        let curve = UIView.AnimationOptions(rawValue: curveRaw)
-        
-        // 뷰의 y좌표를 조정하여 키보드 위로 올라오게 합니다.
-        UIView.animate(withDuration: duration, delay: 0, options: curve, animations: {
-            self.view.frame.origin.y = -keyboardHeight
-        }, completion: nil)
-    }
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
-        guard let userInfo = notification.userInfo else { return }
-        let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0.3
-        let curveRaw = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt ?? 0
-        let curve = UIView.AnimationOptions(rawValue: curveRaw)
-        
-        UIView.animate(withDuration: duration, delay: 0, options: curve, animations: {
-            self.view.frame.origin.y = 0
-        }, completion: nil)
-    }
 }
 
 // MARK: - UIColor
@@ -96,7 +34,7 @@ extension UIColor {
     static let brandLight = UIColor.rgb(red: 191, green: 173, blue: 255)
     static let brandHighLight1 = UIColor.rgb(red: 240, green: 235, blue: 255)
     static let brandHighLight2 = UIColor.rgb(red: 245, green: 242, blue: 255)
-
+    
     static let black22 = UIColor.rgb(red: 34, green: 34, blue: 34)
     static let black44 = UIColor.rgb(red: 68, green: 68, blue: 68)
     static let black66 = UIColor.rgb(red: 102, green: 102, blue: 102)
@@ -104,7 +42,7 @@ extension UIColor {
     static let blackD4 = UIColor.rgb(red: 201, green: 201, blue: 201)
     static let blackF0 = UIColor.rgb(red: 240, green: 240, blue: 240)
     static let blackF8 = UIColor.rgb(red: 248, green: 248, blue: 248)
-
+    
     static let calendarRed = UIColor.rgb(red: 248, green: 173, blue: 174)
     static let calendarOrange = UIColor.rgb(red: 250, green: 209, blue: 127)
     static let calendarYellow = UIColor.rgb(red: 244, green: 244, blue: 162)
@@ -113,13 +51,13 @@ extension UIColor {
     static let calendarBlue = UIColor.rgb(red: 178, green: 209, blue: 255)
     static let calendarPink = UIColor.rgb(red: 246, green: 171, blue: 224)
     static let calendarPurple = UIColor.rgb(red: 184, green: 168, blue: 255)
-
+    
     static let error = UIColor.rgb(red: 225, green: 49, blue: 49)
     
     static let secondaryNormal = UIColor.rgb(red: 255, green: 226, blue: 83)
     static let secondaryDark = UIColor.rgb(red: 242, green: 206, blue: 0)
     static let secondaryLight = UIColor.rgb(red: 255, green: 238, blue: 156)
-
+    
     static let brandColor = UIColor.rgb(red: 123, green: 80, blue: 255)
     static let letterBrandColor = UIColor.rgb(red: 98, green: 54, blue: 233)
     static let lightpurple = UIColor.rgb(red: 146, green: 134, blue: 255)
@@ -276,9 +214,9 @@ extension UIFont {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.maximumLineHeight = font.lineHeight * lineHeight
             paragraphStyle.minimumLineHeight = font.lineHeight * lineHeight
-            // https://sujinnaljin.medium.com/swift-label%EC%9D%98-line-height-%EC%84%A4%EC%A0%95-%EB%B0%8F-%EA%B0%80%EC%9A%B4%EB%8D%B0-%EC%A0%95%EB%A0%AC-962f7c6e7512여기서 LineHeight설정시 아래에 깔리는 문제 해결
+            // https://sujinnaljin.medium.com/swift-label%EC%9D%98-line-height-%EC%84%A4%EC%A0%95-%EB%B0%8F-%EA%B0%80%EC%9A%B4%EB%8D%B0-%EC%A0%95%EB%A0%AC-962f7c6e7512여기서 LineHeight설정시 아래에 깔리는 문제 해결            
             let letterSpacingPt = letterSpacing / UIScreen.main.scale // px -> pt 변환
-
+            
             return NSAttributedString(
                 string: text,
                 attributes: [
@@ -462,38 +400,38 @@ extension UILabel {
     // "... 더보기" 관련 로직
     func addTrailing(with trailingText: String, moreText: String, moreTextFont: UIFont, moreTextColor: UIColor) {
         guard let text = self.text, !text.isEmpty else { return }
-
+        
         // Calculate visible text length
         let visibleLength = calculateVisibleTextLength()
         guard visibleLength > 0, visibleLength < text.count else { return }
-
+        
         let trimmedText = (text as NSString).substring(to: visibleLength)
         let trailing = trailingText + moreText
-
+        
         guard trimmedText.count > trailing.count else { return }
-
+        
         let finalText = (trimmedText as NSString).replacingCharacters(
             in: NSRange(location: trimmedText.count - trailing.count, length: trailing.count),
             with: trailingText
         )
-
+        
         let attributedString = NSMutableAttributedString(string: finalText, attributes: [
             .font: self.font ?? UIFont.systemFont(ofSize: 14),
             .foregroundColor: self.textColor ?? UIColor.black
         ])
-
+        
         let moreAttributedString = NSAttributedString(string: moreText, attributes: [
             .font: moreTextFont,
             .foregroundColor: moreTextColor
         ])
         attributedString.append(moreAttributedString)
-
+        
         self.attributedText = attributedString
     }
-
+    
     private func calculateVisibleTextLength() -> Int {
         guard let text = self.text, !text.isEmpty else { return 0 }
-
+        
         self.layoutIfNeeded()
         
         let sizeConstraint = CGSize(width: self.frame.width, height: CGFloat.greatestFiniteMagnitude)
@@ -503,19 +441,19 @@ extension UILabel {
             attributes: [.font: self.font!],
             context: nil
         )
-
+        
         if boundingRect.height <= self.frame.height {
             return text.count
         }
-
+        
         var index = 0
         var prevIndex = 0
         let characterSet = CharacterSet.whitespacesAndNewlines
-
+        
         repeat {
             prevIndex = index
             index = (text as NSString).rangeOfCharacter(from: characterSet, options: [], range: NSRange(location: index + 1, length: text.count - index - 1)).location
-
+            
             let substring = (text as NSString).substring(to: index)
             let height = (substring as NSString).boundingRect(
                 with: sizeConstraint,
@@ -523,12 +461,12 @@ extension UILabel {
                 attributes: [.font: self.font!],
                 context: nil
             ).height
-
+            
             if height > self.frame.height {
                 break
             }
         } while index != NSNotFound
-
+        
         return prevIndex
     }
 }
@@ -541,6 +479,18 @@ extension UIView {
                 return targetSuperview
             }
             superview = superview?.superview
+        }
+        return nil
+    }
+    
+    func currentFirstResponder() -> UIResponder? {
+        if self.isFirstResponder {
+            return self
+        }
+        for subview in self.subviews {
+            if let responder = subview.currentFirstResponder() {
+                return responder
+            }
         }
         return nil
     }

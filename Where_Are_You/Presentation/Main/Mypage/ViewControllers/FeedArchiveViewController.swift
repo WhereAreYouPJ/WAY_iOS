@@ -21,6 +21,8 @@ class FeedArchiveViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+
         setupViewModel()
         setupViews()
         setupTableView()

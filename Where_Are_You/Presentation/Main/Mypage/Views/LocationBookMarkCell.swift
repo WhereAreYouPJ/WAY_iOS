@@ -10,7 +10,8 @@ import UIKit
 class LocationBookMarkCell: UITableViewCell {
     static let identifier = "LocationBookMarkCell"
     
-    let locationLabel = UILabel()
+    let locationLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "", textColor: .black22))
+    
     let checkmarkImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "icon-deselected")
@@ -36,20 +37,17 @@ class LocationBookMarkCell: UITableViewCell {
     }
     
     private func configureCell() {
-        locationLabel.textColor = .black22
-        locationLabel.font = UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 16))
-        
         contentView.addSubview(locationLabel)
         contentView.addSubview(checkmarkImageView)
         
         locationLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 6))
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
             make.centerY.equalToSuperview()
         }
         
         checkmarkImageView.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
-            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 22))
+            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 24))
             make.centerY.equalToSuperview()
         }
         
@@ -58,7 +56,7 @@ class LocationBookMarkCell: UITableViewCell {
     }
     
     func configure(with location: GetFavLocation, isSelected: Bool, isEditingMode: Bool) {
-        locationLabel.text = location.location
+        locationLabel.attributedText = UIFont.CustomFont.bodyP3(text: location.location, textColor: .black22)
         checkmarkImageView.isHidden = !isEditingMode // 선택 가능하므로 보여주기
         self.isChecked = isSelected
         updateCheckmark()
