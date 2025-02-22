@@ -67,7 +67,6 @@ class OverlayTapHandler: NSObject {
 
 struct CustomAlertModifier: ViewModifier {
     @Binding var isPresented: Bool
-    @Binding var showDailySchedule: Bool
     var title: String
     var message: String
     var cancelTitle: String
@@ -118,7 +117,6 @@ struct CustomAlertModifier: ViewModifier {
                     
                     Button(action: {
                         isPresented = false
-                        showDailySchedule = true
                     }, label: {
                         Text(cancelTitle)
                             .foregroundColor(.white)
@@ -156,7 +154,6 @@ struct CustomAlertModifier: ViewModifier {
 extension View {
     func customAlertModifier(
         isPresented: Binding<Bool>,
-        showDailySchedule: Binding<Bool>,
         title: String,
         message: String,
         cancelTitle: String,
@@ -165,7 +162,6 @@ extension View {
     ) -> some View {
         self.modifier(CustomAlertModifier(
             isPresented: isPresented,
-            showDailySchedule: showDailySchedule,
             title: title,
             message: message,
             cancelTitle: cancelTitle,
@@ -173,98 +169,4 @@ extension View {
             action: action
         ))
     }
-}
-
-#Preview("Custom Alert") {
-   struct PreviewWrapper: View {
-       @State private var showAlert = true
-       @State private var showDailySchedule = false
-       
-       var body: some View {
-           ZStack {
-               // 배경 컨텐츠
-               VStack {
-                   Text("배경 컨텐츠")
-                   Button("Show Alert") {
-                       showAlert = true
-                   }
-               }
-               
-               // 하단 탭바 시뮬레이션
-               VStack {
-                   Spacer()
-                   HStack {
-                       ForEach(0..<4) { i in
-                           VStack {
-                               Image(systemName: "circle.fill")
-                               Text("Tab \(i)")
-                           }
-                           .frame(maxWidth: .infinity)
-                       }
-                   }
-                   .padding()
-                   .background(Color.white)
-               }
-           }
-           .customAlert(
-               isPresented: $showAlert,
-               showDailySchedule: $showDailySchedule,
-               title: "일정 삭제",
-               message: "일정을 삭제합니다.\n연관된 피드가 있을 경우 같이 삭제됩니다.",
-               cancelTitle: "취소",
-               actionTitle: "삭제"
-           ) {
-               print("Delete action triggered")
-           }
-       }
-   }
-   
-   return PreviewWrapper()
-}
-
-#Preview("Custom Alert - Hidden") {
-   struct PreviewWrapper: View {
-       @State private var showAlert = false
-       @State private var showDailySchedule = false
-       
-       var body: some View {
-           ZStack {
-               // 배경 컨텐츠
-               VStack {
-                   Text("배경 컨텐츠")
-                   Button("Show Alert") {
-                       showAlert = true
-                   }
-               }
-               
-               // 하단 탭바 시뮬레이션
-               VStack {
-                   Spacer()
-                   HStack {
-                       ForEach(0..<4) { i in
-                           VStack {
-                               Image(systemName: "circle.fill")
-                               Text("Tab \(i)")
-                           }
-                           .frame(maxWidth: .infinity)
-                       }
-                   }
-                   .padding()
-                   .background(Color.white)
-               }
-           }
-           .customAlert(
-               isPresented: $showAlert,
-               showDailySchedule: $showDailySchedule,
-               title: "일정 삭제",
-               message: "일정을 삭제합니다.\n연관된 피드가 있을 경우 같이 삭제됩니다.",
-               cancelTitle: "취소",
-               actionTitle: "삭제"
-           ) {
-               print("Delete action triggered")
-           }
-       }
-   }
-   
-   return PreviewWrapper()
 }

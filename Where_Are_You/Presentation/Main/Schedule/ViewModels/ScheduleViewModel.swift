@@ -37,15 +37,6 @@ class ScheduleViewModel: ObservableObject {
         }
     }
     
-    func setDeleteAlertContent(for schedule: Schedule) -> (String, String) {
-        print("invitedMember 수: \(schedule.invitedMember?.count ?? 0)")
-        if schedule.isGroup == true {
-            return ("그룹 일정 삭제", "그룹 일정을 삭제합니다.\n모든 참여자의 일정에서 삭제되며, 연관된 피드도 함께 삭제됩니다.")
-        } else {
-            return ("일정 삭제", "일정을 삭제합니다.\n연관된 피드가 있을 경우 함께 삭제됩니다.")
-        }
-    }
-    
     func hasSchedules(for date: Date) -> Bool {
         let dayStart = Calendar.current.startOfDay(for: date)
         return monthlySchedules.contains { schedule in
@@ -92,29 +83,6 @@ class ScheduleViewModel: ObservableObject {
                 }
             case .failure(let error):
                 print("getMonthlySchedule 요청 실패: \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    func deleteSchedule(_ schedule: Schedule, completion: @escaping () -> Void) {
-        isLoading = true
-        
-        let deleteRequest = DeleteScheduleBody(scheduleSeq: schedule.scheduleSeq, memberSeq: memberSeq)
-        let isCreator = !(schedule.invitedMember?.contains(where: { $0.memberSeq == memberSeq }) ?? false)
-        
-        let deleteMethod = isCreator ? service.deleteScheduleByCreator : service.deleteScheduleByInvitee
-        
-        deleteMethod(deleteRequest) { [weak self] result in
-            DispatchQueue.main.async {
-                self?.isLoading = false
-                switch result {
-                case .success:
-                    print("Schedule successfully deleted")
-                    self?.getMonthlySchedule()  // 삭제 성공 후 바로 데이터 갱신
-                    completion()  // 완료 콜백 호출
-                case .failure(let error):
-                    print("Failed to delete schedule: \(error.localizedDescription)")
-                }
             }
         }
     }

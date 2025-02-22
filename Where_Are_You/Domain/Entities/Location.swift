@@ -6,11 +6,11 @@
 //
 
 import Foundation
-import MapKit
 
 struct Location: Identifiable, Codable, Hashable {
     var id = UUID()
-    var sequence: Int
+    var locationSeq: Int?   // 서버에서 사용하는 고유 식별자
+    var sequence: Int       // 정렬 순서
     var location: String
     var streetName: String
     var x: Double

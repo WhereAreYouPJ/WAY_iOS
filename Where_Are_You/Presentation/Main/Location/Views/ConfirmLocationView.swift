@@ -8,15 +8,31 @@
 import SwiftUI
 
 struct ConfirmLocationView: View {
-    @StateObject var viewModel = ConfirmLocationViewModel()
     @Environment(\.presentationMode) var presentationMode
-    @Binding var location: Location
     @Binding var path: NavigationPath
+    
+    @StateObject var viewModel: ConfirmLocationViewModel
+    
+    init(location: Location, path: Binding<NavigationPath>) {
+        let repository = LocationRepository(locationService: LocationService())
+        let getLocationUseCase = GetLocationUseCaseImpl(locationRepository: repository)
+        let postLocationUseCase = PostLocationUseCaseImpl(locationRepository: repository)
+        let deleteLocationUseCase = DeleteLocationUseCaseImpl(locationRepository: repository)
+        
+        _viewModel = StateObject(wrappedValue: ConfirmLocationViewModel(
+            location: location,
+            getFavoriteLocationUseCase: getLocationUseCase,
+            postFavoriteLocationUseCase: postLocationUseCase,
+            deleteFavoriteLocationUseCase: deleteLocationUseCase
+        ))
+        
+        _path = path
+    }
     
     var body: some View {
         ZStack {
             VStack {
-                MapView(location: $location)
+                MapView(location: $viewModel.location)
                 
                 Spacer()
                 
@@ -28,11 +44,9 @@ struct ConfirmLocationView: View {
             }
         }
         .navigationBarBackButtonHidden()
-        .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
+        .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 16)))
         .onAppear {
-            viewModel.isFavoriteLocation(location: location) { isFavorite in
-                viewModel.isFavorite = isFavorite
-            }
+            viewModel.isFavoriteLocation()
         }
     }
     
@@ -40,23 +54,17 @@ struct ConfirmLocationView: View {
         VStack {
             HStack {
                 VStack(alignment: .leading) {
-                    Text(location.location)
-                        .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 20)))
+                    Text(viewModel.location.location)
+                        .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 20))))
                         .foregroundColor(Color(.black44))
-                    Text(location.streetName)
-                        .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 14)))
+                    Text(viewModel.location.streetName)
+                        .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14))))
                         .foregroundColor(Color(.color153))
                 }
                 Spacer()
                 
                 Button(action: {
-                    viewModel.toggleFavorite(location: location) { success in
-                        if success {
-                            // Toggle was successful, update UI if needed
-                        } else {
-                            print("즐겨찾기 토글 실패")
-                        }
-                    }
+                    viewModel.toggleFavorite()
                 }, label: {
                     Image(viewModel.isFavorite ? "icon-bookmark-filled" : "icon-bookmark")
                 })
@@ -83,5 +91,9 @@ struct ConfirmLocationView: View {
 }
 
 #Preview {
-    ConfirmLocationView(location: .constant(Location(sequence: 0, location: "현대백화점 디큐브시티점", streetName: "서울 구로구 경인로 662", x: 126.88958060554663, y: 37.50910419634123)), path: .constant(NavigationPath()))
+    let location = Location(sequence: 0, location: "현대백화점 디큐브시티점", streetName: "서울 구로구 경인로 662", x: 126.88958060554663, y: 37.50910419634123)
+    return ConfirmLocationView(
+        location: location,
+        path: .constant(NavigationPath())
+    )
 }
