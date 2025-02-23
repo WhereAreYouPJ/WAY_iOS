@@ -51,7 +51,7 @@ class SocialLinkViewController: UIViewController {
             }
         }
         
-        configureNavigationBar(title: "회원가입")
+        configureNavigationBar(title: "회원가입", showBackButton: false)
     }
     
     private func setupViewModel() {
