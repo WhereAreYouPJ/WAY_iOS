@@ -146,7 +146,7 @@ struct ScheduleDetailView: View {
                         SearchFriendsView(selectedFriends: $createViewModel.selectedFriends)
                     case let .confirmLocation(location):
                         if let location = location {
-                            ConfirmLocationView(location: .constant(location), path: $path)
+                            ConfirmLocationView(location: location, path: $path)
                                 .onDisappear {
                                     createViewModel.getFavoriteLocation()
                                 }

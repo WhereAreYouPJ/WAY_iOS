@@ -8,7 +8,7 @@
 import Foundation
 
 protocol PostLocationUseCase {
-    func execute(request: PostFavoriteLocationBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func execute(request: PostFavoriteLocationBody, completion: @escaping (Result<GenericResponse<PostFavLocationResponse>, Error>) -> Void)
 }
 
 class PostLocationUseCaseImpl: PostLocationUseCase {
@@ -18,7 +18,7 @@ class PostLocationUseCaseImpl: PostLocationUseCase {
         self.locationRepository = locationRepository
     }
     
-    func execute(request: PostFavoriteLocationBody, completion: @escaping (Result<Void, Error>) -> Void) {
+    func execute(request: PostFavoriteLocationBody, completion: @escaping (Result<GenericResponse<PostFavLocationResponse>, Error>) -> Void) {
         locationRepository.postLocation(request: request, completion: completion)
     }
 }

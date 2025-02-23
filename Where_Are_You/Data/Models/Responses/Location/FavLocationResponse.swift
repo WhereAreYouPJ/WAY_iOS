@@ -11,6 +11,9 @@ struct GetFavLocation: Codable {
     let locationSeq: Int
     let location: String
     let streetName: String
+    let sequence: Int
+    let x: Double
+    let y: Double
 }
 
 typealias GetFavLocationResponse = [GetFavLocation]

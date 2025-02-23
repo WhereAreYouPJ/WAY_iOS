@@ -12,6 +12,7 @@ class SearchLocationViewModel: ObservableObject {
     @Published var searchText = ""
     @Published var searchResults: [Location] = []
     @Published var recentSearches: [Location] = []
+    @Published var favoriteLocations: [Location] = [] // 즐겨찾기 위치 목록 추가
     @Published var isLoading = false
     
     private var cancellables = Set<AnyCancellable>()

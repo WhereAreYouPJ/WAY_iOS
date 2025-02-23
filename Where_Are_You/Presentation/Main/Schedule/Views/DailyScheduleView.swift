@@ -12,106 +12,27 @@ struct DailyScheduleView: View {
     
     @State private var scheduleForDetail: Schedule?
     @Binding var isPresented: Bool
-    let onDeleteSchedule: (Schedule) -> Void  // 삭제 요청만 전달하는 클로저
+    let onDeleteComplete: () -> Void  // 삭제 완료 콜백
     
     init(
-        viewModel: DailyScheduleViewModel,
+        date: Date,
         isPresented: Binding<Bool>,
-        onDeleteSchedule: @escaping (Schedule) -> Void
+        onDeleteComplete: @escaping () -> Void
     ) {
-        _viewModel = StateObject(wrappedValue: viewModel)
-        self._isPresented = isPresented
-        self.onDeleteSchedule = onDeleteSchedule
-    }
-    
-    init(date: Date, isPresented: Binding<Bool>, onDeleteSchedule: @escaping (Schedule) -> Void) {
         let service = ScheduleService()
         let repository = ScheduleRepository(scheduleService: service)
         let getDailyScheduleUseCase = GetDailyScheduleUseCaseImpl(scheduleRepository: repository)
         let deleteScheduleUseCase = DeleteScheduleUseCaseImpl(scheduleRepository: repository)
         
-        let viewModel = DailyScheduleViewModel(
+        _viewModel = StateObject(wrappedValue: DailyScheduleViewModel(
             getDailyScheduleUseCase: getDailyScheduleUseCase,
             deleteScheduleUseCase: deleteScheduleUseCase,
             date: date
-        )
+        ))
         
-        self.init(
-            viewModel: viewModel,
-            isPresented: isPresented,
-            onDeleteSchedule: onDeleteSchedule
-        )
+        _isPresented = isPresented
+        self.onDeleteComplete = onDeleteComplete
     }
-    
-    // MARK: dummy data
-    let schedules: [Schedule] = [
-        Schedule(
-            scheduleSeq: 1,
-            title: "3일 연속 일정",
-            startTime: Calendar.current.date(byAdding: .day, value: -1, to: Date())!,
-            endTime: Calendar.current.date(byAdding: .day, value: 1, to: Date())!,
-            isAllday: true,
-            location: Location(sequence: 1, location: "망원한강공원", streetName: "", x: 0, y: 0),
-            color: "red",
-            memo: "",
-            invitedMember: [Friend(memberSeq: 1, profileImage: "", name: "", isFavorite: false, memberCode: "")]
-        ),
-        Schedule(
-            scheduleSeq: 2,
-            title: "오늘 하루 종일",
-            startTime: Calendar.current.startOfDay(for: Date()),
-            endTime: Calendar.current.date(byAdding: .day, value: 1, to: Calendar.current.startOfDay(for: Date()))!,
-            isAllday: true,
-            location: nil,
-            color: "blue",
-            memo: "",
-            invitedMember: []
-        ),
-        Schedule(
-            scheduleSeq: 3,
-            title: "오후 쇼핑",
-            startTime: Calendar.current.date(bySettingHour: 14, minute: 0, second: 0, of: Date())!,
-            endTime: Calendar.current.date(bySettingHour: 18, minute: 30, second: 0, of: Date())!,
-            isAllday: false,
-            location: Location(sequence: 1, location: "성수역", streetName: "", x: 0, y: 0),
-            color: "yellow",
-            memo: "",
-            invitedMember: []
-        ),
-        Schedule(
-            scheduleSeq: 4,
-            title: "새벽 러닝",
-            startTime: Calendar.current.date(bySettingHour: 5, minute: 30, second: 0, of: Date())!,
-            endTime: Calendar.current.date(bySettingHour: 6, minute: 30, second: 0, of: Date())!,
-            isAllday: false,
-            location: nil,
-            color: "violet",
-            memo: "",
-            invitedMember: []
-        ),
-        Schedule(
-            scheduleSeq: 5,
-            title: "자정 넘어가는 영화",
-            startTime: Calendar.current.date(bySettingHour: 22, minute: 10, second: 0, of: Date())!,
-            endTime: Calendar.current.date(byAdding: .hour, value: 3, to: Calendar.current.date(bySettingHour: 22, minute: 10, second: 0, of: Date())!)!,
-            isAllday: false,
-            location: Location(sequence: 2, location: "강남역 CGV", streetName: "", x: 0, y: 0),
-            color: "green",
-            memo: "",
-            invitedMember: []
-        ),
-        Schedule(
-            scheduleSeq: 6,
-            title: "점심 약속",
-            startTime: Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!,
-            endTime: Calendar.current.date(bySettingHour: 13, minute: 0, second: 0, of: Date())!,
-            isAllday: false,
-            location: Location(sequence: 3, location: "강남역 레스토랑", streetName: "", x: 0, y: 0),
-            color: "pink",
-            memo: "",
-            invitedMember: [Friend(memberSeq: 2, profileImage: "", name: "김철수", isFavorite: false, memberCode: "")]
-        )
-    ]
     
     var body: some View {
         ScrollView {
@@ -131,25 +52,25 @@ struct DailyScheduleView: View {
             .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
             .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
         }
+        .customAlertModifier(
+            isPresented: $viewModel.showingDeleteAlert,
+            title: viewModel.selectedSchedule.map { viewModel.getDeleteAlertContent(for: $0).0 } ?? "일정 삭제",
+            message: viewModel.selectedSchedule.map { viewModel.getDeleteAlertContent(for: $0).1 } ?? "",
+            cancelTitle: "취소",
+            actionTitle: "삭제"
+        ) {
+            viewModel.deleteSchedule { success in
+                if success {
+                    onDeleteComplete()  // 삭제 성공 시 콜백 호출
+                }
+            }
+        }
         .onAppear {
             viewModel.getDailySchedule()
-        }
-        .onChange(of: viewModel.shouldDismissView) { _, shouldDismiss in
-            if shouldDismiss {
-                isPresented = false
-            }
-        }
-        .onChange(of: viewModel.schedules.count) { _, count in
-            // 일정이 없으면 뷰를 닫음
-            if count == 0 {
-                isPresented = false
-            }
         }
     }
     
     private func scheduleListView() -> some View {
-        // dummy test
-//                ForEach(schedules, id: \.scheduleSeq) { schedule in
         ForEach(viewModel.schedules, id: \.scheduleSeq) { schedule in
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
@@ -164,9 +85,7 @@ struct DailyScheduleView: View {
                     
                     Button(
                         action: {
-//                            viewModel.showDeleteAlert(for: schedule)
-//                            isPresented = false
-                            onDeleteSchedule(schedule)
+                            viewModel.showDeleteAlert(for: schedule)
                         },
                         label: {
                             Text("삭제")
@@ -243,8 +162,8 @@ struct DailyScheduleView: View {
     DailyScheduleView(
             date: Calendar.current.date(byAdding: .day, value: 1, to: Date.now)!,
             isPresented: .constant(true),
-            onDeleteSchedule: { schedule in
-                print("Deleting schedule: \(schedule.title)")
+            onDeleteComplete: {
+                print("일정 삭제 완료")
             }
         )
     .presentationDetents([.medium])

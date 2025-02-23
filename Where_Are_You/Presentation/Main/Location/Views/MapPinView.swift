@@ -258,7 +258,7 @@ struct KakaoMapPinView: UIViewRepresentable {
                         guard let self = self else { return }
                         
                         let friendMarker = ProfileImageView(image: swiftUIImage)
-                        let friendSymbolImage = friendMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 40.667)))
+                        let friendSymbolImage = friendMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 42)))
                         let friendIconStyle = PoiIconStyle(symbol: friendSymbolImage, anchorPoint: CGPoint(x: 0.5, y: 1))
                         let friendPoiStyle = PoiStyle(styleID: styleID, styles: [
                             PerLevelPoiStyle(iconStyle: friendIconStyle, level: 12)

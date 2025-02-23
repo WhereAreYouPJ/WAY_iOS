@@ -18,9 +18,6 @@ struct ScheduleView: View {
     @State private var selectedDate: Date?
     @State private var showDailySchedule = false
     
-    @State private var showDeleteAlert = false
-    @State private var scheduleToDelete: Schedule?
-    
     init() {
         let service = ScheduleService()
         _viewModel = StateObject(wrappedValue: ScheduleViewModel(service: service))
@@ -96,31 +93,11 @@ struct ScheduleView: View {
                 DailyScheduleView(
                     date: date,
                     isPresented: $showDailySchedule,
-                    onDeleteSchedule: { schedule in
-                        scheduleToDelete = schedule
-                        showDailySchedule = false
-                        showDeleteAlert = true
+                    onDeleteComplete: {
+                        viewModel.getMonthlySchedule()
                     }
                 )
                 .presentationDetents([.medium])
-            }
-        }
-        .customAlertModifier(
-            isPresented: $showDeleteAlert,
-            showDailySchedule: $showDailySchedule,
-            title: scheduleToDelete.map { viewModel.setDeleteAlertContent(for: $0).0 } ?? "일정 삭제",
-            message: {
-                let message = scheduleToDelete.map(viewModel.setDeleteAlertContent)?.1 ?? ""
-                print("Alert message: \(message)")  // 실제 메시지 확인
-                return message
-            }(),
-            cancelTitle: "취소",
-            actionTitle: "삭제"
-        ) {
-            if let schedule = scheduleToDelete {
-                viewModel.deleteSchedule(schedule) {
-                    scheduleToDelete = nil
-                }
             }
         }
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
@@ -229,7 +206,7 @@ struct ScheduleView: View {
         return CellView(day: day, clicked: clicked, isToday: isToday, isCurrentMonthDay: true, weekday: weekday, schedules: processedSchedules)
             .onTapGesture {
                 selectedDate = date
-                showDailySchedule = !processedSchedules.isEmpty
+                showDailySchedule = true
             }
             .frame(height: cellHeight)
     }

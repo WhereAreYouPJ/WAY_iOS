@@ -36,7 +36,6 @@ struct SearchBarView: View {
                     }
                 }
             )
-//            .padding(.horizontal)
     }
 }
 
@@ -50,15 +49,15 @@ struct FriendListView: View {
     
     var body: some View {
         ZStack {
-//            if viewModel.isLoading {
-//                ProgressView()
-//                    .scaleEffect(1.5)
-//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-//            } else if viewModel.hasError {
-//                ErrorView {
-//                    //                    viewModel.retry()
-//                }
-//            } else
+            //            if viewModel.isLoading {
+            //                ProgressView()
+            //                    .scaleEffect(1.5)
+            //                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            //            } else if viewModel.hasError {
+            //                ErrorView {
+            //                    //                    viewModel.retry()
+            //                }
+            //            } else
             if viewModel.favorites.isEmpty && viewModel.friends.isEmpty {
                 EmptyFriendsView()
             } else {
