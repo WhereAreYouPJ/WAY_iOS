@@ -11,46 +11,48 @@ import Kingfisher
 // scheduleInfo 관련 내용들
 class FeedDetailBoxView: UIView {
     // MARK: - Properties
-    
     let detailBox: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = LayoutAdapter.shared.scale(value: 14)
+        view.layer.cornerRadius = 16
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.brandColor.cgColor
+        view.layer.borderColor = UIColor.blackD4.cgColor
         return view
     }()
     
     var profileImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 14)
+        imageView.layer.cornerRadius = 14
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
-    var dateLabel = CustomLabel(UILabel_NotoSans: .medium, text: "dateLabel", textColor: .color153, fontSize: LayoutAdapter.shared.scale(value: 14))
+    var userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "userNameLabel", textColor: .black22))
     
-    var locationLabel = CustomLabel(UILabel_NotoSans: .medium, text: "locationLabel", textColor: .color153, fontSize: LayoutAdapter.shared.scale(value: 14))
+    let separatorView: UIView = {
+        let view = UIView()
+        view.layer.borderWidth = 1.5
+        view.layer.borderColor = UIColor.blackD4.cgColor
+        view.snp.makeConstraints { make in
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 12))
+            make.width.equalTo(0)
+        }
+        view.clipsToBounds = true
+        return view
+    }()
     
-    var titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "titleLabel", textColor: .black22, fontSize: LayoutAdapter.shared.scale(value: 16))
-    
-    // 스케쥴 날짜, 스케쥴 장소
-    lazy var dateLocationStack = createStackView(subviews: [dateLabel, locationLabel], axis: .horizontal, spacing: 0)
-    
-    // (스케쥴 날짜, 스케쥴 장소), 피드 제목
-    lazy var titleStack = createStackView(subviews: [dateLocationStack, titleLabel], axis: .vertical, spacing: 0)
-    
-    // ((스케쥴 날짜, 스케쥴 장소), 피드 제목), 프로필 이미지
-    lazy var profileStack = createStackView(subviews: [profileImage, titleStack], axis: .horizontal, spacing: 0)
-    
+    var locationLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "locationLabel", textColor: .black66))
+        
+    var titleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "titleLabel", textColor: .black22))
+
     let participantBoxView: UIView = {
         let view = UIView()
-        view.layer.borderColor = UIColor.rgb(red: 200, green: 171, blue: 229).cgColor
-        view.backgroundColor = UIColor.rgb(red: 238, green: 238, blue: 238).withAlphaComponent(8)
+        view.layer.borderColor = UIColor.blackF8.cgColor
+        view.backgroundColor = .blackAC
         view.layer.borderWidth = 1
-        view.layer.cornerRadius = LayoutAdapter.shared.scale(value: 14)
+        view.layer.cornerRadius = 14
         view.snp.makeConstraints { make in
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 30))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 38))
         }
         return view
     }()
@@ -60,7 +62,7 @@ class FeedDetailBoxView: UIView {
         imageView.image = UIImage(named: "icon-plus")
         imageView.tintColor = .gray
         imageView.snp.makeConstraints { make in
-            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 15.87))
+            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 16))
         }
         return imageView
     }()
@@ -92,51 +94,70 @@ class FeedDetailBoxView: UIView {
     
     private func configureViewComponents() {
         addSubview(detailBox)
-        detailBox.addSubview(profileStack)
+        detailBox.addSubview(profileImage)
+        detailBox.addSubview(userNameLabel)
+        detailBox.addSubview(separatorView)
+        detailBox.addSubview(locationLabel)
+        detailBox.addSubview(titleLabel)
+        detailBox.addSubview(feedFixButton)
+        
         addSubview(participantBoxView)
         participantBoxView.addSubview(participantStackView)
         participantBoxView.addSubview(plusImage)
-        detailBox.addSubview(feedFixButton)
     }
     
     private func setupConstraints() {
         detailBox.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        profileStack.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
-            make.centerY.equalToSuperview()
-        }
-        
+       
         profileImage.snp.makeConstraints { make in
-            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 50))
+            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 56))
+            make.top.bottom.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 4))
         }
         
-        dateLabel.snp.makeConstraints { make in
-            make.width.equalTo(LayoutAdapter.shared.scale(value: 68))
+        userNameLabel.snp.makeConstraints { make in
+            make.leading.equalTo(profileImage.snp.trailing).offset(LayoutAdapter.shared.scale(value: 10))
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 9))
+        }
+        
+        separatorView.snp.makeConstraints { make in
+            make.leading.equalTo(userNameLabel.snp.trailing).offset(LayoutAdapter.shared.scale(value: 6))
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 9))
+        }
+        
+        locationLabel.snp.makeConstraints { make in
+            make.leading.equalTo(separatorView.snp.trailing).offset(LayoutAdapter.shared.scale(value: 6))
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 9))
+            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 4))
+        }
+        
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(userNameLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 4))
+            make.leading.equalTo(profileImage.snp.trailing).offset(LayoutAdapter.shared.scale(value: 10))
+            make.trailing.equalTo(feedFixButton.snp.leading)
         }
         
         feedFixButton.snp.makeConstraints { make in
-            make.trailing.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 30))
-            make.width.equalTo(LayoutAdapter.shared.scale(value: 24))
+            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 6))
+            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 9))
+            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 24))
         }
         
         participantBoxView.snp.makeConstraints { make in
             make.trailing.equalToSuperview()
-            make.top.equalToSuperview().offset(LayoutAdapter.shared.scale(value: -8))
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 30))
+            make.top.equalToSuperview().offset(LayoutAdapter.shared.scale(value: -19))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 38))
         }
         
         plusImage.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 4))
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 6))
         }
         
         participantStackView.snp.makeConstraints { make in
-            make.leading.equalTo(plusImage.snp.trailing)
-            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
+            make.leading.equalTo(plusImage.snp.trailing).offset(LayoutAdapter.shared.scale(value: 4))
+            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 6))
             make.centerY.equalToSuperview()
         }
     }
@@ -149,9 +170,9 @@ class FeedDetailBoxView: UIView {
     }
     
     func resetUI() {
-        dateLabel.text = nil
-        locationLabel.text = nil
-        titleLabel.text = nil
+        userNameLabel.attributedText = nil
+        locationLabel.attributedText = nil
+        titleLabel.attributedText = nil
         profileImage.image = nil
     }
     
@@ -162,9 +183,9 @@ class FeedDetailBoxView: UIView {
 
         configureParticipantImages(participants: participants)
         profileImage.kf.setImage(with: URL(string: feed.profileImageURL), placeholder: UIImage(named: "basic_profile_image"))
-        dateLabel.text = feed.startTime.formattedDate(to: .yearMonthDate)
-        locationLabel.text = feed.location
-        titleLabel.text = feed.title
+        userNameLabel.updateTextKeepingAttributes(newText: feed.userName)
+        locationLabel.updateTextKeepingAttributes(newText: feed.location)
+        titleLabel.updateTextKeepingAttributes(newText: feed.title)
     }
     
     func configureParticipantImages(participants: [String]) {
@@ -179,9 +200,7 @@ class FeedDetailBoxView: UIView {
                 imageView.kf.setImage(with: URL(string: image))
                 imageView.contentMode = .scaleAspectFill
                 imageView.clipsToBounds = true
-                imageView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 9)
-                imageView.layer.borderWidth = 1.6
-                imageView.layer.borderColor = UIColor.white.cgColor
+                imageView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 13)
                 imageView.snp.makeConstraints { make in
                     make.width.height.equalTo(LayoutAdapter.shared.scale(value: 26))
                 }

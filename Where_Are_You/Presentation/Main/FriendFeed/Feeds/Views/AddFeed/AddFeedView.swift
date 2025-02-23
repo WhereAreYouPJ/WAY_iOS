@@ -50,7 +50,7 @@ class AddFeedView: UIView {
     
     let addImages: UIButton = {
         let button = UIButton()
-        let view = CustomView(image: "icon-Gallery", text: "사진 추가", textColor: .black66, separatorHidden: false)
+        let view = CustomView(image: "icon-Gallery", text: "사진 추가", textColor: .black66, separatorHidden: false, imageTintColor: .black66)
         button.addSubview(view)
         view.isUserInteractionEnabled = false
         view.snp.makeConstraints { make in
@@ -59,7 +59,7 @@ class AddFeedView: UIView {
         return button
     }()
     
-    let membersInfo = CustomView(image: "icon-users", text: "", textColor: .black22, separatorHidden: true)
+    let membersInfo = CustomView(image: "icon-users", text: "", textColor: .black22, separatorHidden: true, imageTintColor: .black)
     
     lazy var addStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [addImages, membersInfo])
@@ -161,7 +161,10 @@ class AddFeedView: UIView {
         }
         
         creatFeedButton.snp.makeConstraints { make in
-            make.bottom.leading.trailing.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(LayoutAdapter.shared.scale(value: 24))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 48))
         }
     }
 }

@@ -175,6 +175,7 @@ class SignUpFormViewController: UIViewController {
     private func resetAuthUI() {
         signUpView.emailCheckButton.updateBackgroundColor(.brandMain)
         signUpView.emailCheckButton.isEnabled = true
+        signUpView.emailErrorLabel.updateTextKeepingAttributes(newText: "")
         
         signUpView.authCheckButton.updateBackgroundColor(.brandMain)
         signUpView.authCheckButton.isEnabled = true
