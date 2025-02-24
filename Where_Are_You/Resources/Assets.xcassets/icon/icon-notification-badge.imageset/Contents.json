@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icon-notification.svg",
+      "filename" : "bell.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "bell_notification.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "bell_notification 1.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

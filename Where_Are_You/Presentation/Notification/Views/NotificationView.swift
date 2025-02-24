@@ -71,8 +71,7 @@ struct NotificationView: View {
         .padding(.horizontal, LayoutAdapter.shared.scale(value: 18))
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: LayoutAdapter.shared.scale(value: 16))))
         .onAppear {
-            viewModel.getInvitedList()
-            viewModel.getFriendRequestList()
+            viewModel.fetchNotifications()
         }
     }
     
