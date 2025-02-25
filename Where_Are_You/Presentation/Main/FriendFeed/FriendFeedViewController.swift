@@ -17,18 +17,16 @@ class FriendFeedViewController: UIViewController {
     
     private let segmentControl: UISegmentedControl = {
         let sc = UISegmentedControl()
-        sc.insertSegment(withTitle: "피드", at: 0, animated: true)
-        sc.insertSegment(withTitle: "친구", at: 1, animated: true)
+        sc.insertSegment(withTitle: "피드", at: 0, animated: false)
+        sc.insertSegment(withTitle: "친구", at: 1, animated: false)
         sc.selectedSegmentIndex = 0
         
-        sc.setTitleTextAttributes([
-            NSAttributedString.Key.foregroundColor: UIColor.black66,
-            NSAttributedString.Key.font: UIFont.pretendard(NotoSans: .medium, fontSize: 20)
-        ], for: .normal)
-        sc.setTitleTextAttributes([
-            NSAttributedString.Key.foregroundColor: UIColor.black22,
-            NSAttributedString.Key.font: UIFont.pretendard(NotoSans: .medium, fontSize: 20)
-        ], for: .selected)
+        // CustomFont.titleH1이 리턴하는 attributedString에서 속성 딕셔너리 추출
+        let normalAttributes = UIFont.CustomFont.titleH1(text: "피드", textColor: .blackAC).attributes(at: 0, effectiveRange: nil)
+        let selectedAttributes = UIFont.CustomFont.titleH1(text: "피드", textColor: .black22).attributes(at: 0, effectiveRange: nil)
+        
+        sc.setTitleTextAttributes(normalAttributes, for: .normal)
+        sc.setTitleTextAttributes(selectedAttributes, for: .selected)
         
         sc.selectedSegmentTintColor = .clear
         sc.backgroundColor = .clear
@@ -37,7 +35,7 @@ class FriendFeedViewController: UIViewController {
         sc.setDividerImage(image, forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
         return sc
     }()
-    
+
     private var showSearchBar: Bool = false {
         didSet {
             if let friendsHostingController = friendsHostingController {
@@ -135,6 +133,8 @@ class FriendFeedViewController: UIViewController {
         setupConstraints()
         setupActions()
         updateUIForSelectedSegment()
+        
+        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     // MARK: - UI Setup

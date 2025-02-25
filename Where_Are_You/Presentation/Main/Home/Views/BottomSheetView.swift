@@ -29,7 +29,7 @@ class BottomSheetView: UIView {
         return view
     }()
     
-    let dateTitle = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .brandDark, fontSize: 22)
+    let dateTitle = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "t", textColor: .brandDark))
     
     let scrollView = UIScrollView()
     
@@ -129,7 +129,6 @@ class BottomSheetView: UIView {
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 28))
         }
 
-        
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }

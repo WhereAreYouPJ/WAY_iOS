@@ -14,7 +14,7 @@ class CustomView: UIView {
     private let separator2 = UIView()
     let imageView = UIImageView()
     
-    let descriptionLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .black66, fontSize: 16)
+    let descriptionLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "d", textColor: .black66))
     
     // MARK: - Lifecycle
 
@@ -33,12 +33,11 @@ class CustomView: UIView {
     
     private func setupView(image: String, text: String, textColor: UIColor, separatorHidden: Bool) {
         imageView.image = UIImage(named: image)
-        descriptionLabel.text = text
-        descriptionLabel.textColor = textColor
+        descriptionLabel.attributedText = UIFont.CustomFont.bodyP3(text: text, textColor: textColor)
         imageView.tintColor = .blackAC
-        separator1.backgroundColor = .color221
-        separator2.backgroundColor = .color221
-        separator1.isHidden = separatorHidden
+        separator1.backgroundColor = .blackF0
+        separator2.backgroundColor = .blackF0
+        separator2.isHidden = separatorHidden
     }
     
     private func configureViewComponents() {

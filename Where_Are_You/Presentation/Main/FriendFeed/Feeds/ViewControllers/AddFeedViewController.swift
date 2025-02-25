@@ -240,7 +240,7 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
                         self?.addFeedView.membersInfo.isHidden = true
                     } else {
                         self?.addFeedView.membersInfo.isHidden = false
-                        self?.addFeedView.membersInfo.descriptionLabel.text = participantInfo
+                        self?.addFeedView.membersInfo.descriptionLabel.updateTextKeepingAttributes(newText: participantInfo)
                     }
                 }
             }

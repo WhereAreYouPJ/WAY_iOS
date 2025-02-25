@@ -21,29 +21,11 @@ class NetworkAlert: UIView {
         return imageView
     }()
     
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "인터넷 연결을 확인해주세요.", textColor: .black22, fontSize: 16)
+    private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "인터넷 연결을 확인해주세요.", textColor: .black22))
     
-    private let closeButton: UIButton = {
-        let button = UIButton()
-        button.setTitleColor(.black22, for: .normal)
-        button.setTitle("닫기", for: .normal)
-        button.titleLabel?.font = UIFont.pretendard(NotoSans: .medium, fontSize: 16)
-        button.layer.cornerRadius = 6
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.color118.cgColor
-        button.backgroundColor = .white
-        return button
-    }()
+    private let closeButton = TitleButton(title: UIFont.CustomFont.button16(text: "닫기", textColor: .brandDark), backgroundColor: .white, borderColor: UIColor.brandMain.cgColor)
     
-    private let actionButton: UIButton = {
-        let button = UIButton()
-        button.setTitleColor(.white, for: .normal)
-        button.setTitle("확인", for: .normal)
-        button.titleLabel?.font = UIFont.pretendard(NotoSans: .medium, fontSize: 16)
-        button.layer.cornerRadius = 6
-        button.backgroundColor = .brandColor
-        return button
-    }()
+    private let actionButton = TitleButton(title: UIFont.CustomFont.button16(text: "확인", textColor: .white), backgroundColor: .brandMain, borderColor: nil)
     
     private lazy var buttonStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [closeButton, actionButton])
@@ -59,7 +41,7 @@ class NetworkAlert: UIView {
         super.init(frame: .zero)
         
         backgroundColor = .white
-        layer.cornerRadius = 6
+        layer.cornerRadius = 10
         clipsToBounds = true
         
         closeButton.addTarget(self, action: #selector(dismissAlert), for: .touchUpInside)
@@ -84,18 +66,18 @@ class NetworkAlert: UIView {
     
     private func setupConstraints() {
         errorImage.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(18)
+            make.top.equalToSuperview().inset(20)
             make.centerX.equalToSuperview()
         }
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(errorImage.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview().inset(39.5)
+            make.centerX.equalToSuperview()
         }
         
         buttonStack.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(20)
-            make.leading.trailing.equalToSuperview().inset(14)
+            make.leading.trailing.equalToSuperview().inset(16)
         }
     }
     
@@ -115,8 +97,8 @@ class NetworkAlert: UIView {
             parentView.addSubview(self)
             self.snp.makeConstraints { make in
                 make.center.equalToSuperview()
-                make.width.equalTo(280)
-                make.height.equalTo(160)
+                make.width.equalTo(300)
+                make.height.equalTo(166)
             }
         }
     }

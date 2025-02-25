@@ -19,9 +19,9 @@ class DailyScheduleTableViewCell: UITableViewCell {
 
     var schedule: Schedule?
     
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "96즈 여의도 한강공원 모임", textColor: .black44, fontSize: 18)
+    private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP2(text: "96즈 여의도 한강공원 모임", textColor: .black22))
     
-    private let locationLabel = CustomLabel(UILabel_NotoSans: .medium, text: "여의도한강공원", textColor: .color153, fontSize: 14)
+    private let locationLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "여의도한강공원", textColor: .black66))
     
     private let checkLocationButton: UIButton = {
         let button = UIButton()

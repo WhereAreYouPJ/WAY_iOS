@@ -27,7 +27,7 @@ class FeedDetailBoxView: UIView {
         return imageView
     }()
     
-    var userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "userNameLabel", textColor: .black22))
+    var userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "u", textColor: .black22))
     
     let separatorView: UIView = {
         let view = UIView()
@@ -35,15 +35,15 @@ class FeedDetailBoxView: UIView {
         view.layer.borderColor = UIColor.blackD4.cgColor
         view.snp.makeConstraints { make in
             make.height.equalTo(LayoutAdapter.shared.scale(value: 12))
-            make.width.equalTo(0)
+            make.width.equalTo(1)
         }
         view.clipsToBounds = true
         return view
     }()
     
-    var locationLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "locationLabel", textColor: .black66))
+    var locationLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "l", textColor: .black66))
         
-    var titleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "titleLabel", textColor: .black22))
+    var titleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "t", textColor: .black22))
 
     let participantBoxView: UIView = {
         let view = UIView()
@@ -104,6 +104,12 @@ class FeedDetailBoxView: UIView {
         addSubview(participantBoxView)
         participantBoxView.addSubview(participantStackView)
         participantBoxView.addSubview(plusImage)
+        
+        userNameLabel.setContentHuggingPriority(.required, for: .horizontal)
+        userNameLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+        locationLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        locationLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
     }
     
     private func setupConstraints() {
@@ -123,7 +129,7 @@ class FeedDetailBoxView: UIView {
         
         separatorView.snp.makeConstraints { make in
             make.leading.equalTo(userNameLabel.snp.trailing).offset(LayoutAdapter.shared.scale(value: 6))
-            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 9))
+            make.centerY.equalTo(userNameLabel)
         }
         
         locationLabel.snp.makeConstraints { make in

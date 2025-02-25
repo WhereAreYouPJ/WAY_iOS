@@ -12,17 +12,20 @@ class ScheduleDropDown: UIView {
 
     let scheduleDropDownView = UIButton()
     
-    let chooseScheduleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "일정 선택", textColor: .black66, fontSize: LayoutAdapter.shared.scale(value: 16))
+    let chooseScheduleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "일정 선택", textColor: .brandDark))
+//    CustomLabel(UILabel_NotoSans: .medium, text: "일정 선택", textColor: .black66, fontSize: LayoutAdapter.shared.scale(value: 16))
+     
+    let scheduleDateLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "s", textColor: .brandDark))
+//    : UILabel = {
+//        let label = UILabel()
+//        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 12))
+//        label.textColor = .black44
+//        label.numberOfLines = 2
+//        return label
+//    }()
     
-    let scheduleDateLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 12))
-        label.textColor = .black44
-        label.numberOfLines = 2
-        return label
-    }()
-    
-    let scheduleLocationLabel: UILabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .black44, fontSize: LayoutAdapter.shared.scale(value: 16))
+    let scheduleLocationLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "s", textColor: .black22))
+//    : UILabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .black44, fontSize: LayoutAdapter.shared.scale(value: 16))
     
     lazy var scheduleStackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [scheduleDateLabel, scheduleLocationLabel])
@@ -60,8 +63,8 @@ class ScheduleDropDown: UIView {
     
     private func setupUI() {
         layer.cornerRadius = LayoutAdapter.shared.scale(value: 8)
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.brandColor.cgColor
+        layer.borderWidth = 1.5
+        layer.borderColor = UIColor.brandMain.cgColor
         scheduleDateLabel.isHidden = true
         scheduleLocationLabel.isHidden = true
     }
@@ -86,22 +89,22 @@ class ScheduleDropDown: UIView {
         }
         
         chooseScheduleLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
-            make.top.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 12))
+            make.top.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
         }
         
         dropDownButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 18.25))
+            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 12))
             make.centerY.equalToSuperview()
-            make.width.equalTo(16)
+            make.width.equalTo(20)
         }
         
         scheduleDateLabel.snp.makeConstraints { make in
-            make.width.equalTo(LayoutAdapter.shared.scale(value: 40))
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 69))
         }
         
         scheduleStackView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 14))
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 12))
             make.trailing.equalTo(dropDownButton.snp.leading)
             make.centerY.equalToSuperview()
         }

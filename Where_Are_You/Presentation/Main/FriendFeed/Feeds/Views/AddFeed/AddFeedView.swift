@@ -48,6 +48,8 @@ class AddFeedView: UIView {
         return textView
     }()
     
+    let membersInfo = CustomView(image: "icon-users", text: "", textColor: .black22, separatorHidden: true, imageTintColor: .black)
+    
     let addImages: UIButton = {
         let button = UIButton()
         let view = CustomView(image: "icon-Gallery", text: "사진 추가", textColor: .black66, separatorHidden: false, imageTintColor: .black66)
@@ -59,10 +61,8 @@ class AddFeedView: UIView {
         return button
     }()
     
-    let membersInfo = CustomView(image: "icon-users", text: "", textColor: .black22, separatorHidden: true, imageTintColor: .black)
-    
     lazy var addStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [addImages, membersInfo])
+        let stackView = UIStackView(arrangedSubviews: [membersInfo, addImages])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         return stackView
