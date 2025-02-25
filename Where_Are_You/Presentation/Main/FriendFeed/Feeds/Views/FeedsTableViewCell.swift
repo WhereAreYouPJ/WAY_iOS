@@ -31,17 +31,20 @@ class FeedsTableViewCell: UITableViewCell {
     let feedImagesView = FeedImagesView()
     let bookMarkButton = UIButton()
     
-    let descriptionLabel: UILabel = {
-        let label = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .black22, fontSize: LayoutAdapter.shared.scale(value: 14))
-        label.isHidden = true
-        label.lineBreakMode = .byCharWrapping
-        label.backgroundColor = .color249
-        return label
-    }()
+    let descriptionLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "d", textColor: .black22))
+    
+//    : UILabel = {
+//        let label = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .black22, fontSize: LayoutAdapter.shared.scale(value: 14))
+//        label.isHidden = true
+//        label.lineBreakMode = .byCharWrapping
+//        label.backgroundColor = .color249
+//        return label
+//    }()
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        descriptionLabel.backgroundColor = .blackF8
         configureViewComponents()
         setupActions()
         setupConstraints()

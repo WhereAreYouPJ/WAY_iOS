@@ -29,6 +29,14 @@ class FeedsViewController: UIViewController {
         
         viewModel.fetchFeeds()
         feedsView.updateContentHeight()
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white  // 원하는 배경색
+        appearance.shadowColor = .clear         // 분리선(쉐도우) 제거
+
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
     // MARK: - Helpers
@@ -62,7 +70,8 @@ class FeedsViewController: UIViewController {
         view.addSubview(feedsView)
         view.addSubview(noFeedsView)
         feedsView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 26))
+            make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         noFeedsView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)

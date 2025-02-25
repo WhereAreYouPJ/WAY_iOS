@@ -65,20 +65,20 @@ class FeedParticipantView: UIView {
             
             let profileImage = UIImageView()
             profileImage.kf.setImage(with: URL(string: participant.profileImageURL))
-            profileImage.layer.cornerRadius = 14
+            profileImage.layer.cornerRadius = LayoutAdapter.shared.scale(value: 27) / 2
             profileImage.clipsToBounds = true
             button.addSubview(profileImage)
             profileImage.snp.makeConstraints { make in
                 make.centerY.equalToSuperview()
-                make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
-                make.width.height.equalTo(LayoutAdapter.shared.scale(value: 28))
-                make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 4))
+                make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 5))
+                make.width.height.equalTo(LayoutAdapter.shared.scale(value: 27))
+                make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 5))
             }
             
-            let userNameLabel = CustomLabel(UILabel_NotoSans: .medium, text: participant.userName, textColor: .black22, fontSize: 12)
+            let userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: participant.userName, textColor: .black22))
             button.addSubview(userNameLabel)
             userNameLabel.snp.makeConstraints { make in
-                make.leading.equalTo(profileImage.snp.trailing).offset(LayoutAdapter.shared.scale(value: 2))
+                make.leading.equalTo(profileImage.snp.trailing).offset(LayoutAdapter.shared.scale(value: 6))
                 make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
                 make.centerY.equalToSuperview()
             }
