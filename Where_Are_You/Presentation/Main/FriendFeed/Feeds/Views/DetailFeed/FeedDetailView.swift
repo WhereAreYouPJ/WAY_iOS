@@ -45,7 +45,7 @@
             participantsBoxView.snp.makeConstraints { make in
                 make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 12))
                 make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
-                make.height.equalTo(LayoutAdapter.shared.scale(value: 37))
+                make.height.equalTo(LayoutAdapter.shared.scale(value: 40))
             }
             
             feedDetailView.snp.makeConstraints { make in
