@@ -7,6 +7,7 @@
 
 import Foundation
 
+// TODO: GetInvitedListResponse -> Schedule convert 로직 UseCase에서 실행하도록
 protocol GetInvitedListUseCase {
     func execute(completion: @escaping (Result<GetInvitedListResponse, Error>) -> Void)
 }

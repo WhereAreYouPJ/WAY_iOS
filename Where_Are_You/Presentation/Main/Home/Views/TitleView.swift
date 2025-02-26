@@ -6,9 +6,21 @@
 //
 
 import UIKit
+import Combine
 
 class TitleView: UIView {
-    // MARK: - Properties
+    private let viewModel: NotificationBadgeViewModel
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(viewModel: NotificationBadgeViewModel = .shared) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
+        setupObserver()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     let titleLabel: UIImageView = {
         let imageView = UIImageView()
@@ -28,4 +40,22 @@ class TitleView: UIView {
         }
         return button
     }()
+    
+    private func setupObserver() {
+        NotificationCenter.default.publisher(for: .unreadNotificationsChanged) // NotificationCenter를 사용하여 알림 상태 변경 구독
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                if let hasUnread = notification.userInfo?["hasUnread"] as? Bool {
+                    self?.updateNotificationIcon(hasUnread: hasUnread)
+                }
+            }
+            .store(in: &cancellables)
+        
+        updateNotificationIcon(hasUnread: viewModel.hasUnreadNotifications) // 초기 상태 설정
+    }
+    
+    private func updateNotificationIcon(hasUnread: Bool) {
+        let imageName = hasUnread ? "icon-notification-badge" : "icon-notification"
+        notificationButton.setImage(UIImage(named: imageName), for: .normal)
+    }
 }
