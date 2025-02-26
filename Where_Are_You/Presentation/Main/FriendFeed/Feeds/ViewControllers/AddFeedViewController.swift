@@ -235,13 +235,13 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
 
             viewModel.fetchParticipants(for: schedule.scheduleSeq) { [weak self] in
                 DispatchQueue.main.async {
-                    guard let participantInfo = self?.viewModel.getParticipants() else {
-                        print("participantInfo is nil")
+                    guard let participantInfo = self?.viewModel.getParticipants() else { return }
+                    if participantInfo.isEmpty {
                         self?.addFeedView.membersInfo.isHidden = true
-                        return
+                    } else {
+                        self?.addFeedView.membersInfo.isHidden = false
+                        self?.addFeedView.membersInfo.descriptionLabel.updateTextKeepingAttributes(newText: participantInfo)
                     }
-                    self?.addFeedView.membersInfo.isHidden = false
-                    self?.addFeedView.membersInfo.descriptionLabel.text = participantInfo
                 }
             }
         }

@@ -43,15 +43,15 @@
         
         private func setupConstraints() {
             participantsBoxView.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 18))
-                make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
+                make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 12))
+                make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
                 make.height.equalTo(LayoutAdapter.shared.scale(value: 40))
             }
             
             feedDetailView.snp.makeConstraints { make in
                 make.top.equalTo(participantsBoxView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 10))
                 make.centerX.equalToSuperview()
-                make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
+                make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
                 //            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 20))
             }
             

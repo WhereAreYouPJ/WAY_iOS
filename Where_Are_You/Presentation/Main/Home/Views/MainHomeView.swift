@@ -12,7 +12,7 @@ class MainHomeView: UIView {
     // MARK: - Properties
     let bannerView = BannerView()
     let dDayView = DDayView()
-    let reminderLabel = CustomLabel(UILabel_NotoSans: .medium, text: "함께한 추억을 확인해보세요!", textColor: .black22, fontSize: LayoutAdapter.shared.scale(value: 20))
+    let reminderLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH3(text: "함께한 추억을 확인해보세요!", textColor: .black22))
     let homeFeedView = HomeFeedView()
     let bottomSheetView = BottomSheetView()
     

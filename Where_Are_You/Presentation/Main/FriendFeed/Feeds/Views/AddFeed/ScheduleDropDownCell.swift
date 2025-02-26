@@ -11,10 +11,10 @@ class ScheduleDropDownCell: UITableViewCell {
     
     static let identifier = "ScheduleDropDownCell"
     
-    let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .black44, fontSize: LayoutAdapter.shared.scale(value: 16))
+    let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "t", textColor: .black22))
     
-    let locationLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .color153, fontSize: LayoutAdapter.shared.scale(value: 14))
-   
+    let locationLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "l", textColor: .black66))
+       
     let checkmarkImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Vector")
@@ -41,8 +41,8 @@ class ScheduleDropDownCell: UITableViewCell {
     
     private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 6))
-            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 6))
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 8))
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 20))
             make.trailing.equalTo(checkmarkImageView.snp.leading).offset(LayoutAdapter.shared.scale(value: 6))
         }
         
@@ -60,8 +60,8 @@ class ScheduleDropDownCell: UITableViewCell {
     }
     
     func configure(with schedule: ScheduleContent) {
-        titleLabel.text = schedule.title
-        locationLabel.text = schedule.location
+        titleLabel.updateTextKeepingAttributes(newText: schedule.title)
+        locationLabel.updateTextKeepingAttributes(newText: schedule.location)
         checkmarkImageView.isHidden = !schedule.feedExists
     }
 }

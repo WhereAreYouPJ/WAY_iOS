@@ -26,9 +26,11 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         return iv
     }()
     
-    private let locationLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .black66, fontSize: 14)
+    private let userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "u", textColor: .black22))
     
-    private let titleLabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .black22, fontSize: 16)
+    private let locationLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "l", textColor: .black66))
+    
+    private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "t", textColor: .black22))
     
     // 장소, 타이틀
     private lazy var textStackView: UIStackView = {
@@ -54,15 +56,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         return iv
     }()
     
-    private let descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
-        label.textColor = .color118
-        label.isHidden = true
-        label.lineBreakMode = .byCharWrapping
-        label.numberOfLines = 2
-        return label
-    }()
+    private let descriptionLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "u", textColor: .black22))
     
     private lazy var feedContentStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [descriptionLabel, feedImageView])
@@ -95,6 +89,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         feedImageView.subviews.forEach { $0.removeFromSuperview() }
         descriptionLabel.text = nil
         descriptionLabel.isHidden = true
+        descriptionLabel.lineBreakMode = .byCharWrapping
     }
     
     required init?(coder: NSCoder) {

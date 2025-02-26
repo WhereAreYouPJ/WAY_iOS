@@ -193,6 +193,7 @@
 		99DC75DE2D06782500C20857 /* DetailFeedslViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DC75DD2D06782500C20857 /* DetailFeedslViewController.swift */; };
 		99DE2F022D0813B40087ACC9 /* FeedArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DE2F012D0813B40087ACC9 /* FeedArchiveViewController.swift */; };
 		99DE2F042D0813EC0087ACC9 /* FeedArchiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DE2F032D0813EC0087ACC9 /* FeedArchiveViewModel.swift */; };
+		99DF440D2D6DB2A200D75956 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DF440C2D6DB2A200D75956 /* CustomImageView.swift */; };
 		99E2EEED2D35FACD0010F1F9 /* FeedDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E2EEEC2D35FACD0010F1F9 /* FeedDetailView.swift */; };
 		99E2EEEF2D35FFCC0010F1F9 /* FeedParticipantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E2EEEE2D35FFCC0010F1F9 /* FeedParticipantView.swift */; };
 		99E2EEF12D3633CD0010F1F9 /* MainNoFeedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E2EEF02D3633CD0010F1F9 /* MainNoFeedImageView.swift */; };
@@ -552,6 +553,7 @@
 		99DC75DD2D06782500C20857 /* DetailFeedslViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFeedslViewController.swift; sourceTree = "<group>"; };
 		99DE2F012D0813B40087ACC9 /* FeedArchiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedArchiveViewController.swift; sourceTree = "<group>"; };
 		99DE2F032D0813EC0087ACC9 /* FeedArchiveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedArchiveViewModel.swift; sourceTree = "<group>"; };
+		99DF440C2D6DB2A200D75956 /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		99E2EEEC2D35FACD0010F1F9 /* FeedDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailView.swift; sourceTree = "<group>"; };
 		99E2EEEE2D35FFCC0010F1F9 /* FeedParticipantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedParticipantView.swift; sourceTree = "<group>"; };
 		99E2EEF02D3633CD0010F1F9 /* MainNoFeedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNoFeedImageView.swift; sourceTree = "<group>"; };
@@ -1479,6 +1481,7 @@
 				99D353E22D3A33CC0098B52E /* GradientButton.swift */,
 				D588498B2D55FAE900DE82E9 /* CornerRadius.swift */,
 				D57A6C102D56006600C2B822 /* CustomAlertModifier.swift */,
+				99DF440C2D6DB2A200D75956 /* CustomImageView.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -2132,6 +2135,7 @@
 				99FBA5562C453BDD002EEEC7 /* HomeFeedViewController.swift in Sources */,
 				99FBA5502C45394E002EEEC7 /* BannerViewModel.swift in Sources */,
 				99C9B22C2C019C67008D7CBD /* LoginView.swift in Sources */,
+				99DF440D2D6DB2A200D75956 /* CustomImageView.swift in Sources */,
 				99949F5F2C58BBAD00AE0177 /* FeedsViewController.swift in Sources */,
 				D5BA30902CE7453900958BF5 /* DeleteFriendBody.swift in Sources */,
 				9950C6572C1040FD003155A7 /* TermsAgreementViewController.swift in Sources */,

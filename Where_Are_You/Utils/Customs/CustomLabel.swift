@@ -24,6 +24,15 @@ class StandardLabel: UILabel {
     func updateText(_ text: NSAttributedString) {
         self.attributedText = text
     }
+    
+    func updateTextKeepingAttributes(newText: String) {
+        if let mutableAttrText = self.attributedText?.mutableCopy() as? NSMutableAttributedString {
+            mutableAttrText.mutableString.setString(newText)
+            self.attributedText = mutableAttrText
+        } else {
+            self.text = newText
+        }
+    }
 }
 
 // inputContainerLabel

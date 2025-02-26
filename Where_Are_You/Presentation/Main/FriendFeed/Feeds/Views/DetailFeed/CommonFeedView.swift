@@ -27,17 +27,13 @@ class CommonFeedView: UIView {
     let feedImagesView = FeedImagesView()
     let bookMarkButton = UIButton()
     
-    let descriptionLabel: UILabel = {
-        let label = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .black22, fontSize: LayoutAdapter.shared.scale(value: 14))
-        label.numberOfLines = 0
-        label.backgroundColor = .color249
-        return label
-    }()
+    let descriptionLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "d", textColor: .black22))
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         descriptionLabel.isHidden = true
+        descriptionLabel.backgroundColor = .blackF8
         configureViewComponents()
         setupActions()
         setupConstraints()
@@ -67,7 +63,6 @@ class CommonFeedView: UIView {
         detailBox.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 8))
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 74))
         }
         
         feedImagesView.snp.makeConstraints { make in
