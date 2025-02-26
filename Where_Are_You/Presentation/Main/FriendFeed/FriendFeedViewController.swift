@@ -136,12 +136,12 @@ class FriendFeedViewController: UIViewController {
         setupActions()
         updateUIForSelectedSegment()
         setupNotificationObserver()
+        
+        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-    
-        notificationBadgeViewModel.checkForNewNotifications() // 서버에서 알림 정보 가져오기
     
         notificationBadgeViewModel.checkForNewNotifications() // 서버에서 알림 정보 가져오기
     }
