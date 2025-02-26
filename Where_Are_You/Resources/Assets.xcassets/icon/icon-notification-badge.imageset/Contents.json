@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "bell.png",
+      "filename" : "icon-notification-badge.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "bell_notification.png",
+      "filename" : "icon-notification-badge 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "bell_notification 1.png",
+      "filename" : "icon-notification-badge 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }

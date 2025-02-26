@@ -38,7 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func sceneDidBecomeActive(_ scene: UIScene) {
-        NotificationBadgeViewModel.shared.fetchNotifications() // 알림 상태 서버와 동기화
+        NotificationBadgeViewModel.shared.checkForNewNotifications() // 알림 상태 서버와 동기화
     }
     
     func sceneWillResignActive(_ scene: UIScene) {

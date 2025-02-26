@@ -6,11 +6,26 @@
 //
 
 import Foundation
+import SwiftUI
 
-// TODO: 확인한 알림 삭제
+extension Notification.Name {
+    static let unreadNotificationsChanged = Notification.Name("unreadNotificationsChanged")
+}
+
+// MARK: 1. 읽지 않은 알림 상태(hasUnreadNotifications) 관리
+// MARK: 2. 새로운 알림 확인을 위한 API 호출과 상태 업데이트
 class NotificationBadgeViewModel: ObservableObject {
-    @Published var hasUnreadNotifications: Bool = false
-    private let storage: NotificationStorage
+    @AppStorage("hasUnreadNotifications") var hasUnreadNotifications: Bool = false { // UserDefaults에 직접 바인딩되는 프로퍼티
+        didSet {
+            NotificationCenter.default.post( // 상태가 변경될 때 Notification 발송
+                name: .unreadNotificationsChanged,
+                object: nil,
+                userInfo: ["hasUnread": hasUnreadNotifications]
+            )
+        }
+}
+    
+    private let storage = NotificationStorage.shared
     
     private let getInvitedListUseCase: GetInvitedListUseCase
     private let getListForReceiverUseCase: GetListForReceiverUseCase
@@ -23,85 +38,81 @@ class NotificationBadgeViewModel: ObservableObject {
         let getListForReceiverUseCase = GetListForReceiverUseCaseImpl(repository: friendRequestRepo)
         
         return NotificationBadgeViewModel(
-            storage: NotificationStorage(),
             getInvitedListUseCase: getInvitedListUseCase,
             getListForReceiverUseCase: getListForReceiverUseCase
         )
     }()
     
     init(
-        storage: NotificationStorage,
         getInvitedListUseCase: GetInvitedListUseCase,
         getListForReceiverUseCase: GetListForReceiverUseCase
     ) {
-        self.storage = storage
         self.getInvitedListUseCase = getInvitedListUseCase
         self.getListForReceiverUseCase = getListForReceiverUseCase
     }
     
-    // MARK: 알림 읽음 처리 - NotificationViewModel에서 사용
-    func markScheduleInvitationsAsRead(scheduleInvitations: [Schedule]) {
-        storage.saveScheduleInvitations(scheduleInvitations: scheduleInvitations)
-        DispatchQueue.main.async {
-            self.hasUnreadNotifications = false
-        }
-    }
-    
-    func markFriendRequestsAsRead(friendRequests: [FriendRequest]) {
-        storage.saveFriendRequests(friendRequests: friendRequests)
-        DispatchQueue.main.async {
-            self.hasUnreadNotifications = false
-        }
-    }
-    
-    // MARK: 새로운 알림을 로컬 저장소에 저장
-    func fetchNotifications() {
-        fetchScheduleInvitations()
-        fetchFriendRequests()
-    }
-    
-    private func fetchScheduleInvitations() {
+    // MARK: 새로운 알림을 확인
+    func checkForNewNotifications() {
+        let group = DispatchGroup()
+        
+        var fetchedSchedules: [Schedule] = []
+        var fetchedRequests: [FriendRequest] = []
+        
+        group.enter() // 일정 초대 조회
         getInvitedListUseCase.execute { [weak self] result in
+            defer { group.leave() }
+            guard let self = self else { return }
+            
             switch result {
             case .success(let scheduleInvitations):
-                guard let schedules = self?.convertToSchedules(from: scheduleInvitations) else { return }
-                self?.checkNewScheduleInvitations(scheduleInvitations: schedules)
+                fetchedSchedules = self.convertToSchedules(from: scheduleInvitations)
             case .failure(let error):
                 print("일정 초대 조회 실패: \(error)")
             }
         }
-    }
-    
-    private func fetchFriendRequests() {
+        
+        group.enter() // 친구 요청 조회
         getListForReceiverUseCase.execute { [weak self] result in
+            defer { group.leave() }
+            guard let self = self else { return }
+            
             switch result {
             case .success(let friendRequests):
-                guard let requests = self?.convertToFriendRequests(from: friendRequests) else { return }
-                self?.checkNewFriendRequests(friendRequests: requests)
+                fetchedRequests = self.convertToFriendRequests(from: friendRequests)
             case .failure(let error):
                 print("친구 요청 조회 실패: \(error)")
             }
         }
-    }
-    
-    private func checkNewScheduleInvitations(scheduleInvitations: [Schedule]) {
-        let currentIds = storage.savedNotificationIds
-        let hasNew = scheduleInvitations.contains { !currentIds.contains("schedule_\($0.scheduleSeq)") }
         
-        if hasNew {
-            storage.saveScheduleInvitations(scheduleInvitations: scheduleInvitations)
-            hasUnreadNotifications = true
+        group.notify(queue: .main) { [weak self] in // 두 API 호출이 모두 완료된 후 새로운 알림 확인
+            guard let self = self else { return }
+            
+            let hasNew = self.storage.hasNewNotifications( // NotificationStorage의 메소드를 이용해 새 알림 확인
+                scheduleInvites: fetchedSchedules,
+                friendRequests: fetchedRequests
+            )
+            if hasNew {
+                self.hasUnreadNotifications = true // @AppStorage 변수에 직접 할당
+                print("🔔 새로운 알림이 있습니다.")
+            }
         }
     }
     
-    private func checkNewFriendRequests(friendRequests: [FriendRequest]) {
-        let currentIds = storage.savedNotificationIds
-        let hasNew = friendRequests.contains { !currentIds.contains("friend_\($0.friendRequestSeq)") }
-        
-        if hasNew {
-            storage.saveFriendRequests(friendRequests: friendRequests)
-            hasUnreadNotifications = true
+    // MARK: 알림 읽음 처리 - NotificationViewModel에서 사용
+    func markAllAsRead(notificationIds: [String]) {
+        storage.saveAllNotificationIds(notificationIds: notificationIds)
+        DispatchQueue.main.async {
+            self.hasUnreadNotifications = false
         }
+    }
+    
+    // MARK: 일정 초대 or 친구 신청 수락/거절 시 로컬 저장소에서 알림 삭제
+    func removeScheduleInvitation(scheduleSeq: Int) {
+        storage.removeScheduleInvitation(scheduleSeq: scheduleSeq)
+    }
+
+    func removeFriendRequest(friendRequestSeq: Int) {
+        storage.removeFriendRequest(friendRequestSeq: friendRequestSeq)
     }
     
     // 형변환

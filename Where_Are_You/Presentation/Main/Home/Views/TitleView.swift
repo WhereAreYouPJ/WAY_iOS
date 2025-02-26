@@ -42,12 +42,16 @@ class TitleView: UIView {
     }()
     
     private func setupObserver() {
-        viewModel.$hasUnreadNotifications
+        NotificationCenter.default.publisher(for: .unreadNotificationsChanged) // NotificationCenter를 사용하여 알림 상태 변경 구독
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] hasUnread in
-                self?.updateNotificationIcon(hasUnread: hasUnread)
+            .sink { [weak self] notification in
+                if let hasUnread = notification.userInfo?["hasUnread"] as? Bool {
+                    self?.updateNotificationIcon(hasUnread: hasUnread)
+                }
             }
             .store(in: &cancellables)
+        
+        updateNotificationIcon(hasUnread: viewModel.hasUnreadNotifications) // 초기 상태 설정
     }
     
     private func updateNotificationIcon(hasUnread: Bool) {

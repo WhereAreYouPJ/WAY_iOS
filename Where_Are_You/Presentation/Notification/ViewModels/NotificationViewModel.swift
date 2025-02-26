@@ -22,6 +22,7 @@ class NotificationViewModel: ObservableObject {
     private let refuseFriendRequestUseCase: RefuseFriendRequestUseCase
     
     private let notificationBadgeViewModel: NotificationBadgeViewModel
+    private let notificationStorage = NotificationStorage.shared
     
     init(
         getInvitedListUseCase: GetInvitedListUseCase,
@@ -45,36 +46,29 @@ class NotificationViewModel: ObservableObject {
         self.notificationBadgeViewModel = notificationBadgeViewModel
     }
     
-    // 알림 목록 조회와 읽음 처리를 함께 수행
+    // MARK: 알림 목록 조회와 읽음 처리를 함께 수행
     func fetchNotifications() {
-        // 두 API 호출이 모두 완료된 후 읽음 처리하기 위한 그룹
-        let group = DispatchGroup()
+        let group = DispatchGroup() // 두 API 호출이 모두 완료된 후 읽음 처리하기 위한 그룹
         
-        // 일정 초대 조회
         group.enter()
-        getInvitedList { success in
+        getInvitedList { _ in // 일정 초대 조회
             group.leave()
         }
         
-        // 친구 요청 조회
         group.enter()
-        getFriendRequestList { success in
+        getFriendRequestList { _ in // 친구 요청 조회
             group.leave()
         }
         
-        // 모든 API 호출이 완료된 후 읽음 처리
-        group.notify(queue: .main) { [weak self] in
+        group.notify(queue: .main) { [weak self] in // 모든 API 호출이 완료된 후 읽음 처리
             guard let self = self else { return }
             
-            // 조회된 알림 데이터로 읽음 처리
-            if let schedules = self.invitedSchedules {
-                self.notificationBadgeViewModel.markScheduleInvitationsAsRead(scheduleInvitations: schedules)
+            if let schedules = self.invitedSchedules, let requests = self.friendRequests {
+                let allNotificationIds = schedules.map { "schedule_\($0.scheduleSeq)" } +
+                                         requests.map { "friend_\($0.friendRequestSeq)" }
+                
+                self.notificationBadgeViewModel.markAllAsRead(notificationIds: allNotificationIds)
             }
-            if let requests = self.friendRequests {
-                self.notificationBadgeViewModel.markFriendRequestsAsRead(friendRequests: requests)
-            }
-            
-            print("🔔 알림 읽음 처리 완료!")
         }
     }
     
@@ -102,9 +96,12 @@ class NotificationViewModel: ObservableObject {
     }
     
     func ecceptSchedule(scheduleSeq: Int) {
-        postAcceptScheduleUseCase.execute(request: PostAcceptScheduleBody(scheduleSeq: scheduleSeq, memberSeq: memberSeq)) { result in
+        postAcceptScheduleUseCase.execute(request: PostAcceptScheduleBody(scheduleSeq: scheduleSeq, memberSeq: memberSeq)) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success:
+                self.notificationBadgeViewModel.removeScheduleInvitation(scheduleSeq: scheduleSeq)
                 print("일정 \(scheduleSeq) 초대 수락 완료!")
             case .failure(let error):
                 print("일정 초대 수락 실패 - \(error.localizedDescription)")
@@ -113,9 +110,12 @@ class NotificationViewModel: ObservableObject {
     }
     
     func refuseInvitedSchedule(scheduleSeq: Int) {
-        refuseInvitedScheduleUseCase.execute(request: RefuseInvitedScheduleBody(memberSeq: memberSeq, scheduleSeq: scheduleSeq)) { result in
+        refuseInvitedScheduleUseCase.execute(request: RefuseInvitedScheduleBody(memberSeq: memberSeq, scheduleSeq: scheduleSeq)) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success:
+                self.notificationBadgeViewModel.removeScheduleInvitation(scheduleSeq: scheduleSeq)
                 print("일정 \(scheduleSeq) 초대 거절 완료!")
             case .failure(let error):
                 print("일정 초대 거절 실패 - \(error.localizedDescription)")
@@ -148,9 +148,12 @@ class NotificationViewModel: ObservableObject {
     }
     
     func acceptFriendRequest(friendRequest: FriendRequest) {
-        acceptFriendRequestUseCase.execute(request: AcceptFriendRequestBody(friendRequestSeq: friendRequest.friendRequestSeq, memberSeq: memberSeq, senderSeq: friendRequest.friend.memberSeq)) { result in
+        acceptFriendRequestUseCase.execute(request: AcceptFriendRequestBody(friendRequestSeq: friendRequest.friendRequestSeq, memberSeq: memberSeq, senderSeq: friendRequest.friend.memberSeq)) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success:
+                self.notificationBadgeViewModel.removeFriendRequest(friendRequestSeq: friendRequest.friendRequestSeq)
                 print("친구 요청 \(friendRequest.friendRequestSeq) 수락 완료!")
             case .failure(let error):
                 print("친구 요청 수락 실패 - \(error.localizedDescription)")
@@ -159,9 +162,12 @@ class NotificationViewModel: ObservableObject {
     }
     
     func refuseFriendRequest(friendRequestSeq: Int) {
-        refuseFriendRequestUseCase.execute(request: RefuseFriendRequestBody(friendRequestSeq: friendRequestSeq)) { result in
+        refuseFriendRequestUseCase.execute(request: RefuseFriendRequestBody(friendRequestSeq: friendRequestSeq)) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success:
+                self.notificationBadgeViewModel.removeFriendRequest(friendRequestSeq: friendRequestSeq)
                 print("친구 요청 \(friendRequestSeq) 거절 완료!")
             case .failure(let error):
                 print("친구 요청 거절 실패 - \(error.localizedDescription)")

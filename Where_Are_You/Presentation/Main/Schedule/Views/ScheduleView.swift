@@ -10,6 +10,7 @@ import SwiftUI
 struct ScheduleView: View {
     // TODO: 초대받은 일정 캘린더에 안뜸
     @StateObject var viewModel: ScheduleViewModel
+    @StateObject private var notificationBadgeViewModel = NotificationBadgeViewModel.shared
     
     @State private var showNotification = false
     @State private var showOptionMenu = false
@@ -34,7 +35,7 @@ struct ScheduleView: View {
                             Button(action: {
                                 showNotification = true
                             }, label: {
-                                Image("icon-notification")
+                                Image(notificationBadgeViewModel.hasUnreadNotifications ? "icon-notification-badge" : "icon-notification")
                                     .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
                             })
                             .padding(0)
@@ -57,8 +58,7 @@ struct ScheduleView: View {
                 .padding(.horizontal, LayoutAdapter.shared.scale(value: 10))
                 
                 if showOptionMenu {
-                    // 배경 터치시 메뉴 닫기
-                    Color.clear
+                    Color.clear // 배경 터치시 메뉴 닫기
                         .contentShape(Rectangle())
                         .onTapGesture {
                             showOptionMenu = false
@@ -103,6 +103,7 @@ struct ScheduleView: View {
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
         .onAppear(perform: {
             viewModel.getMonthlySchedule()
+            notificationBadgeViewModel.checkForNewNotifications()
         })
     }
     
