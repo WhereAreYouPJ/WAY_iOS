@@ -20,8 +20,12 @@ struct ScheduleView: View {
     @State private var showDailySchedule = false
     
     init() {
-        let service = ScheduleService()
-        _viewModel = StateObject(wrappedValue: ScheduleViewModel(service: service))
+        let repository = ScheduleRepository(scheduleService: ScheduleService())
+        let getMonthlyScheduleUseCase = GetMonthlyScheduleUseCaseImpl(scheduleRepository: repository)
+        
+        _viewModel = StateObject(wrappedValue: ScheduleViewModel(
+            getMonthlyScheduleUseCase: getMonthlyScheduleUseCase
+        ))
     }
     
     var body: some View {

@@ -9,7 +9,6 @@ import Foundation
 
 protocol GetScheduleUseCase {
     func execute(scheduleSeq: Int, completion: @escaping (Result<GetScheduleResponse, Error>) -> Void)
-
 }
 
 class GetScheduleUseCaseImpl: GetScheduleUseCase {

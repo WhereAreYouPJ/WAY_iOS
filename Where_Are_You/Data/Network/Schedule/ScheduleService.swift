@@ -15,7 +15,7 @@ protocol ScheduleServiceProtocol {
     func postAcceptSchedule(request: PostAcceptScheduleBody, completion: @escaping (Result<Void, Error>) -> Void)
     
     func getSchedule(scheduleSeq: Int, completion: @escaping (Result<GenericResponse<GetScheduleResponse>, Error>) -> Void)
-    func getMonthlySchedule(yearMonth: String, completion: @escaping (Result<GenericResponse<[GetScheduleByMonthResponse]>, Error>) -> Void)
+    func getMonthlySchedule(yearMonth: String, completion: @escaping (Result<GenericResponse<GetScheduleByMonthResponse>, Error>) -> Void)
     func getDailySchedule(date: String, completion: @escaping (Result<GenericResponse<GetScheduleByDateResponse>, Error>) -> Void)
     func getDDaySchedule(completion: @escaping (Result<GenericResponse<[DDayScheduleResponse]>, Error>) -> Void)
     func getScheduleList(page: Int32, completion: @escaping (Result<GenericResponse<GetScheduleListResponse>, Error>) -> Void)
@@ -64,7 +64,7 @@ class ScheduleService: ScheduleServiceProtocol {
         }
     }
     
-    func getMonthlySchedule(yearMonth: String, completion: @escaping (Result<GenericResponse<[GetScheduleByMonthResponse]>, Error>) -> Void) {
+    func getMonthlySchedule(yearMonth: String, completion: @escaping (Result<GenericResponse<GetScheduleByMonthResponse>, Error>) -> Void) {
         provider.request(.getMonthlySchedule(yearMonth: yearMonth, memberSeq: memberSeq)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }

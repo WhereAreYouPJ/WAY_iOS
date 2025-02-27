@@ -21,4 +21,5 @@ struct MemberInfos: Codable {
     let memberSeq: Int
     let userName: String
     let isCreate: Bool
+    let isAccepted: Bool
 }
