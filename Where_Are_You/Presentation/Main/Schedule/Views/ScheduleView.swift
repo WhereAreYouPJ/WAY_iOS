@@ -400,7 +400,7 @@ private struct CellView: View {
                     Text(schedule.title)
                         .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 9))))
                         .padding(.horizontal, 4)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(maxWidth: .infinity, alignment: .center)
                 } else if isEnd {
                     if weekday == 1 { /// 마지막날이고 일요일일 때
                         RoundedRectangle(cornerRadius: 2)
@@ -435,7 +435,7 @@ private struct CellView: View {
                         Text(schedule.title)
                             .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 9))))
                             .padding(.horizontal, 4)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .frame(maxWidth: .infinity, alignment: .center)
                     } else {
                         Rectangle()
                             .fill(scheduleColor(for: schedule.color))
