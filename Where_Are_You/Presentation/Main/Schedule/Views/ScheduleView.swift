@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ScheduleView: View {
-    // TODO: 초대받은 일정 캘린더에 안뜸
+    // TODO: 연속된 날짜의 일정인 경우 계단식으로 보이는 문제
+    // TODO: " 일정 제목 가운데 정렬
     @StateObject var viewModel: ScheduleViewModel
     @StateObject private var notificationBadgeViewModel = NotificationBadgeViewModel.shared
     
@@ -20,8 +21,12 @@ struct ScheduleView: View {
     @State private var showDailySchedule = false
     
     init() {
-        let service = ScheduleService()
-        _viewModel = StateObject(wrappedValue: ScheduleViewModel(service: service))
+        let repository = ScheduleRepository(scheduleService: ScheduleService())
+        let getMonthlyScheduleUseCase = GetMonthlyScheduleUseCaseImpl(scheduleRepository: repository)
+        
+        _viewModel = StateObject(wrappedValue: ScheduleViewModel(
+            getMonthlyScheduleUseCase: getMonthlyScheduleUseCase
+        ))
     }
     
     var body: some View {
@@ -279,7 +284,7 @@ private struct CellView: View {
         isToday: Bool = false,
         isCurrentMonthDay: Bool = true,
         weekday: Int,
-        schedules: [(Schedule, Bool, Bool)] = []
+        schedules: [(Schedule, Bool, Bool)] = [] // (일정, 오늘 시작하는 날인지, 오늘 끝나는 날인지)
     ) {
         self.day = day
         self.clicked = clicked
@@ -308,12 +313,50 @@ private struct CellView: View {
             }
             .padding(.bottom, 2)
             
-            VStack(spacing: 2) {
-                ForEach(0..<min(3, schedules.count), id: \.self) { index in
-                    scheduleBar(schedule: schedules[index].0, isStart: schedules[index].1, isEnd: schedules[index].2, isMoreThanFour: false)
+            // 1. 일정 정렬. 오랜 기간 일정일 수록 앞에 오도록
+            let sortedSchedules = schedules.sorted { (a, b) in
+                // 첫 번째 기준: 연속 일정이 단일 일정보다 우선
+                let aIsMultiDay = !(a.1 && a.2)
+                let bIsMultiDay = !(b.1 && b.2)
+                
+                if aIsMultiDay != bIsMultiDay {
+                    return aIsMultiDay
                 }
-                if schedules.count > 3 {
-                    scheduleBar(schedule: schedules[3].0, isStart: schedules[3].1, isEnd: schedules[3].2, isMoreThanFour: schedules.count > 4)
+                
+                // 둘 다 연속 일정인 경우, 일정 기간으로 정렬
+                if aIsMultiDay && bIsMultiDay {
+                    let aDuration = Calendar.current.dateComponents([.day],
+                                                                    from: a.0.startTime,
+                                                                    to: a.0.endTime).day ?? 0
+                    let bDuration = Calendar.current.dateComponents([.day],
+                                                                    from: b.0.startTime,
+                                                                    to: b.0.endTime).day ?? 0
+                    return aDuration > bDuration
+                }
+                
+                return false
+            }
+            
+            // 2. 정렬된 일정 목록을 기반으로 스케줄바 표시
+            VStack(spacing: 2) {
+                // 최대 3개까지 일정 표시
+                ForEach(0..<min(3, sortedSchedules.count), id: \.self) { index in
+                    scheduleBar(
+                        schedule: sortedSchedules[index].0,
+                        isStart: sortedSchedules[index].1,
+                        isEnd: sortedSchedules[index].2,
+                        isMoreThanFour: false
+                    )
+                }
+                
+                // 3개 초과 일정이 있는 경우 "+" 표시
+                if sortedSchedules.count > 3 {
+                    scheduleBar(
+                        schedule: sortedSchedules[3].0,
+                        isStart: sortedSchedules[3].1,
+                        isEnd: sortedSchedules[3].2,
+                        isMoreThanFour: true
+                    )
                 }
             }
             

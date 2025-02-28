@@ -37,7 +37,7 @@ final class CreateScheduleViewModel: ObservableObject {
     private let geocodeLocationUseCase: GeocodeLocationUseCase
     private var cancellables = Set<AnyCancellable>()
     
-    let memberSeq = UserDefaultsManager.shared.getMemberSeq() // Combine 구독을 저장할 속성 추가
+    let memberSeq = UserDefaultsManager.shared.getMemberSeq()
     
     init(
         schedule: Schedule? = nil,
@@ -69,8 +69,7 @@ final class CreateScheduleViewModel: ObservableObject {
         self.startTime = startOfHour
         self.endTime = endOfHour // TODO: 23시 이후에 하루종일 토글 on 할 경우 시작일과 종료날이 달라지는 부분 수정 필요
         
-        // 기존 일정이 있으면 값 설정
-        if let schedule = schedule {
+        if let schedule = schedule { // 기존 일정이 있으면 값 설정
             self.title = schedule.title
             self.isAllDay = schedule.isAllday ?? false
             self.startTime = schedule.startTime
@@ -79,8 +78,7 @@ final class CreateScheduleViewModel: ObservableObject {
             self.memo = schedule.memo ?? ""
             self.selectedFriends = schedule.invitedMember ?? []
             
-            // 위치 정보가 있으면 시퀀스 유지하며 설정
-            if let scheduleLocation = schedule.location {
+            if let scheduleLocation = schedule.location { // 위치 정보가 있으면 시퀀스 유지하며 설정
                 // 즐겨찾기 목록에서 시퀀스 확인
                 if let favoriteLocation = LocationManager.shared.findLocationByAddress(
                     location: scheduleLocation.location,
@@ -100,8 +98,7 @@ final class CreateScheduleViewModel: ObservableObject {
             }
         }
         
-        // LocationManager의 즐겨찾기 목록 변경 구독
-        LocationManager.shared.$favoriteLocations
+        LocationManager.shared.$favoriteLocations // LocationManager의 즐겨찾기 목록 변경 구독
             .sink { [weak self] locations in
                 self?.updateFavoritePlaces(locations)
                 self?.syncPlaceWithFavorites()
@@ -110,13 +107,11 @@ final class CreateScheduleViewModel: ObservableObject {
     }
     
     func geocodeSelectedLocation(_ location: Location, completion: @escaping (Location) -> Void) {
-        // 즐겨찾기된 위치라면 시퀀스 유지
-        let locationWithSequence = LocationManager.shared.applyFavoriteSequence(to: location)
+        let locationWithSequence = LocationManager.shared.applyFavoriteSequence(to: location) // 즐겨찾기된 위치라면 시퀀스 유지
         
         geocodeLocationUseCase.execute(location: locationWithSequence) { result in
             switch result {
             case .success(let geocodedLocation):
-                // 지오코딩된 결과에도 시퀀스 유지
                 let resultLocation = Location(
                     locationSeq: locationWithSequence.locationSeq,
                     sequence: locationWithSequence.sequence,
@@ -133,21 +128,18 @@ final class CreateScheduleViewModel: ObservableObject {
         }
     }
     
-    func getFavoriteLocation() {
-        // LocationManager를 통해 즐겨찾기 새로고침
+    func getFavoriteLocation() { // LocationManager를 통해 즐겨찾기 새로고침
         LocationManager.shared.loadFavoriteLocations()
     }
     
-    // 즐겨찾기 목록 업데이트
     private func updateFavoritePlaces(_ locations: [Location]) {
         DispatchQueue.main.async {
             self.favPlaces = locations
             print("즐겨찾기 위치 \(locations.count)개 업데이트됨")
         }
     }
-    
-    // 현재 선택된 위치와 즐겨찾기 목록 동기화
-    private func syncPlaceWithFavorites() {
+
+    private func syncPlaceWithFavorites() { // 현재 선택된 위치와 즐겨찾기 목록 동기화
         guard let currentPlace = place else { return }
         
         // 현재 선택된 위치가 즐겨찾기 목록에 있는지 확인
@@ -155,9 +147,8 @@ final class CreateScheduleViewModel: ObservableObject {
             location: currentPlace.location,
             streetName: currentPlace.streetName
         ) {
-            // 시퀀스가 다르면 업데이트
             if currentPlace.sequence != favoriteMatch.sequence ||
-                currentPlace.locationSeq != favoriteMatch.locationSeq {
+                currentPlace.locationSeq != favoriteMatch.locationSeq { // 시퀀스가 다르면 업데이트
                 DispatchQueue.main.async {
                     self.place = Location(
                         locationSeq: favoriteMatch.locationSeq,
@@ -171,8 +162,7 @@ final class CreateScheduleViewModel: ObservableObject {
                 }
             }
         } else if currentPlace.sequence > 0 || currentPlace.locationSeq != nil {
-            // 즐겨찾기에 없는데 시퀀스가 있으면 (즐겨찾기 삭제된 경우) 시퀀스 리셋
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { // 즐겨찾기에 없는데 시퀀스가 있으면 (즐겨찾기 삭제된 경우) 시퀀스 리셋
                 self.place = Location(
                     locationSeq: nil,
                     sequence: 0,
@@ -212,7 +202,6 @@ final class CreateScheduleViewModel: ObservableObject {
                     self.isSuccess = true
                     print("post 성공! start time: \(self.startTime.formatted(to: .serverSimple)), end time: \(self.startTime.formatted(to: .serverSimple))")
                     print("Member Sequence: \(self.memberSeq), Schedule Sequence: \(response.data.scheduleSeq), Chat Root Sequence: \(response.data.chatRootSeq)")
-                    
                 case .failure(let error):
                     print("postSchedule 요청 실패: \(error.localizedDescription)")
                 }
