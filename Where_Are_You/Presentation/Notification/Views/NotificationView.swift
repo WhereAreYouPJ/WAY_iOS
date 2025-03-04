@@ -81,7 +81,7 @@ struct NotificationView: View {
             Text("알림")
                 .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 20))))
                 .foregroundStyle(Color(.black22))
-            
+
             Spacer()
             
             Button(action: {

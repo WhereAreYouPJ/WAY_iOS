@@ -91,7 +91,7 @@ class AccountSearchViewController: UIViewController {
         // 타이머 업데이트
         viewModel.onUpdateTimer = { [weak self] timeString in
             DispatchQueue.main.async {
-                self?.accountSearchView.timer.text = timeString
+                self?.accountSearchView.timer.updateTextKeepingAttributes(newText: timeString)
             }
         }
     }

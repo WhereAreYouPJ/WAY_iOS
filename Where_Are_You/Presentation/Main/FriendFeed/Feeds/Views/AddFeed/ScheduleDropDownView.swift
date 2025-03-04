@@ -13,19 +13,10 @@ class ScheduleDropDown: UIView {
     let scheduleDropDownView = UIButton()
     
     let chooseScheduleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "일정 선택", textColor: .brandDark))
-//    CustomLabel(UILabel_NotoSans: .medium, text: "일정 선택", textColor: .black66, fontSize: LayoutAdapter.shared.scale(value: 16))
      
     let scheduleDateLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "s", textColor: .brandDark))
-//    : UILabel = {
-//        let label = UILabel()
-//        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 12))
-//        label.textColor = .black44
-//        label.numberOfLines = 2
-//        return label
-//    }()
     
     let scheduleLocationLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "s", textColor: .black22))
-//    : UILabel = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .black44, fontSize: LayoutAdapter.shared.scale(value: 16))
     
     lazy var scheduleStackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [scheduleDateLabel, scheduleLocationLabel])

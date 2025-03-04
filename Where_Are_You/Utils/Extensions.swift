@@ -214,7 +214,7 @@ extension UIFont {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.maximumLineHeight = font.lineHeight * lineHeight
             paragraphStyle.minimumLineHeight = font.lineHeight * lineHeight
-            // https://sujinnaljin.medium.com/swift-label%EC%9D%98-line-height-%EC%84%A4%EC%A0%95-%EB%B0%8F-%EA%B0%80%EC%9A%B4%EB%8D%B0-%EC%A0%95%EB%A0%AC-962f7c6e7512여기서 LineHeight설정시 아래에 깔리는 문제 해결            
+            // https://sujinnaljin.medium.com/swift-label%EC%9D%98-line-height-%EC%84%A4%EC%A0%95-%EB%B0%8F-%EA%B0%80%EC%9A%B4%EB%8D%B0-%EC%A0%95%EB%A0%AC-962f7c6e7512여기서 LineHeight설정시 아래에 깔리는 문제 해결
             let letterSpacingPt = letterSpacing / UIScreen.main.scale // px -> pt 변환
             
             return NSAttributedString(
@@ -397,12 +397,85 @@ extension View {
 // MARK: - UILabel
 
 extension UILabel {
+    //    // "... 더보기" 관련 로직
+    //    func addTrailing(with trailingText: String, moreText: String, moreTextFont: UIFont, moreTextColor: UIColor) {
+    //        guard let text = self.text, !text.isEmpty else { return }
+    //
+    //        // Calculate visible text length
+    //        let visibleLength = calculateVisibleTextLength()
+    //        guard visibleLength > 0, visibleLength < text.count else { return }
+    //
+    //        let trimmedText = (text as NSString).substring(to: visibleLength)
+    //        let trailing = trailingText + moreText
+    //
+    //        guard trimmedText.count > trailing.count else { return }
+    //
+    //        let finalText = (trimmedText as NSString).replacingCharacters(
+    //            in: NSRange(location: trimmedText.count - trailing.count, length: trailing.count),
+    //            with: trailingText
+    //        )
+    //
+    //        let attributedString = NSMutableAttributedString(string: finalText, attributes: [
+    //            .font: self.font ?? UIFont.systemFont(ofSize: 14),
+    //            .foregroundColor: self.textColor ?? UIColor.black
+    //        ])
+    //
+    //        let moreAttributedString = NSAttributedString(string: moreText, attributes: [
+    //            .font: moreTextFont,
+    //            .foregroundColor: moreTextColor
+    //        ])
+    //        attributedString.append(moreAttributedString)
+    //
+    //        self.attributedText = attributedString
+    //    }
+    //
+    //    private func calculateVisibleTextLength() -> Int {
+    //        guard let text = self.text, !text.isEmpty else { return 0 }
+    //
+    //        self.layoutIfNeeded()
+    //
+    //        let sizeConstraint = CGSize(width: self.frame.width, height: CGFloat.greatestFiniteMagnitude)
+    //        let boundingRect = (text as NSString).boundingRect(
+    //            with: sizeConstraint,
+    //            options: .usesLineFragmentOrigin,
+    //            attributes: [.font: self.font!],
+    //            context: nil
+    //        )
+    //
+    //        if boundingRect.height <= self.frame.height {
+    //            return text.count
+    //        }
+    //
+    //        var index = 0
+    //        var prevIndex = 0
+    //        let characterSet = CharacterSet.whitespacesAndNewlines
+    //
+    //        repeat {
+    //            prevIndex = index
+    //            index = (text as NSString).rangeOfCharacter(from: characterSet, options: [], range: NSRange(location: index + 1, length: text.count - index - 1)).location
+    //
+    //            let substring = (text as NSString).substring(to: index)
+    //            let height = (substring as NSString).boundingRect(
+    //                with: sizeConstraint,
+    //                options: .usesLineFragmentOrigin,
+    //                attributes: [.font: self.font!],
+    //                context: nil
+    //            ).height
+    //
+    //            if height > self.frame.height {
+    //                break
+    //            }
+    //        } while index != NSNotFound
+    //
+    //        return prevIndex
+    //    }
     // "... 더보기" 관련 로직
     func addTrailing(with trailingText: String, moreText: String, moreTextFont: UIFont, moreTextColor: UIColor) {
         guard let text = self.text, !text.isEmpty else { return }
         
-        // Calculate visible text length
-        let visibleLength = calculateVisibleTextLength()
+        let computedVisibleLength = calculateVisibleTextLength()
+        let visibleLength = min(computedVisibleLength, text.count)
+        
         guard visibleLength > 0, visibleLength < text.count else { return }
         
         let trimmedText = (text as NSString).substring(to: visibleLength)
@@ -410,10 +483,9 @@ extension UILabel {
         
         guard trimmedText.count > trailing.count else { return }
         
-        let finalText = (trimmedText as NSString).replacingCharacters(
-            in: NSRange(location: trimmedText.count - trailing.count, length: trailing.count),
-            with: trailingText
-        )
+        let rangeLocation = trimmedText.count - trailing.count
+        let safeRange = NSRange(location: rangeLocation, length: trailing.count)
+        let finalText = (trimmedText as NSString).replacingCharacters(in: safeRange, with: trailingText)
         
         let attributedString = NSMutableAttributedString(string: finalText, attributes: [
             .font: self.font ?? UIFont.systemFont(ofSize: 14),
@@ -434,6 +506,8 @@ extension UILabel {
         
         self.layoutIfNeeded()
         
+        // 만약 self.frame.height가 0이라면 intrinsicContentSize.height 사용
+        let labelHeight = self.frame.height > 0 ? self.frame.height : self.intrinsicContentSize.height
         let sizeConstraint = CGSize(width: self.frame.width, height: CGFloat.greatestFiniteMagnitude)
         let boundingRect = (text as NSString).boundingRect(
             with: sizeConstraint,
@@ -442,7 +516,8 @@ extension UILabel {
             context: nil
         )
         
-        if boundingRect.height <= self.frame.height {
+        // 전체 텍스트가 이미 보인다면
+        if boundingRect.height <= labelHeight {
             return text.count
         }
         
@@ -452,7 +527,20 @@ extension UILabel {
         
         repeat {
             prevIndex = index
-            index = (text as NSString).rangeOfCharacter(from: characterSet, options: [], range: NSRange(location: index + 1, length: text.count - index - 1)).location
+            
+            // 다음 공백을 찾기 위한 범위를 계산
+            let searchRange = NSRange(location: index + 1, length: text.count - index - 1)
+            let foundRange = (text as NSString).rangeOfCharacter(from: characterSet, options: [], range: searchRange)
+            
+            // 만약 공백을 찾지 못했다면, 인덱스를 텍스트 전체 길이로 설정하고 종료
+            if foundRange.location == NSNotFound {
+                index = text.count
+                break
+            } else {
+                index = foundRange.location
+            }
+            
+            //            index = (text as NSString).rangeOfCharacter(from: characterSet, options: [], range: NSRange(location: index + 1, length: text.count - index - 1)).location
             
             let substring = (text as NSString).substring(to: index)
             let height = (substring as NSString).boundingRect(
@@ -462,14 +550,15 @@ extension UILabel {
                 context: nil
             ).height
             
-            if height > self.frame.height {
+            if height > labelHeight {
                 break
             }
-        } while index != NSNotFound
+        } while index < text.count
         
         return prevIndex
     }
 }
+
 
 extension UIView {
     func superview<T>(of type: T.Type) -> T? {
