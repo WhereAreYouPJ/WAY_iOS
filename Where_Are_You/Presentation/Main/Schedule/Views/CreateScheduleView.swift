@@ -7,16 +7,30 @@
 
 import SwiftUI
 
-enum Route: Hashable {
-    case searchPlace
-    case searchFriends
-    case confirmLocation(Location?)
-}
-
 struct CreateScheduleView: View {
     @StateObject var viewModel: CreateScheduleViewModel
+    @StateObject var searchFriendsViewModel: SearchFriendsViewModel = {
+        let friendRepository = FriendRepository(friendService: FriendService())
+        let getFriendUseCase = GetFriendUseCaseImpl(friendRepository: friendRepository)
+        
+        let memberRepository = MemberRepository(memberService: MemberService())
+        let memberDetailsUseCase = MemberDetailsUseCaseImpl(memberRepository: memberRepository)
+        
+        let friendsViewModel = FriendsViewModel(getFriendUseCase: getFriendUseCase, memberDetailsUseCase: memberDetailsUseCase)
+        
+        return SearchFriendsViewModel(
+            friendsViewModel: friendsViewModel,
+            getFriendUseCase: getFriendUseCase)
+    }()
+    
     @Environment(\.dismiss) private var dismiss
     @State private var path = NavigationPath()
+    
+    @State private var showSearchLocation = false
+    @State private var showConfirmLocation = false
+    @State private var showSearchFriends = false
+    
+    @State private var selectedLocationForConfirm: Location?
     
     init(viewModel: CreateScheduleViewModel? = nil) {
         let scheduleRepository = ScheduleRepository(scheduleService: ScheduleService())
@@ -38,67 +52,124 @@ struct CreateScheduleView: View {
     
     var body: some View {
         NavigationStack(path: $path) {
-            ScrollView {
-                VStack(alignment: .leading, content: {
-                    TextField("", text: $viewModel.title, prompt: Text("일정명을 작성해주세요.").foregroundColor(Color(.color118)))
-                    
-                    Divider()
-                        .padding(.bottom, 16)
-                    
-                    DateAndTimeView(isAllDay: $viewModel.isAllDay, startTime: $viewModel.startTime, endTime: $viewModel.endTime)
-                    
-                    AddPlaceView(viewModel: viewModel, path: $path)
-                    
-                    AddFriendsView(selectedFriends: $viewModel.selectedFriends, path: $path)
-                    
-                    SetColorView(color: $viewModel.color)
-                    
-                    MemoView(memo: $viewModel.memo)
-                })
-                .padding(15)
-                .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
+            mainContent
                 .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("취소", role: .cancel) {
-                            dismiss()
-                        }
-                        .foregroundStyle(Color.red)
-                    }
-                    ToolbarItem(placement: .primaryAction) {
-                        Button("추가") {
-                            viewModel.postSchedule()
-                            if viewModel.isSuccess {
-                                dismiss()
-                            } else {
-                                // TODO: 일정 생성 예외 처리 필요, 실패 경우 동작 구현
-                                dismiss()
-                            }
-                        }
-                        .foregroundStyle(viewModel.title.isEmpty ? Color.gray : Color.red)
-                        .disabled(viewModel.title.isEmpty)
-                    }
+                    toolbarContent
                 }
                 .navigationTitle("일정 추가")
                 .navigationBarTitleDisplayMode(.inline)
-                .navigationDestination(for: Route.self) { route in
-                    switch route {
-                    case .searchPlace:
-                        SearchLocationView(selectedLocation: $viewModel.place, path: $path)
-                    case let .confirmLocation(location):
-                        if let location = location {
-                            ConfirmLocationView(location: location, path: $path)
-                                .onDisappear {
-                                    viewModel.getFavoriteLocation()
-                                }
-                        }
-                    case .searchFriends:
-                        SearchFriendsView(selectedFriends: $viewModel.selectedFriends)
+                .fullScreenCover(isPresented: $showSearchLocation) {
+                    SearchLocationView(
+                        selectedLocation: $viewModel.place,
+                        showConfirmLocation: $showConfirmLocation,
+                        selectedLocationForConfirm: $selectedLocationForConfirm,
+                        dismissAction: { showSearchLocation = false }
+                    )
+                }
+                .fullScreenCover(isPresented: $showConfirmLocation) {
+                    if let location = selectedLocationForConfirm {
+                        ConfirmLocationView(
+                            location: location,
+                            dismissAction: {
+                                showConfirmLocation = false
+                                viewModel.getFavoriteLocation()
+                            }
+                        )
                     }
                 }
-            }
+                .fullScreenCover(isPresented: $showSearchFriends) {
+                    searchFriendsView
+                }
         }
         .onAppear {
             viewModel.getFavoriteLocation()
+        }
+    }
+    
+    private var mainContent: some View {
+        ScrollView {
+            VStack(alignment: .leading, content: {
+                TextField("", text: $viewModel.title, prompt: Text("일정명을 작성해주세요.").foregroundColor(Color(.color118)))
+                
+                Divider()
+                    .padding(.bottom, 16)
+                
+                DateAndTimeView(
+                    isAllDay: $viewModel.isAllDay,
+                    startTime: $viewModel.startTime,
+                    endTime: $viewModel.endTime
+                )
+                
+                AddPlaceView(
+                    viewModel: viewModel,
+                    showSearchLocation: $showSearchLocation,
+                    showConfirmLocation: $showConfirmLocation,
+                    selectedLocationForConfirm: $selectedLocationForConfirm
+                )
+                
+                AddFriendsView(
+                    showSearchFriends: $showSearchFriends,
+                    selectedFriends: $viewModel.selectedFriends
+                )
+                
+                SetColorView(color: $viewModel.color)
+                
+                MemoView(memo: $viewModel.memo)
+            })
+            .padding(15)
+            .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
+        }
+    }
+    
+    private var toolbarContent: some ToolbarContent {
+        Group {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("취소", role: .cancel) {
+                    dismiss()
+                }
+                .foregroundStyle(Color.red)
+            }
+            ToolbarItem(placement: .primaryAction) {
+                Button("추가") {
+                    viewModel.postSchedule()
+                    if viewModel.isSuccess {
+                        dismiss()
+                    } else {
+                        dismiss()
+                    }
+                }
+                .foregroundStyle(viewModel.title.isEmpty ? Color.gray : Color.red)
+                .disabled(viewModel.title.isEmpty)
+            }
+        }
+    }
+    
+    private var searchFriendsView: some View {
+        NavigationStack {
+            SearchFriendsView(
+                viewModel: searchFriendsViewModel,
+                selectedFriends: $viewModel.selectedFriends
+            )
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("친구 검색")
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: {
+                        showSearchFriends = false
+                    }, label: {
+                        Image(systemName: "chevron.left")
+                            .foregroundStyle(.gray)
+                    })
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("추가") {
+                        viewModel.selectedFriends = searchFriendsViewModel.confirmSelection()
+                        showSearchFriends = false
+                    }
+                    .foregroundStyle(.red)
+                }
+            }
         }
     }
 }
@@ -142,7 +213,10 @@ struct DateAndTimeView: View {
 
 struct AddPlaceView: View {
     @ObservedObject var viewModel: CreateScheduleViewModel
-    @Binding var path: NavigationPath
+    @Binding var showSearchLocation: Bool
+    @Binding var showConfirmLocation: Bool
+    @Binding var selectedLocationForConfirm: Location?
+    
     
     var body: some View {
         Text("위치추가")
@@ -156,7 +230,8 @@ struct AddPlaceView: View {
                     Text(selectedPlace.location)
                         .lineLimit(1)
                         .onTapGesture {
-                            path.append(Route.confirmLocation(selectedPlace))
+                            selectedLocationForConfirm = selectedPlace
+                            showConfirmLocation = true
                         }
                 }
                 
@@ -171,7 +246,7 @@ struct AddPlaceView: View {
                 Text("위치 추가")
                     .foregroundStyle(Color(.color118))
                     .onTapGesture {
-                        path.append(Route.searchPlace)
+                        showSearchLocation = true
                     }
             }
         }
@@ -209,8 +284,8 @@ struct FavoritePlaceCell: View {
 }
 
 struct AddFriendsView: View {
+    @Binding var showSearchFriends: Bool
     @Binding var selectedFriends: [Friend]
-    @Binding var path: NavigationPath
     
     var body: some View {
         Text("친구추가")
@@ -222,9 +297,6 @@ struct AddFriendsView: View {
             if selectedFriends.isEmpty {
                 Text("친구 추가")
                     .foregroundStyle(Color(.color118))
-                    .onTapGesture {
-                        path.append(Route.searchFriends)
-                    }
             } else {
                 let count = selectedFriends.count
                 ForEach(0..<min(3, count), id: \.self) { idx in
@@ -233,9 +305,6 @@ struct AddFriendsView: View {
                     } else {
                         Text(selectedFriends[idx].name)
                     }
-                }
-                .onTapGesture {
-                    path.append(Route.searchFriends)
                 }
                 
                 if count > 3 {
@@ -250,6 +319,9 @@ struct AddFriendsView: View {
                     CancellationView()
                 })
             }
+        }
+        .onTapGesture {
+            showSearchFriends = true
         }
         .padding(.bottom, 20)
     }

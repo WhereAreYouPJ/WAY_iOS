@@ -9,39 +9,52 @@ import SwiftUI
 
 struct SearchLocationView: View {
     @StateObject private var viewModel = SearchLocationViewModel()
+    
     @Binding var selectedLocation: Location?
-    @Binding var path: NavigationPath
-    @Environment(\.presentationMode) var presentationMode
+    @Binding var showConfirmLocation: Bool
+    @Binding var selectedLocationForConfirm: Location?
     
     @State var showRecentSearch = true
     
+    var dismissAction: () -> Void
+    
     var body: some View {
         VStack {
-            TextField("검색", text: $viewModel.searchText)
-                .autocorrectionDisabled()
-                .padding(7)
-                .padding(.horizontal, 25)
-                .background(Color(.systemGray6))
-                .cornerRadius(8)
-                .overlay(
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(.gray)
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            .padding(.leading, 8)
-                        
-                        if !viewModel.searchText.isEmpty {
-                            Button(action: {
-                                viewModel.searchText = ""
-                            }, label: {
-                                Image(systemName: "multiply.circle.fill")
-                                    .foregroundColor(.gray)
-                                    .padding(.trailing, 8)
-                            })
+            HStack {
+                Button(action: dismissAction) {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.gray)
+                }
+                .padding(.leading, LayoutAdapter.shared.scale(value: 16))
+                .padding(.trailing, LayoutAdapter.shared.scale(value: 4))
+                
+                TextField("장소 검색", text: $viewModel.searchText)
+                    .autocorrectionDisabled()
+                    .padding(LayoutAdapter.shared.scale(value: 7))
+                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 25))
+                    .background(Color(.systemGray6))
+                    .cornerRadius(LayoutAdapter.shared.scale(value: 8))
+                    .overlay(
+                        HStack {
+                            Image(systemName: "magnifyingglass")
+                                .foregroundColor(.gray)
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                .padding(.leading, LayoutAdapter.shared.scale(value: 8))
+                            
+                            if !viewModel.searchText.isEmpty {
+                                Button(action: {
+                                    viewModel.searchText = ""
+                                }, label: {
+                                    Image(systemName: "multiply.circle.fill")
+                                        .foregroundColor(.gray)
+                                        .padding(.trailing, LayoutAdapter.shared.scale(value: 8))
+                                })
+                            }
                         }
-                    }
-                )
-                .padding()
+                    )
+                    .padding(.trailing, LayoutAdapter.shared.scale(value: 16))
+            }
+            .padding(.vertical, LayoutAdapter.shared.scale(value: 10))
             
             if viewModel.searchText.isEmpty {
                 HStack {
@@ -51,10 +64,10 @@ struct SearchLocationView: View {
                         viewModel.clearRecentSearches()
                     }
                     .foregroundStyle(Color(.black66))
-                    .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 12)))
+                    .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 12))))
                 }
-                .padding(.horizontal, 25)
-                .padding(.bottom, 6)
+                .padding(.horizontal, LayoutAdapter.shared.scale(value: 25))
+                .padding(.bottom, LayoutAdapter.shared.scale(value: 10))
                 
                 List(viewModel.recentSearches) { location in
                     locationRow(location: location)
@@ -77,7 +90,7 @@ struct SearchLocationView: View {
         }
         .navigationTitle("장소 검색")
         .navigationBarTitleDisplayMode(.inline)
-        .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
+        .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 16)))
         .foregroundStyle(Color(.black22))
         .onChange(of: viewModel.searchText) { _, _ in
             showRecentSearch = (viewModel.searchText == "")
@@ -89,16 +102,16 @@ struct SearchLocationView: View {
             HStack {
                 VStack {
                     Image("icon-place2")
-                        .padding(2)
+                        .padding(LayoutAdapter.shared.scale(value: 2))
                     Spacer()
                 }
                 VStack(alignment: .leading) {
                     HStack {
                         Text(location.location)
-                            .padding(2)
+                            .padding(LayoutAdapter.shared.scale(value: 2))
                     }
                     Text(location.streetName)
-                        .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 14)))
+                        .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14))))
                         .foregroundStyle(Color(.color153))
                 }
                 Spacer()
@@ -114,12 +127,21 @@ struct SearchLocationView: View {
         .onTapGesture {
             selectedLocation = location
             viewModel.addToRecentSearches(location)
-            path.append(Route.confirmLocation(location))
+            
+            selectedLocationForConfirm = location
+            dismissAction() // SearchLocation 화면을 닫고
+            showConfirmLocation = true // ConfirmLocation 화면을 표시
+            
             print("위치: \(location.location) / \(location.streetName) / \(location.x) / \(location.y)")
         }
     }
 }
 
 #Preview {
-    SearchLocationView(selectedLocation: .constant(Location(sequence: 0, location: "", streetName: "", x: 0, y: 0)), path: .constant(NavigationPath()))
+    SearchLocationView(
+        selectedLocation: .constant(nil),
+        showConfirmLocation: .constant(false),
+        selectedLocationForConfirm: .constant(nil),
+        dismissAction: {}
+    )
 }
