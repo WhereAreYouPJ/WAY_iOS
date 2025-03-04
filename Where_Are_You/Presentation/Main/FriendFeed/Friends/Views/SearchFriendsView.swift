@@ -9,19 +9,7 @@ import SwiftUI
 import Kingfisher
 
 struct SearchFriendsView: View {
-    @StateObject private var viewModel: SearchFriendsViewModel = {
-        let friendRepository = FriendRepository(friendService: FriendService())
-        let getFriendUseCase = GetFriendUseCaseImpl(friendRepository: friendRepository)
-        
-        let memberRepository = MemberRepository(memberService: MemberService())
-        let memberDetailsUseCase = MemberDetailsUseCaseImpl(memberRepository: memberRepository)
-        
-        let friendsViewModel = FriendsViewModel(getFriendUseCase: getFriendUseCase, memberDetailsUseCase: memberDetailsUseCase)
-        
-        return SearchFriendsViewModel(
-            friendsViewModel: friendsViewModel,
-            getFriendUseCase: getFriendUseCase)
-    }()
+    @ObservedObject var viewModel: SearchFriendsViewModel
     
     @Binding var selectedFriends: [Friend]
     @Environment(\.dismiss) private var dismiss
@@ -55,6 +43,17 @@ struct SearchFriendsView: View {
             )
             .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
         }
+        .onAppear {
+            viewModel.friendsViewModel.getFriendsList()
+            
+            // 기존에 선택된 친구들을 viewModel에 반영
+            viewModel.resetSelection() // 선택 상태 초기화
+            for friend in selectedFriends {
+                if !viewModel.isSelected(friend: friend) {
+                    viewModel.toggleSelection(for: friend)
+                }
+            }
+        }
     }
 }
 
@@ -70,7 +69,7 @@ struct SelectedFriendsView: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: UIScreen.main.bounds.width * 0.12, height: UIScreen.main.bounds.width * 0.12)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16)))
                 
                 Text(friend.name)
                     .font(.caption)
@@ -83,14 +82,14 @@ struct SelectedFriendsView: View {
                     Image(systemName: "circle.fill")
                         .foregroundColor(.white)
                         .opacity(0.8)
-                        .shadow(radius: 10)
+                        .shadow(radius: LayoutAdapter.shared.scale(value: 10))
                     Image(systemName: "multiply")
                         .foregroundColor(.gray)
                 }
             })
-            .offset(x: 20, y: -28)
+            .offset(x: LayoutAdapter.shared.scale(value: 20), y: LayoutAdapter.shared.scale(value: -28))
         }
-        .padding(.top, 4)
+        .padding(.top, LayoutAdapter.shared.scale(value: 20))
     }
 }
 
@@ -104,10 +103,10 @@ struct FriendCellWithToggle: View {
                 .resizable()
                 .scaledToFill()
                 .frame(width: UIScreen.main.bounds.width * 0.14, height: UIScreen.main.bounds.width * 0.14)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16)))
             
             Text(friend.name)
-                .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 17)))
+                .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 17))))
                 .foregroundColor(Color(.black22))
                 .padding(8)
             
@@ -116,7 +115,7 @@ struct FriendCellWithToggle: View {
             Toggle("", isOn: $isOn)
                 .toggleStyle(CheckboxToggleStyle())
         }
-        .padding(.vertical, 6)
+        .padding(.vertical, LayoutAdapter.shared.scale(value: 6))
     }
 }
 
@@ -147,9 +146,26 @@ struct CheckboxToggleStyle: ToggleStyle {
 #Preview {
     struct PreviewWrapper: View {
         @State var selectedFriends: [Friend] = []
+        @StateObject var viewModel: SearchFriendsViewModel = {
+            // 테스트를 위한 간단한 의존성 설정
+            let friendRepository = FriendRepository(friendService: FriendService())
+            let getFriendUseCase = GetFriendUseCaseImpl(friendRepository: friendRepository)
+            
+            let memberRepository = MemberRepository(memberService: MemberService())
+            let memberDetailsUseCase = MemberDetailsUseCaseImpl(memberRepository: memberRepository)
+            
+            let friendsViewModel = FriendsViewModel(getFriendUseCase: getFriendUseCase, memberDetailsUseCase: memberDetailsUseCase)
+            
+            return SearchFriendsViewModel(
+                friendsViewModel: friendsViewModel,
+                getFriendUseCase: getFriendUseCase)
+        }()
         
         var body: some View {
-            SearchFriendsView(selectedFriends: $selectedFriends)
+            SearchFriendsView(
+                viewModel: viewModel,
+                selectedFriends: $selectedFriends
+            )
         }
     }
     
