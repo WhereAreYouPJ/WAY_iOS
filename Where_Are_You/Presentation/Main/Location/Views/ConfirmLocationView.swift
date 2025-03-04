@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct ConfirmLocationView: View {
-    @Environment(\.presentationMode) var presentationMode
-    @Binding var path: NavigationPath
-    
     @StateObject var viewModel: ConfirmLocationViewModel
+    var dismissAction: () -> Void
     
-    init(location: Location, path: Binding<NavigationPath>) {
+    init(location: Location, dismissAction: @escaping () -> Void) {
         let repository = LocationRepository(locationService: LocationService())
         let getLocationUseCase = GetLocationUseCaseImpl(locationRepository: repository)
         let postLocationUseCase = PostLocationUseCaseImpl(locationRepository: repository)
@@ -26,7 +24,7 @@ struct ConfirmLocationView: View {
             deleteFavoriteLocationUseCase: deleteLocationUseCase
         ))
         
-        _path = path
+        self.dismissAction = dismissAction
     }
     
     var body: some View {
@@ -40,7 +38,7 @@ struct ConfirmLocationView: View {
             }
             
             DismissButtonView(isShownView: .constant(true)) {
-                path.removeLast()
+                dismissAction()
             }
         }
         .navigationBarBackButtonHidden()
@@ -74,7 +72,7 @@ struct ConfirmLocationView: View {
                 .padding(.top, 16)
             
             Button(action: {
-                path.removeLast(path.count)
+                dismissAction()
             }, label: {
                 Text("확인")
                     .font(Font(UIFont.pretendard(NotoSans: .semibold, fontSize: 18)))
@@ -92,8 +90,9 @@ struct ConfirmLocationView: View {
 
 #Preview {
     let location = Location(sequence: 0, location: "현대백화점 디큐브시티점", streetName: "서울 구로구 경인로 662", x: 126.88958060554663, y: 37.50910419634123)
+    
     return ConfirmLocationView(
         location: location,
-        path: .constant(NavigationPath())
+        dismissAction: {}
     )
 }

@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct ScheduleView: View {
-    // TODO: 연속된 날짜의 일정인 경우 계단식으로 보이는 문제
-    // TODO: " 일정 제목 가운데 정렬
+    // TODO: 가끔 일정 조회시 누락되는 일정 발생. 원인 추측: 특히 다중날짜 일정이 있을 경우 or 월이 다른 일정
     @StateObject var viewModel: ScheduleViewModel
     @StateObject private var notificationBadgeViewModel = NotificationBadgeViewModel.shared
     

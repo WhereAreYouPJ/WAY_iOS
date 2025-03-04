@@ -8,15 +8,20 @@
 import SwiftUI
 
 enum Route: Hashable {
-    case searchPlace
+//    case searchPlace
+//    case confirmLocation(Location?)
     case searchFriends
-    case confirmLocation(Location?)
 }
 
 struct CreateScheduleView: View {
     @StateObject var viewModel: CreateScheduleViewModel
     @Environment(\.dismiss) private var dismiss
     @State private var path = NavigationPath()
+    
+    // FullScreenCover 관련 상태 추가
+    @State private var showSearchLocation = false
+    @State private var showConfirmLocation = false
+    @State private var selectedLocationForConfirm: Location?
     
     init(viewModel: CreateScheduleViewModel? = nil) {
         let scheduleRepository = ScheduleRepository(scheduleService: ScheduleService())
@@ -47,7 +52,12 @@ struct CreateScheduleView: View {
                     
                     DateAndTimeView(isAllDay: $viewModel.isAllDay, startTime: $viewModel.startTime, endTime: $viewModel.endTime)
                     
-                    AddPlaceView(viewModel: viewModel, path: $path)
+                    AddPlaceView(
+                        viewModel: viewModel,
+                        showSearchLocation: $showSearchLocation,
+                        showConfirmLocation: $showConfirmLocation,
+                        selectedLocationForConfirm: $selectedLocationForConfirm
+                    )
                     
                     AddFriendsView(selectedFriends: $viewModel.selectedFriends, path: $path)
                     
@@ -70,7 +80,6 @@ struct CreateScheduleView: View {
                             if viewModel.isSuccess {
                                 dismiss()
                             } else {
-                                // TODO: 일정 생성 예외 처리 필요, 실패 경우 동작 구현
                                 dismiss()
                             }
                         }
@@ -82,17 +91,29 @@ struct CreateScheduleView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationDestination(for: Route.self) { route in
                     switch route {
-                    case .searchPlace:
-                        SearchLocationView(selectedLocation: $viewModel.place, path: $path)
-                    case let .confirmLocation(location):
-                        if let location = location {
-                            ConfirmLocationView(location: location, path: $path)
-                                .onDisappear {
-                                    viewModel.getFavoriteLocation()
-                                }
-                        }
                     case .searchFriends:
                         SearchFriendsView(selectedFriends: $viewModel.selectedFriends)
+                    }
+                }
+                // FullScreenCover로 SearchLocationView 표시
+                .fullScreenCover(isPresented: $showSearchLocation) {
+                    SearchLocationView(
+                        selectedLocation: $viewModel.place,
+                        showConfirmLocation: $showConfirmLocation,
+                        selectedLocationForConfirm: $selectedLocationForConfirm,
+                        dismissAction: { showSearchLocation = false }
+                    )
+                }
+                // FullScreenCover로 ConfirmLocationView 표시
+                .fullScreenCover(isPresented: $showConfirmLocation) {
+                    if let location = selectedLocationForConfirm {
+                        ConfirmLocationView(
+                            location: location,
+                            dismissAction: {
+                                showConfirmLocation = false
+                                viewModel.getFavoriteLocation()
+                            }
+                        )
                     }
                 }
             }
@@ -142,7 +163,10 @@ struct DateAndTimeView: View {
 
 struct AddPlaceView: View {
     @ObservedObject var viewModel: CreateScheduleViewModel
-    @Binding var path: NavigationPath
+    @Binding var showSearchLocation: Bool
+    @Binding var showConfirmLocation: Bool
+    @Binding var selectedLocationForConfirm: Location?
+
     
     var body: some View {
         Text("위치추가")
@@ -156,7 +180,8 @@ struct AddPlaceView: View {
                     Text(selectedPlace.location)
                         .lineLimit(1)
                         .onTapGesture {
-                            path.append(Route.confirmLocation(selectedPlace))
+                            selectedLocationForConfirm = selectedPlace
+                            showConfirmLocation = true
                         }
                 }
                 
@@ -171,7 +196,7 @@ struct AddPlaceView: View {
                 Text("위치 추가")
                     .foregroundStyle(Color(.color118))
                     .onTapGesture {
-                        path.append(Route.searchPlace)
+                        showSearchLocation = true
                     }
             }
         }
