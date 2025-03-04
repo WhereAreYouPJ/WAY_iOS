@@ -507,7 +507,15 @@ extension UILabel {
         self.layoutIfNeeded()
         
         // 만약 self.frame.height가 0이라면 intrinsicContentSize.height 사용
-        let labelHeight = self.frame.height > 0 ? self.frame.height : self.intrinsicContentSize.height
+//        let labelHeight = self.frame.height > 0 ? self.frame.height : self.intrinsicContentSize.height
+        // numberOfLines가 설정되어 있으면, 최대 높이를 그에 맞게 계산
+            let maxHeight: CGFloat
+            if self.numberOfLines > 0 {
+                maxHeight = font.lineHeight * CGFloat(self.numberOfLines)
+            } else {
+                maxHeight = self.frame.height > 0 ? self.frame.height : self.intrinsicContentSize.height
+            }
+        
         let sizeConstraint = CGSize(width: self.frame.width, height: CGFloat.greatestFiniteMagnitude)
         let boundingRect = (text as NSString).boundingRect(
             with: sizeConstraint,
@@ -517,7 +525,7 @@ extension UILabel {
         )
         
         // 전체 텍스트가 이미 보인다면
-        if boundingRect.height <= labelHeight {
+        if boundingRect.height <= maxHeight {
             return text.count
         }
         
@@ -550,7 +558,7 @@ extension UILabel {
                 context: nil
             ).height
             
-            if height > labelHeight {
+            if height > maxHeight {
                 break
             }
         } while index < text.count
@@ -558,7 +566,6 @@ extension UILabel {
         return prevIndex
     }
 }
-
 
 extension UIView {
     func superview<T>(of type: T.Type) -> T? {

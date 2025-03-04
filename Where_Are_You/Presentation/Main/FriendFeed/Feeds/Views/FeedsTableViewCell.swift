@@ -39,13 +39,7 @@ class FeedsTableViewCell: UITableViewCell {
         return view
     }()
     
-    let descriptionLabel: UILabel = {
-        let label = CustomLabel(UILabel_NotoSans: .medium, text: "d", textColor: .black22, fontSize: LayoutAdapter.shared.scale(value: 14))
-        label.isHidden = true
-        label.lineBreakMode = .byCharWrapping
-        label.backgroundColor = .blackF8
-        return label
-    }()
+    let descriptionLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "d", textColor: .black66))
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -144,7 +138,7 @@ class FeedsTableViewCell: UITableViewCell {
         // 레이아웃을 강제로 갱신한 뒤 "더 보기" 추가
         descriptionLabel.layoutIfNeeded()
         if !isExpanded {
-            DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.descriptionLabel.addTrailing(with: "...", moreText: "  더 보기", moreTextFont: readmoreFont, moreTextColor: readmoreFontColor)
             }
         }
