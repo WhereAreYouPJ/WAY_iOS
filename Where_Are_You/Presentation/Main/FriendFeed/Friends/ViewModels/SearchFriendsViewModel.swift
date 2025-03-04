@@ -90,4 +90,9 @@ class SearchFriendsViewModel: ObservableObject {
         print("Selected friends: \(selectedFriends.map { $0.name })")
         return selectedFriends
     }
+    
+    func resetSelection() {
+        selectedFavorites.removeAll()
+        selectedFriends.removeAll()
+    }
 }

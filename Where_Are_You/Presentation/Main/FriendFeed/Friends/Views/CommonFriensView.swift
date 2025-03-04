@@ -15,7 +15,7 @@ struct SearchBarView: View {
     
     var body: some View {
         TextField("검색", text: $searchText)
-            .frame(height: LayoutAdapter.shared.scale(value: 30))
+            .frame(height: LayoutAdapter.shared.scale(value: 24))
             .padding(LayoutAdapter.shared.scale(value: 7))
             .padding(.horizontal, LayoutAdapter.shared.scale(value: 25))
             .background(Color(.systemGray6))
@@ -36,6 +36,7 @@ struct SearchBarView: View {
                     }
                 }
             )
+            .padding(.top, LayoutAdapter.shared.scale(value: 10))
     }
 }
 
@@ -142,12 +143,12 @@ struct FriendCell: View {
                 .resizable()
                 .scaledToFill()
                 .frame(width: UIScreen.main.bounds.width * 0.14, height: UIScreen.main.bounds.width * 0.14)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16)))
             
             Text(friend.name)
-                .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 17)))
+                .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 17))))
                 .foregroundColor(Color(.black22))
-                .padding(8)
+                .padding(LayoutAdapter.shared.scale(value: 8))
             
             Spacer()
             
@@ -165,12 +166,12 @@ struct ErrorView: View {
     var retryAction: () -> Void
     
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: LayoutAdapter.shared.scale(value: 16)) {
             Image(systemName: "exclamationmark.triangle")
-                .font(.system(size: 50))
+                .font(.system(size: LayoutAdapter.shared.scale(value: 50)))
                 .foregroundColor(.gray)
             Text("친구 목록을 불러오는데 실패했습니다")
-                .font(.pretendard(NotoSans: .regular, fontSize: 17))
+                .font(.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 17)))
                 .foregroundColor(.gray)
             Button("다시 시도", action: retryAction)
                 .buttonStyle(.bordered)
@@ -182,15 +183,15 @@ struct ErrorView: View {
 // MARK: 친구 목록이 비어있을 때 보여줄 뷰
 struct EmptyFriendsView: View {
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: LayoutAdapter.shared.scale(value: 16)) {
             Image(systemName: "person.2")
                 .font(.system(size: 50))
                 .foregroundColor(.gray)
             Text("아직 등록된 친구가 없습니다")
-                .font(.pretendard(NotoSans: .regular, fontSize: 17))
+                .font(.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 16)))
                 .foregroundColor(.gray)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.top, 100)
+        .padding(.top, LayoutAdapter.shared.scale(value: 100))
     }
 }

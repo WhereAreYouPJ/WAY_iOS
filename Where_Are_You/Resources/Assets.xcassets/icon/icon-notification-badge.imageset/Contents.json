@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icon-notification.svg",
+      "filename" : "icon-notification-badge.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icon-notification 1.svg",
+      "filename" : "icon-notification-badge 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icon-notification 2.svg",
+      "filename" : "icon-notification-badge 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }

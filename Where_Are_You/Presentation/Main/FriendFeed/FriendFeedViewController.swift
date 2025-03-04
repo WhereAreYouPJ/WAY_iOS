@@ -8,12 +8,15 @@
 import Foundation
 import UIKit
 import SwiftUI
+import Combine
 
 class FriendFeedViewController: UIViewController {
     // MARK: - Properties
     
     private var friendsHostingController: UIHostingController<FriendsView>?
     private let feedsViewController = FeedsViewController()
+    private let notificationBadgeViewModel = NotificationBadgeViewModel.shared
+    private var cancellables = Set<AnyCancellable>()
     
     private let segmentControl: UISegmentedControl = {
         let sc = UISegmentedControl()
@@ -72,7 +75,6 @@ class FriendFeedViewController: UIViewController {
         return stackView
     }()
         
-    // 1. 친구 관련 옵션 버튼 추가
     private let friendOptionView: UIHostingController = {
         let view = MultiOptionButtonView {
             OptionButton(
@@ -133,8 +135,15 @@ class FriendFeedViewController: UIViewController {
         setupConstraints()
         setupActions()
         updateUIForSelectedSegment()
+        setupNotificationObserver()
         
         self.navigationController?.navigationBar.shadowImage = UIImage()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    
+        notificationBadgeViewModel.checkForNewNotifications() // 서버에서 알림 정보 가져오기
     }
     
     // MARK: - UI Setup
@@ -229,11 +238,22 @@ class FriendFeedViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
     }
     
-    
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonStack)
         segmentControl.addTarget(self, action: #selector(handleSegmentChange), for: .valueChanged)
+    }
+    
+    private func setupNotificationObserver() {
+        // 사용자 정의 알림을 구독
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateNotificationIcon),
+            name: .unreadNotificationsChanged,
+            object: nil
+        )
+        
+        updateNotificationIcon()
     }
     
     // MARK: - Helpers
@@ -295,5 +315,11 @@ class FriendFeedViewController: UIViewController {
         if !friendOptionView.view.frame.contains(location) {
             friendOptionView.view.isHidden = true
         }
+    }
+    
+    @objc private func updateNotificationIcon() {
+        // 읽지 않은 알림이 있는지 확인
+        let imageName = notificationBadgeViewModel.hasUnreadNotifications ? "icon-notification-badge" : "icon-notification"
+        notificationButton.setImage(UIImage(named: imageName), for: .normal)
     }
 }
