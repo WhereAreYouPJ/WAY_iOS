@@ -7,20 +7,15 @@
 
 import SwiftUI
 
-enum Route: Hashable {
-//    case searchPlace
-//    case confirmLocation(Location?)
-    case searchFriends
-}
-
 struct CreateScheduleView: View {
     @StateObject var viewModel: CreateScheduleViewModel
     @Environment(\.dismiss) private var dismiss
     @State private var path = NavigationPath()
     
-    // FullScreenCover 관련 상태 추가
     @State private var showSearchLocation = false
     @State private var showConfirmLocation = false
+    @State private var showSearchFriends = false
+    
     @State private var selectedLocationForConfirm: Location?
     
     init(viewModel: CreateScheduleViewModel? = nil) {
@@ -50,7 +45,11 @@ struct CreateScheduleView: View {
                     Divider()
                         .padding(.bottom, 16)
                     
-                    DateAndTimeView(isAllDay: $viewModel.isAllDay, startTime: $viewModel.startTime, endTime: $viewModel.endTime)
+                    DateAndTimeView(
+                        isAllDay: $viewModel.isAllDay,
+                        startTime: $viewModel.startTime,
+                        endTime: $viewModel.endTime
+                    )
                     
                     AddPlaceView(
                         viewModel: viewModel,
@@ -59,7 +58,10 @@ struct CreateScheduleView: View {
                         selectedLocationForConfirm: $selectedLocationForConfirm
                     )
                     
-                    AddFriendsView(selectedFriends: $viewModel.selectedFriends, path: $path)
+                    AddFriendsView(
+                        showSearchFriends: $showSearchFriends,
+                        selectedFriends: $viewModel.selectedFriends
+                    )
                     
                     SetColorView(color: $viewModel.color)
                     
@@ -89,13 +91,6 @@ struct CreateScheduleView: View {
                 }
                 .navigationTitle("일정 추가")
                 .navigationBarTitleDisplayMode(.inline)
-                .navigationDestination(for: Route.self) { route in
-                    switch route {
-                    case .searchFriends:
-                        SearchFriendsView(selectedFriends: $viewModel.selectedFriends)
-                    }
-                }
-                // FullScreenCover로 SearchLocationView 표시
                 .fullScreenCover(isPresented: $showSearchLocation) {
                     SearchLocationView(
                         selectedLocation: $viewModel.place,
@@ -104,7 +99,6 @@ struct CreateScheduleView: View {
                         dismissAction: { showSearchLocation = false }
                     )
                 }
-                // FullScreenCover로 ConfirmLocationView 표시
                 .fullScreenCover(isPresented: $showConfirmLocation) {
                     if let location = selectedLocationForConfirm {
                         ConfirmLocationView(
@@ -114,6 +108,30 @@ struct CreateScheduleView: View {
                                 viewModel.getFavoriteLocation()
                             }
                         )
+                    }
+                }
+                .fullScreenCover(isPresented: $showSearchFriends) {
+                    NavigationStack {
+                        SearchFriendsView(selectedFriends: $viewModel.selectedFriends)
+                            .navigationBarTitleDisplayMode(.inline)
+                            .navigationTitle("친구 검색")
+                            .toolbar {
+                                ToolbarItem(placement: .topBarLeading) {
+                                    Button(action: {
+                                        showSearchFriends = false
+                                    }, label: {
+                                        Image(systemName: "chevron.left")
+                                            .foregroundStyle(.gray)
+                                    })
+                                }
+                                
+                                ToolbarItem(placement: .topBarTrailing) {
+                                    Button("추가") {
+                                        showSearchFriends = false
+                                    }
+                                    .foregroundStyle(.red)
+                                }
+                            }
                     }
                 }
             }
@@ -234,8 +252,8 @@ struct FavoritePlaceCell: View {
 }
 
 struct AddFriendsView: View {
+    @Binding var showSearchFriends: Bool
     @Binding var selectedFriends: [Friend]
-    @Binding var path: NavigationPath
     
     var body: some View {
         Text("친구추가")
@@ -247,9 +265,6 @@ struct AddFriendsView: View {
             if selectedFriends.isEmpty {
                 Text("친구 추가")
                     .foregroundStyle(Color(.color118))
-                    .onTapGesture {
-                        path.append(Route.searchFriends)
-                    }
             } else {
                 let count = selectedFriends.count
                 ForEach(0..<min(3, count), id: \.self) { idx in
@@ -258,9 +273,6 @@ struct AddFriendsView: View {
                     } else {
                         Text(selectedFriends[idx].name)
                     }
-                }
-                .onTapGesture {
-                    path.append(Route.searchFriends)
                 }
                 
                 if count > 3 {
@@ -275,6 +287,9 @@ struct AddFriendsView: View {
                     CancellationView()
                 })
             }
+        }
+        .onTapGesture {
+            showSearchFriends = true
         }
         .padding(.bottom, 20)
     }

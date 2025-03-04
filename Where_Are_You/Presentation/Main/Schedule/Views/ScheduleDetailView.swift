@@ -15,9 +15,9 @@ struct ScheduleDetailView: View {
     @State private var showFriendsLocation = false // MARK: 친구 위치 실시간 확인 테스트용
     @State private var showToast = false
     
-    // FullScreenCover 관련 상태 추가
     @State private var showSearchLocation = false
     @State private var showConfirmLocation = false
+    @State private var showSearchFriends = false
     @State private var selectedLocationForConfirm: Location?
     
     var schedule: Schedule
@@ -96,11 +96,11 @@ struct ScheduleDetailView: View {
                         .disabled(!viewModel.isEditable)
                     
                     AddFriendsView(
+                        showSearchFriends: $showSearchFriends,
                         selectedFriends: Binding(
                             get: { viewModel.schedule.invitedMember ?? [] },
                             set: { viewModel.schedule.invitedMember = $0 }
-                        ),
-                        path: $path
+                        )
                     )
                     .disabled(!viewModel.isEditable)
                     
@@ -148,12 +148,6 @@ struct ScheduleDetailView: View {
                 }
                 .navigationTitle("일정 수정")
                 .navigationBarTitleDisplayMode(.inline)
-                .navigationDestination(for: Route.self) { route in
-                    switch route {
-                    case .searchFriends:
-                        SearchFriendsView(selectedFriends: $createViewModel.selectedFriends)
-                    }
-                }
                 .toast(isPresented: $showToast, message: "일정을 수정할 수 없습니다.")
             }
         }

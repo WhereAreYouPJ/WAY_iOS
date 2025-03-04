@@ -26,6 +26,7 @@ struct SearchLocationView: View {
                         .foregroundColor(.gray)
                 }
                 .padding(.leading, LayoutAdapter.shared.scale(value: 16))
+                .padding(.trailing, LayoutAdapter.shared.scale(value: 4))
                 
                 TextField("장소 검색", text: $viewModel.searchText)
                     .autocorrectionDisabled()

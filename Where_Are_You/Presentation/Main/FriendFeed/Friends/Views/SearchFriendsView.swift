@@ -41,6 +41,7 @@ struct SearchFriendsView: View {
             .padding(.horizontal)
             
             SearchBarView(searchText: $viewModel.searchText, onClear: viewModel.clearSearch)
+                .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
             
             FriendListView(
                 viewModel: viewModel.friendsViewModel,
@@ -53,22 +54,6 @@ struct SearchFriendsView: View {
                 }
             )
             .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
-            
-            Button(action: {
-                selectedFriends = viewModel.confirmSelection()
-                dismiss()
-            }, label: {
-                Text("확인")
-                    .frame(maxWidth: .infinity)
-            })
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
-            .tint(Color(.brandColor))
-            .padding(.horizontal)
-            .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
-            .onAppear {
-                viewModel.friendsViewModel.getFriendsList()
-            }
         }
     }
 }
