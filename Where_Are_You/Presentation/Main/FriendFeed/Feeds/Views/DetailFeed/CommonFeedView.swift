@@ -94,7 +94,8 @@ class CommonFeedView: UIView {
         self.delegate2 = delegate
 
         descriptionLabel.isHidden = (feed.content == nil)
-        descriptionLabel.text = feed.content
+        guard let content = feed.content else { return }
+        descriptionLabel.updateTextKeepingAttributes(newText: content)
         detailBox.configure(with: feed)
         detailBox.participantBoxView.isHidden = true
         let feedImageInfos = feed.feedImageInfos ?? []

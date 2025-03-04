@@ -39,6 +39,11 @@ class FeedsViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        viewModel?.fetchFeeds()
+//    }
+    
     // MARK: - Helpers
     
     private func setupViewModel() {

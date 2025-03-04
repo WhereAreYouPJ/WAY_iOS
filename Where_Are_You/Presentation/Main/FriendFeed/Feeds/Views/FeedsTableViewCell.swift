@@ -31,15 +31,15 @@ class FeedsTableViewCell: UITableViewCell {
     let feedImagesView = FeedImagesView()
     let bookMarkButton = UIButton()
     
-    let descriptionLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "d", textColor: .black22))
+    let labelBackGroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .blackF8
+        view.layer.cornerRadius = 12
+        view.clipsToBounds = true
+        return view
+    }()
     
-//    : UILabel = {
-//        let label = CustomLabel(UILabel_NotoSans: .medium, text: "", textColor: .black22, fontSize: LayoutAdapter.shared.scale(value: 14))
-//        label.isHidden = true
-//        label.lineBreakMode = .byCharWrapping
-//        label.backgroundColor = .color249
-//        return label
-//    }()
+    let descriptionLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "d", textColor: .black66))
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -61,7 +61,9 @@ class FeedsTableViewCell: UITableViewCell {
         contentView.addSubview(detailBox)
         contentView.addSubview(feedImagesView)
         contentView.addSubview(bookMarkButton)
-        contentView.addSubview(descriptionLabel)
+        contentView.addSubview(labelBackGroundView)
+        labelBackGroundView.addSubview(descriptionLabel)
+//        contentView.addSubview(descriptionLabel)
     }
     
     private func setupActions() {
@@ -95,9 +97,15 @@ class FeedsTableViewCell: UITableViewCell {
             make.trailing.equalToSuperview()
         }
         
-        descriptionLabel.snp.makeConstraints { make in
+        labelBackGroundView.snp.makeConstraints { make in
             make.top.equalTo(bookMarkButton.snp.bottom).offset(LayoutAdapter.shared.scale(value: 6))
             make.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        descriptionLabel.snp.makeConstraints { make in
+//            make.top.equalTo(bookMarkButton.snp.bottom).offset(LayoutAdapter.shared.scale(value: 6))
+//            make.leading.trailing.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
         }
     }
     
@@ -124,13 +132,13 @@ class FeedsTableViewCell: UITableViewCell {
         guard let feedcontent = feed.content else { return }
         descriptionLabel.attributedText = UIFont.CustomFont.bodyP4(text: feedcontent, textColor: .black66)
         let readmoreFont = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
-        let readmoreFontColor = UIColor.color153
+        let readmoreFontColor = UIColor.brandLight
         descriptionLabel.numberOfLines = isExpanded ? 0 : 3
         
         // 레이아웃을 강제로 갱신한 뒤 "더 보기" 추가
         descriptionLabel.layoutIfNeeded()
         if !isExpanded {
-            DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.descriptionLabel.addTrailing(with: "...", moreText: "  더 보기", moreTextFont: readmoreFont, moreTextColor: readmoreFontColor)
             }
         }
