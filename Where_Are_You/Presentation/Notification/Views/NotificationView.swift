@@ -44,6 +44,7 @@ struct NotificationView: View {
     var body: some View {
         VStack(spacing: 0) {
             topBar()
+                .padding(.horizontal, LayoutAdapter.shared.scale(value: 18))
             
             Divider()
             
@@ -64,11 +65,10 @@ struct NotificationView: View {
                         
                         generalSection()
                     }
-                    
+                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 18))
                 }
             }
         }
-        .padding(.horizontal, LayoutAdapter.shared.scale(value: 18))
         .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: LayoutAdapter.shared.scale(value: 16))))
         .onAppear {
             viewModel.fetchNotifications()
