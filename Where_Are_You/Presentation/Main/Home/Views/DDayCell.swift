@@ -13,33 +13,39 @@ class DDAyCell: UICollectionViewCell {
 
     static let identifier = "DDAyCell"
     
-    private let dDayLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .scheduleDateColor
-        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
-        return label
-    }()
+    private let dDayLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "dday", textColor: .error))
+
+//    : UILabel = {
+//        let label = UILabel()
+//        label.textColor = .scheduleDateColor
+//        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
+//        return label
+//    }()
     
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .black22
-        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 16)
-        return label
-    }()
+    private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "titlelabel", textColor: .black22))
+
+//    : UILabel = {
+//        let label = UILabel()
+//        label.textColor = .black22
+//        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 16)
+//        return label
+//    }()
     
-    private let emptyLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .color118
-        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 16)
-        label.text = "일정이 없습니다."
-        label.isHidden = true
-        return label
-    }()
+    private let emptyLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "일정이 없습니다.", textColor: .black66))
+//    : UILabel = {
+//        let label = UILabel()
+//        label.textColor = .color118
+//        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 16)
+//        label.text = "일정이 없습니다."
+//        label.isHidden = true
+//        return label
+//    }()
     
     // MARK: - Lifecycle
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        emptyLabel.isHidden = true
         setupViews()
     }
     
@@ -55,7 +61,7 @@ class DDAyCell: UICollectionViewCell {
         addSubview(emptyLabel)
         
         dDayLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(12)
+            make.leading.equalToSuperview().inset(16)
             make.centerY.equalToSuperview()
         }
         
@@ -74,12 +80,11 @@ class DDAyCell: UICollectionViewCell {
             titleLabel.isHidden = false
             emptyLabel.isHidden = true
             if dDay.dDay == 0 {
-                dDayLabel.text = "D - Day"
-
+                dDayLabel.updateTextKeepingAttributes(newText: "D - Day")
             } else {
-                dDayLabel.text = "D - \(dDay.dDay)"
+                dDayLabel.updateTextKeepingAttributes(newText: "D - \(dDay.dDay)")
             }
-            titleLabel.text = dDay.title
+            titleLabel.updateTextKeepingAttributes(newText: dDay.title)
         } else {
             dDayLabel.isHidden = true
             titleLabel.isHidden = true

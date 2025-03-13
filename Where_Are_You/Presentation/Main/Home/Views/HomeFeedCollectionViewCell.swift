@@ -101,7 +101,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
     private func configureViewComponents() {
         contentView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 16)
         contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor.color212.cgColor
+        contentView.layer.borderColor = UIColor.blackF0.cgColor
         contentView.addSubview(mainStack)
     }
     

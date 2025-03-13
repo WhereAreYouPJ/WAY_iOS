@@ -45,24 +45,24 @@ class MainHomeView: UIView {
     
     private func setupConstraints() {
         bannerView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(10)
-            make.leading.trailing.equalToSuperview().inset(15)
-            make.height.equalTo(self.snp.width).multipliedBy(0.507)
+            make.top.equalToSuperview().inset(12)
+            make.leading.trailing.equalToSuperview().inset(24)
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 180))
         }
         
         dDayView.snp.makeConstraints { make in
-            make.top.equalTo(bannerView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 15))
-            make.leading.trailing.equalToSuperview().inset(15)
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 52))
+            make.top.equalTo(bannerView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 12))
+            make.leading.trailing.equalToSuperview().inset(24)
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
         }
         
         reminderLabel.snp.makeConstraints { make in
-            make.top.equalTo(dDayView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 20))
-            make.leading.trailing.equalToSuperview().inset(15)
+            make.top.equalTo(dDayView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 32))
+            make.leading.trailing.equalToSuperview().inset(24)
         }
         
         homeFeedView.snp.makeConstraints { make in
-            make.top.equalTo(reminderLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 15))
+            make.top.equalTo(reminderLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 16))
             make.leading.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
         }

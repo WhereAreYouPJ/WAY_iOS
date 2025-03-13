@@ -63,7 +63,7 @@ class BannerViewController: UIViewController {
     private func updatePageNumber() {
         let currentPage = viewModel.currentIndex + 1
         let totalPages = viewModel.getBannerImages().count
-        bannerView.pageNumberLabel.text = "\(currentPage) / \(totalPages)"
+        bannerView.pageNumberLabel.updateTextKeepingAttributes(newText: "\(currentPage) / \(totalPages)") 
     }
     
     // 배너 이미지를 업데이트하는 메서드 추가

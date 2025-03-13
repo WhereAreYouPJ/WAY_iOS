@@ -105,7 +105,10 @@ class FeedsTableViewCell: UITableViewCell {
         descriptionLabel.snp.makeConstraints { make in
 //            make.top.equalTo(bookMarkButton.snp.bottom).offset(LayoutAdapter.shared.scale(value: 6))
 //            make.leading.trailing.bottom.equalToSuperview()
-            make.edges.equalToSuperview()
+//            make.edges.equalToSuperview()
+            make.center.equalToSuperview()
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 8))
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 12))
         }
     }
     
