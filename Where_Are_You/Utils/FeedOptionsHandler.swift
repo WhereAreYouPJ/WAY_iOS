@@ -55,7 +55,7 @@ class FeedOptionsHandler {
 //            make.top.equalTo(frame.origin.y + frame.height)
             make.width.equalTo(LayoutAdapter.shared.scale(value: 160))
             make.trailing.equalToSuperview().inset(11)
-            make.height.equalTo(LayoutAdapter.shared.scale(value: CGFloat(31 * titles.count)))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: CGFloat(41 * titles.count)))
         }
 
         // Trigger layout update

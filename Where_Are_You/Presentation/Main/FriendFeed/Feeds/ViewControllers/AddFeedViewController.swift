@@ -251,8 +251,9 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let frameHeight = scrollView.frame.size.height
+        let threshold: CGFloat = -25  // 원하는 임계값
         
-        if offsetY > contentHeight - frameHeight {
+        if offsetY > contentHeight - frameHeight - threshold {
             // 테이블 뷰 끝에 도달했을 때 다음 페이지의 데이터를 불러옴
             viewModel.fetchSchedules()
         }
