@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 protocol HomeFeedCollectionViewCellDelegate: AnyObject {
-    func didTapReadMoreButton()
+    func didTapReadMoreButton(for feed: Feed)
 }
 
 class HomeFeedCollectionViewCell: UICollectionViewCell {
@@ -17,6 +17,8 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "HomeFeedCollectionViewCell"
     weak var delegate: HomeFeedCollectionViewCellDelegate?
+    
+    var feed: Feed?
     
     let profileImageView: UIImageView = {
         let iv = UIImageView()
@@ -134,7 +136,8 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with feed: Feed) {
-          
+        self.feed = feed
+        
         profileImageView.kf.setImage(with: URL(string: feed.profileImageURL), placeholder: UIImage(named: "basic_profile_image"))
         locationLabel.text = feed.location
         titleLabel.text = feed.title
@@ -181,6 +184,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
     }
     
     @objc private func descriptionLabelTapped() {
-        delegate?.didTapReadMoreButton()
+        guard let feed = feed else { return }
+        delegate?.didTapReadMoreButton(for: feed)
     }
 }
