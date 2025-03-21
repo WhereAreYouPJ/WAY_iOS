@@ -15,9 +15,9 @@ class DDayView: UIView {
     
     let containerView: UIView = {
         let view = UIView()
-        view.layer.borderColor = UIColor.blackD4.cgColor
-        view.layer.borderWidth = 1
-        view.layer.cornerRadius = LayoutAdapter.shared.scale(value: 10)
+        view.layer.borderColor = UIColor.blackF0.cgColor
+        view.layer.borderWidth = 1.5
+        view.layer.cornerRadius = 12
         view.clipsToBounds = true
         return view
     }()
@@ -60,6 +60,6 @@ class DDayView: UIView {
     }
     
     func configureUI(dDayExists: Bool) {
-        containerView.layer.borderColor = dDayExists ? UIColor.brandMain.cgColor : UIColor.blackD4.cgColor
+        containerView.layer.borderColor = dDayExists ? UIColor.brandMain.cgColor : UIColor.blackF0.cgColor
     }
 }

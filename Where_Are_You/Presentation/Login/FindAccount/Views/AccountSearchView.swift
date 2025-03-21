@@ -37,13 +37,7 @@ class AccountSearchView: UIView {
     
     let authNumberTextField = CustomTextField(placeholder: "인증코드 입력")
     
-    let timer: UILabel = {
-        let label = UILabel()
-        label.textColor = .error
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 14))
-        label.adjustsFontForContentSizeCategory = true
-        return label
-    }()
+    let timer = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "t", textColor: .error))
     
     let authNumberCheckButton = TitleButton(title: UIFont.CustomFont.button16(text: "확인", textColor: .white), backgroundColor: .brandMain, borderColor: nil)
     

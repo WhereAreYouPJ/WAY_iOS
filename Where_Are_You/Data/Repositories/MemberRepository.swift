@@ -45,7 +45,9 @@ class MemberRepository: MemberRepositoryProtocol {
     func putProfileImage(images: UIImage, completion: @escaping (Result<Void, any Error>) -> Void) {
         memberService.putProfileImage(images: images) { result in
             switch result {
-            case .success:
+            case .success(let response):
+                let data = response.data
+                UserDefaultsManager.shared.saveProfileImage(data)
                 completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))

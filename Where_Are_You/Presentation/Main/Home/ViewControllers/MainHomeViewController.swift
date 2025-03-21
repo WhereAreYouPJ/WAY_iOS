@@ -58,7 +58,9 @@ class MainHomeViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleView.titleLabel)
+        let spacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        spacer.width = 18
+        navigationItem.leftBarButtonItems = [spacer, UIBarButtonItem(customView: titleView.titleLabel)]
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: titleView.notificationButton)
         
         // 화면을 스크롤 했을때 네비게이션바가 여전히 색상을 유지

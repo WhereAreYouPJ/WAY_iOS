@@ -89,6 +89,7 @@
 		9974EA202C62196500826793 /* SnappingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974EA1F2C62196500826793 /* SnappingFlowLayout.swift */; };
 		9975A35B2C8055C100A0FF5C /* MemberDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F57A22C27F9FE00F6E1AD /* MemberDetailsUseCase.swift */; };
 		9979622D2C3E6B2200E95CA6 /* AccountLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979622C2C3E6B2200E95CA6 /* AccountLoginUseCase.swift */; };
+		997C10F42D8913FB0045CB3D /* ModifyProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997C10F32D8913FB0045CB3D /* ModifyProfileImage.swift */; };
 		997DC6572C3D253000EACA5F /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997DC6562C3D253000EACA5F /* UserDefaultManager.swift */; };
 		9985AB972C786D0400D1442E /* MyDetailManageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985AB962C786D0400D1442E /* MyDetailManageView.swift */; };
 		9985AB992C78802400D1442E /* MyDetailManageViewcontroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9985AB982C78802400D1442E /* MyDetailManageViewcontroller.swift */; };
@@ -448,6 +449,7 @@
 		9974EA1D2C61EBAD00826793 /* MoreFeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreFeedCollectionViewCell.swift; sourceTree = "<group>"; };
 		9974EA1F2C62196500826793 /* SnappingFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnappingFlowLayout.swift; sourceTree = "<group>"; };
 		9979622C2C3E6B2200E95CA6 /* AccountLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLoginUseCase.swift; sourceTree = "<group>"; };
+		997C10F32D8913FB0045CB3D /* ModifyProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyProfileImage.swift; sourceTree = "<group>"; };
 		997DC6562C3D253000EACA5F /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		9985AB962C786D0400D1442E /* MyDetailManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDetailManageView.swift; sourceTree = "<group>"; };
 		9985AB982C78802400D1442E /* MyDetailManageViewcontroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDetailManageViewcontroller.swift; sourceTree = "<group>"; };
@@ -1406,6 +1408,7 @@
 				99D780E12C606726005A3F30 /* MemberDetailsResponse.swift */,
 				99D780E32C606735005A3F30 /* CheckEmailResponse.swift */,
 				99C921382D34B50E00FC2333 /* TokenReissueResponse.swift */,
+				997C10F32D8913FB0045CB3D /* ModifyProfileImage.swift */,
 			);
 			path = Member;
 			sourceTree = "<group>";
@@ -2138,6 +2141,7 @@
 				992F57CC2C5B270300219C6B /* LoginBody.swift in Sources */,
 				99FBA5562C453BDD002EEEC7 /* HomeFeedViewController.swift in Sources */,
 				99FBA5502C45394E002EEEC7 /* BannerViewModel.swift in Sources */,
+				997C10F42D8913FB0045CB3D /* ModifyProfileImage.swift in Sources */,
 				99C9B22C2C019C67008D7CBD /* LoginView.swift in Sources */,
 				99DF440D2D6DB2A200D75956 /* CustomImageView.swift in Sources */,
 				99949F5F2C58BBAD00AE0177 /* FeedsViewController.swift in Sources */,

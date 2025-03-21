@@ -157,7 +157,7 @@ class MultiCustomOptionsContainerView: UIView {
                     make.top.equalTo(buttons[index - 1].snp.bottom)
                 }
                 make.leading.trailing.equalToSuperview()
-                make.height.equalTo(LayoutAdapter.shared.scale(value: 31))
+                make.height.equalTo(LayoutAdapter.shared.scale(value: 41))
             }
             
             // 버튼 액션 추가
@@ -191,15 +191,15 @@ class MultiCustomOptionsContainerView: UIView {
 class MultiCustomOptionButtonView: UIView {
     let button: UIButton = {
         let button = UIButton(type: .system)
-        button.backgroundColor = .popupButtonColor
-        button.titleLabel?.font = UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))
-        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .brandDark2
+//        button.titleLabel?.font = UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))
+//        button.setTitleColor(.white, for: .normal)
         return button
     }()
     
     private let separator: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.rgb(red: 114, green: 98, blue: 168) // 구분선 색상
+        view.backgroundColor = UIColor.rgb(red: 176, green: 150, blue: 255) // 구분선 색상
         return view
     }()
     
@@ -219,20 +219,21 @@ class MultiCustomOptionButtonView: UIView {
         addSubview(separator)
         
         // 버튼 제목 설정
-        let label = UILabel()
-        label.text = title
-        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))
-        label.textColor = .white
+        let label = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: title, textColor: .white))
+//        UILabel()
+//        label.text = title
+//        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))
+//        label.textColor = .white
         button.addSubview(label)
         label.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 12))
             make.centerY.equalToSuperview()
         }
         
         // AutoLayout 설정
         button.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 30))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 40))
         }
         print("Button frame: \(button.frame)") // 추가
 

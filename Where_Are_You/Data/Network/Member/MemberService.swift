@@ -12,7 +12,7 @@ import Moya
 
 protocol MemberServiceProtocol {
     func putUserName(userName: String, completion: @escaping (Result<Void, Error>) -> Void)
-    func putProfileImage(images: UIImage, completion: @escaping (Result<Void, Error>) -> Void)
+    func putProfileImage(images: UIImage, completion: @escaping (Result<ModifyProfileImage, Error>) -> Void)
     
     func postSignUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postTokenReissue(request: TokenReissueBody, completion: @escaping (Result<GenericResponse<TokenReissueResponse>, Error>) -> Void)
@@ -56,7 +56,7 @@ class MemberService: MemberServiceProtocol {
         }
     }
     
-    func putProfileImage(images: UIImage, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func putProfileImage(images: UIImage, completion: @escaping (Result<ModifyProfileImage, any Error>) -> Void) {
         provider.request(.putProfileImage(memberSeq: memberSeq, images: images)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }

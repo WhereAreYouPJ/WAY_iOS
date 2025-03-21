@@ -20,17 +20,15 @@ class BannerView: UIView {
         return cv
     }()
         
-    var pageNumberLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.textColor = .white
-        label.attributedText = UIFont.CustomFont.bodyP5(text: "", textColor: .white)
-//        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 12)
-        label.backgroundColor = UIColor.black44.withAlphaComponent(0.4)
-        label.layer.cornerRadius = LayoutAdapter.shared.scale(value: 10)
-        label.clipsToBounds = true
-        return label
+    let pageView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black44.withAlphaComponent(0.4)
+        view.layer.cornerRadius = 10
+        view.clipsToBounds = true
+        return view
     }()
+    
+    var pageNumberLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "p", textColor: .white))
     
     // MARK: - Lifecycle
     
@@ -47,7 +45,7 @@ class BannerView: UIView {
     private func setupViews() {
         layer.cornerRadius = 16
         layer.borderWidth = 1.5
-        layer.borderColor = UIColor.color221.cgColor
+        layer.borderColor = UIColor.blackF0.cgColor
         backgroundColor = .white
         clipsToBounds = true
         
@@ -56,17 +54,22 @@ class BannerView: UIView {
         collectionView.register(BannerCollectionViewCell.self, forCellWithReuseIdentifier: BannerCollectionViewCell.identifier)
         
         addSubview(collectionView)
-        addSubview(pageNumberLabel)
+        addSubview(pageView)
+        pageView.addSubview(pageNumberLabel)
         
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        pageNumberLabel.snp.makeConstraints { make in
+        pageView.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
             make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 20))
             make.width.equalTo(LayoutAdapter.shared.scale(value: 37))
             make.height.equalTo(LayoutAdapter.shared.scale(value: 20))
+        }
+        
+        pageNumberLabel.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
     }
 }

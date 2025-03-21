@@ -48,7 +48,7 @@ class CustomAlert: UIView {
         super.init(frame: .zero)
         
         backgroundColor = .black44
-        layer.cornerRadius = LayoutAdapter.shared.scale(value: 12)
+        layer.cornerRadius = 12
         clipsToBounds = true
                 
         titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH3(text: title, textColor: .white))
