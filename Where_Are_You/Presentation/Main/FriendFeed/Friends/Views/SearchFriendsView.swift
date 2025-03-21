@@ -46,13 +46,26 @@ struct SearchFriendsView: View {
         .onAppear {
             viewModel.friendsViewModel.getFriendsList()
             
-            // 기존에 선택된 친구들을 viewModel에 반영
-            viewModel.resetSelection() // 선택 상태 초기화
-            for friend in selectedFriends {
-                if !viewModel.isSelected(friend: friend) {
-                    viewModel.toggleSelection(for: friend)
+            // 친구 목록이 로드된 후에 선택 상태를 설정하도록 Combine 활용
+            viewModel.friendsViewModel.$favorites
+                .combineLatest(viewModel.friendsViewModel.$friends)
+                .sink { favorites, friends in
+                    // 선택 상태 초기화
+                    viewModel.resetSelection()
+                    
+                    // 선택된 친구들 처리
+                    for selectedFriend in selectedFriends {
+                        // 즐겨찾기에서 찾기
+                        if let foundInFavorites = favorites.first(where: { $0.memberSeq == selectedFriend.memberSeq }) {
+                            viewModel.selectedFavorites.insert(foundInFavorites.id)
+                        }
+                        // 일반 친구 목록에서 찾기
+                        else if let foundInFriends = friends.first(where: { $0.memberSeq == selectedFriend.memberSeq }) {
+                            viewModel.selectedFriends.insert(foundInFriends.id)
+                        }
+                    }
                 }
-            }
+                .store(in: &viewModel.cancellables)
         }
     }
 }
@@ -64,7 +77,6 @@ struct SelectedFriendsView: View {
     var body: some View {
         ZStack {
             VStack {
-//                Image(friend.profileImage)
                 KFImage(URL(string: friend.profileImage))
                     .resizable()
                     .scaledToFill()

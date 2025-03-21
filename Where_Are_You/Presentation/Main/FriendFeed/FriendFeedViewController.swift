@@ -76,7 +76,7 @@ class FriendFeedViewController: UIViewController {
     }()
         
     private let friendOptionView: UIHostingController = {
-        let view = MultiOptionButtonView {
+        let view = OptionButtonView(inUIKit: true, content: {
             OptionButton(
                 title: "친구 추가",
                 position: .top
@@ -90,7 +90,7 @@ class FriendFeedViewController: UIViewController {
             ) {
                 NotificationCenter.default.post(name: .showManageFriends, object: nil)
             }
-        }
+        })
         return UIHostingController(rootView: view)
     }()
     
@@ -222,8 +222,8 @@ class FriendFeedViewController: UIViewController {
         }
         
         friendOptionView.view.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 9))
-            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 15))
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(0)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(0)
         }
     }
     

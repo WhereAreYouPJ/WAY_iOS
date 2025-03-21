@@ -98,17 +98,21 @@ struct FriendDetailView: View {
             }
             
             if showOptions {
-                Color.black.opacity(0.1)
-                    .ignoresSafeArea()
+                Color.clear
+                    .contentShape(Rectangle())
                     .onTapGesture {
                         showOptions = false
                     }
                 
-                CustomMenuView(
-                    isPresented: $showOptions,
-                    position: menuPosition,
-                    showDeleteAlert: $showDeleteAlert
-                )
+                OptionButtonView {
+                    OptionButton(
+                        title: "친구 삭제",
+                        position: .single,
+                        action: {
+                            showOptions = false
+                            showDeleteAlert = true
+                        })
+                }
             }
         }
         .customAlert(
@@ -125,61 +129,6 @@ struct FriendDetailView: View {
                 }
             }
         )
-    }
-}
-
-// CustomOptionButtonView를 포함한 메뉴 뷰
-struct CustomMenuView: View {
-    @Binding var isPresented: Bool
-    let position: CGPoint
-    @Binding var showDeleteAlert: Bool
-    
-    var body: some View {
-        GeometryReader { geometry in
-            VStack(spacing: 0) {
-                CustomOptionButtonViewRepresentable(title: "친구 삭제", action: {
-                    isPresented = false
-                    showDeleteAlert = true
-                })
-                    .frame(height: LayoutAdapter.shared.scale(value: 44))
-            }
-            .frame(width: LayoutAdapter.shared.scale(value: 140))
-            .background(Color(.popupButtonColor))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .position(x: min(max(position.x, 70), geometry.size.width - 70),
-                      y: position.y)
-            .transition(.opacity.combined(with: .scale))
-        }
-    }
-}
-
-// CustomOptionButtonView를 SwiftUI에서 사용하기 위한 래퍼
-struct CustomOptionButtonViewRepresentable: UIViewRepresentable {
-    let title: String
-    let action: () -> Void
-    
-    func makeUIView(context: Context) -> CustomOptionButtonView {
-        let view = CustomOptionButtonView(title: title)
-        view.button.addTarget(context.coordinator, action: #selector(Coordinator.buttonTapped), for: .touchUpInside)
-        return view
-    }
-    
-    func updateUIView(_ uiView: CustomOptionButtonView, context: Context) {}
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator(action: action)
-    }
-    
-    class Coordinator: NSObject {
-        let action: () -> Void
-        
-        init(action: @escaping () -> Void) {
-            self.action = action
-        }
-        
-        @objc func buttonTapped() {
-            action()
-        }
     }
 }
 

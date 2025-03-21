@@ -68,7 +68,7 @@ struct ScheduleView: View {
                             showOptionMenu = false
                         }
                     
-                    MultiOptionButtonView {
+                    OptionButtonView {
                         OptionButton(
                             title: "일정 추가",
                             position: .single
