@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icon-friends-filled.png",
+      "filename" : "icon-friends-filled.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icon-users2.png",
+      "filename" : "icon-friends-filled 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icon-users3.png",
+      "filename" : "icon-friends-filled 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }

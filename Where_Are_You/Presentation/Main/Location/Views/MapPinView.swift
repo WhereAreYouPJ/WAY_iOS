@@ -210,7 +210,8 @@ struct KakaoMapPinView: UIViewRepresentable {
                     guard let self = self else { return }
                     
                     let myMarker = ProfileImageView(image: swiftUIImage)
-                    let mySymbolImage = myMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 40.667)))
+//                    let mySymbolImage = myMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 40.667)))
+                    let mySymbolImage = myMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 42)))
                     let myIconStyle = PoiIconStyle(symbol: mySymbolImage, anchorPoint: CGPoint(x: 0.5, y: 1))
                     let myPoiStyle = PoiStyle(styleID: "myPoiStyle", styles: [
                         PerLevelPoiStyle(iconStyle: myIconStyle, level: 12)
@@ -258,7 +259,8 @@ struct KakaoMapPinView: UIViewRepresentable {
                         guard let self = self else { return }
                         
                         let friendMarker = ProfileImageView(image: swiftUIImage)
-                        let friendSymbolImage = friendMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 42)))
+//                        let friendSymbolImage = friendMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 30), height: LayoutAdapter.shared.scale(value: 42)))
+                        let friendSymbolImage = friendMarker.snapshot().resizedForProfile(to: CGSize(width: LayoutAdapter.shared.scale(value: 45), height: LayoutAdapter.shared.scale(value: 60)))
                         let friendIconStyle = PoiIconStyle(symbol: friendSymbolImage, anchorPoint: CGPoint(x: 0.5, y: 1))
                         let friendPoiStyle = PoiStyle(styleID: styleID, styles: [
                             PerLevelPoiStyle(iconStyle: friendIconStyle, level: 12)

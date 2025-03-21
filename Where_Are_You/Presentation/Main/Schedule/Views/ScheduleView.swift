@@ -30,7 +30,7 @@ struct ScheduleView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            ZStack(alignment: .top) {
+            ZStack {
                 VStack(spacing: 0) {
                     HStack(alignment: .center) {
                         yearMonthView
@@ -52,11 +52,12 @@ struct ScheduleView: View {
                             })
                         }
                     }
-                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 4))
+                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 6))
                     .padding(.top, LayoutAdapter.shared.scale(value: -2))
-                    .padding(.bottom, LayoutAdapter.shared.scale(value: 8))
                     
                     weekdayView
+                        .padding(.top, LayoutAdapter.shared.scale(value: 16))
+                    
                     calendarGridView(in: geometry)
                 }
                 .padding(.horizontal, LayoutAdapter.shared.scale(value: 10))
@@ -68,7 +69,7 @@ struct ScheduleView: View {
                             showOptionMenu = false
                         }
                     
-                    OptionButtonView {
+                    OptionButtonView(topPadding: LayoutAdapter.shared.scale(value: 36), content: {
                         OptionButton(
                             title: "일정 추가",
                             position: .single
@@ -76,10 +77,7 @@ struct ScheduleView: View {
                             showOptionMenu = false
                             showCreateSchedule.toggle()
                         }
-                    }
-                    .offset(y: LayoutAdapter.shared.scale(value: 44))
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                    .padding(.trailing, LayoutAdapter.shared.scale(value: 15))
+                    })
                 }
             }
         }
