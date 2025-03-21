@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icon-home.png",
+      "filename" : "icon-home.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icon-home2.png",
+      "filename" : "icon-home 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icon-home3.png",
+      "filename" : "icon-home 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }

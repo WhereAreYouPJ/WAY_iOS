@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "icon-search.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icon-research.svg",
+      "filename" : "icon-search 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "icon-search 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }
