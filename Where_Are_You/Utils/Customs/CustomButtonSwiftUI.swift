@@ -80,12 +80,12 @@ struct BottomButtonSwiftUIView: View {
 }
 
 struct OptionButtonView<Content: View>: View {
-    let inUIKit: Bool
     let content: Content
+    let topPadding: CGFloat
     
-    init(inUIKit: Bool = false, @ViewBuilder content: () -> Content) {
-        self.inUIKit = inUIKit
+    init(topPadding: CGFloat = 48, @ViewBuilder content: () -> Content) {
         self.content = content()
+        self.topPadding = topPadding
     }
     
     var body: some View {
@@ -93,9 +93,7 @@ struct OptionButtonView<Content: View>: View {
             content
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-        .padding(inUIKit
-                 ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 24)
-                 : EdgeInsets(top: 48, leading: 0, bottom: 0, trailing: 24))
+        .padding(EdgeInsets(top: topPadding, leading: 0, bottom: 0, trailing: 24))
     }
 }
 

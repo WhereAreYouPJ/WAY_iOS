@@ -76,7 +76,7 @@ class FriendFeedViewController: UIViewController {
     }()
         
     private let friendOptionView: UIHostingController = {
-        let view = OptionButtonView(inUIKit: true, content: {
+        let view = OptionButtonView(topPadding: 0, content: {
             OptionButton(
                 title: "친구 추가",
                 position: .top
