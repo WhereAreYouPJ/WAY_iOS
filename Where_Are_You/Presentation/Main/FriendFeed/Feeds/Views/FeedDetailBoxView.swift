@@ -50,7 +50,7 @@ class FeedDetailBoxView: UIView {
         view.layer.borderColor = UIColor.blackF8.cgColor
         view.backgroundColor = .blackAC
         view.layer.borderWidth = 1
-        view.layer.cornerRadius = 14
+        view.layer.cornerRadius = LayoutAdapter.shared.scale(value: 19)
         view.snp.makeConstraints { make in
             make.height.equalTo(LayoutAdapter.shared.scale(value: 38))
         }

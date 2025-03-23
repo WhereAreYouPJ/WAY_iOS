@@ -14,6 +14,7 @@
         weak var delegate2: CommonFeedViewDelegate?
             
         let participantsBoxView = FeedParticipantView()
+        let scrollView = UIScrollView()
         let feedDetailView = CommonFeedView()
         let noFeedView: NoDataView = {
             let view = NoDataView()
@@ -38,7 +39,8 @@
         private func configureViewComponents() {
             addSubview(noFeedView)
             addSubview(participantsBoxView)
-            addSubview(feedDetailView)
+            addSubview(scrollView)
+            scrollView.addSubview(feedDetailView)
         }
         
         private func setupConstraints() {
@@ -48,11 +50,15 @@
                 make.height.equalTo(LayoutAdapter.shared.scale(value: 40))
             }
             
-            feedDetailView.snp.makeConstraints { make in
+            scrollView.snp.makeConstraints { make in
                 make.top.equalTo(participantsBoxView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 10))
-                make.centerX.equalToSuperview()
-                make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
-                //            make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 20))
+                make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+                make.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 20))
+            }
+            
+            feedDetailView.snp.makeConstraints { make in
+                make.edges.equalTo(scrollView.contentLayoutGuide)
+                make.width.equalTo(scrollView.frameLayoutGuide)
             }
             
             noFeedView.snp.makeConstraints { make in
@@ -70,13 +76,13 @@
         
         func showNoFeedView() {
             noFeedView.isHidden = false
-            feedDetailView.isHidden = true
+            scrollView.isHidden = true
         }
         
         func showFeedView(feed: Feed) {
             configureFeedView(feed: feed)
             noFeedView.isHidden = true
-            feedDetailView.isHidden = false
+            scrollView.isHidden = false
         }
     }
 

@@ -38,6 +38,8 @@ class ScheduleDropDown: UIView {
         return tableView
     }()
     
+    let moreButton = UIButton(type: .system)
+    
     // MARK: - Lifecycle
 
     override init(frame: CGRect) {
@@ -58,6 +60,14 @@ class ScheduleDropDown: UIView {
         layer.borderColor = UIColor.brandMain.cgColor
         scheduleDateLabel.isHidden = true
         scheduleLocationLabel.isHidden = true
+        
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: dropDownTableView.frame.width, height: 50))
+        moreButton.setTitle("더 보기", for: .normal)
+        // 버튼 액션 추가
+        moreButton.frame = footerView.bounds
+        footerView.addSubview(moreButton)
+        dropDownTableView.tableFooterView = footerView
+        
     }
 
     private func configureViewComponents() {

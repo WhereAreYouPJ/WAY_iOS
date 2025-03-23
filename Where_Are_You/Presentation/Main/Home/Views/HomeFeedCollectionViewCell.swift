@@ -79,6 +79,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .white
         configureViewComponents()
         setupConstraints()
         setupActions()
@@ -101,10 +102,11 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
     // MARK: - Helpers
     
     private func configureViewComponents() {
-        contentView.layer.cornerRadius = LayoutAdapter.shared.scale(value: 16)
-        contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor.blackF0.cgColor
         contentView.addSubview(mainStack)
+        layer.cornerRadius = LayoutAdapter.shared.scale(value: 16)
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.blackF0.cgColor
+        clipsToBounds = true
     }
     
     private func setupConstraints() {

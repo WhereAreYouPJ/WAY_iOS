@@ -98,9 +98,14 @@ class AddFeedViewController: UIViewController {
         addFeedView.scheduleDropDown.scheduleDropDownView.addTarget(self, action: #selector(dropDownButtonTapped), for: .touchUpInside)
         addFeedView.addImages.addTarget(self, action: #selector(handleAddImagesTapped), for: .touchUpInside)
         addFeedView.creatFeedButton.addTarget(self, action: #selector(createFeed), for: .touchUpInside)
+        addFeedView.scheduleDropDown.moreButton.addTarget(self, action: #selector(loadMoreData), for: .touchUpInside)
+
     }
     
     // MARK: - Selectors
+    @objc func loadMoreData() {
+        print("loadMoreData tapped")
+    }
     
     @objc func backButtonTapped() {
         dismiss(animated: true)

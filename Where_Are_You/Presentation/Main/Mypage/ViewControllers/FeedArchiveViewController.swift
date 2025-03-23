@@ -151,6 +151,10 @@ class FeedArchiveViewController: UIViewController {
 // MARK: - FeedsTableViewCellDelegate
 
 extension FeedArchiveViewController: FeedsTableViewCellDelegate {
+    func didTapReadMoreButton() {
+        feedArchiveView.updateContentHeight()
+    }
+    
     func didSelectFeed(feed: Feed) {
     }
     

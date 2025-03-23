@@ -75,8 +75,7 @@ class FeedsViewController: UIViewController {
         view.addSubview(feedsView)
         view.addSubview(noFeedsView)
         feedsView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 26))
-            make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.top.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         noFeedsView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
@@ -195,6 +194,10 @@ class FeedsViewController: UIViewController {
 // MARK: - FeedsTableViewCellDelegate
 
 extension FeedsViewController: FeedsTableViewCellDelegate {
+    func didTapReadMoreButton() {
+        feedsView.updateContentHeight()
+    }
+    
     func didTapFeedFixButton(feed: Feed, buttonFrame: CGRect) {
         let isAuthor = feed.memberSeq == UserDefaultsManager.shared.getMemberSeq()
         showOptions(for: feed, at: buttonFrame, isAuthor: isAuthor)
