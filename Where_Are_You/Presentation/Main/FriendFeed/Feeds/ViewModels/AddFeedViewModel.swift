@@ -132,17 +132,6 @@ class AddFeedViewModel {
         } else {
             return otherParticipants.joined(separator: ", ")
         }
-//        if participants.count == 1 {
-//            print("participants is Empty")
-//            return ""
-//        } else {
-//            if participants.count > 4 {
-//                let displayedNames = participants.prefix(3).joined(separator: ", ")
-//                return "\(displayedNames) 외 \(participants.count - 3)명"
-//            } else {
-//                return participants.joined(separator: ", ")
-//            }
-//        }
     }
 
     // 전체 행 수를 반환하는 메서드 추가

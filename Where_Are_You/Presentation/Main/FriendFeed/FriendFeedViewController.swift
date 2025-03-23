@@ -202,12 +202,14 @@ class FriendFeedViewController: UIViewController {
         }
         
         segmentControl.snp.makeConstraints { make in
-            make.width.equalTo(150)
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 36)).priority(.required)
+//            make.width.equalTo(150)
+//            make.height.equalTo(LayoutAdapter.shared.scale(value: 36)).priority(.required)
+            make.width.equalTo(118)
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 45)).priority(.required)
         }
         
         addButton.snp.makeConstraints { make in
-            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 34))
+            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 24))
         }
         
         if segmentControl.selectedSegmentIndex == 0 {
