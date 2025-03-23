@@ -7,10 +7,12 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 class SearchFriendsViewModel: ObservableObject {
     @Published var selectedFavorites: Set<UUID> = []
     @Published var selectedFriends: Set<UUID> = []
+    var cancellables = Set<AnyCancellable>()
     
     let friendsViewModel: FriendsViewModel
     private let getFriendUseCase: GetFriendUseCase
@@ -56,28 +58,45 @@ class SearchFriendsViewModel: ObservableObject {
     }
     
     func toggleSelection(for friend: Friend) {
-        if favorites.contains(where: { $0.id == friend.id }) {
-            if selectedFavorites.contains(friend.id) {
-                selectedFavorites.remove(friend.id)
-            } else {
-                selectedFavorites.insert(friend.id)
-            }
+        // 이미 선택되어 있는지 확인
+        if isSelected(friend: friend) {
+            removeFromSelection(friend: friend)
         } else {
-            if selectedFriends.contains(friend.id) {
-                selectedFriends.remove(friend.id)
+            // 친구 타입에 따라 적절한 컬렉션에 추가
+            if favorites.contains(where: { $0.memberSeq == friend.memberSeq }) {
+                if let favoriteToAdd = favorites.first(where: { $0.memberSeq == friend.memberSeq }) {
+                    selectedFavorites.insert(favoriteToAdd.id)
+                }
             } else {
-                selectedFriends.insert(friend.id)
+                if let friendToAdd = friends.first(where: { $0.memberSeq == friend.memberSeq }) {
+                    selectedFriends.insert(friendToAdd.id)
+                }
             }
         }
     }
     
     func isSelected(friend: Friend) -> Bool {
-        selectedFavorites.contains(friend.id) || selectedFriends.contains(friend.id)
+        let isFavoriteSelected = favorites.contains { favorite in
+            favorite.memberSeq == friend.memberSeq && selectedFavorites.contains(favorite.id)
+        }
+        
+        let isFriendSelected = friends.contains { friendItem in
+            friendItem.memberSeq == friend.memberSeq && selectedFriends.contains(friendItem.id)
+        }
+        
+        return isFavoriteSelected || isFriendSelected
     }
     
     func removeFromSelection(friend: Friend) {
-        selectedFavorites.remove(friend.id)
-        selectedFriends.remove(friend.id)
+        // 즐겨찾기에서 제거 시도
+        if let favoriteToRemove = favorites.first(where: { $0.memberSeq == friend.memberSeq }) {
+            selectedFavorites.remove(favoriteToRemove.id)
+        }
+        
+        // 일반 친구 목록에서 제거 시도
+        if let friendToRemove = friends.first(where: { $0.memberSeq == friend.memberSeq }) {
+            selectedFriends.remove(friendToRemove.id)
+        }
     }
     
     func getSelectedFriends() -> [Friend] {

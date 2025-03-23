@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icon-schedule-filled.png",
+      "filename" : "icon-schedule-filled.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icon-Notes-lines2.png",
+      "filename" : "icon-schedule-filled 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icon-Notes-lines3.png",
+      "filename" : "icon-schedule-filled 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }

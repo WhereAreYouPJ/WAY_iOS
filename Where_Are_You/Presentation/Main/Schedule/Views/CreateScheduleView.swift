@@ -293,7 +293,7 @@ struct AddFriendsView: View {
         Divider()
         
         HStack {
-            Image("icon-friends")
+            Image("icon-invitation")
             if selectedFriends.isEmpty {
                 Text("친구 추가")
                     .foregroundStyle(Color(.color118))

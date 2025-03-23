@@ -79,19 +79,21 @@ struct BottomButtonSwiftUIView: View {
     }
 }
 
-struct MultiOptionButtonView<Content: View>: View {
+struct OptionButtonView<Content: View>: View {
     let content: Content
+    let topPadding: CGFloat
     
-    init(@ViewBuilder content: () -> Content) {
+    init(topPadding: CGFloat = 48, @ViewBuilder content: () -> Content) {
         self.content = content()
+        self.topPadding = topPadding
     }
     
     var body: some View {
         VStack(spacing: LayoutAdapter.shared.scale(value: 0.5)) {
             content
         }
-        .background(Color(UIColor.systemGray6))
-        .cornerRadius(LayoutAdapter.shared.scale(value: 10))
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+        .padding(EdgeInsets(top: topPadding, leading: 0, bottom: 0, trailing: 24))
     }
 }
 
@@ -125,11 +127,11 @@ struct OptionButton: View {
                 
                 Spacer()
             }
-            .padding(.leading, LayoutAdapter.shared.scale(value: 14))
-            .frame(width: LayoutAdapter.shared.scale(value: 160), height: LayoutAdapter.shared.scale(value: 35))
-            .background(Color(.popupButtonColor))
+            .padding(.horizontal, LayoutAdapter.shared.scale(value: 12))
+            .frame(width: LayoutAdapter.shared.scale(value: 155), height: LayoutAdapter.shared.scale(value: 40))
+            .background(Color(.brandDark2))
             .clipShape(
-                RoundedCorner(radius: LayoutAdapter.shared.scale(value: 10), corners: position.cornerRadius)
+                RoundedCorner(radius: LayoutAdapter.shared.scale(value: 8), corners: position.cornerRadius)
             )
         }
     }
@@ -166,7 +168,7 @@ struct RoundedCorner: Shape {
 }
 
 #Preview {
-    MultiOptionButtonView {
+    OptionButtonView {
         OptionButton(
             title: "첫 번째 옵션",
             position: .top
@@ -189,4 +191,13 @@ struct RoundedCorner: Shape {
         }
     }
     .padding()
+}
+
+#Preview {
+    OptionButton(
+        title: "옵션 한 개",
+        position: .single
+    ) {
+        print("옵션 선택됨")
+    }
 }

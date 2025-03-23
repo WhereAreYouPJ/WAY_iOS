@@ -15,11 +15,11 @@ struct ProfileImageView: View {
     var body: some View {
         ZStack {
             Image("icon-location-anchor")
-                .frame(width: LayoutAdapter.shared.scale(value: 11), height: LayoutAdapter.shared.scale(value: 11))
-                .padding(.top, 55)
+                .frame(width: LayoutAdapter.shared.scale(value: 10), height: LayoutAdapter.shared.scale(value: 10))
+                .padding(.top, 60)
             
             Image("icon-location-pin")
-                .frame(width: LayoutAdapter.shared.scale(value: 45), height: LayoutAdapter.shared.scale(value: 56))
+//                .frame(width: LayoutAdapter.shared.scale(value: 45), height: LayoutAdapter.shared.scale(value: 56))
             
             image
                 .resizable()
@@ -27,7 +27,7 @@ struct ProfileImageView: View {
                 .frame(width: LayoutAdapter.shared.scale(value: 45), height: LayoutAdapter.shared.scale(value: 45))
                 .frame(width: LayoutAdapter.shared.scale(value: 35), height: LayoutAdapter.shared.scale(value: 35))
                 .clipShape(Circle())
-                .padding(.bottom, 10)
+                .padding(.bottom, 14)
         }
     }
 }
