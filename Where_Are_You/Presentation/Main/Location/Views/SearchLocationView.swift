@@ -78,13 +78,16 @@ struct SearchLocationView: View {
                     ProgressView()
                 }
             } else {
-                List(viewModel.searchResults) { location in
-                    locationRow(location: location)
-                }
-                .listStyle(PlainListStyle())
-                
                 if viewModel.isLoading {
                     ProgressView()
+                } else if viewModel.searchResults.isEmpty {
+                    noResultsView()
+                        .padding(.top, LayoutAdapter.shared.scale(value: 70))
+                } else {
+                    List(viewModel.searchResults) { location in
+                        locationRow(location: location)
+                    }
+                    .listStyle(PlainListStyle())
                 }
             }
         }
@@ -134,6 +137,26 @@ struct SearchLocationView: View {
             
             print("위치: \(location.location) / \(location.streetName) / \(location.x) / \(location.y)")
         }
+    }
+    
+    private func noResultsView() -> some View {
+        VStack(spacing: 0) {
+            Image("icon-notice")
+                .padding(.bottom, LayoutAdapter.shared.scale(value: 10))
+            
+            Text("검색결과가 없습니다.")
+                .font(.bodyP2())
+            
+            Group {
+                Text("검색어에 해당하는 위치가 존재하지 않습니다.")
+                Text("다시 한번 확인해 주세요.")
+            }
+            .font(.bodyP4())
+            .padding(.top, LayoutAdapter.shared.scale(value: 6))
+            
+            Spacer()
+        }
+        .foregroundStyle(Color.blackAC)
     }
 }
 
