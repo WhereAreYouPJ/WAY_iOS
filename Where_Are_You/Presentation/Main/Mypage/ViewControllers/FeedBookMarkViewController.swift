@@ -156,6 +156,10 @@ class FeedBookMarkViewController: UIViewController {
 // MARK: - FeedsTableViewCellDelegate
 
 extension FeedBookMarkViewController: FeedsTableViewCellDelegate {
+    func didTapReadMoreButton() {
+        feedBookMarkView.updateContentHeight()
+    }
+    
     func didSelectFeed(feed: Feed) {
     }
     

@@ -56,10 +56,13 @@ class HomeFeedView: UIView {
     // MARK: - Helpers
 
     private func setupViews() {
-        addSubview(collectionView)
         backgroundColor = .blackF8
+        collectionView.backgroundColor = .blackF8
+        addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 18))
+            make.leading.trailing.bottom.equalToSuperview()
+//            make.edges.equalToSuperview()
         }
     }
     

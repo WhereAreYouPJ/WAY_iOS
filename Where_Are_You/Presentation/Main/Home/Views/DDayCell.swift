@@ -14,33 +14,11 @@ class DDAyCell: UICollectionViewCell {
     static let identifier = "DDAyCell"
     
     private let dDayLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "dday", textColor: .error))
-
-//    : UILabel = {
-//        let label = UILabel()
-//        label.textColor = .scheduleDateColor
-//        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
-//        return label
-//    }()
     
     private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "titlelabel", textColor: .black22))
 
-//    : UILabel = {
-//        let label = UILabel()
-//        label.textColor = .black22
-//        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 16)
-//        return label
-//    }()
-    
     private let emptyLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "일정이 없습니다.", textColor: .black66))
-//    : UILabel = {
-//        let label = UILabel()
-//        label.textColor = .color118
-//        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: 16)
-//        label.text = "일정이 없습니다."
-//        label.isHidden = true
-//        return label
-//    }()
-    
+
     // MARK: - Lifecycle
 
     override init(frame: CGRect) {

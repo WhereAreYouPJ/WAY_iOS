@@ -12,6 +12,7 @@ protocol FeedsTableViewCellDelegate: AnyObject {
     func didTapBookmarkButton(feedSeq: Int, isBookMarked: Bool)
     func didTapFeedFixButton(feed: Feed, buttonFrame: CGRect)
     func didSelectFeed(feed: Feed)
+    func didTapReadMoreButton()
 }
 
 class FeedsTableViewCell: UITableViewCell {
@@ -26,6 +27,8 @@ class FeedsTableViewCell: UITableViewCell {
     private var isBookMarked: Bool = false
     private var imageUrls: [String] = []
     var isExpanded: Bool = false
+    
+    let containerView = UIView()
     
     let detailBox = FeedDetailBoxView()
     let feedImagesView = FeedImagesView()
@@ -58,12 +61,13 @@ class FeedsTableViewCell: UITableViewCell {
     // MARK: - Helpers
     
     private func configureViewComponents() {
-        contentView.addSubview(detailBox)
-        contentView.addSubview(feedImagesView)
-        contentView.addSubview(bookMarkButton)
-        contentView.addSubview(labelBackGroundView)
+        contentView.addSubview(containerView)
+
+        containerView.addSubview(detailBox)
+        containerView.addSubview(feedImagesView)
+        containerView.addSubview(bookMarkButton)
+        containerView.addSubview(labelBackGroundView)
         labelBackGroundView.addSubview(descriptionLabel)
-//        contentView.addSubview(descriptionLabel)
     }
     
     private func setupActions() {
@@ -79,10 +83,15 @@ class FeedsTableViewCell: UITableViewCell {
     }
     
     private func setupConstraints() {
+        containerView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 19))
+            make.leading.trailing.equalToSuperview()
+        }
+        
         detailBox.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 8))
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 74))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 64))
         }
         
         feedImagesView.snp.makeConstraints { make in
@@ -103,9 +112,6 @@ class FeedsTableViewCell: UITableViewCell {
         }
         
         descriptionLabel.snp.makeConstraints { make in
-//            make.top.equalTo(bookMarkButton.snp.bottom).offset(LayoutAdapter.shared.scale(value: 6))
-//            make.leading.trailing.bottom.equalToSuperview()
-//            make.edges.equalToSuperview()
             make.center.equalToSuperview()
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 8))
             make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 12))
@@ -131,7 +137,6 @@ class FeedsTableViewCell: UITableViewCell {
         resetUI()
         
         descriptionLabel.isHidden = (feed.content == nil)
-//        descriptionLabel.text = feed.content
         guard let feedcontent = feed.content else { return }
         descriptionLabel.attributedText = UIFont.CustomFont.bodyP4(text: feedcontent, textColor: .black66)
         let readmoreFont = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
@@ -205,9 +210,11 @@ class FeedsTableViewCell: UITableViewCell {
         if let tableView = superview as? UITableView, let indexPath = tableView.indexPath(for: self) {
             // 레이아웃 강제 업데이트
             UIView.performWithoutAnimation { // 애니메이션 없이 즉시 갱신
-                tableView.reloadRows(at: [indexPath], with: .none) // 해당 셀 높이 갱신
+                tableView.reloadRows(at: [indexPath], with: .none)
+                tableView.reloadInputViews()// 해당 셀 높이 갱신
             }
         }
+        delegate?.didTapReadMoreButton()
     }
 }
 extension FeedsTableViewCell: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIScrollViewDelegate {
