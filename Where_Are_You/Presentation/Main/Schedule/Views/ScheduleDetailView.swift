@@ -107,7 +107,7 @@ struct ScheduleDetailView: View {
                     SetColorView(color: $createViewModel.color)
                         .disabled(!viewModel.isEditable)
                     
-                    MemoView(memo: $createViewModel.memo)
+                    MemoView(memo: $createViewModel.memo, isEditing: $createViewModel.isEditingMemo)
                         .disabled(!viewModel.isEditable)
                     
                     // TODO: 친구 위치 실시간 확인 테스트용. 홈화면에서 기능 추가시 삭제 필요
