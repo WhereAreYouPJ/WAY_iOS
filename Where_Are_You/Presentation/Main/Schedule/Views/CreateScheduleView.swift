@@ -156,8 +156,8 @@ struct CreateScheduleView: View {
                         dismiss()
                     }
                 }
-                .foregroundStyle(viewModel.title.isEmpty ? Color.gray : Color.red)
-                .disabled(viewModel.title.isEmpty)
+                .foregroundStyle(viewModel.checkPostAvailable() ? Color.red : Color.gray)
+                .disabled(!viewModel.checkPostAvailable())
             }
         }
     }
