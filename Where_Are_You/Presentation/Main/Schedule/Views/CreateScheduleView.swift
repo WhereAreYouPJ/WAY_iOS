@@ -371,17 +371,7 @@ struct CancellationView: View {
 
 struct SetColorView: View {
     @Binding var color: String
-    
-    let colors: [(Color, String)] = [
-        (Color(UIColor.calendarRed), "red"),
-        (Color(UIColor.calendarOrange), "orange"),
-        (Color(UIColor.calendarYellow), "yellow"),
-        (Color(UIColor.calendarGreen), "green"),
-        (Color(UIColor.calendarMint), "mint"),
-        (Color(UIColor.calendarBlue), "blue"),
-        (Color(UIColor.calendarPink), "pink"),
-        (Color(UIColor.calendarPurple), "purple")
-    ]
+    let colors = ScheduleColor.allColorsWithNames // [(Color, String)]
     
     var body: some View {
         Text("일정컬러")

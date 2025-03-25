@@ -135,18 +135,6 @@ class DailyScheduleViewModel: ObservableObject {
             return nil
         }
     }
-    
-    func scheduleColor(for color: String) -> Color {
-        switch color {
-        case "red": return Color.colorRed
-        case "yellow": return Color.colorYellow
-        case "green": return Color.colorGreen
-        case "blue": return Color.colorBlue
-        case "violet": return Color.colorViolet
-        case "pink": return Color.colorPink
-        default: return Color.colorRed
-        }
-    }
 }
 
 extension DailyScheduleViewModel {
