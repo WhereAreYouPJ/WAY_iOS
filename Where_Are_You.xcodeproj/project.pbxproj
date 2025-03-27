@@ -243,6 +243,8 @@
 		D50D7D952D92C4F2009B0217 /* ScheduleColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50D7D942D92C4F2009B0217 /* ScheduleColor.swift */; };
 		D511A5742D3E8F7400CA6FE7 /* CustomToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511A5732D3E8F7400CA6FE7 /* CustomToast.swift */; };
 		D512EC572CA6E56C001AC965 /* GetScheduleByDateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512EC562CA6E56C001AC965 /* GetScheduleByDateResponse.swift */; };
+		D5161A6D2D950D5F00D92B39 /* CustomFontStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5161A6C2D950D5F00D92B39 /* CustomFontStyle.swift */; };
+		D5161A6F2D95214200D92B39 /* ToastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5161A6E2D95214200D92B39 /* ToastManager.swift */; };
 		D517F25D2CEC8691003C5F60 /* FriendDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D517F25C2CEC8691003C5F60 /* FriendDetailView.swift */; };
 		D517F25F2CECA902003C5F60 /* FriendDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D517F25E2CECA902003C5F60 /* FriendDetailViewModel.swift */; };
 		D517F2612CECAAF1003C5F60 /* DeleteFriendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D517F2602CECAAF1003C5F60 /* DeleteFriendUseCase.swift */; };
@@ -614,6 +616,8 @@
 		D50D7D942D92C4F2009B0217 /* ScheduleColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleColor.swift; sourceTree = "<group>"; };
 		D511A5732D3E8F7400CA6FE7 /* CustomToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToast.swift; sourceTree = "<group>"; };
 		D512EC562CA6E56C001AC965 /* GetScheduleByDateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetScheduleByDateResponse.swift; sourceTree = "<group>"; };
+		D5161A6C2D950D5F00D92B39 /* CustomFontStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFontStyle.swift; sourceTree = "<group>"; };
+		D5161A6E2D95214200D92B39 /* ToastManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastManager.swift; sourceTree = "<group>"; };
 		D517F25C2CEC8691003C5F60 /* FriendDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailView.swift; sourceTree = "<group>"; };
 		D517F25E2CECA902003C5F60 /* FriendDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailViewModel.swift; sourceTree = "<group>"; };
 		D517F2602CECAAF1003C5F60 /* DeleteFriendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFriendUseCase.swift; sourceTree = "<group>"; };
@@ -1218,6 +1222,7 @@
 				99EDD14E2D49EE5B005164FB /* APIError.swift */,
 				99EDD1502D49F003005164FB /* ServerError.swift */,
 				D5FFF2A12D6734830067C3FE /* LocationManager.swift */,
+				D5161A6E2D95214200D92B39 /* ToastManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1491,6 +1496,7 @@
 				D588498B2D55FAE900DE82E9 /* CornerRadius.swift */,
 				D57A6C102D56006600C2B822 /* CustomAlertModifier.swift */,
 				99DF440C2D6DB2A200D75956 /* CustomImageView.swift */,
+				D5161A6C2D950D5F00D92B39 /* CustomFontStyle.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -2254,6 +2260,7 @@
 				992F57C62C5B265600219C6B /* SingUpBody.swift in Sources */,
 				990F57912C27ECDC00F6E1AD /* AccountSignUpUseCase.swift in Sources */,
 				99EC78D22C11E437007C4415 /* PasswordFinishResetViewController.swift in Sources */,
+				D5161A6D2D950D5F00D92B39 /* CustomFontStyle.swift in Sources */,
 				99EC78D02C11E20F007C4415 /* PasswordFinishResetView.swift in Sources */,
 				99949F492C587BA500AE0177 /* FriendsListView.swift in Sources */,
 				99F9FADE2C0B6187005B36B9 /* AccountSearchViewController.swift in Sources */,
@@ -2415,6 +2422,7 @@
 				99CA4F262C33B704007C027C /* ResetPasswordViewModel.swift in Sources */,
 				993AA5412D5351C900B0C9F6 /* SocialLinkViewController.swift in Sources */,
 				99D23FF42C6889BA00CFD4F0 /* FeedDetailViewModel.swift in Sources */,
+				D5161A6F2D95214200D92B39 /* ToastManager.swift in Sources */,
 				99DA18B92C4E132A00D5CDA6 /* TitleView.swift in Sources */,
 				D55C6C592CF5DD33005132DC /* FriendRequestRepository.swift in Sources */,
 				99C68E4C2C64B83D00DEC1F1 /* FeedRepository.swift in Sources */,

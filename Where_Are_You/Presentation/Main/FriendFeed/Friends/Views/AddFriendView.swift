@@ -48,7 +48,7 @@ struct AddFriendView: View {
                     dismiss()
                 }
             )
-            .toast(isPresented: $viewModel.showToast, message: viewModel.toastText)
+//            .toast(isPresented: $viewModel.showToast, message: viewModel.toastText)
         }
     }
     

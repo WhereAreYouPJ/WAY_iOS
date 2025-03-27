@@ -315,50 +315,105 @@ extension UIFont {
 
 extension Font {
     // Title Fonts
-    static func titleH1(color: Color = .primary) -> Font {
-        return Font.custom("Paperlogy-6SemiBold", size: LayoutAdapter.shared.scale(value: 22))
+    static func titleH1() -> FontStyle {
+        return FontStyle(
+            family: "Paperlogy-6SemiBold",
+            size: LayoutAdapter.shared.scale(value: 22),
+            lineHeight: 1.3,
+            letterSpacing: -1
+        )
     }
     
-    static func titleH2(color: Color = .primary) -> Font {
-        return Font.custom("Paperlogy-6SemiBold", size: LayoutAdapter.shared.scale(value: 20))
+    static func titleH2() -> FontStyle {
+        return FontStyle(
+            family: "Paperlogy-6SemiBold",
+            size: LayoutAdapter.shared.scale(value: 20),
+            lineHeight: 1.3,
+            letterSpacing: -2
+        )
     }
     
-    static func titleH3(color: Color = .primary) -> Font {
-        return Font.custom("Paperlogy-6SemiBold", size: LayoutAdapter.shared.scale(value: 18))
+    static func titleH3() -> FontStyle {
+        return FontStyle(
+            family: "Paperlogy-6SemiBold",
+            size: LayoutAdapter.shared.scale(value: 18),
+            lineHeight: 1.3,
+            letterSpacing: -1
+        )
     }
     
     // Body Fonts
-    static func bodyP1(color: Color = .primary) -> Font {
-        return Font.custom("Pretendard-Medium", size: LayoutAdapter.shared.scale(value: 20))
+    static func bodyP1() -> FontStyle {
+        return FontStyle(
+            family: "Pretendard-Medium",
+            size: LayoutAdapter.shared.scale(value: 20),
+            lineHeight: 1.4,
+            letterSpacing: -1
+        )
     }
     
-    static func bodyP2(color: Color = .primary) -> Font {
-        return Font.custom("Pretendard-SemiBold", size: LayoutAdapter.shared.scale(value: 18))
+    static func bodyP2() -> FontStyle {
+        return FontStyle(
+            family: "Pretendard-SemiBold",
+            size: LayoutAdapter.shared.scale(value: 18),
+            lineHeight: 1.4,
+            letterSpacing: 0
+        )
     }
     
-    static func bodyP3(color: Color = .primary) -> Font {
-        return Font.custom("Pretendard-Medium", size: LayoutAdapter.shared.scale(value: 16))
+    static func bodyP3() -> FontStyle {
+        return FontStyle(
+            family: "Pretendard-Medium",
+            size: LayoutAdapter.shared.scale(value: 16),
+            lineHeight: 1.4,
+            letterSpacing: -0.5
+        )
     }
     
-    static func bodyP4(color: Color = .primary) -> Font {
-        return Font.custom("Pretendard-Medium", size: LayoutAdapter.shared.scale(value: 14))
+    static func bodyP4() -> FontStyle {
+        return FontStyle(
+            family: "Pretendard-Medium",
+            size: LayoutAdapter.shared.scale(value: 14),
+            lineHeight: 1.4,
+            letterSpacing: -0.5
+        )
     }
     
-    static func bodyP5(color: Color = .primary) -> Font {
-        return Font.custom("Pretendard-Medium", size: LayoutAdapter.shared.scale(value: 12))
+    static func bodyP5() -> FontStyle {
+        return FontStyle(
+            family: "Pretendard-Medium",
+            size: LayoutAdapter.shared.scale(value: 12),
+            lineHeight: 1.3,
+            letterSpacing: -1.25
+        )
     }
     
     // Button Fonts
-    static func button18(color: Color = .primary) -> Font {
-        return Font.custom("Paperlogy-6SemiBold", size: LayoutAdapter.shared.scale(value: 18))
+    static func button18() -> FontStyle {
+        return FontStyle(
+            family: "Paperlogy-6SemiBold",
+            size: LayoutAdapter.shared.scale(value: 18),
+            lineHeight: 1.3,
+            letterSpacing: 1.25
+        )
     }
     
-    static func button16(color: Color = .primary) -> Font {
-        return Font.custom("Paperlogy-6SemiBold", size: LayoutAdapter.shared.scale(value: 16))
+    static func button16() -> FontStyle {
+        return FontStyle(
+            family: "Paperlogy-6SemiBold",
+            size: LayoutAdapter.shared.scale(value: 16),
+            lineHeight: 1.3,
+            letterSpacing: 4
+        )
     }
     
-    static func button14(color: Color = .primary) -> Font {
-        return Font.custom("Paperlogy-6SemiBold", size: LayoutAdapter.shared.scale(value: 14))
+    static func button14() -> FontStyle {
+        return FontStyle(
+            family: "Paperlogy-6SemiBold",
+            size: LayoutAdapter.shared.scale(value: 14),
+            lineHeight: 1.3,
+            letterSpacing: -0.5
+        )
     }
     
     // Custom Fonts
@@ -407,6 +462,31 @@ extension Font {
         }
         return Font(UIFont.pretendard(NotoSans: uiFontWeight, fontSize: fontSize))
     }
+}
+
+// Text 확장 - prompt와 같은 특별한 경우를 위한 스타일 메서드
+extension Text {
+    func withFontStyle(_ style: FontStyle, color: Color = .primary) -> Text {
+        return self.font(style.font)
+                  .foregroundColor(color)
+                  // lineSpacing과 kerning은 여기서 적용하지 않음
+                  // (Text 타입의 특성상 이후 chaining이 필요함)
+    }
+    
+    // 다른 스타일 메서드들도 동일한 패턴으로 구현
+    func withTitleH1Style(color: Color = .primary) -> Text {
+        return withFontStyle(Font.titleH1(), color: color)
+    }
+    
+    func withBodyP2Style(color: Color = .primary) -> Text {
+        return withFontStyle(Font.bodyP2(), color: color)
+    }
+    
+    func withBodyP3Style(color: Color = .primary) -> Text {
+        return withFontStyle(Font.bodyP3(), color: color)
+    }
+    
+    // 필요한 다른 스타일 메서드들...
 }
 
 // MARK: - UIImage
@@ -512,8 +592,9 @@ extension Notification.Name {
     static let showManageFriends = Notification.Name("showManageFriends")
 }
 
-// MARK: View to UIImage - 실시간 위치 조회시 프로필사진 마킹용
+// MARK: - View
 extension View {
+    // View to UIImage - 실시간 위치 조회시 프로필사진 마킹용
     func snapshot() -> UIImage {
         let controller = UIHostingController(rootView: self.edgesIgnoringSafeArea(.all))
         let view = controller.view
@@ -528,6 +609,64 @@ extension View {
         return renderer.image { _ in
             view?.drawHierarchy(in: controller.view.bounds, afterScreenUpdates: true)
         }
+    }
+    
+    // 폰트 스타일 적용을 위한 모디파이어
+    func applyFontStyle(_ style: FontStyle, color: Color = .primary) -> some View {
+        let lineSpacing = (style.lineHeight - 1) * style.fontSize
+        
+        return self
+            .font(style.font)
+            .lineSpacing(lineSpacing)
+            .kerning(style.letterSpacing)
+            .foregroundColor(color)
+    }
+    
+    // 헤더 스타일 적용 메서드
+    func titleH1Style(color: Color = .primary) -> some View {
+        applyFontStyle(Font.titleH1(), color: color)
+    }
+    
+    func titleH2Style(color: Color = .primary) -> some View {
+        applyFontStyle(Font.titleH2(), color: color)
+    }
+    
+    func titleH3Style(color: Color = .primary) -> some View {
+        applyFontStyle(Font.titleH3(), color: color)
+    }
+    
+    // 본문 스타일 적용 메서드
+    func bodyP1Style(color: Color = .primary) -> some View {
+        applyFontStyle(Font.bodyP1(), color: color)
+    }
+    
+    func bodyP2Style(color: Color = .primary) -> some View {
+        applyFontStyle(Font.bodyP2(), color: color)
+    }
+    
+    func bodyP3Style(color: Color = .primary) -> some View {
+        applyFontStyle(Font.bodyP3(), color: color)
+    }
+    
+    func bodyP4Style(color: Color = .primary) -> some View {
+        applyFontStyle(Font.bodyP4(), color: color)
+    }
+    
+    func bodyP5Style(color: Color = .primary) -> some View {
+        applyFontStyle(Font.bodyP5(), color: color)
+    }
+    
+    // 버튼 스타일 적용 메서드
+    func button18Style(color: Color = .primary) -> some View {
+        applyFontStyle(Font.button18(), color: color)
+    }
+    
+    func button16Style(color: Color = .primary) -> some View {
+        applyFontStyle(Font.button16(), color: color)
+    }
+    
+    func button14Style(color: Color = .primary) -> some View {
+        applyFontStyle(Font.button14(), color: color)
     }
 }
 

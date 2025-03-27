@@ -145,13 +145,13 @@ struct SearchLocationView: View {
                 .padding(.bottom, LayoutAdapter.shared.scale(value: 10))
             
             Text("검색결과가 없습니다.")
-                .font(.bodyP2())
+                .bodyP2Style(color: .black22)
             
             Group {
                 Text("검색어에 해당하는 위치가 존재하지 않습니다.")
                 Text("다시 한번 확인해 주세요.")
             }
-            .font(.bodyP4())
+            .bodyP4Style(color: .black22)
             .padding(.top, LayoutAdapter.shared.scale(value: 6))
             
             Spacer()

@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import SwiftUI
 import KakaoSDKAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    
     var window: UIWindow?
+    private var toastHostingController: UIHostingController<ToastOverlayView>?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = scene as? UIWindowScene else { return }
@@ -19,6 +20,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
+        
+        // ToastManager 초기화 (이렇게 하면 싱글톤 인스턴스가 생성됨)
+        _ = ToastManager.shared
     }
     
     // Kakao Login
