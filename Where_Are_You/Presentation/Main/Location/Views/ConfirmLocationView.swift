@@ -53,11 +53,9 @@ struct ConfirmLocationView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text(viewModel.location.location)
-                        .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 20))))
-                        .foregroundColor(Color(.black44))
+                        .bodyP1Style(color: .black22)
                     Text(viewModel.location.streetName)
-                        .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14))))
-                        .foregroundColor(Color(.color153))
+                        .bodyP4Style(color: .black66)
                 }
                 Spacer()
                 
@@ -69,22 +67,22 @@ struct ConfirmLocationView: View {
             }
             
             Divider()
-                .padding(.top, 16)
+                .padding(.top, LayoutAdapter.shared.scale(value: 16))
+                .padding(.bottom, LayoutAdapter.shared.scale(value: 6))
             
             Button(action: {
                 dismissAction()
             }, label: {
                 Text("확인")
-                    .font(Font(UIFont.pretendard(NotoSans: .semibold, fontSize: 18)))
+                    .button18Style(color: .white)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color(.brandColor))
-                    .foregroundColor(.white)
-                    .cornerRadius(6)
+                    .cornerRadius(LayoutAdapter.shared.scale(value: 8))
             })
         }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 10)
+        .padding(.horizontal, LayoutAdapter.shared.scale(value: 24))
+        .padding(.vertical, LayoutAdapter.shared.scale(value: 10))
     }
 }
 
