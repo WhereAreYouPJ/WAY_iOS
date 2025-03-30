@@ -49,7 +49,6 @@ struct ConfirmLocationView: View {
             }
         }
         .navigationBarBackButtonHidden()
-        .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 16)))
         .onAppear {
             viewModel.isFavoriteLocation()
         }
