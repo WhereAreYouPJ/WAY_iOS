@@ -30,7 +30,14 @@ struct ConfirmLocationView: View {
     var body: some View {
         ZStack {
             VStack {
-                MapView(location: $viewModel.location)
+                MapPinView(
+                    myLocation: .constant(LongLat(
+                        member: viewModel.member,
+                        x: viewModel.location.x,
+                        y: viewModel.location.y
+                    )),
+                    friendsLocation: .constant([])
+                )
                 
                 Spacer()
                 
@@ -51,7 +58,7 @@ struct ConfirmLocationView: View {
     private func locationDetailsView() -> some View {
         VStack {
             HStack {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: LayoutAdapter.shared.scale(value: 4)) {
                     Text(viewModel.location.location)
                         .bodyP1Style(color: .black22)
                     Text(viewModel.location.streetName)
@@ -67,7 +74,7 @@ struct ConfirmLocationView: View {
             }
             
             Divider()
-                .padding(.top, LayoutAdapter.shared.scale(value: 16))
+                .padding(.top, LayoutAdapter.shared.scale(value: 12))
                 .padding(.bottom, LayoutAdapter.shared.scale(value: 6))
             
             Button(action: {

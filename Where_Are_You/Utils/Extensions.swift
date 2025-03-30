@@ -58,6 +58,7 @@ extension UIColor {
     static let secondaryDark = UIColor.rgb(red: 242, green: 206, blue: 0)
     static let secondaryLight = UIColor.rgb(red: 255, green: 238, blue: 156)
     
+    // 여기부터 예전버전 컬러.
     static let brandColor = UIColor.rgb(red: 123, green: 80, blue: 255)
     static let letterBrandColor = UIColor.rgb(red: 98, green: 54, blue: 233)
     static let lightpurple = UIColor.rgb(red: 146, green: 134, blue: 255)
