@@ -14,8 +14,6 @@ class AddFriendViewModel: ObservableObject {
     @Published var showSearchError: Bool = false
     
     @Published var disabledButton: Bool = false
-    @Published var showToast: Bool = false
-    @Published var toastText: String = ""
     
     private let memberSearchUseCase: MemberSearchUseCase
     private let postFriendRequestUseCase: PostFriendRequestUseCase
@@ -50,23 +48,24 @@ class AddFriendViewModel: ObservableObject {
         guard let searchedMember else { return }
         let memberSeq = UserDefaultsManager.shared.getMemberSeq()
         postFriendRequestUseCase.execute(request: PostFriendRequestBody(memberSeq: memberSeq, friendSeq: searchedMember.memberSeq)) { [weak self] result in
-            guard let self = self else { return }
+            guard self != nil else { return }
             
             DispatchQueue.main.async {
+                var toastMessage = ""
+                
                 switch result {
                 case .success:
-                    self.toastText = "친구 신청이 완료되었습니다."
-                    self.showToast = true
+                    toastMessage = "친구 신청이 완료되었습니다."
                     print("친구 요청 완료!")
                 case .failure(let error):
                     if let errorResponse = (error as NSError).userInfo["errorResponse"] as? ErrorResponse {
-                        self.toastText = errorResponse.message
+                        toastMessage = errorResponse.message
                     } else {
-                        self.toastText = error.localizedDescription
+                        toastMessage = error.localizedDescription
                     }
-                    self.showToast = true
-                    print("친구 요청 실패 - \(self.toastText)")
+                    print("친구 요청 실패 - \(toastMessage)")
                 }
+                ToastManager.shared.showToast(message: toastMessage)
             }
         }
     }

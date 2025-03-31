@@ -11,6 +11,8 @@ class ConfirmLocationViewModel: ObservableObject { // TODO: 위치 시퀀스 오
     @Published var isFavorite = false
     @Published var location: Location
     
+    let member = Member(userName: UserDefaultsManager.shared.getUserName() ?? "나",
+                        profileImage: UserDefaultsManager.shared.getProfileImage())
     let memberSeq = UserDefaultsManager.shared.getMemberSeq()
     
     private let getFavoriteLocationUseCase: GetLocationUseCase

@@ -13,7 +13,6 @@ struct ScheduleDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var path = NavigationPath()
     @State private var showFriendsLocation = false // MARK: 친구 위치 실시간 확인 테스트용
-    @State private var showToast = false
     
     @State private var showSearchLocation = false
     @State private var showConfirmLocation = false
@@ -33,7 +32,7 @@ struct ScheduleDetailView: View {
         let getScheduleUseCase = GetScheduleUseCaseImpl(scheduleRepository: scheduleRepository)
         let putScheduleUseCase = PutScheduleUseCaseImpl(scheduleRepository: scheduleRepository)
         
-        let defaultViewModel = ScheduleDetailViewModel(
+        _ = ScheduleDetailViewModel(
             schedule: schedule,
             getScheduleUseCase: getScheduleUseCase,
             putScheduleUseCase: putScheduleUseCase
@@ -61,12 +60,16 @@ struct ScheduleDetailView: View {
     var body: some View {
         NavigationStack(path: $path) {
             ScrollView {
-                VStack(alignment: .leading, content: {
-                    TextField("",
-                              text: Binding(get: { viewModel.schedule.title },
-                                            set: { viewModel.schedule.title = $0 }),
-                              prompt: Text("일정명을 작성해주세요.").foregroundColor(Color(.color118)))
+                VStack(alignment: .leading, spacing: LayoutAdapter.shared.scale(value: 10)) {
+                    TextField(
+                        "",
+                        text: Binding(get: { viewModel.schedule.title },
+                                      set: { viewModel.schedule.title = $0 }),
+                        prompt: Text("일정명을 작성해주세요.").withBodyP2Style(color: .blackAC)
+                    )
                     .disabled(!viewModel.isEditable)
+                    .padding(.top, LayoutAdapter.shared.scale(value: 6))
+                    .bodyP2Style(color: .black22)
                     
                     Divider()
                         .padding(.bottom, 16)
@@ -117,40 +120,39 @@ struct ScheduleDetailView: View {
                         Text("실시간 위치 확인")
                     }
                     .padding(.vertical, 20)
-                })
+                }
+                .padding(LayoutAdapter.shared.scale(value: 16))
                 .onTapGesture {
                     if !viewModel.isEditable {
-                        showToast = true
+                        ToastManager.shared.showToast(message: "일정을 수정할 수 없습니다.")
                     }
                 }
                 .fullScreenCover(isPresented: $showFriendsLocation) {
                     FriendsLocationView(isShownView: $showFriendsLocation, schedule: $viewModel.schedule)
                 }
-                .padding(15)
-                .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
                         Button("취소", role: .cancel) {
                             dismiss()
                         }
-                        .foregroundStyle(Color.red)
+                        .bodyP3Style(color: .error)
                     }
                     ToolbarItem(placement: .primaryAction) {
-                        if viewModel.isEditable {
+//                        if viewModel.isEditable {
                             Button("수정") {
                                 viewModel.updateSchedule()
                                 dismiss()
                             }
-                            .foregroundStyle(viewModel.schedule.title.isEmpty ? Color.gray : Color.red)
-                            .disabled(viewModel.schedule.title.isEmpty)
-                        }
+                            .foregroundStyle(createViewModel.checkPostAvailable() ? Color.error : Color.gray)
+                            .disabled(!createViewModel.checkPostAvailable())
+//                        }
                     }
                 }
                 .navigationTitle("일정 수정")
                 .navigationBarTitleDisplayMode(.inline)
-                .toast(isPresented: $showToast, message: "일정을 수정할 수 없습니다.")
             }
         }
+        .bodyP3Style(color: .black22)
         .onAppear {
             viewModel.getScheduleDetail()
             createViewModel.getFavoriteLocation()

@@ -362,7 +362,9 @@ private struct CellView: View {
     }
     
     private func scheduleBar(schedule: Schedule, isStart: Bool, isEnd: Bool, isMoreThanFour: Bool) -> some View {
-        ZStack {
+        let scheduleColor = ScheduleColor.color(from: schedule.color)
+        
+        return ZStack {
             if isMoreThanFour { /// 네번째 일정부터는 "+"로 표시
                 RoundedRectangle(cornerRadius: 2)
                     .fill(Color(.color231))
@@ -373,7 +375,7 @@ private struct CellView: View {
                     .padding(.horizontal, 4)
             } else if isStart && isEnd { /// 단일 일정
                 RoundedRectangle(cornerRadius: 2)
-                    .fill(scheduleColor(for: schedule.color))
+                    .fill(scheduleColor)
                     .padding(.horizontal, 2)
                 
                 Text(schedule.title)
@@ -383,14 +385,14 @@ private struct CellView: View {
                 if isStart {
                     if weekday == 7 { /// 첫날이고 토요일일 때
                         RoundedRectangle(cornerRadius: 2)
-                            .fill(scheduleColor(for: schedule.color))
+                            .fill(scheduleColor)
                             .padding(.horizontal, 2)
                     } else { /// 첫날이고 토요일이 아닐 때
                         UnevenRoundedRectangle(
                             topLeadingRadius: 2,
                             bottomLeadingRadius: 2
                         )
-                        .fill(scheduleColor(for: schedule.color))
+                        .fill(scheduleColor)
                         .padding(.leading, 2)
                     }
                     
@@ -401,7 +403,7 @@ private struct CellView: View {
                 } else if isEnd {
                     if weekday == 1 { /// 마지막날이고 일요일일 때
                         RoundedRectangle(cornerRadius: 2)
-                            .fill(scheduleColor(for: schedule.color))
+                            .fill(scheduleColor)
                             .padding(.horizontal, 2)
                         
                         Text(schedule.title)
@@ -411,7 +413,7 @@ private struct CellView: View {
                         UnevenRoundedRectangle(
                             bottomTrailingRadius: 2, topTrailingRadius: 2
                         )
-                        .fill(scheduleColor(for: schedule.color))
+                        .fill(scheduleColor)
                         .padding(.trailing, 2)
                     }
                 } else {
@@ -419,14 +421,14 @@ private struct CellView: View {
                         UnevenRoundedRectangle(
                             bottomTrailingRadius: 2, topTrailingRadius: 2
                         )
-                        .fill(scheduleColor(for: schedule.color))
+                        .fill(scheduleColor)
                         .padding(.trailing, 2)
                     } else if weekday == 1 { /// 중간날이고 일요일일 때
                         UnevenRoundedRectangle(
                             topLeadingRadius: 2,
                             bottomLeadingRadius: 2
                         )
-                        .fill(scheduleColor(for: schedule.color))
+                        .fill(scheduleColor)
                         .padding(.leading, 2)
                         
                         Text(schedule.title)
@@ -435,7 +437,7 @@ private struct CellView: View {
                             .frame(maxWidth: .infinity, alignment: .center)
                     } else {
                         Rectangle()
-                            .fill(scheduleColor(for: schedule.color))
+                            .fill(scheduleColor)
                             .padding(.trailing, 2)
                     }
                 }
@@ -443,18 +445,6 @@ private struct CellView: View {
             }
         }
         .frame(height: LayoutAdapter.shared.scale(value: 14))
-    }
-    
-    private func scheduleColor(for color: String) -> Color {
-        switch color {
-        case "red": return Color.colorRed
-        case "yellow": return Color.colorYellow
-        case "green": return Color.colorGreen
-        case "blue": return Color.colorBlue
-        case "violet": return Color.colorViolet
-        case "pink": return Color.colorPink
-        default: return Color.colorRed
-        }
     }
 }
 

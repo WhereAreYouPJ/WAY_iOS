@@ -18,6 +18,13 @@ struct SearchLocationView: View {
     
     var dismissAction: () -> Void
     
+    // dummy
+    var recentSearches = [
+        Location(sequence: 1, location: "신도림역", streetName: "신도림역 1호선", x: 0, y: 0),
+        Location(sequence: 1, location: "서울역", streetName: "서울역 1호선", x: 0, y: 0),
+        Location(sequence: 1, location: "망원한강공원", streetName: "망원한강공원", x: 0, y: 0),
+    ]
+    
     var body: some View {
         VStack {
             HStack {
@@ -53,22 +60,24 @@ struct SearchLocationView: View {
                         }
                     )
                     .padding(.trailing, LayoutAdapter.shared.scale(value: 16))
-            }
-            .padding(.vertical, LayoutAdapter.shared.scale(value: 10))
+            } // HStack
+            .padding(.top, LayoutAdapter.shared.scale(value: 10))
             
             if viewModel.searchText.isEmpty {
                 HStack {
                     Text("최근장소")
+                    
                     Spacer()
+                    
                     Button("전체삭제") {
                         viewModel.clearRecentSearches()
                     }
-                    .foregroundStyle(Color(.black66))
-                    .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 12))))
+                    .bodyP4Style(color: .black66)
                 }
-                .padding(.horizontal, LayoutAdapter.shared.scale(value: 25))
-                .padding(.bottom, LayoutAdapter.shared.scale(value: 10))
+                .padding(.top, LayoutAdapter.shared.scale(value: 20))
+                .padding(.horizontal, LayoutAdapter.shared.scale(value: 24))
                 
+//                List(recentSearches) { location in
                 List(viewModel.recentSearches) { location in
                     locationRow(location: location)
                 }
@@ -88,16 +97,17 @@ struct SearchLocationView: View {
                         locationRow(location: location)
                     }
                     .listStyle(PlainListStyle())
+                    .padding(.top, LayoutAdapter.shared.scale(value: 16))
                 }
             }
         }
         .navigationTitle("장소 검색")
         .navigationBarTitleDisplayMode(.inline)
-        .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 16)))
         .foregroundStyle(Color(.black22))
         .onChange(of: viewModel.searchText) { _, _ in
             showRecentSearch = (viewModel.searchText == "")
         }
+        .bodyP3Style(color: .black22)
     }
     
     private func locationRow(location: Location) -> some View {
@@ -108,17 +118,26 @@ struct SearchLocationView: View {
                         .padding(LayoutAdapter.shared.scale(value: 2))
                     Spacer()
                 }
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text(location.location)
-                            .padding(LayoutAdapter.shared.scale(value: 2))
-                    }
-                    Text(location.streetName)
-                        .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14))))
-                        .foregroundStyle(Color(.color153))
+                
+                VStack(alignment: .leading, spacing: LayoutAdapter.shared.scale(value: 5)) {
+                    HighlightedText(
+                        text: location.location,
+                        highlightText: viewModel.searchText,
+                        highlightColor: .brandDark
+                    )
+                    
+                    HighlightedText(
+                        text: location.location,
+                        highlightText: viewModel.searchText,
+                        highlightColor: .brandDark
+                    )
+                    .bodyP4Style(color: .black66)
+                    .foregroundStyle(Color(.color153))
                 }
+                
                 Spacer()
-                if showRecentSearch {
+                
+                if showRecentSearch { // 검색 결과 삭제 버튼
                     Image("icon-delete")
                         .opacity(0.3)
                         .onTapGesture {
@@ -145,18 +164,17 @@ struct SearchLocationView: View {
                 .padding(.bottom, LayoutAdapter.shared.scale(value: 10))
             
             Text("검색결과가 없습니다.")
-                .font(.bodyP2())
+                .bodyP2Style(color: .blackD4)
             
             Group {
                 Text("검색어에 해당하는 위치가 존재하지 않습니다.")
                 Text("다시 한번 확인해 주세요.")
             }
-            .font(.bodyP4())
+            .bodyP4Style(color: .blackD4)
             .padding(.top, LayoutAdapter.shared.scale(value: 6))
             
             Spacer()
         }
-        .foregroundStyle(Color.blackAC)
     }
 }
 

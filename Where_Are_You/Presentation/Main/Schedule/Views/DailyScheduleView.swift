@@ -75,7 +75,7 @@ struct DailyScheduleView: View {
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     Circle()
-                        .fill(viewModel.scheduleColor(for: schedule.color))
+                        .fill(ScheduleColor.color(from: schedule.color))
                         .frame(width: LayoutAdapter.shared.scale(value: 10), height: LayoutAdapter.shared.scale(value: 10))
                         .padding(.trailing, LayoutAdapter.shared.scale(value: 10))
                     

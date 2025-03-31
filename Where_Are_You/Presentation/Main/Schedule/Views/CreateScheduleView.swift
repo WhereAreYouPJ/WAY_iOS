@@ -81,8 +81,7 @@ struct CreateScheduleView: View {
                     searchFriendsView
                 }
         }
-        .font(.bodyP3(color: .black22))
-        .foregroundStyle(Color.black22)
+        .bodyP3Style(color: .black22)
         .onAppear {
             viewModel.getFavoriteLocation()
         }
@@ -95,11 +94,10 @@ struct CreateScheduleView: View {
                     TextField(
                         "",
                         text: $viewModel.title,
-                        prompt: Text("일정명을 입력해주세요.")
-                            .foregroundStyle(Color.blackAC)
+                        prompt: Text("일정명을 입력해주세요.").withBodyP2Style(color: .blackAC)
                     )
                     .padding(.top, LayoutAdapter.shared.scale(value: 6))
-                    .font(.bodyP2(color: .black22))
+                    .bodyP2Style(color: .black22)
                     
                     Divider()
                         .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
@@ -145,7 +143,7 @@ struct CreateScheduleView: View {
                 Button("취소", role: .cancel) {
                     dismiss()
                 }
-                .foregroundStyle(Color.red)
+                .foregroundStyle(Color.error)
             }
             ToolbarItem(placement: .primaryAction) {
                 Button("추가") {
@@ -156,8 +154,8 @@ struct CreateScheduleView: View {
                         dismiss()
                     }
                 }
-                .foregroundStyle(viewModel.title.isEmpty ? Color.gray : Color.red)
-                .disabled(viewModel.title.isEmpty)
+                .foregroundStyle(viewModel.checkPostAvailable() ? Color.error : Color.gray)
+                .disabled(!viewModel.checkPostAvailable())
             }
         }
     }
@@ -207,9 +205,7 @@ struct DateAndTimeView: View {
                 HStack {
                     Image("icon-information")
                     Text("위치 확인하기 기능이 제공되지 않습니다.")
-                        .font(.bodyP5(color: .error))
-                        .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 12))))
-                        .foregroundStyle(Color(.error))
+                        .bodyP5Style(color: .error)
                 }
                 .transition(.opacity.combined(with: .move(edge: .top)))
             }
@@ -296,7 +292,7 @@ struct FavoritePlaceCell: View {
     var body: some View {
         Button(action: action) {
             Text(place.location)
-                .font(.bodyP4(color: .black66))
+                .bodyP4Style(color: .black66)
                 .foregroundStyle(Color.black66)
                 .padding(.vertical, LayoutAdapter.shared.scale(value: 4))
                 .padding(.horizontal, LayoutAdapter.shared.scale(value: 8))
@@ -371,17 +367,7 @@ struct CancellationView: View {
 
 struct SetColorView: View {
     @Binding var color: String
-    
-    let colors: [(Color, String)] = [
-        (Color(UIColor.calendarRed), "red"),
-        (Color(UIColor.calendarOrange), "orange"),
-        (Color(UIColor.calendarYellow), "yellow"),
-        (Color(UIColor.calendarGreen), "green"),
-        (Color(UIColor.calendarMint), "mint"),
-        (Color(UIColor.calendarBlue), "blue"),
-        (Color(UIColor.calendarPink), "pink"),
-        (Color(UIColor.calendarPurple), "purple")
-    ]
+    let colors = ScheduleColor.allColorsWithNames // [(Color, String)]
     
     var body: some View {
         Text("일정컬러")
