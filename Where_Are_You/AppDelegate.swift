@@ -22,6 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SDKInitializer.InitSDK(appKey: Config.kakaoAppKey)
         KakaoSDK.initSDK(appKey: Config.kakaoAppKey)
         
+        // 초기화 완료를 추적하는 지연 호출 추가
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            KakaoMapInitializer.shared.initializeSDK {
+                print("📍 카카오맵 SDK 초기화 완료 콜백")
+            }
+        }
+        
         // 파이어베이스 설정
         FirebaseApp.configure()
         
@@ -67,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
-    // Kakao Login
+    // MARK: - Kakao Login
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         if (AuthApi.isKakaoTalkLoginUrl(url)) {
             return AuthController.handleOpenUrl(url: url)
@@ -117,6 +124,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
+        }
+    }
+}
+
+// MARK: - Kakao Map
+class KakaoMapInitializer {
+    static let shared = KakaoMapInitializer()
+    private(set) var isInitialized = false
+    private var pendingCompletions: [() -> Void] = []
+    
+    func initializeSDK(completion: @escaping () -> Void) {
+        if isInitialized {
+            completion()
+            return
+        }
+        
+        pendingCompletions.append(completion)
+        
+        // 이미 초기화 시도 중이면 중복 시도 방지
+        guard pendingCompletions.count == 1 else { return }
+        
+        print("📍 카카오맵 SDK 초기화 시작")
+        
+        // SDK는 이미 AppDelegate에서 초기화됨
+        // 여기서는 초기화 완료 상태를 관리
+        
+        // 2초 후에 초기화 완료로 간주
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+            guard let self = self else { return }
+            self.isInitialized = true
+            print("📍 카카오맵 SDK 초기화 완료")
+            
+            // 대기 중인 모든 완료 핸들러 호출
+            for completion in self.pendingCompletions {
+                completion()
+            }
+            self.pendingCompletions.removeAll()
         }
     }
 }
