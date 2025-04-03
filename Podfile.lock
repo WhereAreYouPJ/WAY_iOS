@@ -96,22 +96,8 @@ PODS:
     - GoogleUtilities/Privacy
   - IQKeyboardManager (6.5.19)
   - KakaoMapsSDK (2.12.2)
-  - KakaoSDK (2.22.7):
-    - KakaoSDKAuth (= 2.22.7)
-    - KakaoSDKCert (= 2.22.7)
-    - KakaoSDKCommon (= 2.22.7)
-    - KakaoSDKFriend (= 2.22.7)
-    - KakaoSDKNavi (= 2.22.7)
-    - KakaoSDKShare (= 2.22.7)
-    - KakaoSDKTalk (= 2.22.7)
-    - KakaoSDKTemplate (= 2.22.7)
-    - KakaoSDKUser (= 2.22.7)
   - KakaoSDKAuth (2.22.7):
     - KakaoSDKCommon (= 2.22.7)
-  - KakaoSDKCert (2.22.7):
-    - KakaoSDKCertCore (= 2.22.7)
-    - KakaoSDKUser (= 2.22.7)
-  - KakaoSDKCertCore (2.22.7)
   - KakaoSDKCommon (2.22.7):
     - KakaoSDKCommon/Common (= 2.22.7)
     - KakaoSDKCommon/Network (= 2.22.7)
@@ -119,18 +105,9 @@ PODS:
   - KakaoSDKCommon/Network (2.22.7):
     - Alamofire (~> 5.9.0)
     - KakaoSDKCommon/Common (= 2.22.7)
-  - KakaoSDKFriend (2.22.7):
-    - KakaoSDKFriendCore (= 2.22.7)
-    - KakaoSDKUser (= 2.22.7)
-  - KakaoSDKFriendCore (2.22.7)
-  - KakaoSDKNavi (2.22.7):
-    - KakaoSDKCommon/Common (= 2.22.7)
   - KakaoSDKShare (2.22.7):
     - KakaoSDKCommon (= 2.22.7)
     - KakaoSDKTemplate (= 2.22.7)
-  - KakaoSDKTalk (2.22.7):
-    - KakaoSDKTemplate (= 2.22.7)
-    - KakaoSDKUser (= 2.22.7)
   - KakaoSDKTemplate (2.22.7):
     - KakaoSDKCommon/Common (= 2.22.7)
   - KakaoSDKUser (2.22.7):
@@ -156,7 +133,10 @@ DEPENDENCIES:
   - FloatingPanel
   - IQKeyboardManager
   - KakaoMapsSDK
-  - KakaoSDK
+  - KakaoSDKAuth
+  - KakaoSDKCommon
+  - KakaoSDKShare
+  - KakaoSDKUser
   - Kingfisher (~> 7.0)
   - Moya (~> 15.0)
   - SnapKit (~> 5.0)
@@ -177,16 +157,9 @@ SPEC REPOS:
     - GoogleUtilities
     - IQKeyboardManager
     - KakaoMapsSDK
-    - KakaoSDK
     - KakaoSDKAuth
-    - KakaoSDKCert
-    - KakaoSDKCertCore
     - KakaoSDKCommon
-    - KakaoSDKFriend
-    - KakaoSDKFriendCore
-    - KakaoSDKNavi
     - KakaoSDKShare
-    - KakaoSDKTalk
     - KakaoSDKTemplate
     - KakaoSDKUser
     - Kingfisher
@@ -210,16 +183,9 @@ SPEC CHECKSUMS:
   GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
   IQKeyboardManager: c8665b3396bd0b79402b4c573eac345a31c7d485
   KakaoMapsSDK: 0716f807bd2fcc0f6faadd54e619cc2d34925899
-  KakaoSDK: dc4f9062a42e6f7e8e2aacb620a0480996dcb62b
   KakaoSDKAuth: 45204252ff7c379c0f86c5573f97ec36885afca0
-  KakaoSDKCert: 0e0d2a278731676c566a4bd2da4c0febf1c2d54d
-  KakaoSDKCertCore: 73649497338c420b16b647dba7651855bda21f5c
   KakaoSDKCommon: 132164a6bac8bcd3a4346d3bf777f34f8f39fdca
-  KakaoSDKFriend: a4ef5e83b8c655b722cf84ec60940a652fb513a9
-  KakaoSDKFriendCore: c2a935a5f6a4bb1dc19d4d7ba692bf2b7c737ca5
-  KakaoSDKNavi: 707e416ffe83b6cf197a964863471e7e6211c593
   KakaoSDKShare: 01c60c3d5394479429a51ef14ea78d3e72f48af0
-  KakaoSDKTalk: a0c41d014cfda872ea9adae41bcaf7720a002785
   KakaoSDKTemplate: b11ecf08777198ffafd184201baf93de476ddb84
   KakaoSDKUser: 4c9cf1da78710d19d0b2c2dd32d1a44c544cdfa4
   Kingfisher: 53a10ea35051a436b5fb626ca2dd8f3144d755e9

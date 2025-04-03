@@ -30,6 +30,8 @@ final class CreateScheduleViewModel: ObservableObject {
     @Published var favPlaces: [Location] = []
     @Published var color: String = "red"
     @Published var memo: String = ""
+    @Published var isEditingMemo = false
+    
     @Published var isSuccess = false
     
     private let postScheduleUseCase: PostScheduleUseCase
@@ -62,12 +64,18 @@ final class CreateScheduleViewModel: ObservableObject {
         
         let calendar = Calendar.current
         let now = Date()
-        let components = calendar.dateComponents([.year, .month, .day, .hour], from: now)
-        let startOfHour = calendar.date(from: components)!
-        let endOfHour = calendar.date(byAdding: .hour, value: 1, to: startOfHour)!
         
-        self.startTime = startOfHour
-        self.endTime = endOfHour // TODO: 23시 이후에 하루종일 토글 on 할 경우 시작일과 종료날이 달라지는 부분 수정 필요
+        // 시각 초기값: 현재 시간 + 1 hour, 00 minute
+        var components = calendar.dateComponents([.year, .month, .day, .hour], from: now)
+        components.hour = (components.hour ?? 0) + 1
+        components.minute = 0
+        components.second = 0
+        
+        let startOfNextHour = calendar.date(from: components) ?? now
+        let endOfNextHour = calendar.date(byAdding: .hour, value: 1, to: startOfNextHour) ?? now
+ 
+        self.startTime = startOfNextHour
+        self.endTime = endOfNextHour // TODO: 23시 이후에 하루종일 토글 on 할 경우 시작일과 종료날이 달라지는 부분 수정 필요
         
         if let schedule = schedule { // 기존 일정이 있으면 값 설정
             self.title = schedule.title
@@ -104,6 +112,13 @@ final class CreateScheduleViewModel: ObservableObject {
                 self?.syncPlaceWithFavorites()
             }
             .store(in: &cancellables)
+    }
+    
+    func checkPostAvailable() -> Bool {
+        if !self.title.isEmpty && !(self.place?.location.isEmpty ?? true) { // 일정 제목과 장소 필수 입력
+            return true
+        }
+        return false
     }
     
     func geocodeSelectedLocation(_ location: Location, completion: @escaping (Location) -> Void) {

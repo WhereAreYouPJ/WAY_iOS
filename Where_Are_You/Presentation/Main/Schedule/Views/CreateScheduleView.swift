@@ -81,6 +81,7 @@ struct CreateScheduleView: View {
                     searchFriendsView
                 }
         }
+        .bodyP3Style(color: .black22)
         .onAppear {
             viewModel.getFavoriteLocation()
         }
@@ -88,37 +89,52 @@ struct CreateScheduleView: View {
     
     private var mainContent: some View {
         ScrollView {
-            VStack(alignment: .leading, content: {
-                TextField("", text: $viewModel.title, prompt: Text("일정명을 작성해주세요.").foregroundColor(Color(.color118)))
-                
-                Divider()
-                    .padding(.bottom, 16)
-                
-                DateAndTimeView(
-                    isAllDay: $viewModel.isAllDay,
-                    startTime: $viewModel.startTime,
-                    endTime: $viewModel.endTime
-                )
-                
-                AddPlaceView(
-                    viewModel: viewModel,
-                    showSearchLocation: $showSearchLocation,
-                    showConfirmLocation: $showConfirmLocation,
-                    selectedLocationForConfirm: $selectedLocationForConfirm
-                )
-                
-                AddFriendsView(
-                    showSearchFriends: $showSearchFriends,
-                    selectedFriends: $viewModel.selectedFriends
-                )
-                
-                SetColorView(color: $viewModel.color)
-                
-                MemoView(memo: $viewModel.memo)
-            })
-            .padding(15)
-            .environment(\.font, .pretendard(NotoSans: .regular, fontSize: 16))
-        }
+            ScrollViewReader { proxy in
+                VStack(alignment: .leading, spacing: LayoutAdapter.shared.scale(value: 10)) {
+                    TextField(
+                        "",
+                        text: $viewModel.title,
+                        prompt: Text("일정명을 입력해주세요.").withBodyP2Style(color: .blackAC)
+                    )
+                    .padding(.top, LayoutAdapter.shared.scale(value: 6))
+                    .bodyP2Style(color: .black22)
+                    
+                    Divider()
+                        .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
+                    
+                    DateAndTimeView(
+                        isAllDay: $viewModel.isAllDay,
+                        startTime: $viewModel.startTime,
+                        endTime: $viewModel.endTime
+                    )
+                    
+                    AddPlaceView(
+                        viewModel: viewModel,
+                        showSearchLocation: $showSearchLocation,
+                        showConfirmLocation: $showConfirmLocation,
+                        selectedLocationForConfirm: $selectedLocationForConfirm
+                    )
+                    
+                    AddFriendsView(
+                        showSearchFriends: $showSearchFriends,
+                        selectedFriends: $viewModel.selectedFriends
+                    )
+                    
+                    SetColorView(color: $viewModel.color)
+                    
+                    MemoView(memo: $viewModel.memo, isEditing: $viewModel.isEditingMemo)
+                        .id("memoView")
+                }
+                .padding(LayoutAdapter.shared.scale(value: 16))
+                .onChange(of: viewModel.isEditingMemo) { _, isEditing in
+                    if isEditing {
+                        withAnimation {
+                            proxy.scrollTo("memoView", anchor: .top)
+                        }
+                    }
+                }
+            } // ScrollViewReader
+        } // ScrollView
     }
     
     private var toolbarContent: some ToolbarContent {
@@ -127,7 +143,7 @@ struct CreateScheduleView: View {
                 Button("취소", role: .cancel) {
                     dismiss()
                 }
-                .foregroundStyle(Color.red)
+                .foregroundStyle(Color.error)
             }
             ToolbarItem(placement: .primaryAction) {
                 Button("추가") {
@@ -138,8 +154,8 @@ struct CreateScheduleView: View {
                         dismiss()
                     }
                 }
-                .foregroundStyle(viewModel.title.isEmpty ? Color.gray : Color.red)
-                .disabled(viewModel.title.isEmpty)
+                .foregroundStyle(viewModel.checkPostAvailable() ? Color.error : Color.gray)
+                .disabled(!viewModel.checkPostAvailable())
             }
         }
     }
@@ -180,34 +196,37 @@ struct DateAndTimeView: View {
     @Binding var endTime: Date
     
     var body: some View {
-        Toggle(isOn: $isAllDay, label: {
-            Text("하루 종일")
-        })
-        
-        if isAllDay {
-            HStack {
-                Image("icon-information")
-                Text("위치 확인하기 기능이 제공되지 않습니다.")
-                    .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 12)))
-                    .foregroundStyle(.red)
+        VStack(alignment: .leading, spacing: LayoutAdapter.shared.scale(value: 4)) {
+            Toggle(isOn: $isAllDay, label: {
+                Text("하루 종일")
+            })
+            
+            if isAllDay {
+                HStack {
+                    Image("icon-information")
+                    Text("위치 확인하기 기능이 제공되지 않습니다.")
+                        .bodyP5Style(color: .error)
+                }
+                .transition(.opacity.combined(with: .move(edge: .top)))
             }
-            .transition(.opacity.combined(with: .move(edge: .top)))
         }
         
         Divider()
         
-        DatePicker("시작", selection: $startTime, displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
+        DatePicker("시작일", selection: $startTime, in: Date.yearRange2000To2100, displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
             .environment(\.locale, Locale(identifier: "ko_KR"))
             .environment(\.calendar, Calendar(identifier: .gregorian))
+            .accentColor(Color(.brandDark))
         
         Divider()
         
-        DatePicker("종료", selection: $endTime, in: startTime..., displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
+        DatePicker("종료일", selection: $endTime, in: startTime...Date.yearRange2000To2100.upperBound, displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
             .environment(\.locale, Locale(identifier: "ko_KR"))
             .environment(\.calendar, Calendar(identifier: .gregorian))
+            .accentColor(Color(.brandDark))
         
         Divider()
-            .padding(.bottom, 20)
+            .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
     }
 }
 
@@ -216,7 +235,6 @@ struct AddPlaceView: View {
     @Binding var showSearchLocation: Bool
     @Binding var showConfirmLocation: Bool
     @Binding var selectedLocationForConfirm: Location?
-    
     
     var body: some View {
         Text("위치추가")
@@ -243,8 +261,8 @@ struct AddPlaceView: View {
                     CancellationView()
                 })
             } else { // 위치가 선택되지 않은 경우
-                Text("위치 추가")
-                    .foregroundStyle(Color(.color118))
+                Text("위치 검색")
+                    .foregroundStyle(Color(UIColor.blackAC))
                     .onTapGesture {
                         showSearchLocation = true
                     }
@@ -253,7 +271,7 @@ struct AddPlaceView: View {
         
         ScrollView(.horizontal) {
             HStack {
-                ForEach(viewModel.favPlaces) { favPlace in
+                ForEach(Array(viewModel.favPlaces.prefix(20))) { favPlace in // 최대 20개 표시
                     FavoritePlaceCell(place: favPlace) {
                         viewModel.geocodeSelectedLocation(favPlace) { geocodedLocation in
                             viewModel.place = geocodedLocation
@@ -261,8 +279,9 @@ struct AddPlaceView: View {
                     }
                 }
             }
-            .padding(.bottom, 20)
+            .padding(.bottom, LayoutAdapter.shared.scale(value: 4))
         }
+        .padding(.bottom, LayoutAdapter.shared.scale(value: 12))
     }
 }
 
@@ -273,7 +292,10 @@ struct FavoritePlaceCell: View {
     var body: some View {
         Button(action: action) {
             Text(place.location)
-                .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
+                .bodyP4Style(color: .black66)
+                .foregroundStyle(Color.black66)
+                .padding(.vertical, LayoutAdapter.shared.scale(value: 4))
+                .padding(.horizontal, LayoutAdapter.shared.scale(value: 8))
                 .background(
                     RoundedRectangle(cornerRadius: 20)
                         .fill(Color(.blackF0))
@@ -296,7 +318,7 @@ struct AddFriendsView: View {
             Image("icon-invitation")
             if selectedFriends.isEmpty {
                 Text("친구 추가")
-                    .foregroundStyle(Color(.color118))
+                    .foregroundStyle(Color(UIColor.blackAC))
             } else {
                 let count = selectedFriends.count
                 ForEach(0..<min(3, count), id: \.self) { idx in
@@ -323,7 +345,7 @@ struct AddFriendsView: View {
         .onTapGesture {
             showSearchFriends = true
         }
-        .padding(.bottom, 20)
+        .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
     }
 }
 
@@ -345,15 +367,7 @@ struct CancellationView: View {
 
 struct SetColorView: View {
     @Binding var color: String
-    
-    let colors: [(Color, String)] = [
-        (.colorRed, "red"),
-        (.colorYellow, "yellow"),
-        (.colorGreen, "green"),
-        (.colorBlue, "blue"),
-        (.colorViolet, "violet"),
-        (.colorPink, "pink")
-    ]
+    let colors = ScheduleColor.allColorsWithNames // [(Color, String)]
     
     var body: some View {
         Text("일정컬러")
@@ -364,51 +378,58 @@ struct SetColorView: View {
             ForEach(colors, id: \.1) { colorPair in
                 Circle()
                     .fill(colorPair.0)
-                    .frame(width: 18, height: 18)
+                    .frame(width: LayoutAdapter.shared.scale(value: 18), height: LayoutAdapter.shared.scale(value: 18))
                     .onTapGesture {
                         color = colorPair.1
                     }
+                    .padding(LayoutAdapter.shared.scale(value: 3))
                     .overlay(
                         Circle()
-                            .stroke(Color.black, lineWidth: color == colorPair.1 ? 2 : 0)
+                            .stroke(Color(UIColor.blackD4), lineWidth: color == colorPair.1 ? 1 : 0)
                     )
             }
         }
-        .padding(.bottom, 20)
+        .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
     }
 }
 
 struct MemoView: View {
     @Binding var memo: String
+    @Binding var isEditing: Bool
     let maxLength = 500
     
     var body: some View {
-        HStack {
-            Text("메모")
-            
-            Spacer()
-            
-            Text("\(memo.count)/\(maxLength)")
-                .foregroundColor(memo.count == maxLength ? .red : .gray)
-        }
-        Divider()
+        Text("메모")
         
         ScrollView {
             ZStack(alignment: .topLeading) {
                 if memo.isEmpty {
-                    Text("메모를 작성해주세요.")
-                        .foregroundStyle(memo.isEmpty ? Color(.color118) : .clear)
-                        .padding(10)
+                    HStack(spacing: 0) {
+                        Text("메모를 작성해주세요.")
+                            .foregroundStyle(memo.isEmpty ? Color(UIColor.blackAC) : .clear)
+                        
+                        Spacer()
+                        
+                        Text("\(memo.count)/\(maxLength)")
+                            .foregroundColor(memo.count == maxLength ? Color(UIColor.error) : Color(UIColor.black66))
+                    }
+                    .padding(LayoutAdapter.shared.scale(value: 10))
                 }
                 
                 TextEditor(text: $memo)
                     .modifier(MaxLengthModifier(text: $memo, maxLength: maxLength))
-                    .frame(height: LayoutAdapter.shared.scale(value: 100))
-                    .padding(2)
+                    .frame(height: LayoutAdapter.shared.scale(value: 110))
+                    .padding(LayoutAdapter.shared.scale(value: 2))
                     .opacity(memo.isEmpty ? 0.1 : 1)
+                    .onTapGesture {
+                        isEditing = true
+                    }
+                    .onSubmit {
+                        isEditing = false
+                    }
             }
             .overlay(
-                RoundedRectangle(cornerRadius: 6)
+                RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 8))
                     .stroke(Color(.color212))
             )
         }

@@ -241,8 +241,11 @@
 		99FBA5562C453BDD002EEEC7 /* HomeFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5552C453BDD002EEEC7 /* HomeFeedViewController.swift */; };
 		99FBA5582C453C05002EEEC7 /* HomeFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5572C453C05002EEEC7 /* HomeFeedViewModel.swift */; };
 		99FDD0BD2C6DF72700B15026 /* MultipartFormDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */; };
+		D50D7D952D92C4F2009B0217 /* ScheduleColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50D7D942D92C4F2009B0217 /* ScheduleColor.swift */; };
 		D511A5742D3E8F7400CA6FE7 /* CustomToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511A5732D3E8F7400CA6FE7 /* CustomToast.swift */; };
 		D512EC572CA6E56C001AC965 /* GetScheduleByDateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512EC562CA6E56C001AC965 /* GetScheduleByDateResponse.swift */; };
+		D5161A6D2D950D5F00D92B39 /* CustomFontStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5161A6C2D950D5F00D92B39 /* CustomFontStyle.swift */; };
+		D5161A6F2D95214200D92B39 /* ToastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5161A6E2D95214200D92B39 /* ToastManager.swift */; };
 		D517F25D2CEC8691003C5F60 /* FriendDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D517F25C2CEC8691003C5F60 /* FriendDetailView.swift */; };
 		D517F25F2CECA902003C5F60 /* FriendDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D517F25E2CECA902003C5F60 /* FriendDetailViewModel.swift */; };
 		D517F2612CECAAF1003C5F60 /* DeleteFriendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D517F2602CECAAF1003C5F60 /* DeleteFriendUseCase.swift */; };
@@ -272,6 +275,7 @@
 		D54C040C2C651832009CC419 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54C040B2C651832009CC419 /* Schedule.swift */; };
 		D54C040E2C651B8A009CC419 /* ScheduleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54C040D2C651B8A009CC419 /* ScheduleAPI.swift */; };
 		D54F33122D4381710062A17E /* GeocodeLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54F33112D4381710062A17E /* GeocodeLocationUseCase.swift */; };
+		D5505A722D9914C500FA7A66 /* HighlightedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5505A712D9914C400FA7A66 /* HighlightedText.swift */; };
 		D558CB662D28196100710808 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D558CB652D28196100710808 /* AppConstants.swift */; };
 		D55C6C3E2CF57E74005132DC /* CustomButtonSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C3D2CF57E74005132DC /* CustomButtonSwiftUI.swift */; };
 		D55C6C402CF585F1005132DC /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C3F2CF585F1005132DC /* AddFriendView.swift */; };
@@ -612,8 +616,11 @@
 		99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartFormDataHelper.swift; sourceTree = "<group>"; };
 		A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5015275FE458D5F6450041 /* Pods-Where_Are_You.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You.release.xcconfig"; path = "Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You.release.xcconfig"; sourceTree = "<group>"; };
+		D50D7D942D92C4F2009B0217 /* ScheduleColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleColor.swift; sourceTree = "<group>"; };
 		D511A5732D3E8F7400CA6FE7 /* CustomToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToast.swift; sourceTree = "<group>"; };
 		D512EC562CA6E56C001AC965 /* GetScheduleByDateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetScheduleByDateResponse.swift; sourceTree = "<group>"; };
+		D5161A6C2D950D5F00D92B39 /* CustomFontStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFontStyle.swift; sourceTree = "<group>"; };
+		D5161A6E2D95214200D92B39 /* ToastManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastManager.swift; sourceTree = "<group>"; };
 		D517F25C2CEC8691003C5F60 /* FriendDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailView.swift; sourceTree = "<group>"; };
 		D517F25E2CECA902003C5F60 /* FriendDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailViewModel.swift; sourceTree = "<group>"; };
 		D517F2602CECAAF1003C5F60 /* DeleteFriendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFriendUseCase.swift; sourceTree = "<group>"; };
@@ -644,6 +651,7 @@
 		D54C040B2C651832009CC419 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		D54C040D2C651B8A009CC419 /* ScheduleAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleAPI.swift; sourceTree = "<group>"; };
 		D54F33112D4381710062A17E /* GeocodeLocationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodeLocationUseCase.swift; sourceTree = "<group>"; };
+		D5505A712D9914C400FA7A66 /* HighlightedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightedText.swift; sourceTree = "<group>"; };
 		D558CB652D28196100710808 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		D55C6C3D2CF57E74005132DC /* CustomButtonSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonSwiftUI.swift; sourceTree = "<group>"; };
 		D55C6C3F2CF585F1005132DC /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
@@ -1218,6 +1226,7 @@
 				99EDD14E2D49EE5B005164FB /* APIError.swift */,
 				99EDD1502D49F003005164FB /* ServerError.swift */,
 				D5FFF2A12D6734830067C3FE /* LocationManager.swift */,
+				D5161A6E2D95214200D92B39 /* ToastManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1352,6 +1361,7 @@
 				995493F52CA3E2EF008BFA19 /* ScheduleList.swift */,
 				D567A9D32CF86081009F6451 /* FriendRequest.swift */,
 				99E9D39A2CF7F7FC00D2554A /* User.swift */,
+				D50D7D942D92C4F2009B0217 /* ScheduleColor.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -1491,6 +1501,8 @@
 				D588498B2D55FAE900DE82E9 /* CornerRadius.swift */,
 				D57A6C102D56006600C2B822 /* CustomAlertModifier.swift */,
 				99DF440C2D6DB2A200D75956 /* CustomImageView.swift */,
+				D5161A6C2D950D5F00D92B39 /* CustomFontStyle.swift */,
+				D5505A712D9914C400FA7A66 /* HighlightedText.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -2196,6 +2208,7 @@
 				99EFC76B2CD0B9560044DFC5 /* PostLocationUseCase.swift in Sources */,
 				992F57DF2C5B614A00219C6B /* LogoutUseCase.swift in Sources */,
 				99E9E18B2D3E129B008A81BF /* GetDailyScheduleUseCase.swift in Sources */,
+				D5505A722D9914C500FA7A66 /* HighlightedText.swift in Sources */,
 				992F57E52C5B623F00219C6B /* CheckEmailUseCase.swift in Sources */,
 				99647EF12D33DB2600D63B4B /* CompleteDeleteViewController.swift in Sources */,
 				D5DCF8C02D69C14E0045030C /* NotificationStorage.swift in Sources */,
@@ -2255,6 +2268,7 @@
 				992F57C62C5B265600219C6B /* SingUpBody.swift in Sources */,
 				990F57912C27ECDC00F6E1AD /* AccountSignUpUseCase.swift in Sources */,
 				99EC78D22C11E437007C4415 /* PasswordFinishResetViewController.swift in Sources */,
+				D5161A6D2D950D5F00D92B39 /* CustomFontStyle.swift in Sources */,
 				99EC78D02C11E20F007C4415 /* PasswordFinishResetView.swift in Sources */,
 				99949F492C587BA500AE0177 /* FriendsListView.swift in Sources */,
 				99F9FADE2C0B6187005B36B9 /* AccountSearchViewController.swift in Sources */,
@@ -2337,6 +2351,7 @@
 				D592D8EF2C7DE3B100736D93 /* SearchFriendsViewModel.swift in Sources */,
 				D5496DD22C6B69570056C196 /* ConfirmLocationView.swift in Sources */,
 				99AE534B2D408719003AD774 /* BottomSheetView.swift in Sources */,
+				D50D7D952D92C4F2009B0217 /* ScheduleColor.swift in Sources */,
 				99C6D2A02C903EAF009C0CF8 /* ScheduleRepository.swift in Sources */,
 				99EDF5842CE864180008B19A /* DeleteMemberBody.swift in Sources */,
 				99CF9C052CD3438C0079BE81 /* DeleteBookMarkFeedUseCase.swift in Sources */,
@@ -2415,6 +2430,7 @@
 				99CA4F262C33B704007C027C /* ResetPasswordViewModel.swift in Sources */,
 				993AA5412D5351C900B0C9F6 /* SocialLinkViewController.swift in Sources */,
 				99D23FF42C6889BA00CFD4F0 /* FeedDetailViewModel.swift in Sources */,
+				D5161A6F2D95214200D92B39 /* ToastManager.swift in Sources */,
 				99DA18B92C4E132A00D5CDA6 /* TitleView.swift in Sources */,
 				D55C6C592CF5DD33005132DC /* FriendRequestRepository.swift in Sources */,
 				99C68E4C2C64B83D00DEC1F1 /* FeedRepository.swift in Sources */,
@@ -2577,6 +2593,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

@@ -56,13 +56,13 @@ struct DismissButtonView: View {
                 Button(action: action) {
                     ZStack {
                         RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 4))
-                            .stroke(Color(.brandColor), lineWidth: LayoutAdapter.shared.scale(value: 1.5))
-                            .background(Color(.color249))
+//                            .stroke(Color.white, lineWidth: LayoutAdapter.shared.scale(value: 1.5))
+                            .fill(Color.white)
                             .frame(width: LayoutAdapter.shared.scale(value: 32), height: LayoutAdapter.shared.scale(value: 32))
-                            .shadow(color: Color(.color153), radius: 5, x: 3, y: 3)
+                            .shadow(color: .black.opacity(0.15), radius: 0, x: 2, y: 2)
                         
-                        Image(systemName: "arrow.backward")
-                            .foregroundColor(Color(.black22))
+                        Image("icon-arrow-left")
+                            .foregroundColor(Color.brandMain)
                     }
                 }
                 Spacer()

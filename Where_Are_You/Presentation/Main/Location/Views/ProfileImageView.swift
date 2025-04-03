@@ -19,7 +19,7 @@ struct ProfileImageView: View {
                 .padding(.top, 60)
             
             Image("icon-location-pin")
-//                .frame(width: LayoutAdapter.shared.scale(value: 45), height: LayoutAdapter.shared.scale(value: 56))
+                .shadow(color: .white, radius: LayoutAdapter.shared.scale(value: 1.5))
             
             image
                 .resizable()
