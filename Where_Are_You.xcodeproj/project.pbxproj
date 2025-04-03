@@ -234,6 +234,7 @@
 		99EFC7692CD0B9420044DFC5 /* PutLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EFC7682CD0B9420044DFC5 /* PutLocationUseCase.swift */; };
 		99EFC76B2CD0B9560044DFC5 /* PostLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EFC76A2CD0B9560044DFC5 /* PostLocationUseCase.swift */; };
 		99EFC76D2CD0B9630044DFC5 /* DeleteLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EFC76C2CD0B9630044DFC5 /* DeleteLocationUseCase.swift */; };
+		99F4B0732D9A85E70039A0B0 /* BottomSheetPanelLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F4B0722D9A85E70039A0B0 /* BottomSheetPanelLayout.swift */; };
 		99F9FADE2C0B6187005B36B9 /* AccountSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9FADD2C0B6187005B36B9 /* AccountSearchViewController.swift */; };
 		99FBA54E2C453924002EEEC7 /* BannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA54D2C453924002EEEC7 /* BannerViewController.swift */; };
 		99FBA5502C45394E002EEEC7 /* BannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA54F2C45394E002EEEC7 /* BannerViewModel.swift */; };
@@ -603,6 +604,7 @@
 		99EFC7682CD0B9420044DFC5 /* PutLocationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutLocationUseCase.swift; sourceTree = "<group>"; };
 		99EFC76A2CD0B9560044DFC5 /* PostLocationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLocationUseCase.swift; sourceTree = "<group>"; };
 		99EFC76C2CD0B9630044DFC5 /* DeleteLocationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteLocationUseCase.swift; sourceTree = "<group>"; };
+		99F4B0722D9A85E70039A0B0 /* BottomSheetPanelLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetPanelLayout.swift; sourceTree = "<group>"; };
 		99F78F1D2C09C98D004C0C72 /* AccountSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSearchView.swift; sourceTree = "<group>"; };
 		99F9FADD2C0B6187005B36B9 /* AccountSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSearchViewController.swift; sourceTree = "<group>"; };
 		99FBA54D2C453924002EEEC7 /* BannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewController.swift; sourceTree = "<group>"; };
@@ -1426,6 +1428,7 @@
 		99D8FBAD2C3B64040062AF10 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				99F4B0722D9A85E70039A0B0 /* BottomSheetPanelLayout.swift */,
 				99CC5E692C5211C500A0509A /* Views */,
 				99D8FBAF2C3B99BF0062AF10 /* ViewControllers */,
 				99D8FBB32C3B9F7D0062AF10 /* ViewModels */,
@@ -2143,6 +2146,7 @@
 				D517F2652CECAB3E003C5F60 /* PostFavoriteFriendUseCase.swift in Sources */,
 				D512EC572CA6E56C001AC965 /* GetScheduleByDateResponse.swift in Sources */,
 				9910B8482C71B5A4005F7EEE /* DDayViewController.swift in Sources */,
+				99F4B0732D9A85E70039A0B0 /* BottomSheetPanelLayout.swift in Sources */,
 				9910B8472C71B59E005F7EEE /* AccountSearchView.swift in Sources */,
 				99C5B9E32D30AE7700CD570F /* AgreementAcountDeletionView.swift in Sources */,
 				D55C6C602CF71241005132DC /* PostFriendRequestUseCase.swift in Sources */,
