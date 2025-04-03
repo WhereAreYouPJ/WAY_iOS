@@ -71,6 +71,7 @@ class FriendFeedViewController: UIViewController {
     private lazy var barButtonStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [searchFriendButton, notificationButton, addButton])
         stackView.axis = .horizontal
+        stackView.spacing = 8
         stackView.distribution = .fillEqually
         return stackView
     }()
@@ -202,8 +203,6 @@ class FriendFeedViewController: UIViewController {
         }
         
         segmentControl.snp.makeConstraints { make in
-//            make.width.equalTo(150)
-//            make.height.equalTo(LayoutAdapter.shared.scale(value: 36)).priority(.required)
             make.width.equalTo(118)
             make.height.equalTo(LayoutAdapter.shared.scale(value: 45)).priority(.required)
         }
@@ -212,16 +211,8 @@ class FriendFeedViewController: UIViewController {
             make.width.height.equalTo(LayoutAdapter.shared.scale(value: 24))
         }
         
-        if segmentControl.selectedSegmentIndex == 0 {
-//            view.addSubview(plusOptionButton)
-//
-//            plusOptionButton.snp.makeConstraints { make in
-//                make.top.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 9))
-//                make.trailing.equalTo(view.safeAreaLayoutGuide).inset(LayoutAdapter.shared.scale(value: 15))
-//                make.width.equalTo(160)
-//                make.height.equalTo(38)
-//            }
-        }
+//        if segmentControl.selectedSegmentIndex == 0 {
+//        }
         
         friendOptionView.view.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(0)

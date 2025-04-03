@@ -6,14 +6,17 @@
 //
 
 import UIKit
+import FloatingPanel
 
 class BottomSheetViewController: UIViewController {
     
     private var isExpanded = false
     
+    let tableView = UITableView()
+    
     let bottomSheetView = BottomSheetView()
     let viewModel: BottomSheetViewModel
-
+    
     var schedules: [Schedule] = [] {
         didSet {
             bottomSheetView.tableView.reloadData()
@@ -32,13 +35,12 @@ class BottomSheetViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view = bottomSheetView
+        
         setupBindings()
         setupTableView()
         viewModel.fetchDailySchedule()
-        
-        setupGesture()
     }
+    
     // MARK: - Helpers
     
     private func setupBindings() {
@@ -46,45 +48,42 @@ class BottomSheetViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.schedules = self?.viewModel.getSchedules() ?? []
                 self?.bottomSheetView.tableView.reloadData()
-                self?.setupUI()
             }
         }
     }
     
     private func setupTableView() {
-        bottomSheetView.tableView.register(DailyScheduleTableViewCell.self, forCellReuseIdentifier: DailyScheduleTableViewCell.identifier)
-        bottomSheetView.tableView.dataSource = self
-        bottomSheetView.tableView.delegate = self
-        bottomSheetView.tableView.rowHeight = UITableView.automaticDimension
-        bottomSheetView.tableView.allowsSelection = false
-        bottomSheetView.tableView.separatorStyle = .none
-    }
-    
-    private func setupUI() {
-        if viewModel.getSchedules().isEmpty {
-            bottomSheetView.sheetHeaderButton.isHidden = true
-        } else {
-            bottomSheetView.sheetHeaderButton.isHidden = false
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
+        
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
+        
+        tableView.register(DailyScheduleTableViewCell.self, forCellReuseIdentifier: DailyScheduleTableViewCell.identifier)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.allowsSelection = false
+        tableView.separatorStyle = .none
+        tableView.contentInset = .zero
     }
     
-    private func setupGesture() {
-        bottomSheetView.sheetHeaderButton.addTarget(self, action: #selector(headerButtonTapped), for: .touchUpInside)
-      }
-    
-    @objc func headerButtonTapped() {
-        isExpanded.toggle()
-        bottomSheetView.showExpandView(isExpand: isExpanded)
-        bottomSheetView.tableView.reloadData()
-    }
-    
-    @objc func dimViewTapped() {
-        isExpanded = false
-        bottomSheetView.showExpandView(isExpand: isExpanded)
+    private func formattedDate() -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR") // 한국어 포맷
+        formatter.dateFormat = "M월 d일" // 원하는 날짜 형식
+        return formatter.string(from: Date())
     }
 }
 
 extension BottomSheetViewController: UITableViewDataSource, UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.getSchedules().count
     }
@@ -101,6 +100,30 @@ extension BottomSheetViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return LayoutAdapter.shared.scale(value: 73)
+    }
+    
+    // Sticky Header 설정
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 45
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = .brandHighLight1
+        
+        let label = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: formattedDate(), textColor: .brandDark))
+        headerView.addSubview(label)
+        
+        //        headerView.snp.makeConstraints { make in
+        //            make.height.equalTo(45) // 고정 높이 명시
+        //        }
+        
+        label.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 28))
+            make.top.equalToSuperview().inset(4)
+        }
+        
+        return headerView
     }
 }
 

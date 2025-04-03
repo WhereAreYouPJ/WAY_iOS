@@ -15,6 +15,7 @@ class TitleView: UIView {
     init(viewModel: NotificationBadgeViewModel = .shared) {
         self.viewModel = viewModel
         super.init(frame: .zero)
+        setupUI()
         setupObserver()
     }
     
@@ -25,19 +26,12 @@ class TitleView: UIView {
     let titleLabel: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "logo-long")
-        imageView.snp.makeConstraints { make in
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 26))
-            make.width.equalTo(LayoutAdapter.shared.scale(value: 132))
-        }
         return imageView
     }()
     
     let notificationButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "icon-notification"), for: .normal)
-        button.snp.makeConstraints { make in
-            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 34))
-        }
         return button
     }()
     
@@ -57,5 +51,21 @@ class TitleView: UIView {
     private func updateNotificationIcon(hasUnread: Bool) {
         let imageName = hasUnread ? "icon-notification-badge" : "icon-notification"
         notificationButton.setImage(UIImage(named: imageName), for: .normal)
+    }
+    
+    private func setupUI() {
+        addSubview(titleLabel)
+        addSubview(notificationButton)
+        
+        titleLabel.snp.makeConstraints { make in
+            make.top.leading.centerY.equalToSuperview()
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 26))
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 132))
+        }
+        
+        notificationButton.snp.makeConstraints { make in
+            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 24))
+            make.top.trailing.centerY.equalToSuperview()
+        }
     }
 }
