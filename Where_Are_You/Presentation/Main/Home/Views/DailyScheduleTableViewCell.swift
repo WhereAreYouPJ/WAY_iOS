@@ -32,7 +32,7 @@ class DailyScheduleTableViewCell: UITableViewCell {
     lazy var labelStackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [titleLabel, locationLabel])
         sv.axis = .vertical
-        sv.spacing = 0
+        sv.spacing = 2
         return sv
     }()
     

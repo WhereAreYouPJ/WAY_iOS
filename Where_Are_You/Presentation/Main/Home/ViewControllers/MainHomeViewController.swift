@@ -42,22 +42,23 @@ class MainHomeViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupActions()
-        setupFloatingPanel(contentViewController: bottomSheetViewController)
-
-        print(fpc.view.subviews)
         
+        // 일정 데이터 먼저 받아오고 조건에 따라 setup
+        bottomSheetViewController.viewModel.fetchDailySchedule { [weak self] hasSchedule in
+            guard let self = self else { return }
+            if hasSchedule {
+                self.setupFloatingPanel(contentViewController: self.bottomSheetViewController)
+            } else {
+                print("오늘 일정 없음! => BottomSheet 띄우지 않음")
+            }
+        }
+//        setupFloatingPanel(contentViewController: bottomSheetViewController)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // 네비게이션 바 숨기기
         navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        fpc.backdropView.backgroundColor = .black
-        fpc.backdropView.alpha = 0.0
     }
     
     // MARK: - Helpers
@@ -102,7 +103,6 @@ class MainHomeViewController: UIViewController {
     }
     
     @objc private func backdropTapped() {
-        print("fpc backdropTapped")
         fpc.move(to: .tip, animated: true)
     }
     

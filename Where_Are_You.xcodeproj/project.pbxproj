@@ -60,6 +60,7 @@
 		993AA53F2D5351B400B0C9F6 /* SocialLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993AA53E2D5351B400B0C9F6 /* SocialLinkView.swift */; };
 		993AA5412D5351C900B0C9F6 /* SocialLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993AA5402D5351C900B0C9F6 /* SocialLinkViewController.swift */; };
 		993AA5432D5351D100B0C9F6 /* SocialLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993AA5422D5351D100B0C9F6 /* SocialLinkViewModel.swift */; };
+		993AC6632D9FB22600C95ACD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 993AC6622D9FB22600C95ACD /* GoogleService-Info.plist */; };
 		995009792CE9A6E10069151D /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995009782CE9A6E10069151D /* FeedViewModel.swift */; };
 		9950097B2CE9B07A0069151D /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950097A2CE9B07A0069151D /* FeedView.swift */; };
 		9950C64E2C102FB6003155A7 /* TermsAgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9950C64D2C102FB6003155A7 /* TermsAgreementView.swift */; };
@@ -304,7 +305,6 @@
 		D564EE882CF4DF540033DBD3 /* MapPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D564EE872CF4DF540033DBD3 /* MapPinView.swift */; };
 		D567A9D02CF85B54009F6451 /* ManageFriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D567A9CF2CF85B54009F6451 /* ManageFriendsViewModel.swift */; };
 		D567A9D42CF86081009F6451 /* FriendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D567A9D32CF86081009F6451 /* FriendRequest.swift */; };
-		D56C07BE2D50B225002FB5CB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D56C07BD2D50B225002FB5CB /* GoogleService-Info.plist */; };
 		D57A6C112D56006600C2B822 /* CustomAlertModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A6C102D56006600C2B822 /* CustomAlertModifier.swift */; };
 		D57AC3B12C8B6336006AE7D7 /* KakaoLocalResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57AC3B02C8B6336006AE7D7 /* KakaoLocalResponse.swift */; };
 		D57B46F72C786AFD00657C51 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57B46F62C786AFD00657C51 /* MapView.swift */; };
@@ -423,6 +423,7 @@
 		993AA53E2D5351B400B0C9F6 /* SocialLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLinkView.swift; sourceTree = "<group>"; };
 		993AA5402D5351C900B0C9F6 /* SocialLinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLinkViewController.swift; sourceTree = "<group>"; };
 		993AA5422D5351D100B0C9F6 /* SocialLinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLinkViewModel.swift; sourceTree = "<group>"; };
+		993AC6622D9FB22600C95ACD /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		995009782CE9A6E10069151D /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		9950097A2CE9B07A0069151D /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		9950C64D2C102FB6003155A7 /* TermsAgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAgreementView.swift; sourceTree = "<group>"; };
@@ -680,7 +681,6 @@
 		D564EE872CF4DF540033DBD3 /* MapPinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPinView.swift; sourceTree = "<group>"; };
 		D567A9CF2CF85B54009F6451 /* ManageFriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFriendsViewModel.swift; sourceTree = "<group>"; };
 		D567A9D32CF86081009F6451 /* FriendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequest.swift; sourceTree = "<group>"; };
-		D56C07BD2D50B225002FB5CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D57A6C102D56006600C2B822 /* CustomAlertModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertModifier.swift; sourceTree = "<group>"; };
 		D57AC3B02C8B6336006AE7D7 /* KakaoLocalResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLocalResponse.swift; sourceTree = "<group>"; };
 		D57B46F62C786AFD00657C51 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -1373,7 +1373,7 @@
 				99C9B22D2C019E16008D7CBD /* Fonts */,
 				9953584D2C00C558005BF799 /* Info.plist */,
 				995358482C00C558005BF799 /* Assets.xcassets */,
-				D56C07BD2D50B225002FB5CB /* GoogleService-Info.plist */,
+				993AC6622D9FB22600C95ACD /* GoogleService-Info.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1990,10 +1990,10 @@
 			files = (
 				99D2BEE92D420AAE00DE22A2 /* Paperlogy-6SemiBold.ttf in Resources */,
 				995358552C00DB0A005BF799 /* .swiftlint.yml in Resources */,
+				993AC6632D9FB22600C95ACD /* GoogleService-Info.plist in Resources */,
 				99D2BEEE2D42152000DE22A2 /* Pretendard-Medium.otf in Resources */,
 				99D2BEEF2D42152000DE22A2 /* Pretendard-SemiBold.otf in Resources */,
 				99C9B24E2C01ECCE008D7CBD /* NotoSansKR-Medium.ttf in Resources */,
-				D56C07BE2D50B225002FB5CB /* GoogleService-Info.plist in Resources */,
 				99C9B23F2C01ACBE008D7CBD /* Ttangsbudaejjigae-Light.otf in Resources */,
 				99C9B23D2C01ACBE008D7CBD /* Ttangsbudaejjigae-Medium.otf in Resources */,
 				995358492C00C558005BF799 /* Assets.xcassets in Resources */,
@@ -2024,9 +2024,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2103,9 +2107,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

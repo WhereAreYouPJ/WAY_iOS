@@ -28,7 +28,7 @@ class BottomSheetViewModel {
         dateFormatterD2S.dateFormat = "yyyy-MM-dd"
     }
     
-    func fetchDailySchedule() {
+    func fetchDailySchedule(completion: @escaping (Bool) -> Void) {
         let date = dateFormatterD2S.string(from: date)
         getDailyScheduleUseCase.execute(date: date) { result in
             switch result {
@@ -49,9 +49,11 @@ class BottomSheetViewModel {
                                     memo: "",
                                     invitedMember: nil)
                 }
+                completion(!self.displayScheduleData.isEmpty)
                 self.onDailyScheduleDataFetched?()
             case .failure(let error):
                 print(error.localizedDescription)
+                completion(false)
             }
         }
     }
