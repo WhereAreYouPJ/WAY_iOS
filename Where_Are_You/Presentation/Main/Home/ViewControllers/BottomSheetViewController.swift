@@ -6,12 +6,11 @@
 //
 
 import UIKit
+import SwiftUI
 import FloatingPanel
 
 class BottomSheetViewController: UIViewController {
-    
-    private var isExpanded = false
-    
+        
     let tableView = UITableView()
     
     let bottomSheetView = BottomSheetView()
@@ -38,7 +37,13 @@ class BottomSheetViewController: UIViewController {
         
         setupBindings()
         setupTableView()
-        viewModel.fetchDailySchedule()
+        viewModel.fetchDailySchedule { [weak self] hasSchedule in
+            if hasSchedule {
+                self?.schedules = self?.viewModel.getSchedules() ?? []
+            } else {
+                print("nodata")
+            }
+        }
     }
     
     // MARK: - Helpers
@@ -67,7 +72,9 @@ class BottomSheetViewController: UIViewController {
         tableView.delegate = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.allowsSelection = false
-        tableView.separatorStyle = .none
+        tableView.separatorInset = .zero
+
+//        tableView.separatorStyle = .none
         tableView.contentInset = .zero
     }
     
@@ -114,10 +121,6 @@ extension BottomSheetViewController: UITableViewDataSource, UITableViewDelegate 
         let label = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: formattedDate(), textColor: .brandDark))
         headerView.addSubview(label)
         
-        //        headerView.snp.makeConstraints { make in
-        //            make.height.equalTo(45) // 고정 높이 명시
-        //        }
-        
         label.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 28))
             make.top.equalToSuperview().inset(4)
@@ -130,5 +133,8 @@ extension BottomSheetViewController: UITableViewDataSource, UITableViewDelegate 
 extension BottomSheetViewController: DailyScheduleTableViewCellDelegate {
     func didTapCheckLocationButton(schedule: Schedule) {
         let notificationView = NotificationView()
+        let hostingController = UIHostingController(rootView: notificationView)
+        hostingController.modalPresentationStyle = .fullScreen
+        present(hostingController, animated: true)
     }
 }
