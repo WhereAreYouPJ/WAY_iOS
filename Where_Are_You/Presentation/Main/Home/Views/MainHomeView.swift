@@ -10,11 +10,11 @@ import SnapKit
 
 class MainHomeView: UIView {
     // MARK: - Properties
+    let titleView = TitleView()
     let bannerView = BannerView()
     let dDayView = DDayView()
     let reminderLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH3(text: "함께한 추억을 확인해보세요!", textColor: .black22))
     let homeFeedView = HomeFeedView()
-    let bottomSheetView = BottomSheetView()
     
     // MARK: - Lifecycle
     
@@ -22,7 +22,6 @@ class MainHomeView: UIView {
         super.init(frame: frame)
         configureViewComponents()
         setupConstraints()
-        bottomSheetView.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -34,19 +33,22 @@ class MainHomeView: UIView {
     private func configureViewComponents() {
         backgroundColor = .white
         
+        addSubview(titleView)
         addSubview(bannerView)
         addSubview(dDayView)
         addSubview(reminderLabel)
         addSubview(homeFeedView)
-        
-//        addSubview(dimView)
-        addSubview(bottomSheetView)
     }
     
     private func setupConstraints() {
+        titleView.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 12))
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+        }
+        
         bannerView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(12)
-            make.leading.trailing.equalToSuperview().inset(24)
+            make.top.equalTo(titleView.snp.bottom).offset(12)
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
             make.height.equalTo(LayoutAdapter.shared.scale(value: 180))
         }
         
@@ -65,14 +67,6 @@ class MainHomeView: UIView {
             make.top.equalTo(reminderLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 16))
             make.leading.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
-        }
-        
-//        dimView.snp.makeConstraints { make in
-//            make.edges.equalToSuperview()
-//        }
-        
-        bottomSheetView.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview()
         }
     }
 }

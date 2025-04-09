@@ -32,13 +32,14 @@ class DailyScheduleTableViewCell: UITableViewCell {
     lazy var labelStackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [titleLabel, locationLabel])
         sv.axis = .vertical
-        sv.spacing = 0
+        sv.spacing = 2
         return sv
     }()
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = .white
         configureViewComponents()
         setupActions()
         setupConstraints()

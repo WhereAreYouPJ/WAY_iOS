@@ -19,6 +19,7 @@ target 'Where_Are_You' do
 	pod 'FirebaseAnalytics'
 	pod 'Firebase/Messaging'
 	pod 'IQKeyboardManager'
+	pod 'FloatingPanel'
 
 	target 'Where_Are_You_Tests' do
 	  inherit! :search_paths
