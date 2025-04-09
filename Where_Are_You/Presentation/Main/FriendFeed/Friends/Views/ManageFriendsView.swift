@@ -8,6 +8,7 @@
 import SwiftUI
 import Kingfisher
 
+// TODO: 버튼 크기 수정 필요
 struct ManageFriendsView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel: ManageFriendsViewModel = {
@@ -52,10 +53,70 @@ struct ManageFriendsView: View {
                 }
             )
             .onAppear {
-                viewModel.getSentRequests()
-                viewModel.getReceivedRequests()
+//                viewModel.getSentRequests()
+//                viewModel.getReceivedRequests()
+                setDummyData()
             }
         }
+    }
+    
+    // 더미 데이터 설정 함수
+    private func setDummyData() {
+        // 일정 초대 더미 데이터
+        let calendar = Calendar.current
+        let now = Date()
+        
+        // 친구 요청 더미 데이터
+        viewModel.sentRequests = [
+            FriendRequest(
+                friendRequestSeq: 5001,
+                createTime: calendar.date(byAdding: .minute, value: -30, to: now)!,
+                friend: Friend(
+                    memberSeq: 2001,
+                    profileImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3",
+                    name: "김지민",
+                    isFavorite: false,
+                    memberCode: "JIMIN12345"
+                )
+            ),
+            FriendRequest(
+                friendRequestSeq: 5002,
+                createTime: calendar.date(byAdding: .hour, value: -2, to: now)!,
+                friend: Friend(
+                    memberSeq: 2002,
+                    profileImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+                    name: "이태오",
+                    isFavorite: false,
+                    memberCode: "TAEO67890"
+                )
+            )
+        ]
+        
+        // 친구 요청 더미 데이터
+        viewModel.receivedRequests = [
+            FriendRequest(
+                friendRequestSeq: 5003,
+                createTime: calendar.date(byAdding: .minute, value: -30, to: now)!,
+                friend: Friend(
+                    memberSeq: 2003,
+                    profileImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3",
+                    name: "김지민",
+                    isFavorite: false,
+                    memberCode: "JIMIN12345"
+                )
+            ),
+            FriendRequest(
+                friendRequestSeq: 5004,
+                createTime: calendar.date(byAdding: .hour, value: -2, to: now)!,
+                friend: Friend(
+                    memberSeq: 2004,
+                    profileImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+                    name: "이태오",
+                    isFavorite: false,
+                    memberCode: "TAEO67890"
+                )
+            )
+        ]
     }
     
     func requestView(title: String, count: Int, isSentRequest: Bool) -> some View {
@@ -96,7 +157,20 @@ struct ManageFriendsView: View {
                         }
                         .frame(width: LayoutAdapter.shared.scale(value: 90), height: LayoutAdapter.shared.scale(value: 36))
                     } else {
-                        buttonMergeView(for: request)
+//                        buttonMergeView(for: request)
+                        ButtonMergeView(
+                            data: request,
+                            acceptButtonTitle: "친구 수락하기",
+                            refuseButtonTitle: "친구 거절하기",
+                            onAccept: { request in
+                                viewModel.acceptRequest(request: request)
+                                print("친구 수락 버튼 클릭됨!")
+                            },
+                            onRefuse: { request in
+                                viewModel.refuseRequest(requestSeq: request.friendRequestSeq)
+                                print("친구 거절 버튼 클릭됨!")
+                            }
+                        )
                     }
                 }
             }

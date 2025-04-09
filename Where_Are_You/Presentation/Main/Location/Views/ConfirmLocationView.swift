@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// TODO: 앱 처음 실행시 지도 안보이는 문제에 대해, 다른 장소 선택했다가 지도 안보였던 장소 다시 선택하면 잘 보임. 대체 왜지!?!??
 struct ConfirmLocationView: View {
     @StateObject var viewModel: ConfirmLocationViewModel
     var dismissAction: () -> Void

@@ -278,6 +278,7 @@
 		D54F33122D4381710062A17E /* GeocodeLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54F33112D4381710062A17E /* GeocodeLocationUseCase.swift */; };
 		D5505A722D9914C500FA7A66 /* HighlightedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5505A712D9914C400FA7A66 /* HighlightedText.swift */; };
 		D558CB662D28196100710808 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D558CB652D28196100710808 /* AppConstants.swift */; };
+		D559454F2DA6708A00A5D1A1 /* ButtonMergeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D559454E2DA6708A00A5D1A1 /* ButtonMergeView.swift */; };
 		D55C6C3E2CF57E74005132DC /* CustomButtonSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C3D2CF57E74005132DC /* CustomButtonSwiftUI.swift */; };
 		D55C6C402CF585F1005132DC /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C3F2CF585F1005132DC /* AddFriendView.swift */; };
 		D55C6C422CF5B8D7005132DC /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C412CF5B8D7005132DC /* NavigationBarModifier.swift */; };
@@ -654,6 +655,7 @@
 		D54F33112D4381710062A17E /* GeocodeLocationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodeLocationUseCase.swift; sourceTree = "<group>"; };
 		D5505A712D9914C400FA7A66 /* HighlightedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightedText.swift; sourceTree = "<group>"; };
 		D558CB652D28196100710808 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		D559454E2DA6708A00A5D1A1 /* ButtonMergeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonMergeView.swift; sourceTree = "<group>"; };
 		D55C6C3D2CF57E74005132DC /* CustomButtonSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonSwiftUI.swift; sourceTree = "<group>"; };
 		D55C6C3F2CF585F1005132DC /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
 		D55C6C412CF5B8D7005132DC /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
@@ -1503,6 +1505,7 @@
 				99DF440C2D6DB2A200D75956 /* CustomImageView.swift */,
 				D5161A6C2D950D5F00D92B39 /* CustomFontStyle.swift */,
 				D5505A712D9914C400FA7A66 /* HighlightedText.swift */,
+				D559454E2DA6708A00A5D1A1 /* ButtonMergeView.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -2394,6 +2397,7 @@
 				99C68E3F2C64B11D00DEC1F1 /* FeedRequest.swift in Sources */,
 				995E3E5B2C507FE6006B4480 /* MyPageView.swift in Sources */,
 				99A7D7E42C999897002BCD21 /* LocationBookMarkCell.swift in Sources */,
+				D559454F2DA6708A00A5D1A1 /* ButtonMergeView.swift in Sources */,
 				99EDF58A2CE8764B0008B19A /* AccountLinkUseCase.swift in Sources */,
 				99EDF58C2CE877BD0008B19A /* DeleteMemberUseCase.swift in Sources */,
 				D51AC99C2C849AB400D0AD2E /* LocationAPI.swift in Sources */,
