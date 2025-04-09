@@ -19,11 +19,11 @@ struct SearchLocationView: View {
     var dismissAction: () -> Void
     
     // dummy
-    var recentSearches = [
-        Location(sequence: 1, location: "신도림역", streetName: "신도림역 1호선", x: 0, y: 0),
-        Location(sequence: 1, location: "서울역", streetName: "서울역 1호선", x: 0, y: 0),
-        Location(sequence: 1, location: "망원한강공원", streetName: "망원한강공원", x: 0, y: 0),
-    ]
+//    var recentSearches = [
+//        Location(sequence: 1, location: "신도림역", streetName: "신도림역 1호선", x: 0, y: 0),
+//        Location(sequence: 1, location: "서울역", streetName: "서울역 1호선", x: 0, y: 0),
+//        Location(sequence: 1, location: "망원한강공원", streetName: "망원한강공원", x: 0, y: 0),
+//    ]
     
     var body: some View {
         VStack {
@@ -127,7 +127,7 @@ struct SearchLocationView: View {
                     )
                     
                     HighlightedText(
-                        text: location.location,
+                        text: location.streetName,
                         highlightText: viewModel.searchText,
                         highlightColor: .brandDark
                     )

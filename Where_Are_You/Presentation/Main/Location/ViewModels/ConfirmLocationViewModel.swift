@@ -75,6 +75,7 @@ class ConfirmLocationViewModel: ObservableObject { // TODO: 위치 시퀀스 오
                 DispatchQueue.main.async {
                     if success {
                         self.isFavorite = true
+                        print("위치 즐겨찾기 성공! 좌표: ", self.location.x, self.location.y)
                     }
                 }
             }

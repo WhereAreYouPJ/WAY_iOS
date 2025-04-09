@@ -26,7 +26,9 @@ Where_Are_You/Resources/GoogleService-Info.plist
 
 # Icon must end with two \r
 
-
+# Goggle Services
+GoogleService-Info.plist
+google-services.json
 
 # Thumbnails
 ._*

@@ -75,6 +75,15 @@ struct CreateScheduleView: View {
                                 viewModel.getFavoriteLocation()
                             }
                         )
+                    } else {
+                        // 이 경우는 발생하지 않아야 함
+                        Text("다시 시도해주세요.")
+                            .onAppear {
+                                print("위치 정보 없음 - 이 메시지가 표시되면 안됨")
+                                DispatchQueue.main.async {
+                                    showConfirmLocation = false
+                                }
+                            }
                     }
                 }
                 .fullScreenCover(isPresented: $showSearchFriends) {
@@ -248,8 +257,14 @@ struct AddPlaceView: View {
                     Text(selectedPlace.location)
                         .lineLimit(1)
                         .onTapGesture {
-                            selectedLocationForConfirm = selectedPlace
-                            showConfirmLocation = true
+//                            selectedLocationForConfirm = selectedPlace
+////                            showConfirmLocation = true
+//                            print("선택된 위치: \(selectedLocationForConfirm?.location ?? "빈 값"), 좌표: \(selectedLocationForConfirm?.x ?? 0), \(selectedLocationForConfirm?.y ?? 0)")
+//                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//                                    showConfirmLocation = true
+//                                }
+//                            print("showConfirmLocation", showConfirmLocation)
+                            showLocationConfirmation(location: selectedPlace)
                         }
                 }
                 
@@ -273,15 +288,28 @@ struct AddPlaceView: View {
             HStack {
                 ForEach(Array(viewModel.favPlaces.prefix(20))) { favPlace in // 최대 20개 표시
                     FavoritePlaceCell(place: favPlace) {
-                        viewModel.geocodeSelectedLocation(favPlace) { geocodedLocation in
-                            viewModel.place = geocodedLocation
-                        }
+//                        viewModel.geocodeSelectedLocation(favPlace) { geocodedLocation in
+//                            viewModel.place = geocodedLocation
+//                        }
+                        viewModel.place = favPlace
                     }
                 }
             }
             .padding(.bottom, LayoutAdapter.shared.scale(value: 4))
         }
         .padding(.bottom, LayoutAdapter.shared.scale(value: 12))
+    }
+    
+    func showLocationConfirmation(location: Location) {
+        print("showLocationConfirmation 호출됨, 위치: \(location.location)")
+        
+        // 명시적으로 상태 업데이트
+        self.selectedLocationForConfirm = location
+        
+        // 상태 업데이트가 완료된 후 화면 전환
+        DispatchQueue.main.async {
+            self.showConfirmLocation = true
+        }
     }
 }
 

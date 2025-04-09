@@ -29,7 +29,11 @@ struct MapPinView: View {
         KakaoMapPinView(draw: $draw, myLocation: $myLocation, friendsLocation: $friendsLocation, debugMessage: $debugMessage)
                         .onAppear {
                             print("📍 MapPinView appeared")
-                            self.draw = true
+//                            self.draw = true
+                            // 약간의 지연을 줘서 뷰 계층 구조가 완전히 로드된 후에 draw를 설정
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    self.draw = true
+                                }
                         }
                         .onDisappear {
                             print("📍 MapPinView disappeared")
@@ -38,17 +42,17 @@ struct MapPinView: View {
                         .ignoresSafeArea()
         
         // 디버깅 오버레이 (문제 해결 후 제거)
-        if showDebug {
-            VStack {
-                Text(debugMessage)
-                    .padding(8)
-                    .background(Color.black.opacity(0.7))
-                    .foregroundColor(.white)
-                    .cornerRadius(5)
-                    .padding()
-                Spacer()
-            }
-        }
+//        if showDebug {
+//            VStack {
+//                Text(debugMessage)
+//                    .padding(8)
+//                    .background(Color.black.opacity(0.7))
+//                    .foregroundColor(.white)
+//                    .cornerRadius(5)
+//                    .padding()
+//                Spacer()
+//            }
+//        }
     }
 }
 
@@ -58,20 +62,20 @@ struct KakaoMapPinView: UIViewRepresentable {
     @Binding var friendsLocation: [LongLat]
     @Binding var debugMessage: String
     
-    private func setDebug(_ message: String) {
-        print("📍 \(message)")
-        DispatchQueue.main.async {
-            self.debugMessage = message
-        }
-    }
-    
     /// UIView를 상속한 KMViewContainer를 생성한다.
     /// 뷰 생성과 함께 KMControllerDelegate를 구현한 Coordinator를 생성하고, 엔진을 생성 및 초기화한다.
     func makeUIView(context: Self.Context) -> KMViewContainer {
-        setDebug("makeUIView 호출됨")
+        print("makeUIView 호출됨")
         let view: KMViewContainer = KMViewContainer()
         view.sizeToFit()
         context.coordinator.createController(view)
+        
+        // 컨트롤러 생성을 약간 지연시켜 실행
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                context.coordinator.createController(view)
+                print("컨트롤러 생성 완료")
+            }
+        
         return view
     }
     
@@ -109,52 +113,70 @@ struct KakaoMapPinView: UIViewRepresentable {
 //        }
 //    }
     func updateUIView(_ uiView: KMViewContainer, context: Self.Context) {
-        setDebug("updateUIView 호출됨 (draw: \(draw))")
+        print("updateUIView 호출됨 (draw: \(draw))")
         
-        if draw {
-            // 엔진 상태 확인 및 설정
-            DispatchQueue.main.async {
-                let controller = context.coordinator.controller
-                setDebug("컨트롤러: \(controller != nil ? "OK" : "nil")")
-                
-                if let controller = controller {
-                    if !controller.isEnginePrepared {
-                        setDebug("엔진 준비 시작")
-                        controller.prepareEngine()
-                        
-                        // 후속 작업을 위한 지연 추가
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            if controller.isEnginePrepared {
-                                setDebug("엔진 준비 완료")
-                                context.coordinator.addViews()
-                                
-                                if !controller.isEngineActive {
-                                    setDebug("엔진 활성화 중")
-                                    controller.activateEngine()
-                                }
-                                
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    setDebug("위치 업데이트 시도")
-                                    context.coordinator.updateLocation(myNewLocation: myLocation, friendsNewLocation: friendsLocation)
-                                }
-                            } else {
-                                setDebug("❌ 엔진 준비 실패")
-                            }
-                        }
-                    } else if !controller.isEngineActive {
-                        setDebug("엔진 활성화 중")
+        guard draw else {
+            // 엔진 비활성화 처리
+            print("엔진 비활성화 요청")
+            context.coordinator.cleanUpPois()
+            context.coordinator.controller?.resetEngine()
+            return
+        }
+        
+        // 컨트롤러 확인
+        guard let controller = context.coordinator.controller else {
+            print("컨트롤러가 nil입니다. 재생성 시도")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                context.coordinator.createController(uiView)
+            }
+            return
+        }
+        
+        // 엔진 준비 상태 확인 및 처리
+        if !controller.isEnginePrepared {
+            print("엔진 준비 시작")
+            controller.prepareEngine()
+            
+            // 엔진 준비 후 처리
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                if controller.isEnginePrepared {
+                    print("엔진 준비 완료")
+                    context.coordinator.addViews()
+                    
+                    // 엔진 활성화
+                    if !controller.isEngineActive {
+                        print("엔진 활성화")
                         controller.activateEngine()
-                        context.coordinator.updateLocation(myNewLocation: myLocation, friendsNewLocation: friendsLocation)
-                    } else {
-                        setDebug("이미 준비됨, 위치 업데이트")
-                        context.coordinator.updateLocation(myNewLocation: myLocation, friendsNewLocation: friendsLocation)
+                    }
+                    
+                    // 위치 업데이트
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        context.coordinator.updateLocation(
+                            myNewLocation: myLocation,
+                            friendsNewLocation: friendsLocation
+                        )
                     }
                 }
             }
+        } else if !controller.isEngineActive {
+            // 엔진은 준비되었지만 활성화되지 않은 경우
+            print("엔진 활성화")
+            controller.activateEngine()
+            
+            // 위치 업데이트
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                context.coordinator.updateLocation(
+                    myNewLocation: myLocation,
+                    friendsNewLocation: friendsLocation
+                )
+            }
         } else {
-            setDebug("엔진 비활성화")
-            context.coordinator.cleanUpPois()
-            context.coordinator.controller?.resetEngine()
+            // 엔진이 준비되고 활성화된 경우
+            print("위치 업데이트")
+            context.coordinator.updateLocation(
+                myNewLocation: myLocation,
+                friendsNewLocation: friendsLocation
+            )
         }
     }
     

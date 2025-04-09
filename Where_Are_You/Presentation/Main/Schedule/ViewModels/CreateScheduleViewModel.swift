@@ -121,7 +121,7 @@ final class CreateScheduleViewModel: ObservableObject {
         return false
     }
     
-    func geocodeSelectedLocation(_ location: Location, completion: @escaping (Location) -> Void) {
+    func geocodeSelectedLocation(_ location: Location, completion: @escaping (Location) -> Void) { // 주소를 받아 좌표 리턴
         let locationWithSequence = LocationManager.shared.applyFavoriteSequence(to: location) // 즐겨찾기된 위치라면 시퀀스 유지
         
         geocodeLocationUseCase.execute(location: locationWithSequence) { result in
@@ -135,6 +135,7 @@ final class CreateScheduleViewModel: ObservableObject {
                     x: geocodedLocation.x,
                     y: geocodedLocation.y
                 )
+                print("지오코딩 성공: ", resultLocation.location, resultLocation.streetName, resultLocation.x, resultLocation.y)
                 completion(resultLocation)
             case .failure(let error):
                 print("지오코딩 실패: \(error.localizedDescription)")

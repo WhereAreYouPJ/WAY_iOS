@@ -25,6 +25,8 @@ struct ConfirmLocationView: View {
         ))
         
         self.dismissAction = dismissAction
+        
+        print("init ConfirmLocationView!")
     }
     
     var body: some View {
@@ -38,8 +40,16 @@ struct ConfirmLocationView: View {
                     )),
                     friendsLocation: .constant([])
                 )
-                
-                Spacer()
+                // 임시로 MapPinView 대신 컬러 블록 사용
+//                Rectangle()
+//                    .fill(Color.gray.opacity(0.3))
+//                    .frame(maxHeight: .infinity)
+//                    .overlay(
+//                        Text("지도 영역")
+//                            .foregroundColor(.white)
+//                    )
+//                
+//                Spacer()
                 
                 locationDetailsView()
             }
@@ -51,6 +61,7 @@ struct ConfirmLocationView: View {
         .navigationBarBackButtonHidden()
         .onAppear {
             viewModel.isFavoriteLocation()
+            print("장소: \(viewModel.location.location), 위치: \(viewModel.location.streetName)")
         }
     }
     
