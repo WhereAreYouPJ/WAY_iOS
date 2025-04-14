@@ -52,9 +52,19 @@ class AddFeedViewController: UIViewController {
     }
     
     private func setupTableView() {
+        // viewDidLoad 또는 setupTableView() 안에서 설정
+        addFeedView.scrollView.delaysContentTouches = false
+        addFeedView.scrollView.canCancelContentTouches = true
+
         addFeedView.scheduleDropDown.dropDownTableView.delegate = self
         addFeedView.scheduleDropDown.dropDownTableView.dataSource = self
         addFeedView.scheduleDropDown.dropDownTableView.register(ScheduleDropDownCell.self, forCellReuseIdentifier: ScheduleDropDownCell.identifier)
+        
+        addFeedView.scheduleDropDown.dropDownTableView.delaysContentTouches = false
+        addFeedView.scheduleDropDown.dropDownTableView.canCancelContentTouches = true
+
+        addFeedView.scrollView.panGestureRecognizer.require(toFail: addFeedView.scheduleDropDown.dropDownTableView.panGestureRecognizer)
+        
     }
     
     private func setupNavigationBar() {
@@ -352,5 +362,12 @@ extension AddFeedViewController: UICollectionViewDataSource, UICollectionViewDel
         
         // 만약 이미지가 모두 삭제된 경우 collectionView를 숨김
         addFeedView.imagesCollectionView.isHidden = selectedImages.isEmpty
+    }
+}
+
+
+extension AddFeedViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

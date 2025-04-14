@@ -73,8 +73,6 @@ class BottomSheetViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.allowsSelection = false
         tableView.separatorInset = .zero
-
-//        tableView.separatorStyle = .none
         tableView.contentInset = .zero
     }
     
