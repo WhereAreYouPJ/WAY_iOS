@@ -10,6 +10,18 @@ import Kingfisher
 
 struct FriendsView: View {
     @StateObject private var viewModel: FriendsViewModel = {
+        // 프리뷰용 더미 데이터 초기화
+        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
+            let dummyViewModel = FriendsViewModel(
+                getFriendUseCase: GetFriendUseCaseImpl(friendRepository: FriendRepository(friendService: FriendService())),
+                memberDetailsUseCase: MemberDetailsUseCaseImpl(memberRepository: MemberRepository(memberService: MemberService()))
+            )
+            
+            // 더미 데이터 설정
+            dummyViewModel.setDummyData()
+            return dummyViewModel
+        }
+        
         let friendRepository = FriendRepository(friendService: FriendService())
         let getFriendUseCase = GetFriendUseCaseImpl(friendRepository: friendRepository)
         
@@ -78,19 +90,20 @@ struct FriendsView: View {
                 }
             }
         )
+        .bodyP3Style(color: .black22)
     }
     
     func myProfileView() -> some View {
         HStack {
             KFImage(URL(string: UserDefaultsManager.shared.getProfileImage()))
+//            Image("icon-profile-default")
                 .resizable()
                 .scaledToFill()
-                .frame(width: UIScreen.main.bounds.width * 0.14, height: UIScreen.main.bounds.width * 0.14)
+                .frame(width: LayoutAdapter.shared.scale(value: 56), height: LayoutAdapter.shared.scale(value: 56))
+                .background(Color.brandLight)
                 .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16)))
             
             Text(UserDefaultsManager.shared.getUserName() ?? "나")
-                .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 17))))
-                .foregroundColor(Color(.black22))
                 .padding(LayoutAdapter.shared.scale(value: 8))
             
             Spacer()

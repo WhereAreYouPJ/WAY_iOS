@@ -75,32 +75,29 @@ struct SelectedFriendsView: View {
     @Binding var isOn: Bool
     
     var body: some View {
-        ZStack {
-            VStack {
-                KFImage(URL(string: friend.profileImage))
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: UIScreen.main.bounds.width * 0.12, height: UIScreen.main.bounds.width * 0.12)
-                    .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16)))
-                
-                Text(friend.name)
-                    .font(.caption)
-                    .lineLimit(1)
-            }
+        HStack {
+            KFImage(URL(string: friend.profileImage))
+                .resizable()
+                .scaledToFill()
+                .frame(width: LayoutAdapter.shared.scale(value: 27), height: LayoutAdapter.shared.scale(value: 27))
+                .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 50)))
+            
+            Text(friend.name)
+                .bodyP4Style(color: .black22)
+                .lineLimit(1)
+            
+            Spacer(minLength: LayoutAdapter.shared.scale(value: 12))
+            
             Button(action: {
                 isOn = false
             }, label: {
-                ZStack {
-                    Image(systemName: "circle.fill")
-                        .foregroundColor(.white)
-                        .opacity(0.8)
-                        .shadow(radius: LayoutAdapter.shared.scale(value: 10))
-                    Image(systemName: "multiply")
-                        .foregroundColor(.gray)
-                }
+                Image(systemName: "multiply")
+                    .foregroundColor(.black66)
             })
-            .offset(x: LayoutAdapter.shared.scale(value: 20), y: LayoutAdapter.shared.scale(value: -28))
         }
+        .padding(EdgeInsets(top: 6, leading: 5, bottom: 6, trailing: 10))
+        .background(Color.blackF0)
+        .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16)))
         .padding(.top, LayoutAdapter.shared.scale(value: 20))
     }
 }
@@ -168,9 +165,14 @@ struct CheckboxToggleStyle: ToggleStyle {
             
             let friendsViewModel = FriendsViewModel(getFriendUseCase: getFriendUseCase, memberDetailsUseCase: memberDetailsUseCase)
             
-            return SearchFriendsViewModel(
+            let searchViewModel = SearchFriendsViewModel(
                 friendsViewModel: friendsViewModel,
                 getFriendUseCase: getFriendUseCase)
+            
+            // 프리뷰용 더미 데이터 설정
+            searchViewModel.setDummyData()
+            
+            return searchViewModel
         }()
         
         var body: some View {

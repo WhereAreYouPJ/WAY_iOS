@@ -49,62 +49,43 @@ struct FriendListView: View {
     var onFriendSelect: ((Friend) -> Void)? = nil
     
     var body: some View {
-        ZStack {
-            //            if viewModel.isLoading {
-            //                ProgressView()
-            //                    .scaleEffect(1.5)
-            //                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            //            } else if viewModel.hasError {
-            //                ErrorView {
-            //                    //                    viewModel.retry()
-            //                }
-            //            } else
-            if viewModel.favorites.isEmpty && viewModel.friends.isEmpty {
-                EmptyFriendsView()
-            } else {
-                ScrollView {
-                    VStack(spacing: 0) {
-                        if !viewModel.filteredFavorites.isEmpty {
-                            FriendsSectionView(title: "즐겨찾기", count: viewModel.filteredFavorites.count)
-                            ForEach(viewModel.filteredFavorites) { friend in
-                                if showToggle {
-                                    FriendCell(
-                                        friend: friend,
-                                        showToggle: true,
-                                        isOn: Binding(
-                                            get: { isSelected?(friend) ?? false },
-                                            set: { _ in onToggle?(friend) }
-                                        )
-                                    )
-                                } else {
-                                    FriendCell(friend: friend)
-                                        .onTapGesture {
-                                            onFriendSelect?(friend)
-                                        }
-                                }
+        ScrollView {
+            VStack(spacing: 0) {
+                FriendsSectionView(title: "즐겨찾기", count: viewModel.filteredFavorites.count)
+                ForEach(viewModel.filteredFavorites) { friend in
+                    if showToggle {
+                        FriendCell(
+                            friend: friend,
+                            showToggle: true,
+                            isOn: Binding(
+                                get: { isSelected?(friend) ?? false },
+                                set: { _ in onToggle?(friend) }
+                            )
+                        )
+                    } else {
+                        FriendCell(friend: friend)
+                            .onTapGesture {
+                                onFriendSelect?(friend)
                             }
-                        }
-                        
-                        if !viewModel.filteredFriends.isEmpty {
-                            FriendsSectionView(title: "친구", count: viewModel.filteredFriends.count)
-                            ForEach(viewModel.filteredFriends) { friend in
-                                if showToggle {
-                                    FriendCell(
-                                        friend: friend,
-                                        showToggle: true,
-                                        isOn: Binding(
-                                            get: { isSelected?(friend) ?? false },
-                                            set: { _ in onToggle?(friend) }
-                                        )
-                                    )
-                                } else {
-                                    FriendCell(friend: friend)
-                                        .onTapGesture {
-                                            onFriendSelect?(friend)
-                                        }
-                                }
+                    }
+                }
+                
+                FriendsSectionView(title: "친구", count: viewModel.filteredFriends.count)
+                ForEach(viewModel.filteredFriends) { friend in
+                    if showToggle {
+                        FriendCell(
+                            friend: friend,
+                            showToggle: true,
+                            isOn: Binding(
+                                get: { isSelected?(friend) ?? false },
+                                set: { _ in onToggle?(friend) }
+                            )
+                        )
+                    } else {
+                        FriendCell(friend: friend)
+                            .onTapGesture {
+                                onFriendSelect?(friend)
                             }
-                        }
                     }
                 }
             }
@@ -125,6 +106,7 @@ struct FriendsSectionView: View {
             HStack {
                 Text(title)
                 Text("\(count)")
+                    .bodyP4Style(color: .blackAC)
                 Spacer()
             }
         }
@@ -142,11 +124,11 @@ struct FriendCell: View {
             KFImage(URL(string: friend.profileImage))
                 .resizable()
                 .scaledToFill()
-                .frame(width: UIScreen.main.bounds.width * 0.14, height: UIScreen.main.bounds.width * 0.14)
+//                .frame(width: UIScreen.main.bounds.width * 0.14, height: UIScreen.main.bounds.width * 0.14)
+                .frame(width: LayoutAdapter.shared.scale(value: 56), height: LayoutAdapter.shared.scale(value: 56))
                 .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16)))
             
             Text(friend.name)
-                .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 17))))
                 .foregroundColor(Color(.black22))
                 .padding(LayoutAdapter.shared.scale(value: 8))
             
@@ -158,6 +140,7 @@ struct FriendCell: View {
             }
         }
         .padding(.top, LayoutAdapter.shared.scale(value: 10))
+        .bodyP3Style(color: .black22)
     }
 }
 
@@ -177,21 +160,5 @@ struct ErrorView: View {
                 .buttonStyle(.bordered)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-}
-
-// MARK: 친구 목록이 비어있을 때 보여줄 뷰
-struct EmptyFriendsView: View {
-    var body: some View {
-        VStack(spacing: LayoutAdapter.shared.scale(value: 16)) {
-            Image(systemName: "person.2")
-                .font(.system(size: 50))
-                .foregroundColor(.gray)
-            Text("아직 등록된 친구가 없습니다")
-                .font(.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 16)))
-                .foregroundColor(.gray)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.top, LayoutAdapter.shared.scale(value: 100))
     }
 }

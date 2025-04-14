@@ -524,11 +524,13 @@ enum DateFormat: String {
     case server = "yyyy-MM-dd'T'HH:mm:ss.SSS"   // 서버의 날짜 형식
     case serverSimple = "yyyy-MM-dd'T'HH:mm:ss" // 서버의 날짜 형식
     case yearMonthDateHyphen = "yyyy-MM-dd"     // "yyyy-MM-dd" 형태
+    case yearMonthDateDot = "yyyy.MM.dd"     // "yyyy-MM-dd" 형태
     case yearMonthDate = "yy.MM.dd"             // "YY.MM.dd" 형태
     case yearMonth = "yyyy-MM"                  // "YYYY-MM" 형태
     case monthDay = "MM월 dd일"                  // "MM월 dd일" 형태
     case monthDaySimple = "M월 d일"              // "M월 d일" 형태
     case time = "a h시 m분"                      // "오후 1시 1분" 형태
+    case timeColon = "a h:mm"                      // "오후 1:01" 형태
     case timeSimple = "a h시"                   // "오후 1시" 형태
 }
 

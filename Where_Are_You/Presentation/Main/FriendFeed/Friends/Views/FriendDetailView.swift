@@ -62,7 +62,8 @@ struct FriendDetailView: View {
                         Button(action: {
                             showOptions.toggle()
                         }, label: {
-                            Image(systemName: "ellipsis")
+                            Image("icon-3dots")
+                                .renderingMode(.template)
                                 .foregroundStyle(Color.white)
                                 .frame(width: LayoutAdapter.shared.scale(value: 14), height: LayoutAdapter.shared.scale(value: 14))
                         })
@@ -88,11 +89,11 @@ struct FriendDetailView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: LayoutAdapter.shared.scale(value: 100), height: LayoutAdapter.shared.scale(value: 100))
-                    .clipShape(RoundedRectangle(cornerRadius: 36))
+                    .background(Color.brandLight)
+                    .clipShape(RoundedRectangle(cornerRadius: 24))
                 
                 Text((viewModel.isMyProfile ? UserDefaultsManager.shared.getUserName() : viewModel.friend?.name) ?? "이름")
-                    .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: 20)))
-                    .foregroundStyle(Color.white)
+                    .bodyP1Style(color: .white)
                     .padding(.top, LayoutAdapter.shared.scale(value: 10))
                     .padding(.bottom, LayoutAdapter.shared.scale(value: 90))
             }
@@ -134,7 +135,7 @@ struct FriendDetailView: View {
 
 #Preview {
     // 친구 프로필 프리뷰
-    FriendDetailView(viewModel: FriendDetailViewModel(friend: Friend(memberSeq: 1, profileImage: "", name: "김철수", isFavorite: false, memberCode: "abc12"), isMyProfile: false))
+    FriendDetailView(viewModel: FriendDetailViewModel(friend: Friend(memberSeq: 1, profileImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3", name: "김철수", isFavorite: false, memberCode: "abc12"), isMyProfile: false))
 }
 
 #Preview {

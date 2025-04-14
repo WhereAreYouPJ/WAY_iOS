@@ -122,8 +122,7 @@ struct OptionButton: View {
         Button(action: action) {
             HStack {
                 Text(title)
-                    .font(.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
-                    .foregroundColor(.white)
+                    .bodyP4Style(color: .white)
                 
                 Spacer()
             }
