@@ -69,15 +69,12 @@ class TermsAgreementViewController: UIViewController {
     @objc func termButtonTapped(_ sender: UIButton) {
         switch sender.tag {
         case 0:
-            // 서비스 이용약관 "보기" 버튼 탭 처리
             print("서비스 이용약관 보기")
             // 예: 서비스 이용약관 페이지로 이동
         case 1:
-            // 개인정보 처리방침 "보기" 버튼 탭 처리
             print("개인정보 처리방침 보기")
             // 예: 개인정보 처리방침 페이지로 이동
         case 2:
-            // 위치기반 서비스 이용약관 "보기" 버튼 탭 처리
             print("위치기반 서비스 이용약관 보기")
             // 예: 위치기반 서비스 이용약관 페이지로 이동
         default:

@@ -58,7 +58,7 @@ class TermsAgreementView: UIView {
     private lazy var termTitleStackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [agreeTermButton, agreeTitle])
         sv.axis = .horizontal
-        sv.spacing = 0
+        sv.spacing = 5
         return sv
     }()
     

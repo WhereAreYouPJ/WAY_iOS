@@ -86,6 +86,8 @@ class LoginView: UIView {
         super.init(frame: frame)
         configureViewComponents()
         setupConstraints()
+        kakaoLogin.isHidden = true
+        appleLogin.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -121,6 +123,10 @@ class LoginView: UIView {
         }
         
         kakaoLogin.snp.makeConstraints { make in
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 48))
+        }
+        
+        accountLogin.snp.makeConstraints { make in
             make.height.equalTo(LayoutAdapter.shared.scale(value: 48))
         }
         
