@@ -395,7 +395,7 @@ extension Font {
             family: "Paperlogy-6SemiBold",
             size: LayoutAdapter.shared.scale(value: 18),
             lineHeight: 1.3,
-            letterSpacing: 1.25
+            letterSpacing: -1.5
         )
     }
     
@@ -404,7 +404,7 @@ extension Font {
             family: "Paperlogy-6SemiBold",
             size: LayoutAdapter.shared.scale(value: 16),
             lineHeight: 1.3,
-            letterSpacing: 4
+            letterSpacing: 0
         )
     }
     
@@ -487,7 +487,9 @@ extension Text {
         return withFontStyle(Font.bodyP3(), color: color)
     }
     
-    // 필요한 다른 스타일 메서드들...
+    func withBodyP4Style(color: Color = .primary) -> Text {
+        return withFontStyle(Font.bodyP4(), color: color)
+    }
 }
 
 // MARK: - UIImage

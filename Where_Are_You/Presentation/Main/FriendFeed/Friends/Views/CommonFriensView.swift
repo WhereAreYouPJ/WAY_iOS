@@ -124,8 +124,8 @@ struct FriendCell: View {
             KFImage(URL(string: friend.profileImage))
                 .resizable()
                 .scaledToFill()
-//                .frame(width: UIScreen.main.bounds.width * 0.14, height: UIScreen.main.bounds.width * 0.14)
                 .frame(width: LayoutAdapter.shared.scale(value: 56), height: LayoutAdapter.shared.scale(value: 56))
+                .background(Color.brandLight)
                 .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16)))
             
             Text(friend.name)

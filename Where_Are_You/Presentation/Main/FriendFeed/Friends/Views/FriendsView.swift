@@ -96,7 +96,6 @@ struct FriendsView: View {
     func myProfileView() -> some View {
         HStack {
             KFImage(URL(string: UserDefaultsManager.shared.getProfileImage()))
-//            Image("icon-profile-default")
                 .resizable()
                 .scaledToFill()
                 .frame(width: LayoutAdapter.shared.scale(value: 56), height: LayoutAdapter.shared.scale(value: 56))

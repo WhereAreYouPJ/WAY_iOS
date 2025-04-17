@@ -12,26 +12,31 @@ struct CustomButtonSwiftUI: View {
     private let title: String
     private let backgroundColor: Color
     private let titleColor: Color
+    private let titleSize: Int
     private let action: () -> Void
     
     @State private var currentTitle: String
     @State private var currentBackgroundColor: Color
     @State private var currentTitleColor: Color
+    @State private var currentTitleSize: Int
     
     init(
         title: String,
         backgroundColor: Color,
         titleColor: Color,
+        titleSize: Int = 14,
         action: @escaping () -> Void
     ) {
         self.title = title
         self.backgroundColor = backgroundColor
         self.titleColor = titleColor
+        self.titleSize = titleSize
         self.action = action
         
         _currentTitle = State(initialValue: title)
         _currentBackgroundColor = State(initialValue: backgroundColor)
         _currentTitleColor = State(initialValue: titleColor)
+        _currentTitleSize = State(initialValue: titleSize)
     }
     
     var body: some View {
@@ -64,7 +69,6 @@ struct BottomButtonSwiftUIView: View {
             
             Button(action: action) {
                 Text(title)
-                    .font(.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
                     .foregroundColor(Color(.color242))
                     .frame(maxWidth: .infinity)
                     .frame(height: LayoutAdapter.shared.scale(value: 50))
@@ -154,7 +158,8 @@ struct RoundedCorner: Shape {
     CustomButtonSwiftUI(
         title: "확인",
         backgroundColor: Color(.brandColor),
-        titleColor: .white
+        titleColor: .white,
+        titleSize: 16
     ) {
         print("커스텀 버튼")
     }

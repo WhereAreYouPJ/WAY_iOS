@@ -17,7 +17,7 @@ struct CustomToast: View {
             ZStack {
                 RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 12))
                     .foregroundStyle(Color(.black44))
-                    .opacity(0.8)
+                    .opacity(0.7)
                     .frame(maxWidth: .infinity)
                     .frame(height: LayoutAdapter.shared.scale(value: 48))
                     .padding(.horizontal, LayoutAdapter.shared.scale(value: 40))

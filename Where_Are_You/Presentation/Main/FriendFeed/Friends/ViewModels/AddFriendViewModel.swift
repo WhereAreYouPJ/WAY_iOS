@@ -70,3 +70,18 @@ class AddFriendViewModel: ObservableObject {
         }
     }
 }
+
+// FriendsViewModel 클래스에 아래 메서드 추가
+extension AddFriendViewModel {
+    // 더미 데이터 설정 메서드
+    func setDummyData() {
+        // 즐겨찾기 친구들
+        self.searchedMember = Friend(
+            memberSeq: 1,
+            profileImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3",
+            name: "루시",
+            isFavorite: false,
+            memberCode: "A1B2C3"
+        )
+    }
+}

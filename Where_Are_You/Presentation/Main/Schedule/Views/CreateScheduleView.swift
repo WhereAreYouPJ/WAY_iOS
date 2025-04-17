@@ -103,7 +103,8 @@ struct CreateScheduleView: View {
                     TextField(
                         "",
                         text: $viewModel.title,
-                        prompt: Text("일정명을 입력해주세요.").withBodyP2Style(color: .blackAC)
+                        prompt: Text("일정명을 입력해주세요.")
+                            .withBodyP2Style(color: .blackAC)
                     )
                     .padding(.top, LayoutAdapter.shared.scale(value: 6))
                     .bodyP2Style(color: .black22)
@@ -199,60 +200,10 @@ struct CreateScheduleView: View {
     }
 }
 
-//struct DateAndTimeView: View {
-//    @Binding var isAllDay: Bool
-//    @Binding var startTime: Date
-//    @Binding var endTime: Date
-//    
-//    var body: some View {
-//        VStack(alignment: .leading, spacing: LayoutAdapter.shared.scale(value: 4)) {
-//            Toggle(isOn: $isAllDay, label: {
-//                Text("하루 종일")
-//            })
-//            
-//            if isAllDay {
-//                HStack {
-//                    Image("icon-information")
-//                    Text("위치 확인하기 기능이 제공되지 않습니다.")
-//                        .bodyP5Style(color: .error)
-//                }
-//                .transition(.opacity.combined(with: .move(edge: .top)))
-//            }
-//        }
-//        
-//        Divider()
-//        
-//        DatePicker("시작일", selection: $startTime, in: Date.yearRange2000To2100, displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
-//            .environment(\.locale, Locale(identifier: "ko_KR"))
-//            .environment(\.calendar, Calendar(identifier: .gregorian))
-//            .accentColor(Color(.brandDark))
-//        
-//        Divider()
-//        
-//        DatePicker("종료일", selection: $endTime, in: startTime...Date.yearRange2000To2100.upperBound, displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
-//            .environment(\.locale, Locale(identifier: "ko_KR"))
-//            .environment(\.calendar, Calendar(identifier: .gregorian))
-//            .accentColor(Color(.brandDark))
-//        
-//        Divider()
-//            .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
-//    }
-//}
-
 struct DateAndTimeView: View {
     @Binding var isAllDay: Bool
     @Binding var startTime: Date
     @Binding var endTime: Date
-    
-    @State private var isShowingStartDatePicker = false
-    @State private var isShowingStartTimePicker = false
-    @State private var isShowingEndDatePicker = false
-    @State private var isShowingEndTimePicker = false
-    
-    @State private var tempStartDate: Date = Date()
-    @State private var tempStartTime: Date = Date()
-    @State private var tempEndDate: Date = Date()
-    @State private var tempEndTime: Date = Date()
     
     var body: some View {
         VStack(alignment: .leading, spacing: LayoutAdapter.shared.scale(value: 4)) {
@@ -268,250 +219,24 @@ struct DateAndTimeView: View {
                 }
                 .transition(.opacity.combined(with: .move(edge: .top)))
             }
-            
-            Divider()
-            
-            // 시작일 선택 버튼
-            HStack {
-                Button(action: {
-                    tempStartDate = startTime
-                    isShowingStartDatePicker = true
-                }, label: {
-                    HStack {
-                        Text("시작일")
-                        
-                        Spacer()
-                        
-                        Text(startTime.formatted(to: .yearMonthDateDot))
-                            .padding(.vertical, LayoutAdapter.shared.scale(value: 6))
-                            .padding(.horizontal, LayoutAdapter.shared.scale(value: 8))
-                            .background(Color.blackF0)
-                            .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 4)))
-                    }
-                    .padding(.vertical, 8)
-                })
-                
-                if !isAllDay {
-                    Button(action: {
-                        tempStartTime = startTime
-                        isShowingStartTimePicker = true
-                    }, label: {
-                        Text(startTime.formatted(to: .timeColon))
-                            .padding(.vertical, LayoutAdapter.shared.scale(value: 6))
-                            .padding(.horizontal, LayoutAdapter.shared.scale(value: 8))
-                            .background(Color.blackF0)
-                            .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 4)))
-                        .padding(.vertical, 8)
-                    })
-                }
-            }
-            
-            Divider()
-            
-            // 종료일 선택 버튼
-            HStack {
-                Button(action: {
-                    tempEndDate = endTime
-                    isShowingEndDatePicker = true
-                }, label: {
-                    HStack {
-                        Text("종료일")
-                        
-                        Spacer()
-                        
-                        Text(endTime.formatted(to: .yearMonthDateDot))
-                            .padding(.vertical, LayoutAdapter.shared.scale(value: 6))
-                            .padding(.horizontal, LayoutAdapter.shared.scale(value: 8))
-                            .background(Color.blackF0)
-                            .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 4)))
-                    }
-                    .padding(.vertical, 8)
-                })
-                
-                if !isAllDay {
-                    Button(action: {
-                        tempEndTime = endTime
-                        isShowingEndTimePicker = true
-                    }, label: {
-                        Text(endTime.formatted(to: .timeColon))
-                            .padding(.vertical, LayoutAdapter.shared.scale(value: 6))
-                            .padding(.horizontal, LayoutAdapter.shared.scale(value: 8))
-                            .background(Color.blackF0)
-                            .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 4)))
-                        .padding(.vertical, 8)
-                    })
-                }
-            }
-            
-            Divider()
-                .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
         }
-        .sheet(isPresented: $isShowingStartDatePicker) { // 시작일
-            let sheetHeight = max(UIScreen.main.bounds.height * 0.45, 420) // 전체 화면의 45%
-            
-            VStack {
-                Text("시작일")
-                    .bodyP3Style(color: .black22)
-                    .padding(.vertical, LayoutAdapter.shared.scale(value: 16))
-                
-                DatePicker("", selection: $tempStartDate, in: Date.yearRange2000To2100, displayedComponents: [.date])
-                    .datePickerStyle(.graphical)
-                    .labelsHidden()
-                    .environment(\.locale, Locale(identifier: "ko_KR"))
-                    .environment(\.calendar, Calendar(identifier: .gregorian))
-                    .frame(height: sheetHeight * 0.7)
-                    .tint(.brandMain)
-                    .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
-                
-                Spacer()
-                                
-                HStack {
-                    Spacer()
-                    
-                    Button("취소") {
-                        isShowingStartDatePicker = false
-                    }
-                    .padding()
-                    
-                    Spacer()
-                    Text("|")
-                        .foregroundStyle(Color.blackD4)
-                    Spacer()
-                    
-                    Button("완료") {
-                        // 날짜만 추출하여 시간은 유지
-                        let updatedDate = combineDateAndTime(date: tempStartDate, time: startTime)
-                        startTime = updatedDate
-                        
-                        isShowingStartDatePicker = false
-                    }
-                    .padding()
-                    .fontWeight(.bold)
-                    
-                    Spacer()
-                }
-            }
-            .presentationDetents([.height(sheetHeight)])
-        }
-        .sheet(isPresented: $isShowingStartTimePicker) { // 시작 시각
-            let sheetHeight = max(UIScreen.main.bounds.height * 0.3, 300)
-            
-            Text("시작 시각")
-                .bodyP3Style(color: .black22)
-                .padding(.vertical, LayoutAdapter.shared.scale(value: 16))
-            
-            VStack {
-                DatePicker("", selection: $tempStartDate, in: Date.yearRange2000To2100, displayedComponents: [.hourAndMinute])
-                    .datePickerStyle(.wheel)
-                    .labelsHidden()
-                    .environment(\.locale, Locale(identifier: "ko_KR"))
-                    .environment(\.calendar, Calendar(identifier: .gregorian))
-                    .frame(height: 180)
-                    .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
-                
-                Spacer()
-                
-                HStack {
-                    Spacer()
-                    
-                    Button("취소") {
-                        isShowingStartTimePicker = false
-                    }
-                    .padding()
-                    
-                    Spacer()
-                    Text("|")
-                        .foregroundStyle(Color.blackD4)
-                    Spacer()
-                    
-                    Button("완료") {
-                        // 시간만 추출하여 날짜는 유지
-                        startTime = combineDateAndTime(date: startTime, time: tempStartTime)
-                        isShowingStartTimePicker = false
-                    }
-                    .padding()
-                    .fontWeight(.bold)
-                    
-                    Spacer()
-                }
-            }
-            .presentationDetents([.height(300)])
-        }
-        .sheet(isPresented: $isShowingEndDatePicker) {
-            VStack {
-                HStack {
-                    Button("취소") {
-                        isShowingEndDatePicker = false
-                    }
-                    .padding()
-                    
-                    Spacer()
-                    
-                    Button("완료") {
-                        let updatedDate = combineDateAndTime(date: tempEndDate, time: endTime)
-                        endTime = updatedDate
-                        
-                        isShowingEndDatePicker = false
-                    }
-                    .padding()
-                    .fontWeight(.bold)
-                }
-                
-                DatePicker("", selection: $tempEndDate, in: startTime...Date.yearRange2000To2100.upperBound, displayedComponents: [.date])
-                    .datePickerStyle(.wheel)
-                    .labelsHidden()
-                    .environment(\.locale, Locale(identifier: "ko_KR"))
-                    .environment(\.calendar, Calendar(identifier: .gregorian))
-                
-                Spacer()
-            }
-            .presentationDetents([.height(300)])
-        }
-        .sheet(isPresented: $isShowingEndTimePicker) {
-            VStack {
-                HStack {
-                    Button("취소") {
-                        isShowingEndTimePicker = false
-                    }
-                    .padding()
-                    
-                    Spacer()
-                    
-                    Button("완료") {
-                        endTime = combineDateAndTime(date: endTime, time: tempEndTime)
-                        isShowingEndTimePicker = false
-                    }
-                    .padding()
-                    .fontWeight(.bold)
-                }
-                
-                DatePicker("", selection: $tempEndTime, in: startTime...Date.yearRange2000To2100.upperBound, displayedComponents: [.hourAndMinute])
-                    .datePickerStyle(.wheel)
-                    .labelsHidden()
-                    .environment(\.locale, Locale(identifier: "ko_KR"))
-                    .environment(\.calendar, Calendar(identifier: .gregorian))
-                
-                Spacer()
-            }
-            .presentationDetents([.height(300)])
-        }
-    }
-    
-    // 날짜와 시간 결합 함수
-    func combineDateAndTime(date: Date, time: Date) -> Date {
-        let calendar = Calendar.current
         
-        let dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
-        let timeComponents = calendar.dateComponents([.hour, .minute], from: time)
+        Divider()
         
-        var combinedComponents = DateComponents()
-        combinedComponents.year = dateComponents.year
-        combinedComponents.month = dateComponents.month
-        combinedComponents.day = dateComponents.day
-        combinedComponents.hour = timeComponents.hour
-        combinedComponents.minute = timeComponents.minute
+        DatePicker("시작일", selection: $startTime, in: Date.yearRange2000To2100, displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
+            .environment(\.locale, Locale(identifier: "ko_KR"))
+            .environment(\.calendar, Calendar(identifier: .gregorian))
+            .accentColor(Color(.brandDark))
         
-        return calendar.date(from: combinedComponents) ?? date
+        Divider()
+        
+        DatePicker("종료일", selection: $endTime, in: startTime...Date.yearRange2000To2100.upperBound, displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
+            .environment(\.locale, Locale(identifier: "ko_KR"))
+            .environment(\.calendar, Calendar(identifier: .gregorian))
+            .accentColor(Color(.brandDark))
+        
+        Divider()
+            .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
     }
 }
 
