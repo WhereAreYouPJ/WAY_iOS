@@ -74,7 +74,6 @@ struct ButtonMergeView<T>: View {
                     }
                     .frame(width: LayoutAdapter.shared.scale(value: buttonWidth),
                           height: LayoutAdapter.shared.scale(value: buttonHeight))
-                    .button14Style(color: acceptButtonTextColor)
                     
                     CustomButtonSwiftUI(
                         title: refuseButtonTitle,
@@ -90,7 +89,6 @@ struct ButtonMergeView<T>: View {
                     }
                     .frame(width: LayoutAdapter.shared.scale(value: buttonWidth),
                           height: LayoutAdapter.shared.scale(value: buttonHeight))
-                    .button14Style(color: refuseButtonTextColor)
                 }
             } else {
                 Button(action: {}) {
@@ -140,34 +138,24 @@ struct ButtonMergeViewFriendPreview: View {
                     print("친구 요청 거절: \(request.id) - \(request.name)")
                 }
             )
+            .button14Style()
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(Color.gray.opacity(0.3), lineWidth: 1)
             )
             
-            // 이미 클릭된 상태를 보여주기 위한 수동 설정 버전
-            let alreadyClickedView = ButtonMergeView(
-                data: PreviewFriendRequest(id: 2, name: "이태오"),
+            ButtonMergeView(
+                data: PreviewFriendRequest(id: 1, name: "김지민"),
                 acceptButtonTitle: "수락",
                 refuseButtonTitle: "삭제",
-                onAccept: { _ in },
-                onRefuse: { _ in }
-            )
-            
-            alreadyClickedView
-                .onAppear {
-                    // 프리뷰에서 이미 수락된 상태 시뮬레이션
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        withAnimation {
-                            alreadyClickedView.isAccepted = true
-                            alreadyClickedView.showMergedButton = true
-                        }
-                    }
+                onAccept: { request in
+                    print("친구 요청 수락: \(request.id) - \(request.name)")
+                },
+                onRefuse: { request in
+                    print("친구 요청 거절: \(request.id) - \(request.name)")
                 }
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                )
+            )
+            .button14Style()
         }
         .padding()
         .previewLayout(.sizeThatFits)
@@ -183,7 +171,7 @@ struct ButtonMergeViewSchedulePreview: View {
                 data: PreviewSchedule(id: 101, title: "팀 미팅"),
                 acceptButtonTitle: "수락하기",
                 refuseButtonTitle: "거절하기",
-                buttonWidth: 100,
+                buttonWidth: .infinity,
                 buttonHeight: 46,
                 onAccept: { schedule in
                     print("일정 수락: \(schedule.id) - \(schedule.title)")
@@ -192,12 +180,12 @@ struct ButtonMergeViewSchedulePreview: View {
                     print("일정 거절: \(schedule.id) - \(schedule.title)")
                 }
             )
+            .button16Style()
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(Color.gray.opacity(0.3), lineWidth: 1)
             )
         }
-        .padding()
         .previewLayout(.sizeThatFits)
     }
 }

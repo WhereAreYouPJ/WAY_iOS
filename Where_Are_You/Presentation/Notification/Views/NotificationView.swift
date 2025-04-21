@@ -55,7 +55,8 @@ struct NotificationView: View {
                 endTime: calendar.date(byAdding: .day, value: 1, to: now)!,
                 location: Location(sequence: 1, location: "강남역 카페", streetName: "", x: 0, y: 0),
                 color: "",
-                dDay: 1
+                dDay: 1,
+                createdAt: Calendar.current.date(byAdding: .hour, value: -1, to: now)
             ),
             Schedule(
                 scheduleSeq: 1002,
@@ -64,7 +65,8 @@ struct NotificationView: View {
                 endTime: calendar.date(byAdding: .day, value: 3, to: now)!,
                 location: Location(sequence: 2, location: "회사 회의실", streetName: "", x: 0, y: 0),
                 color: "",
-                dDay: 3
+                dDay: 3,
+                createdAt: Calendar.current.date(byAdding: .day, value: -1, to: now)
             )
         ]
         
@@ -123,7 +125,6 @@ struct NotificationView: View {
                 }
             }
         }
-        .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: LayoutAdapter.shared.scale(value: 16))))
         .onAppear {
 //            viewModel.fetchNotifications()
             setDummyData()
@@ -166,9 +167,8 @@ struct NotificationView: View {
             },
             label: {
                 HStack {
-                    Text("일정")
-                        .foregroundStyle(Color(.color153))
-                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
+                    Text("일정초대")
+                        .bodyP4Style(color: .black22)
                     Spacer()
                 }
             }
@@ -193,8 +193,7 @@ struct NotificationView: View {
             label: {
                 HStack {
                     Text("친구")
-                        .foregroundStyle(Color(.color153))
-                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
+                        .bodyP4Style(color: .black22)
                     Spacer()
                 }
             }
@@ -212,8 +211,7 @@ struct NotificationView: View {
             label: {
                 HStack {
                     Text("일반")
-                        .foregroundStyle(Color(.color153))
-                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
+                        .bodyP4Style(color: .black22)
                     Spacer()
                 }
             }
@@ -223,62 +221,83 @@ struct NotificationView: View {
     
     // MARK: Schedule Section Cards
     func invitedScheduleCard(schedule: Schedule) -> some View {
-        VStack(spacing: LayoutAdapter.shared.scale(value: 16)) {
-                HStack {
-                    Text("일정에 초대되었습니다.")
-                        .foregroundStyle(Color(.black22))
-                    
-                    Spacer()
-                    
-                    Text(schedule.createdAt?.timeAgoDisplay() ?? "")
-                        .foregroundStyle(Color(.color153))
-                        .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
-                }
-                .padding(.top, LayoutAdapter.shared.scale(value: 16))
-                .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
+        VStack(alignment: .leading, spacing: 0) {
+            // 알림 텍스트
+            HStack(spacing: 0) {
+                Text("일정에 초대되었습니다.")
+                    .bodyP4Style(color: .blackAC)
+                
+                Spacer()
+                
+                Text(schedule.createdAt?.timeAgoDisplay() ?? "")
+                    .bodyP4Style(color: .black66)
+            }
+            .padding(.horizontal, LayoutAdapter.shared.scale(value: 4))
+            .padding(.bottom, LayoutAdapter.shared.scale(value: 10))
             
-                HStack {
-                    VStack {
-                        Text(schedule.startTime.formatted(to: .monthDay))
-                            .foregroundStyle(Color(.brandColor))
-                            .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 20))))
-                        
-                        Text("D - \(schedule.dDay ?? 0)")
-                            .foregroundStyle(Color.red)
-                            .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
-                    }
-                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
-                    
-                    VStack(alignment: .leading) {
-                        Text(schedule.title)
-                            .foregroundStyle(Color(.black66))
-                        
-                        Text(schedule.location?.location ?? "")
-                            .foregroundStyle(Color(.color153))
-                            .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
-                    }
-                    
-                    Spacer()
-                }
-                    
-            ButtonMergeView(
-                data: schedule,
-                acceptButtonTitle: "수락하기",
-                refuseButtonTitle: "거절하기",
-                onAccept: { schedule in
-                    viewModel.ecceptSchedule(scheduleSeq: schedule.scheduleSeq)
-                },
-                onRefuse: { schedule in
-                    viewModel.refuseInvitedSchedule(scheduleSeq: schedule.scheduleSeq)
-                }
-            )
-            .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
+            // 일정 시작일, 타이틀
+            HStack(spacing: 0) {
+                Text(schedule.startTime.formatted(to: .monthDay))
+                    .titleH2Style(color: .brandDark)
+                    .frame(width: LayoutAdapter.shared.scale(value: 90))
+                    .padding(.trailing, LayoutAdapter.shared.scale(value: 6))
+                
+                Text(schedule.title)
+                    .bodyP2Style(color: .black22)
+            }
+            .padding(.bottom, LayoutAdapter.shared.scale(value: 6))
+            
+            // Dday, 초대자, 장소
+            HStack(alignment: .top, spacing: 0) {
+                Text("D - \(schedule.dDay ?? 0)")
+                    .bodyP4Style(color: .error)
+                    .padding(.vertical, LayoutAdapter.shared.scale(value: 4))
+                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 14))
+                    .background(Color.blackF0)
+                    .clipShape(
+                        RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 50))
+                    )
+                    .frame(width: LayoutAdapter.shared.scale(value: 90))
+                    .padding(.trailing, LayoutAdapter.shared.scale(value: 6))
+                
+                Text(schedule.title)
+                    .withBodyP4Style(color: .black66)
+                
+                Text("|")
+                    .withBodyP4Style(color: .blackD4)
+                    .padding(.horizontal, 4)
+                
+                Text(schedule.location?.location ?? "")
+                    .withBodyP4Style(color: .black66)
+            }
             .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
+            
+            HStack(spacing: 0) {
+                Spacer()
+                ButtonMergeView(
+                    data: schedule,
+                    acceptButtonTitle: "수락하기",
+                    refuseButtonTitle: "거절하기",
+                    buttonWidth: .infinity,
+                    buttonHeight: 44,
+                    onAccept: { schedule in
+                        viewModel.ecceptSchedule(scheduleSeq: schedule.scheduleSeq)
+                    },
+                    onRefuse: { schedule in
+                        viewModel.refuseInvitedSchedule(scheduleSeq: schedule.scheduleSeq)
+                    }
+                )
+                .button16Style()
+                Spacer()
+            }
+            .padding(.horizontal, LayoutAdapter.shared.scale(value: -4))
         }
+        .padding(.horizontal, LayoutAdapter.shared.scale(value: 12))
+        .padding(.vertical, LayoutAdapter.shared.scale(value: 16))
         .background(
-            RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16))
+            RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 12))
                 .fill(Color(.white))
-                .strokeBorder(Color(.brandColor), lineWidth: 1)
+                .strokeBorder(Color.blackD4, lineWidth: 1.5)
         )
         .padding(.top, LayoutAdapter.shared.scale(value: 6))
     }
@@ -367,28 +386,27 @@ struct NotificationView: View {
 //    }
     
     func friendRequestCard(friendRequest: FriendRequest) -> some View {
-        VStack(spacing: LayoutAdapter.shared.scale(value: 8)) {
+        VStack(spacing: 0) {
             HStack {
                 Text("친구요청이 도착했습니다.")
-                    .foregroundStyle(Color(.black22))
+                    .bodyP4Style(color: .blackAC)
                 
                 Spacer()
                 
                 Text(friendRequest.createTime.timeAgoDisplay())
-                    .foregroundStyle(Color(.color153))
-                    .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
+                    .bodyP4Style(color: .black66)
             }
-            .padding(.top, LayoutAdapter.shared.scale(value: 16))
-            .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
+            .padding(.bottom, LayoutAdapter.shared.scale(value: 10))
         
             profileView(friend: friendRequest.friend)
-                .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
+                .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
 
-//            buttonMergeView(friendRequest: friendRequest)
             ButtonMergeView(
                 data: friendRequest,
                 acceptButtonTitle: "친구 수락하기",
                 refuseButtonTitle: "친구 거절하기",
+                buttonWidth: .infinity,
+                buttonHeight: 44,
                 onAccept: { request in
                     viewModel.acceptFriendRequest(friendRequest: request)
                     print("친구 수락 버튼 클릭됨!")
@@ -398,35 +416,34 @@ struct NotificationView: View {
                     print("친구 거절 버튼 클릭됨!")
                 }
             )
-                .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
-                .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
+            .button16Style()
         }
+        .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
+        .padding(.vertical, LayoutAdapter.shared.scale(value: 16))
         .background(
-            RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16))
+            RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 12))
                 .fill(Color(.white))
-                .strokeBorder(Color(.brandColor), lineWidth: 1)
+                .strokeBorder(Color.blackD4, lineWidth: 1.5)
         )
         .padding(.top, LayoutAdapter.shared.scale(value: 6))
     }
     
     func profileView(friend: Friend) -> some View {
-        HStack {
+        HStack(spacing: 0) {
             KFImage(URL(string: friend.profileImage))
                 .resizable()
                 .scaledToFill()
-                .frame(width: LayoutAdapter.shared.scale(value: 64), height: LayoutAdapter.shared.scale(value: 64))
-                .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 22)))
-                .padding(.leading, LayoutAdapter.shared.scale(value: -4))
+                .frame(width: LayoutAdapter.shared.scale(value: 56), height: LayoutAdapter.shared.scale(value: 56))
+                .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 14)))
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 6) {
                 Text(friend.name)
-                    .foregroundStyle(Color(.black22))
+                    .bodyP2Style(color: .black22)
                 
                 Text(friend.memberCode)
-                    .foregroundStyle(Color(.color153))
-                    .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))))
+                    .bodyP4Style(color: .black66)
             }
-            .padding(.leading, LayoutAdapter.shared.scale(value: 4))
+            .padding(.leading, LayoutAdapter.shared.scale(value: 12))
             
             Spacer()
         }

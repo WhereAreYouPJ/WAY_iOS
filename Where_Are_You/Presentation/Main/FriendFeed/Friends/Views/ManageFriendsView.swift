@@ -111,9 +111,9 @@ struct ManageFriendsView: View {
                 }
             )
             .onAppear {
-//                viewModel.getSentRequests()
-//                viewModel.getReceivedRequests()
-                setDummyData()
+                viewModel.getSentRequests()
+                viewModel.getReceivedRequests()
+//                setDummyData()
             }
         }
     }
@@ -179,9 +179,10 @@ struct ManageFriendsView: View {
                             }
                         )
                     }
-                }
-            }
-        }
+                } // HStack
+                .padding(.horizontal, 2)
+            } // ForEach
+        } // VStack
     }
 }
 
