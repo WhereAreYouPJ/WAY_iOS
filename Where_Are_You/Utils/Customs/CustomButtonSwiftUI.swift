@@ -11,30 +11,35 @@ struct CustomButtonSwiftUI: View {
     // MARK: - Properties
     private let title: String
     private let backgroundColor: Color
+    private let strokeColor: Color
     private let titleColor: Color
     private let titleSize: Int
     private let action: () -> Void
     
     @State private var currentTitle: String
     @State private var currentBackgroundColor: Color
+    @State private var currentStrokeColor: Color
     @State private var currentTitleColor: Color
     @State private var currentTitleSize: Int
     
     init(
         title: String,
         backgroundColor: Color,
+        strokeColor: Color = .clear,
         titleColor: Color,
         titleSize: Int = 14,
         action: @escaping () -> Void
     ) {
         self.title = title
         self.backgroundColor = backgroundColor
+        self.strokeColor = strokeColor
         self.titleColor = titleColor
         self.titleSize = titleSize
         self.action = action
         
         _currentTitle = State(initialValue: title)
         _currentBackgroundColor = State(initialValue: backgroundColor)
+        _currentStrokeColor = State(initialValue: strokeColor)
         _currentTitleColor = State(initialValue: titleColor)
         _currentTitleSize = State(initialValue: titleSize)
     }
@@ -50,7 +55,8 @@ struct CustomButtonSwiftUI: View {
                 .contentShape(Rectangle())
                 .overlay(
                     RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 6))
-                        .stroke(backgroundColor == .white ? Color(.color153) : .clear)
+//                        .stroke(backgroundColor == .white ? Color(.color153) : .clear)
+                        .stroke(strokeColor, style: StrokeStyle(lineWidth: 1.5))
                 )
         }
     }
@@ -154,7 +160,7 @@ struct RoundedCorner: Shape {
     }
 }
 
-#Preview {
+#Preview("커스텀 버튼") {
     CustomButtonSwiftUI(
         title: "확인",
         backgroundColor: Color(.brandColor),
@@ -165,13 +171,13 @@ struct RoundedCorner: Shape {
     }
 }
 
-#Preview {
+#Preview("하단 버튼") {
     BottomButtonSwiftUIView(title: "버튼 제목", background: Color(.brandColor)) {
         print("버튼 탭됨")
     }
 }
 
-#Preview {
+#Preview("다중 옵션 메뉴") {
     OptionButtonView {
         OptionButton(
             title: "첫 번째 옵션",
@@ -197,7 +203,7 @@ struct RoundedCorner: Shape {
     .padding()
 }
 
-#Preview {
+#Preview("단일 옵션 메뉴") {
     OptionButton(
         title: "옵션 한 개",
         position: .single

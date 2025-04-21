@@ -28,38 +28,6 @@ struct ManageFriendsView: View {
         )
     }()
     
-    var body: some View {
-        NavigationStack {
-            ScrollView(.vertical) {
-                VStack {
-                    requestView(title: "신청한 친구", count: viewModel.sentRequests.count, isSentRequest: true)
-                        .padding(.top, LayoutAdapter.shared.scale(value: 16))
-                    
-                    Divider()
-                        .padding(.vertical, LayoutAdapter.shared.scale(value: 10))
-                    
-                    requestView(title: "요청이 들어온 친구", count: viewModel.receivedRequests.count, isSentRequest: false)
-                    
-                    Spacer()
-                }
-            }
-            .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
-            .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
-            .customNavigationBar(
-                title: "친구 관리",
-                showBackButton: true,
-                backButtonAction: {
-                    dismiss()
-                }
-            )
-            .onAppear {
-//                viewModel.getSentRequests()
-//                viewModel.getReceivedRequests()
-                setDummyData()
-            }
-        }
-    }
-    
     // 더미 데이터 설정 함수
     private func setDummyData() {
         // 일정 초대 더미 데이터
@@ -119,110 +87,101 @@ struct ManageFriendsView: View {
         ]
     }
     
-    func requestView(title: String, count: Int, isSentRequest: Bool) -> some View {
+    var body: some View {
+        NavigationStack {
+            ScrollView(.vertical) {
+                VStack {
+                    manageTitleView(title: "친구신청", count: viewModel.sentRequests.count, isSentRequest: true)
+                        .padding(.top, LayoutAdapter.shared.scale(value: 16))
+                    
+                    Divider()
+                        .padding(.vertical, LayoutAdapter.shared.scale(value: 10))
+                    
+                    manageTitleView(title: "친구요청", count: viewModel.receivedRequests.count, isSentRequest: false)
+                    
+                    Spacer()
+                }
+            }
+            .padding(.horizontal, LayoutAdapter.shared.scale(value: 20))
+            .customNavigationBar(
+                title: "친구관리",
+                showBackButton: true,
+                backButtonAction: {
+                    dismiss()
+                }
+            )
+            .onAppear {
+//                viewModel.getSentRequests()
+//                viewModel.getReceivedRequests()
+                setDummyData()
+            }
+        }
+    }
+    
+    func manageTitleView(title: String, count: Int, isSentRequest: Bool) -> some View {
         VStack {
             HStack {
                 Text(title)
+                    .bodyP3Style(color: .black22)
                 
                 Text("\(count)")
-                    .foregroundStyle(Color(.color191))
+                    .bodyP3Style(color: .blackAC)
                 
                 Spacer()
             }
+            .padding(.bottom, LayoutAdapter.shared.scale(value: 8))
             
             requestCellView(isSentRequest: isSentRequest)
         }
     }
     
     func requestCellView(isSentRequest: Bool) -> some View {
-        VStack {
+        VStack(spacing: LayoutAdapter.shared.scale(value: 14)) {
             ForEach(isSentRequest ? viewModel.sentRequests : viewModel.receivedRequests) { request in
                 HStack {
                     KFImage(URL(string: request.friend.profileImage))
                         .resizable()
                         .scaledToFill()
                         .frame(width: UIScreen.main.bounds.width * 0.14, height: UIScreen.main.bounds.width * 0.14)
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .clipShape(RoundedRectangle(cornerRadius: 14))
                     
                     Text(request.friend.name)
-                        .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: 17)))
-                        .foregroundColor(Color(.black22))
+                        .bodyP3Style(color: .black22)
                         .padding(LayoutAdapter.shared.scale(value: 8))
                     
                     Spacer()
                     
                     if isSentRequest {
-                        CustomButtonSwiftUI(title: "취소", backgroundColor: Color.white, titleColor: Color(.black22)) {
+                        CustomButtonSwiftUI(
+                            title: "삭제",
+                            backgroundColor: Color.white,
+                            strokeColor: .brandDark,
+                            titleColor: .brandDark
+                        ) {
                             viewModel.cancelRequest(requestSeq: request.friendRequestSeq)
                         }
-                        .frame(width: LayoutAdapter.shared.scale(value: 90), height: LayoutAdapter.shared.scale(value: 36))
+                        .frame(width: LayoutAdapter.shared.scale(value: 85), height: LayoutAdapter.shared.scale(value: 38))
+                        .button14Style()
                     } else {
-//                        buttonMergeView(for: request)
                         ButtonMergeView(
                             data: request,
-                            acceptButtonTitle: "친구 수락하기",
-                            refuseButtonTitle: "친구 거절하기",
+                            acceptButtonTitle: "수락",
+                            refuseButtonTitle: "삭제",
+                            buttonWidth: 85,
+                            buttonHeight: 38,
                             onAccept: { request in
                                 viewModel.acceptRequest(request: request)
                                 print("친구 수락 버튼 클릭됨!")
                             },
                             onRefuse: { request in
                                 viewModel.refuseRequest(requestSeq: request.friendRequestSeq)
-                                print("친구 거절 버튼 클릭됨!")
+                                print("친구 요청 삭제 버튼 클릭됨!")
                             }
                         )
                     }
                 }
             }
         }
-    }
-
-    func buttonMergeView(for request: FriendRequest) -> some View {
-        let state = viewModel.requestStates[request.friendRequestSeq]
-        
-        return ZStack {
-            if state == nil {
-                HStack {
-                    CustomButtonSwiftUI(title: "수락",
-                                      backgroundColor: Color(.brandColor),
-                                      titleColor: .white) {
-                        withAnimation(.spring(duration: 0.5)) {
-                            viewModel.acceptRequest(request: request)
-                        }
-                    }
-                    .frame(width: LayoutAdapter.shared.scale(value: 90),
-                          height: LayoutAdapter.shared.scale(value: 36))
-                    
-                    CustomButtonSwiftUI(title: "거절",
-                                      backgroundColor: .white,
-                                      titleColor: Color(.black22)) {
-                        withAnimation(.spring(duration: 0.5)) {
-                            viewModel.refuseRequest(requestSeq: request.friendRequestSeq)
-                        }
-                    }
-                    .frame(width: LayoutAdapter.shared.scale(value: 90),
-                          height: LayoutAdapter.shared.scale(value: 36))
-                }
-            } else {
-                Button(action: {}) {
-                    HStack {
-                        Image(systemName: state == .accepted ? "checkmark" : "xmark")
-                            .foregroundColor(state == .accepted ? .white : Color(.black66))
-                    }
-                    .frame(maxWidth: .infinity)
-                    .frame(height: LayoutAdapter.shared.scale(value: 36))
-                    .background(state == .accepted ? Color(.brandColor) : Color.white)
-                    .cornerRadius(LayoutAdapter.shared.scale(value: 12))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 12))
-                            .stroke(Color(.black66), lineWidth: state == .accepted ? 0 : 1)
-                    )
-                }
-                .frame(width: LayoutAdapter.shared.scale(value: 180))  // 두 버튼의 너비 합
-                .transition(.scale)
-            }
-        }
-        .animation(.spring(duration: 0.5), value: state)
     }
 }
 

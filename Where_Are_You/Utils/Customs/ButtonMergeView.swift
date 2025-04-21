@@ -23,7 +23,7 @@ struct ButtonMergeView<T>: View {
     let refuseButtonTextColor: Color
     
     // 크기 관련 매개변수
-    let buttonWidth: CGFloat?     // 각 버튼의 너비 (nil이면 자동 계산)
+    let buttonWidth: CGFloat      // 각 버튼의 너비 (nil이면 자동 계산)
     let buttonHeight: CGFloat     // 버튼의 높이
     
     // 콜백 함수
@@ -35,12 +35,12 @@ struct ButtonMergeView<T>: View {
         data: T,
         acceptButtonTitle: String = "수락하기",
         refuseButtonTitle: String = "거절하기",
-        acceptButtonColor: Color = Color(.brandColor),
+        acceptButtonColor: Color = Color.brandDark,
         refuseButtonColor: Color = Color.white,
         acceptButtonTextColor: Color = Color.white,
-        refuseButtonTextColor: Color = Color(.black22),
-        buttonWidth: CGFloat? = nil,
-        buttonHeight: CGFloat = 46,
+        refuseButtonTextColor: Color = Color.brandDark,
+        buttonWidth: CGFloat = 85,
+        buttonHeight: CGFloat = 38,
         onAccept: @escaping (T) -> Void,
         onRefuse: @escaping (T) -> Void
     ) {
@@ -72,12 +72,14 @@ struct ButtonMergeView<T>: View {
                             onAccept(data)
                         }
                     }
-                    .frame(width: LayoutAdapter.shared.scale(value: LayoutAdapter.shared.scale(value: 140)),
-                          height: LayoutAdapter.shared.scale(value: LayoutAdapter.shared.scale(value: 44)))
+                    .frame(width: LayoutAdapter.shared.scale(value: buttonWidth),
+                          height: LayoutAdapter.shared.scale(value: buttonHeight))
+                    .button14Style(color: acceptButtonTextColor)
                     
                     CustomButtonSwiftUI(
                         title: refuseButtonTitle,
                         backgroundColor: refuseButtonColor,
+                        strokeColor: refuseButtonTextColor,
                         titleColor: refuseButtonTextColor
                     ) {
                         withAnimation(.spring(duration: 0.5)) {
@@ -86,8 +88,9 @@ struct ButtonMergeView<T>: View {
                             onRefuse(data)
                         }
                     }
-                    .frame(width: LayoutAdapter.shared.scale(value: LayoutAdapter.shared.scale(value: 140)),
-                          height: LayoutAdapter.shared.scale(value: LayoutAdapter.shared.scale(value: 44)))
+                    .frame(width: LayoutAdapter.shared.scale(value: buttonWidth),
+                          height: LayoutAdapter.shared.scale(value: buttonHeight))
+                    .button14Style(color: refuseButtonTextColor)
                 }
             } else {
                 Button(action: {}) {
@@ -95,20 +98,18 @@ struct ButtonMergeView<T>: View {
                         Image(systemName: isAccepted ? "checkmark" : "xmark")
                             .foregroundColor(isAccepted ? acceptButtonTextColor : refuseButtonTextColor)
                     }
-                    .frame(maxWidth: .infinity)
-                    .frame(height: LayoutAdapter.shared.scale(value: 44))
+                    .frame(maxWidth: LayoutAdapter.shared.scale(value: buttonWidth * 2 + 8))
+                    .frame(height: LayoutAdapter.shared.scale(value: buttonHeight))
                     .background(isAccepted ? acceptButtonColor : refuseButtonColor)
-                    .cornerRadius(LayoutAdapter.shared.scale(value: 12))
+                    .cornerRadius(LayoutAdapter.shared.scale(value: 6))
                     .overlay(
-                        RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 12))
-                            .stroke(Color(.black66), lineWidth: isAccepted ? 0 : 1)
+                        RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 6))
+                            .stroke(Color(refuseButtonTextColor), lineWidth: 1.5)
                     )
                 }
                 .transition(.scale)
             }
         }
-        // 프리뷰 테스트를 위한 추가 패딩
-        .padding(4)
     }
 }
 
@@ -123,15 +124,15 @@ struct PreviewSchedule {
     let title: String
 }
 
-// 프리뷰 - 친구 요청 버전
+// 프리뷰 - 친구 관리 버전
 struct ButtonMergeViewFriendPreview: View {
     var body: some View {
         VStack(spacing: 20) {
             // 친구 요청 스타일의 ButtonMergeView
             ButtonMergeView(
                 data: PreviewFriendRequest(id: 1, name: "김지민"),
-                acceptButtonTitle: "친구 수락하기",
-                refuseButtonTitle: "친구 거절하기",
+                acceptButtonTitle: "수락",
+                refuseButtonTitle: "삭제",
                 onAccept: { request in
                     print("친구 요청 수락: \(request.id) - \(request.name)")
                 },
@@ -147,8 +148,8 @@ struct ButtonMergeViewFriendPreview: View {
             // 이미 클릭된 상태를 보여주기 위한 수동 설정 버전
             let alreadyClickedView = ButtonMergeView(
                 data: PreviewFriendRequest(id: 2, name: "이태오"),
-                acceptButtonTitle: "친구 수락하기",
-                refuseButtonTitle: "친구 거절하기",
+                acceptButtonTitle: "수락",
+                refuseButtonTitle: "삭제",
                 onAccept: { _ in },
                 onRefuse: { _ in }
             )
@@ -173,7 +174,7 @@ struct ButtonMergeViewFriendPreview: View {
     }
 }
 
-// 프리뷰 - 일정 초대 버전
+// 프리뷰 - 알림페이지 버전
 struct ButtonMergeViewSchedulePreview: View {
     var body: some View {
         VStack(spacing: 20) {
@@ -182,6 +183,8 @@ struct ButtonMergeViewSchedulePreview: View {
                 data: PreviewSchedule(id: 101, title: "팀 미팅"),
                 acceptButtonTitle: "수락하기",
                 refuseButtonTitle: "거절하기",
+                buttonWidth: 100,
+                buttonHeight: 46,
                 onAccept: { schedule in
                     print("일정 수락: \(schedule.id) - \(schedule.title)")
                 },
