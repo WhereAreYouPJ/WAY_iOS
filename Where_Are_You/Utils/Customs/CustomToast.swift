@@ -25,7 +25,7 @@ struct CustomToast: View {
                 Text(message)
                     .bodyP4Style(color: .white)
             }
-            .padding(.bottom, LayoutAdapter.shared.scale(value: 20))
+            .padding(.bottom, LayoutAdapter.shared.scale(value: 120))
         }
     }
 }

@@ -627,6 +627,11 @@ extension View {
             .foregroundColor(color)
     }
     
+    // 키보드 닫기
+    func dismissKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+    
     // 헤더 스타일 적용 메서드
     func titleH1Style(color: Color = .primary) -> some View {
         applyFontStyle(Font.titleH1(), color: color)

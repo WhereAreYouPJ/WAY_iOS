@@ -87,6 +87,7 @@ struct AddFriendView: View {
                 )
                 
                 CustomButtonSwiftUI(title: "검색", backgroundColor: Color(.brandColor), titleColor: .white) {
+                    dismissKeyboard()
                     viewModel.searchMember()
                 }
                 .frame(width: LayoutAdapter.shared.scale(value: 91), height: LayoutAdapter.shared.scale(value: 44))
