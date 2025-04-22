@@ -35,7 +35,6 @@ class FeedsViewController: UIViewController {
         setupActions()
         
         viewModel.fetchFeeds()
-        feedsView.updateContentHeight()
         
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -67,7 +66,6 @@ class FeedsViewController: UIViewController {
                 self?.noFeedsView.isHidden = !isEmpty
                 if !isEmpty {
                     self?.feedsView.feedsTableView.reloadData()
-                    self?.feedsView.updateContentHeight()
                 }
             }
         }
@@ -214,7 +212,6 @@ class FeedsViewController: UIViewController {
 
 extension FeedsViewController: FeedsTableViewCellDelegate {
     func didTapReadMoreButton() {
-        feedsView.updateContentHeight()
     }
     
     func didTapFeedFixButton(feed: Feed, buttonFrame: CGRect) {
@@ -255,6 +252,7 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         let feed = viewModel.displayFeedContent[indexPath.row]
+        cell.selectionStyle = .none
         cell.configure(with: feed)
         cell.delegate = self
         return cell
