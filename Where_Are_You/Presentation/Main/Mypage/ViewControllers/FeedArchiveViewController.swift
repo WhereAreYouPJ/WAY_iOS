@@ -31,7 +31,6 @@ class FeedArchiveViewController: UIViewController {
         setupNavigationBar()
         viewModel.fetchArchiveFeed()
         
-        feedArchiveView.updateContentHeight()
     }
     
     // MARK: - Helpers
@@ -57,7 +56,6 @@ class FeedArchiveViewController: UIViewController {
                 self?.noDataView.isHidden = !isEmpty
                 if !isEmpty {
                     self?.feedArchiveView.feedsTableView.reloadData()
-                    self?.feedArchiveView.updateContentHeight()
                 }
             }
         }
@@ -152,7 +150,6 @@ class FeedArchiveViewController: UIViewController {
 
 extension FeedArchiveViewController: FeedsTableViewCellDelegate {
     func didTapReadMoreButton() {
-        feedArchiveView.updateContentHeight()
     }
     
     func didSelectFeed(feed: Feed) {
