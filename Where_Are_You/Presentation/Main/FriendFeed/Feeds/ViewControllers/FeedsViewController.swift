@@ -16,6 +16,13 @@ class FeedsViewController: UIViewController {
     private var optionsView = MultiCustomOptionsContainerView()
     private var selectedFeed: Feed?
     
+    private let loadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.color = .lightGray
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+    
     var viewModel: FeedViewModel!
     
     // MARK: - Lifecycle
@@ -38,11 +45,6 @@ class FeedsViewController: UIViewController {
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        viewModel?.fetchFeeds()
-//    }
     
     // MARK: - Helpers
     
@@ -109,6 +111,23 @@ class FeedsViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
         view.addGestureRecognizer(tapGesture)
         plusOptionButton.button.addTarget(self, action: #selector(plusOptionButtonTapped), for: .touchUpInside)
+    }
+    
+    func showLoadingFooter() {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: feedsView.feedsTableView.bounds.width, height: 50))
+        footerView.addSubview(loadingIndicator)
+        
+        loadingIndicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
+        feedsView.feedsTableView.tableFooterView = footerView
+        loadingIndicator.startAnimating()
+    }
+    
+    func hideLoadingFooter() {
+        loadingIndicator.stopAnimating()
+        feedsView.feedsTableView.tableFooterView = nil
     }
     
     private func showOptions(for feed: Feed, at frame: CGRect, isAuthor: Bool) {
@@ -243,5 +262,21 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        let currentOffset = scrollView.contentOffset.y // frame영역의 origin에 비교했을때의 content view의 현재 origin 위치
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height // 화면에는 frame만큼 가득 찰 수 있기때문에 frame의 height를 빼준 것
+
+        // 스크롤 할 수 있는 영역보다 더 스크롤된 경우 (하단에서 스크롤이 더 된 경우)
+        if maximumOffset < currentOffset {
+            showLoadingFooter()
+            viewModel.fetchFeeds()
+            
+            // 예시로 로딩 사라지게
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.hideLoadingFooter()
+            }
+        }
     }
 }

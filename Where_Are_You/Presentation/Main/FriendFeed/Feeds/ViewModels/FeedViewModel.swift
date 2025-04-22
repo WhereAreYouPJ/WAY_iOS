@@ -55,7 +55,8 @@ class FeedViewModel {
             switch result {
             case .success(let data):
                 self.rawFeedContent = data
-                self.displayFeedContent = data.compactMap { $0.toFeeds() }
+                self.page += 1
+                self.displayFeedContent.append(contentsOf: data.compactMap { $0.toFeeds() })
             case .failure(let error):
                 print(error.localizedDescription)
             }
