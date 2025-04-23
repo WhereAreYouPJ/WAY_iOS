@@ -67,18 +67,25 @@ class TermsAgreementViewController: UIViewController {
     }
     
     @objc func termButtonTapped(_ sender: UIButton) {
+        let (title, url): (String, String)
+
         switch sender.tag {
         case 0:
-            print("서비스 이용약관 보기")
-            // 예: 서비스 이용약관 페이지로 이동
+            title = "서비스 이용약관"
+            url = "https://wlrmadjel.com/term-of-service"
         case 1:
-            print("개인정보 처리방침 보기")
-            // 예: 개인정보 처리방침 페이지로 이동
-        case 2:
-            print("위치기반 서비스 이용약관 보기")
-            // 예: 위치기반 서비스 이용약관 페이지로 이동
+            title = "개인정보 처리방침"
+            url = "https://wlrmadjel.com/private-policy"
+//        case 2:
+//            title = "위치기반 서비스 이용약관"
+//            url = "https://example.com/location-terms"
         default:
-            break
+            return
         }
+        
+        let controller = TermsWebViewController(title: title, urlString: url)
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
     }
 }
