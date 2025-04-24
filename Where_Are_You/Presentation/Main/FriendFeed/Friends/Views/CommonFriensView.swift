@@ -44,6 +44,7 @@ struct SearchBarView: View {
 struct FriendListView: View {
     @ObservedObject var viewModel: FriendsViewModel
     let showToggle: Bool
+    var searchText: String = ""
     var isSelected: ((Friend) -> Bool)? = nil  // 선택 상태를 확인하는 클로저
     var onToggle: ((Friend) -> Void)? = nil    // 토글 동작을 처리하는 클로저
     var onFriendSelect: ((Friend) -> Void)? = nil
@@ -57,6 +58,7 @@ struct FriendListView: View {
                         FriendCell(
                             friend: friend,
                             showToggle: true,
+                            searchText: searchText,
                             isOn: Binding(
                                 get: { isSelected?(friend) ?? false },
                                 set: { _ in onToggle?(friend) }
@@ -76,6 +78,7 @@ struct FriendListView: View {
                         FriendCell(
                             friend: friend,
                             showToggle: true,
+                            searchText: searchText,
                             isOn: Binding(
                                 get: { isSelected?(friend) ?? false },
                                 set: { _ in onToggle?(friend) }
@@ -117,9 +120,11 @@ struct FriendsSectionView: View {
 struct FriendCell: View {
     let friend: Friend
     var showToggle: Bool = false
+    var searchText: String = ""
     var isOn: Binding<Bool>? = nil
     
     var body: some View {
+        let _ = print("🔎 친구 검색 - showToggle: \(showToggle)")
         HStack {
             KFImage(URL(string: friend.profileImage))
                 .resizable()
@@ -128,9 +133,18 @@ struct FriendCell: View {
                 .background(Color.brandLight)
                 .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16)))
             
-            Text(friend.name)
-                .foregroundColor(Color(.black22))
+            if showToggle {
+                HighlightedText(
+                    text: friend.name,
+                    highlightText: searchText,
+                    highlightColor: .brandDark
+                )
                 .padding(LayoutAdapter.shared.scale(value: 8))
+            } else {
+                Text(friend.name)
+                    .foregroundColor(Color(.black22))
+                    .padding(LayoutAdapter.shared.scale(value: 8))
+            }
             
             Spacer()
             

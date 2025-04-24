@@ -13,18 +13,48 @@ final class CreateScheduleViewModel: ObservableObject {
     @Published var isAllDay: Bool = true {
         didSet {
             if isAllDay { // 하루종일이 켜지면 종료일을 시작일과 동일하게 설정
-                endTime = Calendar.current.startOfDay(for: startTime)
+                startTime = Calendar.current.startOfDay(for: startTime)
+                endTime = Calendar.current.startOfDay(for: endTime)
+            } else { // 하루종일이 꺼지면 시작일은 오늘날짜 + 다음 정각
+                let calendar = Calendar.current
+                let now = Date()
+                
+                // 시각 초기값: 현재 시간 + 1 hour, 00 minute
+                var components = calendar.dateComponents([.year, .month, .day, .hour], from: now)
+                components.hour = (components.hour ?? 0) + 1
+                components.minute = 0
+                components.second = 0
+                
+                let startOfNextHour = calendar.date(from: components) ?? now
+                let endOfNextHour = calendar.date(byAdding: .hour, value: 1, to: startOfNextHour) ?? now
+         
+                startTime = startOfNextHour
+                endTime = endOfNextHour
             }
         }
     }
+    
+    private var isUpdatingStartTime = false
+    private var isUpdatingEndTime = false
+    
     @Published var startTime: Date {
         didSet {
-            if isAllDay { // 하루종일일 때 시작일이 변경되면 종료일도 함께 변경
+            if isAllDay && !isUpdatingStartTime {
+                isUpdatingEndTime = true
                 endTime = Calendar.current.startOfDay(for: startTime)
+                isUpdatingEndTime = false
             }
         }
     }
-    @Published var endTime: Date
+    @Published var endTime: Date {
+        didSet {
+            if isAllDay && !isUpdatingEndTime {
+                isUpdatingStartTime = true
+                startTime = Calendar.current.startOfDay(for: endTime)
+                isUpdatingStartTime = false
+            }
+        }
+    }
     @Published var selectedFriends: [Friend] = []
     @Published var place: Location?
     @Published var favPlaces: [Location] = []
@@ -115,10 +145,13 @@ final class CreateScheduleViewModel: ObservableObject {
     }
     
     func checkPostAvailable() -> Bool {
-        if !self.title.isEmpty && !(self.place?.location.isEmpty ?? true) { // 일정 제목과 장소 필수 입력
-            return true
+        if self.title.isEmpty || (self.place?.location.isEmpty ?? true) { // 일정 제목과 장소 필수 입력
+            return false
         }
-        return false
+        if self.endTime < self.startTime { // 일정 종료일이 시작일보다 빠를 수 없음
+            return false
+        }
+        return true
     }
     
     func geocodeSelectedLocation(_ location: Location, completion: @escaping (Location) -> Void) { // 주소를 받아 좌표 리턴

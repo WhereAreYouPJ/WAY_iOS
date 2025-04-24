@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+// TODO: 2. 메모 글자수 초과시 토스트 메시지
+// TODO: 3. 위치 뒤로가기 스택 수정
+// TODO: 4. 필수 항목 누락이 있을 때 추가 버튼 터치 시 토스트 메시지
 struct CreateScheduleView: View {
     @StateObject var viewModel: CreateScheduleViewModel
     @StateObject var searchFriendsViewModel: SearchFriendsViewModel = {
@@ -189,7 +192,7 @@ struct CreateScheduleView: View {
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("추가") {
+                    Button("적용") {
                         viewModel.selectedFriends = searchFriendsViewModel.confirmSelection()
                         showSearchFriends = false
                     }
@@ -230,10 +233,25 @@ struct DateAndTimeView: View {
         
         Divider()
         
-        DatePicker("종료일", selection: $endTime, in: startTime...Date.yearRange2000To2100.upperBound, displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
+        DatePicker("종료일", selection: $endTime, in: Date.yearRange2000To2100, displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
             .environment(\.locale, Locale(identifier: "ko_KR"))
             .environment(\.calendar, Calendar(identifier: .gregorian))
             .accentColor(Color(.brandDark))
+            .onChange(of: endTime) { oldValue, newValue in
+                if newValue < startTime { // 무효한 값. 종료일이 시작일보다 빠름
+//                    endTime = oldValue
+                    
+                }
+            }
+        
+        if startTime > endTime {
+            HStack {
+                Image("icon-information")
+                Text("종료일은 시작일보다 빠를 수 없습니다.")
+                    .bodyP5Style(color: .error)
+            }
+            .transition(.opacity.combined(with: .move(edge: .top)))
+        }
         
         Divider()
             .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
@@ -428,7 +446,15 @@ struct MemoView: View {
     let maxLength = 500
     
     var body: some View {
-        Text("메모")
+        HStack {
+            Text("메모")
+            
+            Spacer()
+            
+            Text("\(memo.count)/\(maxLength)")
+                .foregroundColor(memo.count == maxLength ? Color(UIColor.error) : Color(UIColor.black66))
+                .bodyP4Style()
+        }
         
         ScrollView {
             ZStack(alignment: .topLeading) {
@@ -438,9 +464,6 @@ struct MemoView: View {
                             .foregroundStyle(memo.isEmpty ? Color(UIColor.blackAC) : .clear)
                         
                         Spacer()
-                        
-                        Text("\(memo.count)/\(maxLength)")
-                            .foregroundColor(memo.count == maxLength ? Color(UIColor.error) : Color(UIColor.black66))
                     }
                     .padding(LayoutAdapter.shared.scale(value: 10))
                 }

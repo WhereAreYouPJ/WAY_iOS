@@ -8,6 +8,7 @@
 import SwiftUI
 import Kingfisher
 
+// TODO: 검색 쿼리에 해당하는 글씨 색 변경
 struct SearchFriendsView: View {
     @ObservedObject var viewModel: SearchFriendsViewModel
     
@@ -26,14 +27,13 @@ struct SearchFriendsView: View {
                     }
                 }
             }
-            .padding(.horizontal)
             
             SearchBarView(searchText: $viewModel.searchText, onClear: viewModel.clearSearch)
-                .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
             
             FriendListView(
                 viewModel: viewModel.friendsViewModel,
                 showToggle: true,
+                searchText: viewModel.searchText,
                 isSelected: { friend in
                     viewModel.isSelected(friend: friend)
                 },
@@ -41,8 +41,34 @@ struct SearchFriendsView: View {
                     viewModel.toggleSelection(for: friend)
                 }
             )
-            .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
+            
+//            FriendsSectionView(title: "즐겨찾기", count: viewModel.favorites.count)
+//            ForEach(viewModel.filteredFavorites) { friend in
+//                FriendCellWithToggle(
+//                    friend: friend,
+//                    searchText: viewModel.searchText,
+//                    isOn: Binding(
+//                        get: { viewModel.isSelected(friend: friend) },
+//                        set: { _ in viewModel.toggleSelection(for: friend) }
+//                    )
+//                )
+//            }
+//            
+//            FriendsSectionView(title: "친구", count: viewModel.favorites.count)
+//            ForEach(viewModel.filteredFriends) { friend in
+//                FriendCellWithToggle(
+//                    friend: friend,
+//                    searchText: viewModel.searchText,
+//                    isOn: Binding(
+//                        get: { viewModel.isSelected(friend: friend) },
+//                        set: { _ in viewModel.toggleSelection(for: friend) }
+//                    )
+//                )
+//            }
+            
+            Spacer()
         }
+        .padding(.horizontal, LayoutAdapter.shared.scale(value: 20))
         .onAppear {
             viewModel.friendsViewModel.getFriendsList()
             
@@ -104,6 +130,7 @@ struct SelectedFriendsView: View {
 
 struct FriendCellWithToggle: View {
     let friend: Friend
+    let searchText: String
     @Binding var isOn: Bool
     
     var body: some View {
@@ -114,10 +141,15 @@ struct FriendCellWithToggle: View {
                 .frame(width: UIScreen.main.bounds.width * 0.14, height: UIScreen.main.bounds.width * 0.14)
                 .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16)))
             
-            Text(friend.name)
-                .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 17))))
-                .foregroundColor(Color(.black22))
-                .padding(8)
+//            Text(friend.name)
+//                .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 17))))
+//                .foregroundColor(Color(.black22))
+//                .padding(8)
+            HighlightedText(
+                text: friend.name,
+                highlightText: searchText,
+                highlightColor: .brandDark
+            )
             
             Spacer()
             

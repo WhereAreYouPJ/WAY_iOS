@@ -126,8 +126,8 @@ struct NotificationView: View {
             }
         }
         .onAppear {
-//            viewModel.fetchNotifications()
-            setDummyData()
+            viewModel.fetchNotifications()
+//            setDummyData()
         }
     }
     
