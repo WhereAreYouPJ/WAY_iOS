@@ -1839,8 +1839,8 @@
 		D5B79A142C5B83A4004EDDF2 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */,
 				D593CCC72C82318F00A862FF /* ScheduleViewModel.swift */,
+				D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */,
 				D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */,
 				D5DB6C6E2CDA2A0900D89360 /* ScheduleDetailViewModel.swift */,
 			);
