@@ -237,14 +237,8 @@ struct DateAndTimeView: View {
             .environment(\.locale, Locale(identifier: "ko_KR"))
             .environment(\.calendar, Calendar(identifier: .gregorian))
             .accentColor(Color(.brandDark))
-            .onChange(of: endTime) { oldValue, newValue in
-                if newValue < startTime { // 무효한 값. 종료일이 시작일보다 빠름
-//                    endTime = oldValue
-                    
-                }
-            }
         
-        if startTime > endTime {
+        if (isAllDay ? Calendar.current.startOfDay(for: startTime) : startTime) > (isAllDay ? Calendar.current.startOfDay(for: endTime) : endTime) {
             HStack {
                 Image("icon-information")
                 Text("종료일은 시작일보다 빠를 수 없습니다.")
