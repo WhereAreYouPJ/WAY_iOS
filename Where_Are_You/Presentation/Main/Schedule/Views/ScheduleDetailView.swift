@@ -114,12 +114,12 @@ struct ScheduleDetailView: View {
                         .disabled(!viewModel.isEditable)
                     
                     // TODO: 친구 위치 실시간 확인 테스트용. 홈화면에서 기능 추가시 삭제 필요
-                    Button {
-                        self.showFriendsLocation.toggle()
-                    } label: {
-                        Text("실시간 위치 확인")
-                    }
-                    .padding(.vertical, 20)
+//                    Button {
+//                        self.showFriendsLocation.toggle()
+//                    } label: {
+//                        Text("실시간 위치 확인")
+//                    }
+//                    .padding(.vertical, 20)
                 }
                 .padding(LayoutAdapter.shared.scale(value: 16))
                 .onTapGesture {
