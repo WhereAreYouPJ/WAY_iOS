@@ -31,8 +31,7 @@ struct CustomAlertSwiftUI: View {
                 VStack(spacing: 0) {
                     HStack {
                         Text(title)
-                            .font(.pretendard(NotoSans: .bold, fontSize: 18))
-                            .foregroundColor(.white)
+                            .titleH1Style(color: .white)
                             .padding(.bottom, LayoutAdapter.shared.scale(value: 12))
                         
                         Spacer()
@@ -40,7 +39,7 @@ struct CustomAlertSwiftUI: View {
                     
                     HStack {
                         Text(message)
-                            .foregroundColor(Color(.color160))
+                            .bodyP4Style(color: .blackD4)
                             .padding(.bottom, LayoutAdapter.shared.scale(value: 24))
                         
                         Spacer()
@@ -54,7 +53,7 @@ struct CustomAlertSwiftUI: View {
                             showDailySchedule = true
                         }, label: {
                             Text(cancelTitle)
-                                .foregroundColor(.white)
+                                .bodyP4Style(color: .white)
                         })
                         
                         Button(action: {
@@ -62,7 +61,7 @@ struct CustomAlertSwiftUI: View {
                             isPresented = false
                         }, label: {
                             Text(actionTitle)
-                                .foregroundColor(Color(.alertActionButtonColor))
+                                .bodyP4Style(color: .secondaryDark)
                         })
                     }
                 }

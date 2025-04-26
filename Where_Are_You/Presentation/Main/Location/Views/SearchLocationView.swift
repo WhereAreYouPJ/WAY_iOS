@@ -77,8 +77,8 @@ struct SearchLocationView: View {
                 .padding(.top, LayoutAdapter.shared.scale(value: 20))
                 .padding(.horizontal, LayoutAdapter.shared.scale(value: 24))
                 
-//                List(recentSearches) { location in
-                List(viewModel.recentSearches) { location in
+                List(recentSearches) { location in
+//                List(viewModel.recentSearches) { location in
                     locationRow(location: location)
                 }
                 .listStyle(PlainListStyle())
@@ -127,7 +127,7 @@ struct SearchLocationView: View {
                     )
                     
                     HighlightedText(
-                        text: location.location,
+                        text: location.streetName,
                         highlightText: viewModel.searchText,
                         highlightColor: .brandDark
                     )

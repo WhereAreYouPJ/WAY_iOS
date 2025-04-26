@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// TODO: 앱 처음 실행시 지도 안보이는 문제에 대해, 다른 장소 선택했다가 지도 안보였던 장소 다시 선택하면 잘 보임. 대체 왜지!?!??
 struct ConfirmLocationView: View {
     @StateObject var viewModel: ConfirmLocationViewModel
     var dismissAction: () -> Void
@@ -25,6 +26,8 @@ struct ConfirmLocationView: View {
         ))
         
         self.dismissAction = dismissAction
+        
+        print("init ConfirmLocationView!")
     }
     
     var body: some View {
@@ -38,8 +41,16 @@ struct ConfirmLocationView: View {
                     )),
                     friendsLocation: .constant([])
                 )
-                
-                Spacer()
+                // 임시로 MapPinView 대신 컬러 블록 사용
+//                Rectangle()
+//                    .fill(Color.gray.opacity(0.3))
+//                    .frame(maxHeight: .infinity)
+//                    .overlay(
+//                        Text("지도 영역")
+//                            .foregroundColor(.white)
+//                    )
+//                
+//                Spacer()
                 
                 locationDetailsView()
             }
@@ -51,6 +62,7 @@ struct ConfirmLocationView: View {
         .navigationBarBackButtonHidden()
         .onAppear {
             viewModel.isFavoriteLocation()
+            print("장소: \(viewModel.location.location), 위치: \(viewModel.location.streetName)")
         }
     }
     

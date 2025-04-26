@@ -25,6 +25,7 @@ class ScheduleViewModel: ObservableObject {
     func changeMonth(by value: Int) {
         if let newMonth = Calendar.current.date(byAdding: .month, value: value, to: month) {
             month = newMonth
+            getMonthlySchedule()
         }
     }
     

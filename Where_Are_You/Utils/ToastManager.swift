@@ -101,7 +101,7 @@ struct ToastOverlayView: View {
                     insertion: .move(edge: .bottom).combined(with: .opacity),
                     removal: .opacity
                 ))
-                .padding(.bottom, LayoutAdapter.shared.scale(value: 20))
+//                .padding(.bottom, LayoutAdapter.shared.scale(value: 80))
             }
         }
         .edgesIgnoringSafeArea(.all)
