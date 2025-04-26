@@ -10,6 +10,7 @@ import SwiftUI
 // TODO: 2. 메모 글자수 초과시 토스트 메시지
 // TODO: 3. 위치 뒤로가기 스택 수정
 // TODO: 4. 필수 항목 누락이 있을 때 추가 버튼 터치 시 토스트 메시지
+// TODO: 5. 오후 11시 이후의 경우 시각 초기값 - 시작일: 현재시각, 종료일: 11:59
 struct CreateScheduleView: View {
     @StateObject var viewModel: CreateScheduleViewModel
     @StateObject var searchFriendsViewModel: SearchFriendsViewModel = {
@@ -439,6 +440,9 @@ struct MemoView: View {
     @Binding var isEditing: Bool
     let maxLength = 500
     
+    // 메모 길이가 초과했는지 추적하는 상태 변수
+    @State private var didExceedMaxLength = false
+    
     var body: some View {
         HStack {
             Text("메모")
@@ -446,7 +450,7 @@ struct MemoView: View {
             Spacer()
             
             Text("\(memo.count)/\(maxLength)")
-                .foregroundColor(memo.count == maxLength ? Color(UIColor.error) : Color(UIColor.black66))
+                .foregroundColor(memo.count >= maxLength ? Color(UIColor.error) : Color(UIColor.black66))
                 .bodyP4Style()
         }
         
@@ -463,7 +467,7 @@ struct MemoView: View {
                 }
                 
                 TextEditor(text: $memo)
-                    .modifier(MaxLengthModifier(text: $memo, maxLength: maxLength))
+//                    .modifier(MaxLengthModifier(text: $memo, maxLength: maxLength))
                     .frame(height: LayoutAdapter.shared.scale(value: 110))
                     .padding(LayoutAdapter.shared.scale(value: 2))
                     .opacity(memo.isEmpty ? 0.1 : 1)
@@ -479,20 +483,24 @@ struct MemoView: View {
                     .stroke(Color(.color212))
             )
         }
-    }
-}
-
-struct MaxLengthModifier: ViewModifier {
-    @Binding var text: String
-    let maxLength: Int
-    
-    func body(content: Content) -> some View {
-        content
-            .onChange(of: text) { _, newValue in
-                if newValue.count > maxLength {
-                    text = String(newValue.prefix(maxLength))
+        .onChange(of: memo) { oldValue, newValue in
+            // 길이가 최대값을 초과하면
+            if newValue.count > maxLength {
+                // 텍스트를 최대 길이로 자르기
+                memo = String(newValue.prefix(maxLength))
+                
+                // 초과 상태 표시 및 토스트 메시지 표시
+                if !didExceedMaxLength {
+                    didExceedMaxLength = true
+                    ToastManager.shared.showToast(message: "글자 수 제한을 초과했습니다.")
+                    
+                    // 일정 시간 후 초과 상태 리셋 (연속 토스트 방지)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        didExceedMaxLength = false
+                    }
                 }
             }
+        }
     }
 }
 
