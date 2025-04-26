@@ -58,7 +58,7 @@ class TermsAgreementView: UIView {
     private lazy var termTitleStackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [agreeTermButton, agreeTitle])
         sv.axis = .horizontal
-        sv.spacing = 0
+        sv.spacing = 5
         return sv
     }()
     
@@ -149,8 +149,8 @@ class TermsAgreementView: UIView {
         // 약관 항목들을 배열로 정의
         let terms = [
             "서비스 이용약관 (필수)",
-            "개인정보 처리방침 (필수)",
-            "위치기반 서비스 이용약관 (필수)"
+            "개인정보 처리방침 (필수)"
+//            "위치기반 서비스 이용약관 (필수)" 추후 추가 예정
         ]
         
         // 각 항목에 대해 rowStack을 생성하여 배열에 담습니다.

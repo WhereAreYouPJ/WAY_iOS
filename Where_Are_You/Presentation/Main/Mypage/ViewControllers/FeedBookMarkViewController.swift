@@ -31,8 +31,6 @@ class FeedBookMarkViewController: UIViewController {
         setupBindings()
         setupActions()
         viewModel.fetchBookMarkFeed()
-        
-        feedBookMarkView.updateContentHeight()
     }
     
     // MARK: - Helpers
@@ -57,7 +55,6 @@ class FeedBookMarkViewController: UIViewController {
                 self?.noDataView.isHidden = !isEmpty
                 if !isEmpty {
                     self?.feedBookMarkView.feedsTableView.reloadData()
-                    self?.feedBookMarkView.updateContentHeight()
                 }
             }
         }
@@ -157,7 +154,6 @@ class FeedBookMarkViewController: UIViewController {
 
 extension FeedBookMarkViewController: FeedsTableViewCellDelegate {
     func didTapReadMoreButton() {
-        feedBookMarkView.updateContentHeight()
     }
     
     func didSelectFeed(feed: Feed) {

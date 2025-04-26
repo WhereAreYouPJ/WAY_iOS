@@ -85,7 +85,7 @@ class FeedsTableViewCell: UITableViewCell {
     private func setupConstraints() {
         containerView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 19))
-            make.leading.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
         }
         
         detailBox.snp.makeConstraints { make in

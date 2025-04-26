@@ -42,7 +42,7 @@ class AddFeedView: UIView {
     
     let contentTextView: UITextView = {
         let textView = UITextView()
-        textView.text = "어떤 일이 있었나요?"
+        textView.text = "어떤 하루를 보냈나요?"
         textView.font = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
         textView.textColor = .color118
         return textView
@@ -77,6 +77,7 @@ class AddFeedView: UIView {
         backgroundColor = .white
         configureViewComponents()
         setupConstraints()
+        
         imagesCollectionView.isHidden = true
         membersInfo.isHidden = true
     }
@@ -90,43 +91,45 @@ class AddFeedView: UIView {
     private func configureViewComponents() {
         addSubview(scrollView)
         scrollView.addSubview(contentView)
-        
-        contentView.addSubview(titleTextField)
-        contentView.addSubview(titleSeparator)
         contentView.addSubview(imageStackView)
         contentView.addSubview(contentTextView)
-        contentView.addSubview(addStackView)
         
-        addSubview(creatFeedButton)
-        contentView.addSubview(scheduleDropDown)
+        addSubview(titleTextField)
+        addSubview(titleSeparator)
 
+        addSubview(addStackView)
+        addSubview(creatFeedButton)
+        
+        addSubview(scheduleDropDown)
     }
     
     private func setupConstraints() {
+        scheduleDropDown.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+        }
+        
+        titleTextField.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 86))
+            make.leading.trailing.equalTo(scheduleDropDown)
+        }
+        
+        titleSeparator.snp.makeConstraints { make in
+            make.top.equalTo(titleTextField.snp.bottom).offset(LayoutAdapter.shared.scale(value: 8))
+            make.height.equalTo(1)
+            make.leading.trailing.equalTo(scheduleDropDown)
+        }
+        
         scrollView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(creatFeedButton.snp.top)
+            make.top.equalTo(titleSeparator.snp.bottom).offset(LayoutAdapter.shared.scale(value: 3))
+            make.bottom.equalTo(addStackView.snp.top)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 356))
         }
         
         contentView.snp.makeConstraints { make in
             make.edges.equalTo(scrollView.contentLayoutGuide)
             make.width.equalTo(scrollView.frameLayoutGuide)
-        }
-        
-        scheduleDropDown.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 13))
-            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
-        }
-        
-        titleTextField.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 77))
-            make.leading.trailing.equalTo(scheduleDropDown)
-        }
-        
-        titleSeparator.snp.makeConstraints { make in
-            make.top.equalTo(titleTextField.snp.bottom).offset(LayoutAdapter.shared.scale(value: 6))
-            make.height.equalTo(1)
-            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
         }
         
         imageBackView.snp.makeConstraints { make in
@@ -136,24 +139,23 @@ class AddFeedView: UIView {
         
         imagesCollectionView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 232))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 246))
         }
         
         imageStackView.snp.makeConstraints { make in
-            make.top.equalTo(titleSeparator.snp.bottom)
-            make.leading.trailing.equalToSuperview()
+            make.top.leading.trailing.equalToSuperview()
         }
         
         contentTextView.snp.makeConstraints { make in
             make.top.equalTo(imageStackView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 6))
-            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 23))
-            make.height.greaterThanOrEqualTo(LayoutAdapter.shared.scale(value: 110))
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
+//            make.height.greaterThanOrEqualTo(LayoutAdapter.shared.scale(value: 110))
+            make.bottom.equalToSuperview()
         }
         
         addStackView.snp.makeConstraints { make in
-            make.top.equalTo(contentTextView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 28))
+            make.top.equalTo(scrollView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 10))
             make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
         }
         
         addImages.snp.makeConstraints { make in

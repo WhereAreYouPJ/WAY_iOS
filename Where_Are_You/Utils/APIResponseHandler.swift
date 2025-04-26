@@ -10,6 +10,7 @@ import Moya
 
 class APIResponseHandler {
     static func handleResponse<T>(_ result: Result<Moya.Response, MoyaError>, completion: @escaping (Result<T, Error>) -> Void) where T: Decodable {
+        
         switch result {
         case .success(let response):
             do {

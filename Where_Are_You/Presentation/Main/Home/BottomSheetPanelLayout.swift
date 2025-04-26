@@ -16,7 +16,7 @@ class BottomSheetPanelLayout: FloatingPanelLayout {
         return .tip
     }
 
-    var anchors: [FloatingPanel.FloatingPanelState : any FloatingPanel.FloatingPanelLayoutAnchoring] {
+    var anchors: [FloatingPanel.FloatingPanelState: any FloatingPanel.FloatingPanelLayoutAnchoring] {
         return [
             .tip: FloatingPanelLayoutAnchor(absoluteInset: 34, edge: .bottom, referenceGuide: .safeArea),
             .half: FloatingPanelLayoutAnchor(absoluteInset: LayoutAdapter.shared.scale(value: 420), edge: .bottom, referenceGuide: .safeArea)

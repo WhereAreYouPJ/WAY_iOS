@@ -20,6 +20,14 @@ class AddFeedViewController: UIViewController {
     var onFeedCreated: (() -> Void)?
         
     let addFeedView = AddFeedView()
+    
+    private let loadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.color = .lightGray
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+    
     private var dropViewHeightConstraint: NSLayoutConstraint!
     private var isDropdownVisible = false
     private var contentTextViewHeightConstraint: NSLayoutConstraint!
@@ -55,6 +63,13 @@ class AddFeedViewController: UIViewController {
         addFeedView.scheduleDropDown.dropDownTableView.delegate = self
         addFeedView.scheduleDropDown.dropDownTableView.dataSource = self
         addFeedView.scheduleDropDown.dropDownTableView.register(ScheduleDropDownCell.self, forCellReuseIdentifier: ScheduleDropDownCell.identifier)
+        
+        addFeedView.scheduleDropDown.dropDownTableView.delaysContentTouches = false
+        addFeedView.scheduleDropDown.dropDownTableView.canCancelContentTouches = true
+
+        addFeedView.scheduleDropDown.dropDownTableView.separatorInset = .zero
+        addFeedView.scheduleDropDown.dropDownTableView.contentInset = .zero
+
     }
     
     private func setupNavigationBar() {
@@ -99,7 +114,23 @@ class AddFeedViewController: UIViewController {
         addFeedView.addImages.addTarget(self, action: #selector(handleAddImagesTapped), for: .touchUpInside)
         addFeedView.creatFeedButton.addTarget(self, action: #selector(createFeed), for: .touchUpInside)
         addFeedView.scheduleDropDown.moreButton.addTarget(self, action: #selector(loadMoreData), for: .touchUpInside)
-
+    }
+    
+    func showLoadingFooter() {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: addFeedView.scheduleDropDown.dropDownTableView.bounds.width, height: 50))
+        footerView.addSubview(loadingIndicator)
+        
+        loadingIndicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
+        addFeedView.scheduleDropDown.dropDownTableView.tableFooterView = footerView
+        loadingIndicator.startAnimating()
+    }
+    
+    func hideLoadingFooter() {
+        loadingIndicator.stopAnimating()
+        addFeedView.scheduleDropDown.dropDownTableView.tableFooterView = nil
     }
     
     // MARK: - Selectors
@@ -134,7 +165,7 @@ class AddFeedViewController: UIViewController {
         // 피드 생성하기 버튼 눌림
         print("createFeed 눌림")
         guard let title = addFeedView.titleTextField.text, !title.isEmpty else { return }
-        let content = addFeedView.contentTextView.text == "어떤 일이 있었나요?" ? nil : addFeedView.contentTextView.text
+        let content = addFeedView.contentTextView.text == "어떤 하루를 보냈나요?" ? nil : addFeedView.contentTextView.text
         
         viewModel.saveFeed(title: title, content: content)
         self.onFeedCreated?()
@@ -152,7 +183,7 @@ extension AddFeedViewController: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text == "" {
-            textView.text = "어떤 일이 있었나요?"
+            textView.text = "어떤 하루를 보냈나요?"
             textView.textColor = .color118
         }
     }
@@ -193,8 +224,33 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
         return UITableView.automaticDimension
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return viewModel.titleForHeader(in: section)
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerText = viewModel.titleForHeader(in: section)
+        let label = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: headerText, textColor: .brandDark))
+        label.textAlignment = .left
+
+        let container = UIView()
+        container.backgroundColor = .white
+        container.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 20)) // ← 여기 여백 조절
+            make.top.bottom.equalToSuperview()
+        }
+        
+        // separator 직접 추가
+        let separator = UIView()
+        separator.backgroundColor = .white  // separator 색상 맞게 지정
+        container.addSubview(separator)
+        separator.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.height.equalTo(1)  // 얇게
+        }
+        
+        return container
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 29 // 너가 원하는 높이
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -252,18 +308,23 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        let frameHeight = scrollView.frame.size.height
-        let threshold: CGFloat = -25  // 원하는 임계값
-        
-        if offsetY > contentHeight - frameHeight - threshold {
-            // 테이블 뷰 끝에 도달했을 때 다음 페이지의 데이터를 불러옴
+    // 테이블뷰 하단 당겨서 추가 데이터 불러오는 로직
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        let currentOffset = scrollView.contentOffset.y // frame영역의 origin에 비교했을때의 content view의 현재 origin 위치
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height // 화면에는 frame만큼 가득 찰 수 있기때문에 frame의 height를 빼준 것
+
+        // 스크롤 할 수 있는 영역보다 더 스크롤된 경우 (하단에서 스크롤이 더 된 경우)
+        if maximumOffset < currentOffset {
+            showLoadingFooter()
             viewModel.fetchSchedules()
+            
+            // 예시로 로딩 사라지게
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.hideLoadingFooter()
+            }
         }
     }
-    
+
     func updateDropDownHeight() {
         let rowHeight = LayoutAdapter.shared.scale(value: 62)
         let numberOfRows = viewModel.totalNumberOfRows()
@@ -284,7 +345,7 @@ extension AddFeedViewController: UIImagePickerControllerDelegate, UINavigationCo
     
     @objc func handleAddImagesTapped() {
         var configuration = PHPickerConfiguration()
-        configuration.selectionLimit = 10  // 최대 선택 가능 사진 수
+        configuration.selectionLimit = 10 - selectedImages.count  // 최대 선택 가능 사진 수
         configuration.filter = .images  // 이미지만 선택할 수 있도록 설정
         
         let picker = PHPickerViewController(configuration: configuration)
@@ -301,9 +362,7 @@ extension AddFeedViewController: UIImagePickerControllerDelegate, UINavigationCo
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true, completion: nil)
-        
-        selectedImages.removeAll() // 초기화
-        
+                
         let group = DispatchGroup()
         for result in results {
             group.enter()
