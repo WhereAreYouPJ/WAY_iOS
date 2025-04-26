@@ -154,12 +154,6 @@ final class CreateScheduleViewModel: ObservableObject {
         return true
     }
     
-//    func showToastMessage() {
-//        if memo.count > 500 {
-//            ToastManager.shared.showToast(message: "글자 수 제한을 초과했습니다.")
-//        }
-//    }
-    
     func geocodeSelectedLocation(_ location: Location, completion: @escaping (Location) -> Void) { // 주소를 받아 좌표 리턴
         let locationWithSequence = LocationManager.shared.applyFavoriteSequence(to: location) // 즐겨찾기된 위치라면 시퀀스 유지
         

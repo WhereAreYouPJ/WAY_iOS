@@ -140,10 +140,12 @@ struct CreateScheduleView: View {
                         .id("memoView")
                 }
                 .padding(LayoutAdapter.shared.scale(value: 16))
-                .onChange(of: viewModel.isEditingMemo) { _, isEditing in
-                    if isEditing {
+                .onChange(of: viewModel.isEditingMemo) { oldValue, newValue in
+                    print("⌨️ isEditingMemo changed from \(oldValue) to \(newValue)")
+                    if newValue {
                         withAnimation {
                             proxy.scrollTo("memoView", anchor: .top)
+                            print("⌨️ Scrolled to memoView")
                         }
                     }
                 }
@@ -439,9 +441,9 @@ struct MemoView: View {
     @Binding var memo: String
     @Binding var isEditing: Bool
     let maxLength = 500
-    
-    // 메모 길이가 초과했는지 추적하는 상태 변수
     @State private var didExceedMaxLength = false
+    
+    @FocusState private var isFocused: Bool
     
     var body: some View {
         HStack {
@@ -467,7 +469,7 @@ struct MemoView: View {
                 }
                 
                 TextEditor(text: $memo)
-//                    .modifier(MaxLengthModifier(text: $memo, maxLength: maxLength))
+                    .focused($isFocused)
                     .frame(height: LayoutAdapter.shared.scale(value: 110))
                     .padding(LayoutAdapter.shared.scale(value: 2))
                     .opacity(memo.isEmpty ? 0.1 : 1)
@@ -484,22 +486,26 @@ struct MemoView: View {
             )
         }
         .onChange(of: memo) { oldValue, newValue in
-            // 길이가 최대값을 초과하면
             if newValue.count > maxLength {
-                // 텍스트를 최대 길이로 자르기
                 memo = String(newValue.prefix(maxLength))
                 
-                // 초과 상태 표시 및 토스트 메시지 표시
                 if !didExceedMaxLength {
                     didExceedMaxLength = true
                     ToastManager.shared.showToast(message: "글자 수 제한을 초과했습니다.")
                     
-                    // 일정 시간 후 초과 상태 리셋 (연속 토스트 방지)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { // 일정 시간 후 초과 상태 리셋 (연속 토스트 방지)
                         didExceedMaxLength = false
                     }
                 }
             }
+        }
+        .onChange(of: isFocused) { oldValue, newValue in // isFocused 상태가 변경될 때 isEditing 바인딩 업데이트
+            print("🔍 Focus changed from \(oldValue) to \(newValue)")
+            isEditing = newValue
+        }
+        .onChange(of: isEditing) { oldValue, newValue in // isEditing 값이 외부에서 변경될 경우 포커스 상태 동기화
+            print("🔍 isEditing changed from \(oldValue) to \(newValue)")
+            isFocused = newValue
         }
     }
 }
