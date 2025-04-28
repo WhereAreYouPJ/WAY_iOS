@@ -28,6 +28,6 @@ struct FontStyle {
             self.font = .custom(family, size: size)
         }
         self.lineHeight = lineHeight
-        self.letterSpacing = letterSpacing
+        self.letterSpacing = size * letterSpacing / 100
     }
 }

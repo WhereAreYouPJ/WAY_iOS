@@ -395,7 +395,8 @@ extension Font {
             family: "Paperlogy-6SemiBold",
             size: LayoutAdapter.shared.scale(value: 18),
             lineHeight: 1.3,
-            letterSpacing: -1.5
+            letterSpacing: 1.25
+//            letterSpacing: -1.5
         )
     }
     
@@ -404,7 +405,8 @@ extension Font {
             family: "Paperlogy-6SemiBold",
             size: LayoutAdapter.shared.scale(value: 16),
             lineHeight: 1.3,
-            letterSpacing: 0
+            letterSpacing: 4
+//            letterSpacing: 0
         )
     }
     
@@ -414,6 +416,7 @@ extension Font {
             size: LayoutAdapter.shared.scale(value: 14),
             lineHeight: 1.3,
             letterSpacing: -0.5
+//            letterSpacing: -0.5
         )
     }
     
