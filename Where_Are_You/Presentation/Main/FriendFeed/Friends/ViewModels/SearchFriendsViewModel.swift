@@ -115,3 +115,21 @@ class SearchFriendsViewModel: ObservableObject {
         selectedFriends.removeAll()
     }
 }
+
+// SearchFriendsViewModel 확장 - 더미 데이터 추가
+extension SearchFriendsViewModel {
+    // 더미 데이터 설정 메서드
+    func setDummyData() {
+        // FriendsViewModel에 더미 데이터 설정
+        self.friendsViewModel.setDummyData()
+        
+        // 기본적으로 첫 번째 친구를 선택 상태로 설정 (데모용)
+        if let firstFavorite = self.friendsViewModel.favorites.first {
+            self.selectedFavorites.insert(firstFavorite.id)
+        }
+        
+        if let firstFriend = self.friendsViewModel.friends.first {
+            self.selectedFriends.insert(firstFriend.id)
+        }
+    }
+}

@@ -395,7 +395,7 @@ extension Font {
             family: "Paperlogy-6SemiBold",
             size: LayoutAdapter.shared.scale(value: 18),
             lineHeight: 1.3,
-            letterSpacing: 1.25
+            letterSpacing: -1.5
         )
     }
     
@@ -404,7 +404,7 @@ extension Font {
             family: "Paperlogy-6SemiBold",
             size: LayoutAdapter.shared.scale(value: 16),
             lineHeight: 1.3,
-            letterSpacing: 4
+            letterSpacing: 0
         )
     }
     
@@ -487,7 +487,9 @@ extension Text {
         return withFontStyle(Font.bodyP3(), color: color)
     }
     
-    // 필요한 다른 스타일 메서드들...
+    func withBodyP4Style(color: Color = .primary) -> Text {
+        return withFontStyle(Font.bodyP4(), color: color)
+    }
 }
 
 // MARK: - UIImage
@@ -524,11 +526,13 @@ enum DateFormat: String {
     case server = "yyyy-MM-dd'T'HH:mm:ss.SSS"   // 서버의 날짜 형식
     case serverSimple = "yyyy-MM-dd'T'HH:mm:ss" // 서버의 날짜 형식
     case yearMonthDateHyphen = "yyyy-MM-dd"     // "yyyy-MM-dd" 형태
+    case yearMonthDateDot = "yyyy.MM.dd"     // "yyyy-MM-dd" 형태
     case yearMonthDate = "yy.MM.dd"             // "YY.MM.dd" 형태
     case yearMonth = "yyyy-MM"                  // "YYYY-MM" 형태
     case monthDay = "MM월 dd일"                  // "MM월 dd일" 형태
     case monthDaySimple = "M월 d일"              // "M월 d일" 형태
     case time = "a h시 m분"                      // "오후 1시 1분" 형태
+    case timeColon = "a h:mm"                      // "오후 1:01" 형태
     case timeSimple = "a h시"                   // "오후 1시" 형태
 }
 
@@ -621,6 +625,11 @@ extension View {
             .lineSpacing(lineSpacing)
             .kerning(style.letterSpacing)
             .foregroundColor(color)
+    }
+    
+    // 키보드 닫기
+    func dismissKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
     
     // 헤더 스타일 적용 메서드

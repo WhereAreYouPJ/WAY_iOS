@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+// TODO: 2. 메모 글자수 초과시 토스트 메시지
+// TODO: 3. 위치 뒤로가기 스택 수정
+// TODO: 4. 필수 항목 누락이 있을 때 추가 버튼 터치 시 토스트 메시지
+// TODO: 5. 오후 11시 이후의 경우 시각 초기값 - 시작일: 현재시각, 종료일: 11:59
 struct CreateScheduleView: View {
     @StateObject var viewModel: CreateScheduleViewModel
     @StateObject var searchFriendsViewModel: SearchFriendsViewModel = {
@@ -75,6 +79,15 @@ struct CreateScheduleView: View {
                                 viewModel.getFavoriteLocation()
                             }
                         )
+                    } else {
+                        // 이 경우는 발생하지 않아야 함
+                        Text("다시 시도해주세요.")
+                            .onAppear {
+                                print("위치 정보 없음 - 이 메시지가 표시되면 안됨")
+                                DispatchQueue.main.async {
+                                    showConfirmLocation = false
+                                }
+                            }
                     }
                 }
                 .fullScreenCover(isPresented: $showSearchFriends) {
@@ -94,7 +107,8 @@ struct CreateScheduleView: View {
                     TextField(
                         "",
                         text: $viewModel.title,
-                        prompt: Text("일정명을 입력해주세요.").withBodyP2Style(color: .blackAC)
+                        prompt: Text("일정명을 입력해주세요.")
+                            .withBodyP2Style(color: .blackAC)
                     )
                     .padding(.top, LayoutAdapter.shared.scale(value: 6))
                     .bodyP2Style(color: .black22)
@@ -126,10 +140,12 @@ struct CreateScheduleView: View {
                         .id("memoView")
                 }
                 .padding(LayoutAdapter.shared.scale(value: 16))
-                .onChange(of: viewModel.isEditingMemo) { _, isEditing in
-                    if isEditing {
+                .onChange(of: viewModel.isEditingMemo) { oldValue, newValue in
+                    print("⌨️ isEditingMemo changed from \(oldValue) to \(newValue)")
+                    if newValue {
                         withAnimation {
                             proxy.scrollTo("memoView", anchor: .top)
+                            print("⌨️ Scrolled to memoView")
                         }
                     }
                 }
@@ -179,7 +195,7 @@ struct CreateScheduleView: View {
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("추가") {
+                    Button("적용") {
                         viewModel.selectedFriends = searchFriendsViewModel.confirmSelection()
                         showSearchFriends = false
                     }
@@ -220,10 +236,19 @@ struct DateAndTimeView: View {
         
         Divider()
         
-        DatePicker("종료일", selection: $endTime, in: startTime...Date.yearRange2000To2100.upperBound, displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
+        DatePicker("종료일", selection: $endTime, in: Date.yearRange2000To2100, displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute])
             .environment(\.locale, Locale(identifier: "ko_KR"))
             .environment(\.calendar, Calendar(identifier: .gregorian))
             .accentColor(Color(.brandDark))
+        
+        if (isAllDay ? Calendar.current.startOfDay(for: startTime) : startTime) > (isAllDay ? Calendar.current.startOfDay(for: endTime) : endTime) {
+            HStack {
+                Image("icon-information")
+                Text("종료일은 시작일보다 빠를 수 없습니다.")
+                    .bodyP5Style(color: .error)
+            }
+            .transition(.opacity.combined(with: .move(edge: .top)))
+        }
         
         Divider()
             .padding(.bottom, LayoutAdapter.shared.scale(value: 16))
@@ -248,8 +273,14 @@ struct AddPlaceView: View {
                     Text(selectedPlace.location)
                         .lineLimit(1)
                         .onTapGesture {
-                            selectedLocationForConfirm = selectedPlace
-                            showConfirmLocation = true
+//                            selectedLocationForConfirm = selectedPlace
+////                            showConfirmLocation = true
+//                            print("선택된 위치: \(selectedLocationForConfirm?.location ?? "빈 값"), 좌표: \(selectedLocationForConfirm?.x ?? 0), \(selectedLocationForConfirm?.y ?? 0)")
+//                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//                                    showConfirmLocation = true
+//                                }
+//                            print("showConfirmLocation", showConfirmLocation)
+                            showLocationConfirmation(location: selectedPlace)
                         }
                 }
                 
@@ -273,15 +304,28 @@ struct AddPlaceView: View {
             HStack {
                 ForEach(Array(viewModel.favPlaces.prefix(20))) { favPlace in // 최대 20개 표시
                     FavoritePlaceCell(place: favPlace) {
-                        viewModel.geocodeSelectedLocation(favPlace) { geocodedLocation in
-                            viewModel.place = geocodedLocation
-                        }
+//                        viewModel.geocodeSelectedLocation(favPlace) { geocodedLocation in
+//                            viewModel.place = geocodedLocation
+//                        }
+                        viewModel.place = favPlace
                     }
                 }
             }
             .padding(.bottom, LayoutAdapter.shared.scale(value: 4))
         }
         .padding(.bottom, LayoutAdapter.shared.scale(value: 12))
+    }
+    
+    func showLocationConfirmation(location: Location) {
+        print("showLocationConfirmation 호출됨, 위치: \(location.location)")
+        
+        // 명시적으로 상태 업데이트
+        self.selectedLocationForConfirm = location
+        
+        // 상태 업데이트가 완료된 후 화면 전환
+        DispatchQueue.main.async {
+            self.showConfirmLocation = true
+        }
     }
 }
 
@@ -397,9 +441,20 @@ struct MemoView: View {
     @Binding var memo: String
     @Binding var isEditing: Bool
     let maxLength = 500
+    @State private var didExceedMaxLength = false
+    
+    @FocusState private var isFocused: Bool
     
     var body: some View {
-        Text("메모")
+        HStack {
+            Text("메모")
+            
+            Spacer()
+            
+            Text("\(memo.count)/\(maxLength)")
+                .foregroundColor(memo.count >= maxLength ? Color(UIColor.error) : Color(UIColor.black66))
+                .bodyP4Style()
+        }
         
         ScrollView {
             ZStack(alignment: .topLeading) {
@@ -409,15 +464,12 @@ struct MemoView: View {
                             .foregroundStyle(memo.isEmpty ? Color(UIColor.blackAC) : .clear)
                         
                         Spacer()
-                        
-                        Text("\(memo.count)/\(maxLength)")
-                            .foregroundColor(memo.count == maxLength ? Color(UIColor.error) : Color(UIColor.black66))
                     }
                     .padding(LayoutAdapter.shared.scale(value: 10))
                 }
                 
                 TextEditor(text: $memo)
-                    .modifier(MaxLengthModifier(text: $memo, maxLength: maxLength))
+                    .focused($isFocused)
                     .frame(height: LayoutAdapter.shared.scale(value: 110))
                     .padding(LayoutAdapter.shared.scale(value: 2))
                     .opacity(memo.isEmpty ? 0.1 : 1)
@@ -433,20 +485,28 @@ struct MemoView: View {
                     .stroke(Color(.color212))
             )
         }
-    }
-}
-
-struct MaxLengthModifier: ViewModifier {
-    @Binding var text: String
-    let maxLength: Int
-    
-    func body(content: Content) -> some View {
-        content
-            .onChange(of: text) { _, newValue in
-                if newValue.count > maxLength {
-                    text = String(newValue.prefix(maxLength))
+        .onChange(of: memo) { oldValue, newValue in
+            if newValue.count > maxLength {
+                memo = String(newValue.prefix(maxLength))
+                
+                if !didExceedMaxLength {
+                    didExceedMaxLength = true
+                    ToastManager.shared.showToast(message: "글자 수 제한을 초과했습니다.")
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { // 일정 시간 후 초과 상태 리셋 (연속 토스트 방지)
+                        didExceedMaxLength = false
+                    }
                 }
             }
+        }
+        .onChange(of: isFocused) { oldValue, newValue in // isFocused 상태가 변경될 때 isEditing 바인딩 업데이트
+            print("🔍 Focus changed from \(oldValue) to \(newValue)")
+            isEditing = newValue
+        }
+        .onChange(of: isEditing) { oldValue, newValue in // isEditing 값이 외부에서 변경될 경우 포커스 상태 동기화
+            print("🔍 isEditing changed from \(oldValue) to \(newValue)")
+            isFocused = newValue
+        }
     }
 }
 

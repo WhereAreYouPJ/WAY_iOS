@@ -140,11 +140,45 @@ extension BottomSheetViewController: UITableViewDataSource, UITableViewDelegate 
     }
 }
 
+//extension BottomSheetViewController: DailyScheduleTableViewCellDelegate {
+//    func didTapCheckLocationButton(schedule: Schedule) {
+//        let notificationView = NotificationView()
+//        let hostingController = UIHostingController(rootView: notificationView)
+//        hostingController.modalPresentationStyle = .fullScreen
+//        present(hostingController, animated: true)
+//    }
+//}
+
 extension BottomSheetViewController: DailyScheduleTableViewCellDelegate {
     func didTapCheckLocationButton(schedule: Schedule) {
-        let notificationView = NotificationView()
-        let hostingController = UIHostingController(rootView: notificationView)
-        hostingController.modalPresentationStyle = .fullScreen
-        present(hostingController, animated: true)
+        class FriendsLocationViewDismissHandler { // SwiftUI 뷰와 UIKit의 통신을 위한 클래스
+            var dismissAction: (() -> Void)?
+        }
+        
+        let dismissHandler = FriendsLocationViewDismissHandler() // 핸들러 인스턴스 생성
+        dismissHandler.dismissAction = { [weak self] in
+            self?.dismiss(animated: true)
+        }
+        
+        let isShownBinding = Binding<Bool>( // isShownView 바인딩 생성
+            get: { true },
+            set: { newValue in
+                if !newValue {
+                    dismissHandler.dismissAction?() // isShownView가 false로 설정되면 뷰 컨트롤러 dismiss
+                }
+            }
+        )
+        
+        let friendsLocationView = FriendsLocationView( // FriendsLocationView 생성
+            isShownView: isShownBinding,
+            schedule: .constant(schedule)
+        )
+        
+        let hostingController = UIHostingController(rootView: friendsLocationView) // SwiftUI 뷰를 UIKit 컨트롤러에 래핑
+        
+        hostingController.modalPresentationStyle = .fullScreen // 전체 화면으로 표시
+        hostingController.view.backgroundColor = .clear
+        
+        present(hostingController, animated: true) // 뷰를 표시
     }
 }

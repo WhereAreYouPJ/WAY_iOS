@@ -265,6 +265,7 @@
 		D534B1032D06F329004864E0 /* GetCoordinateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D534B1022D06F329004864E0 /* GetCoordinateUseCase.swift */; };
 		D534B1052D06F416004864E0 /* PostCoordinateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D534B1042D06F416004864E0 /* PostCoordinateUseCase.swift */; };
 		D53620912C8AE1010017B279 /* SearchLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53620902C8AE1010017B279 /* SearchLocationViewModel.swift */; };
+		D53866422DACECBA00728707 /* DatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53866412DACECBA00728707 /* DatePickerView.swift */; };
 		D53A4E382CF810A800225E4C /* ManageFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53A4E372CF810A800225E4C /* ManageFriendsView.swift */; };
 		D53A515C2CA1260400025AC8 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53A515B2CA1260400025AC8 /* ErrorResponse.swift */; };
 		D53E05F52CB97C4100F96346 /* PutScheduleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E05F42CB97C4100F96346 /* PutScheduleBody.swift */; };
@@ -279,6 +280,7 @@
 		D54F33122D4381710062A17E /* GeocodeLocationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54F33112D4381710062A17E /* GeocodeLocationUseCase.swift */; };
 		D5505A722D9914C500FA7A66 /* HighlightedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5505A712D9914C400FA7A66 /* HighlightedText.swift */; };
 		D558CB662D28196100710808 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D558CB652D28196100710808 /* AppConstants.swift */; };
+		D559454F2DA6708A00A5D1A1 /* ButtonMergeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D559454E2DA6708A00A5D1A1 /* ButtonMergeView.swift */; };
 		D55C6C3E2CF57E74005132DC /* CustomButtonSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C3D2CF57E74005132DC /* CustomButtonSwiftUI.swift */; };
 		D55C6C402CF585F1005132DC /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C3F2CF585F1005132DC /* AddFriendView.swift */; };
 		D55C6C422CF5B8D7005132DC /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55C6C412CF5B8D7005132DC /* NavigationBarModifier.swift */; };
@@ -642,6 +644,7 @@
 		D534B1022D06F329004864E0 /* GetCoordinateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCoordinateUseCase.swift; sourceTree = "<group>"; };
 		D534B1042D06F416004864E0 /* PostCoordinateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCoordinateUseCase.swift; sourceTree = "<group>"; };
 		D53620902C8AE1010017B279 /* SearchLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationViewModel.swift; sourceTree = "<group>"; };
+		D53866412DACECBA00728707 /* DatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerView.swift; sourceTree = "<group>"; };
 		D53A4E372CF810A800225E4C /* ManageFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFriendsView.swift; sourceTree = "<group>"; };
 		D53A515B2CA1260400025AC8 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
 		D53E05F42CB97C4100F96346 /* PutScheduleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutScheduleBody.swift; sourceTree = "<group>"; };
@@ -656,6 +659,7 @@
 		D54F33112D4381710062A17E /* GeocodeLocationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodeLocationUseCase.swift; sourceTree = "<group>"; };
 		D5505A712D9914C400FA7A66 /* HighlightedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightedText.swift; sourceTree = "<group>"; };
 		D558CB652D28196100710808 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		D559454E2DA6708A00A5D1A1 /* ButtonMergeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonMergeView.swift; sourceTree = "<group>"; };
 		D55C6C3D2CF57E74005132DC /* CustomButtonSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonSwiftUI.swift; sourceTree = "<group>"; };
 		D55C6C3F2CF585F1005132DC /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
 		D55C6C412CF5B8D7005132DC /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
@@ -1506,6 +1510,7 @@
 				99DF440C2D6DB2A200D75956 /* CustomImageView.swift */,
 				D5161A6C2D950D5F00D92B39 /* CustomFontStyle.swift */,
 				D5505A712D9914C400FA7A66 /* HighlightedText.swift */,
+				D559454E2DA6708A00A5D1A1 /* ButtonMergeView.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -1829,6 +1834,7 @@
 				D55DFC302C61022900EEEF51 /* CreateScheduleView.swift */,
 				D5CCD96E2CB0217E008497AD /* DailyScheduleView.swift */,
 				D5DB6C6C2CDA297300D89360 /* ScheduleDetailView.swift */,
+				D53866412DACECBA00728707 /* DatePickerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1836,8 +1842,8 @@
 		D5B79A142C5B83A4004EDDF2 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */,
 				D593CCC72C82318F00A862FF /* ScheduleViewModel.swift */,
+				D5E3D7D72C63BF730041B28D /* CreateScheduleViewModel.swift */,
 				D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */,
 				D5DB6C6E2CDA2A0900D89360 /* ScheduleDetailViewModel.swift */,
 			);
@@ -2256,6 +2262,7 @@
 				995009792CE9A6E10069151D /* FeedViewModel.swift in Sources */,
 				D541BBF02D32C238001C4C0C /* NotificationViewModel.swift in Sources */,
 				99C68E432C64B28400DEC1F1 /* FeedAPI.swift in Sources */,
+				D53866422DACECBA00728707 /* DatePickerView.swift in Sources */,
 				999E29732CBB9C7F00AB9FF9 /* GetLocationUseCase.swift in Sources */,
 				99A07CD42CF440E100A47796 /* FeedBookMarkViewModel.swift in Sources */,
 				9974EA202C62196500826793 /* SnappingFlowLayout.swift in Sources */,
@@ -2397,6 +2404,7 @@
 				99C68E3F2C64B11D00DEC1F1 /* FeedRequest.swift in Sources */,
 				995E3E5B2C507FE6006B4480 /* MyPageView.swift in Sources */,
 				99A7D7E42C999897002BCD21 /* LocationBookMarkCell.swift in Sources */,
+				D559454F2DA6708A00A5D1A1 /* ButtonMergeView.swift in Sources */,
 				99EDF58A2CE8764B0008B19A /* AccountLinkUseCase.swift in Sources */,
 				99EDF58C2CE877BD0008B19A /* DeleteMemberUseCase.swift in Sources */,
 				D51AC99C2C849AB400D0AD2E /* LocationAPI.swift in Sources */,
