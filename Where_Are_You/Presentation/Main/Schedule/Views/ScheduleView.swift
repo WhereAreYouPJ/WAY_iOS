@@ -35,6 +35,7 @@ struct ScheduleView: View {
                     HStack(alignment: .center) {
                         yearMonthView
                         Spacer()
+                        
                         HStack(spacing: 0) {
                             Button(action: {
                                 showNotification = true
@@ -102,7 +103,6 @@ struct ScheduleView: View {
                 .presentationDetents([.medium])
             }
         }
-        .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
         .onAppear(perform: {
             viewModel.getMonthlySchedule()
             notificationBadgeViewModel.checkForNewNotifications()
@@ -119,9 +119,8 @@ struct ScheduleView: View {
                     .foregroundColor(.black)
             })
             
-            Text(viewModel.month, formatter: Self.calendarHeaderDateFormatter)
-                .font(Font(UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 22))))
-                .foregroundStyle(Color(.color17))
+            Text(viewModel.month.formatted(to: .yearMonth))
+                .titleH1Style(color: .black22)
             
             Button(action: {
                 viewModel.changeMonth(by: 1)
@@ -140,7 +139,7 @@ struct ScheduleView: View {
             HStack {
                 ForEach(Self.weekdaySymbols.indices, id: \.self) { index in
                     Text(Self.weekdaySymbols[index].uppercased())
-                        .foregroundColor(weekdayColor(for: index + 1))
+                        .bodyP4Style(color: weekdayColor(for: index + 1))
                         .frame(maxWidth: .infinity)
                 }
             }
@@ -155,7 +154,7 @@ struct ScheduleView: View {
         switch index {
         case 1: return Color(.color255125)  // 일요일
         case 7: return Color(.color57125) // 토요일
-        default: return Color(.black66)
+        default: return Color(.black22)
         }
     }
     
@@ -258,12 +257,12 @@ private struct CellView: View {
         if clicked {
             return .white
         } else if !isCurrentMonthDay {
-            return Color(.color190)
+            return .blackAC
         } else {
             switch weekday {
             case 1: return Color(.color25569)
             case 7: return Color(.color5769)
-            default: return Color(.color17)
+            default: return .black22
             }
         }
     }
@@ -305,7 +304,7 @@ private struct CellView: View {
                 }
                 
                 Text(String(day))
-                    .foregroundColor(textColor)
+                    .bodyP4Style(color: textColor)
                     .frame(width: 30, height: 30)
             }
             .padding(.bottom, 2)
@@ -366,52 +365,52 @@ private struct CellView: View {
         
         return ZStack {
             if isMoreThanFour { /// 네번째 일정부터는 "+"로 표시
-                RoundedRectangle(cornerRadius: 2)
+                RoundedRectangle(cornerRadius: 4)
                     .fill(Color(.color231))
                     .padding(.horizontal, 2)
                 
                 Text("+")
-                    .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 9))))
+                    .button9Style(color: .black22)
                     .padding(.horizontal, 4)
             } else if isStart && isEnd { /// 단일 일정
-                RoundedRectangle(cornerRadius: 2)
+                RoundedRectangle(cornerRadius: 4)
                     .fill(scheduleColor)
                     .padding(.horizontal, 2)
                 
                 Text(schedule.title)
-                    .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 9))))
+                    .button9Style(color: .black22)
                     .padding(.horizontal, 4)
             } else { /// 연속 일정
                 if isStart {
                     if weekday == 7 { /// 첫날이고 토요일일 때
-                        RoundedRectangle(cornerRadius: 2)
+                        RoundedRectangle(cornerRadius: 4)
                             .fill(scheduleColor)
                             .padding(.horizontal, 2)
                     } else { /// 첫날이고 토요일이 아닐 때
                         UnevenRoundedRectangle(
-                            topLeadingRadius: 2,
-                            bottomLeadingRadius: 2
+                            topLeadingRadius: 4,
+                            bottomLeadingRadius: 4
                         )
                         .fill(scheduleColor)
                         .padding(.leading, 2)
                     }
                     
                     Text(schedule.title)
-                        .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 9))))
+                        .button9Style(color: .black22)
                         .padding(.horizontal, 4)
                         .frame(maxWidth: .infinity, alignment: .center)
                 } else if isEnd {
                     if weekday == 1 { /// 마지막날이고 일요일일 때
-                        RoundedRectangle(cornerRadius: 2)
+                        RoundedRectangle(cornerRadius: 4)
                             .fill(scheduleColor)
                             .padding(.horizontal, 2)
                         
                         Text(schedule.title)
-                            .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 9))))
+                            .button9Style(color: .black22)
                             .padding(.horizontal, 4)
                     } else { /// 마지막날이고 일요일이 아닐 때
                         UnevenRoundedRectangle(
-                            bottomTrailingRadius: 2, topTrailingRadius: 2
+                            bottomTrailingRadius: 4, topTrailingRadius: 4
                         )
                         .fill(scheduleColor)
                         .padding(.trailing, 2)
@@ -419,20 +418,20 @@ private struct CellView: View {
                 } else {
                     if weekday == 7 { /// 중간날이고 토요일일 때
                         UnevenRoundedRectangle(
-                            bottomTrailingRadius: 2, topTrailingRadius: 2
+                            bottomTrailingRadius: 4, topTrailingRadius: 4
                         )
                         .fill(scheduleColor)
                         .padding(.trailing, 2)
                     } else if weekday == 1 { /// 중간날이고 일요일일 때
                         UnevenRoundedRectangle(
-                            topLeadingRadius: 2,
-                            bottomLeadingRadius: 2
+                            topLeadingRadius: 4,
+                            bottomLeadingRadius: 4
                         )
                         .fill(scheduleColor)
                         .padding(.leading, 2)
                         
                         Text(schedule.title)
-                            .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 9))))
+                            .button9Style(color: .black22)
                             .padding(.horizontal, 4)
                             .frame(maxWidth: .infinity, alignment: .center)
                     } else {
@@ -455,12 +454,6 @@ private extension ScheduleView {
         let components = Calendar.current.dateComponents([.year, .month, .day], from: now)
         return Calendar.current.date(from: components)!
     }
-    
-    static let calendarHeaderDateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "YYYY.MM"
-        return formatter
-    }()
     
     static let weekdaySymbols: [String] = Calendar.current.shortWeekdaySymbols
     

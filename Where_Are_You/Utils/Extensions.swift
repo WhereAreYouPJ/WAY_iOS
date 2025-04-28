@@ -396,7 +396,6 @@ extension Font {
             size: LayoutAdapter.shared.scale(value: 18),
             lineHeight: 1.3,
             letterSpacing: 1.25
-//            letterSpacing: -1.5
         )
     }
     
@@ -406,7 +405,6 @@ extension Font {
             size: LayoutAdapter.shared.scale(value: 16),
             lineHeight: 1.3,
             letterSpacing: 4
-//            letterSpacing: 0
         )
     }
     
@@ -416,7 +414,15 @@ extension Font {
             size: LayoutAdapter.shared.scale(value: 14),
             lineHeight: 1.3,
             letterSpacing: -0.5
-//            letterSpacing: -0.5
+        )
+    }
+    
+    static func button9() -> FontStyle {
+        return FontStyle(
+            family: "Paperlogy-6SemiBold",
+            size: LayoutAdapter.shared.scale(value: 9),
+            lineHeight: 1.3,
+            letterSpacing: -1.25
         )
     }
     
@@ -531,7 +537,8 @@ enum DateFormat: String {
     case yearMonthDateHyphen = "yyyy-MM-dd"     // "yyyy-MM-dd" 형태
     case yearMonthDateDot = "yyyy.MM.dd"     // "yyyy-MM-dd" 형태
     case yearMonthDate = "yy.MM.dd"             // "YY.MM.dd" 형태
-    case yearMonth = "yyyy-MM"                  // "YYYY-MM" 형태
+    case yearMonthHyphen = "yyyy-MM"                  // "YYYY-MM" 형태
+    case yearMonth = "yyyy년 M월"                  // "2025년 1월" 형태
     case monthDay = "MM월 dd일"                  // "MM월 dd일" 형태
     case monthDaySimple = "M월 d일"              // "M월 d일" 형태
     case time = "a h시 m분"                      // "오후 1시 1분" 형태
@@ -680,6 +687,10 @@ extension View {
     
     func button14Style(color: Color = .primary) -> some View {
         applyFontStyle(Font.button14(), color: color)
+    }
+    
+    func button9Style(color: Color = .primary) -> some View {
+        applyFontStyle(Font.button9(), color: color)
     }
 }
 
