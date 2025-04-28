@@ -46,6 +46,18 @@ class BottomSheetViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.fetchDailySchedule { [weak self] hasSchedule in
+            if hasSchedule {
+                self?.schedules = self?.viewModel.getSchedules() ?? []
+            } else {
+                print("nodata")
+            }
+        }
+    }
+    
     // MARK: - Helpers
     
     private func setupBindings() {

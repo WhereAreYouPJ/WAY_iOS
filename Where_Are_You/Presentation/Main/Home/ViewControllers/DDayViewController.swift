@@ -35,6 +35,12 @@ class DDayViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(scrollToDDayIndex(_:)), name: .scrollToDDayIndex, object: nil)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.fetchDDays()
+    }
+    
     // MARK: - Helpers
     
     private func setupBindings() {

@@ -18,6 +18,7 @@ class AddFeedViewModel {
     
     private var participants: [String] = [] // 참가자 이름을 저장할 배열
     private var schedules: [ScheduleContent] = []
+    private var sectionKeys: [String] = []
     private var page: Int32 = 0
     private var isLoading = false
     
@@ -39,6 +40,14 @@ class AddFeedViewModel {
     }
     
     // MARK: - Helpers
+    private func updateGroupedSchedules() {
+        // 날짜 기준 그룹화
+        groupedSchedules = Dictionary(grouping: schedules, by: { schedule in
+            String(schedule.startTime.prefix(10))
+        })
+        // 날짜 내림차순 정렬 (최신 날짜가 먼저 오도록)
+        sectionKeys = groupedSchedules.keys.sorted(by: >)
+    }
     
     func fetchSchedules() {
         guard !isLoading else { return }
@@ -55,13 +64,13 @@ class AddFeedViewModel {
                 
                 // 일정 배열을 최신 날짜 순으로 정렬 (날짜가 최신인 일정이 상단에 위치)
                 self.schedules.sort { $0.startTime > $1.startTime }
-                
                 // 데이터 그룹화 (날짜별로)
-                self.groupedSchedules = Dictionary(grouping: schedules, by: { schedule -> String in
-                    return String(schedule.startTime.prefix(10))
-                })
-                self.onSchedulesUpdated?()
-                self.delegate?.didUpdateSchedules()
+                self.updateGroupedSchedules() // 💥 여기서 keys도 같이 세팅
+                
+                DispatchQueue.main.async {
+                    self.onSchedulesUpdated?()
+                    self.delegate?.didUpdateSchedules()
+                }
             case .failure(let error):
                 print("\(error.localizedDescription)")
             }
@@ -69,24 +78,33 @@ class AddFeedViewModel {
     }
     
     func numberOfSections() -> Int {
-        return groupedSchedules.keys.count
+        return sectionKeys.count
     }
     
     func numberOfRows(in section: Int) -> Int {
-        let key = Array(groupedSchedules.keys)[section]
+        let key = sectionKeys[section]
         return groupedSchedules[key]?.count ?? 0
     }
     
     // 섹션 헤더(날짜)를 반환
     func titleForHeader(in section: Int) -> String {
-        let key = Array(groupedSchedules.keys)[section]
-        return key.replacingOccurrences(of: "-", with: ".")
+        return sectionKeys[section].replacingOccurrences(of: "-", with: ".")
     }
     
     // 특정 셀에 대한 일정 데이터를 반환
     func schedule(for indexPath: IndexPath) -> ScheduleContent {
-        let key = Array(groupedSchedules.keys)[indexPath.section]
-        return groupedSchedules[key]![indexPath.row]
+        guard sectionKeys.indices.contains(indexPath.section) else {
+            fatalError("Invalid section index: \(indexPath.section)")
+        }
+        
+        let key = sectionKeys[indexPath.section]
+        guard let schedulesForSection = groupedSchedules[key],
+              indexPath.row < schedulesForSection.count else {
+            fatalError("Invalid row index: \(indexPath)")
+        }
+        print("🟡 sectionKeys.count = \(sectionKeys.count)")
+        print("🟡 schedulesForSection.count = \(schedulesForSection.count), indexPath = \(indexPath)")
+        return schedulesForSection[indexPath.row]
     }
     
     // 일정 선택시 호출
@@ -133,7 +151,7 @@ class AddFeedViewModel {
             return otherParticipants.joined(separator: ", ")
         }
     }
-
+    
     // 전체 행 수를 반환하는 메서드 추가
     func totalNumberOfRows() -> Int {
         return groupedSchedules.values.reduce(0) { $0 + $1.count }
@@ -141,7 +159,7 @@ class AddFeedViewModel {
     
     // MARK: - 피드 저장 메서드
     func saveFeed(title: String, content: String?) {
-        guard let schedule = selectedSchedule else { return }        
+        guard let schedule = selectedSchedule else { return }
         let feedImageOrders: [Int]? = selectedImages.isEmpty ? nil : Array(0..<selectedImages.count)
         
         let request = SaveFeedRequest(scheduleSeq: schedule.scheduleSeq,

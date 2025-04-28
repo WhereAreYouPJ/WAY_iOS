@@ -32,6 +32,12 @@ class HomeFeedViewController: UIViewController {
         fetchInitialFeeds()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        fetchInitialFeeds()
+    }
+    
     // MARK: - Helpers
     
     private func setupBindings() {
