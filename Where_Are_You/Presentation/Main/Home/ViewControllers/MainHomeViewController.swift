@@ -52,7 +52,6 @@ class MainHomeViewController: UIViewController {
                 print("오늘 일정 없음! => BottomSheet 띄우지 않음")
             }
         }
-//        setupFloatingPanel(contentViewController: bottomSheetViewController)
     }
     
     override func viewWillAppear(_ animated: Bool) {

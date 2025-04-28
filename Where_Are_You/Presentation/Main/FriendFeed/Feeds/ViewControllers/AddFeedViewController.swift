@@ -226,8 +226,12 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerText = viewModel.titleForHeader(in: section)
-        let label = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: headerText, textColor: .brandDark))
+        let label = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "● \(headerText)", textColor: .brandDark))
         label.textAlignment = .left
+        
+        let dateText = viewModel.titleForHeader(in: section) // 예: "2024.08.03"
+        let bullet = "●"
+        let fullText = "\(bullet) \(dateText)"
 
         let container = UIView()
         container.backgroundColor = .white
