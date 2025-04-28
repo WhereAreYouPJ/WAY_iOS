@@ -8,7 +8,6 @@
 import SwiftUI
 import Kingfisher
 
-// TODO: 검색 쿼리에 해당하는 글씨 색 변경
 struct SearchFriendsView: View {
     @ObservedObject var viewModel: SearchFriendsViewModel
     
@@ -17,6 +16,8 @@ struct SearchFriendsView: View {
     
     var body: some View {
         VStack {
+            SearchBarView(searchText: $viewModel.searchText, onClear: viewModel.clearSearch)
+                        
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(viewModel.selectedList) { friend in
@@ -28,12 +29,11 @@ struct SearchFriendsView: View {
                 }
             }
             
-            SearchBarView(searchText: $viewModel.searchText, onClear: viewModel.clearSearch)
-            
             FriendListView(
                 viewModel: viewModel.friendsViewModel,
                 showToggle: true,
-                searchText: viewModel.searchText,
+//                searchText: viewModel.searchText,
+                searchText: viewModel.highlightText,
                 isSelected: { friend in
                     viewModel.isSelected(friend: friend)
                 },
@@ -42,51 +42,21 @@ struct SearchFriendsView: View {
                 }
             )
             
-//            FriendsSectionView(title: "즐겨찾기", count: viewModel.favorites.count)
-//            ForEach(viewModel.filteredFavorites) { friend in
-//                FriendCellWithToggle(
-//                    friend: friend,
-//                    searchText: viewModel.searchText,
-//                    isOn: Binding(
-//                        get: { viewModel.isSelected(friend: friend) },
-//                        set: { _ in viewModel.toggleSelection(for: friend) }
-//                    )
-//                )
-//            }
-//            
-//            FriendsSectionView(title: "친구", count: viewModel.favorites.count)
-//            ForEach(viewModel.filteredFriends) { friend in
-//                FriendCellWithToggle(
-//                    friend: friend,
-//                    searchText: viewModel.searchText,
-//                    isOn: Binding(
-//                        get: { viewModel.isSelected(friend: friend) },
-//                        set: { _ in viewModel.toggleSelection(for: friend) }
-//                    )
-//                )
-//            }
-            
             Spacer()
         }
         .padding(.horizontal, LayoutAdapter.shared.scale(value: 20))
         .onAppear {
             viewModel.friendsViewModel.getFriendsList()
             
-            // 친구 목록이 로드된 후에 선택 상태를 설정하도록 Combine 활용
-            viewModel.friendsViewModel.$favorites
+            viewModel.friendsViewModel.$favorites // 친구 목록이 로드된 후에 선택 상태를 설정하도록 Combine 활용
                 .combineLatest(viewModel.friendsViewModel.$friends)
                 .sink { favorites, friends in
-                    // 선택 상태 초기화
-                    viewModel.resetSelection()
+                    viewModel.resetSelection() // 선택 상태 초기화
                     
-                    // 선택된 친구들 처리
                     for selectedFriend in selectedFriends {
-                        // 즐겨찾기에서 찾기
                         if let foundInFavorites = favorites.first(where: { $0.memberSeq == selectedFriend.memberSeq }) {
                             viewModel.selectedFavorites.insert(foundInFavorites.id)
-                        }
-                        // 일반 친구 목록에서 찾기
-                        else if let foundInFriends = friends.first(where: { $0.memberSeq == selectedFriend.memberSeq }) {
+                        } else if let foundInFriends = friends.first(where: { $0.memberSeq == selectedFriend.memberSeq }) {
                             viewModel.selectedFriends.insert(foundInFriends.id)
                         }
                     }
@@ -122,41 +92,9 @@ struct SelectedFriendsView: View {
             })
         }
         .padding(EdgeInsets(top: 6, leading: 5, bottom: 6, trailing: 10))
-        .background(Color.blackF0)
+        .background(Color.brandHighLight1)
         .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16)))
-        .padding(.top, LayoutAdapter.shared.scale(value: 20))
-    }
-}
-
-struct FriendCellWithToggle: View {
-    let friend: Friend
-    let searchText: String
-    @Binding var isOn: Bool
-    
-    var body: some View {
-        HStack {
-            KFImage(URL(string: friend.profileImage))
-                .resizable()
-                .scaledToFill()
-                .frame(width: UIScreen.main.bounds.width * 0.14, height: UIScreen.main.bounds.width * 0.14)
-                .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16)))
-            
-//            Text(friend.name)
-//                .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 17))))
-//                .foregroundColor(Color(.black22))
-//                .padding(8)
-            HighlightedText(
-                text: friend.name,
-                highlightText: searchText,
-                highlightColor: .brandDark
-            )
-            
-            Spacer()
-            
-            Toggle("", isOn: $isOn)
-                .toggleStyle(CheckboxToggleStyle())
-        }
-        .padding(.vertical, LayoutAdapter.shared.scale(value: 6))
+        .padding(.top, LayoutAdapter.shared.scale(value: 10))
     }
 }
 

@@ -22,8 +22,10 @@ struct HighlightedText: View {
     
     private var highlightedText: Text {
         do {
-            // 검색어를 정규식에 사용하기 위해 특수문자 처리
-            let pattern = escapeRegexPattern(highlightText)
+            guard !highlightText.isEmpty else { return Text(text) } // 검색어가 있는지 먼저 확인
+    
+            let pattern = escapeRegexPattern(highlightText) // 검색어에서 민감한 문자를 이스케이프 처리
+            
             let regex = try NSRegularExpression(pattern: pattern, options: [.caseInsensitive])
             let range = NSRange(text.startIndex..., in: text)
             let matches = regex.matches(in: text, options: [], range: range)
@@ -44,7 +46,7 @@ struct HighlightedText: View {
                     segments.append(Text(beforeMatch))
                 }
                 
-                // 일치하는 부분을 파란색으로 강조
+                // 일치하는 부분 색 강조
                 let matchText = String(text[matchRange])
                 segments.append(Text(matchText).foregroundColor(highlightColor))
                 
@@ -65,7 +67,7 @@ struct HighlightedText: View {
     
     // 정규식 특수문자 이스케이프 처리
     private func escapeRegexPattern(_ string: String) -> String {
-        return string.replacingOccurrences(of: "[.*+?^${}()|[\\]\\\\]", with: "\\\\$0", options: .regularExpression)
+        return NSRegularExpression.escapedPattern(for: string)
     }
 }
 

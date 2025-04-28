@@ -14,41 +14,42 @@ struct DailyScheduleView: View {
     @Binding var isPresented: Bool
     let onDeleteComplete: () -> Void  // 삭제 완료 콜백
     
-    var dummySchedules = [
-        Schedule(
-            scheduleSeq: 1,
-            title: "더미 일정",
-            startTime: Date.now,
-            endTime: Date.now,
-            location: Location(sequence: 1, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
-            color: "red",
-            memo: ""
-        ), Schedule(
-            scheduleSeq: 2,
-            title: "더미 일정 2",
-            startTime: Date.now,
-            endTime: Date.now,
-            location: Location(sequence: 2, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
-            color: "blue",
-            memo: ""
-        ), Schedule(
-            scheduleSeq: 3,
-            title: "더미 일정3",
-            startTime: Date.now,
-            endTime: Date.now,
-            location: Location(sequence: 1, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
-            color: "red",
-            memo: ""
-        ), Schedule(
-            scheduleSeq: 4,
-            title: "더미 일정 4",
-            startTime: Date.now,
-            endTime: Date.now,
-            location: Location(sequence: 2, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
-            color: "blue",
-            memo: ""
-        )
-    ]
+    // dummy
+//    var dummySchedules = [
+//        Schedule(
+//            scheduleSeq: 1,
+//            title: "더미 일정",
+//            startTime: Date.now,
+//            endTime: Date.now,
+//            location: Location(sequence: 1, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
+//            color: "red",
+//            memo: ""
+//        ), Schedule(
+//            scheduleSeq: 2,
+//            title: "더미 일정 2",
+//            startTime: Date.now,
+//            endTime: Date.now,
+//            location: Location(sequence: 2, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
+//            color: "blue",
+//            memo: ""
+//        ), Schedule(
+//            scheduleSeq: 3,
+//            title: "더미 일정3",
+//            startTime: Date.now,
+//            endTime: Date.now,
+//            location: Location(sequence: 1, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
+//            color: "red",
+//            memo: ""
+//        ), Schedule(
+//            scheduleSeq: 4,
+//            title: "더미 일정 4",
+//            startTime: Date.now,
+//            endTime: Date.now,
+//            location: Location(sequence: 2, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
+//            color: "blue",
+//            memo: ""
+//        )
+//    ]
     
     init(
         date: Date,
@@ -110,8 +111,9 @@ struct DailyScheduleView: View {
     }
     
     private func scheduleListView() -> some View {
-        ForEach(Array(dummySchedules.enumerated()), id: \.element.scheduleSeq) { index, schedule in
-//        ForEach(Array(viewModel.schedules.enumerated()), id: \.element.scheduleSeq) { index, schedule in
+        // dummy
+//        ForEach(Array(dummySchedules.enumerated()), id: \.element.scheduleSeq) { index, schedule in
+        ForEach(Array(viewModel.schedules.enumerated()), id: \.element.scheduleSeq) { index, schedule in
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     Circle()

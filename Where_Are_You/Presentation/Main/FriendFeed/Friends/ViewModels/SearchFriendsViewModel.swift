@@ -17,18 +17,40 @@ class SearchFriendsViewModel: ObservableObject {
     let friendsViewModel: FriendsViewModel
     private let getFriendUseCase: GetFriendUseCase
     
+    // 검색어 처리
+    @Published var inputSearchText: String = "" // 사용자 입력 값
+    @Published private var debouncedSearchText: String = "" // 디바운스된 값
+    private var searchTextCancellable: AnyCancellable?
+    
     init(
         friendsViewModel: FriendsViewModel,
         getFriendUseCase: GetFriendUseCase
     ) {
         self.friendsViewModel = friendsViewModel
         self.getFriendUseCase = getFriendUseCase
+        
+        // 디바운스 설정
+        searchTextCancellable = $inputSearchText
+            .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
+            .sink { [weak self] value in
+                self?.debouncedSearchText = value
+                self?.friendsViewModel.searchText = value // 디바운스된 값을 필터링에 사용
+            }
     }
     
-    // FriendsViewModel에서 forward
+//    // FriendsViewModel에서 forward
+//    var searchText: String {
+//        get { friendsViewModel.searchText }
+//        set { friendsViewModel.searchText = newValue }
+//    }
     var searchText: String {
-        get { friendsViewModel.searchText }
-        set { friendsViewModel.searchText = newValue }
+        get { inputSearchText }
+        set { inputSearchText = newValue }
+    }
+    
+    // 강조 표시에 사용할 디바운스된 검색어
+    var highlightText: String {
+        return debouncedSearchText
     }
     
     var favorites: [Friend] {
@@ -48,7 +70,23 @@ class SearchFriendsViewModel: ObservableObject {
     }
     
     func clearSearch() {
-        friendsViewModel.clearSearch()
+        // 사용자 입력 텍스트 초기화
+        inputSearchText = ""
+        
+        // 디바운스 타이머를 기다리지 않고 즉시 디바운스된 검색어도 초기화
+        debouncedSearchText = ""
+        
+        // FriendsViewModel의 검색어도 초기화
+        friendsViewModel.searchText = ""
+        
+        // 현재 실행 중인 디바운스 작업 취소
+        searchTextCancellable?.cancel()
+        searchTextCancellable = $inputSearchText
+            .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
+            .sink { [weak self] value in
+                self?.debouncedSearchText = value
+                self?.friendsViewModel.searchText = value
+            }
     }
     
     // SearchFriendsViewModel 고유 기능
