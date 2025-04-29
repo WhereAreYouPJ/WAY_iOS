@@ -7,11 +7,12 @@
 
 import SwiftUI
 
-struct YearMonthPicker: View {
-    // 선택된 날짜를 외부와 바인딩
+/// 년, 월, 일을 모두 선택할 수 있는 커스텀 DatePicker (소수점 없는 년도 표시 및 커스텀 폰트)
+struct FullDatePickerView: View {
+    // 선택된 날짜 바인딩
     @Binding var selectedDate: Date
     
-    // 피커 표시 여부 컨트롤
+    // 피커 표시 여부 바인딩
     @Binding var isPresented: Bool
     
     // 취소/완료 버튼 액션
@@ -19,25 +20,32 @@ struct YearMonthPicker: View {
     var onConfirm: ((Date) -> Void)?
     
     // 내부 상태 관리
-    @State private var tempSelectedDate: Date
-    @State private var selectedYear: Int
-    @State private var selectedMonth: Int
+    @State private var tempYear: Int
+    @State private var tempMonth: Int
+    @State private var tempDay: Int
     
     // 년도 범위 (기본: 현재 년도 ±10년)
-    private let yearRange: Range<Int>
+    private let yearRange: [Int]
     
-    // 월 이름 표시 형식
-    private let monthFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.setLocalizedDateFormatFromTemplate("MMMM")
-        return formatter
-    }()
+    // 월 범위
+    private let months = Array(1...12)
+    
+    // 선택한 년월에 따른 일 범위
+    private var days: [Int] {
+        let calendar = Calendar.current
+        guard let date = calendar.date(from: DateComponents(year: tempYear, month: tempMonth, day: 1)) else {
+            return Array(1...31) // 기본값 반환
+        }
+        
+        let range = calendar.range(of: .day, in: .month, for: date)!
+        return Array(1...range.count)
+    }
     
     // 이니셜라이저
     init(
         selectedDate: Binding<Date>,
         isPresented: Binding<Bool>,
-        yearRange: Range<Int>? = nil,
+        yearRange: [Int]? = nil,
         onCancel: (() -> Void)? = nil,
         onConfirm: ((Date) -> Void)? = nil
     ) {
@@ -46,176 +54,162 @@ struct YearMonthPicker: View {
         self.onCancel = onCancel
         self.onConfirm = onConfirm
         
-        // 년도 범위 결정 (기본값: 현재 년도 ±10년)
+        // 년도 범위 설정 (기본값: 현재 년도 ±10년)
         let currentYear = Calendar.current.component(.year, from: Date())
-        self.yearRange = yearRange ?? (currentYear - 10)..<(currentYear + 10)
+        self.yearRange = yearRange ?? Array(2000...2100)
         
-        // 초기 날짜 설정
-        self._tempSelectedDate = State(initialValue: selectedDate.wrappedValue)
-        
-        // 연도와 월 컴포넌트 추출
+        // 현재 선택된 날짜에서 연도, 월, 일 초기화
         let calendar = Calendar.current
-        self._selectedYear = State(initialValue: calendar.component(.year, from: selectedDate.wrappedValue))
-        self._selectedMonth = State(initialValue: calendar.component(.month, from: selectedDate.wrappedValue))
+        let year = calendar.component(.year, from: selectedDate.wrappedValue)
+        let month = calendar.component(.month, from: selectedDate.wrappedValue)
+        let day = calendar.component(.day, from: selectedDate.wrappedValue)
+        
+        // 내부 상태 초기화
+        self._tempYear = State(initialValue: year)
+        self._tempMonth = State(initialValue: month)
+        self._tempDay = State(initialValue: day)
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            // 상단 공간
-            Spacer()
-            
-            // 피커 컴포넌트
-            HStack {
-                // 년도 피커
-                Picker("Year", selection: $selectedYear) {
-                    ForEach(yearRange, id: \.self) { year in
-                        Text("\(year)년").tag(year)
-                    }
-                }
-                .pickerStyle(.wheel)
-                .frame(width: UIScreen.main.bounds.width / 2, height: 180)
-                .clipped()
-                .compositingGroup()
-                .onChange(of: selectedYear) { newYear in
-                    updateSelectedDate()
-                }
-                
-                // 월 피커
-                Picker("Month", selection: $selectedMonth) {
-                    ForEach(1...12, id: \.self) { month in
-                        Text(monthName(for: month)).tag(month)
-                    }
-                }
-                .pickerStyle(.wheel)
-                .frame(width: UIScreen.main.bounds.width / 2, height: 180)
-                .clipped()
-                .compositingGroup()
-                .onChange(of: selectedMonth) { newMonth in
-                    updateSelectedDate()
-                }
-            }
-            .padding(.bottom, 8)
-            
-            // 하단 버튼 영역
-            HStack {
-                Button(action: {
-                    isPresented = false
-                    onCancel?()
-                }) {
-                    Text("취소")
-                        .foregroundColor(.red)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                }
-                
-                Divider()
-                    .frame(height: 44)
-                
-                Button(action: {
-                    selectedDate = tempSelectedDate
-                    isPresented = false
-                    onConfirm?(tempSelectedDate)
-                }) {
-                    Text("완료")
-                        .fontWeight(.bold)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                }
-            }
-            .background(Color(.systemGray6))
-            .cornerRadius(10)
-            .padding(.horizontal)
-        }
-        .padding(.bottom, 30) // 하단 안전 영역 확보
-        .background(
-            Color.black.opacity(0.4)
+        ZStack {
+            // 반투명 배경
+            Color.black.opacity(0.3)
                 .edgesIgnoringSafeArea(.all)
                 .onTapGesture {
-                    // 배경 탭시 닫기 (옵션)
-                    // isPresented = false
+                    // 배경 탭시 닫기 (필요에 따라 주석 처리)
+                     isPresented = false
                 }
-        )
-    }
-    
-    // 월 이름 반환 함수
-    private func monthName(for month: Int) -> String {
-        let calendar = Calendar.current
-        guard let date = calendar.date(from: DateComponents(year: 2000, month: month, day: 1)) else {
-            return "\(month)월"
-        }
-        
-        return monthFormatter.string(from: date)
-    }
-    
-    // 선택한 년/월로 날짜 업데이트
-    private func updateSelectedDate() {
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.day], from: tempSelectedDate)
-        let day = components.day ?? 1
-        
-        // 새 날짜 생성
-        var newComponents = DateComponents()
-        newComponents.year = selectedYear
-        newComponents.month = selectedMonth
-        newComponents.day = day
-        
-        // 날짜 객체 생성 및 업데이트
-        if let newDate = calendar.date(from: newComponents) {
-            self.tempSelectedDate = newDate
-        }
-    }
-}
-
-// MARK: - 사용 예시를 위한 컨테이너 뷰
-struct YearMonthPickerContainer: View {
-    @State private var selectedDate = Date()
-    @State private var showPicker = false
-    
-    var body: some View {
-        VStack {
-            // 선택된 날짜 표시
-            let dateString = formattedDate(selectedDate)
-            Text("선택된 날짜: \(dateString)")
-                .padding()
             
-            // 피커 열기 버튼
-            Button("년도/월 선택") {
-                showPicker = true
-            }
-            .padding()
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(10)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .overlay(
-            ZStack {
-                if showPicker {
-                    YearMonthPicker(
-                        selectedDate: $selectedDate,
-                        isPresented: $showPicker,
-                        onCancel: {
-                            print("선택 취소됨")
-                        },
-                        onConfirm: { date in
-                            print("선택된 날짜: \(formattedDate(date))")
+            // 피커 컨테이너
+            VStack(spacing: 0) {
+                Spacer()
+                
+                // 피커 뷰 컨테이너
+                VStack(spacing: 0) {
+                    // 피커
+                    HStack(spacing: 0) {
+                        // 년도 피커
+                        Picker("", selection: $tempYear) {
+                            ForEach(yearRange, id: \.self) { year in
+                                Text("\(String(format: "%d", year))년")
+                                    .withBodyP2Style(color: .black22)
+                                    .tag(year)
+                            }
                         }
-                    )
+                        .pickerStyle(.wheel)
+                        .frame(maxWidth: .infinity)
+                        .clipped()
+                        
+                        // 월 피커
+                        Picker("", selection: $tempMonth) {
+                            ForEach(months, id: \.self) { month in
+                                Text("\(month)월")
+                                    .withBodyP2Style(color: .black22)
+                                    .tag(month)
+                            }
+                        }
+                        .pickerStyle(.wheel)
+                        .frame(maxWidth: .infinity)
+                        .clipped()
+                        .onChange(of: tempMonth) { _ in
+                            // 월이 변경되면 일 범위를 조정하고, 일이 범위를 벗어나면 수정
+                            if tempDay > days.last! {
+                                tempDay = days.last!
+                            }
+                        }
+                        
+                        // 일 피커
+                        Picker("", selection: $tempDay) {
+                            ForEach(days, id: \.self) { day in
+                                Text("\(day)일")
+                                    .withBodyP2Style(color: .black22)
+                                    .tag(day)
+                            }
+                        }
+                        .pickerStyle(.wheel)
+                        .frame(maxWidth: .infinity)
+                        .clipped()
+                    }
+                    .padding(.top, 10)
+                    .frame(height: 200)
+                    .background(Color(.systemBackground))
+                    
+                    // 버튼 영역
+                    HStack(spacing: 0) {
+                        // 취소 버튼
+                        Button(action: {
+                            isPresented = false
+                            onCancel?()
+                        }) {
+                            Text("취소")
+                                .button16Style(color: .black22)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 16)
+                        }
+                        
+                        Divider()
+                            .frame(height: 20)
+                            .background(Color.blackAC)
+                        
+                        // 확인 버튼
+                        Button(action: {
+                            applySelection()
+                            isPresented = false
+                            onConfirm?(selectedDate)
+                        }) {
+                            Text("완료")
+                                .button16Style(color: .black22)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 16)
+                        }
+                    }
+                    .padding(.bottom, 10)
+                    .background(Color(.systemBackground))
                 }
+                .cornerRadius(12)
+                .padding(.horizontal, 20)
+                .padding(.bottom, 30) // 하단 안전 영역 확보
             }
-        )
+            .edgesIgnoringSafeArea(.bottom)
+        }
     }
     
-    // 날짜 포맷팅
-    private func formattedDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy년 MM월"
-        return formatter.string(from: date)
+    // 선택한 날짜로 업데이트하고 바인딩에 적용
+    private func applySelection() {
+        let calendar = Calendar.current
+        
+        var dateComponents = DateComponents()
+        dateComponents.year = tempYear
+        dateComponents.month = tempMonth
+        dateComponents.day = tempDay
+        
+        if let newDate = calendar.date(from: dateComponents) {
+            selectedDate = newDate
+        } else {
+            // 유효하지 않은 날짜의 경우(예: 2월 30일), 해당 월의 마지막 날로 설정
+            dateComponents.day = 1
+            if let firstDayOfMonth = calendar.date(from: dateComponents),
+               let lastDay = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: firstDayOfMonth) {
+                selectedDate = lastDay
+            }
+        }
     }
 }
 
-struct YearMonthPicker_Previews: PreviewProvider {
+// MARK: - 프리뷰
+struct FullDatePickerView_Previews: PreviewProvider {
     static var previews: some View {
-        YearMonthPickerContainer()
+        ZStack {
+            Color.gray.opacity(0.3).edgesIgnoringSafeArea(.all)
+            
+            // 배경 콘텐츠
+            Text("배경 콘텐츠")
+            
+            // 피커 표시
+            FullDatePickerView(
+                selectedDate: .constant(Date()),
+                isPresented: .constant(true)
+            )
+        }
     }
 }
