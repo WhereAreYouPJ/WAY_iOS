@@ -124,14 +124,13 @@ struct FriendCell: View {
     var isOn: Binding<Bool>? = nil
     
     var body: some View {
-        let _ = print("🔎 친구 검색 - showToggle: \(showToggle)")
         HStack {
             KFImage(URL(string: friend.profileImage))
                 .resizable()
                 .scaledToFill()
                 .frame(width: LayoutAdapter.shared.scale(value: 56), height: LayoutAdapter.shared.scale(value: 56))
                 .background(Color.brandLight)
-                .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16)))
+                .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 14)))
             
             if showToggle {
                 HighlightedText(

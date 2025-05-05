@@ -395,7 +395,7 @@ extension Font {
             family: "Paperlogy-6SemiBold",
             size: LayoutAdapter.shared.scale(value: 18),
             lineHeight: 1.3,
-            letterSpacing: -1.5
+            letterSpacing: 1.25
         )
     }
     
@@ -404,7 +404,7 @@ extension Font {
             family: "Paperlogy-6SemiBold",
             size: LayoutAdapter.shared.scale(value: 16),
             lineHeight: 1.3,
-            letterSpacing: 0
+            letterSpacing: 4
         )
     }
     
@@ -414,6 +414,15 @@ extension Font {
             size: LayoutAdapter.shared.scale(value: 14),
             lineHeight: 1.3,
             letterSpacing: -0.5
+        )
+    }
+    
+    static func button9() -> FontStyle {
+        return FontStyle(
+            family: "Paperlogy-6SemiBold",
+            size: LayoutAdapter.shared.scale(value: 9),
+            lineHeight: 1.3,
+            letterSpacing: -1.25
         )
     }
     
@@ -528,7 +537,8 @@ enum DateFormat: String {
     case yearMonthDateHyphen = "yyyy-MM-dd"     // "yyyy-MM-dd" 형태
     case yearMonthDateDot = "yyyy.MM.dd"     // "yyyy-MM-dd" 형태
     case yearMonthDate = "yy.MM.dd"             // "YY.MM.dd" 형태
-    case yearMonth = "yyyy-MM"                  // "YYYY-MM" 형태
+    case yearMonthHyphen = "yyyy-MM"                  // "YYYY-MM" 형태
+    case yearMonth = "yyyy년 M월"                  // "2025년 1월" 형태
     case monthDay = "MM월 dd일"                  // "MM월 dd일" 형태
     case monthDaySimple = "M월 d일"              // "M월 d일" 형태
     case time = "a h시 m분"                      // "오후 1시 1분" 형태
@@ -572,6 +582,45 @@ extension Date {
         let minDate = calendar.date(from: DateComponents(year: 2000, month: 1, day: 1))!
         let maxDate = calendar.date(from: DateComponents(year: 2100, month: 12, day: 31))!
         return minDate...maxDate
+    }
+    
+    // 날짜의 년/월/일 컴포넌트만 추출 (시간대는 한국으로 고정)
+    var ymd: DateComponents {
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(identifier: "Asia/Seoul") ?? TimeZone.current
+        return calendar.dateComponents([.year, .month, .day], from: self)
+    }
+    
+    // 두 날짜의 년/월/일이 동일한지 비교 (시간 무시)
+    func isSameYMD(as otherDate: Date) -> Bool {
+        let myComponents = self.ymd
+        let otherComponents = otherDate.ymd
+        
+        return myComponents.year == otherComponents.year &&
+               myComponents.month == otherComponents.month &&
+               myComponents.day == otherComponents.day
+    }
+    
+    // 년/월/일 컴포넌트로부터 날짜 생성 (정확한 날짜 보장)
+    static func fromYMD(year: Int, month: Int, day: Int) -> Date? {
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(identifier: "Asia/Seoul") ?? TimeZone.current
+        
+        var components = DateComponents()
+        components.year = year
+        components.month = month
+        components.day = day
+        components.hour = 12  // 정오로 설정하여 일관성 확보
+        
+        return calendar.date(from: components)
+    }
+    
+    // 디버깅용 날짜 표현 (한국 시간대 기준)
+    var koreaDateString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+        return formatter.string(from: self)
     }
 }
 
@@ -677,6 +726,10 @@ extension View {
     
     func button14Style(color: Color = .primary) -> some View {
         applyFontStyle(Font.button14(), color: color)
+    }
+    
+    func button9Style(color: Color = .primary) -> some View {
+        applyFontStyle(Font.button9(), color: color)
     }
 }
 
@@ -875,5 +928,14 @@ extension UIView {
             }
         }
         return nil
+    }
+}
+
+// MARK: - Calendar 시간대를 한국으로 고정
+extension Calendar {
+    static var koreaCalendar: Calendar {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "Asia/Seoul") ?? TimeZone.current
+        return calendar
     }
 }

@@ -40,7 +40,7 @@ class ScheduleViewModel: ObservableObject {
     
     func getMonthlySchedule() {
         isLoading = true
-        let yearMonth = month.formatted(to: .yearMonth)
+        let yearMonth = month.formatted(to: .yearMonthHyphen)
         
         getMonthlyScheduleUseCase.execute(yearMonth: yearMonth) { [weak self] result in
             guard let self = self else { return }

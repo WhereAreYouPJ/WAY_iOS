@@ -14,6 +14,43 @@ struct DailyScheduleView: View {
     @Binding var isPresented: Bool
     let onDeleteComplete: () -> Void  // 삭제 완료 콜백
     
+    // dummy
+//    var dummySchedules = [
+//        Schedule(
+//            scheduleSeq: 1,
+//            title: "더미 일정",
+//            startTime: Date.now,
+//            endTime: Date.now,
+//            location: Location(sequence: 1, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
+//            color: "red",
+//            memo: ""
+//        ), Schedule(
+//            scheduleSeq: 2,
+//            title: "더미 일정 2",
+//            startTime: Date.now,
+//            endTime: Date.now,
+//            location: Location(sequence: 2, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
+//            color: "blue",
+//            memo: ""
+//        ), Schedule(
+//            scheduleSeq: 3,
+//            title: "더미 일정3",
+//            startTime: Date.now,
+//            endTime: Date.now,
+//            location: Location(sequence: 1, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
+//            color: "red",
+//            memo: ""
+//        ), Schedule(
+//            scheduleSeq: 4,
+//            title: "더미 일정 4",
+//            startTime: Date.now,
+//            endTime: Date.now,
+//            location: Location(sequence: 2, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
+//            color: "blue",
+//            memo: ""
+//        )
+//    ]
+    
     init(
         date: Date,
         isPresented: Binding<Bool>,
@@ -35,22 +72,25 @@ struct DailyScheduleView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack {
-                HStack {
-                    Text(viewModel.date.formatted(to: .monthDay))
-                        .foregroundStyle(Color(.letterBrandColor))
-                        .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 22))))
-                    
-                    Spacer()
-                }
-                .padding(.bottom, LayoutAdapter.shared.scale(value: 10))
+        VStack(spacing: 0) {
+            ZStack(alignment: .bottomLeading) {
+                Color(.brandHighLight1)
+                    .ignoresSafeArea()
+                    .frame(width: .infinity, height: LayoutAdapter.shared.scale(value: 75))
                 
+                Text(viewModel.date.formatted(to: .monthDaySimple))
+                    .titleH1Style(color: .brandDark)
+                    .padding(.top, LayoutAdapter.shared.scale(value: 30))
+                    .frame(width: .infinity, height: LayoutAdapter.shared.scale(value: 75))
+                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 24))
+            }
+            
+            ScrollView {
                 scheduleListView()
             }
-            .padding(.top, LayoutAdapter.shared.scale(value: 16))
-            .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
-            .environment(\.font, .pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 14)))
+            .padding(.horizontal, LayoutAdapter.shared.scale(value: 24))
+            
+            Spacer()
         }
         .customAlertModifier(
             isPresented: $viewModel.showingDeleteAlert,
@@ -71,7 +111,9 @@ struct DailyScheduleView: View {
     }
     
     private func scheduleListView() -> some View {
-        ForEach(viewModel.schedules, id: \.scheduleSeq) { schedule in
+        // dummy
+//        ForEach(Array(dummySchedules.enumerated()), id: \.element.scheduleSeq) { index, schedule in
+        ForEach(Array(viewModel.schedules.enumerated()), id: \.element.scheduleSeq) { index, schedule in
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     Circle()
@@ -89,15 +131,15 @@ struct DailyScheduleView: View {
                         },
                         label: {
                             Text("삭제")
-                                .foregroundStyle(Color(.color118))
-                                .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 12))))
+                                .bodyP4Style(color: .black66)
                         })
                     .padding(.trailing, LayoutAdapter.shared.scale(value: 6))
                 }
                 
                 Divider()
-                    .padding(.vertical, 4)
+                    .padding(.vertical, LayoutAdapter.shared.scale(value: 12))
             }
+            .padding(.top, index == 0 ? LayoutAdapter.shared.scale(value: 16) : 0) // 첫 번째 항목일 때만 상단 패딩
             .contentShape(Rectangle())
             .onTapGesture {
                 scheduleForDetail = schedule
@@ -119,8 +161,7 @@ struct DailyScheduleView: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
                 Text(schedule.title)
-                    .foregroundStyle(Color(.black22))
-                    .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 16))))
+                    .bodyP3Style(color: .black22)
                     .padding(.bottom, LayoutAdapter.shared.scale(value: 4))
                 
                 groupTagView(for: schedule)
@@ -128,13 +169,13 @@ struct DailyScheduleView: View {
             
             if let location = schedule.location?.location, !location.isEmpty {
                 Text(location)
-                    .foregroundStyle(Color(.color118))
+                    .bodyP4Style(color: .black66)
                     .padding(.bottom, LayoutAdapter.shared.scale(value: 4))
             }
             
             if let scheduleDate = viewModel.getScheduleDate(schedule) {
                 Text("\(scheduleDate)")
-                    .foregroundStyle(Color(.color118))
+                    .bodyP4Style(color: .black66)
                     .padding(.bottom, LayoutAdapter.shared.scale(value: 4))
             }
         }
@@ -149,8 +190,7 @@ struct DailyScheduleView: View {
                         .stroke(Color(.brandColor), lineWidth: 1)
                         .frame(width: LayoutAdapter.shared.scale(value: 39), height: LayoutAdapter.shared.scale(value: 24))
                     Text("그룹")
-                        .foregroundStyle(Color(.letterBrandColor))
-                        .font(Font(UIFont.pretendard(NotoSans: .regular, fontSize: LayoutAdapter.shared.scale(value: 12))))
+                        .bodyP4Style(color: .brandDark)
                 }
                 .padding(.bottom, LayoutAdapter.shared.scale(value: 2))
             }

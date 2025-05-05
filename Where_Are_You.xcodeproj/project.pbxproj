@@ -256,6 +256,7 @@
 		D51AC99C2C849AB400D0AD2E /* LocationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51AC99B2C849AB400D0AD2E /* LocationAPI.swift */; };
 		D51AC99F2C84A0AD00D0AD2E /* FavLocationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51AC99E2C84A0AD00D0AD2E /* FavLocationResponse.swift */; };
 		D51F8E562D12F4E400364F31 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51F8E552D12F4E400364F31 /* ProfileImageView.swift */; };
+		D52FB64D2DC0CE5D00D5099D /* DatePickerWindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52FB64C2DC0CE5D00D5099D /* DatePickerWindowManager.swift */; };
 		D531D45F2D2C009A00A938EB /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D531D45E2D2C009A00A938EB /* NotificationView.swift */; };
 		D534B0F62D06EF42004864E0 /* GetCoordinateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D534B0F52D06EF42004864E0 /* GetCoordinateResponse.swift */; };
 		D534B0F92D06EFB6004864E0 /* PostCoordinateBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D534B0F82D06EFB6004864E0 /* PostCoordinateBody.swift */; };
@@ -634,6 +635,7 @@
 		D51AC99B2C849AB400D0AD2E /* LocationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAPI.swift; sourceTree = "<group>"; };
 		D51AC99E2C84A0AD00D0AD2E /* FavLocationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavLocationResponse.swift; sourceTree = "<group>"; };
 		D51F8E552D12F4E400364F31 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
+		D52FB64C2DC0CE5D00D5099D /* DatePickerWindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerWindowManager.swift; sourceTree = "<group>"; };
 		D53078812C5D3C9D0041BBB7 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		D531D45E2D2C009A00A938EB /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		D534B0F52D06EF42004864E0 /* GetCoordinateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCoordinateResponse.swift; sourceTree = "<group>"; };
@@ -1511,6 +1513,7 @@
 				D5161A6C2D950D5F00D92B39 /* CustomFontStyle.swift */,
 				D5505A712D9914C400FA7A66 /* HighlightedText.swift */,
 				D559454E2DA6708A00A5D1A1 /* ButtonMergeView.swift */,
+				D52FB64C2DC0CE5D00D5099D /* DatePickerWindowManager.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -2198,6 +2201,7 @@
 				99E755512C22E66F0016A0A6 /* MemberService.swift in Sources */,
 				D534B1052D06F416004864E0 /* PostCoordinateUseCase.swift in Sources */,
 				D511A5742D3E8F7400CA6FE7 /* CustomToast.swift in Sources */,
+				D52FB64D2DC0CE5D00D5099D /* DatePickerWindowManager.swift in Sources */,
 				D55C6C492CF5D921005132DC /* AcceptFriendRequestBody.swift in Sources */,
 				99D8FBC22C3BA25B0062AF10 /* CustomTextField.swift in Sources */,
 				D55C6C402CF585F1005132DC /* AddFriendView.swift in Sources */,

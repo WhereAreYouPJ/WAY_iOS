@@ -8,6 +8,7 @@
 import SwiftUI
 import Kingfisher
 
+// TODO: 일정명, 장소, 일정 초대자 텍스트 길이 제한 필요.
 struct NotificationView: View {
     @Environment(\.dismiss) private var dismiss
     
@@ -127,7 +128,7 @@ struct NotificationView: View {
         }
         .onAppear {
             viewModel.fetchNotifications()
-//            setDummyData()
+            setDummyData()
         }
     }
     
@@ -237,7 +238,7 @@ struct NotificationView: View {
             
             // 일정 시작일, 타이틀
             HStack(spacing: 0) {
-                Text(schedule.startTime.formatted(to: .monthDay))
+                Text(schedule.startTime.formatted(to: .monthDaySimple))
                     .titleH2Style(color: .brandDark)
                     .frame(width: LayoutAdapter.shared.scale(value: 90))
                     .padding(.trailing, LayoutAdapter.shared.scale(value: 6))
@@ -252,7 +253,7 @@ struct NotificationView: View {
                 Text("D - \(schedule.dDay ?? 0)")
                     .bodyP4Style(color: .error)
                     .padding(.vertical, LayoutAdapter.shared.scale(value: 4))
-                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 14))
+                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 18))
                     .background(Color.blackF0)
                     .clipShape(
                         RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 50))
