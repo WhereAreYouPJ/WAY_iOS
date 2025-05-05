@@ -55,11 +55,11 @@ struct FullDatePickerView: View {
         self.onConfirm = onConfirm
         
         // 년도 범위 설정 (기본값: 현재 년도 ±10년)
-        let currentYear = Calendar.current.component(.year, from: Date())
+        let currentYear = Calendar.koreaCalendar.component(.year, from: Date())
         self.yearRange = yearRange ?? Array(2000...2100)
         
         // 현재 선택된 날짜에서 연도, 월, 일 초기화
-        let calendar = Calendar.current
+        let calendar = Calendar.koreaCalendar
         let year = calendar.component(.year, from: selectedDate.wrappedValue)
         let month = calendar.component(.month, from: selectedDate.wrappedValue)
         let day = calendar.component(.day, from: selectedDate.wrappedValue)
@@ -175,23 +175,32 @@ struct FullDatePickerView: View {
     }
     
     // 선택한 날짜로 업데이트하고 바인딩에 적용
+//    private func applySelection() {
+//        let calendar = Calendar.current
+//        
+//        var dateComponents = DateComponents()
+//        dateComponents.year = tempYear
+//        dateComponents.month = tempMonth
+//        dateComponents.day = tempDay
+//        
+//        if let newDate = calendar.date(from: dateComponents) {
+//            selectedDate = newDate
+//        } else {
+//            // 유효하지 않은 날짜의 경우(예: 2월 30일), 해당 월의 마지막 날로 설정
+//            dateComponents.day = 1
+//            if let firstDayOfMonth = calendar.date(from: dateComponents),
+//               let lastDay = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: firstDayOfMonth) {
+//                selectedDate = lastDay
+//            }
+//        }
+//    }
     private func applySelection() {
-        let calendar = Calendar.current
-        
-        var dateComponents = DateComponents()
-        dateComponents.year = tempYear
-        dateComponents.month = tempMonth
-        dateComponents.day = tempDay
-        
-        if let newDate = calendar.date(from: dateComponents) {
+        // DateComponents로 날짜 생성
+        if let newDate = Date.fromYMD(year: tempYear, month: tempMonth, day: tempDay) {
             selectedDate = newDate
+            print("📆 선택된 날짜(KST): \(newDate.koreaDateString)")
         } else {
-            // 유효하지 않은 날짜의 경우(예: 2월 30일), 해당 월의 마지막 날로 설정
-            dateComponents.day = 1
-            if let firstDayOfMonth = calendar.date(from: dateComponents),
-               let lastDay = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: firstDayOfMonth) {
-                selectedDate = lastDay
-            }
+            // 기존 예외 처리 로직
         }
     }
 }

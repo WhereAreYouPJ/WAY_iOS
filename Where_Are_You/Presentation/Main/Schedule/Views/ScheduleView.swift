@@ -83,19 +83,6 @@ struct ScheduleView: View {
                         }
                     })
                 }
-                
-//                if showDatePicker {
-//                    FullDatePickerView(
-//                        selectedDate: $selectedPickerDate,
-//                        isPresented: $showDatePicker,
-//                        onCancel: {
-//                            // 취소 시 동작 (옵션)
-//                        },
-//                        onConfirm: { date in
-//                            handleDateSelection(date)
-//                        }
-//                    )
-//                }
             }
         }
         .fullScreenCover(isPresented: $showNotification, content: {
@@ -144,39 +131,37 @@ struct ScheduleView: View {
     // MARK: 연월 표시
     private var yearMonthView: some View {
         HStack {
-            Text(viewModel.month.formatted(to: .yearMonth))
-                .titleH1Style(color: .black22)
-            
             Button(action: {
                 // 피커가 표시될 때 현재 선택된 월로 피커 날짜 초기화
                 selectedPickerDate = viewModel.month
                 showDatePicker = true
             }, label: {
+                Text(viewModel.month.formatted(to: .yearMonth))
+                    .titleH1Style(color: .black22)
+                
                 Image("control")
             })
         }
     }
     
     private func handleDateSelection(_ date: Date) {
-        // 1. 현재 표시 중인 월과 선택한 날짜의 월 비교
-        let calendar = Calendar.current
+        let calendar = Calendar.current // 현재 표시 중인 월과 선택한 날짜의 월 비교
         
         let currentMonth = calendar.component(.month, from: viewModel.month)
         let selectedMonth = calendar.component(.month, from: date)
         let currentYear = calendar.component(.year, from: viewModel.month)
         let selectedYear = calendar.component(.year, from: date)
         
-        // 2. 월이 다른 경우 월 변경 (월 차이 계산)
-        if currentMonth != selectedMonth || currentYear != selectedYear {
+        selectedPickerDate = date // 선택한 날짜로 selectedDate 업데이트
+        print("📆 선택된 날짜: \(selectedPickerDate)")
+        
+        if currentMonth != selectedMonth || currentYear != selectedYear { // 월이 다른 경우 월 변경 (월 차이 계산)
             let yearDiff = selectedYear - currentYear
             let monthDiff = selectedMonth - currentMonth
             let totalMonthDiff = yearDiff * 12 + monthDiff
             
             viewModel.changeMonth(by: totalMonthDiff)
         }
-        
-        // 3. 선택한 날짜로 selectedDate 업데이트
-        selectedDate = date
         
         viewModel.getMonthlySchedule()
     }
@@ -237,22 +222,24 @@ struct ScheduleView: View {
     
     private func currentMonthCell(for index: Int, cellHeight: CGFloat, monthlySchedules: [Schedule]) -> some View {
         let date = getDate(for: index)
-        let day = Calendar.current.component(.day, from: date)
-        let weekday = Calendar.current.component(.weekday, from: date)
+        let calendar = Calendar.koreaCalendar
+        let day = calendar.component(.day, from: date)
+        let weekday = calendar.component(.weekday, from: date)
         
         let clicked = selectedDate == date
         let isToday = date.formattedCalendarDayDate == today.formattedCalendarDayDate
-        let isSelectedInPicker = Calendar.current.isDate(date, inSameDayAs: selectedPickerDate)
+//        let isSelectedInPicker = calendar.isDate(date, inSameDayAs: selectedPickerDate)
+        let isSelectedInPicker = date.isSameYMD(as: selectedPickerDate)
         
         let daySchedules = monthlySchedules.filter { schedule in
-            let scheduleStartDate = Calendar.current.startOfDay(for: schedule.startTime)
-            let scheduleEndDate = Calendar.current.startOfDay(for: schedule.endTime)
-            let cellDate = Calendar.current.startOfDay(for: date)
+            let scheduleStartDate = calendar.startOfDay(for: schedule.startTime)
+            let scheduleEndDate = calendar.startOfDay(for: schedule.endTime)
+            let cellDate = calendar.startOfDay(for: date)
             return (scheduleStartDate...scheduleEndDate).contains(cellDate)
         }
         let processedSchedules = daySchedules.map { schedule in
-            let isStart = Calendar.current.isDate(schedule.startTime, inSameDayAs: date)
-            let isEnd = Calendar.current.isDate(schedule.endTime, inSameDayAs: date)
+            let isStart = calendar.isDate(schedule.startTime, inSameDayAs: date)
+            let isEnd = calendar.isDate(schedule.endTime, inSameDayAs: date)
             return (schedule, isStart, isEnd)
         }
         
@@ -273,21 +260,22 @@ struct ScheduleView: View {
     }
     
     private func otherMonthCell(for index: Int, lastDayOfMonthBefore: Int, cellHeight: CGFloat, monthlySchedules: [Schedule]) -> CellView {
-        let calendar = Calendar.current
+        let calendar = Calendar.koreaCalendar
         let date = getDate(for: index)
         
-        let isSelectedInPicker = Calendar.current.isDate(date, inSameDayAs: selectedPickerDate)
+//        let isSelectedInPicker = calendar.isDate(date, inSameDayAs: selectedPickerDate)
+        let isSelectedInPicker = date.isSameYMD(as: selectedPickerDate)
         
         let daySchedules = monthlySchedules.filter { schedule in
-            let scheduleStartDate = Calendar.current.startOfDay(for: schedule.startTime)
-            let scheduleEndDate = Calendar.current.startOfDay(for: schedule.endTime)
-            let cellDate = Calendar.current.startOfDay(for: date)
+            let scheduleStartDate = calendar.startOfDay(for: schedule.startTime)
+            let scheduleEndDate = calendar.startOfDay(for: schedule.endTime)
+            let cellDate = calendar.startOfDay(for: date)
             
             return (scheduleStartDate...scheduleEndDate).contains(cellDate)
         }
         let processedSchedules = daySchedules.map { schedule in
-            let isStart = Calendar.current.isDate(schedule.startTime, inSameDayAs: date)
-            let isEnd = Calendar.current.isDate(schedule.endTime, inSameDayAs: date)
+            let isStart = calendar.isDate(schedule.startTime, inSameDayAs: date)
+            let isEnd = calendar.isDate(schedule.endTime, inSameDayAs: date)
             return (schedule, isStart, isEnd)
         }
         
@@ -371,6 +359,7 @@ private struct CellView: View {
     fileprivate var body: some View {
         VStack(alignment: .center) {
             ZStack {
+                let _ = print("📆 isSelectedInPicker in CellView: \(self.isSelectedInPicker)")
                 if clicked { // 터치 시 채워진 동그라미 표시
                     Circle()
                         .fill(backgroundColor)

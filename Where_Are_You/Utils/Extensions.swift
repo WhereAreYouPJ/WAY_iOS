@@ -583,6 +583,45 @@ extension Date {
         let maxDate = calendar.date(from: DateComponents(year: 2100, month: 12, day: 31))!
         return minDate...maxDate
     }
+    
+    // 날짜의 년/월/일 컴포넌트만 추출 (시간대는 한국으로 고정)
+    var ymd: DateComponents {
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(identifier: "Asia/Seoul") ?? TimeZone.current
+        return calendar.dateComponents([.year, .month, .day], from: self)
+    }
+    
+    // 두 날짜의 년/월/일이 동일한지 비교 (시간 무시)
+    func isSameYMD(as otherDate: Date) -> Bool {
+        let myComponents = self.ymd
+        let otherComponents = otherDate.ymd
+        
+        return myComponents.year == otherComponents.year &&
+               myComponents.month == otherComponents.month &&
+               myComponents.day == otherComponents.day
+    }
+    
+    // 년/월/일 컴포넌트로부터 날짜 생성 (정확한 날짜 보장)
+    static func fromYMD(year: Int, month: Int, day: Int) -> Date? {
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(identifier: "Asia/Seoul") ?? TimeZone.current
+        
+        var components = DateComponents()
+        components.year = year
+        components.month = month
+        components.day = day
+        components.hour = 12  // 정오로 설정하여 일관성 확보
+        
+        return calendar.date(from: components)
+    }
+    
+    // 디버깅용 날짜 표현 (한국 시간대 기준)
+    var koreaDateString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+        return formatter.string(from: self)
+    }
 }
 
 // MARK: - String
@@ -889,5 +928,14 @@ extension UIView {
             }
         }
         return nil
+    }
+}
+
+// MARK: - Calendar 시간대를 한국으로 고정
+extension Calendar {
+    static var koreaCalendar: Calendar {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "Asia/Seoul") ?? TimeZone.current
+        return calendar
     }
 }
