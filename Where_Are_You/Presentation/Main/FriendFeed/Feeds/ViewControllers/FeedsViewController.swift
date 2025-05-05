@@ -33,20 +33,17 @@ class FeedsViewController: UIViewController {
         setupTableView()
         setupBindings()
         setupActions()
+        setupNavigationBar()
         
         viewModel.fetchFeeds()
-        
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .white  // 원하는 배경색
-        appearance.shadowColor = .clear         // 분리선(쉐도우) 제거
-
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.fetchFeeds()
     }
     
     // MARK: - Helpers
-    
     private func setupViewModel() {
         let feedService = FeedService()
         let feedRepository = FeedRepository(feedService: feedService)
@@ -103,6 +100,16 @@ class FeedsViewController: UIViewController {
         feedsView.feedsTableView.rowHeight = UITableView.automaticDimension
         feedsView.feedsTableView.estimatedRowHeight = LayoutAdapter.shared.scale(value: 498)
         feedsView.feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
+    }
+    
+    private func setupNavigationBar() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white  // 원하는 배경색
+        appearance.shadowColor = .clear         // 분리선(쉐도우) 제거
+
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
     private func setupActions() {

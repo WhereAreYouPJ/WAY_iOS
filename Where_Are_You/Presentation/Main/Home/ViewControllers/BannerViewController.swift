@@ -35,6 +35,12 @@ class BannerViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(scrollToBannerIndex(_:)), name: .scrollToBannerIndex, object: nil)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.fetchBannerImages()
+    }
+    
     // MARK: - Helpers
     private func setupBindings() {
         viewModel.onBannerDataFetched = { [weak self] in
