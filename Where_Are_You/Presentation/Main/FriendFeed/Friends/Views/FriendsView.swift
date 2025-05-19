@@ -95,6 +95,7 @@ struct FriendsView: View {
     
     func myProfileView() -> some View {
         HStack {
+            let _ = print("📷 myProfileView - profile URL: \(UserDefaultsManager.shared.getProfileImage())")
             KFImage(URL(string: UserDefaultsManager.shared.getProfileImage()))
                 .resizable()
                 .scaledToFill()

@@ -68,8 +68,8 @@ class UserDefaultsManager {
     }
     
     // MARK: - ProfileImage
-    func saveProfileImage(_ profileImage: String) {
-        defaults.set(profileImage, forKey: profileImage)
+    func saveProfileImage(_ imageUrl: String) {
+        defaults.set(imageUrl, forKey: profileImage)
     }
     
     func getProfileImage() -> String {
