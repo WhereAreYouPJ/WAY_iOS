@@ -93,7 +93,6 @@ class FriendsViewModel: ObservableObject { // 친구 목록을 나중에는 iOS 
     
 }
 
-// FriendsViewModel 클래스에 아래 메서드 추가
 extension FriendsViewModel {
     // 더미 데이터 설정 메서드
     func setDummyData() {

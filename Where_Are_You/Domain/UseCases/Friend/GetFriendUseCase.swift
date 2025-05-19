@@ -24,8 +24,7 @@ class GetFriendUseCaseImpl: GetFriendUseCase {
             case .success(let response):
                 let allFriends = response.data
                 let favorites = allFriends.filter { $0.favorites}
-                let friends = allFriends.filter { !$0.favorites}
-                completion(.success((favorites: favorites, friends: friends)))
+                completion(.success((favorites: favorites, friends: allFriends)))
             case .failure(let error):
                 completion(.failure(error))
             }
