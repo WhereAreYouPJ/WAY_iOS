@@ -95,14 +95,32 @@ class UserDefaultsManager {
     }
     
     // MARK: - ClearData
-    func clearData() {
+    func clearLoginData() { // 로그아웃
         defaults.removeObject(forKey: accessTokenKey)
         defaults.removeObject(forKey: refreshTokenKey)
+        
         defaults.removeObject(forKey: memberSeqKey)
         defaults.removeObject(forKey: memberCode)
         defaults.removeObject(forKey: userName)
         defaults.removeObject(forKey: profileImage)
+        
         defaults.removeObject(forKey: isLoggedIn)
+        
+        defaults.removeObject(forKey: "hasUnreadNotifications")
+        defaults.removeObject(forKey: "notificationIds")
+    }
+    
+    func clearData() { // 탈퇴
+        defaults.removeObject(forKey: accessTokenKey)
+        defaults.removeObject(forKey: refreshTokenKey)
+        
+        defaults.removeObject(forKey: memberSeqKey)
+        defaults.removeObject(forKey: memberCode)
+        defaults.removeObject(forKey: userName)
+        defaults.removeObject(forKey: profileImage)
+        
+        defaults.removeObject(forKey: isLoggedIn)
+        
         defaults.removeObject(forKey: fcmToken)
         
         defaults.removeObject(forKey: "hasUnreadNotifications")

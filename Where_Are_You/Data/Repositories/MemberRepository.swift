@@ -88,7 +88,7 @@ class MemberRepository: MemberRepositoryProtocol {
         memberService.postLogout { result in
             switch result {
             case .success:
-                UserDefaultsManager.shared.clearData()
+                UserDefaultsManager.shared.clearLoginData()
                 completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))
