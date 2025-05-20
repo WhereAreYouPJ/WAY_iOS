@@ -29,7 +29,7 @@ class DDayViewController: UIViewController {
         setupBindings()
         setupCollectionView()
         
-        viewModel.fetchDDays()
+//        viewModel.fetchDDays()
         
         // NotificationCenter를 통해 알림을 수신하는 옵저버를 추가합니다.
         NotificationCenter.default.addObserver(self, selector: #selector(scrollToDDayIndex(_:)), name: .scrollToDDayIndex, object: nil)

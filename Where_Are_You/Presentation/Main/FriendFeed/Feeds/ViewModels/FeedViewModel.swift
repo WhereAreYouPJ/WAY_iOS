@@ -23,7 +23,7 @@ class FeedViewModel {
     
     private(set) var currentIndex = 0
     
-    private var page: Int32 = 0
+    var page: Int32 = 0
     private var isLoading = false
     
     private var rawFeedContent: [FeedContent] = []
@@ -48,6 +48,8 @@ class FeedViewModel {
     
     // MARK: - Helpers
     func fetchFeeds() {
+        print("DEBUG: 피드 데이터 리스트 불러오는중,,,")
+
         getFeedListUseCase.execute(page: page) { [weak self] result in
             guard let self = self else { return }
             self.isLoading = false

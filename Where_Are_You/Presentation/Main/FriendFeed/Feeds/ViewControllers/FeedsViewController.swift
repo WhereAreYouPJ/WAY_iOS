@@ -34,8 +34,6 @@ class FeedsViewController: UIViewController {
         setupBindings()
         setupActions()
         setupNavigationBar()
-        
-        viewModel.fetchFeeds()
     }
     
     override func viewWillAppear(_ animated: Bool) {
