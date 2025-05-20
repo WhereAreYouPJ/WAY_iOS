@@ -44,20 +44,14 @@ class MainHomeViewController: UIViewController {
         setupActions()
         
         // 일정 데이터 먼저 받아오고 조건에 따라 setup
-        bottomSheetViewController.viewModel.fetchDailySchedule { [weak self] hasSchedule in
-            guard let self = self else { return }
-            if hasSchedule {
-                self.setupFloatingPanel(contentViewController: self.bottomSheetViewController)
-            } else {
-                print("오늘 일정 없음! => BottomSheet 띄우지 않음")
-            }
-        }
+//        resetUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // 네비게이션 바 숨기기
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        resetUI()
     }
     
     // MARK: - Helpers
@@ -107,6 +101,17 @@ class MainHomeViewController: UIViewController {
     
     private func setupActions() {
         mainHomeView.titleView.notificationButton.addTarget(self, action: #selector(moveToNotification), for: .touchUpInside)
+    }
+    
+    private func resetUI() {
+        bottomSheetViewController.viewModel.fetchDailySchedule { [weak self] hasSchedule in
+            guard let self = self else { return }
+            if hasSchedule {
+                self.setupFloatingPanel(contentViewController: self.bottomSheetViewController)
+            } else {
+                print("오늘 일정 없음! => BottomSheet 띄우지 않음")
+            }
+        }
     }
     
     private func addAndLayoutChildViewController(_ child: UIViewController, toView containerView: UIView) {
