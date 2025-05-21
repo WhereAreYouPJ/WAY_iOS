@@ -20,6 +20,7 @@ target 'Where_Are_You' do
 	pod 'Firebase/Messaging'
 	pod 'IQKeyboardManager'
 	pod 'FloatingPanel'
+	pod 'Toast-Swift', '~> 5.1.1'
 
 	target 'Where_Are_You_Tests' do
 	  inherit! :search_paths
