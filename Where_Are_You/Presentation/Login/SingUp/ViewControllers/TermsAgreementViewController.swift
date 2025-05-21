@@ -27,27 +27,42 @@ class TermsAgreementViewController: UIViewController {
     func buttonActions() {
         termsAgreementView.bottomButtonView.addTarget(self, action: #selector(agreeButtonTapped), for: .touchUpInside)
         termsAgreementView.agreeTermButton.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
+        
         // 각 "보기" 버튼에 target 추가
         for (index, button) in termsAgreementView.termButtons.enumerated() {
             button.tag = index  // 각 버튼을 식별하기 위해 태그를 설정
             button.addTarget(self, action: #selector(termButtonTapped(_:)), for: .touchUpInside)
         }
-    }
-    
-    private func updateAgreeUI() {
-        if isAgreed {
-            // 동의 상태일 때: agreeTermButton과 bottomButtonView 모두 brandMain 색으로 변경하고, bottomButtonView 활성화
-            termsAgreementView.agreeTermButton.tintColor = .brandMain
-            termsAgreementView.bottomButtonView.updateBackgroundColor(.brandMain)
-            termsAgreementView.bottomButtonView.isEnabled = true
-        } else {
-            // 미동의 상태일 때: 기본 색상으로 변경 및 bottomButtonView 비활성화
-            termsAgreementView.agreeTermButton.tintColor = .blackAC
-            termsAgreementView.bottomButtonView.updateBackgroundColor(.blackAC)
-            termsAgreementView.bottomButtonView.isEnabled = false
+        
+        for button in termsAgreementView.checkButtons {
+            button.addTarget(self, action: #selector(individualCheckToggled(_:)), for: .touchUpInside)
         }
     }
     
+    private func updateAgreeUI() {
+        let buttons = termsAgreementView.checkButtons
+        let required = termsAgreementView.requiredIndices
+        let all = termsAgreementView.allIndices
+        
+        // 필수 약관만 모두 체크되었는지 여부
+        let allRequiredAgreed = required.allSatisfy { buttons[$0].isSelected }
+        
+        // 전체 약관(필수 + 선택) 모두 체크되었는지 여부
+        let allTotallyAgreed = all.allSatisfy { buttons[$0].isSelected }
+        
+        // 전체 동의 버튼은 전체 체크되었을 때만 선택 상태로 유지
+        termsAgreementView.agreeTermButton.isSelected = allTotallyAgreed
+        isAgreed = allTotallyAgreed
+        
+        termsAgreementView.agreeTermButton.tintColor = allTotallyAgreed ? .brandMain : .blackAC
+        termsAgreementView.bottomButtonView.updateBackgroundColor(allRequiredAgreed ? .brandMain : .blackAC)
+        termsAgreementView.bottomButtonView.isEnabled = allRequiredAgreed
+    }
+    
+    private func updateButtonTintColor(_ button: UIButton) {
+        button.tintColor = button.isSelected ? .brandMain : .blackAC
+    }
+
     // MARK: - Selectors
     
     @objc func backButtonTapped() {
@@ -56,6 +71,33 @@ class TermsAgreementViewController: UIViewController {
     
     @objc func checkButtonTapped() {
         isAgreed.toggle()
+        termsAgreementView.agreeTermButton.isSelected = isAgreed
+        for button in termsAgreementView.checkButtons {
+            button.isSelected = isAgreed
+        }
+        
+        let allButtons = [termsAgreementView.agreeTermButton] + termsAgreementView.checkButtons
+        allButtons.forEach {
+            $0.isSelected = isAgreed
+            updateButtonTintColor($0)
+        }
+        updateAgreeUI()
+    }
+    
+    @objc func individualCheckToggled(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+//        // 필수 항목이 모두 체크되었는지 확인
+//        let allRequiredAgreed = termsAgreementView.requiredIndices.allSatisfy {
+//            termsAgreementView.checkButtons[$0].isSelected
+//        }
+//        
+//        // 전체 동의 상태 갱신
+//        isAgreed = allRequiredAgreed
+//        termsAgreementView.agreeTermButton.isSelected = isAgreed
+
+        updateButtonTintColor(sender)
+
         updateAgreeUI()
     }
     

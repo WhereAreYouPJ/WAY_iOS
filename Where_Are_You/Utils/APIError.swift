@@ -29,9 +29,9 @@ enum APIError: Error {
     var localizedDescription: String {
         switch self {
         case .emailError:
-            return " 이메일이 올바르지 않습니다."
+            return " 이메일 또는 비밀번호를 확인해주세요."
         case .passwordError:
-            return " 비밀번호가 옳지 않습니다."
+            return " 이메일 또는 비밀번호를 확인해주세요."
         case .serverError:
             return " 서버에 오류가 발생했습니다."
         case .unknownError(let message):
