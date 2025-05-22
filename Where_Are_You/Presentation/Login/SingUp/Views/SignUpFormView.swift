@@ -88,6 +88,14 @@ class SignUpFormView: UIView {
     
     let passwordTextField = CustomTextField(placeholder: "비밀번호")
     
+    let hidePasswordButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        button.setImage(UIImage(systemName: "eye"), for: .selected)
+        button.tintColor = .blackAC
+        return button
+    }()
+    
     let passwordErrorLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -97,6 +105,14 @@ class SignUpFormView: UIView {
     }()
     
     let checkPasswordTextField = CustomTextField(placeholder: "비밀번호 확인")
+    
+    let hideCheckPasswordButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        button.setImage(UIImage(systemName: "eye"), for: .selected)
+        button.tintColor = .blackAC
+        return button
+    }()
     
     let checkPasswordErrorLabel: UILabel = {
         let label = UILabel()
@@ -147,6 +163,8 @@ class SignUpFormView: UIView {
         checkPasswordTextField.isSecureTextEntry = true
         bottomButtonView.updateBackgroundColor(.color171)
         bottomButtonView.isEnabled = false
+        hideCheckPasswordButton.isUserInteractionEnabled = true
+        hidePasswordButton.isUserInteractionEnabled = true
         
         emailTextField.keyboardType = .emailAddress
         authCodeTextField.keyboardType = .numberPad
@@ -157,6 +175,9 @@ class SignUpFormView: UIView {
         addSubview(bottomButtonView)
         addSubview(stack)
         authCodeTextField.addSubview(timer)
+        
+        addSubview(hidePasswordButton)
+        addSubview(hideCheckPasswordButton)
     }
     
     private func setupConstraints() {
@@ -199,6 +220,18 @@ class SignUpFormView: UIView {
             make.top.equalTo(titleLabel.snp.bottom).offset(30)
             make.leading.trailing.equalToSuperview().inset(15)
             make.bottom.lessThanOrEqualTo(bottomButtonView.snp.top).offset(-20)
+        }
+        
+        hidePasswordButton.snp.makeConstraints { make in
+            make.centerY.equalTo(passwordTextField)
+            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 20))
+            make.trailing.equalTo(passwordTextField.snp.trailing).inset(LayoutAdapter.shared.scale(value: 12))
+        }
+        
+        hideCheckPasswordButton.snp.makeConstraints { make in
+            make.centerY.equalTo(checkPasswordTextField)
+            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 20))
+            make.trailing.equalTo(checkPasswordTextField.snp.trailing).inset(LayoutAdapter.shared.scale(value: 12))
         }
         
         bottomButtonView.snp.makeConstraints { make in

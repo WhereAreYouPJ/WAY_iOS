@@ -49,6 +49,9 @@ class SignUpFormViewController: UIViewController {
         signUpView.emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         signUpView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         signUpView.checkPasswordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        
+        signUpView.hidePasswordButton.addTarget(self, action: #selector(hidePasswordButtonTapped(_:)), for: .touchUpInside)
+        signUpView.hideCheckPasswordButton.addTarget(self, action: #selector(hidePasswordButtonTapped(_:)), for: .touchUpInside)
     }
     
     private func setupBindings() {
@@ -152,6 +155,17 @@ class SignUpFormViewController: UIViewController {
     
     @objc func authCheckButtonTapped() {
         viewModel.verifyEmailCode(inputCode: signUpView.authCodeTextField.text ?? "")
+    }
+    
+    @objc func hidePasswordButtonTapped(_ button: UIButton) {
+        switch button {
+        case signUpView.hidePasswordButton:
+            signUpView.passwordTextField.isSecureTextEntry.toggle()
+        case signUpView.hideCheckPasswordButton:
+            signUpView.checkPasswordTextField.isSecureTextEntry.toggle()
+        default:
+            break
+        }
     }
     
     @objc func startButtonTapped() {

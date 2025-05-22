@@ -326,7 +326,7 @@
 		D5A91D5B2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */; };
 		D5AB2EE22D548E0D009E6741 /* MyLocation.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D5AB2EE12D548E0D009E6741 /* MyLocation.gpx */; };
 		D5B3B5392CB3DE63004353F6 /* DailyScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */; };
-		D5B79A162C5B83CD004EDDF2 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		D5B79A162C5B83CD004EDDF2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D5BA308C2CE744C400958BF5 /* FriendAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308B2CE744C400958BF5 /* FriendAPI.swift */; };
 		D5BA308E2CE744CA00958BF5 /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308D2CE744CA00958BF5 /* FriendService.swift */; };
 		D5BA30902CE7453900958BF5 /* DeleteFriendBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308F2CE7453900958BF5 /* DeleteFriendBody.swift */; };
@@ -980,9 +980,9 @@
 				9950C6562C1040FD003155A7 /* TermsAgreementViewController.swift */,
 				9921F9582DB8B1C90091C634 /* TermsWebViewController.swift */,
 				9950C65A2C10B0F5003155A7 /* SignUpFormViewController.swift */,
+				99EC78D52C11E8A3007C4415 /* FinishRegisterViewController.swift */,
 				993AA53A2D53307100B0C9F6 /* SocialSignUpViewController.swift */,
 				993AA5402D5351C900B0C9F6 /* SocialLinkViewController.swift */,
-				99EC78D52C11E8A3007C4415 /* FinishRegisterViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -992,9 +992,9 @@
 			children = (
 				9950C64D2C102FB6003155A7 /* TermsAgreementView.swift */,
 				9950C6582C10B0DF003155A7 /* SignUpFormView.swift */,
+				99EC78D32C11E809007C4415 /* FinishRegisterview.swift */,
 				99E9E1882D3E0DC1008A81BF /* SocialSignUpView.swift */,
 				993AA53E2D5351B400B0C9F6 /* SocialLinkView.swift */,
-				99EC78D32C11E809007C4415 /* FinishRegisterview.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2036,9 +2036,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2115,9 +2119,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2213,7 +2221,7 @@
 				995175022C7EF95100E938DE /* LocationBookmarkViewModel.swift in Sources */,
 				D5CD68A42D351EA000B790E9 /* RefuseInvitedScheduleUseCase.swift in Sources */,
 				D5BA30922CE745A700958BF5 /* PostFavoriteFriendBody.swift in Sources */,
-				D5B79A162C5B83CD004EDDF2 /* BuildFile in Sources */,
+				D5B79A162C5B83CD004EDDF2 /* (null) in Sources */,
 				D5DCF8C42D69CA770045030C /* NotificationBadgeViewModel.swift in Sources */,
 				D534B0FE2D06F0FD004864E0 /* CoordinateService.swift in Sources */,
 				99C9213D2D34B72A00FC2333 /* TokenReissueUseCase.swift in Sources */,
