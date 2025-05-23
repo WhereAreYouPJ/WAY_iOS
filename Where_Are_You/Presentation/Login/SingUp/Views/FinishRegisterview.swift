@@ -48,15 +48,15 @@ class FinishRegisterview: UIView {
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(progressBar).offset(30)
-            make.leading.equalToSuperview().offset(15)
-            make.width.equalToSuperview().multipliedBy(0.477)
-            make.height.equalTo(titleLabel.snp.width).multipliedBy(0.402)
+            make.top.equalTo(progressBar).offset(54)
+            make.leading.equalToSuperview().offset(24)
+//            make.width.equalToSuperview().multipliedBy(0.477)
+//            make.height.equalTo(titleLabel.snp.width).multipliedBy(0.402)
         }
         
         descriptionLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(titleLabel.snp.bottom).offset(26)
+            make.top.equalTo(titleLabel.snp.bottom).offset(38)
             make.leading.equalTo(titleLabel)
         }
         

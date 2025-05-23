@@ -13,7 +13,7 @@ class AccountCheckView: UIView {
     
     private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "회원님의 가입정보를 \n확인해주세요", textColor: .black22))
     
-    private let emailLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "회원님의 가입정보와 일치하는 이메일 주소는", textColor: .black22))
+    private let emailLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "회원님의 가입정보와 일치하는 이메일은", textColor: .black22))
     
     let accountImage: UIImageView = {
         let imageView = UIImageView()
@@ -38,7 +38,7 @@ class AccountCheckView: UIView {
         return view
     }()
     
-    private let descriptionLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "로그인 또는 비밀번호 찾기 버튼을 눌러주세요.", textColor: .black66))
+    private let descriptionLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "로그인 또는 비밀번호 재설정 버튼을 눌러주세요.", textColor: .black66))
     
     let loginButton = TitleButton(title: UIFont.CustomFont.button18(text: "로그인하기", textColor: .white), backgroundColor: .brandMain, borderColor: nil)
     

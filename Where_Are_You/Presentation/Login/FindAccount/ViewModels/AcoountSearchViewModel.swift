@@ -57,7 +57,7 @@ class AcoountSearchViewModel {
                 self.requestEmailCode(email: data.email)
                 self.emailType = data.type
             case .failure:
-                self.onRequestCodeFailure?("\(ValidationError.invalidEmailFormat)")
+                self.onRequestCodeFailure?("이메일 형식에 알맞지 않습니다.")
             }
         }
     }
@@ -85,7 +85,7 @@ class AcoountSearchViewModel {
                     self.onVerifyCodeSuccess?(" 인증코드가 확인되었습니다.")
                     self.timerHelper.stopTimer()
                 case .failure:
-                    self.onVerifyCodeFailure?(" 인증코드가 알맞지 않습니다.")
+                    self.onVerifyCodeFailure?(" 인증코드가 일치하지 않습니다.")
                 }
             }
         }

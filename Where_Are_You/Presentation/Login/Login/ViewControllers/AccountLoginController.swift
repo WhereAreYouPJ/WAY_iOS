@@ -75,7 +75,10 @@ class AccountLoginController: UIViewController {
     
     // MARK: - Selectors
     @objc private func backButtonTapped() {
-        dismiss(animated: true)
+        let loginVC = LoginViewController()
+        let nav = UINavigationController(rootViewController: loginVC)
+        nav.modalPresentationStyle = .fullScreen
+        self.present(nav, animated: true, completion: nil)
     }
     
     // viewmodel에 로그인하기 버튼 활성화 비활성화 로직 추가하기
