@@ -11,7 +11,6 @@ class SignUpFormViewController: UIViewController {
     // MARK: - Properties
     let signUpView = SignUpFormView()
     private var viewModel: SignUpViewModel!
-    var type: [String] = []
     
     // MARK: - Lifecycle
     
@@ -97,7 +96,7 @@ class SignUpFormViewController: UIViewController {
         }
         
         viewModel.onCheckEmailDuplicate = { [weak self] type in
-            self?.type = type
+            // 이 부분은 이메일 로직 수정되면서 삭제/수정 될 예정
         }
         
         viewModel.onEmailVerifyCodeMessage = { [weak self] message, isAvailable in
@@ -160,8 +159,10 @@ class SignUpFormViewController: UIViewController {
     @objc func hidePasswordButtonTapped(_ button: UIButton) {
         switch button {
         case signUpView.hidePasswordButton:
+            signUpView.hidePasswordButton.isSelected.toggle()
             signUpView.passwordTextField.isSecureTextEntry.toggle()
         case signUpView.hideCheckPasswordButton:
+            signUpView.hideCheckPasswordButton.isSelected.toggle()
             signUpView.checkPasswordTextField.isSecureTextEntry.toggle()
         default:
             break
@@ -169,14 +170,7 @@ class SignUpFormViewController: UIViewController {
     }
     
     @objc func startButtonTapped() {
-        if type.isEmpty {
-            viewModel.signUp()
-        } else {
-            let email = viewModel.email
-            guard let password = viewModel.signUpBody.password, let userName = viewModel.signUpBody.userName else { return }
-            let controller = SocialLinkViewController(email: email, password: password, userName: userName, loginType: "normal", linkLoginType: type)
-            navigationController?.pushViewController(controller, animated: true)
-        }
+        viewModel.signUp()
     }
     
     // MARK: - Helpers

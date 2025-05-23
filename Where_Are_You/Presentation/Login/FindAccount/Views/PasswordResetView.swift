@@ -11,11 +11,19 @@ import SnapKit
 class PasswordResetView: UIView {
     // MARK: - Properties
     
-    private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "회원님의 비밀번호를 재설정해주세요.", textColor: .black22))
+    private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "회원님의 비밀번호를 \n재설정 해주세요.", textColor: .black22))
     
     private let passwordLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "비밀번호", textColor: .black22))
     
     let resetPasswordTextField = CustomTextField(placeholder: "비밀번호")
+    
+    let hidePasswordButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        button.setImage(UIImage(systemName: "eye"), for: .selected)
+        button.tintColor = .blackAC
+        return button
+    }()
     
     let resetPasswordDescription = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 영문 대소문자로 시작하는 6~20자의 영문 대소문자, 숫자를 \n 포함해 입력해주세요.", textColor: .brandMain))
     
@@ -27,6 +35,14 @@ class PasswordResetView: UIView {
     }()
     
     let checkPasswordTextField = CustomTextField(placeholder: "비밀번호 확인")
+    
+    let hideCheckPasswordButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        button.setImage(UIImage(systemName: "eye"), for: .selected)
+        button.tintColor = .blackAC
+        return button
+    }()
     
     let checkPasswordDescription = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "비밀번호가 일치하지 않습니다.", textColor: .error))
     
@@ -66,6 +82,8 @@ class PasswordResetView: UIView {
         addSubview(titleLabel)
         addSubview(stack)
         addSubview(bottomButtonView)
+        addSubview(hidePasswordButton)
+        addSubview(hideCheckPasswordButton)
     }
     
     private func setupConstraints() {
@@ -78,6 +96,18 @@ class PasswordResetView: UIView {
             make.leading.equalTo(titleLabel.snp.leading)
             make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(LayoutAdapter.shared.scale(value: 50))
+        }
+        
+        hidePasswordButton.snp.makeConstraints { make in
+            make.centerY.equalTo(resetPasswordTextField)
+            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 20))
+            make.trailing.equalTo(resetPasswordTextField.snp.trailing).inset(LayoutAdapter.shared.scale(value: 12))
+        }
+        
+        hideCheckPasswordButton.snp.makeConstraints { make in
+            make.centerY.equalTo(checkPasswordTextField)
+            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 20))
+            make.trailing.equalTo(checkPasswordTextField.snp.trailing).inset(LayoutAdapter.shared.scale(value: 12))
         }
         
         bottomButtonView.snp.makeConstraints { make in
