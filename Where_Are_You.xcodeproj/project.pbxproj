@@ -42,6 +42,13 @@
 		99149FED2C4F97EA00136097 /* TimeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99149FEC2C4F97EA00136097 /* TimeHelper.swift */; };
 		9921F9592DB8B1C90091C634 /* TermsWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9921F9582DB8B1C90091C634 /* TermsWebViewController.swift */; };
 		992381882C7DC8C900FFCBCB /* MyDetailManageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992381872C7DC8C900FFCBCB /* MyDetailManageViewModel.swift */; };
+		99256F9E2DE42B3B00856B70 /* AdminAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99256F9D2DE42B3B00856B70 /* AdminAPI.swift */; };
+		99256FA02DE42B4300856B70 /* AdminService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99256F9F2DE42B4300856B70 /* AdminService.swift */; };
+		99256FA22DE42F9D00856B70 /* AdminResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99256FA12DE42F9D00856B70 /* AdminResponse.swift */; };
+		99256FA42DE4318700856B70 /* AdminRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99256FA32DE4318700856B70 /* AdminRepository.swift */; };
+		99256FA72DE432B500856B70 /* GetAdminImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99256FA62DE432B500856B70 /* GetAdminImageUseCase.swift */; };
+		99256FA92DE4344F00856B70 /* GetServerStatusUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99256FA82DE4344F00856B70 /* GetServerStatusUseCase.swift */; };
+		99256FAB2DE448CA00856B70 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99256FAA2DE448CA00856B70 /* SplashViewModel.swift */; };
 		992BF70A2CAA8819008D3055 /* GetScheduleListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992BF7092CAA8819008D3055 /* GetScheduleListResponse.swift */; };
 		992BF70C2CAA9006008D3055 /* GetScheduleListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992BF70B2CAA9006008D3055 /* GetScheduleListUseCase.swift */; };
 		992F1EC62C37ED400042CB1A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 992F1EC52C37ED400042CB1A /* .gitignore */; };
@@ -409,6 +416,13 @@
 		99149FEC2C4F97EA00136097 /* TimeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeHelper.swift; sourceTree = "<group>"; };
 		9921F9582DB8B1C90091C634 /* TermsWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsWebViewController.swift; sourceTree = "<group>"; };
 		992381872C7DC8C900FFCBCB /* MyDetailManageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDetailManageViewModel.swift; sourceTree = "<group>"; };
+		99256F9D2DE42B3B00856B70 /* AdminAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminAPI.swift; sourceTree = "<group>"; };
+		99256F9F2DE42B4300856B70 /* AdminService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminService.swift; sourceTree = "<group>"; };
+		99256FA12DE42F9D00856B70 /* AdminResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminResponse.swift; sourceTree = "<group>"; };
+		99256FA32DE4318700856B70 /* AdminRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminRepository.swift; sourceTree = "<group>"; };
+		99256FA62DE432B500856B70 /* GetAdminImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAdminImageUseCase.swift; sourceTree = "<group>"; };
+		99256FA82DE4344F00856B70 /* GetServerStatusUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetServerStatusUseCase.swift; sourceTree = "<group>"; };
+		99256FAA2DE448CA00856B70 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		992BF7092CAA8819008D3055 /* GetScheduleListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetScheduleListResponse.swift; sourceTree = "<group>"; };
 		992BF70B2CAA9006008D3055 /* GetScheduleListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetScheduleListUseCase.swift; sourceTree = "<group>"; };
 		992F1EC52C37ED400042CB1A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -866,6 +880,24 @@
 			path = Photo;
 			sourceTree = "<group>";
 		};
+		99256F9C2DE42B2A00856B70 /* Admin */ = {
+			isa = PBXGroup;
+			children = (
+				99256F9D2DE42B3B00856B70 /* AdminAPI.swift */,
+				99256F9F2DE42B4300856B70 /* AdminService.swift */,
+			);
+			path = Admin;
+			sourceTree = "<group>";
+		};
+		99256FA52DE4329100856B70 /* Admin */ = {
+			isa = PBXGroup;
+			children = (
+				99256FA62DE432B500856B70 /* GetAdminImageUseCase.swift */,
+				99256FA82DE4344F00856B70 /* GetServerStatusUseCase.swift */,
+			);
+			path = Admin;
+			sourceTree = "<group>";
+		};
 		992F57C32C5B1EBE00219C6B /* Requests */ = {
 			isa = PBXGroup;
 			children = (
@@ -906,6 +938,7 @@
 				D53A515B2CA1260400025AC8 /* ErrorResponse.swift */,
 				99D780DC2C6066EB005A3F30 /* Member */,
 				99C68E442C64B3FC00DEC1F1 /* Feed */,
+				99256FA12DE42F9D00856B70 /* AdminResponse.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -923,6 +956,7 @@
 		9950C64F2C103031003155A7 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				99256F9C2DE42B2A00856B70 /* Admin */,
 				D534B0FA2D06F005004864E0 /* Coordinate */,
 				992F57DC2C5B56E200219C6B /* AutoTokenPlugin.swift */,
 				D51AC99A2C849AA400D0AD2E /* Location */,
@@ -1053,6 +1087,7 @@
 			children = (
 				9967C1532C566F2F00927277 /* NetworkAlert.swift */,
 				99CEAD492C539743006B3D41 /* SplashViewController.swift */,
+				99256FAA2DE448CA00856B70 /* SplashViewModel.swift */,
 				9953584A2C00C558005BF799 /* LaunchScreen.storyboard */,
 			);
 			path = LaunchScreen;
@@ -1531,6 +1566,7 @@
 		99EC209F2C0D8DEC0018904D /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				99256FA52DE4329100856B70 /* Admin */,
 				D534B1012D06F30C004864E0 /* Coordinate */,
 				D5BA30972CE74BE200958BF5 /* Friend */,
 				999E296E2CBB9A8900AB9FF9 /* Loacation */,
@@ -1551,6 +1587,7 @@
 				D5BA30952CE7481D00958BF5 /* FriendRepository.swift */,
 				D55C6C582CF5DD33005132DC /* FriendRequestRepository.swift */,
 				D534B0FF2D06F113004864E0 /* CoordinateRepository.swift */,
+				99256FA32DE4318700856B70 /* AdminRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -2185,6 +2222,7 @@
 				9950C6572C1040FD003155A7 /* TermsAgreementViewController.swift in Sources */,
 				D5CD68A82D35214B00B790E9 /* PostAcceptScheduleBody.swift in Sources */,
 				99960AB12CE1D96D007D2B61 /* DeleteScheduleUseCase.swift in Sources */,
+				99256FA42DE4318700856B70 /* AdminRepository.swift in Sources */,
 				9910B8522C71EAA4005F7EEE /* ScheduleDropDownCell.swift in Sources */,
 				99EDF5822CE862120008B19A /* MemberSnsBody.swift in Sources */,
 				D534B0F92D06EFB6004864E0 /* PostCoordinateBody.swift in Sources */,
@@ -2195,7 +2233,9 @@
 				99C140382C64943F00A706B6 /* LayoutAdapter.swift in Sources */,
 				995358412C00C555005BF799 /* LoginViewController.swift in Sources */,
 				D55C6C4D2CF5D9B6005132DC /* CancelFriendRequestBody.swift in Sources */,
+				99256FAB2DE448CA00856B70 /* SplashViewModel.swift in Sources */,
 				99CEAD4A2C539743006B3D41 /* SplashViewController.swift in Sources */,
+				99256FA72DE432B500856B70 /* GetAdminImageUseCase.swift in Sources */,
 				9910B4322C76BE3000DBE375 /* AlbumService.swift in Sources */,
 				D55C6C552CF5DA9C005132DC /* FriendRequestAPI.swift in Sources */,
 				99E755512C22E66F0016A0A6 /* MemberService.swift in Sources */,
@@ -2223,6 +2263,7 @@
 				D5BA30922CE745A700958BF5 /* PostFavoriteFriendBody.swift in Sources */,
 				D5B79A162C5B83CD004EDDF2 /* (null) in Sources */,
 				D5DCF8C42D69CA770045030C /* NotificationBadgeViewModel.swift in Sources */,
+				99256F9E2DE42B3B00856B70 /* AdminAPI.swift in Sources */,
 				D534B0FE2D06F0FD004864E0 /* CoordinateService.swift in Sources */,
 				99C9213D2D34B72A00FC2333 /* TokenReissueUseCase.swift in Sources */,
 				9953583D2C00C555005BF799 /* AppDelegate.swift in Sources */,
@@ -2355,6 +2396,7 @@
 				99EC78CE2C11DBA5007C4415 /* PasswordResetViewController.swift in Sources */,
 				99AE53472D3F5F13003AD774 /* BottomSheetViewController.swift in Sources */,
 				D541BBF42D32C6D6001C4C0C /* GetInvitedListResponse.swift in Sources */,
+				99256FA92DE4344F00856B70 /* GetServerStatusUseCase.swift in Sources */,
 				99A814122D129DC5000FC5A3 /* NoFeedImageView.swift in Sources */,
 				99E2EEEF2D35FFCC0010F1F9 /* FeedParticipantView.swift in Sources */,
 				99E2EEF12D3633CD0010F1F9 /* MainNoFeedImageView.swift in Sources */,
@@ -2426,7 +2468,9 @@
 				99D353E32D3A33CD0098B52E /* GradientButton.swift in Sources */,
 				99CF9BFB2CD317920079BE81 /* FeedBookMarkViewController.swift in Sources */,
 				99FBA5582C453C05002EEEC7 /* HomeFeedViewModel.swift in Sources */,
+				99256FA22DE42F9D00856B70 /* AdminResponse.swift in Sources */,
 				99949F512C588B6200AE0177 /* FavoritesTableView.swift in Sources */,
+				99256FA02DE42B4300856B70 /* AdminService.swift in Sources */,
 				D55C6C662CF71336005132DC /* CancelFriendRequestUseCase.swift in Sources */,
 				99960AAB2CE1D26C007D2B61 /* GetScheduleUseCase.swift in Sources */,
 				992F57CE2C5B28A800219C6B /* EmailVerifyBody.swift in Sources */,
