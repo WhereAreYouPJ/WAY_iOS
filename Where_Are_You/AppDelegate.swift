@@ -29,6 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            }
 //        }
         
+        Thread.sleep(forTimeInterval: 1.5)
+        
         // 파이어베이스 설정
         FirebaseApp.configure()
         

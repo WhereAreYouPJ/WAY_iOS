@@ -9,9 +9,12 @@ import UIKit
 import SwiftUI
 
 class SplashViewController: UIViewController {
-    
+    private var viewModel: SplashViewModel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViewModel()
+        setupBindings()
         view.backgroundColor = UIColor.rgb(red: 123, green: 80, blue: 255)
     }
     
@@ -20,15 +23,43 @@ class SplashViewController: UIViewController {
         checkDeviceNetworkStatus()
     }
     
+    private func setupViewModel() {
+        let adminService = AdminService()
+        let adminRepository = AdminRepository(adminService: adminService)
+        viewModel = SplashViewModel(getServerStatusUseCase: GetServerStatusUseCaseImpl(adminRepository: adminRepository))
+    }
+    
+    private func setupBindings() {
+        viewModel.onServerStatus = { [weak self] serverStatus in
+            print("serverStatus is \(serverStatus)")
+            DispatchQueue.main.async {
+            if serverStatus {
+                self?.navigateBasedOnLoginStatus()
+            } else {
+                    let networkAlert = NetworkAlert(action: {
+                        self?.viewModel.checkServerHealth()
+                    }, serverIssue: true)
+                    networkAlert.showAlert(on: self!)
+                }
+            }
+        }
+    }
+    
     func checkDeviceNetworkStatus() {
         if !(DeviceManager.shared.networkStatue) {
-            let networkAlert = NetworkAlert(action: {
-                self.checkDeviceNetworkStatus()
-            })
-            networkAlert.showAlert(on: self)
+            DispatchQueue.main.async {
+                let networkAlert = NetworkAlert(action: {
+                    self.checkDeviceNetworkStatus()
+                }, serverIssue: false)
+                networkAlert.showAlert(on: self)
+            }
         } else {
-            navigateBasedOnLoginStatus()
+            checkServerHealth()
         }
+    }
+    
+    func checkServerHealth() {
+        viewModel.checkServerHealth()
     }
     
     private func navigateBasedOnLoginStatus() {
