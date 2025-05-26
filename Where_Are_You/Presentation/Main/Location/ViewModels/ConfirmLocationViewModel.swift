@@ -67,6 +67,7 @@ class ConfirmLocationViewModel: ObservableObject { // TODO: 위치 시퀀스 오
                 DispatchQueue.main.async {
                     if success {
                         self.isFavorite = false
+                        self.refreshLocationManager()
                     }
                 }
             }
@@ -75,10 +76,18 @@ class ConfirmLocationViewModel: ObservableObject { // TODO: 위치 시퀀스 오
                 DispatchQueue.main.async {
                     if success {
                         self.isFavorite = true
+                        self.refreshLocationManager()
                         print("위치 즐겨찾기 성공! 좌표: ", self.location.x, self.location.y)
                     }
                 }
             }
+        }
+    }
+    
+    private func refreshLocationManager() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            LocationManager.shared.loadFavoriteLocations()
+            print("LocationManager 즐겨찾기 목록 새로고침 완료")
         }
     }
     

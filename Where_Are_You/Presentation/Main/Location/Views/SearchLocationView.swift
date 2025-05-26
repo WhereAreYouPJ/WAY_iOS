@@ -15,6 +15,7 @@ struct SearchLocationView: View {
     @Binding var selectedLocationForConfirm: Location?
     
     @State var showRecentSearch = true
+    @State private var showConfirmFromSearch = false
     
     var dismissAction: () -> Void
     
@@ -103,6 +104,21 @@ struct SearchLocationView: View {
         }
         .navigationTitle("장소 검색")
         .navigationBarTitleDisplayMode(.inline)
+        .fullScreenCover(isPresented: $showConfirmFromSearch) {
+            if let location = selectedLocationForConfirm {
+                ConfirmLocationView(
+                    location: location,
+                    presentationMode: .fromSearch, // SearchLocationView에서 온 경우
+                    dismissAction: { // 확인 버튼을 눌렀을 때 - CreateScheduleView로 돌아가기
+                        showConfirmFromSearch = false
+                        dismissAction()
+                    },
+                    backToSearchAction: { // 뒤로가기 버튼을 눌렀을 때 - SearchLocationView로 돌아가기
+                        showConfirmFromSearch = false
+                    }
+                )
+            }
+        }
         .foregroundStyle(Color(.black22))
         .onChange(of: viewModel.searchText) { _, _ in
             showRecentSearch = (viewModel.searchText == "")
@@ -151,8 +167,7 @@ struct SearchLocationView: View {
             viewModel.addToRecentSearches(location)
             
             selectedLocationForConfirm = location
-            dismissAction() // SearchLocation 화면을 닫고
-            showConfirmLocation = true // ConfirmLocation 화면을 표시
+            showConfirmFromSearch = true
             
             print("위치: \(location.location) / \(location.streetName) / \(location.x) / \(location.y)")
         }

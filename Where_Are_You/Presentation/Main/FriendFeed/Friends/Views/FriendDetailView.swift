@@ -85,7 +85,7 @@ struct FriendDetailView: View {
                 
                 Spacer()
                 
-                KFImage(URL(string: viewModel.friend?.profileImage ?? AppConstants.defaultProfileImageUrl))
+                KFImage(URL(string: viewModel.friend?.profileImage ?? UserDefaultsManager.shared.getProfileImage()))
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: LayoutAdapter.shared.scale(value: 100), height: LayoutAdapter.shared.scale(value: 100))

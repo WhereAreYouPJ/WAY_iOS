@@ -7,12 +7,24 @@
 
 import SwiftUI
 
+enum ConfirmLocationPresentationMode {
+    case fromSearch // SearchLocationView에서 온 경우
+    case fromFavorites // CreateScheduleView의 즐겨찾기에서 온 경우
+}
+
 // TODO: 앱 처음 실행시 지도 안보이는 문제에 대해, 다른 장소 선택했다가 지도 안보였던 장소 다시 선택하면 잘 보임. 대체 왜지!?!??
 struct ConfirmLocationView: View {
     @StateObject var viewModel: ConfirmLocationViewModel
     var dismissAction: () -> Void
+    var backToSearchAction: (() -> Void)?
+    let presentationMode: ConfirmLocationPresentationMode
     
-    init(location: Location, dismissAction: @escaping () -> Void) {
+    init(
+        location: Location,
+        presentationMode: ConfirmLocationPresentationMode = .fromFavorites,
+        dismissAction: @escaping () -> Void,
+        backToSearchAction: (() -> Void)? = nil
+    ) {
         let repository = LocationRepository(locationService: LocationService())
         let getLocationUseCase = GetLocationUseCaseImpl(locationRepository: repository)
         let postLocationUseCase = PostLocationUseCaseImpl(locationRepository: repository)
@@ -26,6 +38,8 @@ struct ConfirmLocationView: View {
         ))
         
         self.dismissAction = dismissAction
+        self.backToSearchAction = backToSearchAction
+        self.presentationMode = presentationMode
         
         print("init ConfirmLocationView!")
     }
@@ -41,28 +55,28 @@ struct ConfirmLocationView: View {
                     )),
                     friendsLocation: .constant([])
                 )
-                // 임시로 MapPinView 대신 컬러 블록 사용
-//                Rectangle()
-//                    .fill(Color.gray.opacity(0.3))
-//                    .frame(maxHeight: .infinity)
-//                    .overlay(
-//                        Text("지도 영역")
-//                            .foregroundColor(.white)
-//                    )
-//                
-//                Spacer()
                 
                 locationDetailsView()
             }
             
             DismissButtonView(isShownView: .constant(true)) {
-                dismissAction()
+//                dismissAction()
+                handleBackButtonTap()
             }
         }
         .navigationBarBackButtonHidden()
         .onAppear {
             viewModel.isFavoriteLocation()
             print("장소: \(viewModel.location.location), 위치: \(viewModel.location.streetName)")
+        }
+    }
+    
+    private func handleBackButtonTap() {
+        switch presentationMode {
+        case .fromSearch: // 위치검색에서 온 경우 - SearchLocationView로 돌아가기
+            backToSearchAction?()
+        case .fromFavorites: // 즐겨찾기에서 온 경우 - CreateScheduleView로 돌아가기
+            dismissAction()
         }
     }
     

@@ -32,4 +32,11 @@ class AccountLoginViewModel {
             }
         }
     }
+
+    private func performLogin(email: String, password: String, fcmToken: String) {
+        print("🔐Login with FCM Token: \(fcmToken)")
+        accountLoginUseCase.execute(request: LoginBody(email: email, password: password, fcmToken: fcmToken, loginType: "normal")) { result in
+            // 기존 코드와 동일
+        }
+    }
 }

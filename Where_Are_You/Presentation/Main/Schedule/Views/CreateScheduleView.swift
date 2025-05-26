@@ -74,6 +74,7 @@ struct CreateScheduleView: View {
                     if let location = selectedLocationForConfirm {
                         ConfirmLocationView(
                             location: location,
+                            presentationMode: .fromFavorites,
                             dismissAction: {
                                 showConfirmLocation = false
                                 viewModel.getFavoriteLocation()
@@ -273,13 +274,6 @@ struct AddPlaceView: View {
                     Text(selectedPlace.location)
                         .lineLimit(1)
                         .onTapGesture {
-//                            selectedLocationForConfirm = selectedPlace
-////                            showConfirmLocation = true
-//                            print("선택된 위치: \(selectedLocationForConfirm?.location ?? "빈 값"), 좌표: \(selectedLocationForConfirm?.x ?? 0), \(selectedLocationForConfirm?.y ?? 0)")
-//                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//                                    showConfirmLocation = true
-//                                }
-//                            print("showConfirmLocation", showConfirmLocation)
                             showLocationConfirmation(location: selectedPlace)
                         }
                 }
@@ -304,9 +298,6 @@ struct AddPlaceView: View {
             HStack {
                 ForEach(Array(viewModel.favPlaces.prefix(20))) { favPlace in // 최대 20개 표시
                     FavoritePlaceCell(place: favPlace) {
-//                        viewModel.geocodeSelectedLocation(favPlace) { geocodedLocation in
-//                            viewModel.place = geocodedLocation
-//                        }
                         viewModel.place = favPlace
                     }
                 }

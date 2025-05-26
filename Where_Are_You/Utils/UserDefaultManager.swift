@@ -68,8 +68,8 @@ class UserDefaultsManager {
     }
     
     // MARK: - ProfileImage
-    func saveProfileImage(_ profileImage: String) {
-        defaults.set(profileImage, forKey: profileImage)
+    func saveProfileImage(_ imageUrl: String) {
+        defaults.set(imageUrl, forKey: profileImage)
     }
     
     func getProfileImage() -> String {
@@ -95,15 +95,16 @@ class UserDefaultsManager {
     }
     
     // MARK: - ClearData
-    func clearData() {
+    func clearData() { // 탈퇴
         defaults.removeObject(forKey: accessTokenKey)
         defaults.removeObject(forKey: refreshTokenKey)
+        
         defaults.removeObject(forKey: memberSeqKey)
         defaults.removeObject(forKey: memberCode)
         defaults.removeObject(forKey: userName)
         defaults.removeObject(forKey: profileImage)
+        
         defaults.removeObject(forKey: isLoggedIn)
-        defaults.removeObject(forKey: fcmToken)
         
         defaults.removeObject(forKey: "hasUnreadNotifications")
         defaults.removeObject(forKey: "notificationIds")
