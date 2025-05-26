@@ -9,9 +9,6 @@ import UIKit
 
 class FeedsView: UIView {
     // MARK: - Properties
-    
-//    let scrollView = UIScrollView()
-//    let contentView = UIView()
     let feedsTableView = UITableView()
     
     // MARK: - Lifecycle
@@ -30,9 +27,6 @@ class FeedsView: UIView {
     
     private func configureViewComponents() {
         backgroundColor = .white
-        
-//        addSubview(scrollView)
-//        scrollView.addSubview(contentView)
         addSubview(feedsTableView)
         feedsTableView.separatorStyle = .none
         feedsTableView.isScrollEnabled = true

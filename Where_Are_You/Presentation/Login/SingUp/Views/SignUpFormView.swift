@@ -25,6 +25,9 @@ class SignUpFormView: UIView {
         return view
     }()
     
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
+    
     private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "아래 내용을 작성해주세요", textColor: .black22))
     
     private let userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 이름", textColor: .black22))
@@ -149,6 +152,7 @@ class SignUpFormView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
+        setupUI()
         configureViewComponents()
         setupConstraints()
     }
@@ -157,7 +161,7 @@ class SignUpFormView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func configureViewComponents() {
+    private func setupUI() {
         authStack.isHidden = true
         passwordTextField.isSecureTextEntry = true
         checkPasswordTextField.isSecureTextEntry = true
@@ -169,15 +173,25 @@ class SignUpFormView: UIView {
         emailTextField.keyboardType = .emailAddress
         authCodeTextField.keyboardType = .numberPad
         
+        scrollView.alwaysBounceVertical = true
+        scrollView.showsVerticalScrollIndicator = true
+    }
+    
+    private func configureViewComponents() {
         addSubview(progressBar)
         progressBar.addSubview(colorBar)
-        addSubview(titleLabel)
-        addSubview(bottomButtonView)
-        addSubview(stack)
+        
+        addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(stack)
         authCodeTextField.addSubview(timer)
         
-        addSubview(hidePasswordButton)
-        addSubview(hideCheckPasswordButton)
+        contentView.addSubview(hidePasswordButton)
+        contentView.addSubview(hideCheckPasswordButton)
+        
+        addSubview(bottomButtonView)
     }
     
     private func setupConstraints() {
@@ -194,9 +208,21 @@ class SignUpFormView: UIView {
             make.width.equalToSuperview().multipliedBy(0.666)
         }
         
-        titleLabel.snp.makeConstraints { make in
+        scrollView.snp.makeConstraints { make in
             make.top.equalTo(progressBar).offset(30)
-            make.leading.equalToSuperview().offset(15)
+            make.leading.trailing.equalToSuperview()
+            // 키보드가 올라오면 scrollView.bottom이 keyboardLayoutGuide.top에 붙음
+            make.bottom.equalTo(keyboardLayoutGuide.snp.top)
+        }
+        
+        contentView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView.contentLayoutGuide)
+            make.width.equalTo(scrollView.frameLayoutGuide)
+        }
+        
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(30)
+            make.leading.equalToSuperview().offset(24)
         }
         
         emailCheckButton.snp.makeConstraints { make in
@@ -218,8 +244,8 @@ class SignUpFormView: UIView {
         
         stack.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(30)
-            make.leading.trailing.equalToSuperview().inset(15)
-            make.bottom.lessThanOrEqualTo(bottomButtonView.snp.top).offset(-20)
+            make.leading.trailing.equalToSuperview().inset(24)
+            make.bottom.equalToSuperview().inset(20)
         }
         
         hidePasswordButton.snp.makeConstraints { make in
