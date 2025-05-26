@@ -183,7 +183,7 @@ final class CreateScheduleViewModel: ObservableObject {
     
     private func updateFavoritePlaces(_ locations: [Location]) {
         DispatchQueue.main.async {
-            self.favPlaces = locations
+            self.favPlaces = locations.sorted { $0.sequence > $1.sequence }
             print("즐겨찾기 위치 \(locations.count)개 업데이트됨")
         }
     }
