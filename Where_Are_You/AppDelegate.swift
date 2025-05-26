@@ -14,7 +14,7 @@ import Kingfisher
 import Firebase
 import FirebaseMessaging
 import AVFoundation
-import IQKeyboardManager
+import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -28,6 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                print("📍 카카오맵 SDK 초기화 완료 콜백")
 //            }
 //        }
+        
+        Thread.sleep(forTimeInterval: 1.5)
         
         // 파이어베이스 설정
         FirebaseApp.configure()
@@ -48,9 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().compactAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
             
-        IQKeyboardManager.shared().isEnabled = true
-        IQKeyboardManager.shared().isEnableAutoToolbar = true
-        IQKeyboardManager.shared().shouldResignOnTouchOutside = true
+        IQKeyboardManager.shared.isEnabled = true
+        IQKeyboardManager.shared.resignOnTouchOutside = true
 
         return true
     }

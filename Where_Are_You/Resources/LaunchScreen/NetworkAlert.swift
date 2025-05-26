@@ -37,8 +37,10 @@ class NetworkAlert: UIView {
     
     // MARK: - Lifecycle
     
-    init(action: @escaping () -> Void) {
+    init(action: @escaping () -> Void, serverIssue: Bool) {
         super.init(frame: .zero)
+        
+        titleLabel.updateTextKeepingAttributes(newText: serverIssue ? "서버에 문제가 생겼습니다" : "인터넷 연결을 확인해주세요.")
         
         backgroundColor = .white
         layer.cornerRadius = 10

@@ -99,7 +99,7 @@ class SignUpViewModel {
     func checkSamePassword(password: String, checkPassword: String) {
         if !checkPassword.isEmpty {
             if ValidationHelper.isPasswordSame(password, checkpw: checkPassword) {
-                onCheckPasswordFormatMessage?("", true)
+                onCheckPasswordFormatMessage?("비밀번호가 일치합니다.", true)
                 signUpBody.password = checkPassword
             } else {
                 onCheckPasswordFormatMessage?("비밀번호가 일치하지 않습니다.", false)
@@ -108,6 +108,9 @@ class SignUpViewModel {
         }
     }
     
+    // 현재 Get/member/checkEmail 부분에서 어느 이메일을 넣든 200 success를 보내는중.
+    // 회원가입시의 중복여부만 파악하기 위해 email이 중복된 경우 에러가 뜨게 해서
+    // success시 Post/member/email/send를 불러오게 하는 플로우를 해야한다 생각함
     // 이메일 중복체크
     func checkEmailAvailability(email: String) {
         guard ValidationHelper.isValidEmail(email) else {

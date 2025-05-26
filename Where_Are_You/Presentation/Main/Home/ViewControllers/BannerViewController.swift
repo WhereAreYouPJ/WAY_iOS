@@ -30,7 +30,7 @@ class BannerViewController: UIViewController {
         setupBindings()
         setupCollectionView()
         
-        viewModel.fetchBannerImages()
+//        viewModel.fetchBannerImages()
         
         NotificationCenter.default.addObserver(self, selector: #selector(scrollToBannerIndex(_:)), name: .scrollToBannerIndex, object: nil)
     }

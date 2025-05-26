@@ -11,7 +11,6 @@ class SignUpFormViewController: UIViewController {
     // MARK: - Properties
     let signUpView = SignUpFormView()
     private var viewModel: SignUpViewModel!
-    var type: [String] = []
     
     // MARK: - Lifecycle
     
@@ -49,6 +48,9 @@ class SignUpFormViewController: UIViewController {
         signUpView.emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         signUpView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         signUpView.checkPasswordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        
+        signUpView.hidePasswordButton.addTarget(self, action: #selector(hidePasswordButtonTapped(_:)), for: .touchUpInside)
+        signUpView.hideCheckPasswordButton.addTarget(self, action: #selector(hidePasswordButtonTapped(_:)), for: .touchUpInside)
     }
     
     private func setupBindings() {
@@ -94,7 +96,7 @@ class SignUpFormViewController: UIViewController {
         }
         
         viewModel.onCheckEmailDuplicate = { [weak self] type in
-            self?.type = type
+            // 이 부분은 이메일 로직 수정되면서 삭제/수정 될 예정
         }
         
         viewModel.onEmailVerifyCodeMessage = { [weak self] message, isAvailable in
@@ -154,15 +156,21 @@ class SignUpFormViewController: UIViewController {
         viewModel.verifyEmailCode(inputCode: signUpView.authCodeTextField.text ?? "")
     }
     
-    @objc func startButtonTapped() {
-        if type.isEmpty {
-            viewModel.signUp()
-        } else {
-            let email = viewModel.email
-            guard let password = viewModel.signUpBody.password, let userName = viewModel.signUpBody.userName else { return }
-            let controller = SocialLinkViewController(email: email, password: password, userName: userName, loginType: "normal", linkLoginType: type)
-            navigationController?.pushViewController(controller, animated: true)
+    @objc func hidePasswordButtonTapped(_ button: UIButton) {
+        switch button {
+        case signUpView.hidePasswordButton:
+            signUpView.hidePasswordButton.isSelected.toggle()
+            signUpView.passwordTextField.isSecureTextEntry.toggle()
+        case signUpView.hideCheckPasswordButton:
+            signUpView.hideCheckPasswordButton.isSelected.toggle()
+            signUpView.checkPasswordTextField.isSecureTextEntry.toggle()
+        default:
+            break
         }
+    }
+    
+    @objc func startButtonTapped() {
+        viewModel.signUp()
     }
     
     // MARK: - Helpers

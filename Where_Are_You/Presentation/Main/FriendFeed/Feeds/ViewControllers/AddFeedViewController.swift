@@ -95,6 +95,8 @@ class AddFeedViewController: UIViewController {
         viewModel.onSchedulesUpdated = { [weak self] in
             DispatchQueue.main.async {
                 self?.addFeedView.scheduleDropDown.dropDownTableView.reloadData()
+                // 1. 불러온 일정이 있는지 없는지 확인
+                // 2. 불러온 일정이 없으면 테이블뷰를 hide하고 일정 없을때 뜨는 UI 보이게 하기
                 // 선택된 일정의 정보를 표시
                 if (self?.viewModel.selectedSchedule) != nil {
                     self?.addFeedView.scheduleDropDown.chooseScheduleLabel.isHidden = true

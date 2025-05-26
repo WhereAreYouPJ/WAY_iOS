@@ -86,6 +86,9 @@ class PasswordResetViewController: UIViewController {
         passwordResetView.resetPasswordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         passwordResetView.checkPasswordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         passwordResetView.bottomButtonView.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
+        
+        passwordResetView.hidePasswordButton.addTarget(self, action: #selector(hidePasswordButtonTapped(_:)), for: .touchUpInside)
+        passwordResetView.hideCheckPasswordButton.addTarget(self, action: #selector(hidePasswordButtonTapped(_:)), for: .touchUpInside)
     }
     
     // MARK: - Selectors
@@ -106,6 +109,19 @@ class PasswordResetViewController: UIViewController {
     
     @objc func backButtonTapped() {
         dismiss(animated: true)
+    }
+    
+    @objc func hidePasswordButtonTapped(_ button: UIButton) {
+        switch button {
+        case passwordResetView.hidePasswordButton:
+            passwordResetView.hidePasswordButton.isSelected.toggle()
+            passwordResetView.resetPasswordTextField.isSecureTextEntry.toggle()
+        case passwordResetView.hideCheckPasswordButton:
+            passwordResetView.hideCheckPasswordButton.isSelected.toggle()
+            passwordResetView.checkPasswordTextField.isSecureTextEntry.toggle()
+        default:
+            break
+        }
     }
     
     @objc func confirmButtonTapped() {

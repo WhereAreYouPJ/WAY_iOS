@@ -10,8 +10,6 @@ import SnapKit
 
 class AccountLoginView: UIView {
     // MARK: - Properties
-    let scrollView = UIScrollView()
-    
     private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "로그인하기", textColor: .black22))
     
     private let emailLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 이메일 주소", textColor: .black22))
@@ -70,19 +68,14 @@ class AccountLoginView: UIView {
 
     private func configureViewComponents() {
         emailTextField.keyboardType = .emailAddress
-        addSubview(scrollView)
-        scrollView.addSubview(titleLabel)
-        scrollView.addSubview(stack)
-        scrollView.addSubview(loginButton)
-        scrollView.addSubview(findAccountButton)
-        scrollView.addSubview(signupButton)
+        addSubview(titleLabel)
+        addSubview(stack)
+        addSubview(loginButton)
+        addSubview(findAccountButton)
+        addSubview(signupButton)
     }
     
     private func setupConstraints() {
-        scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 54))
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))

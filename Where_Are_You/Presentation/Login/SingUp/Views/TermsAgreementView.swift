@@ -12,6 +12,9 @@ class TermsAgreementView: UIView {
     
     // MARK: - Properties
     var termButtons: [UIButton] = []
+    var checkButtons: [UIButton] = []
+    let requiredIndices: Set<Int> = [0, 1] // 필수 항목 인덱스
+    let allIndices: Set<Int> = [0, 1, 2]
 
     private let progressBar: UIView = {
         let view = UIView()
@@ -47,8 +50,10 @@ class TermsAgreementView: UIView {
     
     let agreeTermButton: UIButton = {
         let button = UIButton()
-        let image = UIImage(named: "icon-checkBox")?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage(systemName: "circle")
+        let selectedImage = UIImage(systemName: "checkmark.circle.fill")
         button.setImage(image, for: .normal)
+        button.setImage(selectedImage, for: .selected)
         button.tintColor = .blackAC
         return button
     }()
@@ -109,6 +114,10 @@ class TermsAgreementView: UIView {
             make.leading.trailing.equalToSuperview()
         }
         
+        agreeTermButton.snp.makeConstraints { make in
+            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 20))
+        }
+        
         termTitleStackView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 30))
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 27))
@@ -122,7 +131,19 @@ class TermsAgreementView: UIView {
         }
     }
     
-    private func createTermRow(title: String) -> UIStackView {
+    private func createTermRow(title: String, index: Int) -> UIStackView {
+        let checkButton = UIButton()
+        let image = UIImage(systemName: "circle")
+        let selectedImage = UIImage(systemName: "checkmark.circle.fill")
+        checkButton.setImage(image, for: .normal)
+        checkButton.setImage(selectedImage, for: .selected)
+        checkButton.tintColor = .blackAC
+        checkButton.tag = index
+        checkButtons.append(checkButton)
+        checkButton.snp.makeConstraints { make in
+            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 20))
+        }
+        
         // 약관 제목을 표시하는 라벨
         let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: title, textColor: .black22))
         
@@ -132,14 +153,17 @@ class TermsAgreementView: UIView {
             make.height.equalTo(22)
         }
         termButtons.append(viewButton)
-
-        // 가로 스택 뷰에 라벨과 버튼 추가
-        let rowStack = UIStackView(arrangedSubviews: [titleLabel, viewButton])
+        
+        let contentStack = UIStackView(arrangedSubviews: [checkButton, titleLabel])
+        contentStack.spacing = 6
+        
+        let rowStack = UIStackView(arrangedSubviews: [contentStack, viewButton])
         rowStack.axis = .horizontal
         rowStack.spacing = 0
+        rowStack.distribution = .equalSpacing
+        return rowStack
         
-        // 라벨과 버튼 사이의 공간을 유연하게 분배하려면 라벨의 content hugging priority를 낮게 설정 가능
-        titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        //라벨과 버튼 사이의 공간을 유연하게 분배하려면 라벨의 content hugging priority를 낮게 설정 가능
         viewButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         return rowStack
@@ -149,13 +173,13 @@ class TermsAgreementView: UIView {
         // 약관 항목들을 배열로 정의
         let terms = [
             "서비스 이용약관 (필수)",
-            "개인정보 처리방침 (필수)"
-//            "위치기반 서비스 이용약관 (필수)" 추후 추가 예정
+            "개인정보 처리방침 (필수)",
+            "위치기반 서비스 이용약관 (선택)"
         ]
         
         // 각 항목에 대해 rowStack을 생성하여 배열에 담습니다.
-        let termRows = terms.map { createTermRow(title: $0) }
-        
+        let termRows = terms.enumerated().map { createTermRow(title: $1, index: $0) }
+
         // 세로 스택 뷰 생성
         let termsStackView = UIStackView(arrangedSubviews: termRows)
         termsStackView.axis = .vertical
