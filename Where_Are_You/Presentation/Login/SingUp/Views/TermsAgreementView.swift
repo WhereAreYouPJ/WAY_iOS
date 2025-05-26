@@ -115,7 +115,7 @@ class TermsAgreementView: UIView {
         }
         
         agreeTermButton.snp.makeConstraints { make in
-            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 24))
+            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 20))
         }
         
         termTitleStackView.snp.makeConstraints { make in
@@ -164,7 +164,6 @@ class TermsAgreementView: UIView {
         return rowStack
         
         //라벨과 버튼 사이의 공간을 유연하게 분배하려면 라벨의 content hugging priority를 낮게 설정 가능
-        contentStack.setContentHuggingPriority(.defaultLow, for: .horizontal)
         viewButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         return rowStack
