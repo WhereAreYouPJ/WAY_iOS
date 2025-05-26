@@ -82,36 +82,6 @@ struct KakaoMapPinView: UIViewRepresentable {
     /// Updates the presented `UIView` (and coordinator) to the latest configuration.
     /// draw가 true로 설정되면 엔진을 시작하고 렌더링을 시작한다.
     /// draw가 false로 설정되면 렌더링을 멈추고 엔진을 stop한다.
-//    func updateUIView(_ uiView: KMViewContainer, context: Self.Context) {
-//        if draw {
-//            DispatchQueue.main.asyncAfter(deadline: .now()) {
-//                guard let controller = context.coordinator.controller else {
-//                    print("Controller is nil in updateUIView")
-//                    return
-//                }
-//                
-//                // 항상 POI 정리를 먼저 수행
-//                context.coordinator.cleanUpPois()
-//                
-//                if !controller.isEnginePrepared {
-//                    controller.prepareEngine()
-//                    context.coordinator.addViews() // 엔진 준비 후 addViews 호출
-//                }
-//                
-//                if !controller.isEngineActive {
-//                    controller.activateEngine()
-//                }
-//                
-//                // location이 변경되었을 때 updateLocation 호출
-//                context.coordinator.updateLocation(myNewLocation: myLocation, friendsNewLocation: friendsLocation)
-//                print("📍KakaoMapPinView - updateUIView with location x: \(myLocation.x), y: \(myLocation.y)")
-//            }
-//        } else {
-//            context.coordinator.cleanUpPois() // 모든 Poi 제거
-//            context.coordinator.controller?.resetEngine()
-//            print("📍KakaoMapPinView - 뷰 사라짐, 모든 리소스 정리")
-//        }
-//    }
     func updateUIView(_ uiView: KMViewContainer, context: Self.Context) {
         print("updateUIView 호출됨 (draw: \(draw))")
         
@@ -190,8 +160,8 @@ struct KakaoMapPinView: UIViewRepresentable {
         
     }
     
-    /// Coordinator 구현. KMControllerDelegate를 adopt한다.
-    class KakaoMapCoordinator: NSObject, MapControllerDelegate {
+    /// Coordinator 구현. KMControllerDelegate와 KakaoMapEventDelegate를 adopt한다.
+    class KakaoMapCoordinator: NSObject, MapControllerDelegate, KakaoMapEventDelegate {
         var controller: KMController?
         var container: KMViewContainer?
         var myLocation: LongLat?
@@ -205,10 +175,28 @@ struct KakaoMapPinView: UIViewRepresentable {
         private let mapViewName = "friendsLocationMapView"
         private var isViewReady = false
         
+        // 카메라 이벤트 핸들러들
+        private var cameraWillMoveHandler: DisposableEventHandler?
+        private var cameraStoppedHandler: DisposableEventHandler?
+        
+        // 카메라 위치 추적을 위한 변수 추가
+        private var isCameraInitialized = false
+        private var isUserControllingCamera = false
+        
         init(myLocation: LongLat?, friendsLocation: [LongLat]) {
             self.myLocation = myLocation
             self.friendsLocation = friendsLocation
             super.init()
+        }
+        
+        deinit {
+            dispose()
+        }
+        
+        // 리소스 정리
+        func dispose() {
+            cameraWillMoveHandler?.dispose()
+            cameraStoppedHandler?.dispose()
         }
         
         // KMController 객체 생성 및 event delegate 지정
@@ -246,6 +234,13 @@ struct KakaoMapPinView: UIViewRepresentable {
             }
             view.viewRect = container?.bounds ?? .zero
             
+            // KakaoMapEventDelegate 설정
+            if let kakaoMap = view as? KakaoMap {
+                kakaoMap.eventDelegate = self
+                setupCameraEventHandlers(kakaoMap: kakaoMap)
+                print("📍 KakaoMapEventDelegate 및 CameraEventHandler 설정 완료")
+            }
+            
             createLabelLayer()
             
             createMyPoiStyle()
@@ -261,6 +256,108 @@ struct KakaoMapPinView: UIViewRepresentable {
             if let currentLocation = myLocation {
                 updateLocation(myNewLocation: currentLocation, friendsNewLocation: friendsLocation)
             }
+        }
+        
+        // MARK: - Camera Event Handlers 설정
+                
+        private func setupCameraEventHandlers(kakaoMap: KakaoMap) {
+            // 카메라 이동 시작 핸들러
+            cameraWillMoveHandler = kakaoMap.addCameraWillMovedEventHandler(
+                target: self,
+                handler: KakaoMapCoordinator.onCameraWillMove
+            )
+            
+            // 카메라 이동 완료 핸들러
+            cameraStoppedHandler = kakaoMap.addCameraStoppedEventHandler(
+                target: self,
+                handler: KakaoMapCoordinator.onCameraStopped
+            )
+        }
+        
+        // 카메라 이동 시작 이벤트 핸들러
+        func onCameraWillMove(_ param: CameraActionEventParam) {
+            if param.by != .notUserAction {
+                isUserControllingCamera = true
+                print("📍 사용자가 카메라 조작 시작 (제스처)")
+            } else {
+                print("📍 프로그래밍적 카메라 이동 시작")
+            }
+        }
+        
+        // 카메라 이동 완료 이벤트 핸들러
+        func onCameraStopped(_ param: CameraActionEventParam) {
+            if param.by != .notUserAction {
+                print("📍 사용자 카메라 조작 완료")
+                // 사용자가 카메라를 조작한 후 일정 시간 동안 자동 카메라 이동을 비활성화
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                    // 3초 후에 사용자 제어 상태를 해제 (조정 가능)
+                    if !self.isUserControllingCamera {
+                        print("📍 사용자 제어 상태 자동 해제")
+                    }
+                }
+            } else {
+                print("📍 프로그래밍적 카메라 이동 완료")
+            }
+        }
+        
+        // MARK: - KakaoMapEventDelegate 구현 (추가적인 제스처 감지)
+        
+        // 사용자가 지도를 터치했을 때 호출
+        func terrainDidTapped(kakaoMap: KakaoMap, position: MapPoint) {
+            print("📍 사용자가 지도를 터치함: \(position)")
+            isUserControllingCamera = true
+        }
+        
+        // 최초 카메라 위치 설정
+        private func moveToInitialPosition(_ target: MapPoint) {
+            guard let view = controller?.getView(mapViewName) as? KakaoMap,
+                  !isCameraInitialized else { return }
+            
+            let cameraUpdate = CameraUpdate.make(
+                target: target,
+                zoomLevel: 16,
+                mapView: view
+            )
+            
+            // 애니메이션과 함께 카메라 이동
+            view.animateCamera(
+                cameraUpdate: cameraUpdate,
+                options: CameraAnimationOptions(
+                    autoElevation: false,
+                    consecutive: true,
+                    durationInMillis: 1000
+                )
+            ) { [weak self] in
+                self?.isCameraInitialized = true
+                print("📍 최초 카메라 위치 설정 및 애니메이션 완료")
+            }
+        }
+        
+        // 내 위치로 카메라 이동 (공개 메서드)
+        func moveToMyLocation() {
+            guard let myLocation = myLocation,
+                  let view = controller?.getView(mapViewName) as? KakaoMap else { return }
+            
+            let target = MapPoint(longitude: myLocation.x, latitude: myLocation.y)
+            let cameraUpdate = CameraUpdate.make(
+                target: target,
+                zoomLevel: 16,
+                mapView: view
+            )
+            
+            view.animateCamera(
+                cameraUpdate: cameraUpdate,
+                options: CameraAnimationOptions(
+                    autoElevation: false,
+                    consecutive: true,
+                    durationInMillis: 800
+                )
+            ) {
+                print("📍 내 위치로 카메라 이동 완료")
+            }
+            
+            // 프로그래밍적 이동이므로 사용자 제어 상태 해제
+            isUserControllingCamera = false
         }
         
         // addView 실패 이벤트 delegate. 실패에 대한 오류 처리를 진행한다.
@@ -455,60 +552,11 @@ struct KakaoMapPinView: UIViewRepresentable {
             }
             mapView.viewRect = CGRect(origin: CGPoint(x: 0.0, y: 0.0), size: size)
             
-            let cameraUpdate = CameraUpdate.make(
-                target: MapPoint(
-                    longitude: myLocation?.x ?? 126.978365,
-                    latitude: myLocation?.y ?? 37.566691
-                ),
-                mapView: mapView
-            )
-            mapView.moveCamera(cameraUpdate)
+            // 리사이징 시에도 사용자가 이동한 카메라 위치 유지
+            if !isCameraInitialized, let myLocation = myLocation {
+                moveToInitialPosition(MapPoint(longitude: myLocation.x, latitude: myLocation.y))
+            }
         }
-        
-        // location 값이 변경될 때 지도 업데이트를 위한 메서드 추가
-//        func updateLocation(myNewLocation: LongLat, friendsNewLocation: [LongLat]) {
-//            self.myLocation = myNewLocation
-//            self.friendsLocation = friendsNewLocation
-//            
-//            // view가 준비되지 않았으면 업데이트 스킵
-//            guard isViewReady else { return }
-//            guard let view = controller?.getView(mapViewName) as? KakaoMap else { return }
-//            
-//            // 각각의 스타일 생성 확인
-//            if !createdStyleIDs.contains("myPoiStyle") {
-//                createMyPoiStyle()
-//                createMyPoi()
-//            }
-//            if friendsPois.count != friendsNewLocation.count {
-//                createFriendPoiStyles()
-//                createFriendPois()
-//            }
-//            
-//            // 위치 업데이트
-//            if let myPoi = myLocationPoi as? Poi {
-//                myPoi.moveAt(MapPoint(longitude: myNewLocation.x, latitude: myNewLocation.y), duration: 0)
-//            }
-//            if friendsPois.count != friendsNewLocation.count {
-//                // 친구 수가 변경된 경우 POI 재생성
-//                createFriendPois()
-//            } else {
-//                // 친구 수가 동일한 경우 위치만 업데이트
-//                for (index, friend) in friendsNewLocation.enumerated() {
-//                    if let friendPoi = friendsPois[index] as? Poi {
-//                        friendPoi.moveAt(MapPoint(longitude: friend.x, latitude: friend.y), duration: 0)
-//                    }
-//                }
-//            }
-//            
-//            // 카메라 이동: 내 위치 중심
-//            let target = MapPoint(longitude: myNewLocation.x, latitude: myNewLocation.y)
-//            let cameraUpdate = CameraUpdate.make(
-//                target: target,
-//                zoomLevel: 16, mapView: view
-//            )
-//            view.moveCamera(cameraUpdate)
-//            print("📍MapPinView camera updated! x: \(myNewLocation.x), y: \(myNewLocation.y)")
-//        }
         
         // location 값이 변경될 때 지도 업데이트를 위한 메서드 추가
         func updateLocation(myNewLocation: LongLat, friendsNewLocation: [LongLat]) {
@@ -555,14 +603,16 @@ struct KakaoMapPinView: UIViewRepresentable {
                 }
             }
             
-            // 카메라 이동: 내 위치 중심
-            let target = MapPoint(longitude: myNewLocation.x, latitude: myNewLocation.y)
-            let cameraUpdate = CameraUpdate.make(
-                target: target,
-                zoomLevel: 16, mapView: view
-            )
-            view.moveCamera(cameraUpdate)
-            print("📍MapPinView camera updated! x: \(myNewLocation.x), y: \(myNewLocation.y)")
+            // 최초 카메라 위치 설정
+            if !isCameraInitialized {
+                moveToInitialPosition(MapPoint(longitude: myNewLocation.x, latitude: myNewLocation.y))
+            } else if !isUserControllingCamera { // 사용자가 카메라를 제어하고 있지 않을 때만 부드럽게 따라가기
+                print("📍 사용자 제어 없음 - 카메라 위치 유지 (자동 추적 비활성화)")
+            } else {
+                print("📍 사용자가 카메라 제어 중 - 카메라 위치 유지")
+            }
+            
+            print("📍위치 업데이트 완료 - 마커 이동, 카메라는 사용자 제어 상태에 따라 처리")
         }
     }
 }
