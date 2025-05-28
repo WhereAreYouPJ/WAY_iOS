@@ -13,7 +13,7 @@ class PasswordResetView: UIView {
     
     private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "회원님의 비밀번호를 \n재설정 해주세요.", textColor: .black22))
     
-    private let passwordLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "비밀번호", textColor: .black22))
+    private let passwordLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "비밀번호", textColor: .black22), isPaddingLabel: true)
     
     let resetPasswordTextField = CustomTextField(placeholder: "비밀번호")
     
@@ -25,7 +25,7 @@ class PasswordResetView: UIView {
         return button
     }()
     
-    let resetPasswordDescription = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 영문 대소문자로 시작하는 6~20자의 영문 대소문자, 숫자를 \n 포함해 입력해주세요.", textColor: .brandMain))
+    let resetPasswordDescription = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 영문 대소문자로 시작하는 6~20자의 영문 대소문자, 숫자를 포함해 입력해주세요.", textColor: .brandMain), isPaddingLabel: true)
     
     private lazy var resetStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [passwordLabel, resetPasswordTextField, resetPasswordDescription])
@@ -44,7 +44,7 @@ class PasswordResetView: UIView {
         return button
     }()
     
-    let checkPasswordDescription = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "비밀번호가 일치하지 않습니다.", textColor: .error))
+    let checkPasswordDescription = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "비밀번호가 일치하지 않습니다.", textColor: .error), isPaddingLabel: true)
     
     lazy var checkStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [checkPasswordTextField, checkPasswordDescription])

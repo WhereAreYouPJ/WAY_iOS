@@ -174,7 +174,6 @@ class SignUpFormViewController: UIViewController {
     }
     
     // MARK: - Helpers
-    
     private func navigateToNextScreen() {
         let controller = FinishRegisterViewController()
         navigationController?.pushViewController(controller, animated: true)

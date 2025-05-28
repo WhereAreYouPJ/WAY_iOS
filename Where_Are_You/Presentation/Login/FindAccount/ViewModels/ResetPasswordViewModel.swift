@@ -39,7 +39,7 @@ class ResetPasswordViewModel {
         if ValidationHelper.isValidPassword(pw) {
             onPasswordValidation?("", true)
         } else {
-            onPasswordValidation?(" 영문 대소문자로 시작하는 6~20자의 영문 대소문자, 숫자를 \n 포함해 입력해주세요.", false)
+            onPasswordValidation?("영문 대소문자로 시작하는 6~20자의 영문 대소문자, 숫자를 \n 포함해 입력해주세요.", false)
         }
     }
     

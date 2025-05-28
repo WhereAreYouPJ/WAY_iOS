@@ -30,11 +30,11 @@ class SignUpFormView: UIView {
     
     private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "아래 내용을 작성해주세요", textColor: .black22))
     
-    private let userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 이름", textColor: .black22))
+    private let userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "이름", textColor: .black22), isPaddingLabel: true)
     
     let userNameTextField = CustomTextField(placeholder: "이름")
     
-    let userNameErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error))
+    let userNameErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error), isPaddingLabel: true)
     
     // 이름 + 이름tf
     lazy var usernameStack: UIStackView = {
@@ -43,19 +43,19 @@ class SignUpFormView: UIView {
         return stackView
     }()
     
-    private let emailLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 이메일", textColor: .black22))
+    private let emailLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "이메일", textColor: .black22), isPaddingLabel: true)
     
     let emailTextField = CustomTextField(placeholder: "이메일")
     
     let emailCheckButton = TitleButton(title: UIFont.CustomFont.button16(text: "인증요청", textColor: .white), backgroundColor: .brandMain, borderColor: nil)
     
-    let emailErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error))
+    let emailErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error), isPaddingLabel: true)
     
     // 이메일 + 이메일tf + 이메일 중복버튼 + description
     lazy var emailCheckStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [emailTextField, emailCheckButton])
         stackView.axis = .horizontal
-        stackView.spacing = 4
+        stackView.spacing = 8
         return stackView
     }()
     
@@ -75,11 +75,11 @@ class SignUpFormView: UIView {
     lazy var authCheckStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [authCodeTextField, authCheckButton])
         stackView.axis = .horizontal
-        stackView.spacing = 4
+        stackView.spacing = 8
         return stackView
     }()
     
-    let authCodeErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error))
+    let authCodeErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error), isPaddingLabel: true)
     
     lazy var authStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [authCheckStack, authCodeErrorLabel])
@@ -87,7 +87,7 @@ class SignUpFormView: UIView {
         return stackView
     }()
     
-    let passwordLabel =  StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 비밀번호", textColor: .black22))
+    let passwordLabel =  StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "비밀번호", textColor: .black22), isPaddingLabel: true)
     
     let passwordTextField = CustomTextField(placeholder: "비밀번호")
     
@@ -99,13 +99,7 @@ class SignUpFormView: UIView {
         return button
     }()
     
-    let passwordErrorLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
-        label.adjustsFontForContentSizeCategory = true
-        return label
-    }()
+    let passwordErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error), isPaddingLabel: true)
     
     let checkPasswordTextField = CustomTextField(placeholder: "비밀번호 확인")
     
@@ -117,13 +111,7 @@ class SignUpFormView: UIView {
         return button
     }()
     
-    let checkPasswordErrorLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFontMetrics.default.scaledFont(for: UIFont.pretendard(NotoSans: .medium, fontSize: 12))
-        label.adjustsFontForContentSizeCategory = true
-        return label
-    }()
+    let checkPasswordErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error), isPaddingLabel: true)
     
     // 비밀번호 + 비밀번호tf + description + 비밀번호 일치tf + description
     lazy var passwordEnterStack: UIStackView = {
@@ -167,6 +155,7 @@ class SignUpFormView: UIView {
         checkPasswordTextField.isSecureTextEntry = true
         bottomButtonView.updateBackgroundColor(.color171)
         bottomButtonView.isEnabled = false
+        bottomButtonView.isUserInteractionEnabled = true
         hideCheckPasswordButton.isUserInteractionEnabled = true
         hidePasswordButton.isUserInteractionEnabled = true
         

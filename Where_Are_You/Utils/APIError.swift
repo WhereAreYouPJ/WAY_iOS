@@ -29,13 +29,13 @@ enum APIError: Error {
     var localizedDescription: String {
         switch self {
         case .emailError:
-            return " 이메일 또는 비밀번호를 확인해주세요."
+            return "이메일 또는 비밀번호를 확인해주세요."
         case .passwordError:
-            return " 이메일 또는 비밀번호를 확인해주세요."
+            return "이메일 또는 비밀번호를 확인해주세요."
         case .serverError:
-            return " 서버에 오류가 발생했습니다."
+            return "서버에 오류가 발생했습니다."
         case .unknownError(let message):
-            return message.isEmpty ? " 알 수 없는 오류가 발생했습니다." : message
+            return message.isEmpty ? "알 수 없는 오류가 발생했습니다." : message
         }
     }
 }

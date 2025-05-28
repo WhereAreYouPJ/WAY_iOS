@@ -41,7 +41,6 @@ class PasswordResetViewController: UIViewController {
     private func setupUI() {
         view = passwordResetView
         configureNavigationBar(title: "비밀번호 재설정", backButtonAction: #selector(backButtonTapped))
-        passwordResetView.checkStack.isHidden = true
         passwordResetView.bottomButtonView.isEnabled = false
         passwordResetView.bottomButtonView.backgroundColor = .color171
     }
@@ -60,7 +59,6 @@ class PasswordResetViewController: UIViewController {
                 self?.isPasswordValidate = result
                 self?.passwordResetView.resetPasswordDescription.updateText(UIFont.CustomFont.bodyP5(text: message, textColor: result == false ? .error : .brandMain))
                 self?.passwordResetView.resetPasswordTextField.layer.borderColor = result == false ? UIColor.error.cgColor : UIColor.blackD4.cgColor
-                self?.passwordResetView.checkStack.isHidden = !result
                 self?.updateResetButtonState()
             }
         }

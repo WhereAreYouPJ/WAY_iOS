@@ -10,15 +10,39 @@ import UIKit
 
 // MARK: - CustomLabel
 class StandardLabel: UILabel {
-    init(UIFont text: NSAttributedString) {
+    private var textInsets = UIEdgeInsets.zero
+
+    init(UIFont text: NSAttributedString, isPaddingLabel: Bool = false) {
         super.init(frame: .zero)
         
         self.attributedText = text
         self.numberOfLines = 0
+        if isPaddingLabel {
+            textInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
+        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func drawText(in rect: CGRect) {
+        // 텍스트를 insets만큼 줄인 영역에서 그립니다.
+        let insetRect = rect.inset(by: textInsets)
+        super.drawText(in: insetRect)
+    }
+    
+    override func textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
+        // 실제 텍스트가 차지할 영역을 계산한 뒤
+        let insetBounds = bounds.inset(by: textInsets)
+        let textRect = super.textRect(forBounds: insetBounds, limitedToNumberOfLines: numberOfLines)
+        // 원래 좌표계로 복귀시키기 위해 반대 방향으로 offset
+        return CGRect(
+            x: textInsets.left + textRect.origin.x,
+            y: textInsets.top + textRect.origin.y,
+            width: textRect.width,
+            height: textRect.height
+        )
     }
     
     func updateText(_ text: NSAttributedString) {

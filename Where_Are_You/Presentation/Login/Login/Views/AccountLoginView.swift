@@ -12,11 +12,11 @@ class AccountLoginView: UIView {
     // MARK: - Properties
     private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "로그인하기", textColor: .black22))
     
-    private let emailLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 이메일 주소", textColor: .black22))
+    private let emailLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "이메일 주소", textColor: .black22), isPaddingLabel: true)
     
     let emailTextField = CustomTextField(placeholder: "이메일을 입력해주세요.")
     
-    let emailErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error))
+    let emailErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error), isPaddingLabel: true)
     
     lazy var idStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [emailLabel, emailTextField, emailErrorLabel])
@@ -25,11 +25,11 @@ class AccountLoginView: UIView {
         return stack
     }()
     
-    private let passwordLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 비밀번호", textColor: .black22))
+    private let passwordLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "비밀번호", textColor: .black22), isPaddingLabel: true)
     
     let passwordTextField = CustomTextField(placeholder: "비밀번호를 입력해주세요.")
     
-    let passwordErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error))
+    let passwordErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error), isPaddingLabel: true)
 
     lazy var passwordStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField, passwordErrorLabel])
