@@ -14,7 +14,7 @@ class AccountSearchView: UIView {
     
     private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.titleH1(text: "온마이웨이에 가입했던 이메일을 \n입력해주세요.", textColor: .black22))
     
-    private let emailLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 이메일 주소", textColor: .black22))
+    private let emailLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "이메일 주소", textColor: .black22), isPaddingLabel: true)
     
     let emailTextField = CustomTextField(placeholder: "이메일")
     
@@ -22,12 +22,12 @@ class AccountSearchView: UIView {
     
     private lazy var emailBoxStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [emailTextField, requestAuthButton])
-        stackView.spacing = 4
+        stackView.spacing = 8
         stackView.axis = .horizontal
         return stackView
     }()
     
-    let emailErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .black22))
+    let emailErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .black22), isPaddingLabel: true)
     
     private lazy var emailStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [emailLabel, emailBoxStack, emailErrorLabel])
@@ -37,18 +37,18 @@ class AccountSearchView: UIView {
     
     let authNumberTextField = CustomTextField(placeholder: "인증코드 입력")
     
-    let timer = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "t", textColor: .error))
+    let timer = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "", textColor: .error))
     
     let authNumberCheckButton = TitleButton(title: UIFont.CustomFont.button16(text: "확인", textColor: .white), backgroundColor: .brandMain, borderColor: nil)
     
     private lazy var authBoxStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [authNumberTextField, authNumberCheckButton])
-        stackView.spacing = 4
+        stackView.spacing = 8
         stackView.axis = .horizontal
         return stackView
     }()
     
-    let authNumberErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error))
+    let authNumberErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .error), isPaddingLabel: true)
     
     lazy var authStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [authBoxStack, authNumberErrorLabel])
@@ -58,7 +58,7 @@ class AccountSearchView: UIView {
     
     private lazy var stack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [emailStack, authStack])
-        stackView.spacing = 10
+        stackView.spacing = 14
         stackView.axis = .vertical
         return stackView
     }()
