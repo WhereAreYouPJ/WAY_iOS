@@ -98,29 +98,29 @@ struct SelectedFriendsView: View {
     }
 }
 
-struct CheckboxToggleStyle: ToggleStyle {
-    @Environment(\.isEnabled) var isEnabled
-    
-    func makeBody(configuration: Configuration) -> some View {
-        Button(action: {
-            configuration.isOn.toggle()
-        }, label: {
-            HStack {
-                if configuration.isOn {
-                    Image(systemName: "checkmark.circle.fill")
-                        .imageScale(.large)
-                        .foregroundStyle(Color(.brandColor))
-                } else {
-                    Image(systemName: "circle")
-                        .imageScale(.large)
-                        .foregroundStyle(.gray)
-                }
-                
-                configuration.label
-            }
-        })
-    }
-}
+//struct CheckboxToggleStyle: ToggleStyle {
+//    @Environment(\.isEnabled) var isEnabled
+//    
+//    func makeBody(configuration: Configuration) -> some View {
+//        Button(action: {
+//            configuration.isOn.toggle()
+//        }, label: {
+//            HStack {
+//                if configuration.isOn {
+//                    Image(systemName: "checkmark.circle.fill")
+//                        .imageScale(.large)
+//                        .foregroundStyle(Color(.brandColor))
+//                } else {
+//                    Image(systemName: "circle")
+//                        .imageScale(.large)
+//                        .foregroundStyle(.gray)
+//                }
+//                
+//                configuration.label
+//            }
+//        })
+//    }
+//}
 
 #Preview {
     struct PreviewWrapper: View {

@@ -242,13 +242,26 @@ struct DateAndTimeView: View {
             .environment(\.calendar, Calendar(identifier: .gregorian))
             .accentColor(Color(.brandDark))
         
-        if (isAllDay ? Calendar.current.startOfDay(for: startTime) : startTime) > (isAllDay ? Calendar.current.startOfDay(for: endTime) : endTime) {
-            HStack {
-                Image("icon-information")
-                Text("종료일은 시작일보다 빠를 수 없습니다.")
-                    .bodyP5Style(color: .error)
+        Group {
+            // 하루종일일 때는 날짜만 비교, 시간 지정일 때는 날짜+시간 비교
+            let isInvalid: Bool = {
+                if isAllDay {
+                    let startDate = Calendar.current.startOfDay(for: startTime)
+                    let endDate = Calendar.current.startOfDay(for: endTime)
+                    return startDate > endDate
+                } else {
+                    return startTime > endTime
+                }
+            }()
+            
+            if isInvalid {
+                HStack {
+                    Image("icon-information")
+                    Text("종료일은 시작일보다 빠를 수 없습니다.")
+                        .bodyP5Style(color: .error)
+                }
+                .transition(.opacity.combined(with: .move(edge: .top)))
             }
-            .transition(.opacity.combined(with: .move(edge: .top)))
         }
         
         Divider()
