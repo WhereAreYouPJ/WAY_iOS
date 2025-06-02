@@ -90,7 +90,10 @@ class LoginViewController: UIViewController {
     }
     
     @objc func inquiryButtonTapped() {
-        
+        let controller = InquiryViewController()
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
     }
     
     // MARK: Kakao Login

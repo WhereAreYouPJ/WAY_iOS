@@ -9,34 +9,49 @@ import UIKit
 
 class BannerViewModel {
     // MARK: - Properties
+    private let getAdminImageUseCase: GetAdminImageUseCase
+
     var onBannerDataFetched: (() -> Void)?
-    private var banners: [UIImage] = []
+    private var banners: [String] = []
     private var timer: Timer?
     private(set) var currentIndex = 0
     
+    init(getAdminImageUseCase: GetAdminImageUseCase) {
+        self.getAdminImageUseCase = getAdminImageUseCase
+    }
     // MARK: - Helpers
     
     // 배너 이미지를 불러오는 메서드
     func fetchBannerImages() {
+        getAdminImageUseCase.execute { result in
+            switch result {
+            case .success(let data):
+                self.banners.append(contentsOf: data.map({ $0.imageURL }))
+                self.onBannerDataFetched?()
+                self.startAutoScroll()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
         // 예시 이미지 로딩 (나중에 실제 데이터를 로딩하는 로직으로 대체)
-        self.banners = [
-            UIImage(named: "exampleBanner")!,
-            UIImage(named: "exampleBanner")!,
-            UIImage(named: "exampleBanner")!
-        ]
-        onBannerDataFetched?()
-        startAutoScroll()
+//        self.banners = [
+//            UIImage(named: "exampleBanner")!,
+//            UIImage(named: "exampleBanner")!,
+//            UIImage(named: "exampleBanner")!
+//        ]
+//        onBannerDataFetched?()
+//        startAutoScroll()
     }
     
-    func getBannerImages() -> [UIImage] {
+    func getBannerImages() -> [String] {
         return banners
     }
     
-    func setBannerImages(_ banners: [UIImage]) {
-        self.banners = banners
-        onBannerDataFetched?()
-        startAutoScroll()
-    }
+//    func setBannerImages(_ banners: [String]) {
+//        self.banners = banners
+//        onBannerDataFetched?()
+//        startAutoScroll()
+//    }
     
     func startAutoScroll() {
         stopAutoScroll()

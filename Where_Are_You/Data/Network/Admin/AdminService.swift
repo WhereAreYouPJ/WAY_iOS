@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 protocol AdminServiceProtocol {
-    func getAdminImage(completion: @escaping (Result<GenericResponse<AdminResponse>, Error>) -> Void)
+    func getAdminImage(completion: @escaping (Result<GenericResponse<[AdminResponse]>, Error>) -> Void)
     func getServerStatus(completion: @escaping (Result<Void, Error>) -> Void)
 }
 
@@ -29,7 +29,7 @@ class AdminService: AdminServiceProtocol {
     }
 
     // MARK: - APIService
-    func getAdminImage(completion: @escaping (Result<GenericResponse<AdminResponse>, Error>) -> Void) {
+    func getAdminImage(completion: @escaping (Result<GenericResponse<[AdminResponse]>, Error>) -> Void) {
         provider.request(.getAdminImage(memberSeq: memberSeq)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }

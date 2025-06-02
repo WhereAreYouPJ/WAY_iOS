@@ -58,14 +58,16 @@ class TitleView: UIView {
         addSubview(notificationButton)
         
         titleLabel.snp.makeConstraints { make in
-            make.top.leading.centerY.equalToSuperview()
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 12))
+            make.leading.equalToSuperview()
             make.height.equalTo(LayoutAdapter.shared.scale(value: 26))
             make.width.equalTo(LayoutAdapter.shared.scale(value: 132))
         }
         
         notificationButton.snp.makeConstraints { make in
             make.height.width.equalTo(LayoutAdapter.shared.scale(value: 24))
-            make.top.trailing.centerY.equalToSuperview()
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 13))
+            make.trailing.equalToSuperview()
         }
     }
 }

@@ -66,26 +66,26 @@ class AcoountSearchViewModel {
         emailSendUseCase.execute(email: email) { [weak self] result in
             switch result {
             case .success:
-                self?.onRequestCodeSuccess?(" 인증코드가 전송되었습니다.")
+                self?.onRequestCodeSuccess?("인증코드가 전송되었습니다.")
                 self?.email = email
                 self?.timerHelper.startTimer()
             case .failure:
-                self?.onRequestCodeFailure?(" 입력한 이메일 주소를 다시 확인해주세요.")
+                self?.onRequestCodeFailure?("입력한 이메일 주소를 다시 확인해주세요.")
             }
         }
     }
     
     func verifyEmailCode(code: String) {
         if timerHelper.timerCount == 0 {
-            self.onVerifyCodeFailure?(" 이메일 재인증 요청이 필요합니다.")
+            self.onVerifyCodeFailure?("이메일 재인증 요청이 필요합니다.")
         } else {
             emailVerifyUseCase.execute(request: EmailVerifyBody(email: email, code: code)) { result in
                 switch result {
                 case .success:
-                    self.onVerifyCodeSuccess?(" 인증코드가 확인되었습니다.")
+                    self.onVerifyCodeSuccess?("인증코드가 확인되었습니다.")
                     self.timerHelper.stopTimer()
                 case .failure:
-                    self.onVerifyCodeFailure?(" 인증코드가 일치하지 않습니다.")
+                    self.onVerifyCodeFailure?("인증코드가 일치하지 않습니다.")
                 }
             }
         }

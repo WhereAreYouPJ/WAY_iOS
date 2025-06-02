@@ -148,9 +148,10 @@ class MyPageViewController: UIViewController {
         case 4:
             // Handle "공지사항"
             print("공지사항 tapped")
+            moveToDetailController(controller: AnnouncmentListViewController())
         case 5:
             // Handle "1:1 이용문의"
-            print("1:1 이용문의 tapped")
+            moveToDetailController(controller: InquiryViewController())
         default:
             break
         }

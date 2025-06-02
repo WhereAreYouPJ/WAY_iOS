@@ -78,7 +78,7 @@ class SignUpViewModel {
     // 이름 형식 체크
     func checkUserNameValidation(userName: String) {
         if ValidationHelper.isValidUserName(userName) {
-            onUserNameValidationMessage?("", true)
+            onUserNameValidationMessage?("사용가능한 이름입니다.", true)
             signUpBody.userName = userName
         } else {
             onUserNameValidationMessage?(invalidUserNameMessage, false)

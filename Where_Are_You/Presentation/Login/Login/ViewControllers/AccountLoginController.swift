@@ -58,7 +58,7 @@ class AccountLoginController: UIViewController {
         // 로그인 실패
         viewModel.onLoginFailure = { [weak self] message, isAvailable in
             // 로그인 실패
-            if message == " 이메일 또는 비밀번호를 확인해주세요." {
+            if message == "이메일 또는 비밀번호를 확인해주세요." {
                 self?.updateStatus(label: self?.accountLoginView.passwordErrorLabel,
                                    message: message,
                                    isAvailable: isAvailable,
