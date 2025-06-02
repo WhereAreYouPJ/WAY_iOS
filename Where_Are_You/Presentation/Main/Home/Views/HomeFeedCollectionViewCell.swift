@@ -30,22 +30,43 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
     
     private let userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "u", textColor: .black22))
     
+    private let borderView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .blackF0
+        view.snp.makeConstraints { make in
+            make.height.equalTo(12)
+            make.width.equalTo(1.5)
+        }
+        return view
+    }()
+    
     private let locationLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "l", textColor: .black66))
     
     private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "t", textColor: .black22))
     
-    // 장소, 타이틀
+    // 이름, 장소
+    private lazy var mainStackView: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [userNameLabel, borderView, locationLabel])
+        sv.axis = .horizontal
+        sv.spacing = 6
+        sv.alignment = .center
+        return sv
+    }()
+    
+    // (이름, 장소), 타이틀
     private lazy var textStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [locationLabel, titleLabel])
+        let stackView = UIStackView(arrangedSubviews: [mainStackView, titleLabel])
         stackView.axis = .vertical
         return stackView
     }()
     
+    private let titleContentView = UIView()
+    
     // 프로필 이미지, (장소, 타이틀)
     private lazy var titleStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [profileImageView, textStackView])
+        let stackView = UIStackView(arrangedSubviews: [profileImageView, titleContentView])
         stackView.axis = .horizontal
-        stackView.spacing = 5
+        stackView.spacing = 10
         return stackView
     }()
     
@@ -65,7 +86,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.distribution = .fill
-        stackView.spacing = LayoutAdapter.shared.scale(value: 12)
+        stackView.spacing = 12
         return stackView
     }()
     
@@ -103,24 +124,38 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
     
     private func configureViewComponents() {
         contentView.addSubview(mainStack)
+        titleContentView.addSubview(textStackView)
         layer.cornerRadius = LayoutAdapter.shared.scale(value: 16)
         layer.borderWidth = 1
         layer.borderColor = UIColor.blackF0.cgColor
         clipsToBounds = true
+        
+        // userNameLabel은 intrinsic size로 딱 맞게만
+        userNameLabel.setContentHuggingPriority(.required, for: .horizontal)
+        userNameLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+        // locationLabel은 남은 공간을 차지하도록
+        locationLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        locationLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        
+        borderView.setContentHuggingPriority(.required, for: .horizontal)
+        borderView.setContentCompressionResistancePriority(.required, for: .horizontal)
     }
     
     private func setupConstraints() {
         mainStack.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.top.leading.equalToSuperview().inset(16)
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 16))
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 20))
         }
         
         profileImageView.snp.makeConstraints { make in
-            make.width.equalTo(textStackView.snp.height)
+            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 56))
         }
         
-        profileImageView.snp.makeConstraints { make in
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 56))
+        textStackView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 5))
+            make.leading.trailing.equalToSuperview()
         }
 
         feedContentStackView.snp.makeConstraints { make in
@@ -141,13 +176,14 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
         self.feed = feed
         
         profileImageView.kf.setImage(with: URL(string: feed.profileImageURL), placeholder: UIImage(named: "basic_profile_image"))
-        locationLabel.text = feed.location
-        titleLabel.text = feed.title
+        userNameLabel.updateTextKeepingAttributes(newText: feed.userName)
+        locationLabel.updateTextKeepingAttributes(newText: feed.location)
+        titleLabel.updateTextKeepingAttributes(newText: feed.title)
         descriptionLabel.isHidden = true
         let feedImageInfos = feed.feedImageInfos ?? []
         if let content = feed.content { // 피드 content가 있는 경우
             descriptionLabel.isHidden = false
-            descriptionLabel.text = content
+            descriptionLabel.updateTextKeepingAttributes(newText: content)
             let readmoreFont = UIFont.pretendard(NotoSans: .medium, fontSize: 14)
             let readmoreFontColor = UIColor.brandLight
             DispatchQueue.main.async {

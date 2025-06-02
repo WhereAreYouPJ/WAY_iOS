@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class BannerCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
@@ -37,7 +38,7 @@ class BannerCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Helpers
 
-    func configure(with image: UIImage) {
-        imageView.image = image
+    func configure(with image: String) {
+        imageView.kf.setImage(with: URL(string: image))
     }
 }
