@@ -8,7 +8,7 @@
 import Alamofire
 
 protocol AdminRepositoryProtocol {
-    func getAdminImage(completion: @escaping (Result<GenericResponse<AdminResponse>, Error>) -> Void)
+    func getAdminImage(completion: @escaping (Result<GenericResponse<[AdminResponse]>, Error>) -> Void)
     func getServerStatus(completion: @escaping (Result<Void, Error>) -> Void)
 }
 
@@ -19,7 +19,7 @@ class AdminRepository: AdminRepositoryProtocol {
         self.adminService = adminService
     }
     
-    func getAdminImage(completion: @escaping (Result<GenericResponse<AdminResponse>, any Error>) -> Void) {
+    func getAdminImage(completion: @escaping (Result<GenericResponse<[AdminResponse]>, any Error>) -> Void) {
         adminService.getAdminImage(completion: completion)
     }
     

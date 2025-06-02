@@ -24,13 +24,16 @@ class MainTabBarController: UITabBarController {
     
     private func configureMainInterface() {
         // 각 뷰 컨트롤러를 초기화하고 설정
+        let adminService = AdminService()
+        let adminRepository = AdminRepository(adminService: adminService)
+        
         let feedService = FeedService()
         let feedRepository = FeedRepository(feedService: feedService)
         
         let scheduleService = ScheduleService()
         let scheduleRepository = ScheduleRepository(scheduleService: scheduleService)
         
-        let bannerViewModel = BannerViewModel()
+        let bannerViewModel = BannerViewModel(getAdminImageUseCase: GetAdminImageUseCaseImpl(adminRepository: adminRepository))
         let dDayViewModel = DDayViewModel(getDDayScheduleUseCase: GetDDayScheduleUseCaseImpl(scheduleRepository: scheduleRepository))
         let homeFeedViewModel = HomeFeedViewModel(getFeedMainUseCase: GetFeedMainUseCaseImpl(feedRepository: feedRepository))
         let bottomSheetViewModel = BottomSheetViewModel(getDailyScheduleUseCase: GetDailyScheduleUseCaseImpl(scheduleRepository: scheduleRepository))

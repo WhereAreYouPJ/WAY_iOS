@@ -8,7 +8,7 @@
 import Foundation
 
 protocol GetAdminImageUseCase {
-    func execute(completion: @escaping (Result<AdminResponse, Error>) -> Void)
+    func execute(completion: @escaping (Result<[AdminResponse], Error>) -> Void)
 }
 
 class GetAdminImageUseCaseImpl: GetAdminImageUseCase {
@@ -18,7 +18,7 @@ class GetAdminImageUseCaseImpl: GetAdminImageUseCase {
         self.adminRepository = adminRepository
     }
     
-    func execute(completion: @escaping (Result<AdminResponse, any Error>) -> Void) {
+    func execute(completion: @escaping (Result<[AdminResponse], any Error>) -> Void) {
         adminRepository.getAdminImage { result in
             switch result {
             case .success(let response):

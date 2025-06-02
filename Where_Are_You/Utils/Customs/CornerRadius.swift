@@ -24,7 +24,6 @@ extension View {
     }
 }
 
-
 #Preview {
     CornerRadius()
 }
