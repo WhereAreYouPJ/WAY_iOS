@@ -10,51 +10,9 @@ import Combine
 
 final class CreateScheduleViewModel: ObservableObject {
     @Published var title: String = ""
-    @Published var isAllDay: Bool = true {
-        didSet {
-            if isAllDay { // 하루종일이 켜지면 종료일을 시작일과 동일하게 설정
-                startTime = Calendar.current.startOfDay(for: startTime)
-                endTime = Calendar.current.startOfDay(for: endTime)
-            } else { // 하루종일이 꺼지면 시작일은 오늘날짜 + 다음 정각
-                let calendar = Calendar.current
-                let now = Date()
-                
-                // 시각 초기값: 현재 시간 + 1 hour, 00 minute
-                var components = calendar.dateComponents([.year, .month, .day, .hour], from: now)
-                components.hour = (components.hour ?? 0) + 1
-                components.minute = 0
-                components.second = 0
-                
-                let startOfNextHour = calendar.date(from: components) ?? now
-                let endOfNextHour = calendar.date(byAdding: .hour, value: 1, to: startOfNextHour) ?? now
-         
-                startTime = startOfNextHour
-                endTime = endOfNextHour
-            }
-        }
-    }
-    
-    private var isUpdatingStartTime = false
-    private var isUpdatingEndTime = false
-    
-    @Published var startTime: Date {
-        didSet {
-            if isAllDay && !isUpdatingStartTime {
-                isUpdatingEndTime = true
-                endTime = Calendar.current.startOfDay(for: startTime)
-                isUpdatingEndTime = false
-            }
-        }
-    }
-    @Published var endTime: Date {
-        didSet {
-            if isAllDay && !isUpdatingEndTime {
-                isUpdatingStartTime = true
-                startTime = Calendar.current.startOfDay(for: endTime)
-                isUpdatingStartTime = false
-            }
-        }
-    }
+    @Published var isAllDay: Bool = true
+    @Published var startTime: Date
+    @Published var endTime: Date
     @Published var selectedFriends: [Friend] = []
     @Published var place: Location?
     @Published var favPlaces: [Location] = []
@@ -68,6 +26,9 @@ final class CreateScheduleViewModel: ObservableObject {
     private let getFavoriteLocationUseCase: GetLocationUseCase
     private let geocodeLocationUseCase: GeocodeLocationUseCase
     private var cancellables = Set<AnyCancellable>()
+    
+    private var rememberedStartTime: Date?
+    private var rememberedEndTime: Date?
     
     let memberSeq = UserDefaultsManager.shared.getMemberSeq()
     
@@ -94,19 +55,27 @@ final class CreateScheduleViewModel: ObservableObject {
         
         let calendar = Calendar.current
         let now = Date()
+        let currentHour = calendar.component(.hour, from: now)
         
-        // 시각 초기값: 현재 시간 + 1 hour, 00 minute
-        var components = calendar.dateComponents([.year, .month, .day, .hour], from: now)
-        components.hour = (components.hour ?? 0) + 1
-        components.minute = 0
-        components.second = 0
-        
-        let startOfNextHour = calendar.date(from: components) ?? now
-        let endOfNextHour = calendar.date(byAdding: .hour, value: 1, to: startOfNextHour) ?? now
- 
-        self.startTime = startOfNextHour
-        self.endTime = endOfNextHour // TODO: 23시 이후에 하루종일 토글 on 할 경우 시작일과 종료날이 달라지는 부분 수정 필요
-        
+        if currentHour >= 23 {
+            self.startTime = now
+            
+            var components = calendar.dateComponents([.year, .month, .day], from: now)
+            components.hour = 23
+            components.minute = 59
+            self.endTime = calendar.date(from: components) ?? now
+        } else {
+            var startComponents = calendar.dateComponents([.year, .month, .day], from: now)
+            startComponents.hour = currentHour + 1
+            startComponents.minute = 0
+            self.startTime = calendar.date(from: startComponents) ?? now
+            
+            var endComponents = calendar.dateComponents([.year, .month, .day], from: now)
+            endComponents.hour = currentHour + 2
+            endComponents.minute = 0
+            self.endTime = calendar.date(from: endComponents) ?? now
+        }
+
         if let schedule = schedule { // 기존 일정이 있으면 값 설정
             self.title = schedule.title
             self.isAllDay = schedule.isAllday ?? false
@@ -142,6 +111,15 @@ final class CreateScheduleViewModel: ObservableObject {
                 self?.syncPlaceWithFavorites()
             }
             .store(in: &cancellables)
+    }
+    
+    // 기본 시간 설정 로직을 별도 메서드로 분리
+    func setTime(for date: Date, hour: Int, minute: Int) -> Date {
+        let calendar = Calendar.current
+        var components = calendar.dateComponents([.year, .month, .day], from: date)
+        components.hour = hour
+        components.minute = minute
+        return calendar.date(from: components) ?? date
     }
     
     func checkPostAvailable() -> Bool {
@@ -227,10 +205,21 @@ final class CreateScheduleViewModel: ObservableObject {
     
     func postSchedule() {
         let invitedMemberSeqs = selectedFriends.map { $0.memberSeq }
+        let serverStartTime: String
+        let serverEndTime: String
+        
+        if isAllDay {
+            serverStartTime = Calendar.current.startOfDay(for: startTime).formatted(to: .serverSimple)
+            serverEndTime = Calendar.current.startOfDay(for: endTime).formatted(to: .serverSimple)
+        } else {
+            serverStartTime = startTime.formatted(to: .serverSimple)
+            serverEndTime = endTime.formatted(to: .serverSimple)
+        }
+        
         let body = CreateScheduleBody(
             title: title,
-            startTime: startTime.formatted(to: .serverSimple),
-            endTime: endTime.formatted(to: .serverSimple),
+            startTime: serverStartTime,
+            endTime: serverEndTime,
             location: place?.location,
             streetName: place?.streetName,
             x: place?.x,
@@ -249,7 +238,7 @@ final class CreateScheduleViewModel: ObservableObject {
                 switch result {
                 case .success(let response):
                     self.isSuccess = true
-                    print("post 성공! start time: \(self.startTime.formatted(to: .serverSimple)), end time: \(self.startTime.formatted(to: .serverSimple))")
+                    print("post 성공! start time: \(serverStartTime), end time: \(serverEndTime)")
                     print("Member Sequence: \(self.memberSeq), Schedule Sequence: \(response.data.scheduleSeq), Chat Root Sequence: \(response.data.chatRootSeq)")
                 case .failure(let error):
                     print("postSchedule 요청 실패: \(error.localizedDescription)")

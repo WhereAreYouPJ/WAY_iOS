@@ -148,12 +148,28 @@ struct FriendCell: View {
             Spacer()
             
             if showToggle, let isOn = isOn {
-                Toggle("", isOn: isOn)
-                    .toggleStyle(CheckboxToggleStyle())
+//                Toggle("", isOn: isOn)
+//                    .toggleStyle(CheckboxToggleStyle())
+                // 토글 아이콘만 표시, 터치 이벤트는 제거
+                if isOn.wrappedValue {
+                    Image(systemName: "checkmark.circle.fill")
+                        .imageScale(.large)
+                        .foregroundStyle(Color(.brandColor))
+                } else {
+                    Image(systemName: "circle")
+                        .imageScale(.large)
+                        .foregroundStyle(.gray)
+                }
             }
         }
         .padding(.top, LayoutAdapter.shared.scale(value: 10))
         .bodyP3Style(color: .black22)
+        .onTapGesture {
+            // 토글이 있는 경우 전체 셀 터치 시 토글 상태 변경
+            if showToggle, let isOn = isOn {
+                isOn.wrappedValue.toggle()
+            }
+        }
     }
 }
 
