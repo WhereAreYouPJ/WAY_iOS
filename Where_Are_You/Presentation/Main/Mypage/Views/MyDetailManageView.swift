@@ -11,7 +11,7 @@ class MyDetailManageView: UIView {
     // MARK: - Properties
     let modifyButton = CustomOptionButtonView(title: "수정하기")
     
-    private let userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 이름", textColor: .black22))
+    private let userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "이름", textColor: .black22), isPaddingLabel: true)
     
     var userNameTextField = CustomTextField(placeholder: "")
     
@@ -24,7 +24,7 @@ class MyDetailManageView: UIView {
         return stackView
     }()
     
-    private let emailLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 이메일 주소", textColor: .black22))
+    private let emailLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "이메일 주소", textColor: .black22), isPaddingLabel: true)
         
     var emailTextfield = CustomTextField(placeholder: "")
     

@@ -44,6 +44,12 @@ class CustomTextField: UITextField {
         }
     }
     
+    func setupTextField(inputAttributedText: NSAttributedString?) {
+        if let displayText = inputAttributedText {
+            self.attributedText = displayText
+        }
+    }
+    
     private func setupBorder() {
         if hasBorder {
             layer.borderColor = UIColor.blackD4.cgColor
