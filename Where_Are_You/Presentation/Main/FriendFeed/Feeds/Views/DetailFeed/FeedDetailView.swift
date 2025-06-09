@@ -84,6 +84,11 @@
             noFeedView.isHidden = true
             scrollView.isHidden = false
         }
+        
+        func selectParticipant(at index: Int) {
+            guard let button = participantsBoxView.participantStackView.arrangedSubviews[index] as? GradientButton else { return }
+            participantsBoxView.performSelectAction(for: button)
+        }
     }
 
     extension FeedDetailView: FeedParticipantDelegate {

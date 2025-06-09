@@ -73,7 +73,7 @@ class MyDetailManageViewcontroller: UIViewController {
    
     // 초기 설정
     private func configureInitialState() {
-        mydetailManageView.emailTextfield.attributedText = UIFont.CustomFont.bodyP3(text: email, textColor: .black66)
+        mydetailManageView.emailTextfield.setupTextField(placeholder: email)
         mydetailManageView.emailTextfield.isUserInteractionEnabled = false
         mydetailManageView.emailTextfield.backgroundColor = .blackF0
         mydetailManageView.userNameTextField.isUserInteractionEnabled = isEditingMode
@@ -86,7 +86,7 @@ class MyDetailManageViewcontroller: UIViewController {
         viewModel.onChangeNameSuccess = { [weak self] userName in
             DispatchQueue.main.async {
                 self?.userName = userName
-                self?.mydetailManageView.userNameTextField.attributedText = UIFont.CustomFont.bodyP3(text: userName, textColor: .black66)
+                self?.mydetailManageView.userNameTextField.setupTextField(placeholder: userName)
                 self?.mydetailManageView.userNameTextField.isEnabled = false
                 self?.mydetailManageView.updateDetailButton.updateTitle("수정되었습니다")
                 self?.mydetailManageView.updateDetailButton.updateBackgroundColor(.blackAC)
