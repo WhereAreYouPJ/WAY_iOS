@@ -18,26 +18,7 @@ class FriendFeedViewController: UIViewController {
     private let notificationBadgeViewModel = NotificationBadgeViewModel.shared
     private var cancellables = Set<AnyCancellable>()
     
-    private let segmentControl: UISegmentedControl = {
-        let sc = UISegmentedControl()
-        sc.insertSegment(withTitle: "피드", at: 0, animated: false)
-        sc.insertSegment(withTitle: "친구", at: 1, animated: false)
-        sc.selectedSegmentIndex = 0
-        
-        // CustomFont.titleH1이 리턴하는 attributedString에서 속성 딕셔너리 추출
-        let normalAttributes = UIFont.CustomFont.titleH1(text: "피드", textColor: .blackAC).attributes(at: 0, effectiveRange: nil)
-        let selectedAttributes = UIFont.CustomFont.titleH1(text: "피드", textColor: .black22).attributes(at: 0, effectiveRange: nil)
-        
-        sc.setTitleTextAttributes(normalAttributes, for: .normal)
-        sc.setTitleTextAttributes(selectedAttributes, for: .selected)
-        
-        sc.selectedSegmentTintColor = .clear
-        sc.backgroundColor = .clear
-        let image = UIImage()
-        sc.setBackgroundImage(image, for: .normal, barMetrics: .default)
-        sc.setDividerImage(image, forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
-        return sc
-    }()
+    private let titleView = FriendFeedTitleView()
 
     private var showSearchBar: Bool = false {
         didSet {
@@ -47,34 +28,6 @@ class FriendFeedViewController: UIViewController {
             }
         }
     }
-    let searchFriendButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "icon-search"), for: .normal)
-        button.tintColor = .brandColor
-        return button
-    }()
-    
-    let notificationButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "icon-notification"), for: .normal)
-        button.tintColor = .brandColor
-        return button
-    }()
-    
-    let addButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "icon-plus"), for: .normal)
-        button.tintColor = .brandColor
-        return button
-    }()
-    
-    private lazy var barButtonStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [searchFriendButton, notificationButton, addButton])
-        stackView.axis = .horizontal
-        stackView.spacing = 8
-        stackView.distribution = .fillEqually
-        return stackView
-    }()
         
     private let friendOptionView: UIHostingController = {
         let view = OptionButtonView(topPadding: 0, content: {
@@ -131,25 +84,25 @@ class FriendFeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNotifications()
-        setupNavigationBar()
         setupUI()
         setupConstraints()
         setupActions()
         updateUIForSelectedSegment()
         setupNotificationObserver()
         
-        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-    
+        
+        navigationController?.setNavigationBarHidden(true, animated: animated)
         notificationBadgeViewModel.checkForNewNotifications() // 서버에서 알림 정보 가져오기
     }
     
     // MARK: - UI Setup
     private func setupUI() {
         view.backgroundColor = .white
+        view.addSubview(titleView)
         
         // Add FeedsViewController
         addChild(feedsViewController)
@@ -165,17 +118,14 @@ class FriendFeedViewController: UIViewController {
             friendsHostingController.view.isHidden = true
             
             friendsHostingController.view.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
+                make.top.equalTo(titleView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 7))
+                make.leading.trailing.bottom.equalToSuperview()
             }
         }
         
         friendsHostingController?.view.isHidden = true
         feedsViewController.view.isHidden = false
         view.bringSubviewToFront(feedsViewController.view)
-        
-        // Setup navigation items
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonStack)
         
         view.addSubview(friendOptionView.view)
         
@@ -191,27 +141,25 @@ class FriendFeedViewController: UIViewController {
         
         // 항상 최상단에 표시되도록
         view.bringSubviewToFront(friendOptionView.view)
+        
+        view.bringSubviewToFront(titleView)
     }
     
     private func setupConstraints() {
+        titleView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 48))
+        }
+        
         feedsViewController.view.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(titleView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 7))
+            make.leading.trailing.bottom.equalToSuperview()
         }
         
-        friendsHostingController?.view.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        segmentControl.snp.makeConstraints { make in
-            make.width.equalTo(118)
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 45)).priority(.required)
-        }
-        
-        addButton.snp.makeConstraints { make in
-            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 24))
-        }
-        
-//        if segmentControl.selectedSegmentIndex == 0 {
+//        friendsHostingController?.view.snp.makeConstraints { make in
+//            make.top.equalTo(titleView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 7))
+//            make.leading.trailing.bottom.equalToSuperview()
 //        }
         
         friendOptionView.view.snp.makeConstraints { make in
@@ -221,20 +169,14 @@ class FriendFeedViewController: UIViewController {
     }
     
     private func setupActions() {
-        segmentControl.addTarget(self, action: #selector(handleSegmentChange), for: .valueChanged)
-        searchFriendButton.addTarget(self, action: #selector(handleSearch), for: .touchUpInside)
-        notificationButton.addTarget(self, action: #selector(handleNotification), for: .touchUpInside)
-        addButton.addTarget(self, action: #selector(handleAdd), for: .touchUpInside)
+        titleView.segmentControl.addTarget(self, action: #selector(handleSegmentChange), for: .valueChanged)
+        titleView.searchFriendButton.addTarget(self, action: #selector(handleSearch), for: .touchUpInside)
+        titleView.notificationButton.addTarget(self, action: #selector(handleNotification), for: .touchUpInside)
+        titleView.addButton.addTarget(self, action: #selector(handleAdd), for: .touchUpInside)
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
-    }
-    
-    private func setupNavigationBar() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: segmentControl)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonStack)
-        segmentControl.addTarget(self, action: #selector(handleSegmentChange), for: .valueChanged)
     }
     
     private func setupNotificationObserver() {
@@ -251,22 +193,22 @@ class FriendFeedViewController: UIViewController {
     
     // MARK: - Helpers
     private func updateUIForSelectedSegment() {
-        if segmentControl.selectedSegmentIndex == 0 {
+        if titleView.segmentControl.selectedSegmentIndex == 0 {
             view.bringSubviewToFront(feedsViewController.view)
             feedsViewController.view.isHidden = false
             friendsHostingController?.view.isHidden = true
-            searchFriendButton.isHidden = true
-            notificationButton.isHidden = false
-            addButton.isHidden = false
+            titleView.searchFriendButton.isHidden = true
+            titleView.notificationButton.isHidden = false
+            titleView.addButton.isHidden = false
             showSearchBar = false
             friendOptionView.view.isHidden = true
         } else {
             view.bringSubviewToFront(friendsHostingController!.view)
             feedsViewController.view.isHidden = true
             friendsHostingController?.view.isHidden = false
-            searchFriendButton.isHidden = false
-            notificationButton.isHidden = false
-            addButton.isHidden = false
+            titleView.searchFriendButton.isHidden = false
+            titleView.notificationButton.isHidden = false
+            titleView.addButton.isHidden = false
         }
     }
     
@@ -288,7 +230,7 @@ class FriendFeedViewController: UIViewController {
     }
     
     @objc private func handleAdd() {
-        if segmentControl.selectedSegmentIndex == 0 {
+        if titleView.segmentControl.selectedSegmentIndex == 0 {
             feedsViewController.plusOptionButton.isHidden = false
             friendOptionView.view.isHidden = true
 //            plusOptionButton.isHidden = false
@@ -313,6 +255,6 @@ class FriendFeedViewController: UIViewController {
     @objc private func updateNotificationIcon() {
         // 읽지 않은 알림이 있는지 확인
         let imageName = notificationBadgeViewModel.hasUnreadNotifications ? "icon-notification-badge" : "icon-notification"
-        notificationButton.setImage(UIImage(named: imageName), for: .normal)
+        titleView.notificationButton.setImage(UIImage(named: imageName), for: .normal)
     }
 }
