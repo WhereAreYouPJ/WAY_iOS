@@ -79,7 +79,7 @@ class MyDetailManageViewcontroller: UIViewController {
         mydetailManageView.userNameTextField.isUserInteractionEnabled = isEditingMode
         mydetailManageView.updateDetailButton.isHidden = !isEditingMode
         addButton.isHidden = isEditingMode
-        mydetailManageView.userNameTextField.attributedText = UIFont.CustomFont.bodyP3(text: userName, textColor: isEditingMode ? .black22 : .black66)
+        mydetailManageView.userNameTextField.setupTextField(placeholder: userName)
     }
     
     private func setupBindings() {

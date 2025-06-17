@@ -121,6 +121,7 @@ extension CommentDeletionViewController: UITableViewDelegate, UITableViewDataSou
                 self?.inputText = text
             }
         }
+        cell.selectionStyle = .none
         return cell
     }
     
