@@ -112,6 +112,11 @@ class FeedParticipantView: UIView {
         selectedButton = button
     }
     
+    func performSelectAction(for button: GradientButton) {
+        updateSelectedButton(button)
+        delegate?.didSelectParticipant(at: button.tag)
+    }
+    
     @objc private func didTapParticipantButton(_ sender: GradientButton) {
         updateSelectedButton(sender)
 

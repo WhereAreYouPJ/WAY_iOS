@@ -98,6 +98,12 @@ class FeedDetailViewController: UIViewController {
         // 참가자 정보 로드 (뷰 모델 혹은 네트워크 호출)
         let participants = viewModel.getParticipants()
         feedDetailView.configureParticipants(participants: participants)
+        
+        // representFeed의 작성자가 몇 번째인지 찾음
+        let memberSeq = representFeed.memberSeq
+        if let selectedIndex = participants.firstIndex(where: { $0.memberSeq == memberSeq }) {
+            feedDetailView.selectParticipant(at: selectedIndex)
+        }
     }
     
     private func showOptions(for feed: Feed, at frame: CGRect, isAuthor: Bool) {

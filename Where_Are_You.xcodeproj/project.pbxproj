@@ -256,6 +256,7 @@
 		99FBA5502C45394E002EEEC7 /* BannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA54F2C45394E002EEEC7 /* BannerViewModel.swift */; };
 		99FBA5562C453BDD002EEEC7 /* HomeFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5552C453BDD002EEEC7 /* HomeFeedViewController.swift */; };
 		99FBA5582C453C05002EEEC7 /* HomeFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBA5572C453C05002EEEC7 /* HomeFeedViewModel.swift */; };
+		99FBB0082DFAAF7C00C5875B /* FriendFeedTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FBB0072DFAAF7C00C5875B /* FriendFeedTitleView.swift */; };
 		99FDD0BD2C6DF72700B15026 /* MultipartFormDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */; };
 		D50D7D952D92C4F2009B0217 /* ScheduleColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50D7D942D92C4F2009B0217 /* ScheduleColor.swift */; };
 		D511A5742D3E8F7400CA6FE7 /* CustomToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511A5732D3E8F7400CA6FE7 /* CustomToast.swift */; };
@@ -647,6 +648,7 @@
 		99FBA5532C453B6D002EEEC7 /* DDayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDayViewModel.swift; sourceTree = "<group>"; };
 		99FBA5552C453BDD002EEEC7 /* HomeFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeedViewController.swift; sourceTree = "<group>"; };
 		99FBA5572C453C05002EEEC7 /* HomeFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeedViewModel.swift; sourceTree = "<group>"; };
+		99FBB0072DFAAF7C00C5875B /* FriendFeedTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendFeedTitleView.swift; sourceTree = "<group>"; };
 		99FDD0BC2C6DF72700B15026 /* MultipartFormDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartFormDataHelper.swift; sourceTree = "<group>"; };
 		A65D158E4FE647BC00BD20B1 /* Pods_Where_Are_You.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Where_Are_You.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA5015275FE458D5F6450041 /* Pods-Where_Are_You.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Where_Are_You.release.xcconfig"; path = "Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You.release.xcconfig"; sourceTree = "<group>"; };
@@ -1407,6 +1409,7 @@
 		99CC5E6B2C52122500A0509A /* FriendFeed */ = {
 			isa = PBXGroup;
 			children = (
+				99FBB0072DFAAF7C00C5875B /* FriendFeedTitleView.swift */,
 				99949F442C58788200AE0177 /* FriendFeedViewController.swift */,
 				990DE76E2C660A5A007B78C9 /* Feeds */,
 				990DE76D2C660A56007B78C9 /* Friends */,
@@ -2412,6 +2415,7 @@
 				992F57DB2C5B2A1D00219C6B /* MemberAPI.swift in Sources */,
 				99FDD0BD2C6DF72700B15026 /* MultipartFormDataHelper.swift in Sources */,
 				99E401252D0D6CD900A63304 /* FeedOptionsHandler.swift in Sources */,
+				99FBB0082DFAAF7C00C5875B /* FriendFeedTitleView.swift in Sources */,
 				99EC78D42C11E809007C4415 /* FinishRegisterview.swift in Sources */,
 				99EDF5A42CE8BE5B0008B19A /* DeleteHideFeedUseCase.swift in Sources */,
 				99647EED2D33B7E100D63B4B /* CheckPasswordView.swift in Sources */,
