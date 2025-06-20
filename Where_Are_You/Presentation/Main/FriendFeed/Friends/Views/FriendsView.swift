@@ -40,57 +40,55 @@ struct FriendsView: View {
     @State private var shouldRefreshList = false
     
     var body: some View {
-        VStack(spacing: 0) {
-            ZStack {
+        ScrollView {
+            VStack(spacing: 0) {
                 if showSearchBar {
                     SearchBarView(searchText: $viewModel.searchText,
                                   onClear: {
                         viewModel.clearSearch()
                         showSearchBar = false
                     })
-                    .frame(height: UIScreen.main.bounds.width * 0.14 + LayoutAdapter.shared.scale(value: 18))
+                    .padding(.bottom, LayoutAdapter.shared.scale(value: 10))
                     .transition(.opacity.combined(with: .move(edge: .top)))
-                } else {
-                    myProfileView()
-                        .onTapGesture {
-                            isMyProfileSelected = true
-                            showFriendDetail = true
-                        }
-                        .transition(.opacity.combined(with: .move(edge: .bottom)))
                 }
+                
+                myProfileView()
+                    .onTapGesture {
+                        isMyProfileSelected = true
+                        showFriendDetail = true
+                    }
+                
+                FriendListView(
+                    viewModel: viewModel,
+                    showToggle: false,
+                    onFriendSelect: { friend in
+                        selectedFriend = friend
+                        isMyProfileSelected = false
+                        showFriendDetail = true
+                    }
+                )
             }
-            .animation(.spring(response: 0.3), value: showSearchBar)
-            
-            FriendListView(
-                viewModel: viewModel,
-                showToggle: false,
-                onFriendSelect: { friend in
-                    selectedFriend = friend
-                    isMyProfileSelected = false
-                    showFriendDetail = true
+            .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
+            .onAppear {
+                viewModel.getUserDetail()
+                viewModel.getFriendsList()
+            }
+            .fullScreenCover(
+                isPresented: $showFriendDetail,
+                onDismiss: { viewModel.getFriendsList() },
+                content: {
+                    if isMyProfileSelected {
+                        FriendDetailView(viewModel: FriendDetailViewModel(isMyProfile: true))
+                    } else if let friend = selectedFriend {
+                        FriendDetailView(
+                            viewModel: FriendDetailViewModel(friend: friend, isMyProfile: false),
+                            onDelete: { shouldRefreshList = true }
+                        )
+                    }
                 }
             )
+            .bodyP3Style(color: .black22)
         }
-        .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
-        .onAppear {
-            viewModel.getUserDetail()
-            viewModel.getFriendsList()
-        }
-        .fullScreenCover(
-            isPresented: $showFriendDetail,
-            onDismiss: { viewModel.getFriendsList() },
-            content: {
-                if isMyProfileSelected {
-                    FriendDetailView(viewModel: FriendDetailViewModel(isMyProfile: true))
-                } else if let friend = selectedFriend {
-                    FriendDetailView(
-                        viewModel: FriendDetailViewModel(friend: friend, isMyProfile: false),
-                        onDelete: { shouldRefreshList = true }
-                    )
-                }
-            }
-        )
-        .bodyP3Style(color: .black22)
     }
     
     func myProfileView() -> some View {

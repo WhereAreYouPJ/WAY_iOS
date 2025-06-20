@@ -15,53 +15,57 @@ struct SearchFriendsView: View {
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        VStack {
-            SearchBarView(searchText: $viewModel.searchText, onClear: viewModel.clearSearch)
-                        
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(viewModel.selectedList) { friend in
-                        SelectedFriendsView(friend: friend, isOn: Binding(
-                            get: { viewModel.isSelected(friend: friend) },
-                            set: { _ in viewModel.removeFromSelection(friend: friend) }
-                        ))
-                    }
-                }
-            }
-            
-            FriendListView(
-                viewModel: viewModel.friendsViewModel,
-                showToggle: true,
-//                searchText: viewModel.searchText,
-                searchText: viewModel.highlightText,
-                isSelected: { friend in
-                    viewModel.isSelected(friend: friend)
-                },
-                onToggle: { friend in
-                    viewModel.toggleSelection(for: friend)
-                }
-            )
-            
-            Spacer()
-        }
-        .padding(.horizontal, LayoutAdapter.shared.scale(value: 20))
-        .onAppear {
-            viewModel.friendsViewModel.getFriendsList()
-            
-            viewModel.friendsViewModel.$favorites // 친구 목록이 로드된 후에 선택 상태를 설정하도록 Combine 활용
-                .combineLatest(viewModel.friendsViewModel.$friends)
-                .sink { favorites, friends in
-                    viewModel.resetSelection() // 선택 상태 초기화
-                    
-                    for selectedFriend in selectedFriends {
-                        if let foundInFavorites = favorites.first(where: { $0.memberSeq == selectedFriend.memberSeq }) {
-                            viewModel.selectedFavorites.insert(foundInFavorites.id)
-                        } else if let foundInFriends = friends.first(where: { $0.memberSeq == selectedFriend.memberSeq }) {
-                            viewModel.selectedFriends.insert(foundInFriends.id)
+        ScrollView {
+            VStack(spacing: 0) {
+                SearchBarView(searchText: $viewModel.searchText, onClear: viewModel.clearSearch)
+                    .padding(.top, LayoutAdapter.shared.scale(value: 16))
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(viewModel.selectedList) { friend in
+                            SelectedFriendsView(friend: friend, isOn: Binding(
+                                get: { viewModel.isSelected(friend: friend) },
+                                set: { _ in viewModel.removeFromSelection(friend: friend) }
+                            ))
                         }
                     }
                 }
-                .store(in: &viewModel.cancellables)
+                .padding(.top, LayoutAdapter.shared.scale(value: 12))
+                
+                FriendListView(
+                    viewModel: viewModel.friendsViewModel,
+                    showToggle: true,
+                    //                searchText: viewModel.searchText,
+                    searchText: viewModel.highlightText,
+                    isSelected: { friend in
+                        viewModel.isSelected(friend: friend)
+                    },
+                    onToggle: { friend in
+                        viewModel.toggleSelection(for: friend)
+                    }
+                )
+                
+                Spacer()
+            }
+            .padding(.horizontal, LayoutAdapter.shared.scale(value: 20))
+            .onAppear {
+                viewModel.friendsViewModel.getFriendsList()
+                
+                viewModel.friendsViewModel.$favorites // 친구 목록이 로드된 후에 선택 상태를 설정하도록 Combine 활용
+                    .combineLatest(viewModel.friendsViewModel.$friends)
+                    .sink { favorites, friends in
+                        viewModel.resetSelection() // 선택 상태 초기화
+                        
+                        for selectedFriend in selectedFriends {
+                            if let foundInFavorites = favorites.first(where: { $0.memberSeq == selectedFriend.memberSeq }) {
+                                viewModel.selectedFavorites.insert(foundInFavorites.id)
+                            } else if let foundInFriends = friends.first(where: { $0.memberSeq == selectedFriend.memberSeq }) {
+                                viewModel.selectedFriends.insert(foundInFriends.id)
+                            }
+                        }
+                    }
+                    .store(in: &viewModel.cancellables)
+            }
         }
     }
 }
@@ -94,7 +98,6 @@ struct SelectedFriendsView: View {
         .padding(EdgeInsets(top: 6, leading: 5, bottom: 6, trailing: 10))
         .background(Color.brandHighLight1)
         .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16)))
-        .padding(.top, LayoutAdapter.shared.scale(value: 10))
     }
 }
 
