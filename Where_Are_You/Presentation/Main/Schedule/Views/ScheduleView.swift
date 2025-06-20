@@ -16,10 +16,10 @@ struct ScheduleView: View {
     @State private var showOptionMenu = false
     @State private var showCreateSchedule = false
     
-    @State private var selectedDate: Date?
+//    @State private var selectedDate: Date?
     @State private var showDailySchedule = false
     
-    @State private var selectedPickerDate = Date()
+//    @State private var selectedPickerDate = Date()
     @State private var showDatePicker = false
     
     init() {
@@ -91,11 +91,12 @@ struct ScheduleView: View {
         .sheet(isPresented: $showCreateSchedule, onDismiss: {
             viewModel.getMonthlySchedule()
         }, content: {
-            CreateScheduleView()
+//            CreateScheduleView()
+            CreateScheduleView(initialDate: viewModel.getDateForNewSchedule())
         }
         )
         .sheet(isPresented: $showDailySchedule) {
-            if let date = selectedDate {
+            if let date = viewModel.selectedDate {
                 DailyScheduleView(
                     date: date,
                     isPresented: $showDailySchedule,
@@ -110,13 +111,24 @@ struct ScheduleView: View {
             viewModel.getMonthlySchedule()
             notificationBadgeViewModel.checkForNewNotifications()
             
-            selectedPickerDate = Date() // 피커 날짜 오늘로 초기화
+//            selectedPickerDate = Date() // 피커 날짜 오늘로 초기화
         })
-        // DatePicker 오버레이 추가
         .datepickerOverlay(isPresented: $showDatePicker) {
-            // 여기에 FullDatePickerView를 반환
+//            FullDatePickerView(
+//                selectedDate: $selectedPickerDate,
+//                isPresented: $showDatePicker,
+//                onCancel: {
+//                    // 취소 시 동작 (옵션)
+//                },
+//                onConfirm: { date in
+//                    handleDateSelection(date)
+//                }
+//            )
             FullDatePickerView(
-                selectedDate: $selectedPickerDate,
+                selectedDate: Binding(
+                    get: { viewModel.selectedDate ?? Date() }, // 🔄 selectedPickerDate 대신 viewModel.selectedDate 사용
+                    set: { viewModel.selectedDate = $0 } // 🔄 직접 ViewModel의 selectDate 호출
+                ),
                 isPresented: $showDatePicker,
                 onCancel: {
                     // 취소 시 동작 (옵션)
@@ -133,7 +145,7 @@ struct ScheduleView: View {
         HStack {
             Button(action: {
                 // 피커가 표시될 때 현재 선택된 월로 피커 날짜 초기화
-                selectedPickerDate = viewModel.month
+//                selectedPickerDate = viewModel.month
                 showDatePicker = true
             }, label: {
                 Text(viewModel.month.formatted(to: .yearMonth))
@@ -152,8 +164,9 @@ struct ScheduleView: View {
         let currentYear = calendar.component(.year, from: viewModel.month)
         let selectedYear = calendar.component(.year, from: date)
         
-        selectedPickerDate = date // 선택한 날짜로 selectedDate 업데이트
-        print("📆 선택된 날짜: \(selectedPickerDate)")
+//        selectedPickerDate = date // 선택한 날짜로 selectedDate 업데이트
+        viewModel.selectedDate = date
+        print("📆 선택된 날짜: \(date)")
         
         if currentMonth != selectedMonth || currentYear != selectedYear { // 월이 다른 경우 월 변경 (월 차이 계산)
             let yearDiff = selectedYear - currentYear
@@ -226,10 +239,11 @@ struct ScheduleView: View {
         let day = calendar.component(.day, from: date)
         let weekday = calendar.component(.weekday, from: date)
         
-        let clicked = selectedDate == date
+        let clicked = viewModel.selectedDate == date
         let isToday = date.formattedCalendarDayDate == today.formattedCalendarDayDate
 //        let isSelectedInPicker = calendar.isDate(date, inSameDayAs: selectedPickerDate)
-        let isSelectedInPicker = date.isSameYMD(as: selectedPickerDate)
+//        let isSelectedInPicker = date.isSameYMD(as: selectedPickerDate)
+        let isSelectedInPicker = date.isSameYMD(as: date)
         
         let daySchedules = monthlySchedules.filter { schedule in
             let scheduleStartDate = calendar.startOfDay(for: schedule.startTime)
@@ -253,7 +267,7 @@ struct ScheduleView: View {
             schedules: processedSchedules
         )
         .onTapGesture {
-            selectedDate = date
+            viewModel.selectedDate = date
             showDailySchedule = true
         }
         .frame(height: cellHeight)
@@ -264,7 +278,8 @@ struct ScheduleView: View {
         let date = getDate(for: index)
         
 //        let isSelectedInPicker = calendar.isDate(date, inSameDayAs: selectedPickerDate)
-        let isSelectedInPicker = date.isSameYMD(as: selectedPickerDate)
+//        let isSelectedInPicker = date.isSameYMD(as: selectedPickerDate)
+        let isSelectedInPicker = date.isSameYMD(as: date)
         
         let daySchedules = monthlySchedules.filter { schedule in
             let scheduleStartDate = calendar.startOfDay(for: schedule.startTime)

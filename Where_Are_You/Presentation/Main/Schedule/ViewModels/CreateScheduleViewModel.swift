@@ -33,6 +33,7 @@ final class CreateScheduleViewModel: ObservableObject {
     let memberSeq = UserDefaultsManager.shared.getMemberSeq()
     
     init(
+        initialDate: Date? = nil,
         schedule: Schedule? = nil,
         postScheduleUseCase: PostScheduleUseCase,
         getFavoriteLocationUseCase: GetLocationUseCase,
@@ -54,26 +55,31 @@ final class CreateScheduleViewModel: ObservableObject {
         }
         
         let calendar = Calendar.current
-        let now = Date()
-        let currentHour = calendar.component(.hour, from: now)
+        let baseDate = initialDate ?? Date()
+        let currentHour = calendar.component(.hour, from: Date())
         
         if currentHour >= 23 {
-            self.startTime = now
+            // 오후 11시 이후인 경우 - 선택된 날짜의 현재 시각으로 시작, 23:59로 종료
+            var startComponents = calendar.dateComponents([.year, .month, .day], from: baseDate)
+            startComponents.hour = currentHour
+            startComponents.minute = calendar.component(.minute, from: Date())
+            self.startTime = calendar.date(from: startComponents) ?? baseDate
             
-            var components = calendar.dateComponents([.year, .month, .day], from: now)
-            components.hour = 23
-            components.minute = 59
-            self.endTime = calendar.date(from: components) ?? now
+            var endComponents = calendar.dateComponents([.year, .month, .day], from: baseDate)
+            endComponents.hour = 23
+            endComponents.minute = 59
+            self.endTime = calendar.date(from: endComponents) ?? baseDate
         } else {
-            var startComponents = calendar.dateComponents([.year, .month, .day], from: now)
+            // 평상시인 경우 - 선택된 날짜의 다음 시간으로 설정
+            var startComponents = calendar.dateComponents([.year, .month, .day], from: baseDate)
             startComponents.hour = currentHour + 1
             startComponents.minute = 0
-            self.startTime = calendar.date(from: startComponents) ?? now
+            self.startTime = calendar.date(from: startComponents) ?? baseDate
             
-            var endComponents = calendar.dateComponents([.year, .month, .day], from: now)
+            var endComponents = calendar.dateComponents([.year, .month, .day], from: baseDate)
             endComponents.hour = currentHour + 2
             endComponents.minute = 0
-            self.endTime = calendar.date(from: endComponents) ?? now
+            self.endTime = calendar.date(from: endComponents) ?? baseDate
         }
 
         if let schedule = schedule { // 기존 일정이 있으면 값 설정

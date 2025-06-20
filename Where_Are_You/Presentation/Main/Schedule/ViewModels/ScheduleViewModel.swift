@@ -9,7 +9,7 @@ import Foundation
 
 class ScheduleViewModel: ObservableObject {
     @Published var month: Date = Date()
-    @Published var clickedCurrentMonthDates: Date?
+    @Published var selectedDate: Date?
     @Published var monthlySchedules: [Schedule] = []
     @Published var dailySchedules: [Schedule] = []
     @Published var isLoading = false
@@ -22,9 +22,22 @@ class ScheduleViewModel: ObservableObject {
         self.getMonthlyScheduleUseCase = getMonthlyScheduleUseCase
     }
     
+    // 일정 생성을 위한 기본 날짜 반환
+    func getDateForNewSchedule() -> Date {
+        // 1. 선택된 날짜가 있다면 해당 날짜
+        if let selected = selectedDate {
+            print("📆 날짜 선택됨: \(selected)")
+            return selected
+        }
+        
+        // 2. 선택된 날짜가 없으면 오늘 날짜
+        return Date()
+    }
+    
     func changeMonth(by value: Int) {
         if let newMonth = Calendar.current.date(byAdding: .month, value: value, to: month) {
             month = newMonth
+            selectedDate = nil
             getMonthlySchedule()
         }
     }
