@@ -91,7 +91,6 @@ struct ScheduleView: View {
         .sheet(isPresented: $showCreateSchedule, onDismiss: {
             viewModel.getMonthlySchedule()
         }, content: {
-//            CreateScheduleView()
             CreateScheduleView(initialDate: viewModel.getDateForNewSchedule())
         }
         )

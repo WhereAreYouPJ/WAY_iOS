@@ -58,15 +58,17 @@ struct FriendsView: View {
                         showFriendDetail = true
                     }
                 
-                FriendListView(
-                    viewModel: viewModel,
-                    showToggle: false,
-                    onFriendSelect: { friend in
-                        selectedFriend = friend
-                        isMyProfileSelected = false
-                        showFriendDetail = true
-                    }
-                )
+                friendListView()
+                
+//                FriendListView(
+//                    viewModel: viewModel,
+//                    showToggle: false,
+//                    onFriendSelect: { friend in
+//                        selectedFriend = friend
+//                        isMyProfileSelected = false
+//                        showFriendDetail = true
+//                    }
+//                )
             }
             .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
             .onAppear {
@@ -106,6 +108,52 @@ struct FriendsView: View {
             Spacer()
         }
         .padding(.top, LayoutAdapter.shared.scale(value: 10))
+    }
+    
+    func friendListView() -> some View {
+        VStack(spacing: 0) {
+            FriendsSectionView(title: "즐겨찾기", count: viewModel.filteredFavorites.count)
+            ForEach(viewModel.filteredFavorites) { friend in
+                friendCell(friend: friend)
+                    .onTapGesture {
+                        selectedFriend = friend
+                        isMyProfileSelected = false
+                        showFriendDetail = true
+                    }
+            }
+            
+            FriendsSectionView(title: "친구", count: viewModel.filteredFriends.count)
+            ForEach(viewModel.filteredFriends) { friend in
+                friendCell(friend: friend)
+                    .onTapGesture {
+                        selectedFriend = friend
+                        isMyProfileSelected = false
+                        showFriendDetail = true
+                    }
+            }
+        }
+    }
+    
+    func friendCell(friend: Friend) -> some View {
+        HStack {
+            KFImage(URL(string: friend.profileImage))
+                .resizable()
+                .scaledToFill()
+                .frame(width: LayoutAdapter.shared.scale(value: 56), height: LayoutAdapter.shared.scale(value: 56))
+                .background(Color.brandLight)
+                .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 14)))
+            
+            HighlightedText(
+                text: friend.name,
+                highlightText: viewModel.searchText,
+                highlightColor: .brandDark
+            )
+            .padding(LayoutAdapter.shared.scale(value: 8))
+            
+            Spacer()
+        }
+        .padding(.top, LayoutAdapter.shared.scale(value: 10))
+        .bodyP3Style(color: .black22)
     }
 }
 

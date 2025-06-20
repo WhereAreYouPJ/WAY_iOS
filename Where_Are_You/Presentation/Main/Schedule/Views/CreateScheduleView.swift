@@ -9,7 +9,6 @@ import SwiftUI
 
 // TODO: 3. 위치 뒤로가기 스택 수정
 // TODO: 4. 필수 항목 누락이 있을 때 추가 버튼 터치 시 토스트 메시지
-// TODO: 5. 오후 11시 이후의 경우 시각 초기값 - 시작일: 현재시각, 종료일: 11:59
 struct CreateScheduleView: View {
     @StateObject var viewModel: CreateScheduleViewModel
     @StateObject var searchFriendsViewModel: SearchFriendsViewModel = {
