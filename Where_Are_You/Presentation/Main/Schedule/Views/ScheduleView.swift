@@ -254,13 +254,6 @@ struct ScheduleView: View {
             let cellDate = calendar.startOfDay(for: date)
             return (scheduleStartDate...scheduleEndDate).contains(cellDate)
         }
-//        let processedSchedules = daySchedules.map { schedule in
-//            let isStart = calendar.isDate(schedule.startTime, inSameDayAs: date)
-//            let isEnd = calendar.isDate(schedule.endTime, inSameDayAs: date)
-//            return (schedule, isStart, isEnd)
-//        }
-        
-        // ✅ 구조체 사용
         let processedSchedules = assignRowsToSchedules(daySchedules, for: date)
         
         return CellView(
@@ -270,8 +263,7 @@ struct ScheduleView: View {
             isSelectedInPicker: isSelectedInPicker,
             isCurrentMonthDay: true,
             weekday: weekday,
-//            schedules: processedSchedules,
-            scheduleDisplayInfos: processedSchedules // ✅ 구조체 배열 전달
+            scheduleDisplayInfos: processedSchedules
         )
         .onTapGesture {
             viewModel.selectedDate = date
@@ -280,7 +272,6 @@ struct ScheduleView: View {
         .frame(height: cellHeight)
     }
     
-    // ✅ 3. 일정별 행 할당 함수 (구조체 리턴)
     private func assignRowsToSchedules(_ schedules: [Schedule], for date: Date) -> [ScheduleDisplayInfo] {
         let calendar = Calendar.koreaCalendar
         var result: [ScheduleDisplayInfo] = []
@@ -355,8 +346,7 @@ struct ScheduleView: View {
                 day: day,
                 isSelectedInPicker: isSelectedInPicker,
                 isCurrentMonthDay: false,
-                weekday: weekday,
-//                schedules: processedSchedules
+                weekday: weekday
             )
         } else {
             // 이전 달의 날짜를 계산할 수 없는 경우, 빈 CellView를 반환
@@ -364,8 +354,7 @@ struct ScheduleView: View {
                 day: 0,
                 isSelectedInPicker: isSelectedInPicker,
                 isCurrentMonthDay: false,
-                weekday: 1,
-//                schedules: processedSchedules
+                weekday: 1
             )
         }
     }
@@ -380,7 +369,6 @@ private struct CellView: View {
     private var isSelectedInPicker: Bool // DatePicker를 통해 선택된 날짜인지
     private var isCurrentMonthDay: Bool
     private var weekday: Int
-//    private var schedules: [(Schedule, Bool, Bool)] // (일정, 오늘이 시작일인지, 오늘이 종료일인지)
     private var scheduleDisplayInfos: [ScheduleDisplayInfo] // ✅ 구조체 배열
     
     private var textColor: Color {
@@ -411,7 +399,6 @@ private struct CellView: View {
         isSelectedInPicker: Bool = false,
         isCurrentMonthDay: Bool = true,
         weekday: Int,
-//        schedules: [(Schedule, Bool, Bool)] = [] // (일정, 오늘 시작하는 날인지, 오늘 끝나는 날인지)
         scheduleDisplayInfos: [ScheduleDisplayInfo] = [] // ✅ 구조체 배열
     ) {
         self.day = day
@@ -420,7 +407,6 @@ private struct CellView: View {
         self.isSelectedInPicker = isSelectedInPicker
         self.isCurrentMonthDay = isCurrentMonthDay
         self.weekday = weekday
-//        self.schedules = schedules
         self.scheduleDisplayInfos = scheduleDisplayInfos
     }
     
