@@ -52,20 +52,18 @@ struct ScheduleView: View {
                                 showNotification = true
                             }, label: {
                                 Image(notificationBadgeViewModel.hasUnreadNotifications ? "icon-notification-badge" : "icon-notification")
-                                    .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
                             })
-                            .padding(0)
+                            .padding(.trailing, LayoutAdapter.shared.scale(value: 9))
                             
                             Button(action: {
                                 showOptionMenu.toggle()
                             }, label: {
                                 Image("icon-plus")
-                                    .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
                             })
                         }
                     }
-                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 6))
-                    .padding(.top, LayoutAdapter.shared.scale(value: -2))
+                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 15))
+                    .padding(.top, LayoutAdapter.shared.scale(value: 14))
                     
                     weekdayView
                         .padding(.top, LayoutAdapter.shared.scale(value: 16))
@@ -463,7 +461,6 @@ private struct CellView: View {
                 }
             }
             
-            
             Spacer()
         }
     }
@@ -741,7 +738,7 @@ struct TabBarAccessor: UIViewRepresentable {
                         isStart: true,
                         isEnd: false,
                         rowIndex: 1
-                    ),
+                    )
                 ]
             )
             .frame(width: 50, height: 120)
