@@ -14,6 +14,7 @@ struct GetInvitedList: Codable {
     let title: String
     let location: String
     let dDay: Int
+    let creatorName: String
 }
 
 typealias GetInvitedListResponse = [GetInvitedList]

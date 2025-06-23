@@ -36,7 +36,6 @@ struct SearchBarView: View {
                     }
                 }
             )
-            .padding(.top, LayoutAdapter.shared.scale(value: 10))
     }
 }
 

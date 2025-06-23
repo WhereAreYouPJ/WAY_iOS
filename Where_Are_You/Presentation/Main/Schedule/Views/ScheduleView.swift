@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+// ✅ 1. 새로운 구조체 정의 (ScheduleView 파일 상단에 추가)
+struct ScheduleDisplayInfo {
+    let schedule: Schedule
+    let isStart: Bool
+    let isEnd: Bool
+    let rowIndex: Int
+}
+
 struct ScheduleView: View {
     // TODO: 가끔 일정 조회시 누락되는 일정 발생. 원인 추측: 특히 다중날짜 일정이 있을 경우 or 월이 다른 일정
     @StateObject var viewModel: ScheduleViewModel
@@ -16,10 +24,10 @@ struct ScheduleView: View {
     @State private var showOptionMenu = false
     @State private var showCreateSchedule = false
     
-    @State private var selectedDate: Date?
+//    @State private var selectedDate: Date?
     @State private var showDailySchedule = false
     
-    @State private var selectedPickerDate = Date()
+//    @State private var selectedPickerDate = Date()
     @State private var showDatePicker = false
     
     init() {
@@ -44,20 +52,18 @@ struct ScheduleView: View {
                                 showNotification = true
                             }, label: {
                                 Image(notificationBadgeViewModel.hasUnreadNotifications ? "icon-notification-badge" : "icon-notification")
-                                    .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
                             })
-                            .padding(0)
+                            .padding(.trailing, LayoutAdapter.shared.scale(value: 9))
                             
                             Button(action: {
                                 showOptionMenu.toggle()
                             }, label: {
                                 Image("icon-plus")
-                                    .frame(width: LayoutAdapter.shared.scale(value: 34), height: LayoutAdapter.shared.scale(value: 34))
                             })
                         }
                     }
-                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 6))
-                    .padding(.top, LayoutAdapter.shared.scale(value: -2))
+                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 15))
+                    .padding(.top, LayoutAdapter.shared.scale(value: 14))
                     
                     weekdayView
                         .padding(.top, LayoutAdapter.shared.scale(value: 16))
@@ -91,11 +97,11 @@ struct ScheduleView: View {
         .sheet(isPresented: $showCreateSchedule, onDismiss: {
             viewModel.getMonthlySchedule()
         }, content: {
-            CreateScheduleView()
+            CreateScheduleView(initialDate: viewModel.getDateForNewSchedule())
         }
         )
         .sheet(isPresented: $showDailySchedule) {
-            if let date = selectedDate {
+            if let date = viewModel.selectedDate {
                 DailyScheduleView(
                     date: date,
                     isPresented: $showDailySchedule,
@@ -110,13 +116,24 @@ struct ScheduleView: View {
             viewModel.getMonthlySchedule()
             notificationBadgeViewModel.checkForNewNotifications()
             
-            selectedPickerDate = Date() // 피커 날짜 오늘로 초기화
+//            selectedPickerDate = Date() // 피커 날짜 오늘로 초기화
         })
-        // DatePicker 오버레이 추가
         .datepickerOverlay(isPresented: $showDatePicker) {
-            // 여기에 FullDatePickerView를 반환
+//            FullDatePickerView(
+//                selectedDate: $selectedPickerDate,
+//                isPresented: $showDatePicker,
+//                onCancel: {
+//                    // 취소 시 동작 (옵션)
+//                },
+//                onConfirm: { date in
+//                    handleDateSelection(date)
+//                }
+//            )
             FullDatePickerView(
-                selectedDate: $selectedPickerDate,
+                selectedDate: Binding(
+                    get: { viewModel.selectedDate ?? Date() }, // 🔄 selectedPickerDate 대신 viewModel.selectedDate 사용
+                    set: { viewModel.selectedDate = $0 } // 🔄 직접 ViewModel의 selectDate 호출
+                ),
                 isPresented: $showDatePicker,
                 onCancel: {
                     // 취소 시 동작 (옵션)
@@ -133,7 +150,7 @@ struct ScheduleView: View {
         HStack {
             Button(action: {
                 // 피커가 표시될 때 현재 선택된 월로 피커 날짜 초기화
-                selectedPickerDate = viewModel.month
+//                selectedPickerDate = viewModel.month
                 showDatePicker = true
             }, label: {
                 Text(viewModel.month.formatted(to: .yearMonth))
@@ -152,8 +169,9 @@ struct ScheduleView: View {
         let currentYear = calendar.component(.year, from: viewModel.month)
         let selectedYear = calendar.component(.year, from: date)
         
-        selectedPickerDate = date // 선택한 날짜로 selectedDate 업데이트
-        print("📆 선택된 날짜: \(selectedPickerDate)")
+//        selectedPickerDate = date // 선택한 날짜로 selectedDate 업데이트
+        viewModel.selectedDate = date
+        print("📆 선택된 날짜: \(date)")
         
         if currentMonth != selectedMonth || currentYear != selectedYear { // 월이 다른 경우 월 변경 (월 차이 계산)
             let yearDiff = selectedYear - currentYear
@@ -226,10 +244,9 @@ struct ScheduleView: View {
         let day = calendar.component(.day, from: date)
         let weekday = calendar.component(.weekday, from: date)
         
-        let clicked = selectedDate == date
+        let clicked = viewModel.selectedDate == date
         let isToday = date.formattedCalendarDayDate == today.formattedCalendarDayDate
-//        let isSelectedInPicker = calendar.isDate(date, inSameDayAs: selectedPickerDate)
-        let isSelectedInPicker = date.isSameYMD(as: selectedPickerDate)
+        let isSelectedInPicker = date.isSameYMD(as: date)
         
         let daySchedules = monthlySchedules.filter { schedule in
             let scheduleStartDate = calendar.startOfDay(for: schedule.startTime)
@@ -237,11 +254,7 @@ struct ScheduleView: View {
             let cellDate = calendar.startOfDay(for: date)
             return (scheduleStartDate...scheduleEndDate).contains(cellDate)
         }
-        let processedSchedules = daySchedules.map { schedule in
-            let isStart = calendar.isDate(schedule.startTime, inSameDayAs: date)
-            let isEnd = calendar.isDate(schedule.endTime, inSameDayAs: date)
-            return (schedule, isStart, isEnd)
-        }
+        let processedSchedules = assignRowsToSchedules(daySchedules, for: date)
         
         return CellView(
             day: day,
@@ -250,13 +263,54 @@ struct ScheduleView: View {
             isSelectedInPicker: isSelectedInPicker,
             isCurrentMonthDay: true,
             weekday: weekday,
-            schedules: processedSchedules
+            scheduleDisplayInfos: processedSchedules
         )
         .onTapGesture {
-            selectedDate = date
+            viewModel.selectedDate = date
             showDailySchedule = true
         }
         .frame(height: cellHeight)
+    }
+    
+    private func assignRowsToSchedules(_ schedules: [Schedule], for date: Date) -> [ScheduleDisplayInfo] {
+        let calendar = Calendar.koreaCalendar
+        var result: [ScheduleDisplayInfo] = []
+        
+        // 일정 정렬 (기존 로직)
+        let sortedSchedules = schedules.sorted { (a, b) in
+            let aIsMultiDay = !calendar.isDate(a.startTime, inSameDayAs: a.endTime)
+            let bIsMultiDay = !calendar.isDate(b.startTime, inSameDayAs: b.endTime)
+            
+            if aIsMultiDay != bIsMultiDay {
+                return aIsMultiDay
+            }
+            
+            if aIsMultiDay && bIsMultiDay {
+                let aDuration = calendar.dateComponents([.day], from: a.startTime, to: a.endTime).day ?? 0
+                let bDuration = calendar.dateComponents([.day], from: b.startTime, to: b.endTime).day ?? 0
+                return aDuration > bDuration
+            }
+            
+            return a.scheduleSeq < b.scheduleSeq
+        }
+        
+        for schedule in sortedSchedules {
+            let isStart = calendar.isDate(schedule.startTime, inSameDayAs: date)
+            let isEnd = calendar.isDate(schedule.endTime, inSameDayAs: date)
+            
+            // ✅ ViewModel에서 행 번호 가져오기
+            let rowIndex = viewModel.getRowIndex(for: schedule.scheduleSeq)
+            
+            let displayInfo = ScheduleDisplayInfo(
+                schedule: schedule,
+                isStart: isStart,
+                isEnd: isEnd,
+                rowIndex: rowIndex
+            )
+            result.append(displayInfo)
+        }
+        
+        return result
     }
     
     private func otherMonthCell(for index: Int, lastDayOfMonthBefore: Int, cellHeight: CGFloat, monthlySchedules: [Schedule]) -> CellView {
@@ -264,7 +318,8 @@ struct ScheduleView: View {
         let date = getDate(for: index)
         
 //        let isSelectedInPicker = calendar.isDate(date, inSameDayAs: selectedPickerDate)
-        let isSelectedInPicker = date.isSameYMD(as: selectedPickerDate)
+//        let isSelectedInPicker = date.isSameYMD(as: selectedPickerDate)
+        let isSelectedInPicker = date.isSameYMD(as: date)
         
         let daySchedules = monthlySchedules.filter { schedule in
             let scheduleStartDate = calendar.startOfDay(for: schedule.startTime)
@@ -291,8 +346,7 @@ struct ScheduleView: View {
                 day: day,
                 isSelectedInPicker: isSelectedInPicker,
                 isCurrentMonthDay: false,
-                weekday: weekday,
-                schedules: processedSchedules
+                weekday: weekday
             )
         } else {
             // 이전 달의 날짜를 계산할 수 없는 경우, 빈 CellView를 반환
@@ -300,8 +354,8 @@ struct ScheduleView: View {
                 day: 0,
                 isSelectedInPicker: isSelectedInPicker,
                 isCurrentMonthDay: false,
-                weekday: 1,
-                schedules: processedSchedules)
+                weekday: 1
+            )
         }
     }
     
@@ -315,7 +369,7 @@ private struct CellView: View {
     private var isSelectedInPicker: Bool // DatePicker를 통해 선택된 날짜인지
     private var isCurrentMonthDay: Bool
     private var weekday: Int
-    private var schedules: [(Schedule, Bool, Bool)] // (일정, 오늘이 시작일인지, 오늘이 종료일인지)
+    private var scheduleDisplayInfos: [ScheduleDisplayInfo] // ✅ 구조체 배열
     
     private var textColor: Color {
         if clicked {
@@ -345,7 +399,7 @@ private struct CellView: View {
         isSelectedInPicker: Bool = false,
         isCurrentMonthDay: Bool = true,
         weekday: Int,
-        schedules: [(Schedule, Bool, Bool)] = [] // (일정, 오늘 시작하는 날인지, 오늘 끝나는 날인지)
+        scheduleDisplayInfos: [ScheduleDisplayInfo] = [] // ✅ 구조체 배열
     ) {
         self.day = day
         self.clicked = clicked
@@ -353,7 +407,7 @@ private struct CellView: View {
         self.isSelectedInPicker = isSelectedInPicker
         self.isCurrentMonthDay = isCurrentMonthDay
         self.weekday = weekday
-        self.schedules = schedules
+        self.scheduleDisplayInfos = scheduleDisplayInfos
     }
     
     fileprivate var body: some View {
@@ -376,50 +430,20 @@ private struct CellView: View {
             }
             .padding(.bottom, 2)
             
-            // 1. 일정 정렬. 오랜 기간 일정일 수록 앞에 오도록
-            let sortedSchedules = schedules.sorted { (a, b) in
-                // 첫 번째 기준: 연속 일정이 단일 일정보다 우선
-                let aIsMultiDay = !(a.1 && a.2)
-                let bIsMultiDay = !(b.1 && b.2)
-                
-                if aIsMultiDay != bIsMultiDay {
-                    return aIsMultiDay
-                }
-                
-                // 둘 다 연속 일정인 경우, 일정 기간으로 정렬
-                if aIsMultiDay && bIsMultiDay {
-                    let aDuration = Calendar.current.dateComponents([.day],
-                                                                    from: a.0.startTime,
-                                                                    to: a.0.endTime).day ?? 0
-                    let bDuration = Calendar.current.dateComponents([.day],
-                                                                    from: b.0.startTime,
-                                                                    to: b.0.endTime).day ?? 0
-                    return aDuration > bDuration
-                }
-                
-                return false
-            }
-            
-            // 2. 정렬된 일정 목록을 기반으로 스케줄바 표시
             VStack(spacing: 2) {
-                // 최대 3개까지 일정 표시
-                ForEach(0..<min(3, sortedSchedules.count), id: \.self) { index in
-                    scheduleBar(
-                        schedule: sortedSchedules[index].0,
-                        isStart: sortedSchedules[index].1,
-                        isEnd: sortedSchedules[index].2,
-                        isMoreThanFour: false
-                    )
-                }
-                
-                // 3개 초과 일정이 있는 경우 "+" 표시
-                if sortedSchedules.count > 3 {
-                    scheduleBar(
-                        schedule: sortedSchedules[3].0,
-                        isStart: sortedSchedules[3].1,
-                        isEnd: sortedSchedules[3].2,
-                        isMoreThanFour: true
-                    )
+                ForEach(0..<4, id: \.self) { rowIndex in
+                    if let scheduleInfo = scheduleDisplayInfos.first(where: { $0.rowIndex == rowIndex }) {
+                        scheduleBar(
+                            schedule: scheduleInfo.schedule,
+                            isStart: scheduleInfo.isStart,
+                            isEnd: scheduleInfo.isEnd,
+                            isMoreThanFour: rowIndex >= 3 && scheduleDisplayInfos.count > 3
+                        )
+                    } else {
+                        Rectangle() // 빈 행
+                            .fill(Color.clear)
+                            .frame(height: LayoutAdapter.shared.scale(value: 14))
+                    }
                 }
             }
             
@@ -447,67 +471,48 @@ private struct CellView: View {
                 Text(schedule.title)
                     .button9Style(color: .black22)
                     .padding(.horizontal, 4)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             } else { /// 연속 일정
-                if isStart {
-                    if weekday == 7 { /// 첫날이고 토요일일 때
-                        RoundedRectangle(cornerRadius: 4)
-                            .fill(scheduleColor)
-                            .padding(.horizontal, 2)
-                    } else { /// 첫날이고 토요일이 아닐 때
-                        UnevenRoundedRectangle(
-                            topLeadingRadius: 4,
-                            bottomLeadingRadius: 4
-                        )
+                let isWeekStart = weekday == 1 // 일요일 (주 시작)
+                let isWeekEnd = weekday == 7   // 토요일 (주 끝)
+                
+                // 시각적 시작점과 끝점 결정
+                let visualStart = isStart || isWeekStart
+                let visualEnd = isEnd || isWeekEnd
+                
+                if visualStart && visualEnd { // 시작이면서 끝 (예: 토요일 하루짜리 또는 일요일 하루짜리)
+                    RoundedRectangle(cornerRadius: 4)
                         .fill(scheduleColor)
-                        .padding(.leading, 2)
+                        .padding(.horizontal, 2)
+                    
+                    if isStart || isWeekStart {
+                        Text(schedule.title)
+                            .button9Style(color: .black22)
+                            .padding(.horizontal, 4)
                     }
+                } else if visualStart { // 시각적 시작 (실제 시작일 또는 일요일)
+                    UnevenRoundedRectangle(
+                        topLeadingRadius: 4,
+                        bottomLeadingRadius: 4
+                    )
+                    .fill(scheduleColor)
+                    .padding(.leading, 2)
                     
                     Text(schedule.title)
                         .button9Style(color: .black22)
                         .padding(.horizontal, 4)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                } else if isEnd {
-                    if weekday == 1 { /// 마지막날이고 일요일일 때
-                        RoundedRectangle(cornerRadius: 4)
-                            .fill(scheduleColor)
-                            .padding(.horizontal, 2)
-                        
-                        Text(schedule.title)
-                            .button9Style(color: .black22)
-                            .padding(.horizontal, 4)
-                    } else { /// 마지막날이고 일요일이 아닐 때
-                        UnevenRoundedRectangle(
-                            bottomTrailingRadius: 4, topTrailingRadius: 4
-                        )
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                } else if visualEnd { // 시각적 끝 (실제 종료일 또는 토요일)
+                    UnevenRoundedRectangle(
+                        bottomTrailingRadius: 4,
+                        topTrailingRadius: 4
+                    )
+                    .fill(scheduleColor)
+                    .padding(.trailing, 2)
+                } else { // 중간일 (월~금 중간)
+                    Rectangle()
                         .fill(scheduleColor)
-                        .padding(.trailing, 2)
-                    }
-                } else {
-                    if weekday == 7 { /// 중간날이고 토요일일 때
-                        UnevenRoundedRectangle(
-                            bottomTrailingRadius: 4, topTrailingRadius: 4
-                        )
-                        .fill(scheduleColor)
-                        .padding(.trailing, 2)
-                    } else if weekday == 1 { /// 중간날이고 일요일일 때
-                        UnevenRoundedRectangle(
-                            topLeadingRadius: 4,
-                            bottomLeadingRadius: 4
-                        )
-                        .fill(scheduleColor)
-                        .padding(.leading, 2)
-                        
-                        Text(schedule.title)
-                            .button9Style(color: .black22)
-                            .padding(.horizontal, 4)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                    } else {
-                        Rectangle()
-                            .fill(scheduleColor)
-                            .padding(.trailing, 2)
-                    }
                 }
-                
             }
         }
         .frame(height: LayoutAdapter.shared.scale(value: 14))
@@ -622,35 +627,208 @@ struct TabBarAccessor: UIViewRepresentable {
 #Preview("CellView Variations") {
     VStack {
         HStack(spacing: 0) {
-            CellView(day: 24, clicked: false, isToday: false, isCurrentMonthDay: true, weekday: 6, schedules: [
-                (Schedule(scheduleSeq: 1, title: "연속3일정", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, false),
-                (Schedule(scheduleSeq: 2, title: "연속", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, false),
-                (Schedule(scheduleSeq: 3, title: "금", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, true),
-                (Schedule(scheduleSeq: 4, title: "러닝", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, true)
-            ])
+            // 1일 (시작일)
+            CellView(
+                day: 1,
+                clicked: false,
+                isToday: false,
+                isCurrentMonthDay: true,
+                weekday: 1,
+                scheduleDisplayInfos: [
+                    ScheduleDisplayInfo(
+                        schedule: Schedule(scheduleSeq: 1, title: "연속4일정", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []),
+                        isStart: true,
+                        isEnd: false,
+                        rowIndex: 0
+                    ),
+                    ScheduleDisplayInfo(
+                        schedule: Schedule(scheduleSeq: 6, title: "연속", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "blue", memo: "", invitedMember: []),
+                        isStart: true,
+                        isEnd: false,
+                        rowIndex: 1
+                    )
+                ]
+            )
             .frame(width: 50, height: 120)
             
-            CellView(day: 25, clicked: false, isToday: false, isCurrentMonthDay: true, weekday: 7, schedules: [
-                (Schedule(scheduleSeq: 5, title: "연속3일정", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), false, false),
-                (Schedule(scheduleSeq: 6, title: "연속", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), false, true),
-                (Schedule(scheduleSeq: 7, title: "토", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, true)
-            ])
+            // 2일 (중간일)
+            CellView(
+                day: 2,
+                clicked: false,
+                isToday: false,
+                isCurrentMonthDay: true,
+                weekday: 2,
+                scheduleDisplayInfos: [
+                    ScheduleDisplayInfo(
+                        schedule: Schedule(scheduleSeq: 1, title: "연속4일정", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []),
+                        isStart: false,
+                        isEnd: false,
+                        rowIndex: 0
+                    ),
+                    ScheduleDisplayInfo(
+                        schedule: Schedule(scheduleSeq: 6, title: "연속", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "blue", memo: "", invitedMember: []),
+                        isStart: false,
+                        isEnd: true,
+                        rowIndex: 1
+                    )
+                ]
+            )
+            .frame(width: 50, height: 120)
+            
+            // 3일 (중간일)
+            CellView(
+                day: 3,
+                clicked: false,
+                isToday: false,
+                isCurrentMonthDay: true,
+                weekday: 3,
+                scheduleDisplayInfos: [
+                    ScheduleDisplayInfo(
+                        schedule: Schedule(scheduleSeq: 1, title: "연속4일정", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []),
+                        isStart: false,
+                        isEnd: false,
+                        rowIndex: 0
+                    )
+                ]
+            )
+            .frame(width: 50, height: 120)
+            
+            // 4일 (종료일)
+            CellView(
+                day: 4,
+                clicked: false,
+                isToday: false,
+                isCurrentMonthDay: true,
+                weekday: 4,
+                scheduleDisplayInfos: [
+                    ScheduleDisplayInfo(
+                        schedule: Schedule(scheduleSeq: 1, title: "연속4일정", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []),
+                        isStart: false,
+                        isEnd: true,
+                        rowIndex: 0
+                    )
+                ]
+            )
+            .frame(width: 50, height: 120)
+            
+            // 5일 (겹치는 일정들)
+            CellView(
+                day: 5,
+                clicked: false,
+                isToday: false,
+                isCurrentMonthDay: true,
+                weekday: 5,
+                scheduleDisplayInfos: [
+                    ScheduleDisplayInfo(
+                        schedule: Schedule(scheduleSeq: 5, title: "연속3일정", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []),
+                        isStart: true,
+                        isEnd: false,
+                        rowIndex: 1
+                    )
+                ]
+            )
+            .frame(width: 50, height: 120)
+            
+            // 6일 (여러 일정이 겹치는 복잡한 경우)
+            CellView(
+                day: 6,
+                clicked: false,
+                isToday: false,
+                isCurrentMonthDay: true,
+                weekday: 6,
+                scheduleDisplayInfos: [
+                    ScheduleDisplayInfo(
+                        schedule: Schedule(scheduleSeq: 5, title: "연속3일정", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []),
+                        isStart: false,
+                        isEnd: false,
+                        rowIndex: 1
+                    ),
+                    ScheduleDisplayInfo(
+                        schedule: Schedule(scheduleSeq: 8, title: "러닝", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "yellow", memo: "", invitedMember: []),
+                        isStart: true,
+                        isEnd: true,
+                        rowIndex: 0
+                    )
+                ]
+            )
+            .frame(width: 50, height: 120)
+            
+            // 7일 (토요일 - 주 경계)
+            CellView(
+                day: 7,
+                clicked: false,
+                isToday: false,
+                isCurrentMonthDay: true,
+                weekday: 7,
+                scheduleDisplayInfos: [
+                    ScheduleDisplayInfo(
+                        schedule: Schedule(scheduleSeq: 5, title: "연속3일정", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []),
+                        isStart: false,
+                        isEnd: true,
+                        rowIndex: 1
+                    ),
+                    ScheduleDisplayInfo(
+                        schedule: Schedule(scheduleSeq: 9, title: "토", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "purple", memo: "", invitedMember: []),
+                        isStart: true,
+                        isEnd: true,
+                        rowIndex: 0
+                    )
+                ]
+            )
             .frame(width: 50, height: 120)
         }
+        
+        // 두 번째 줄 - 주 경계와 겹치는 일정 테스트
         HStack(spacing: 0) {
-            CellView(day: 26, clicked: false, isToday: false, isCurrentMonthDay: true, weekday: 1, schedules: [
-                (Schedule(scheduleSeq: 1, title: "연속3일정", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), false, true),
-                (Schedule(scheduleSeq: 2, title: "일", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, true),
-                (Schedule(scheduleSeq: 3, title: "한강", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, true),
-                (Schedule(scheduleSeq: 4, title: "러닝", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, true)
-            ])
+            // 8일 (일요일 - 주 시작, 겹치는 일정들)
+            CellView(
+                day: 8,
+                clicked: false,
+                isToday: false,
+                isCurrentMonthDay: true,
+                weekday: 1,
+                scheduleDisplayInfos: [
+                    ScheduleDisplayInfo(
+                        schedule: Schedule(scheduleSeq: 10, title: "주말일정", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []),
+                        isStart: false,
+                        isEnd: true,
+                        rowIndex: 0
+                    ),
+                    ScheduleDisplayInfo(
+                        schedule: Schedule(scheduleSeq: 11, title: "일", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "blue", memo: "", invitedMember: []),
+                        isStart: true,
+                        isEnd: true,
+                        rowIndex: 1
+                    ),
+                    ScheduleDisplayInfo(
+                        schedule: Schedule(scheduleSeq: 12, title: "한강", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "green", memo: "", invitedMember: []),
+                        isStart: true,
+                        isEnd: true,
+                        rowIndex: 2
+                    )
+                ]
+            )
             .frame(width: 50, height: 120)
             
-            CellView(day: 27, clicked: false, isToday: false, isCurrentMonthDay: true, weekday: 2, schedules: [
-                (Schedule(scheduleSeq: 6, title: "월", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, true),
-                (Schedule(scheduleSeq: 7, title: "드럼", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "red", memo: "", invitedMember: []), true, true)
-            ])
-            .frame(width: 50, height: 120)
+            // 9일~14일 (간단한 일정들)
+            ForEach(9...14, id: \.self) { day in
+                CellView(
+                    day: day,
+                    clicked: false,
+                    isToday: false,
+                    isCurrentMonthDay: true,
+                    weekday: ((day - 8) % 7) + 1, // 일요일부터 시작하는 weekday 계산
+                    scheduleDisplayInfos: [
+                        ScheduleDisplayInfo(
+                            schedule: Schedule(scheduleSeq: day + 10, title: "일정\(day)", startTime: Date.now, endTime: Date.now, isAllday: true, location: nil, color: "orange", memo: "", invitedMember: []),
+                            isStart: true,
+                            isEnd: true,
+                            rowIndex: day % 3 // 0, 1, 2 행에 분산 배치
+                        )
+                    ]
+                )
+                .frame(width: 50, height: 120)
+            }
         }
     }
     .padding()

@@ -15,41 +15,43 @@ struct DailyScheduleView: View {
     let onDeleteComplete: () -> Void  // 삭제 완료 콜백
     
     // dummy
-//    var dummySchedules = [
-//        Schedule(
-//            scheduleSeq: 1,
-//            title: "더미 일정",
-//            startTime: Date.now,
-//            endTime: Date.now,
-//            location: Location(sequence: 1, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
-//            color: "red",
-//            memo: ""
-//        ), Schedule(
-//            scheduleSeq: 2,
-//            title: "더미 일정 2",
-//            startTime: Date.now,
-//            endTime: Date.now,
-//            location: Location(sequence: 2, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
-//            color: "blue",
-//            memo: ""
-//        ), Schedule(
-//            scheduleSeq: 3,
-//            title: "더미 일정3",
-//            startTime: Date.now,
-//            endTime: Date.now,
-//            location: Location(sequence: 1, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
-//            color: "red",
-//            memo: ""
-//        ), Schedule(
-//            scheduleSeq: 4,
-//            title: "더미 일정 4",
-//            startTime: Date.now,
-//            endTime: Date.now,
-//            location: Location(sequence: 2, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
-//            color: "blue",
-//            memo: ""
-//        )
-//    ]
+    var dummySchedules = [
+        Schedule(
+            scheduleSeq: 1,
+            title: "더미 일정",
+            startTime: Date.now.addingTimeInterval(3600),    // +1시간
+            endTime: Date.now.addingTimeInterval(7200),    // +2시간
+            location: Location(sequence: 1, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
+            color: "red",
+            memo: "",
+            isGroup: true
+        ), Schedule(
+            scheduleSeq: 2,
+            title: "더미 일정 2",
+            startTime: Date.now.addingTimeInterval(3600),
+            endTime: Date.now.addingTimeInterval(7200),
+            location: Location(sequence: 2, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
+            color: "blue",
+            memo: ""
+        ), Schedule(
+            scheduleSeq: 3,
+            title: "더미 일정3",
+            startTime: Date.now,
+            endTime: Date.now,
+            location: Location(sequence: 1, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
+            color: "red",
+            memo: "",
+            isGroup: true
+        ), Schedule(
+            scheduleSeq: 4,
+            title: "더미 일정 4",
+            startTime: Date.now,
+            endTime: Date.now,
+            location: Location(sequence: 2, location: "신도림역", streetName: "서울 구로구 신도림동", x: 0, y: 0),
+            color: "blue",
+            memo: ""
+        )
+    ]
     
     init(
         date: Date,
@@ -86,7 +88,14 @@ struct DailyScheduleView: View {
             }
             
             ScrollView {
-                scheduleListView()
+//                if viewModel.schedules.isEmpty {
+//                    Text("추가한 일정이 없습니다.")
+//                        .bodyP2Style(color: .blackAC)
+//                        .frame(maxWidth: .infinity, alignment: .leading)
+//                        .padding(.vertical, LayoutAdapter.shared.scale(value: 20))
+//                } else {
+                    scheduleListView()
+//                }
             }
             .padding(.horizontal, LayoutAdapter.shared.scale(value: 24))
             
@@ -116,11 +125,6 @@ struct DailyScheduleView: View {
         ForEach(Array(viewModel.schedules.enumerated()), id: \.element.scheduleSeq) { index, schedule in
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
-                    Circle()
-                        .fill(ScheduleColor.color(from: schedule.color))
-                        .frame(width: LayoutAdapter.shared.scale(value: 10), height: LayoutAdapter.shared.scale(value: 10))
-                        .padding(.trailing, LayoutAdapter.shared.scale(value: 10))
-                    
                     scheduleDetialsView(for: schedule)
                     
                     Spacer()
@@ -159,38 +163,46 @@ struct DailyScheduleView: View {
     
     private func scheduleDetialsView(for schedule: Schedule) -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            HStack {
+            HStack(spacing: 0) {
+                Circle()
+                    .fill(ScheduleColor.color(from: schedule.color))
+                    .frame(width: LayoutAdapter.shared.scale(value: 8), height: LayoutAdapter.shared.scale(value: 8))
+                    .padding(.trailing, LayoutAdapter.shared.scale(value: 8))
+                
                 Text(schedule.title)
-                    .bodyP3Style(color: .black22)
-                    .padding(.bottom, LayoutAdapter.shared.scale(value: 4))
+                    .bodyP2Style(color: .black22)
                 
                 groupTagView(for: schedule)
+                    .padding(.leading, LayoutAdapter.shared.scale(value: 8))
             }
+            .padding(.bottom, LayoutAdapter.shared.scale(value: 8))
             
             if let location = schedule.location?.location, !location.isEmpty {
                 Text(location)
-                    .bodyP4Style(color: .black66)
+                    .bodyP3Style(color: .black66)
                     .padding(.bottom, LayoutAdapter.shared.scale(value: 4))
+                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
             }
             
             if let scheduleDate = viewModel.getScheduleDate(schedule) {
                 Text("\(scheduleDate)")
-                    .bodyP4Style(color: .black66)
+                    .bodyP3Style(color: .black66)
                     .padding(.bottom, LayoutAdapter.shared.scale(value: 4))
+                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 16))
             }
         }
     }
     
     private func groupTagView(for schedule: Schedule) -> some View {
         Group {
-            if schedule.invitedMember?.count ?? 0 > 0 {
+            if schedule.isGroup ?? false {
                 ZStack {
                     RoundedRectangle(cornerRadius: 50)
                         .fill(Color.white)
                         .stroke(Color(.brandColor), lineWidth: 1)
                         .frame(width: LayoutAdapter.shared.scale(value: 39), height: LayoutAdapter.shared.scale(value: 24))
                     Text("그룹")
-                        .bodyP4Style(color: .brandDark)
+                        .bodyP3Style(color: .brandDark)
                 }
                 .padding(.bottom, LayoutAdapter.shared.scale(value: 2))
             }

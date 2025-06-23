@@ -21,4 +21,5 @@ struct Schedule: Identifiable {
     var dDay: Int?
     var createdAt: Date?
     var isGroup: Bool?
+    var creatorName: String?
 }
