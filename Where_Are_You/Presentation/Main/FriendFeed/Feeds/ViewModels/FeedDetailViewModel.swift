@@ -57,7 +57,15 @@ class FeedDetailViewModel {
             case .success(let data):
                 let rawFeedContent: FeedContent = data
                 let scheduleFeedInfo = rawFeedContent.scheduleFeedInfo
-                self.participants = rawFeedContent.scheduleFriendInfo
+                self.participants = rawFeedContent.scheduleFriendInfo.sorted { first, second in
+                    if first.memberSeq == self.memberSeq {
+                        return true
+                    } else if second.memberSeq == self.memberSeq {
+                        return false
+                    } else {
+                        return false
+                    }
+                }
                 self.displayFeedContent = scheduleFeedInfo.compactMap({
                     return Feed(scheduleSeq: rawFeedContent.scheduleInfo.scheduleSeq,
                                 feedSeq: $0.feedInfo.feedSeq,
@@ -78,10 +86,6 @@ class FeedDetailViewModel {
             }
         }
     }
-    
-    //    func getParticipantFeed(index: Int) -> Feed {
-    //        return displayFeedContent[index]
-    //    }
     
     func getParticipants() -> [Info] {
         return participants
