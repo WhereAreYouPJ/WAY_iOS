@@ -190,7 +190,8 @@ class NotificationViewModel: ObservableObject {
                 endTime: startDate,
                 location: Location(sequence: 0, location: response.location, streetName: "", x: 0, y: 0),
                 color: "",
-                dDay: response.dDay
+                dDay: response.dDay,
+                creatorName: response.creatorName
             )
         }
     }

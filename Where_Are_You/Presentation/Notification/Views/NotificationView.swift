@@ -57,7 +57,8 @@ struct NotificationView: View {
                 location: Location(sequence: 1, location: "강남역 카페", streetName: "", x: 0, y: 0),
                 color: "",
                 dDay: 1,
-                createdAt: Calendar.current.date(byAdding: .hour, value: -1, to: now)
+                createdAt: Calendar.current.date(byAdding: .hour, value: -1, to: now),
+                creatorName: "김가나"
             ),
             Schedule(
                 scheduleSeq: 1002,
@@ -67,7 +68,8 @@ struct NotificationView: View {
                 location: Location(sequence: 2, location: "회사 회의실", streetName: "", x: 0, y: 0),
                 color: "",
                 dDay: 3,
-                createdAt: Calendar.current.date(byAdding: .day, value: -1, to: now)
+                createdAt: Calendar.current.date(byAdding: .day, value: -1, to: now),
+                creatorName: "이다라"
             )
         ]
         
@@ -261,7 +263,7 @@ struct NotificationView: View {
                     .frame(width: LayoutAdapter.shared.scale(value: 90))
                     .padding(.trailing, LayoutAdapter.shared.scale(value: 6))
                 
-                Text(schedule.title)
+                Text(schedule.creatorName ?? "")
                     .withBodyP4Style(color: .black66)
                 
                 Text("|")
