@@ -87,7 +87,7 @@ class LoginView: UIView {
         configureViewComponents()
         setupConstraints()
         kakaoLogin.isHidden = true
-        appleLogin.isHidden = true
+//        appleLogin.isHidden = true
     }
     
     required init?(coder: NSCoder) {

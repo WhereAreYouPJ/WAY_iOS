@@ -26,7 +26,7 @@ class BannerViewModel {
         getAdminImageUseCase.execute { result in
             switch result {
             case .success(let data):
-                self.banners.append(contentsOf: data.map({ $0.imageURL }))
+                self.banners = data.map({ $0.imageURL })
                 self.onBannerDataFetched?()
                 self.startAutoScroll()
             case .failure(let error):
