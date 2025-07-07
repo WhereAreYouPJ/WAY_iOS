@@ -86,7 +86,7 @@ class LoginView: UIView {
         super.init(frame: frame)
         configureViewComponents()
         setupConstraints()
-        kakaoLogin.isHidden = true
+//        kakaoLogin.isHidden = true
         appleLogin.isHidden = true
     }
     

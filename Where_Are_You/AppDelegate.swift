@@ -22,13 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SDKInitializer.InitSDK(appKey: Config.kakaoAppKey)
         KakaoSDK.initSDK(appKey: Config.kakaoAppKey)
         
-        // 초기화 완료를 추적하는 지연 호출 추가
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//            KakaoMapInitializer.shared.initializeSDK {
-//                print("📍 카카오맵 SDK 초기화 완료 콜백")
-//            }
-//        }
-        
         Thread.sleep(forTimeInterval: 1.5)
         
         // 파이어베이스 설정
@@ -75,13 +68,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
-    // MARK: - Kakao Login
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        if (AuthApi.isKakaoTalkLoginUrl(url)) {
-            return AuthController.handleOpenUrl(url: url)
-        }
-        return false
-    }
+    // MARK: - Kakao Login SceneDelegate로 옮김
+//    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+//        if (AuthApi.isKakaoTalkLoginUrl(url)) {
+//            return AuthController.handleOpenUrl(url: url)
+//        }
+//        return false
+//    }
     
     // MARK: - Core Data stack
     

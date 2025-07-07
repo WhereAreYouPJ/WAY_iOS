@@ -341,7 +341,7 @@
 		D5A91D5B2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */; };
 		D5AB2EE22D548E0D009E6741 /* MyLocation.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D5AB2EE12D548E0D009E6741 /* MyLocation.gpx */; };
 		D5B3B5392CB3DE63004353F6 /* DailyScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */; };
-		D5B79A162C5B83CD004EDDF2 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		D5B79A162C5B83CD004EDDF2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D5BA308C2CE744C400958BF5 /* FriendAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308B2CE744C400958BF5 /* FriendAPI.swift */; };
 		D5BA308E2CE744CA00958BF5 /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308D2CE744CA00958BF5 /* FriendService.swift */; };
 		D5BA30902CE7453900958BF5 /* DeleteFriendBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308F2CE7453900958BF5 /* DeleteFriendBody.swift */; };
@@ -2129,9 +2129,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2208,9 +2212,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2311,7 +2319,7 @@
 				995175022C7EF95100E938DE /* LocationBookmarkViewModel.swift in Sources */,
 				D5CD68A42D351EA000B790E9 /* RefuseInvitedScheduleUseCase.swift in Sources */,
 				D5BA30922CE745A700958BF5 /* PostFavoriteFriendBody.swift in Sources */,
-				D5B79A162C5B83CD004EDDF2 /* BuildFile in Sources */,
+				D5B79A162C5B83CD004EDDF2 /* (null) in Sources */,
 				D5DCF8C42D69CA770045030C /* NotificationBadgeViewModel.swift in Sources */,
 				99256F9E2DE42B3B00856B70 /* AdminAPI.swift in Sources */,
 				D534B0FE2D06F0FD004864E0 /* CoordinateService.swift in Sources */,
@@ -2745,6 +2753,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2787,6 +2796,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
