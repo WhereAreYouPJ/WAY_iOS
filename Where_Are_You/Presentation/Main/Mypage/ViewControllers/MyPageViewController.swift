@@ -100,12 +100,6 @@ class MyPageViewController: UIViewController {
         }
     }
     
-    private func moveToDetailController(controller: UIViewController) {
-        let navController = UINavigationController(rootViewController: controller)
-        navController.modalPresentationStyle = .fullScreen // 전체 화면으로 전환
-        present(navController, animated: true, completion: nil)
-    }
-    
     // MARK: - Selectors
     @objc func logoutButtonTapped() {
         let alert = CustomAlert(
@@ -122,9 +116,7 @@ class MyPageViewController: UIViewController {
     @objc func deleteAccountButtonTapped() {
         // 회원탈퇴 버튼 눌림
         let controller = AgreementAcountDeletionViewController(userName: userName)
-        let navController = UINavigationController(rootViewController: controller)
-        navController.modalPresentationStyle = .fullScreen // 전체 화면으로 전환
-        present(navController, animated: true, completion: nil)
+        pushToViewController(controller)
     }
     
     @objc private func editImage() {
@@ -135,23 +127,22 @@ class MyPageViewController: UIViewController {
         switch sender.tag {
         case 0:
             // Handle "내 정보 관리"
-            moveToDetailController(controller: MyDetailManageViewcontroller(userName: userName, email: email))
+            pushToViewController(MyDetailManageViewcontroller(userName: userName, email: email))
         case 1:
             // Handle "위치 즐겨찾기"
-            moveToDetailController(controller: LocationBookmarkViewController())
+            pushToViewController(LocationBookmarkViewController())
         case 2:
             // Handle "피드 책갈피"
-            moveToDetailController(controller: FeedBookMarkViewController())
+            pushToViewController(FeedBookMarkViewController())
         case 3:
             // Handle "피드 보관함"
-            moveToDetailController(controller: FeedArchiveViewController())
+            pushToViewController(FeedArchiveViewController())
         case 4:
             // Handle "공지사항"
-            print("공지사항 tapped")
-            moveToDetailController(controller: AnnouncmentListViewController())
+            pushToViewController(AnnouncmentListViewController())
         case 5:
             // Handle "1:1 이용문의"
-            moveToDetailController(controller: InquiryViewController())
+            pushToViewController(InquiryViewController())
         default:
             break
         }

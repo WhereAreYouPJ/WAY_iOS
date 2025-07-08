@@ -23,9 +23,7 @@ class PasswordFinishResetViewController: UIViewController {
     
     @objc func goToLogin() {
         let controller = LoginViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
+        rootToViewcontroller(controller)
     }
     
     // MARK: - Helpers

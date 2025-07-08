@@ -131,8 +131,6 @@ extension HomeFeedViewController: MoreFeedCollectionViewCellDelegate {
 extension HomeFeedViewController: HomeFeedCollectionViewCellDelegate {
     func didTapReadMoreButton(for feed: Feed) {
         let detailVC = FeedDetailViewController(feed: feed)
-        let navController = UINavigationController(rootViewController: detailVC)
-        navController.modalPresentationStyle = .fullScreen
-        present(navController, animated: true, completion: nil)
+        pushToViewController(detailVC)
     }
 }

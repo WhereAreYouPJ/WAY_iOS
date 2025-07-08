@@ -225,6 +225,7 @@ class FriendFeedViewController: UIViewController {
     @objc private func handleNotification() {
         let notificationView = NotificationView()
         let hostingController = UIHostingController(rootView: notificationView)
+//        pushToViewController(hostingController)
         hostingController.modalPresentationStyle = .fullScreen
         present(hostingController, animated: true)
     }

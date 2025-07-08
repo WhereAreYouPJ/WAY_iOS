@@ -31,8 +31,6 @@ class FinishRegisterViewController: UIViewController {
     // MARK: - Selectors
     @objc func loginButtonTapped() {
         let controller = LoginViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
+        rootToViewcontroller(controller)
     }
 }

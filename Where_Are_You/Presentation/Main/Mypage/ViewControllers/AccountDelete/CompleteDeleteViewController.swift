@@ -33,8 +33,6 @@ class CompleteDeleteViewController: UIViewController {
 
     @objc func completeButtonTapped() {
         let controller = LoginViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        self.present(nav, animated: true, completion: nil)
+        rootToViewcontroller(controller)
     }
 }

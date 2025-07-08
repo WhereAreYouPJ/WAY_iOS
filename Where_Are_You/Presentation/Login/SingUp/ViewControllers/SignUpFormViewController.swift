@@ -144,7 +144,7 @@ class SignUpFormViewController: UIViewController {
     }
     
     @objc func backButtonTapped() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func authRequestButtonTapped() {
