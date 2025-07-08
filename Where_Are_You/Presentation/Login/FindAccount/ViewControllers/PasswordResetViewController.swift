@@ -74,9 +74,7 @@ class PasswordResetViewController: UIViewController {
         
         viewModel.onResetPasswordSuccess = { [weak self] in
             let controller = PasswordFinishResetViewController()
-            let nav = UINavigationController(rootViewController: controller)
-            nav.modalPresentationStyle = .fullScreen
-            self?.present(nav, animated: true, completion: nil)
+            self?.pushToViewController(controller)
         }
     }
 
@@ -106,7 +104,7 @@ class PasswordResetViewController: UIViewController {
     }
     
     @objc func backButtonTapped() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func hidePasswordButtonTapped(_ button: UIButton) {

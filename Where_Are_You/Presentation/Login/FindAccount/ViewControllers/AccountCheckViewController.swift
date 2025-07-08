@@ -47,15 +47,11 @@ class CheckIDViewController: UIViewController {
     
     @objc func loginButtonTapped() {
         let controller = LoginViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
+        rootToViewcontroller(controller)
     }
     
     @objc func searchPasswordButtonTapped() {
         let controller = PasswordResetViewController(email: email)
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
+        pushToViewController(controller)
     }
 }

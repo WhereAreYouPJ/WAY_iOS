@@ -30,7 +30,6 @@ class FeedArchiveViewController: UIViewController {
         setupActions()
         setupNavigationBar()
         viewModel.fetchArchiveFeed()
-        
     }
     
     // MARK: - Helpers
@@ -135,7 +134,7 @@ class FeedArchiveViewController: UIViewController {
     
     // MARK: - Selectors
     @objc func backButtonTapped() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {

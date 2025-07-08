@@ -17,6 +17,7 @@ class AccountSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+
         setupViewModel()
         setupBindings()
         setupActions()
@@ -24,7 +25,11 @@ class AccountSearchViewController: UIViewController {
     
     // MARK: - Helpers
     private func setupUI() {
-        self.view = accountSearchView
+        view.addSubview(accountSearchView)
+        accountSearchView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
         configureNavigationBar(title: "계정 찾기", backButtonAction: #selector(backButtonTapped))
     }
     
@@ -82,9 +87,7 @@ class AccountSearchViewController: UIViewController {
         viewModel.onAccountSearchSuccess = { [weak self] email, emailType in
             DispatchQueue.main.async {
                 let controller = CheckIDViewController(email: email, emailType: emailType)
-                let nav = UINavigationController(rootViewController: controller)
-                nav.modalPresentationStyle = .fullScreen
-                self?.present(nav, animated: true, completion: nil)
+                self?.pushToViewController(controller)
             }
         }
         
@@ -105,7 +108,7 @@ class AccountSearchViewController: UIViewController {
     
     // MARK: - Selectors
     @objc func backButtonTapped() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     @objc private func requestAuthCodeTapped() {

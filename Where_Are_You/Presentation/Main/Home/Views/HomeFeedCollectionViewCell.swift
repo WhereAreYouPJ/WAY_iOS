@@ -22,7 +22,7 @@ class HomeFeedCollectionViewCell: UICollectionViewCell {
     
     let profileImageView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
+        iv.contentMode = .scaleToFill
         iv.clipsToBounds = true
         iv.layer.cornerRadius = LayoutAdapter.shared.scale(value: 14)
         return iv

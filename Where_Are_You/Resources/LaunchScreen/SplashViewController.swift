@@ -73,8 +73,15 @@ class SplashViewController: UIViewController {
     }
     
     private func transitionToViewController(_ viewController: UIViewController) {
-        viewController.modalTransitionStyle = .crossDissolve
-        viewController.modalPresentationStyle = .fullScreen
-        self.present(viewController, animated: true, completion: nil)
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let sceneDelegate = windowScene.delegate as? SceneDelegate,
+              let window = sceneDelegate.window else {
+            return
+        }
+
+        let nav = UINavigationController(rootViewController: viewController) // Navigation 포함
+        window.rootViewController = nav
+        UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: nil)
+        window.makeKeyAndVisible()
     }
 }

@@ -106,7 +106,7 @@ class AddFeedViewController: UIViewController {
         
         viewModel.onFeedCreated = { [weak self] in
             DispatchQueue.main.async {
-                self?.dismiss(animated: true)
+                self?.navigationController?.popViewController(animated: true)
             }
         }
     }
@@ -141,7 +141,7 @@ class AddFeedViewController: UIViewController {
     }
     
     @objc func backButtonTapped() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func dropDownButtonTapped() {

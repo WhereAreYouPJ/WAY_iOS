@@ -66,7 +66,7 @@ class TermsAgreementViewController: UIViewController {
     // MARK: - Selectors
     
     @objc func backButtonTapped() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func checkButtonTapped() {
@@ -103,9 +103,7 @@ class TermsAgreementViewController: UIViewController {
     
     @objc func agreeButtonTapped() {
         let controller = SignUpFormViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
+        pushToViewController(controller)
     }
     
     @objc func termButtonTapped(_ sender: UIButton) {
