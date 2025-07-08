@@ -81,9 +81,7 @@ class SocialLinkViewController: UIViewController {
     
     @objc private func returnButtonTapped() {
         let controller = LoginViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
+        rootToViewcontroller(controller)
     }
     
     @objc private func accountLinkButtonTapped() {

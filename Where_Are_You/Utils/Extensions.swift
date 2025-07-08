@@ -18,7 +18,32 @@ enum FeedViewType {
 
 extension UIViewController {
     func configureNavigationBar(title: String, backButtonAction: Selector? = nil, showBackButton: Bool = true, rightButton: UIBarButtonItem? = nil) {
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        
         Utilities.createNavigationBar(for: self, title: title, backButtonAction: backButtonAction, showBackButton: showBackButton, rightButton: rightButton)
+    }
+    
+    func pushToViewController(_ controller: UIViewController) {
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func rootToViewcontroller(_ controller: UIViewController) {
+        let nav = UINavigationController(rootViewController: controller)
+        
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
+           let window = sceneDelegate.window {
+            window.rootViewController = nav
+            UIView.transition(with: window,
+                              duration: 0.3,
+                              options: .transitionCrossDissolve,
+                              animations: nil)
+            window.makeKeyAndVisible()
+        }
+    }
+    
+    func popViewController() {
+        navigationController?.popViewController(animated: true)
     }
 }
 

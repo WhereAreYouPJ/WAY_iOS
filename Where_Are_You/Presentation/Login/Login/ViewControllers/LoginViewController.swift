@@ -70,34 +70,25 @@ class LoginViewController: UIViewController {
     
     @objc func accountLoginTapped() {
         let controller = AccountLoginController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
+        pushToViewController(controller)
     }
     
     @objc func signupButtonTapped() {
         let controller = TermsAgreementViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
+        pushToViewController(controller)
     }
     
     @objc func findAccountButtonTapped() {
         let controller = AccountSearchViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
+        pushToViewController(controller)
     }
     
     @objc func inquiryButtonTapped() {
         let controller = InquiryViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
+        pushToViewController(controller)
     }
-    
+
     // MARK: Kakao Login
-    
     func kakaoLonginWithApp() {
         UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
             if let error = error {
@@ -161,9 +152,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
                                                           userIdentifier: userIdentifier,
                                                           userName: fullName?.givenName ?? "",
                                                           loginType: "apple")
-                let nav = UINavigationController(rootViewController: signUpVC)
-                nav.modalPresentationStyle = .fullScreen
-                self.present(nav, animated: true, completion: nil)
+                pushToViewController(signUpVC)
             } else {
                 // email 값이 nil이면 이미 가입된 계정으로 간주합니다.
                 // 이 경우, 백엔드 API 호출을 통해 로그인 처리를 진행하거나 바로 메인 화면으로 이동합니다.

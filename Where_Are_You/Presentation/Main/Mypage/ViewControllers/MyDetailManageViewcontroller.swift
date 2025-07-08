@@ -102,7 +102,7 @@ class MyDetailManageViewcontroller: UIViewController {
     
     // MARK: - Selectors
     @objc private func backButtonTapped() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
         NotificationCenter.default.post(name: .userNameDidChange, object: nil)
     }
     

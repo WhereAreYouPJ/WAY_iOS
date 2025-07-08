@@ -17,8 +17,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = scene as? UIWindowScene else { return }
         
         let vc = SplashViewController()
+        let navController = UINavigationController(rootViewController: vc)
+            
         window = UIWindow(windowScene: scene)
-        window?.rootViewController = vc
+        window?.rootViewController = navController
         window?.makeKeyAndVisible()
         
         // ToastManager 초기화 (이렇게 하면 싱글톤 인스턴스가 생성됨)

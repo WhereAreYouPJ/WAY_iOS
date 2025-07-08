@@ -93,7 +93,7 @@ class AccountSearchView: UIView {
     
     private func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 54))
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(LayoutAdapter.shared.scale(value: 54))
             make.leading.equalToSuperview().offset(LayoutAdapter.shared.scale(value: 24))
         }
         
