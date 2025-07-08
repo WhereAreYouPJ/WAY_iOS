@@ -17,6 +17,10 @@ protocol MemberRepositoryProtocol {
     func postResetPassword(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postLogout(completion: @escaping (Result<Void, Error>) -> Void)
     func postLogin(request: LoginBody, completion: @escaping (Result<Void, Error>) -> Void)
+    
+    func postKakaoJoin(request: KakaoJoinBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func postKakaoLogin(request: KakaoLoginBody, completion: @escaping (Result<Void, Error>) -> Void)
+    
     func postMemberLink(request: MemberSnsBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postEmailVerify(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postEmailVerifyPassword(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
@@ -100,13 +104,31 @@ class MemberRepository: MemberRepositoryProtocol {
         memberService.postLogin(request: request) { result in
             switch result {
             case .success(let response):
-                let loginData = response.data
-                UserDefaultsManager.shared.saveAccessToken(loginData.accessToken)
-                UserDefaultsManager.shared.saveRefreshToken(loginData.refreshToken)
-                UserDefaultsManager.shared.saveMemberSeq(loginData.memberSeq)
-                UserDefaultsManager.shared.saveMemberCode(loginData.memberCode)
-                UserDefaultsManager.shared.saveProfileImage(loginData.profileImage)
-                UserDefaultsManager.shared.saveIsLoggedIn(true)
+//                let loginData = response.data
+//                UserDefaultsManager.shared.saveAccessToken(loginData.accessToken)
+//                UserDefaultsManager.shared.saveRefreshToken(loginData.refreshToken)
+//                UserDefaultsManager.shared.saveMemberSeq(loginData.memberSeq)
+//                UserDefaultsManager.shared.saveMemberCode(loginData.memberCode)
+//                UserDefaultsManager.shared.saveProfileImage(loginData.profileImage)
+//                UserDefaultsManager.shared.saveIsLoggedIn(true)
+                
+                UserDefaultsManager.shared.saveLoginData(response.data)
+                completion(.success(()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func postKakaoJoin(request: KakaoJoinBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+        memberService.postKakaoJoin(request: request, completion: completion)
+    }
+    
+    func postKakaoLogin(request: KakaoLoginBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+        memberService.postKakaoLogin(request: request) { result in
+            switch result {
+            case .success(let response):
+                UserDefaultsManager.shared.saveLoginData(response.data)
                 completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))
