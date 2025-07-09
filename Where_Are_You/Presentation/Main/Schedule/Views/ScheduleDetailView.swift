@@ -128,7 +128,8 @@ struct ScheduleDetailView: View {
                     }
                 }
                 .fullScreenCover(isPresented: $showFriendsLocation) {
-                    FriendsLocationView(isShownView: $showFriendsLocation, schedule: $viewModel.schedule)
+                    FriendsLocationView(schedule: $viewModel.schedule)
+//                    FriendsLocationView(isShownView: $showFriendsLocation, schedule: $viewModel.schedule)
                 }
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
