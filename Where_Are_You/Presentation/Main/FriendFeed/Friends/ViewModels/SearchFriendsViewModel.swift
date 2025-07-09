@@ -12,6 +12,8 @@ import Combine
 class SearchFriendsViewModel: ObservableObject {
     @Published var selectedFavorites: Set<UUID> = []
     @Published var selectedFriends: Set<UUID> = []
+    @Published var selectedOrder: [Friend] = []
+    
     var cancellables = Set<AnyCancellable>()
     
     let friendsViewModel: FriendsViewModel
@@ -38,11 +40,6 @@ class SearchFriendsViewModel: ObservableObject {
             }
     }
     
-//    // FriendsViewModel에서 forward
-//    var searchText: String {
-//        get { friendsViewModel.searchText }
-//        set { friendsViewModel.searchText = newValue }
-//    }
     var searchText: String {
         get { inputSearchText }
         set { inputSearchText = newValue }
@@ -70,14 +67,9 @@ class SearchFriendsViewModel: ObservableObject {
     }
     
     func clearSearch() {
-        // 사용자 입력 텍스트 초기화
-        inputSearchText = ""
-        
-        // 디바운스 타이머를 기다리지 않고 즉시 디바운스된 검색어도 초기화
-        debouncedSearchText = ""
-        
-        // FriendsViewModel의 검색어도 초기화
-        friendsViewModel.searchText = ""
+        inputSearchText = "" // 사용자 입력 텍스트 초기화
+        debouncedSearchText = "" // 디바운스 타이머를 기다리지 않고 즉시 디바운스된 검색어도 초기화
+        friendsViewModel.searchText = "" // FriendsViewModel의 검색어도 초기화
         
         // 현재 실행 중인 디바운스 작업 취소
         searchTextCancellable?.cancel()
@@ -89,57 +81,32 @@ class SearchFriendsViewModel: ObservableObject {
             }
     }
     
-    // SearchFriendsViewModel 고유 기능
+    // MARK: 친구 선택 로직
+
+    // selectedList를 selectedOrder로 변경
     var selectedList: [Friend] {
-        favorites.filter { selectedFavorites.contains($0.id) } +
-        friends.filter { selectedFriends.contains($0.id) }
+        return selectedOrder
     }
     
     func toggleSelection(for friend: Friend) {
-        // 이미 선택되어 있는지 확인
         if isSelected(friend: friend) {
             removeFromSelection(friend: friend)
         } else {
-            // 친구 타입에 따라 적절한 컬렉션에 추가
-            if favorites.contains(where: { $0.memberSeq == friend.memberSeq }) {
-                if let favoriteToAdd = favorites.first(where: { $0.memberSeq == friend.memberSeq }) {
-                    selectedFavorites.insert(favoriteToAdd.id)
-                }
-            } else {
-                if let friendToAdd = friends.first(where: { $0.memberSeq == friend.memberSeq }) {
-                    selectedFriends.insert(friendToAdd.id)
-                }
-            }
+            // 친구가 이미 선택되어 있지 않은 경우에만 추가
+            selectedOrder.append(friend)
         }
     }
     
     func isSelected(friend: Friend) -> Bool {
-        let isFavoriteSelected = favorites.contains { favorite in
-            favorite.memberSeq == friend.memberSeq && selectedFavorites.contains(favorite.id)
-        }
-        
-        let isFriendSelected = friends.contains { friendItem in
-            friendItem.memberSeq == friend.memberSeq && selectedFriends.contains(friendItem.id)
-        }
-        
-        return isFavoriteSelected || isFriendSelected
+        return selectedOrder.contains { $0.memberSeq == friend.memberSeq }
     }
     
     func removeFromSelection(friend: Friend) {
-        // 즐겨찾기에서 제거 시도
-        if let favoriteToRemove = favorites.first(where: { $0.memberSeq == friend.memberSeq }) {
-            selectedFavorites.remove(favoriteToRemove.id)
-        }
-        
-        // 일반 친구 목록에서 제거 시도
-        if let friendToRemove = friends.first(where: { $0.memberSeq == friend.memberSeq }) {
-            selectedFriends.remove(friendToRemove.id)
-        }
+        selectedOrder.removeAll { $0.memberSeq == friend.memberSeq }
     }
     
     func getSelectedFriends() -> [Friend] {
-        return favorites.filter { selectedFavorites.contains($0.id) } +
-        friends.filter { selectedFriends.contains($0.id) }
+        return selectedOrder // 선택 순서대로 반환
     }
     
     func confirmSelection() -> [Friend] {
@@ -149,8 +116,7 @@ class SearchFriendsViewModel: ObservableObject {
     }
     
     func resetSelection() {
-        selectedFavorites.removeAll()
-        selectedFriends.removeAll()
+        selectedOrder.removeAll()
     }
 }
 
@@ -163,11 +129,11 @@ extension SearchFriendsViewModel {
         
         // 기본적으로 첫 번째 친구를 선택 상태로 설정 (데모용)
         if let firstFavorite = self.friendsViewModel.favorites.first {
-            self.selectedFavorites.insert(firstFavorite.id)
+            self.selectedOrder.append(firstFavorite)
         }
         
         if let firstFriend = self.friendsViewModel.friends.first {
-            self.selectedFriends.insert(firstFriend.id)
+            self.selectedOrder.append(firstFriend)
         }
     }
 }
