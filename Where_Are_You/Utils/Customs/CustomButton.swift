@@ -169,11 +169,7 @@ class MultiCustomOptionsContainerView: UIView {
             }), for: .touchUpInside)
             print("Action added for button with title: \(title) at index: \(index)") // 확인 로그
         }
-        
-        // 동적으로 높이 조정
-//        self.snp.updateConstraints { make in
-//            make.height.equalTo(buttons.count * 44)
-//        }
+    
         self.layoutIfNeeded() // 레이아웃 강제 적용
 
     }
@@ -192,8 +188,6 @@ class MultiCustomOptionButtonView: UIView {
     let button: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .brandDark2
-//        button.titleLabel?.font = UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))
-//        button.setTitleColor(.white, for: .normal)
         return button
     }()
     
@@ -220,10 +214,6 @@ class MultiCustomOptionButtonView: UIView {
         
         // 버튼 제목 설정
         let label = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: title, textColor: .white))
-//        UILabel()
-//        label.text = title
-//        label.font = UIFont.pretendard(NotoSans: .medium, fontSize: LayoutAdapter.shared.scale(value: 14))
-//        label.textColor = .white
         button.addSubview(label)
         label.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 12))
@@ -294,60 +284,59 @@ class CustomOptionButtonView: UIView {
     }
 }
 
-// MARK: - Box Button
-// TODO: 마이페이지 - 회원탈퇴 부분에서 사용되는 버튼 (수정 후 삭제하기)
-class CustomButton: UIButton {
-    
-    private var buttonTitle: String
-    private var buttonBackgroundColor: UIColor
-    private var buttonTitleColor: UIColor
-    private var buttonFont: UIFont
-    
-    init(title: String, backgroundColor: UIColor, titleColor: UIColor, font: UIFont) {
-        self.buttonTitle = title
-        self.buttonBackgroundColor = backgroundColor
-        self.buttonTitleColor = titleColor
-        self.buttonFont = font
-        super.init(frame: .zero)
-        setupButton()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupButton() {
-        setTitle(buttonTitle, for: .normal)
-        setTitleColor(buttonTitleColor, for: .normal)
-        backgroundColor = buttonBackgroundColor
-        titleLabel?.font = buttonFont
-        
-        // 중앙 정렬
-        contentHorizontalAlignment = .center
-        contentVerticalAlignment = .center
-        
-        // 버튼 모서리 둥글게
-        layer.cornerRadius = LayoutAdapter.shared.scale(value: 6)
-        clipsToBounds = true
-    }
-    
-    func updateTitle(_ title: String) {
-        self.buttonTitle = title
-        setTitle(buttonTitle, for: .normal)
-    }
-    
-    func updateBackgroundColor(_ color: UIColor) {
-        self.buttonBackgroundColor = color
-        backgroundColor = color
-    }
-    
-    func updateTitleColor(_ color: UIColor) {
-        self.buttonTitleColor = color
-        setTitleColor(buttonTitleColor, for: .normal)
-    }
-    
-    func updateFont(_ font: UIFont) {
-        self.buttonFont = font
-        titleLabel?.font = font
-    }
-}
+//// MARK: - Box Button
+//class CustomButton: UIButton {
+//    
+//    private var buttonTitle: String
+//    private var buttonBackgroundColor: UIColor
+//    private var buttonTitleColor: UIColor
+//    private var buttonFont: UIFont
+//    
+//    init(title: String, backgroundColor: UIColor, titleColor: UIColor, font: UIFont) {
+//        self.buttonTitle = title
+//        self.buttonBackgroundColor = backgroundColor
+//        self.buttonTitleColor = titleColor
+//        self.buttonFont = font
+//        super.init(frame: .zero)
+//        setupButton()
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//    
+//    private func setupButton() {
+//        setTitle(buttonTitle, for: .normal)
+//        setTitleColor(buttonTitleColor, for: .normal)
+//        backgroundColor = buttonBackgroundColor
+//        titleLabel?.font = buttonFont
+//        
+//        // 중앙 정렬
+//        contentHorizontalAlignment = .center
+//        contentVerticalAlignment = .center
+//        
+//        // 버튼 모서리 둥글게
+//        layer.cornerRadius = LayoutAdapter.shared.scale(value: 6)
+//        clipsToBounds = true
+//    }
+//    
+//    func updateTitle(_ title: String) {
+//        self.buttonTitle = title
+//        setTitle(buttonTitle, for: .normal)
+//    }
+//    
+//    func updateBackgroundColor(_ color: UIColor) {
+//        self.buttonBackgroundColor = color
+//        backgroundColor = color
+//    }
+//    
+//    func updateTitleColor(_ color: UIColor) {
+//        self.buttonTitleColor = color
+//        setTitleColor(buttonTitleColor, for: .normal)
+//    }
+//    
+//    func updateFont(_ font: UIFont) {
+//        self.buttonFont = font
+//        titleLabel?.font = font
+//    }
+//}
