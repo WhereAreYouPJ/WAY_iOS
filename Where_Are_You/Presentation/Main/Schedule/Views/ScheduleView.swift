@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// ✅ 1. 새로운 구조체 정의 (ScheduleView 파일 상단에 추가)
 struct ScheduleDisplayInfo {
     let schedule: Schedule
     let isStart: Bool
@@ -16,18 +15,13 @@ struct ScheduleDisplayInfo {
 }
 
 struct ScheduleView: View {
-    // TODO: 가끔 일정 조회시 누락되는 일정 발생. 원인 추측: 특히 다중날짜 일정이 있을 경우 or 월이 다른 일정
     @StateObject var viewModel: ScheduleViewModel
     @StateObject private var notificationBadgeViewModel = NotificationBadgeViewModel.shared
     
     @State private var showNotification = false
     @State private var showOptionMenu = false
     @State private var showCreateSchedule = false
-    
-//    @State private var selectedDate: Date?
     @State private var showDailySchedule = false
-    
-//    @State private var selectedPickerDate = Date()
     @State private var showDatePicker = false
     
     init() {
@@ -73,7 +67,7 @@ struct ScheduleView: View {
                 .padding(.horizontal, LayoutAdapter.shared.scale(value: 10))
                 
                 if showOptionMenu {
-                    Color.clear // 배경 터치시 메뉴 닫기
+                    Color.clear
                         .contentShape(Rectangle())
                         .onTapGesture {
                             showOptionMenu = false
@@ -94,10 +88,15 @@ struct ScheduleView: View {
         .fullScreenCover(isPresented: $showNotification, content: {
             NotificationView()
         })
-        .sheet(isPresented: $showCreateSchedule, onDismiss: {
-            viewModel.getMonthlySchedule()
-        }, content: {
-            CreateScheduleView(initialDate: viewModel.getDateForNewSchedule())
+        .sheet(isPresented: $showCreateSchedule, content: {
+            CreateScheduleView(
+                initialDate: viewModel.getDateForNewSchedule(),
+                onScheduleCreated: {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        viewModel.getMonthlySchedule()
+                    }
+                }
+            )
         }
         )
         .sheet(isPresented: $showDailySchedule) {
@@ -276,7 +275,6 @@ struct ScheduleView: View {
         let calendar = Calendar.koreaCalendar
         var result: [ScheduleDisplayInfo] = []
         
-        // 일정 정렬 (기존 로직)
         let sortedSchedules = schedules.sorted { (a, b) in
             let aIsMultiDay = !calendar.isDate(a.startTime, inSameDayAs: a.endTime)
             let bIsMultiDay = !calendar.isDate(b.startTime, inSameDayAs: b.endTime)
@@ -298,7 +296,6 @@ struct ScheduleView: View {
             let isStart = calendar.isDate(schedule.startTime, inSameDayAs: date)
             let isEnd = calendar.isDate(schedule.endTime, inSameDayAs: date)
             
-            // ✅ ViewModel에서 행 번호 가져오기
             let rowIndex = viewModel.getRowIndex(for: schedule.scheduleSeq)
             
             let displayInfo = ScheduleDisplayInfo(
@@ -316,9 +313,7 @@ struct ScheduleView: View {
     private func otherMonthCell(for index: Int, lastDayOfMonthBefore: Int, cellHeight: CGFloat, monthlySchedules: [Schedule]) -> CellView {
         let calendar = Calendar.koreaCalendar
         let date = getDate(for: index)
-        
-//        let isSelectedInPicker = calendar.isDate(date, inSameDayAs: selectedPickerDate)
-//        let isSelectedInPicker = date.isSameYMD(as: selectedPickerDate)
+
         let isSelectedInPicker = date.isSameYMD(as: date)
         
         let daySchedules = monthlySchedules.filter { schedule in
@@ -349,7 +344,6 @@ struct ScheduleView: View {
                 weekday: weekday
             )
         } else {
-            // 이전 달의 날짜를 계산할 수 없는 경우, 빈 CellView를 반환
             return CellView(
                 day: 0,
                 isSelectedInPicker: isSelectedInPicker,
@@ -369,7 +363,7 @@ private struct CellView: View {
     private var isSelectedInPicker: Bool // DatePicker를 통해 선택된 날짜인지
     private var isCurrentMonthDay: Bool
     private var weekday: Int
-    private var scheduleDisplayInfos: [ScheduleDisplayInfo] // ✅ 구조체 배열
+    private var scheduleDisplayInfos: [ScheduleDisplayInfo]
     
     private var textColor: Color {
         if clicked {
@@ -399,7 +393,7 @@ private struct CellView: View {
         isSelectedInPicker: Bool = false,
         isCurrentMonthDay: Bool = true,
         weekday: Int,
-        scheduleDisplayInfos: [ScheduleDisplayInfo] = [] // ✅ 구조체 배열
+        scheduleDisplayInfos: [ScheduleDisplayInfo] = []
     ) {
         self.day = day
         self.clicked = clicked
