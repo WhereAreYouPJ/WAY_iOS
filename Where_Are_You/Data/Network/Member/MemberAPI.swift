@@ -17,6 +17,10 @@ enum MemberAPI {
     case postResetPassword(request: ResetPasswordBody)
     case postLogout(memberSeq: Int)
     case postLogin(request: LoginBody)
+    
+    case postKakaoJoin(request: KakaoJoinBody)
+    case postKakaoLogin(request: KakaoLoginBody)
+    
     case postMemberLink(request: MemberSnsBody)
     case postEmailVerify(requst: EmailVerifyBody)
     case postEmailVerifyPassword(request: EmailVerifyBody)
@@ -56,6 +60,12 @@ extension MemberAPI: TargetType {
             return "/member/logout"
         case .postLogin:
             return "/member/login"
+            
+        case .postKakaoJoin:
+            return "/member/kakaoJoin"
+        case .postKakaoLogin:
+            return "/member/kakao/login"
+            
         case .postMemberLink:
             return "/member/link"
         case .postEmailVerify:
@@ -116,6 +126,12 @@ extension MemberAPI: TargetType {
             return .requestParameters(parameters: ["memberSeq": memberSeq], encoding: JSONEncoding.default)
         case .postLogin(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+            
+        case .postKakaoJoin(let request):
+            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+        case .postKakaoLogin(let request):
+            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
+            
         case .postMemberLink(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .postEmailVerify(let request):

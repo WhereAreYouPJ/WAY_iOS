@@ -94,6 +94,16 @@ class UserDefaultsManager {
         return defaults.string(forKey: fcmToken) ?? ""
     }
     
+    // MARK: Login 작업들
+    func saveLoginData(_ response: LoginResponse) {
+        saveAccessToken(response.accessToken)
+        saveRefreshToken(response.refreshToken)
+        saveMemberSeq(response.memberSeq)
+        saveMemberCode(response.memberCode)
+        saveProfileImage(response.profileImage)
+        saveIsLoggedIn(true)
+    }
+    
     // MARK: - ClearData
     func clearData() { // 탈퇴
         defaults.removeObject(forKey: accessTokenKey)

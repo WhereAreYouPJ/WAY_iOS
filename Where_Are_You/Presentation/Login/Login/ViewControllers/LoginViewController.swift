@@ -15,6 +15,7 @@ class LoginViewController: UIViewController {
     // MARK: - Properties
     private let loginView = LoginView()
     private var viewModel: AccountLoginViewModel!
+    private var snsLoginViewModel: LoginViewModel! // 소셜로그인 뷰모델
 
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
@@ -43,22 +44,48 @@ class LoginViewController: UIViewController {
     private func setupViewModel() {
         let memberService = MemberService()
         let memberRepository = MemberRepository(memberService: memberService)
-        viewModel = AccountLoginViewModel(
-            accountLoginUseCase: AccountLoginUseCaseImpl(memberRepository: memberRepository),
-            appleLoginUseCase: AppleLoginUseCaseImpl(memberRepository: memberRepository))
+        viewModel = AccountLoginViewModel(accountLoginUseCase: AccountLoginUseCaseImpl(memberRepository: memberRepository))
+        
+        let kakaoLoginUseCase = KakaoLoginUseCaseImpl(memberRepository: memberRepository)
+        snsLoginViewModel = LoginViewModel(kakaoLoginUseCase: kakaoLoginUseCase)
+        
+        setupKakaoBindings()
     }
     
-    private func setupBindings() {
-        viewModel.onAppleLoginState = { [weak self] state, code in
-            if state {
-                let controller = MainTabBarController()
-                self?.rootToViewcontroller(controller)
-            } else {
-                let controller = TermsAgreementViewController(snsType: .apple, code: code)
-                self?.pushToViewController(controller)
+    // 카카오 로그인 결과 처리
+    private func setupKakaoBindings() {
+        snsLoginViewModel.onLoginResult = { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success: // 로그인 성공 -> 메인 화면으로
+                    let controller = MainTabBarController()
+                    let nav = UINavigationController(rootViewController: controller)
+                    nav.modalPresentationStyle = .fullScreen
+                    self?.present(nav, animated: true, completion: nil)
+                case .failure(let error): // 로그인 실패
+                    print("카카오 로그인 실패: \(error)")
+                    self?.view.makeToast("로그인에 실패했습니다.", duration: 2.0)
+                }
+            }
+        }
+        
+        // 회원가입이 필요한 경우 TODO: 추후 소셜 회원가입 로직 수정되면 해당 코드 수정되어야.
+        snsLoginViewModel.onNeedKakaoSignup = { [weak self] authCode in
+            DispatchQueue.main.async {
+                // 카카오 회원가입 화면으로 이동
+                let signUpVC = SocialSignUpViewController(
+                    email: "", // 카카오에서 이메일 가져오기
+                    userIdentifier: authCode,
+                    userName: "", // 카카오에서 닉네임 가져오기
+                    loginType: "kakao"
+                )
+                let nav = UINavigationController(rootViewController: signUpVC)
+                nav.modalPresentationStyle = .fullScreen
+                self?.present(nav, animated: true, completion: nil)
             }
         }
     }
+    
     // MARK: - Selectors
     
     @objc func kakaoLoginTapped() {
@@ -107,12 +134,10 @@ class LoginViewController: UIViewController {
     func kakaoLonginWithApp() {
         UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
             if let error = error {
-                print(error)
-            } else {
-                print("loginWithKakaoTalk() success.")
-                
-                // do something
-                _ = oauthToken
+                print("카카오톡 로그인 실패: \(error)")
+            } else if let token = oauthToken {
+                print("카카오톡 로그인 성공")
+                self.snsLoginViewModel.kakaoLogin(authCode: token.accessToken)
             }
         }
     }
@@ -120,12 +145,10 @@ class LoginViewController: UIViewController {
     func kakaoLoginWithAccount() {
         UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
             if let error = error {
-                print(error)
-            } else {
-                print("loginWithKakaoAccount() success.")
-                
-                // do something
-                _ = oauthToken
+                print("카카오 계정 로그인 실패: \(error)")
+            } else if let token = oauthToken {
+                print("카카오 계정 로그인 성공")
+                self.snsLoginViewModel.kakaoLogin(authCode: token.accessToken)
             }
         }
     }

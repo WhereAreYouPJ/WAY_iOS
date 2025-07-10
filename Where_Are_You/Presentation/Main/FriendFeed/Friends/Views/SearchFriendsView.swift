@@ -19,14 +19,27 @@ struct SearchFriendsView: View {
             VStack(spacing: 0) {
                 SearchBarView(searchText: $viewModel.searchText, onClear: viewModel.clearSearch)
                     .padding(.top, LayoutAdapter.shared.scale(value: 16))
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach(viewModel.selectedList) { friend in
-                            SelectedFriendsView(friend: friend, isOn: Binding(
-                                get: { viewModel.isSelected(friend: friend) },
-                                set: { _ in viewModel.removeFromSelection(friend: friend) }
-                            ))
+
+                ScrollViewReader { proxy in
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ForEach(viewModel.selectedList) { friend in
+                                SelectedFriendsView(friend: friend, isOn: Binding(
+                                    get: { viewModel.isSelected(friend: friend) },
+                                    set: { _ in viewModel.removeFromSelection(friend: friend) }
+                                ))
+                                .id(friend.memberSeq) // ID 설정
+                            }
+                        }
+                        .padding(.horizontal, LayoutAdapter.shared.scale(value: 4))
+                    }
+                    .onReceive(viewModel.$selectedOrder) { selectedList in
+                        if let lastFriend = selectedList.last { // 새로운 친구가 추가되었을 때만 스크롤
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // 애니메이션
+                                withAnimation(.easeInOut(duration: 0.4)) {
+                                    proxy.scrollTo(lastFriend.memberSeq, anchor: .trailing)
+                                }
+                            }
                         }
                     }
                 }
@@ -35,7 +48,6 @@ struct SearchFriendsView: View {
                 FriendListView(
                     viewModel: viewModel.friendsViewModel,
                     showToggle: true,
-                    //                searchText: viewModel.searchText,
                     searchText: viewModel.highlightText,
                     isSelected: { friend in
                         viewModel.isSelected(friend: friend)
@@ -53,15 +65,12 @@ struct SearchFriendsView: View {
                 
                 viewModel.friendsViewModel.$favorites // 친구 목록이 로드된 후에 선택 상태를 설정하도록 Combine 활용
                     .combineLatest(viewModel.friendsViewModel.$friends)
-                    .sink { favorites, friends in
+                    .sink { _, _ in
                         viewModel.resetSelection() // 선택 상태 초기화
                         
+                        // 기존 선택된 친구들을 순서대로 다시 추가
                         for selectedFriend in selectedFriends {
-                            if let foundInFavorites = favorites.first(where: { $0.memberSeq == selectedFriend.memberSeq }) {
-                                viewModel.selectedFavorites.insert(foundInFavorites.id)
-                            } else if let foundInFriends = friends.first(where: { $0.memberSeq == selectedFriend.memberSeq }) {
-                                viewModel.selectedFriends.insert(foundInFriends.id)
-                            }
+                            viewModel.selectedOrder.append(selectedFriend)
                         }
                     }
                     .store(in: &viewModel.cancellables)
@@ -100,30 +109,6 @@ struct SelectedFriendsView: View {
         .clipShape(RoundedRectangle(cornerRadius: LayoutAdapter.shared.scale(value: 16)))
     }
 }
-
-//struct CheckboxToggleStyle: ToggleStyle {
-//    @Environment(\.isEnabled) var isEnabled
-//    
-//    func makeBody(configuration: Configuration) -> some View {
-//        Button(action: {
-//            configuration.isOn.toggle()
-//        }, label: {
-//            HStack {
-//                if configuration.isOn {
-//                    Image(systemName: "checkmark.circle.fill")
-//                        .imageScale(.large)
-//                        .foregroundStyle(Color(.brandColor))
-//                } else {
-//                    Image(systemName: "circle")
-//                        .imageScale(.large)
-//                        .foregroundStyle(.gray)
-//                }
-//                
-//                configuration.label
-//            }
-//        })
-//    }
-//}
 
 #Preview {
     struct PreviewWrapper: View {

@@ -331,6 +331,11 @@
 		D585E2872C82F6C600C16A14 /* GetScheduleByMonthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D585E2862C82F6C600C16A14 /* GetScheduleByMonthResponse.swift */; };
 		D588498C2D55FAE900DE82E9 /* CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = D588498B2D55FAE900DE82E9 /* CornerRadius.swift */; };
 		D58978732D70068B00D4826E /* GetMonthlyScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58978722D70068B00D4826E /* GetMonthlyScheduleUseCase.swift */; };
+		D58BAB632E1BCDFB00E0756C /* KakaoJoinBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58BAB622E1BCDFB00E0756C /* KakaoJoinBody.swift */; };
+		D58BAB652E1BCECA00E0756C /* KakaoLoginBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58BAB642E1BCECA00E0756C /* KakaoLoginBody.swift */; };
+		D58BAB692E1BDB2900E0756C /* KakaoLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58BAB682E1BDB2900E0756C /* KakaoLoginUseCase.swift */; };
+		D58BAB6B2E1BE1C600E0756C /* KakaoJoinUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58BAB6A2E1BE1C600E0756C /* KakaoJoinUseCase.swift */; };
+		D58BAB6D2E1BE3EE00E0756C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58BAB6C2E1BE3EE00E0756C /* LoginViewModel.swift */; };
 		D58EC0692C633217001BC030 /* SearchLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58EC0682C633217001BC030 /* SearchLocationView.swift */; };
 		D58F5A502C9332220048C23A /* GetMonthlyScheduleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58F5A4F2C9332220048C23A /* GetMonthlyScheduleBody.swift */; };
 		D592D8EF2C7DE3B100736D93 /* SearchFriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */; };
@@ -726,6 +731,11 @@
 		D585E2862C82F6C600C16A14 /* GetScheduleByMonthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetScheduleByMonthResponse.swift; sourceTree = "<group>"; };
 		D588498B2D55FAE900DE82E9 /* CornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadius.swift; sourceTree = "<group>"; };
 		D58978722D70068B00D4826E /* GetMonthlyScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMonthlyScheduleUseCase.swift; sourceTree = "<group>"; };
+		D58BAB622E1BCDFB00E0756C /* KakaoJoinBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoJoinBody.swift; sourceTree = "<group>"; };
+		D58BAB642E1BCECA00E0756C /* KakaoLoginBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginBody.swift; sourceTree = "<group>"; };
+		D58BAB682E1BDB2900E0756C /* KakaoLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginUseCase.swift; sourceTree = "<group>"; };
+		D58BAB6A2E1BE1C600E0756C /* KakaoJoinUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoJoinUseCase.swift; sourceTree = "<group>"; };
+		D58BAB6C2E1BE3EE00E0756C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D58EC0682C633217001BC030 /* SearchLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationView.swift; sourceTree = "<group>"; };
 		D58F5A4F2C9332220048C23A /* GetMonthlyScheduleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMonthlyScheduleBody.swift; sourceTree = "<group>"; };
 		D592D8EE2C7DE3B100736D93 /* SearchFriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendsViewModel.swift; sourceTree = "<group>"; };
@@ -939,6 +949,8 @@
 				99EDF5812CE862120008B19A /* MemberSnsBody.swift */,
 				99EDF5832CE864180008B19A /* DeleteMemberBody.swift */,
 				99C9213A2D34B56500FC2333 /* TokenReissueBody.swift */,
+				D58BAB622E1BCDFB00E0756C /* KakaoJoinBody.swift */,
+				D58BAB642E1BCECA00E0756C /* KakaoLoginBody.swift */,
 			);
 			path = Member;
 			sourceTree = "<group>";
@@ -1222,6 +1234,8 @@
 				99C9213C2D34B72A00FC2333 /* TokenReissueUseCase.swift */,
 				990B0C3E2E1E44D3002970D2 /* AppleJoinUseCase.swift */,
 				990B0C402E1E44DC002970D2 /* AppleLoginUseCase.swift */,
+				D58BAB682E1BDB2900E0756C /* KakaoLoginUseCase.swift */,
+				D58BAB6A2E1BE1C600E0756C /* KakaoJoinUseCase.swift */,
 			);
 			path = Member;
 			sourceTree = "<group>";
@@ -1532,6 +1546,7 @@
 			isa = PBXGroup;
 			children = (
 				99C9B2412C01CE4C008D7CBD /* AccountLoginViewModel.swift */,
+				D58BAB6C2E1BE3EE00E0756C /* LoginViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2240,6 +2255,7 @@
 				9910B84C2C71B638005F7EEE /* DDayViewModel.swift in Sources */,
 				99E6B9F62DE6E7420069CFE4 /* AnnouncementViewController.swift in Sources */,
 				99DE2F022D0813B40087ACC9 /* FeedArchiveViewController.swift in Sources */,
+				D58BAB6D2E1BE3EE00E0756C /* LoginViewModel.swift in Sources */,
 				99EFC76D2CD0B9630044DFC5 /* DeleteLocationUseCase.swift in Sources */,
 				99EDF5A22CE8BE520008B19A /* PostHideFeedUseCase.swift in Sources */,
 				D53620912C8AE1010017B279 /* SearchLocationViewModel.swift in Sources */,
@@ -2261,6 +2277,7 @@
 				D512EC572CA6E56C001AC965 /* GetScheduleByDateResponse.swift in Sources */,
 				9910B8482C71B5A4005F7EEE /* DDayViewController.swift in Sources */,
 				99F4B0732D9A85E70039A0B0 /* BottomSheetPanelLayout.swift in Sources */,
+				D58BAB6B2E1BE1C600E0756C /* KakaoJoinUseCase.swift in Sources */,
 				9910B8472C71B59E005F7EEE /* AccountSearchView.swift in Sources */,
 				99C5B9E32D30AE7700CD570F /* AgreementAcountDeletionView.swift in Sources */,
 				D55C6C602CF71241005132DC /* PostFriendRequestUseCase.swift in Sources */,
@@ -2290,6 +2307,7 @@
 				99C140382C64943F00A706B6 /* LayoutAdapter.swift in Sources */,
 				995358412C00C555005BF799 /* LoginViewController.swift in Sources */,
 				D55C6C4D2CF5D9B6005132DC /* CancelFriendRequestBody.swift in Sources */,
+				D58BAB692E1BDB2900E0756C /* KakaoLoginUseCase.swift in Sources */,
 				99256FAB2DE448CA00856B70 /* SplashViewModel.swift in Sources */,
 				99CEAD4A2C539743006B3D41 /* SplashViewController.swift in Sources */,
 				99256FA72DE432B500856B70 /* GetAdminImageUseCase.swift in Sources */,
@@ -2466,6 +2484,7 @@
 				99933E902D2A566D009D0C5A /* EditFeedViewController.swift in Sources */,
 				D55C6C572CF5DD10005132DC /* FriendRequestService.swift in Sources */,
 				99B397832C0C3E9D00D7A109 /* AccountCheckView.swift in Sources */,
+				D58BAB632E1BCDFB00E0756C /* KakaoJoinBody.swift in Sources */,
 				D564EE882CF4DF540033DBD3 /* MapPinView.swift in Sources */,
 				D5A20AF02CE4A6110048281A /* PutScheduleResponse.swift in Sources */,
 				99C6009C2D38F9D30027702E /* CommonFeedView.swift in Sources */,
@@ -2509,6 +2528,7 @@
 				99D8FBC02C3BA2180062AF10 /* CustomLabel.swift in Sources */,
 				992F57DD2C5B56E200219C6B /* AutoTokenPlugin.swift in Sources */,
 				990B0C3F2E1E44D3002970D2 /* AppleJoinUseCase.swift in Sources */,
+				D58BAB652E1BCECA00E0756C /* KakaoLoginBody.swift in Sources */,
 				992F57E32C5B618D00219C6B /* MemberSearchUseCase.swift in Sources */,
 				99C68E3F2C64B11D00DEC1F1 /* FeedRequest.swift in Sources */,
 				995E3E5B2C507FE6006B4480 /* MyPageView.swift in Sources */,
@@ -2753,6 +2773,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2795,6 +2816,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

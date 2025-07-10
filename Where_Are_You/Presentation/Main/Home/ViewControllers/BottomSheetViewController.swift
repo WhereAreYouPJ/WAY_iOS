@@ -170,7 +170,7 @@ extension BottomSheetViewController: DailyScheduleTableViewCellDelegate {
         )
         
         let friendsLocationView = FriendsLocationView( // FriendsLocationView 생성
-            isShownView: isShownBinding,
+//            isShownView: isShownBinding,
             schedule: .constant(schedule)
         )
         

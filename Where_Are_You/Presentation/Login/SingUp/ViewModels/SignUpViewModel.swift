@@ -11,6 +11,8 @@ class SignUpViewModel {
     
     // MARK: - Properties
     private let accountSignUpUseCase: AccountSignUpUseCase
+//    private let kakaoJoinUseCase: KakaoJoinUseCase
+    
     private let checkEmailUseCase: CheckEmailUseCase
     private let emailSendUseCase: EmailSendUseCase
     private let emailVerifyUseCase: EmailVerifyUseCase
@@ -45,11 +47,13 @@ class SignUpViewModel {
     // MARK: - LifeCycle
     
     init(accountSignUpUseCase: AccountSignUpUseCase,
+//         kakaoJoinUseCase: KakaoJoinUseCase,
          checkEmailUseCase: CheckEmailUseCase,
          emailSendUseCase: EmailSendUseCase,
          emailVerifyUseCase: EmailVerifyUseCase,
          emailSendV2UseCase: EmailSendV2UseCase) {
         self.accountSignUpUseCase = accountSignUpUseCase
+//        self.kakaoJoinUseCase = kakaoJoinUseCase
         self.checkEmailUseCase = checkEmailUseCase
         self.emailSendUseCase = emailSendUseCase
         self.emailVerifyUseCase = emailVerifyUseCase
@@ -73,6 +77,18 @@ class SignUpViewModel {
             }
         }
     }
+    
+//    // 카카오 회원가입
+//    func kakaoJoin(userName: String, authCode: String) {
+//        kakaoJoinUseCase.execute(request: KakaoJoinBody(userName: userName, code: authCode)) { result in
+//            switch result {
+//            case .success:
+//                self.onSignUpSuccess?()
+//            case .failure(let error):
+//                break
+//            }
+//        }
+//    }
     
     private func updateSignUpButtonState() {
         let isButtonEnabled = signUpBody.userName != nil && signUpBody.email != nil && signUpBody.password != nil

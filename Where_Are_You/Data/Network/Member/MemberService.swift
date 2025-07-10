@@ -20,6 +20,10 @@ protocol MemberServiceProtocol {
     func postResetPassword(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postLogout(completion: @escaping (Result<Void, Error>) -> Void)
     func postLogin(request: LoginBody, completion: @escaping (Result<GenericResponse<LoginResponse>, Error>) -> Void)
+    
+    func postKakaoJoin(request: KakaoJoinBody, completion: @escaping (Result<Void, Error>) -> Void)
+    func postKakaoLogin(request: KakaoLoginBody, completion: @escaping (Result<GenericResponse<LoginResponse>, Error>) -> Void)
+    
     func postMemberLink(request: MemberSnsBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postEmailVerify(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postEmailVerifyPassword(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
@@ -99,6 +103,18 @@ class MemberService: MemberServiceProtocol {
     
     func postLogin(request: LoginBody, completion: @escaping (Result<GenericResponse<LoginResponse>, Error>) -> Void) {
         provider.request(.postLogin(request: request)) { result in
+            APIResponseHandler.handleResponse(result, completion: completion)
+        }
+    }
+    
+    func postKakaoJoin(request: KakaoJoinBody, completion: @escaping (Result<Void, any Error>) -> Void) {
+        provider.request(.postKakaoJoin(request: request)) { result in
+            APIResponseHandler.handleResponse(result, completion: completion)
+        }
+    }
+    
+    func postKakaoLogin(request: KakaoLoginBody, completion: @escaping (Result<GenericResponse<LoginResponse>, any Error>) -> Void) {
+        provider.request(.postKakaoLogin(request: request)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
         }
     }
