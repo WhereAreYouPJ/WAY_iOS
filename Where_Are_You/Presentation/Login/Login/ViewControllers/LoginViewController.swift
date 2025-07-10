@@ -70,7 +70,7 @@ class LoginViewController: UIViewController {
         
         // 회원가입이 필요한 경우 TODO: 추후 소셜 회원가입 로직 수정되면 해당 코드 수정되어야.
         snsLoginViewModel.onNeedKakaoSignup = { [weak self] authCode in
-            DispatchQueue.main.async {
+            DispatchQueue.main.async(execute: {
                 // 카카오 회원가입 화면으로 이동
                 let signUpVC = SocialSignUpViewController(
                     email: "", // 카카오에서 이메일 가져오기
@@ -81,7 +81,7 @@ class LoginViewController: UIViewController {
                 let nav = UINavigationController(rootViewController: signUpVC)
                 nav.modalPresentationStyle = .fullScreen
                 self?.present(nav, animated: true, completion: nil)
-            }
+            })
         }
     }
     

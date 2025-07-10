@@ -9,5 +9,5 @@ import Foundation
 
 struct PostScheduleResponse: Codable {
     let scheduleSeq: Int
-    let chatRootSeq: String
+    let chatRoomSeq: String
 }

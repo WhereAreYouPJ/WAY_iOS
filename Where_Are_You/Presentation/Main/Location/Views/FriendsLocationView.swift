@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FriendsLocationView: View { // TODO: 앱을 재시작해야만 일정에 초대된 친구가 업데이트 되는 문제
-    @Environment(\.dismiss) private var dismiss // ios 15+
+    @Environment(\.dismiss) private var dismiss
     @Binding var schedule: Schedule
     var currentLocation: LongLat?
     
