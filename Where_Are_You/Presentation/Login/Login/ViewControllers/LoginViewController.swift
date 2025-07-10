@@ -16,7 +16,7 @@ class LoginViewController: UIViewController {
     private let loginView = LoginView()
     private var viewModel: AccountLoginViewModel!
     private var snsLoginViewModel: LoginViewModel! // 소셜로그인 뷰모델
-
+    
     // MARK: - Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -44,12 +44,26 @@ class LoginViewController: UIViewController {
     private func setupViewModel() {
         let memberService = MemberService()
         let memberRepository = MemberRepository(memberService: memberService)
-        viewModel = AccountLoginViewModel(accountLoginUseCase: AccountLoginUseCaseImpl(memberRepository: memberRepository))
+        viewModel = AccountLoginViewModel(
+            accountLoginUseCase: AccountLoginUseCaseImpl(memberRepository: memberRepository),
+            appleLoginUseCase: AppleLoginUseCaseImpl(memberRepository: memberRepository))
         
         let kakaoLoginUseCase = KakaoLoginUseCaseImpl(memberRepository: memberRepository)
         snsLoginViewModel = LoginViewModel(kakaoLoginUseCase: kakaoLoginUseCase)
         
         setupKakaoBindings()
+    }
+    
+    private func setupBindings() {
+        viewModel.onAppleLoginState = { [weak self] state, code in
+            if state {
+                let controller = MainTabBarController()
+                self?.rootToViewcontroller(controller)
+            } else {
+                let controller = TermsAgreementViewController(snsType: .apple, code: code)
+                self?.pushToViewController(controller)
+            }
+        }
     }
     
     // 카카오 로그인 결과 처리
@@ -73,15 +87,8 @@ class LoginViewController: UIViewController {
         snsLoginViewModel.onNeedKakaoSignup = { [weak self] authCode in
             DispatchQueue.main.async {
                 // 카카오 회원가입 화면으로 이동
-                let signUpVC = SocialSignUpViewController(
-                    email: "", // 카카오에서 이메일 가져오기
-                    userIdentifier: authCode,
-                    userName: "", // 카카오에서 닉네임 가져오기
-                    loginType: "kakao"
-                )
-                let nav = UINavigationController(rootViewController: signUpVC)
-                nav.modalPresentationStyle = .fullScreen
-                self?.present(nav, animated: true, completion: nil)
+                let signUpVC = SocialSignUpViewController(code: authCode, userName: "", snsType: .kakao)
+                self?.pushToViewController(signUpVC)
             }
         }
     }
@@ -129,7 +136,7 @@ class LoginViewController: UIViewController {
         let controller = InquiryViewController()
         pushToViewController(controller)
     }
-
+    
     // MARK: Kakao Login
     func kakaoLonginWithApp() {
         UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
@@ -184,14 +191,14 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             print("fullName: \(String(describing: fullName))")
             print("email: \(String(describing: email))")
             
-//            if let email = email {
-//                // email 값이 있으면 신규 회원가입으로 간주하거나,
-//                // 백엔드에서 회원 존재 여부를 체크하는 API를 호출합니다.
-//                // 예를 들어, 신규 회원가입 화면으로 이동합니다.
-//            } else {
-//                // email 값이 nil이면 이미 가입된 계정으로 간주합니다.
-//                // 이 경우, 백엔드 API 호출을 통해 로그인 처리를 진행하거나 바로 메인 화면으로 이동합니다.
-//            }
+            //            if let email = email {
+            //                // email 값이 있으면 신규 회원가입으로 간주하거나,
+            //                // 백엔드에서 회원 존재 여부를 체크하는 API를 호출합니다.
+            //                // 예를 들어, 신규 회원가입 화면으로 이동합니다.
+            //            } else {
+            //                // email 값이 nil이면 이미 가입된 계정으로 간주합니다.
+            //                // 이 경우, 백엔드 API 호출을 통해 로그인 처리를 진행하거나 바로 메인 화면으로 이동합니다.
+            //            }
         case let passwordCredential as ASPasswordCredential:
             // Sign in using an existing iCloud Keychain credential.
             let username = passwordCredential.user
