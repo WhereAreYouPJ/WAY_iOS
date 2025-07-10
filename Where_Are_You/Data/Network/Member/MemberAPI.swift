@@ -97,7 +97,7 @@ extension MemberAPI: TargetType {
         switch self {
         case .putUserName, .putProfileImage:
             return .put
-        case .postSignUp, .postTokenReissue, .postMemberSns, .postResetPassword, .postLogout, .postLogin, .postMemberLink, .postEmailVerify, .postEmailVerifyPassword, .postEmailSend, .postEmailSendV2, .postAppleJoin, .postAppleLogin:
+        case .postSignUp, .postTokenReissue, .postMemberSns, .postResetPassword, .postLogout, .postLogin, .postMemberLink, .postEmailVerify, .postEmailVerifyPassword, .postEmailSend, .postEmailSendV2, .postAppleJoin, .postAppleLogin, .postKakaoJoin, .postKakaoLogin:
             return .post
         case .getMemberSearch, .getMemberDetails, .getCheckEmail:
             return .get
