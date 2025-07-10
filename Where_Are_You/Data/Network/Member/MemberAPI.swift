@@ -25,6 +25,9 @@ enum MemberAPI {
     case postEmailVerify(requst: EmailVerifyBody)
     case postEmailVerifyPassword(request: EmailVerifyBody)
     case postEmailSend(email: String)
+    case postEmailSendV2(email: String)
+    case postAppleJoin(userName: String, code: String)
+    case postAppleLogin(code: String, fcmToken: String)
     
     case getMemberSearch(memberCode: String)
     case getMemberDetails(memberSeq: Int)
@@ -71,6 +74,12 @@ extension MemberAPI: TargetType {
             return "/member/email/verifyPassword"
         case .postEmailSend:
             return "/member/email/send"
+        case .postEmailSendV2:
+            return "/member/email/send/v2"
+        case .postAppleJoin:
+            return "/member/appleJoin"
+        case .postAppleLogin:
+            return "/member/apple/login"
             
         case .getMemberSearch:
             return "/member/search"
@@ -88,7 +97,7 @@ extension MemberAPI: TargetType {
         switch self {
         case .putUserName, .putProfileImage:
             return .put
-        case .postSignUp, .postTokenReissue, .postMemberSns, .postResetPassword, .postLogout, .postLogin, .postKakaoJoin, .postKakaoLogin, .postMemberLink, .postEmailVerify, .postEmailVerifyPassword, .postEmailSend:
+        case .postSignUp, .postTokenReissue, .postMemberSns, .postResetPassword, .postLogout, .postLogin, .postMemberLink, .postEmailVerify, .postEmailVerifyPassword, .postEmailSend, .postEmailSendV2, .postAppleJoin, .postAppleLogin:
             return .post
         case .getMemberSearch, .getMemberDetails, .getCheckEmail:
             return .get
@@ -131,6 +140,12 @@ extension MemberAPI: TargetType {
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .postEmailSend(let email):
             return .requestParameters(parameters: ["email": email], encoding: JSONEncoding.default)
+        case .postEmailSendV2(let email):
+            return .requestParameters(parameters: ["email": email], encoding: JSONEncoding.default)
+        case .postAppleJoin(let userName, let code):
+            return .requestParameters(parameters: ["userName": userName, "code": code], encoding: JSONEncoding.default)
+        case .postAppleLogin(let code, let fcmToken):
+            return .requestParameters(parameters: ["code": code, "fcmToken": fcmToken], encoding: JSONEncoding.default)
             
         case .getMemberSearch(let memberCode):
             return .requestParameters(parameters: ["memberCode": memberCode], encoding: URLEncoding.queryString)

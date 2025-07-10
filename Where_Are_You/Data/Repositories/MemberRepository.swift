@@ -25,6 +25,9 @@ protocol MemberRepositoryProtocol {
     func postEmailVerify(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postEmailVerifyPassword(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postEmailSend(email: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func postEmailSendV2(email: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func postAppleJoin(userName: String, code: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func postAppleLogin(code: String, fcmToken: String, completion: @escaping (Result<Void, Error>) -> Void)
     
     func getMemberSearch(memberCode: String, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void)
     func getMemberDetails(completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void)
@@ -150,6 +153,32 @@ class MemberRepository: MemberRepositoryProtocol {
     
     func postEmailSend(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
         memberService.postEmailSend(email: email, completion: completion)
+    }
+    
+    func postEmailSendV2(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        memberService.postEmailSendV2(email: email, completion: completion)
+    }
+    
+    func postAppleJoin(userName: String, code: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        memberService.postAppleJoin(userName: userName, code: code, completion: completion)
+    }
+    
+    func postAppleLogin(code: String, fcmToken: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+        memberService.postAppleLogin(code: code, fcmToken: fcmToken) { result in
+            switch result {
+            case .success(let response):
+                let loginData = response.data
+                UserDefaultsManager.shared.saveAccessToken(loginData.accessToken)
+                UserDefaultsManager.shared.saveRefreshToken(loginData.refreshToken)
+                UserDefaultsManager.shared.saveMemberSeq(loginData.memberSeq)
+                UserDefaultsManager.shared.saveMemberCode(loginData.memberCode)
+                UserDefaultsManager.shared.saveProfileImage(loginData.profileImage)
+                UserDefaultsManager.shared.saveIsLoggedIn(true)
+                completion(.success(()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
     
     // MARK: - GET

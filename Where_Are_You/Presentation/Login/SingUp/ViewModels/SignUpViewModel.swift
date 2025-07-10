@@ -16,6 +16,8 @@ class SignUpViewModel {
     private let checkEmailUseCase: CheckEmailUseCase
     private let emailSendUseCase: EmailSendUseCase
     private let emailVerifyUseCase: EmailVerifyUseCase
+    private let emailSendV2UseCase: EmailSendV2UseCase
+    
     private let timerHelper = TimerHelper()
     
     var onUpdateTimer: ((String) -> Void)?
@@ -48,12 +50,14 @@ class SignUpViewModel {
 //         kakaoJoinUseCase: KakaoJoinUseCase,
          checkEmailUseCase: CheckEmailUseCase,
          emailSendUseCase: EmailSendUseCase,
-         emailVerifyUseCase: EmailVerifyUseCase) {
+         emailVerifyUseCase: EmailVerifyUseCase,
+         emailSendV2UseCase: EmailSendV2UseCase) {
         self.accountSignUpUseCase = accountSignUpUseCase
 //        self.kakaoJoinUseCase = kakaoJoinUseCase
         self.checkEmailUseCase = checkEmailUseCase
         self.emailSendUseCase = emailSendUseCase
         self.emailVerifyUseCase = emailVerifyUseCase
+        self.emailSendV2UseCase = emailSendV2UseCase
         
         timerHelper.onUpdateTimer = { [weak self] timeString in
             self?.onUpdateTimer?(timeString)
@@ -128,36 +132,55 @@ class SignUpViewModel {
     // 회원가입시의 중복여부만 파악하기 위해 email이 중복된 경우 에러가 뜨게 해서
     // success시 Post/member/email/send를 불러오게 하는 플로우를 해야한다 생각함
     // 이메일 중복체크
-    func checkEmailAvailability(email: String) {
+    func checkSendEmail(email: String) {
         guard ValidationHelper.isValidEmail(email) else {
             onEmailSendMessage?(invalidEmailMessage, false)
             return
         }
         
-        checkEmailUseCase.execute(email: email) { result in
+        emailSendV2UseCase.execute(email: email) { result in
             switch result {
             case .success(let data):
-                self.onCheckEmailDuplicate?(data.type)
+                print(data)
                 self.timerHelper.startTimer()
-                self.sendEmailVerificationCode(email: data.email)
-            case .failure(let error):
-                self.onEmailSendMessage?(error.localizedDescription, false)
-            }
-        }
-    }
-    
-    // 인증코드 전송
-    func sendEmailVerificationCode(email: String) {
-        emailSendUseCase.execute(email: email) { result in
-            switch result {
-            case .success:
                 self.email = email
                 self.onEmailSendMessage?(sendEmailVerifyCodeSuccessMessage, true)
             case .failure(let error):
                 self.onEmailSendMessage?(error.localizedDescription, false)
+
             }
         }
     }
+    
+//    func checkEmailAvailability(email: String) {
+//        guard ValidationHelper.isValidEmail(email) else {
+//            onEmailSendMessage?(invalidEmailMessage, false)
+//            return
+//        }
+//        
+//        checkEmailUseCase.execute(email: email) { result in
+//            switch result {
+//            case .success(let data):
+//                self.timerHelper.startTimer()
+//                self.sendEmailVerificationCode(email: data.email)
+//            case .failure(let error):
+//                self.onEmailSendMessage?(error.localizedDescription, false)
+//            }
+//        }
+//    }
+//    
+//    // 인증코드 전송
+//    func sendEmailVerificationCode(email: String) {
+//        emailSendUseCase.execute(email: email) { result in
+//            switch result {
+//            case .success:
+//                self.email = email
+//                self.onEmailSendMessage?(sendEmailVerifyCodeSuccessMessage, true)
+//            case .failure(let error):
+//                self.onEmailSendMessage?(error.localizedDescription, false)
+//            }
+//        }
+//    }
     
     // 인증코드 확인
     func verifyEmailCode(inputCode: String) {

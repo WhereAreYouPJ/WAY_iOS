@@ -44,7 +44,7 @@ class AccountLoginController: UIViewController {
     private func setupViewModel() {
         let memberService = MemberService()
         let memberRepository = MemberRepository(memberService: memberService)
-        viewModel = AccountLoginViewModel(accountLoginUseCase: AccountLoginUseCaseImpl(memberRepository: memberRepository))
+        viewModel = AccountLoginViewModel(accountLoginUseCase: AccountLoginUseCaseImpl(memberRepository: memberRepository), appleLoginUseCase: AppleLoginUseCaseImpl(memberRepository: memberRepository))
     }
     
     private func setupBindings() {
@@ -94,7 +94,7 @@ class AccountLoginController: UIViewController {
     }
     
     @objc private func registerAccountButtonTapped() {
-        let controller = TermsAgreementViewController()
+        let controller = TermsAgreementViewController(snsType: .account)
         pushToViewController(controller)
     }
     

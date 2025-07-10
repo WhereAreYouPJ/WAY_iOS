@@ -18,7 +18,7 @@ class FeedImageCell: UICollectionViewCell {
     
     private let imageView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
+        iv.contentMode = .scaleAspectFit
         iv.clipsToBounds = true
         iv.layer.cornerRadius = LayoutAdapter.shared.scale(value: 4.8)
         return iv

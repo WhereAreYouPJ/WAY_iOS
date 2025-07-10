@@ -47,7 +47,7 @@ class BottomSheetViewModel {
                                                        y: 0),
                                     color: schedule.color,
                                     memo: "",
-                                    invitedMember: nil)
+                                    isGroup: schedule.group)
                 }
                 completion(!self.displayScheduleData.isEmpty)
                 self.onDailyScheduleDataFetched?()

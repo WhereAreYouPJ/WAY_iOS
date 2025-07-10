@@ -129,7 +129,9 @@ class CommonFeedView: UIView {
     
     @objc private func feedFixButtonTapped() {
         guard let feed = feed else { return }
-        let buttonFrame = detailBox.feedFixButton.convert(detailBox.feedFixButton.bounds, to: self.superview)
+        guard let window = self.window else { return }
+        
+        let buttonFrame = detailBox.feedFixButton.convert(detailBox.feedFixButton.bounds, to: window)
         delegate2?.didTapFeedFixButton(feed: feed, buttonFrame: buttonFrame)
     }
 }

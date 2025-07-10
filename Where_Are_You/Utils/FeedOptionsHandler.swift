@@ -5,8 +5,6 @@
 //  Created by 오정석 on 14/12/2024.
 //
 
-import Foundation
-
 import UIKit
 
 class FeedOptionsHandler {
@@ -50,13 +48,22 @@ class FeedOptionsHandler {
 
         // Add to parent view
         parentView.addSubview(optionsView)
+
+        let convertedFrame = parentView.convert(frame, from: nil)
         optionsView.snp.makeConstraints { make in
-            make.top.equalTo(frame.maxY)
+                make.top.equalTo(convertedFrame.maxY)
+                make.trailing.equalToSuperview().inset(11)
+                make.width.equalTo(LayoutAdapter.shared.scale(value: 160))
+                make.height.equalTo(LayoutAdapter.shared.scale(value: CGFloat(41 * titles.count)))
+            }
+        
+//        optionsView.snp.makeConstraints { make in
+//            make.top.equalTo(frame.maxY)
 //            make.top.equalTo(frame.origin.y + frame.height)
-            make.width.equalTo(LayoutAdapter.shared.scale(value: 160))
-            make.trailing.equalToSuperview().inset(11)
-            make.height.equalTo(LayoutAdapter.shared.scale(value: CGFloat(41 * titles.count)))
-        }
+//            make.width.equalTo(LayoutAdapter.shared.scale(value: 160))
+//            make.trailing.equalToSuperview().inset(11)
+//            make.height.equalTo(LayoutAdapter.shared.scale(value: CGFloat(41 * titles.count)))
+//        }
 
         // Trigger layout update
         parentView.layoutIfNeeded() // 레이아웃 강제 업데이트

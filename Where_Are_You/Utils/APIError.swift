@@ -12,6 +12,7 @@ enum APIError: Error {
     case passwordError
     case serverError
     case kakaoLoginError
+    case appleError
     case unknownError(message: String)
 
     init(code: String, message: String) {
@@ -24,6 +25,8 @@ enum APIError: Error {
             self = .serverError
         case "KN007":
             self = .kakaoLoginError
+        case "AN008":
+            self = .appleError
         default:
             self = .unknownError(message: message)
         }
@@ -39,6 +42,8 @@ enum APIError: Error {
             return "서버에 오류가 발생했습니다."
         case .kakaoLoginError:
             return "카카오 회원가입이 필요합니다."
+        case .appleError:
+            return "회원가입을 진행해주세요."
         case .unknownError(let message):
             return message.isEmpty ? "알 수 없는 오류가 발생했습니다." : message
         }

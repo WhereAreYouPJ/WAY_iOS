@@ -13,9 +13,11 @@ protocol DailyScheduleTableViewCellDelegate: AnyObject {
 
 class DailyScheduleTableViewCell: UITableViewCell {
     // MARK: - Properties
-
+    
     static let identifier = "DailyScheduleTableViewCell"
     weak var delegate: DailyScheduleTableViewCellDelegate?
+    
+    private var isLocationCheckAvailable = false
 
     var schedule: Schedule?
     
@@ -40,6 +42,7 @@ class DailyScheduleTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .white
+        checkLocationButton.isHidden = false
         configureViewComponents()
         setupActions()
         setupConstraints()
@@ -76,13 +79,31 @@ class DailyScheduleTableViewCell: UITableViewCell {
         titleLabel.text = schedule.title
         locationLabel.text = schedule.location?.location
         self.schedule = schedule
+        
+        if let isAllday = schedule.isAllday, !isAllday, let isGroup = schedule.isGroup, isGroup {
+            let now = Date()
+            let oneHourBefore = Calendar.current.date(byAdding: .hour, value: -1, to: schedule.startTime)!
+            
+            if now >= oneHourBefore {
+                isLocationCheckAvailable = true
+                checkLocationButton.setImage(UIImage(named: "spot3"), for: .normal)
+            } else {
+                isLocationCheckAvailable = false
+                checkLocationButton.setImage(UIImage(named: "spot3disabled"), for: .normal)
+            }
+        } else {
+            checkLocationButton.isHidden = true
+        }
     }
     
     // MARK: - Selectors
     
     @objc func checkLocationButtonTapped() {
         guard let schedule = schedule else { return }
-        
-        delegate?.didTapCheckLocationButton(schedule: schedule)
+        if isLocationCheckAvailable {
+            delegate?.didTapCheckLocationButton(schedule: schedule)
+        } else {
+            ToastManager.shared.showToast(message: "일정 시작 1시간 전후로 위치 확인이 가능합니다.")
+        }
     }
 }
