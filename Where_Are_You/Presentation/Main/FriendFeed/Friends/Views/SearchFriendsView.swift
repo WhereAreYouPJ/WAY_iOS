@@ -19,14 +19,27 @@ struct SearchFriendsView: View {
             VStack(spacing: 0) {
                 SearchBarView(searchText: $viewModel.searchText, onClear: viewModel.clearSearch)
                     .padding(.top, LayoutAdapter.shared.scale(value: 16))
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach(viewModel.selectedList) { friend in
-                            SelectedFriendsView(friend: friend, isOn: Binding(
-                                get: { viewModel.isSelected(friend: friend) },
-                                set: { _ in viewModel.removeFromSelection(friend: friend) }
-                            ))
+
+                ScrollViewReader { proxy in
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ForEach(viewModel.selectedList) { friend in
+                                SelectedFriendsView(friend: friend, isOn: Binding(
+                                    get: { viewModel.isSelected(friend: friend) },
+                                    set: { _ in viewModel.removeFromSelection(friend: friend) }
+                                ))
+                                .id(friend.memberSeq) // ID 설정
+                            }
+                        }
+                        .padding(.horizontal, LayoutAdapter.shared.scale(value: 4))
+                    }
+                    .onReceive(viewModel.$selectedOrder) { selectedList in
+                        if let lastFriend = selectedList.last { // 새로운 친구가 추가되었을 때만 스크롤
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // 애니메이션
+                                withAnimation(.easeInOut(duration: 0.4)) {
+                                    proxy.scrollTo(lastFriend.memberSeq, anchor: .trailing)
+                                }
+                            }
                         }
                     }
                 }
