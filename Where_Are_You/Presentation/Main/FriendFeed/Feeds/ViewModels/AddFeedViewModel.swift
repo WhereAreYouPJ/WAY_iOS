@@ -136,19 +136,16 @@ class AddFeedViewModel {
     
     // 참가자 정보 가져오기
     func getParticipants() -> String {
-        guard participants.count > 1 else {
+        guard participants.count > 0 else {
             print("participants is Empty")
             return ""
         }
         
-        // 첫 번째 요소를 제외한 나머지 배열 생성
-        let otherParticipants = Array(participants.dropFirst())
-        
-        if otherParticipants.count > 3 {
-            let displayedNames = otherParticipants.prefix(3).joined(separator: ", ")
-            return "\(displayedNames) 외 \(otherParticipants.count - 3)명"
+        if participants.count > 3 {
+            let displayedNames = participants.prefix(3).joined(separator: ", ")
+            return "\(displayedNames) 외 \(participants.count - 3)명"
         } else {
-            return otherParticipants.joined(separator: ", ")
+            return participants.joined(separator: ", ")
         }
     }
     

@@ -10,13 +10,17 @@ import Foundation
 class AccountLoginViewModel {
     
     private let accountLoginUseCase: AccountLoginUseCase
-    
+    private let appleLoginUseCase: AppleLoginUseCase
+
     var onLoginSuccess: (() -> Void)?
     var onLoginFailure: ((String, Bool) -> Void)?
-    
-    init(accountLoginUseCase: AccountLoginUseCase) {
+    var onAppleLoginState: ((Bool, String) -> Void)?
+
+    init(accountLoginUseCase: AccountLoginUseCase,
+         appleLoginUseCase: AppleLoginUseCase) {
         self.accountLoginUseCase = accountLoginUseCase
-    }   
+        self.appleLoginUseCase = appleLoginUseCase
+    }
     
     func login(email: String, password: String) {
         print("🔐FCM Token : \(UserDefaultsManager.shared.getFcmToken())")
@@ -29,6 +33,20 @@ class AccountLoginViewModel {
                 if let apiError = error as? APIError {
                     self.onLoginFailure?(apiError.localizedDescription, false)
                 }
+            }
+        }
+    }
+    
+    // 성공시 mainviewcontroller로 이동
+    // 실패시 agreeTermViewcontroller로 이동해서 회원가입 진행
+    func appleLogin(code: String) {
+        let fcmToken = UserDefaultsManager.shared.getFcmToken()
+        appleLoginUseCase.execute(code: code, fcmToken: fcmToken) { result in
+            switch result {
+            case .success:
+                self.onAppleLoginState?(true, "")
+            case .failure:
+                self.onAppleLoginState?(false, code)
             }
         }
     }

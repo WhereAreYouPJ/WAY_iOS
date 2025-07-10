@@ -31,7 +31,8 @@ class SignUpFormViewController: UIViewController {
             accountSignUpUseCase: AccountSignUpUseCaseImpl(memberRepository: memberRepository),
             checkEmailUseCase: CheckEmailUseCaseImpl(memberRepository: memberRepository),
             emailSendUseCase: EmailSendUseCaseImpl(memberRepository: memberRepository),
-            emailVerifyUseCase: EmailVerifyUseCaseImpl(memberRepository: memberRepository))
+            emailVerifyUseCase: EmailVerifyUseCaseImpl(memberRepository: memberRepository),
+            emailSendV2UseCase: EmailSendV2UseCaseImpl(memberRepository: memberRepository))
     }
     
     private func setupUI() {
@@ -95,10 +96,6 @@ class SignUpFormViewController: UIViewController {
             }
         }
         
-        viewModel.onCheckEmailDuplicate = { [weak self] type in
-            // 이 부분은 이메일 로직 수정되면서 삭제/수정 될 예정
-        }
-        
         viewModel.onEmailVerifyCodeMessage = { [weak self] message, isAvailable in
             DispatchQueue.main.async {
                 self?.updateStatus(label: self?.signUpView.authCodeErrorLabel, message: message, isAvailable: isAvailable, textField: self?.signUpView.authCodeTextField)
@@ -149,7 +146,7 @@ class SignUpFormViewController: UIViewController {
     
     @objc func authRequestButtonTapped() {
         signUpView.emailCheckButton.showLoading()
-        viewModel.checkEmailAvailability(email: signUpView.emailTextField.text ?? "")
+        viewModel.checkSendEmail(email: signUpView.emailTextField.text ?? "")
     }
     
     @objc func authCheckButtonTapped() {

@@ -7,10 +7,19 @@
 
 import UIKit
 
+enum SnsType {
+    case apple
+    case kakao
+    case account
+}
+
 class TermsAgreementViewController: UIViewController {
     // MARK: - Properties
     private let termsAgreementView = TermsAgreementView()
     private var isAgreed: Bool = false
+    private var snsType: SnsType
+    private var userName: String
+    private var code: String
     
     // MARK: - Lifecycle
     
@@ -20,6 +29,17 @@ class TermsAgreementViewController: UIViewController {
         
         configureNavigationBar(title: "회원가입", backButtonAction: #selector(backButtonTapped))
         buttonActions()
+    }
+    
+    init(snsType: SnsType, userName: String = "", code: String = "") {
+        self.snsType = snsType
+        self.userName = userName
+        self.code = code
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Helpers
@@ -102,8 +122,13 @@ class TermsAgreementViewController: UIViewController {
     }
     
     @objc func agreeButtonTapped() {
-        let controller = SignUpFormViewController()
-        pushToViewController(controller)
+        if snsType == .account {
+            let controller = SignUpFormViewController()
+            pushToViewController(controller)
+        } else {
+            let controller = SocialSignUpViewController(code: code, userName: userName, snsType: snsType)
+            pushToViewController(controller)
+        }
     }
     
     @objc func termButtonTapped(_ sender: UIButton) {

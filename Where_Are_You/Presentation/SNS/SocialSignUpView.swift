@@ -32,27 +32,9 @@ class SocialSignUpView: UIView {
     
     let userNameErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "", textColor: .brandMain))
     
-    private lazy var userNameStack: UIStackView = {
+    private lazy var stack: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [userNameLabel, userNameTextField, userNameErrorLabel])
         sv.spacing = 4
-        sv.axis = .vertical
-        return sv
-    }()
-    
-    private let emailLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: " 이메일 주소", textColor: .black22))
-    
-    let emailTextField = CustomTextField(placeholder: "")
-    
-    private lazy var emailStack: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [emailLabel, emailTextField])
-        sv.spacing = 4
-        sv.axis = .vertical
-        return sv
-    }()
-    
-    private lazy var stack: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [userNameStack, emailStack])
-        sv.spacing = 20
         sv.axis = .vertical
         return sv
     }()
@@ -64,8 +46,6 @@ class SocialSignUpView: UIView {
         super.init(frame: frame)
         backgroundColor = .white
         
-        emailTextField.backgroundColor = .blackF0
-        emailTextField.isEnabled = true
         configureViewComponents()
         setupConstraints()
     }
