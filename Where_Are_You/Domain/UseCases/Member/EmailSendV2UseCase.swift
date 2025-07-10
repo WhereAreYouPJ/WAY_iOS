@@ -6,3 +6,19 @@
 //
 
 import Foundation
+
+protocol EmailSendV2UseCase {
+    func execute(email: String, completion: @escaping (Result<Void, Error>) -> Void)
+}
+
+class EmailSendV2UseCaseImpl: EmailSendV2UseCase {
+    private let memberRepository: MemberRepositoryProtocol
+
+    init(memberRepository: MemberRepositoryProtocol) {
+        self.memberRepository = memberRepository
+    }
+
+    func execute(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        memberRepository.postEmailSendV2(email: email, completion: completion)
+    }
+}

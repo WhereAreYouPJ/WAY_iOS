@@ -12,19 +12,16 @@ class SocialSignUpViewController: UIViewController {
     let socialSignUpView = SocialSignUpView()
     private var viewModel: SocialSignUpViewModel!
     
-    var email: String = ""
-    private var userIdentifier: String = ""
+    private var code: String = ""
     private var userName: String = ""
-    private var loginType: String = ""
-    private var linkLoginType: [String] = []
+    private var snsType: SnsType
     
     // MARK: - Lifecycle
-    init(email: String, userIdentifier: String, userName: String, loginType: String) {
-        super.init(nibName: nil, bundle: nil)
-        self.email = email
-        self.userIdentifier = userIdentifier
+    init(code: String, userName: String, snsType: SnsType) {
+        self.code = code
         self.userName = userName
-        self.loginType = loginType
+        self.snsType = snsType
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -43,8 +40,6 @@ class SocialSignUpViewController: UIViewController {
     private func setupUI() {
         view = socialSignUpView
         socialSignUpView.userNameTextField.attributedText = UIFont.CustomFont.bodyP3(text: userName, textColor: .black22)
-        socialSignUpView.emailTextField.setupTextField(placeholder: email)
-        socialSignUpView.emailTextField.isEnabled = false
         configureNavigationBar(title: "회원가입", backButtonAction: #selector(backButtonTapped))
     }
     
@@ -53,20 +48,14 @@ class SocialSignUpViewController: UIViewController {
         let memberRepository = MemberRepository(memberService: memberService)
         viewModel = SocialSignUpViewModel(
             snsSignUpUseCase: SnsSignUpUseCaseImpl(memberRepository: memberRepository),
-            checkEmailUseCase: CheckEmailUseCaseImpl(memberRepository: memberRepository))
+            checkEmailUseCase: CheckEmailUseCaseImpl(memberRepository: memberRepository),
+            appleJoinUseCae: AppleJoinUseCaseImpl(memberRepository: memberRepository))
     }
     
     private func setupBindings() {
         viewModel.onSignUpSuccess = { [weak self] in
             DispatchQueue.main.async {
                 self?.moveToSignUpSuccess()
-            }
-        }
-        
-        viewModel.onEmailDuplicate = { [weak self] linkLoginType in
-            DispatchQueue.main.async {
-                self?.linkLoginType = linkLoginType
-                self?.moveToSocialLink()
             }
         }
         
@@ -82,13 +71,6 @@ class SocialSignUpViewController: UIViewController {
     private func setupActions() {
         socialSignUpView.userNameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingDidEnd)
         socialSignUpView.bottomButtonView.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
-    }
-    
-    private func moveToSocialLink() {
-        // 소셜 연동 뷰로 이동
-        guard let userName = socialSignUpView.userNameTextField.text else { return }
-        let controller = SocialLinkViewController(email: email, password: userIdentifier, userName: userName, loginType: loginType, linkLoginType: linkLoginType)
-        navigationController?.pushViewController(controller, animated: true)
     }
     
     private func moveToSignUpSuccess() {
@@ -111,7 +93,11 @@ class SocialSignUpViewController: UIViewController {
     }
     
     @objc private func signupButtonTapped() {
-        viewModel.checkEmailAvailability(userName: userName, email: email, password: userIdentifier, loginType: loginType)
+        if snsType == .apple {
+            viewModel.appleJoin(userName: userName, code: code)
+        } else {
+            // 카카오 회원가입
+        }
     }
     
     @objc private func backButtonTapped() {

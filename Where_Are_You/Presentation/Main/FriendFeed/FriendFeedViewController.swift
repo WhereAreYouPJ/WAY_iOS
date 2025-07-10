@@ -89,7 +89,6 @@ class FriendFeedViewController: UIViewController {
         setupActions()
         updateUIForSelectedSegment()
         setupNotificationObserver()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {

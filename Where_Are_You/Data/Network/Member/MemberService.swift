@@ -24,7 +24,10 @@ protocol MemberServiceProtocol {
     func postEmailVerify(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postEmailVerifyPassword(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postEmailSend(email: String, completion: @escaping (Result<Void, Error>) -> Void)
-    
+    func postEmailSendV2(email: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func postAppleJoin(userName: String, code: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func postAppleLogin(code: String, fcmToken: String, completion: @escaping (Result<GenericResponse<LoginResponse>, Error>) -> Void)
+
     func getMemberSearch(memberCode: String, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void)
     func getMemberDetails(completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void)
     func getCheckEmail(email: String, completion: @escaping (Result<GenericResponse<CheckEmailResponse>, Error>) -> Void)
@@ -50,6 +53,7 @@ class MemberService: MemberServiceProtocol {
     }
 
     // MARK: - APIService
+    // MARK: - PUT
     func putUserName(userName: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         provider.request(.putUserName(memberSeq: memberSeq, userName: userName)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
@@ -62,6 +66,7 @@ class MemberService: MemberServiceProtocol {
         }
     }
     
+    // MARK: - POST
     func postSignUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void) {
         provider.request(.postSignUp(request: request)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
@@ -122,6 +127,25 @@ class MemberService: MemberServiceProtocol {
         }
     }
     
+    func postEmailSendV2(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        provider.request(.postEmailSend(email: email)) { result in
+            APIResponseHandler.handleResponse(result, completion: completion)
+        }
+    }
+    
+    func postAppleJoin(userName: String, code: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        provider.request(.postAppleJoin(userName: userName, code: code)) { result in
+            APIResponseHandler.handleResponse(result, completion: completion)
+        }
+    }
+    
+    func postAppleLogin(code: String, fcmToken: String, completion: @escaping (Result<GenericResponse<LoginResponse>, Error>) -> Void) {
+        provider.request(.postAppleLogin(code: code, fcmToken: fcmToken)) { result in
+            APIResponseHandler.handleResponse(result, completion: completion)
+        }
+    }
+    
+    // MARK: - GET
     func getMemberSearch(memberCode: String, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void) {
         provider.request(.getMemberSearch(memberCode: memberCode)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)
@@ -140,6 +164,7 @@ class MemberService: MemberServiceProtocol {
         }
     }
     
+    // MARK: - DELETE
     func deleteMember(request: DeleteMemberBody, completion: @escaping (Result<Void, any Error>) -> Void) {
         provider.request(.deleteMember(request: request)) { result in
             APIResponseHandler.handleResponse(result, completion: completion)

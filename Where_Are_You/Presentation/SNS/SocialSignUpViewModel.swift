@@ -12,6 +12,7 @@ class SocialSignUpViewModel {
     // MARK: - Properties
     private let snsSignUpUseCase: SnsSignUpUseCase
     private let checkEmailUseCase: CheckEmailUseCase
+    private let appleJoinUseCase: AppleJoinUseCase
     
     var onEmailDuplicate: (([String]) -> Void)?
     var onSignUpSuccess: (() -> Void)?
@@ -21,12 +22,25 @@ class SocialSignUpViewModel {
     
     // MARK: - LifeCycle
     init(snsSignUpUseCase: SnsSignUpUseCase,
-         checkEmailUseCase: CheckEmailUseCase) {
+         checkEmailUseCase: CheckEmailUseCase,
+         appleJoinUseCae: AppleJoinUseCase) {
         self.snsSignUpUseCase = snsSignUpUseCase
         self.checkEmailUseCase = checkEmailUseCase
+        self.appleJoinUseCase = appleJoinUseCae
     }
     
     // MARK: - Helpers
+    func appleJoin(userName: String, code: String) {
+        appleJoinUseCase.execute(userName: userName, code: code) { result in
+            switch result {
+            case .success:
+                self.onSignUpSuccess?()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     func signUp(userName: String, email: String, password: String, loginType: String) {
         snsSignUpUseCase.execute(request: MemberSnsBody(userName: userName, email: email, password: password, loginType: loginType, fcmToken: UserDefaultsManager.shared.getFcmToken())) { result in
             switch result {
@@ -44,23 +58,6 @@ class SocialSignUpViewModel {
             onUserNameValidationMessage?("", true)
         } else {
             onUserNameValidationMessage?(invalidUserNameMessage, false)
-        }
-    }
-    
-    // 이메일 중복체크
-    func checkEmailAvailability(userName: String, email: String, password: String, loginType: String) {
-        checkEmailUseCase.execute(email: email) { result in
-            switch result {
-            case .success(let data):
-                if data.type.isEmpty {
-                    self.signUp(userName: userName, email: email, password: password, loginType: loginType)
-                } else {
-                    self.onEmailDuplicate?(data.type)
-                }
-            case .failure(let error):
-                // 이메일 중복된게 없으니 바로 회원가입 화면으로 이동
-                print(error.localizedDescription)
-            }
         }
     }
 }

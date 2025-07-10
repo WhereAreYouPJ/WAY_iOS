@@ -11,9 +11,14 @@ class FeedDetailViewController: UIViewController {
     // MARK: - Properties
     private let feedDetailView = FeedDetailView()
     var plusOptionButton = CustomOptionButtonView(title: "새 피드 작성", image: nil)
-
+    
     private var optionsView = MultiCustomOptionsContainerView()
-        
+    let addButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "icon-plus"), for: .normal)
+        button.tintColor = .brandColor
+        return button
+    }()
     var representFeed: Feed
     var displayFeed: Feed?
     var viewModel: FeedDetailViewModel!
@@ -50,7 +55,9 @@ class FeedDetailViewController: UIViewController {
     
     // MARK: - Helpers
     private func setupNavigationBar() {
-        configureNavigationBar(title: "", backButtonAction: #selector(backButtonTapped))
+        configureNavigationBar(title: "",
+                               backButtonAction: #selector(backButtonTapped),
+                               rightButton: UIBarButtonItem(customView: addButton))
     }
     
     private func setupViewModel() {
@@ -91,6 +98,7 @@ class FeedDetailViewController: UIViewController {
     private func setupActions() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
         view.addGestureRecognizer(tapGesture)
+        addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         plusOptionButton.button.addTarget(self, action: #selector(plusOptionButtonTapped), for: .touchUpInside)
     }
     
@@ -143,7 +151,9 @@ class FeedDetailViewController: UIViewController {
             guard let scheduleSeq = feed.scheduleSeq else { return }
             self?.viewModel.fetchDetailFeeds(scheduleSeq: scheduleSeq)
         }
-        pushToViewController(controller)
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
     }
     
     private func hideFeed(_ feed: Feed) {
@@ -165,7 +175,11 @@ class FeedDetailViewController: UIViewController {
     // MARK: - Selectors
     
     @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
+    }
+    
+    @objc func addButtonTapped() {
+        plusOptionButton.isHidden = false
     }
     
     @objc func handleOutsideTap(_ sender: UITapGestureRecognizer) {
@@ -186,7 +200,9 @@ class FeedDetailViewController: UIViewController {
             guard let scheduleSeq = self?.representFeed.scheduleSeq else { return }
             self?.viewModel.fetchDetailFeeds(scheduleSeq: scheduleSeq)
         }
-        pushToViewController(controller)
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
     }
 }
 

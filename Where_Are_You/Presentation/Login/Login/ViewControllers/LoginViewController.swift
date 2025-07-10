@@ -27,6 +27,7 @@ class LoginViewController: UIViewController {
         self.view = loginView
         setupViewModel()
         buttonAction()
+        setupBindings()
     }
     
     // MARK: - Helpers
@@ -42,7 +43,21 @@ class LoginViewController: UIViewController {
     private func setupViewModel() {
         let memberService = MemberService()
         let memberRepository = MemberRepository(memberService: memberService)
-        viewModel = AccountLoginViewModel(accountLoginUseCase: AccountLoginUseCaseImpl(memberRepository: memberRepository))
+        viewModel = AccountLoginViewModel(
+            accountLoginUseCase: AccountLoginUseCaseImpl(memberRepository: memberRepository),
+            appleLoginUseCase: AppleLoginUseCaseImpl(memberRepository: memberRepository))
+    }
+    
+    private func setupBindings() {
+        viewModel.onAppleLoginState = { [weak self] state, code in
+            if state {
+                let controller = MainTabBarController()
+                self?.rootToViewcontroller(controller)
+            } else {
+                let controller = TermsAgreementViewController(snsType: .apple, code: code)
+                self?.pushToViewController(controller)
+            }
+        }
     }
     // MARK: - Selectors
     
@@ -74,7 +89,7 @@ class LoginViewController: UIViewController {
     }
     
     @objc func signupButtonTapped() {
-        let controller = TermsAgreementViewController()
+        let controller = TermsAgreementViewController(snsType: .account)
         pushToViewController(controller)
     }
     
@@ -138,26 +153,22 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
                 print("identityToken: \(identityToken)")
                 print("authCodeString: \(authCodeString)")
                 print("identifyTokenString: \(identifyTokenString)")
+                
+                viewModel.appleLogin(code: identifyTokenString)
             }
             
             print("useridentifier: \(userIdentifier)")
             print("fullName: \(String(describing: fullName))")
             print("email: \(String(describing: email))")
             
-            if let email = email {
-                // email 값이 있으면 신규 회원가입으로 간주하거나,
-                // 백엔드에서 회원 존재 여부를 체크하는 API를 호출합니다.
-                // 예를 들어, 신규 회원가입 화면으로 이동합니다.
-                let signUpVC = SocialSignUpViewController(email: email,
-                                                          userIdentifier: userIdentifier,
-                                                          userName: fullName?.givenName ?? "",
-                                                          loginType: "apple")
-                pushToViewController(signUpVC)
-            } else {
-                // email 값이 nil이면 이미 가입된 계정으로 간주합니다.
-                // 이 경우, 백엔드 API 호출을 통해 로그인 처리를 진행하거나 바로 메인 화면으로 이동합니다.
-//                viewModel.login(email: email, password: userIdentifier)
-            }
+//            if let email = email {
+//                // email 값이 있으면 신규 회원가입으로 간주하거나,
+//                // 백엔드에서 회원 존재 여부를 체크하는 API를 호출합니다.
+//                // 예를 들어, 신규 회원가입 화면으로 이동합니다.
+//            } else {
+//                // email 값이 nil이면 이미 가입된 계정으로 간주합니다.
+//                // 이 경우, 백엔드 API 호출을 통해 로그인 처리를 진행하거나 바로 메인 화면으로 이동합니다.
+//            }
         case let passwordCredential as ASPasswordCredential:
             // Sign in using an existing iCloud Keychain credential.
             let username = passwordCredential.user

@@ -6,3 +6,19 @@
 //
 
 import Foundation
+
+protocol AppleLoginUseCase {
+    func execute(code: String, fcmToken: String, completion: @escaping (Result<Void, Error>) -> Void)
+}
+
+class AppleLoginUseCaseImpl: AppleLoginUseCase {
+    private let memberRepository: MemberRepositoryProtocol
+
+    init(memberRepository: MemberRepositoryProtocol) {
+        self.memberRepository = memberRepository
+    }
+
+    func execute(code: String, fcmToken: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        memberRepository.postAppleLogin(code: code, fcmToken: fcmToken, completion: completion)
+    }
+}

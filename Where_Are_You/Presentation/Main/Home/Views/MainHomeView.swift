@@ -49,8 +49,11 @@ class MainHomeView: UIView {
         
         bannerView.snp.makeConstraints { make in
             make.top.equalTo(titleView.snp.bottom).offset(2)
-            make.leading.trailing.equalTo(titleView)
+//            make.leading.trailing.equalTo(titleView)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 327))
             make.height.equalTo(LayoutAdapter.shared.scale(value: 180))
+//            make.height.equalTo(bannerView.snp.width).multipliedBy(180.0 / 327.0)
         }
         
         dDayView.snp.makeConstraints { make in

@@ -107,7 +107,11 @@ class MainHomeViewController: UIViewController {
         bottomSheetViewController.viewModel.fetchDailySchedule { [weak self] hasSchedule in
             guard let self = self else { return }
             if hasSchedule {
-                self.setupFloatingPanel(contentViewController: self.bottomSheetViewController)
+                if self.fpc == nil {
+                    self.setupFloatingPanel(contentViewController: self.bottomSheetViewController)
+                }
+                self.fpc.move(to: .tip, animated: false)
+                //                self.setupFloatingPanel(contentViewController: self.bottomSheetViewController)
             } else {
                 print("오늘 일정 없음! => BottomSheet 띄우지 않음")
             }
@@ -127,8 +131,9 @@ class MainHomeViewController: UIViewController {
     @objc private func moveToNotification() {
         let notificationView = NotificationView()
         let hostingController = UIHostingController(rootView: notificationView)
-        hostingController.modalPresentationStyle = .fullScreen
-        present(hostingController, animated: true)
+//        hostingController.modalPresentationStyle = .fullScreen
+//        present(hostingController, animated: true)
+        pushToViewController(hostingController)
     }
 }
 

@@ -66,14 +66,12 @@ class FeedParticipantView: UIView {
             
             let profileImage = RoundImageView()
             profileImage.kf.setImage(with: URL(string: participant.profileImageURL))
-            profileImage.layer.cornerRadius = LayoutAdapter.shared.scale(value: 13)
             profileImage.clipsToBounds = true
             button.addSubview(profileImage)
             profileImage.snp.makeConstraints { make in
                 make.centerY.equalToSuperview()
                 make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 5))
                 make.height.width.equalTo(LayoutAdapter.shared.scale(value: 26))
-//                make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 5))
             }
             
             let userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: participant.userName, textColor: .black22))

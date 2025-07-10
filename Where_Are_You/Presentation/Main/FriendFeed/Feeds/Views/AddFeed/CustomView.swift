@@ -59,14 +59,14 @@ class CustomView: UIView {
         }
         
         imageView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 15))
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
             make.centerY.equalToSuperview()
-            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 30))
+            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 24))
         }
 
         descriptionLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.leading.equalTo(imageView.snp.trailing)
+            make.leading.equalTo(imageView.snp.trailing).offset(LayoutAdapter.shared.scale(value: 8))
         }
     }
 }

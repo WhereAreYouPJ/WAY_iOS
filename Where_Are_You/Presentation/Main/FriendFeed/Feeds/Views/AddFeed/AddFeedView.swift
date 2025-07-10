@@ -48,11 +48,11 @@ class AddFeedView: UIView {
         return textView
     }()
     
-    let membersInfo = CustomView(image: "icon-users", text: "", textColor: .black22, separatorHidden: true, imageTintColor: .black)
+    let membersInfo = CustomView(image: "user1", text: "", textColor: .black22, separatorHidden: true, imageTintColor: .black)
     
     let addImages: UIButton = {
         let button = UIButton()
-        let view = CustomView(image: "icon-Gallery", text: "사진 추가", textColor: .black66, separatorHidden: false, imageTintColor: .black66)
+        let view = CustomView(image: "icon-feedGallery", text: "사진 추가", textColor: .black66, separatorHidden: false, imageTintColor: .black66)
         button.addSubview(view)
         view.isUserInteractionEnabled = false
         view.snp.makeConstraints { make in

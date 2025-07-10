@@ -169,7 +169,9 @@ class FeedsViewController: UIViewController {
         controller.onFeedEdited = { [weak self] in
             self?.viewModel.fetchFeeds()
         }
-        pushToViewController(controller)
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
     }
     
     private func hideFeed(_ feed: Feed) {
@@ -205,7 +207,9 @@ class FeedsViewController: UIViewController {
         controller.onFeedCreated = { [weak self] in
             self?.viewModel.fetchFeeds()
         }
-        pushToViewController(controller)
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true) // 또는 navigationController?.pushViewController(...)
     }
 }
 
@@ -234,8 +238,10 @@ extension FeedsViewController: FeedsTableViewCellDelegate {
     }
     
     func didSelectFeed(feed: Feed) {
-        let detailVC = FeedDetailViewController(feed: feed)
-        pushToViewController(detailVC)
+        let controller = FeedDetailViewController(feed: feed)
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
     }
 }
 
