@@ -28,7 +28,7 @@ class LoginViewController: UIViewController {
         self.view = loginView
         setupViewModel()
         buttonAction()
-        setupBindings()
+//        setupBindings()
     }
     
     // MARK: - Helpers
@@ -44,7 +44,7 @@ class LoginViewController: UIViewController {
     private func setupViewModel() {
         let memberService = MemberService()
         let memberRepository = MemberRepository(memberService: memberService)
-        viewModel = AccountLoginViewModel(accountLoginUseCase: AccountLoginUseCaseImpl(memberRepository: memberRepository))
+        viewModel = AccountLoginViewModel(accountLoginUseCase: AccountLoginUseCaseImpl(memberRepository: memberRepository), appleLoginUseCase: AppleLoginUseCaseImpl(memberRepository: memberRepository))
         
         let kakaoLoginUseCase = KakaoLoginUseCaseImpl(memberRepository: memberRepository)
         snsLoginViewModel = LoginViewModel(kakaoLoginUseCase: kakaoLoginUseCase)
@@ -71,18 +71,11 @@ class LoginViewController: UIViewController {
         
         // 회원가입이 필요한 경우 TODO: 추후 소셜 회원가입 로직 수정되면 해당 코드 수정되어야.
         snsLoginViewModel.onNeedKakaoSignup = { [weak self] authCode in
-            DispatchQueue.main.async(execute: {
+            DispatchQueue.main.async {
                 // 카카오 회원가입 화면으로 이동
-                let signUpVC = SocialSignUpViewController(
-                    email: "", // 카카오에서 이메일 가져오기
-                    userIdentifier: authCode,
-                    userName: "", // 카카오에서 닉네임 가져오기
-                    loginType: "kakao"
-                )
-                let nav = UINavigationController(rootViewController: signUpVC)
-                nav.modalPresentationStyle = .fullScreen
-                self?.present(nav, animated: true, completion: nil)
-            })
+                let signUpVC = SocialSignUpViewController(code: authCode, userName: "", snsType: .kakao)
+                self?.pushToViewController(signUpVC)
+            }
         }
     }
     

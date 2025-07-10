@@ -17,15 +17,13 @@ enum MemberAPI {
     case postResetPassword(request: ResetPasswordBody)
     case postLogout(memberSeq: Int)
     case postLogin(request: LoginBody)
-    
-    case postKakaoJoin(request: KakaoJoinBody)
-    case postKakaoLogin(request: KakaoLoginBody)
-    
     case postMemberLink(request: MemberSnsBody)
     case postEmailVerify(requst: EmailVerifyBody)
     case postEmailVerifyPassword(request: EmailVerifyBody)
     case postEmailSend(email: String)
     case postEmailSendV2(email: String)
+    case postKakaoJoin(request: KakaoJoinBody)
+    case postKakaoLogin(request: KakaoLoginBody)
     case postAppleJoin(userName: String, code: String)
     case postAppleLogin(code: String, fcmToken: String)
     
@@ -97,7 +95,7 @@ extension MemberAPI: TargetType {
         switch self {
         case .putUserName, .putProfileImage:
             return .put
-        case .postSignUp, .postTokenReissue, .postMemberSns, .postResetPassword, .postLogout, .postLogin, .postMemberLink, .postEmailVerify, .postEmailVerifyPassword, .postEmailSend, .postEmailSendV2, .postAppleJoin, .postAppleLogin:
+        case .postSignUp, .postTokenReissue, .postMemberSns, .postResetPassword, .postLogout, .postLogin, .postMemberLink, .postEmailVerify, .postEmailVerifyPassword, .postEmailSend, .postEmailSendV2, .postKakaoJoin, .postKakaoLogin, .postAppleJoin, .postAppleLogin:
             return .post
         case .getMemberSearch, .getMemberDetails, .getCheckEmail:
             return .get
