@@ -40,6 +40,7 @@ class MyDetailManageViewcontroller: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view = mydetailManageView
+        mydetailManageView.emailStack.isHidden = false
         configureInitialState()
         setupViewModel()
         setupNavigationBar()
@@ -73,13 +74,18 @@ class MyDetailManageViewcontroller: UIViewController {
    
     // 초기 설정
     private func configureInitialState() {
-        mydetailManageView.emailTextfield.setupTextField(placeholder: email)
-        mydetailManageView.emailTextfield.isUserInteractionEnabled = false
-        mydetailManageView.emailTextfield.backgroundColor = .blackF0
-        mydetailManageView.userNameTextField.isUserInteractionEnabled = isEditingMode
-        mydetailManageView.updateDetailButton.isHidden = !isEditingMode
-        addButton.isHidden = isEditingMode
-        mydetailManageView.userNameTextField.setupTextField(placeholder: userName)
+        if email.isEmpty {
+            mydetailManageView.emailStack.isHidden = true
+        } else {
+            mydetailManageView.emailStack.isHidden = false
+            mydetailManageView.emailTextfield.setupTextField(placeholder: email)
+            mydetailManageView.emailTextfield.isUserInteractionEnabled = false
+            mydetailManageView.emailTextfield.backgroundColor = .blackF0
+            mydetailManageView.userNameTextField.isUserInteractionEnabled = isEditingMode
+            mydetailManageView.updateDetailButton.isHidden = !isEditingMode
+            addButton.isHidden = isEditingMode
+            mydetailManageView.userNameTextField.setupTextField(placeholder: userName)
+        }
     }
     
     private func setupBindings() {
