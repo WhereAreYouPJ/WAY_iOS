@@ -23,6 +23,7 @@ class DDAyCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        titleLabel.textAlignment = .center
         emptyLabel.isHidden = true
         setupViews()
     }
@@ -44,7 +45,9 @@ class DDAyCell: UICollectionViewCell {
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+            make.leading.equalTo(dDayLabel.snp.trailing).offset(LayoutAdapter.shared.scale(value: 10))
+            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
+            make.centerY.equalToSuperview()
         }
         
         emptyLabel.snp.makeConstraints { make in

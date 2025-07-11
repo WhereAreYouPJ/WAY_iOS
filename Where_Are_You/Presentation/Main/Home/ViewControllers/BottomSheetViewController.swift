@@ -16,6 +16,12 @@ class BottomSheetViewController: UIViewController {
     let bottomSheetView = BottomSheetView()
     let viewModel: BottomSheetViewModel
     
+    var bottomSheetSchedules: [SheetSchedule] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     var schedules: [Schedule] = [] {
         didSet {
             bottomSheetView.tableView.reloadData()
@@ -34,28 +40,15 @@ class BottomSheetViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        viewModel.getDailyScheduleForSheet()
+
         setupBindings()
         setupTableView()
-        viewModel.fetchDailySchedule { [weak self] hasSchedule in
-            if hasSchedule {
-                self?.schedules = self?.viewModel.getSchedules() ?? []
-            } else {
-                print("nodata")
-            }
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        viewModel.fetchDailySchedule { [weak self] hasSchedule in
-            if hasSchedule {
-                self?.schedules = self?.viewModel.getSchedules() ?? []
-            } else {
-                print("nodata")
-            }
-        }
+        viewModel.getDailyScheduleForSheet()
     }
     
     // MARK: - Helpers
@@ -65,6 +58,13 @@ class BottomSheetViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.schedules = self?.viewModel.getSchedules() ?? []
                 self?.bottomSheetView.tableView.reloadData()
+            }
+        }
+        
+        viewModel.onDailyBottomSheetScheduleFetched = { [weak self] in
+            DispatchQueue.main.async {
+                self?.bottomSheetSchedules = self?.viewModel.getSheetSchedule() ?? []
+                self?.tableView.reloadData()
             }
         }
     }
@@ -102,15 +102,15 @@ extension BottomSheetViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.getSchedules().count
+        return viewModel.getSheetSchedule().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: DailyScheduleTableViewCell.identifier, for: indexPath) as? DailyScheduleTableViewCell else {
             return UITableViewCell()
         }
-        let schedule = viewModel.getSchedules()[indexPath.item]
-        cell.configure(with: schedule)
+        let bottomSheetSchedules = viewModel.getSheetSchedule()[indexPath.item]
+        cell.configure(with: bottomSheetSchedules)
         cell.delegate = self
         return cell
     }
@@ -140,17 +140,8 @@ extension BottomSheetViewController: UITableViewDataSource, UITableViewDelegate 
     }
 }
 
-//extension BottomSheetViewController: DailyScheduleTableViewCellDelegate {
-//    func didTapCheckLocationButton(schedule: Schedule) {
-//        let notificationView = NotificationView()
-//        let hostingController = UIHostingController(rootView: notificationView)
-//        hostingController.modalPresentationStyle = .fullScreen
-//        present(hostingController, animated: true)
-//    }
-//}
-
 extension BottomSheetViewController: DailyScheduleTableViewCellDelegate {
-    func didTapCheckLocationButton(schedule: Schedule) {
+    func didTapCheckLocationButton(scheduleSeq: Int) {
         class FriendsLocationViewDismissHandler { // SwiftUI 뷰와 UIKit의 통신을 위한 클래스
             var dismissAction: (() -> Void)?
         }
@@ -169,16 +160,16 @@ extension BottomSheetViewController: DailyScheduleTableViewCellDelegate {
             }
         )
         
-        let friendsLocationView = FriendsLocationView( // FriendsLocationView 생성
+//        let friendsLocationView = FriendsLocationView( // FriendsLocationView 생성
 //            isShownView: isShownBinding,
-            schedule: .constant(schedule)
-        )
+//            schedule: .constant(schedule)
+//        )
         
-        let hostingController = UIHostingController(rootView: friendsLocationView) // SwiftUI 뷰를 UIKit 컨트롤러에 래핑
+//        let hostingController = UIHostingController(rootView: friendsLocationView) // SwiftUI 뷰를 UIKit 컨트롤러에 래핑
         
-        hostingController.modalPresentationStyle = .fullScreen // 전체 화면으로 표시
-        hostingController.view.backgroundColor = .clear
+//        hostingController.modalPresentationStyle = .fullScreen // 전체 화면으로 표시
+//        hostingController.view.backgroundColor = .clear
         
-        present(hostingController, animated: true) // 뷰를 표시
+//        present(hostingController, animated: true) // 뷰를 표시
     }
 }

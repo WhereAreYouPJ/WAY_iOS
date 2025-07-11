@@ -13,11 +13,13 @@ enum MemberAPI {
     
     case postSignUp(request: SignUpBody)
     case postTokenReissue(request: TokenReissueBody)
-    case postMemberSns(request: MemberSnsBody)
     case postResetPassword(request: ResetPasswordBody)
     case postLogout(memberSeq: Int)
     case postLogin(request: LoginBody)
-    case postMemberLink(request: MemberSnsBody)
+    
+    case postKakaoJoin(request: KakaoJoinBody)
+    case postKakaoLogin(request: KakaoLoginBody)
+    
     case postEmailVerify(requst: EmailVerifyBody)
     case postEmailVerifyPassword(request: EmailVerifyBody)
     case postEmailSend(email: String)
@@ -29,7 +31,6 @@ enum MemberAPI {
     
     case getMemberSearch(memberCode: String)
     case getMemberDetails(memberSeq: Int)
-    case getCheckEmail(email: String)
     
     case deleteMember(request: DeleteMemberBody)
 }
@@ -50,8 +51,6 @@ extension MemberAPI: TargetType {
             return "/member"
         case .postTokenReissue:
             return "/member/tokenReissue"
-        case .postMemberSns:
-            return "/member/sns"
         case .postResetPassword:
             return "/member/resetPassword"
         case .postLogout:
@@ -64,14 +63,12 @@ extension MemberAPI: TargetType {
         case .postKakaoLogin:
             return "/member/kakao/login"
             
-        case .postMemberLink:
-            return "/member/link"
         case .postEmailVerify:
             return "/member/email/verify"
         case .postEmailVerifyPassword:
             return "/member/email/verifyPassword"
         case .postEmailSend:
-            return "/member/email/send"
+            return "/member/email/send/findId"
         case .postEmailSendV2:
             return "/member/email/send/v2"
         case .postAppleJoin:
@@ -83,8 +80,6 @@ extension MemberAPI: TargetType {
             return "/member/search"
         case .getMemberDetails:
             return "/member/details"
-        case .getCheckEmail:
-            return "/member/checkEmail"
             
         case .deleteMember:
             return "/member/member"
@@ -95,9 +90,9 @@ extension MemberAPI: TargetType {
         switch self {
         case .putUserName, .putProfileImage:
             return .put
-        case .postSignUp, .postTokenReissue, .postMemberSns, .postResetPassword, .postLogout, .postLogin, .postMemberLink, .postEmailVerify, .postEmailVerifyPassword, .postEmailSend, .postEmailSendV2, .postKakaoJoin, .postKakaoLogin, .postAppleJoin, .postAppleLogin:
+        case .postSignUp, .postTokenReissue, .postResetPassword, .postLogout, .postLogin, .postEmailVerify, .postEmailVerifyPassword, .postEmailSend, .postEmailSendV2, .postAppleJoin, .postAppleLogin, .postKakaoJoin, .postKakaoLogin:
             return .post
-        case .getMemberSearch, .getMemberDetails, .getCheckEmail:
+        case .getMemberSearch, .getMemberDetails:
             return .get
         case .deleteMember:
             return .delete
@@ -116,8 +111,6 @@ extension MemberAPI: TargetType {
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .postTokenReissue(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
-        case .postMemberSns(request: let request):
-            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .postResetPassword(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .postLogout(let memberSeq):
@@ -130,8 +123,6 @@ extension MemberAPI: TargetType {
         case .postKakaoLogin(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
             
-        case .postMemberLink(let request):
-            return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .postEmailVerify(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         case .postEmailVerifyPassword(let request):
@@ -149,9 +140,7 @@ extension MemberAPI: TargetType {
             return .requestParameters(parameters: ["memberCode": memberCode], encoding: URLEncoding.queryString)
         case .getMemberDetails(let memberSeq):
             return .requestParameters(parameters: ["memberSeq": memberSeq], encoding: URLEncoding.queryString)
-        case .getCheckEmail(let email):
-            return .requestParameters(parameters: ["email": email], encoding: URLEncoding.queryString)
-            
+       
         case .deleteMember(let request):
             return .requestParameters(parameters: request.toParameters() ?? [:], encoding: JSONEncoding.default)
         }

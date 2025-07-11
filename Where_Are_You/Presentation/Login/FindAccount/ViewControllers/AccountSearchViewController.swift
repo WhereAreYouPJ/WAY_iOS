@@ -39,7 +39,6 @@ class AccountSearchViewController: UIViewController {
         viewModel = AcoountSearchViewModel(
             emailSendUseCase: EmailSendUseCaseImpl(memberRepository: memberRepository),
             emailVerifyUseCase: EmailVerifyUseCaseImpl(memberRepository: memberRepository),
-            checkEmailUseCase: CheckEmailUseCaseImpl(memberRepository: memberRepository)
         )
     }
     
@@ -84,9 +83,9 @@ class AccountSearchViewController: UIViewController {
         }
         
         // 아이디 찾기 성공
-        viewModel.onAccountSearchSuccess = { [weak self] email, emailType in
+        viewModel.onAccountSearchSuccess = { [weak self] email in
             DispatchQueue.main.async {
-                let controller = CheckIDViewController(email: email, emailType: emailType)
+                let controller = CheckIDViewController(email: email)
                 self?.pushToViewController(controller)
             }
         }
@@ -113,7 +112,7 @@ class AccountSearchViewController: UIViewController {
     
     @objc private func requestAuthCodeTapped() {
         let email = accountSearchView.emailTextField.text ?? ""
-        viewModel.checkEmailAvailability(email: email)
+        viewModel.checkSendEmail(email: email)
     }
     
     @objc private func findUserId() {
