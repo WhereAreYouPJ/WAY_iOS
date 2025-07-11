@@ -17,9 +17,6 @@ enum MemberAPI {
     case postLogout(memberSeq: Int)
     case postLogin(request: LoginBody)
     
-    case postKakaoJoin(request: KakaoJoinBody)
-    case postKakaoLogin(request: KakaoLoginBody)
-    
     case postEmailVerify(requst: EmailVerifyBody)
     case postEmailVerifyPassword(request: EmailVerifyBody)
     case postEmailSend(email: String)
