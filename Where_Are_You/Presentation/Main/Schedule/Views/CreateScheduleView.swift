@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-// TODO: 3. 위치 뒤로가기 스택 수정
-// TODO: 4. 필수 항목 누락이 있을 때 추가 버튼 터치 시 토스트 메시지
+// TODO: 필수 항목 누락이 있을 때 추가 버튼 터치 시 토스트 메시지
 struct CreateScheduleView: View {
     @StateObject var viewModel: CreateScheduleViewModel
     @StateObject var searchFriendsViewModel: SearchFriendsViewModel = {
@@ -34,7 +33,13 @@ struct CreateScheduleView: View {
     
     @State private var selectedLocationForConfirm: Location?
     
-    init(initialDate: Date? = nil, viewModel: CreateScheduleViewModel? = nil) {
+    var onScheduleCreated: (() -> Void)?
+    
+    init(
+        initialDate: Date? = nil,
+        viewModel: CreateScheduleViewModel? = nil,
+        onScheduleCreated: (() -> Void)? = nil
+    ) {
         let scheduleRepository = ScheduleRepository(scheduleService: ScheduleService())
         let postScheduleUseCase = PostScheduleUseCaseImpl(scheduleRepository: scheduleRepository)
         
@@ -52,6 +57,7 @@ struct CreateScheduleView: View {
         )
         
         _viewModel = StateObject(wrappedValue: viewModel ?? defaultViewModel)
+        self.onScheduleCreated = onScheduleCreated
         
         print("📆 일정 생성 initial date: \(initialDate ?? Date())")
     }
@@ -100,6 +106,15 @@ struct CreateScheduleView: View {
         .bodyP3Style(color: .black22)
         .onAppear {
             viewModel.getFavoriteLocation()
+        }
+        .onReceive(viewModel.$isSuccess) { isSuccess in
+            if isSuccess {
+                dismiss()
+                // ✅ 일정 생성 성공 후 콜백 호출
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    onScheduleCreated?()
+                }
+            }
         }
     }
     
@@ -167,11 +182,6 @@ struct CreateScheduleView: View {
             ToolbarItem(placement: .primaryAction) {
                 Button("추가") {
                     viewModel.postSchedule()
-                    if viewModel.isSuccess {
-                        dismiss()
-                    } else {
-                        dismiss()
-                    }
                 }
                 .foregroundStyle(viewModel.checkPostAvailable() ? Color.error : Color.gray)
                 .disabled(!viewModel.checkPostAvailable())

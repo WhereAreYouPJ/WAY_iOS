@@ -24,6 +24,8 @@ enum MemberAPI {
     case postEmailVerifyPassword(request: EmailVerifyBody)
     case postEmailSend(email: String)
     case postEmailSendV2(email: String)
+    case postKakaoJoin(request: KakaoJoinBody)
+    case postKakaoLogin(request: KakaoLoginBody)
     case postAppleJoin(userName: String, code: String)
     case postAppleLogin(code: String, fcmToken: String)
     

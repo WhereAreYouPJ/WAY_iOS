@@ -19,7 +19,6 @@ final class CreateScheduleViewModel: ObservableObject {
     @Published var color: String = "red"
     @Published var memo: String = ""
     @Published var isEditingMemo = false
-    
     @Published var isSuccess = false
     
     private let postScheduleUseCase: PostScheduleUseCase
@@ -245,7 +244,7 @@ final class CreateScheduleViewModel: ObservableObject {
                 case .success(let response):
                     self.isSuccess = true
                     print("post 성공! start time: \(serverStartTime), end time: \(serverEndTime)")
-                    print("Member Sequence: \(self.memberSeq), Schedule Sequence: \(response.data.scheduleSeq), Chat Root Sequence: \(response.data.chatRootSeq)")
+                    print("Member Sequence: \(self.memberSeq), Schedule Sequence: \(response.data.scheduleSeq), Chat Root Sequence: \(response.data.chatRoomSeq)")
                 case .failure(let error):
                     print("postSchedule 요청 실패: \(error.localizedDescription)")
                 }
