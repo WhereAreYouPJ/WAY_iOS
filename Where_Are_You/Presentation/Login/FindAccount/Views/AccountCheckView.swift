@@ -118,8 +118,7 @@ class AccountCheckView: UIView {
         }
     }
     
-    func setupLogoImage(email: String, emailType: [String]) {
+    func setupLogoImage(email: String) {
         emailDescriptionLabel.attributedText = UIFont.CustomFont.bodyP3(text: email, textColor: .brandDark)
-        // TODO: checkEmail에서 받아오는 emailType으로 어떤 로고가 떠야하는지 기획, 디자인쪽 결정 나면 추가하기
     }
 }

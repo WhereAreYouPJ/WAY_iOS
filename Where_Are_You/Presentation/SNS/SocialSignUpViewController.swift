@@ -47,8 +47,6 @@ class SocialSignUpViewController: UIViewController {
         let memberService = MemberService()
         let memberRepository = MemberRepository(memberService: memberService)
         viewModel = SocialSignUpViewModel(
-            snsSignUpUseCase: SnsSignUpUseCaseImpl(memberRepository: memberRepository),
-            checkEmailUseCase: CheckEmailUseCaseImpl(memberRepository: memberRepository),
             appleJoinUseCae: AppleJoinUseCaseImpl(memberRepository: memberRepository))
     }
     
@@ -96,7 +94,7 @@ class SocialSignUpViewController: UIViewController {
         if snsType == .apple {
             viewModel.appleJoin(userName: userName, code: code)
         } else {
-            // 카카오 회원가입
+            // 카카오 회원가입 - 주희님
         }
     }
     

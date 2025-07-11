@@ -23,3 +23,13 @@ struct Schedule: Identifiable {
     var isGroup: Bool?
     var creatorName: String?
 }
+
+struct SheetSchedule {
+    var title: String
+    var startTime: Date
+    var endTime: Date
+    var isAllday: Bool
+    var isGroup: Bool
+    var scheduleSeq: Int
+    var location: String
+}

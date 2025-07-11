@@ -29,8 +29,6 @@ class SignUpFormViewController: UIViewController {
         let memberRepository = MemberRepository(memberService: memberService)
         viewModel = SignUpViewModel(
             accountSignUpUseCase: AccountSignUpUseCaseImpl(memberRepository: memberRepository),
-            checkEmailUseCase: CheckEmailUseCaseImpl(memberRepository: memberRepository),
-            emailSendUseCase: EmailSendUseCaseImpl(memberRepository: memberRepository),
             emailVerifyUseCase: EmailVerifyUseCaseImpl(memberRepository: memberRepository),
             emailSendV2UseCase: EmailSendV2UseCaseImpl(memberRepository: memberRepository))
     }

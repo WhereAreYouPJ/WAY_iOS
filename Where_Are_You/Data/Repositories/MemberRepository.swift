@@ -13,7 +13,6 @@ protocol MemberRepositoryProtocol {
     
     func postSignUp(request: SignUpBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postTokenReissue(request: TokenReissueBody, completion: @escaping (Result<GenericResponse<TokenReissueResponse>, Error>) -> Void)
-    func postMemberSns(request: MemberSnsBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postResetPassword(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postLogout(completion: @escaping (Result<Void, Error>) -> Void)
     func postLogin(request: LoginBody, completion: @escaping (Result<Void, Error>) -> Void)
@@ -21,7 +20,6 @@ protocol MemberRepositoryProtocol {
     func postKakaoJoin(request: KakaoJoinBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postKakaoLogin(request: KakaoLoginBody, completion: @escaping (Result<Void, Error>) -> Void)
     
-    func postMemberLink(request: MemberSnsBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postEmailVerify(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postEmailVerifyPassword(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void)
     func postEmailSend(email: String, completion: @escaping (Result<Void, Error>) -> Void)
@@ -31,7 +29,6 @@ protocol MemberRepositoryProtocol {
     
     func getMemberSearch(memberCode: String, completion: @escaping (Result<GenericResponse<MemberSearchResponse>, Error>) -> Void)
     func getMemberDetails(completion: @escaping (Result<GenericResponse<MemberDetailsResponse>, Error>) -> Void)
-    func getCheckEmail(email: String, completion: @escaping (Result<GenericResponse<CheckEmailResponse>, Error>) -> Void)
     
     func deleteMember(request: DeleteMemberBody, completion: @escaping (Result<Void, Error>) -> Void)
 }
@@ -83,10 +80,6 @@ class MemberRepository: MemberRepositoryProtocol {
         }
     }
     
-    func postMemberSns(request: MemberSnsBody, completion: @escaping (Result<Void, any Error>) -> Void) {
-        memberService.postMemberSns(request: request, completion: completion)
-    }
-    
     func postResetPassword(request: ResetPasswordBody, completion: @escaping (Result<Void, Error>) -> Void) {
         memberService.postResetPassword(request: request, completion: completion)
     }
@@ -107,14 +100,6 @@ class MemberRepository: MemberRepositoryProtocol {
         memberService.postLogin(request: request) { result in
             switch result {
             case .success(let response):
-//                let loginData = response.data
-//                UserDefaultsManager.shared.saveAccessToken(loginData.accessToken)
-//                UserDefaultsManager.shared.saveRefreshToken(loginData.refreshToken)
-//                UserDefaultsManager.shared.saveMemberSeq(loginData.memberSeq)
-//                UserDefaultsManager.shared.saveMemberCode(loginData.memberCode)
-//                UserDefaultsManager.shared.saveProfileImage(loginData.profileImage)
-//                UserDefaultsManager.shared.saveIsLoggedIn(true)
-                
                 UserDefaultsManager.shared.saveLoginData(response.data)
                 completion(.success(()))
             case .failure(let error):
@@ -137,10 +122,6 @@ class MemberRepository: MemberRepositoryProtocol {
                 completion(.failure(error))
             }
         }
-    }
-    
-    func postMemberLink(request: MemberSnsBody, completion: @escaping (Result<Void, any Error>) -> Void) {
-        memberService.postMemberLink(request: request, completion: completion)
     }
     
     func postEmailVerify(request: EmailVerifyBody, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -167,13 +148,7 @@ class MemberRepository: MemberRepositoryProtocol {
         memberService.postAppleLogin(code: code, fcmToken: fcmToken) { result in
             switch result {
             case .success(let response):
-                let loginData = response.data
-                UserDefaultsManager.shared.saveAccessToken(loginData.accessToken)
-                UserDefaultsManager.shared.saveRefreshToken(loginData.refreshToken)
-                UserDefaultsManager.shared.saveMemberSeq(loginData.memberSeq)
-                UserDefaultsManager.shared.saveMemberCode(loginData.memberCode)
-                UserDefaultsManager.shared.saveProfileImage(loginData.profileImage)
-                UserDefaultsManager.shared.saveIsLoggedIn(true)
+                UserDefaultsManager.shared.saveLoginData(response.data)
                 completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))
@@ -200,10 +175,6 @@ class MemberRepository: MemberRepositoryProtocol {
                 completion(.failure(error))
             }
         }
-    }
-    
-    func getCheckEmail(email: String, completion: @escaping (Result<GenericResponse<CheckEmailResponse>, Error>) -> Void) {
-        memberService.getCheckEmail(email: email, completion: completion)
     }
     
     // MARK: - DELETE

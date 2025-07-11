@@ -149,7 +149,7 @@ class FriendsLocationViewModel: NSObject, ObservableObject, CLLocationManagerDel
                 }
                 
                 DispatchQueue.main.async {
-                    print("Updating friends locations - count: \(locations.count)")
+                    print("friends locations - count: \(locations.count)")
                     locations.forEach { location in
                         print("Friend location - x: \(location.x), y: \(location.y)")
                     }

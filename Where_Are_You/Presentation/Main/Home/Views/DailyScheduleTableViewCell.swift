@@ -8,7 +8,7 @@
 import UIKit
 
 protocol DailyScheduleTableViewCellDelegate: AnyObject {
-    func didTapCheckLocationButton(schedule: Schedule)
+    func didTapCheckLocationButton(scheduleSeq: Int)
 }
 
 class DailyScheduleTableViewCell: UITableViewCell {
@@ -19,7 +19,7 @@ class DailyScheduleTableViewCell: UITableViewCell {
     
     private var isLocationCheckAvailable = false
 
-    var schedule: Schedule?
+    var schedule: SheetSchedule?
     
     private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP2(text: "96즈 여의도 한강공원 모임", textColor: .black22))
     
@@ -35,6 +35,14 @@ class DailyScheduleTableViewCell: UITableViewCell {
         let sv = UIStackView(arrangedSubviews: [titleLabel, locationLabel])
         sv.axis = .vertical
         sv.spacing = 2
+        return sv
+    }()
+    
+    lazy var stack: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [labelStackView, checkLocationButton])
+        sv.axis = .horizontal
+        sv.spacing = 10
+        sv.alignment = .center // 중요!
         return sv
     }()
     
@@ -54,19 +62,29 @@ class DailyScheduleTableViewCell: UITableViewCell {
     
     // MARK: - Helpers
     private func configureViewComponents() {
-        contentView.addSubview(labelStackView)
-        contentView.addSubview(checkLocationButton)
+//        contentView.addSubview(checkLocationButton)
+//        contentView.addSubview(labelStackView)
+        contentView.addSubview(stack)
+        
+        labelStackView.setContentHuggingPriority(.required, for: .vertical)
+        labelStackView.setContentCompressionResistancePriority(.required, for: .vertical)
     }
     
     private func setupConstraints() {
-        labelStackView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 28))
-            make.centerY.equalToSuperview()
+        checkLocationButton.snp.makeConstraints { make in
+            //            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 28))
+            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 42))
+            //            make.centerY.equalToSuperview()
         }
         
-        checkLocationButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 28))
-            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 42))
+        //        labelStackView.snp.makeConstraints { make in
+        //            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 28))
+        //            make.trailing.equalTo(checkLocationButton.snp.leading).offset(-LayoutAdapter.shared.scale(value: 10))
+        //            make.centerY.equalToSuperview()
+        //        }
+        
+        stack.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 28))
             make.centerY.equalToSuperview()
         }
     }
@@ -75,20 +93,25 @@ class DailyScheduleTableViewCell: UITableViewCell {
         checkLocationButton.addTarget(self, action: #selector(checkLocationButtonTapped), for: .touchUpInside)
     }
     
-    func configure(with schedule: Schedule) {
+    func configure(with schedule: SheetSchedule) {
         titleLabel.text = schedule.title
-        locationLabel.text = schedule.location?.location
+        titleLabel.numberOfLines = 1
+        titleLabel.lineBreakMode = .byTruncatingTail
+
+        locationLabel.text = schedule.location
         self.schedule = schedule
         
-        if let isAllday = schedule.isAllday, !isAllday, let isGroup = schedule.isGroup, isGroup {
+        if !schedule.isAllday, schedule.isGroup {
             let now = Date()
             let oneHourBefore = Calendar.current.date(byAdding: .hour, value: -1, to: schedule.startTime)!
             
             if now >= oneHourBefore {
                 isLocationCheckAvailable = true
+                checkLocationButton.isHidden = false
                 checkLocationButton.setImage(UIImage(named: "spot3"), for: .normal)
             } else {
                 isLocationCheckAvailable = false
+                checkLocationButton.isHidden = false
                 checkLocationButton.setImage(UIImage(named: "spot3disabled"), for: .normal)
             }
         } else {
@@ -101,7 +124,7 @@ class DailyScheduleTableViewCell: UITableViewCell {
     @objc func checkLocationButtonTapped() {
         guard let schedule = schedule else { return }
         if isLocationCheckAvailable {
-            delegate?.didTapCheckLocationButton(schedule: schedule)
+            delegate?.didTapCheckLocationButton(scheduleSeq: schedule.scheduleSeq)
         } else {
             ToastManager.shared.showToast(message: "일정 시작 1시간 전후로 위치 확인이 가능합니다.")
         }
