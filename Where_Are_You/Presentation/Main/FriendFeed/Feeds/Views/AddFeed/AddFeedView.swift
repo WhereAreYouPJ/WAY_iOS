@@ -68,7 +68,7 @@ class AddFeedView: UIView {
         return stackView
     }()
     
-    let creatFeedButton = TitleButton(title: UIFont.CustomFont.button18(text: "게시하기", textColor: .white), backgroundColor: .brandMain, borderColor: nil)
+    let creatFeedButton = TitleButton(title: UIFont.CustomFont.button18(text: "업로드하기", textColor: .white), backgroundColor: .blackAC, borderColor: nil)
     
     // MARK: - Lifecycle
     
@@ -77,7 +77,7 @@ class AddFeedView: UIView {
         backgroundColor = .white
         configureViewComponents()
         setupConstraints()
-        
+        creatFeedButton.isEnabled = true
         imagesCollectionView.isHidden = true
         membersInfo.isHidden = true
     }
@@ -149,7 +149,6 @@ class AddFeedView: UIView {
         contentTextView.snp.makeConstraints { make in
             make.top.equalTo(imageStackView.snp.bottom).offset(LayoutAdapter.shared.scale(value: 6))
             make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
-//            make.height.greaterThanOrEqualTo(LayoutAdapter.shared.scale(value: 110))
             make.bottom.equalToSuperview()
         }
         
