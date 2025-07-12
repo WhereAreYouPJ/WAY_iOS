@@ -16,6 +16,8 @@ class AddFeedViewController: UIViewController {
             viewModel.selectedImages = selectedImages // 뷰모델에 선택된 이미지를 전달합니다.
         }
     }
+    var scheduleSelected: Bool = false
+    var isScheduleEmpty: Bool = true
     
     var onFeedCreated: (() -> Void)?
         
@@ -69,6 +71,8 @@ class AddFeedViewController: UIViewController {
 
         addFeedView.scheduleDropDown.dropDownTableView.separatorInset = .zero
         addFeedView.scheduleDropDown.dropDownTableView.contentInset = .zero
+        addFeedView.scheduleDropDown.dropDownTableView.sectionHeaderTopPadding = 0 //상단 여백 해결
+        addFeedView.scheduleDropDown.dropDownTableView.layoutMargins = .zero
 
     }
     
@@ -94,13 +98,29 @@ class AddFeedViewController: UIViewController {
     private func setupBindings() {
         viewModel.onSchedulesUpdated = { [weak self] in
             DispatchQueue.main.async {
-                self?.addFeedView.scheduleDropDown.dropDownTableView.reloadData()
+                guard let self = self else { return }
+                let schedules = self.viewModel.getSchedules()
+
+                self.addFeedView.scheduleDropDown.dropDownTableView.reloadData()
                 // 1. 불러온 일정이 있는지 없는지 확인
                 // 2. 불러온 일정이 없으면 테이블뷰를 hide하고 일정 없을때 뜨는 UI 보이게 하기
                 // 선택된 일정의 정보를 표시
-                if (self?.viewModel.selectedSchedule) != nil {
-                    self?.addFeedView.scheduleDropDown.chooseScheduleLabel.isHidden = true
+                if schedules.isEmpty {
+                    self.isScheduleEmpty = true
+                    self.addFeedView.scheduleDropDown.dropDownTableView.isHidden = true
+                    self.addFeedView.scheduleDropDown.dropDownTableView.reloadData()
+                } else {
+                    self.isScheduleEmpty = false
+                    self.addFeedView.scheduleDropDown.emptyView.isHidden = true
+                    self.addFeedView.scheduleDropDown.dropDownTableView.reloadData()
                 }
+            }
+        }
+        
+        viewModel.onScheduleSelected = { [weak self] in
+            DispatchQueue.main.async {
+                self?.scheduleSelected = true
+                self?.checkUploadAvailability()
             }
         }
         
@@ -113,6 +133,7 @@ class AddFeedViewController: UIViewController {
     
     private func buttonActions() {
         addFeedView.scheduleDropDown.scheduleDropDownView.addTarget(self, action: #selector(dropDownButtonTapped), for: .touchUpInside)
+        addFeedView.titleTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingDidEnd)
         addFeedView.addImages.addTarget(self, action: #selector(handleAddImagesTapped), for: .touchUpInside)
         addFeedView.creatFeedButton.addTarget(self, action: #selector(createFeed), for: .touchUpInside)
         addFeedView.scheduleDropDown.moreButton.addTarget(self, action: #selector(loadMoreData), for: .touchUpInside)
@@ -135,6 +156,16 @@ class AddFeedViewController: UIViewController {
         addFeedView.scheduleDropDown.dropDownTableView.tableFooterView = nil
     }
     
+    func checkUploadAvailability() {
+        if scheduleSelected, let title = addFeedView.titleTextField.text, !title.isEmpty {
+            addFeedView.creatFeedButton.updateBackgroundColor(.brandMain)
+            addFeedView.creatFeedButton.isEnabled = false
+        } else {
+            addFeedView.creatFeedButton.updateBackgroundColor(.blackAC)
+            addFeedView.creatFeedButton.isEnabled = true
+        }
+    }
+    
     // MARK: - Selectors
     @objc func loadMoreData() {
         print("loadMoreData tapped")
@@ -144,12 +175,16 @@ class AddFeedViewController: UIViewController {
         dismiss(animated: true)
     }
     
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        checkUploadAvailability()
+    }
+    
     @objc func dropDownButtonTapped() {
         isDropdownVisible.toggle()
         let iconName = isDropdownVisible ? "chevron.up" : "chevron.down"
         addFeedView.scheduleDropDown.dropDownButton.image = UIImage(systemName: iconName)
         
-        dropViewHeightConstraint.constant = isDropdownVisible ? LayoutAdapter.shared.scale(value: 460) : LayoutAdapter.shared.scale(value: 50) // 테이블 뷰 포함 높이 조정
+        dropViewHeightConstraint.constant = isDropdownVisible ? LayoutAdapter.shared.scale(value: 410) : LayoutAdapter.shared.scale(value: 50) // 테이블 뷰 포함 높이 조정
         
         if isDropdownVisible {
             updateDropDownHeight()
@@ -159,13 +194,18 @@ class AddFeedViewController: UIViewController {
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
-        
-        addFeedView.scheduleDropDown.dropDownTableView.isHidden = !isDropdownVisible // 테이블 뷰 표시/숨김 처리
+        if isScheduleEmpty {
+            addFeedView.scheduleDropDown.dropDownTableView.isHidden = isScheduleEmpty // 테이블 뷰 표시/숨김 처리
+            addFeedView.scheduleDropDown.emptyView.isHidden = !isDropdownVisible
+        } else {
+            addFeedView.scheduleDropDown.dropDownTableView.isHidden = !isDropdownVisible // 테이블 뷰 표시/숨김 처리
+            addFeedView.scheduleDropDown.emptyView.isHidden = true
+        }
     }
     
     @objc func createFeed() {
         // 피드 생성하기 버튼 눌림
-        print("createFeed 눌림")
+print("create tapped")
         guard let title = addFeedView.titleTextField.text, !title.isEmpty else { return }
         let content = addFeedView.contentTextView.text == "어떤 하루를 보냈나요?" ? nil : addFeedView.contentTextView.text
         
@@ -228,29 +268,27 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerText = viewModel.titleForHeader(in: section)
-        let label = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "● \(headerText)", textColor: .brandDark))
+        let label = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "• \(headerText)", textColor: .brandDark))
         label.textAlignment = .left
-        
-        let dateText = viewModel.titleForHeader(in: section) // 예: "2024.08.03"
-        let bullet = "●"
-        let fullText = "\(bullet) \(dateText)"
 
         let container = UIView()
+        container.preservesSuperviewLayoutMargins = false
+        container.layoutMargins = .zero
         container.backgroundColor = .white
         container.addSubview(label)
         label.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 20)) // ← 여기 여백 조절
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 8)) // ← 여기 여백 조절
             make.top.bottom.equalToSuperview()
         }
         
         // separator 직접 추가
-        let separator = UIView()
-        separator.backgroundColor = .white  // separator 색상 맞게 지정
-        container.addSubview(separator)
-        separator.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview()
-            make.height.equalTo(1)  // 얇게
-        }
+//        let separator = UIView()
+//        separator.backgroundColor = .white  // separator 색상 맞게 지정
+//        container.addSubview(separator)
+//        separator.snp.makeConstraints { make in
+//            make.leading.trailing.bottom.equalToSuperview()
+//            make.height.equalTo(1)  // 얇게
+//        }
         
         return container
     }
@@ -280,14 +318,9 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
             viewModel.selectSchedule(at: indexPath)
             
             // 선택된 일정의 정보로 label 업데이트
-            let dateParts = schedule.startTime.prefix(10).split(separator: "-")
-            if dateParts.count == 3 {
-                let year = "\(dateParts[0])."  // 연도
-                let monthDay = "\(dateParts[1]).\(dateParts[2])"  // 월.일
-                
-                // 두 줄로 날짜 표시
-                addFeedView.scheduleDropDown.scheduleDateLabel.text = "\(year)\n\(monthDay)"
-            }
+            let date = schedule.startTime.prefix(10).replacingOccurrences(of: "-", with: ".")
+            let shortDate = String(date.dropFirst(2))
+            addFeedView.scheduleDropDown.scheduleDateLabel.updateTextKeepingAttributes(newText: "• \(shortDate)")
             
             addFeedView.scheduleDropDown.scheduleLocationLabel.text = schedule.title
             
@@ -337,7 +370,8 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
         let totalHeight = CGFloat(numberOfRows) * rowHeight + LayoutAdapter.shared.scale(value: 50)
         let maxHeight = LayoutAdapter.shared.scale(value: 460)
         
-        dropViewHeightConstraint.constant = min(totalHeight, maxHeight)
+//        dropViewHeightConstraint.constant = min(totalHeight, maxHeight)
+        dropViewHeightConstraint.constant = LayoutAdapter.shared.scale(value: 410)
         
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()

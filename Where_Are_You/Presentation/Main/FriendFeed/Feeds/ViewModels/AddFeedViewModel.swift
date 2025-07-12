@@ -29,6 +29,7 @@ class AddFeedViewModel {
     
     var onSchedulesUpdated: (() -> Void)?
     var onFeedCreated: (() -> Void)?
+    var onScheduleSelected: (() -> Void)?
     
     weak var delegate: AddFeedViewModelDelegate?
     
@@ -77,6 +78,10 @@ class AddFeedViewModel {
         }
     }
     
+    func getSchedules() -> [ScheduleContent] {
+        return schedules
+    }
+    
     func numberOfSections() -> Int {
         return sectionKeys.count
     }
@@ -114,7 +119,7 @@ class AddFeedViewModel {
             if !schedule.feedExists {
                 selectedScheduleSeq = schedule.scheduleSeq
                 selectedSchedule = schedule
-                onSchedulesUpdated?() // 선택된 일정 정보 업데이트 알림
+                onScheduleSelected?() // 선택된 일정 정보 업데이트 알림
             }
         }
     }

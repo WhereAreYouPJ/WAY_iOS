@@ -14,6 +14,31 @@ class ScheduleDropDown: UIView {
     
     let chooseScheduleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "일정 선택", textColor: .brandDark))
      
+    let emptyView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        let iv = UIImageView()
+        iv.image = UIImage(named: "feedEmptySchedule")
+        iv.snp.makeConstraints { make in
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 38))
+            make.width.equalTo(LayoutAdapter.shared.scale(value: 44))
+        }
+        let firstText = StandardLabel(UIFont: UIFont.CustomFont.bodyP2(text: "일정 생성 필요", textColor: .blackAC))
+        let secondText = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "아직 만들어진 일정이 없어요.", textColor: .blackAC))
+        let stack = UIStackView(arrangedSubviews: [iv, firstText, secondText])
+        stack.axis = .vertical
+        stack.spacing = 6
+        stack.alignment = .center
+        view.addSubview(stack)
+        
+        stack.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        stack.setContentHuggingPriority(.required, for: .horizontal)
+        stack.setContentCompressionResistancePriority(.required, for: .horizontal)
+        return view
+    }()
+    
     let scheduleDateLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "s", textColor: .brandDark))
     
     let scheduleLocationLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "s", textColor: .black22))
@@ -38,6 +63,13 @@ class ScheduleDropDown: UIView {
         return tableView
     }()
     
+    lazy var contentStackView: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [dropDownTableView, emptyView])
+        sv.axis = .vertical
+        sv.spacing = 0
+        return sv
+    }()
+    
     let moreButton = UIButton(type: .system)
     
     // MARK: - Lifecycle
@@ -55,6 +87,7 @@ class ScheduleDropDown: UIView {
     // MARK: - Helpers
     
     private func setupUI() {
+        emptyView.isHidden = true
         layer.cornerRadius = LayoutAdapter.shared.scale(value: 8)
         layer.borderWidth = 1.5
         layer.borderColor = UIColor.brandMain.cgColor
@@ -75,16 +108,19 @@ class ScheduleDropDown: UIView {
         scheduleDropDownView.addSubview(chooseScheduleLabel)
         scheduleDropDownView.addSubview(dropDownButton)
         scheduleDropDownView.addSubview(scheduleStackView)
-        addSubview(dropDownTableView)
+        addSubview(contentStackView)
     }
     
     private func setupConstraints() {
-        scheduleDropDownView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-//            make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
+        emptyView.snp.makeConstraints { make in
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 350))
         }
         
-        dropDownTableView.snp.makeConstraints { make in
+        scheduleDropDownView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+        }
+        
+        contentStackView.snp.makeConstraints { make in
             make.top.equalTo(scheduleDropDownView.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
         }

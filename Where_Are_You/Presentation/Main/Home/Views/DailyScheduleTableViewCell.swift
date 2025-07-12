@@ -62,8 +62,6 @@ class DailyScheduleTableViewCell: UITableViewCell {
     
     // MARK: - Helpers
     private func configureViewComponents() {
-//        contentView.addSubview(checkLocationButton)
-//        contentView.addSubview(labelStackView)
         contentView.addSubview(stack)
         
         labelStackView.setContentHuggingPriority(.required, for: .vertical)
@@ -72,16 +70,8 @@ class DailyScheduleTableViewCell: UITableViewCell {
     
     private func setupConstraints() {
         checkLocationButton.snp.makeConstraints { make in
-            //            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 28))
             make.width.height.equalTo(LayoutAdapter.shared.scale(value: 42))
-            //            make.centerY.equalToSuperview()
         }
-        
-        //        labelStackView.snp.makeConstraints { make in
-        //            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 28))
-        //            make.trailing.equalTo(checkLocationButton.snp.leading).offset(-LayoutAdapter.shared.scale(value: 10))
-        //            make.centerY.equalToSuperview()
-        //        }
         
         stack.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 28))

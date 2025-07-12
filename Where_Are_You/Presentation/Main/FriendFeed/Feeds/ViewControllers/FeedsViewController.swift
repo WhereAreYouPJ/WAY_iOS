@@ -96,6 +96,7 @@ class FeedsViewController: UIViewController {
         feedsView.feedsTableView.delegate = self
         feedsView.feedsTableView.dataSource = self
         feedsView.feedsTableView.rowHeight = UITableView.automaticDimension
+        feedsView.feedsTableView.sectionHeaderTopPadding = 0
         feedsView.feedsTableView.estimatedRowHeight = LayoutAdapter.shared.scale(value: 498)
         feedsView.feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: FeedsTableViewCell.identifier)
     }
