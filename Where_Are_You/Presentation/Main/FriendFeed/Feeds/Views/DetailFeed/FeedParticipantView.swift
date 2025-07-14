@@ -62,6 +62,8 @@ class FeedParticipantView: UIView {
         participantStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
         for (index, participant) in participants.enumerated() {
+            // participant에서 작성했는지 안했는지 조건 확인하고 피드 작성을 안했으면 회색으로 뜨게 만들기
+            // 1. 작성했다면 지금 아래의 로직 사용
             let button = GradientButton()
             
             let profileImage = RoundImageView()

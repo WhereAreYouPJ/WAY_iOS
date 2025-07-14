@@ -32,7 +32,7 @@ class FeedDetailViewModel {
 //            }
 //        }
 //    }
-    
+        
     private var participants: [Info] = []
     
     // MARK: - Lifecycle
