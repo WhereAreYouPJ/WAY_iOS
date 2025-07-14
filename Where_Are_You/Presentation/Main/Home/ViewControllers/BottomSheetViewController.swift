@@ -160,6 +160,22 @@ extension BottomSheetViewController: DailyScheduleTableViewCellDelegate {
             }
         )
         
+        viewModel.getScheduleDetail(scheduleSeq: scheduleSeq, completion: { schedule in
+            DispatchQueue.main.async {
+                guard let schedule = schedule else { return }
+                let friendsLocationView = FriendsLocationView( // FriendsLocationView 생성
+                    schedule: .constant(schedule)
+                )
+                
+                let hostingController = UIHostingController(rootView: friendsLocationView) // SwiftUI 뷰를 UIKit 컨트롤러에 래핑
+                
+                hostingController.modalPresentationStyle = .fullScreen // 전체 화면으로 표시
+                hostingController.view.backgroundColor = .clear
+                
+                self.present(hostingController, animated: true) // 뷰를 표시
+            }
+        })
+        
 //        let friendsLocationView = FriendsLocationView( // FriendsLocationView 생성
 //            isShownView: isShownBinding,
 //            schedule: .constant(schedule)
