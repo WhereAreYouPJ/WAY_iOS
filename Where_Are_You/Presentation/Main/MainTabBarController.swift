@@ -36,7 +36,10 @@ class MainTabBarController: UITabBarController {
         let bannerViewModel = BannerViewModel(getAdminImageUseCase: GetAdminImageUseCaseImpl(adminRepository: adminRepository))
         let dDayViewModel = DDayViewModel(getDDayScheduleUseCase: GetDDayScheduleUseCaseImpl(scheduleRepository: scheduleRepository))
         let homeFeedViewModel = HomeFeedViewModel(getFeedMainUseCase: GetFeedMainUseCaseImpl(feedRepository: feedRepository))
-        let bottomSheetViewModel = BottomSheetViewModel(getDailyScheduleUseCase: GetDailyScheduleUseCaseImpl(scheduleRepository: scheduleRepository))
+        let bottomSheetViewModel = BottomSheetViewModel(
+            getDailyScheduleUseCase: GetDailyScheduleUseCaseImpl(scheduleRepository: scheduleRepository),
+            getScheduleUseCase: GetScheduleUseCaseImpl(scheduleRepository: scheduleRepository)
+        )
             
         let mainVC = createNavController(viewController: MainHomeViewController(bannerViewModel: bannerViewModel, dDayViewModel: dDayViewModel, homeFeedViewModel: homeFeedViewModel, bottomSheetViewModel: bottomSheetViewModel), title: "홈", imageName: "icon-home", selectedImageName: "icon-home-filled")
         let friendsVC = createNavController(viewController: FriendFeedViewController(), title: "피드", imageName: "icon-friends", selectedImageName: "icon-friends-filled")

@@ -9,6 +9,8 @@ import Foundation
 
 class BottomSheetViewModel {
     private let getDailyScheduleUseCase: GetDailyScheduleUseCase
+    private let getScheduleUseCase: GetScheduleUseCase
+    
     let date: Date
     private let dateFormatterS2D: DateFormatter
     private let dateFormatterD2S: DateFormatter
@@ -19,8 +21,13 @@ class BottomSheetViewModel {
     var onDailyBottomSheetScheduleFetched: (() -> Void)?
     var displaySheetSchedule: [SheetSchedule] = []
     
-    init(getDailyScheduleUseCase: GetDailyScheduleUseCase, date: Date = Date()) {
+    init(
+        getDailyScheduleUseCase: GetDailyScheduleUseCase,
+        getScheduleUseCase: GetScheduleUseCase,
+        date: Date = Date()
+    ) {
         self.getDailyScheduleUseCase = getDailyScheduleUseCase
+        self.getScheduleUseCase = getScheduleUseCase
         self.date = date
         
         dateFormatterS2D = DateFormatter()
@@ -60,6 +67,42 @@ class BottomSheetViewModel {
     
     // MARK: - 실시간 위치 통신을 위한 데이터를 받아오는 로직 - 주희
     // TODO: 일정 상세 조회API통신 -> 데이터 리턴 받기(success) -> coordinate API통신을 위한 데이터 모델링 -> coordinate API통신 진행하기
+    func getScheduleDetail(scheduleSeq: Int, completion: @escaping (Schedule?) -> Void) {
+        // 일정 상세 조회 API 호출
+        // Schedule 객체 반환 (위치 좌표 포함)
+        getScheduleUseCase.execute(scheduleSeq: scheduleSeq) { result in
+            switch result {
+            case .success(let response):
+                guard let startDate = response.startTime.toDate(from: .serverSimple) else {
+                    print("Date 변환 실패: \(response.startTime)")
+                    return completion(nil)
+                }
+                guard let endDate = response.endTime.toDate(from: .serverSimple) else {
+                    print("Date 변환 실패: \(response.startTime)")
+                    return completion(nil)
+                }
+                
+                let schedule = Schedule(
+                    scheduleSeq: scheduleSeq,
+                    title: response.title,
+                    startTime: startDate,
+                    endTime: endDate,
+                    location: Location(sequence: 0, location: response.location, streetName: response.streetName, x: response.x, y: response.y),
+                    color: response.color,
+                    invitedMember: response.memberInfos
+                        .filter { $0.memberSeq != UserDefaultsManager.shared.getMemberSeq()}
+                        .map { friend in
+                            Friend(memberSeq: friend.memberSeq, profileImage: "", name: friend.userName, isFavorite: false, memberCode: "")
+                        }
+                )
+                completion(schedule)
+            case .failure(let error):
+                print("일정 상세 조회 실패: \(error.localizedDescription)")
+                completion(nil)
+            }
+        }
+    }
+    
     func fetchDailySchedule(completion: @escaping (Bool) -> Void) {
         let date = dateFormatterD2S.string(from: date)
         getDailyScheduleUseCase.execute(date: date) { result in
