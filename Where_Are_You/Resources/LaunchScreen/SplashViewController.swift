@@ -78,10 +78,16 @@ class SplashViewController: UIViewController {
               let window = sceneDelegate.window else {
             return
         }
+        let nav = UINavigationController(rootViewController: viewController)
+            nav.setNavigationBarHidden(true, animated: false)
+            nav.view.backgroundColor = .white
 
-        let nav = UINavigationController(rootViewController: viewController) // Navigation 포함
-        window.rootViewController = nav
-        UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: nil)
-        window.makeKeyAndVisible()
+            window.rootViewController = nav
+            window.makeKeyAndVisible()
+        
+        
+//        window.backgroundColor = .white  // 또는 원하는 색상
+
+//        UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: nil)
     }
 }

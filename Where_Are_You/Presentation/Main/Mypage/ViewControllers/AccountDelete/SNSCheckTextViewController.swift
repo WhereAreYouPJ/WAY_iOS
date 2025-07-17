@@ -1,19 +1,18 @@
 //
-//  CheckPasswordViewController.swift
+//  SNSCheckTextViewController.swift
 //  Where_Are_You
 //
-//  Created by 오정석 on 12/1/2025.
+//  Created by 오정석 on 16/7/2025.
 //
 
 import UIKit
 
-class CheckPasswordViewController: UIViewController {
+class SNSCheckTextViewController: UIViewController {
     // MARK: - Properties
-    let checkPasswordView = CheckPasswordView()
+    let snsCheckTextView = SNSCheckTextView()
     private var viewModel: DeleteMemberViewModel!
     
     var comment: String = ""
-    private var passwordEnter: Bool = false
     
     // MARK: - Lifecycle
     init(comment: String) {
@@ -35,14 +34,13 @@ class CheckPasswordViewController: UIViewController {
     
     // MARK: - Helpers
    private func setupUI() {
-       self.view = checkPasswordView
+       self.view = snsCheckTextView
        configureNavigationBar(title: "회원 탈퇴", backButtonAction: #selector(backButtonTapped))
-       checkPasswordView.passwordTextField.isSecureTextEntry = true
    }
     
     private func setupActions() {
-        checkPasswordView.deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
-        checkPasswordView.passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        snsCheckTextView.deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        snsCheckTextView.checkTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     private func setupViewModel() {
@@ -59,9 +57,9 @@ class CheckPasswordViewController: UIViewController {
         }
         
         viewModel.onFailureDeleteAccount = { [weak self] in
-            self?.updateStatus(label: self?.checkPasswordView.passwordErrorLabel,
-                               message: "비밀번호가 맞지 않습니다.",
-                               textField: self?.checkPasswordView.passwordTextField)
+            DispatchQueue.main.async {
+                self?.snsCheckTextView.checkErrorLabel.text = "서버오류"
+            }
         }
     }
     
@@ -78,23 +76,11 @@ class CheckPasswordViewController: UIViewController {
     
     // viewmodel에 로그인하기 버튼 활성화 비활성화 로직 추가하기
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        checkPasswordView.updateLoginButtonState()
+        snsCheckTextView.updateLoginButtonState()
     }
     
     @objc private func deleteButtonTapped() {
-        guard let password = checkPasswordView.passwordTextField.text else {
-            print("password가 nil 값입니다.")
-            return
-        }
-        
-        viewModel.deleteAccount(password: password, comment: comment, loginType: "normal")
-    }
-   
-    private func updateStatus(label: UILabel?, message: String, textField: UITextField?) {
-        label?.attributedText = UIFont.CustomFont.bodyP5(text: message, textColor: .error)
-        if let customTF = textField as? CustomTextField {
-            // 조건이 맞지 않으면 error 상태를 유지하도록 설정
-            customTF.setErrorState(true)
-        }
+        let loginType = UserDefaultsManager.shared.getLoginType()
+        viewModel.deleteAccount(password: "", comment: comment, loginType: loginType)
     }
 }

@@ -1,24 +1,22 @@
 //
-//  CheckPasswordView.swift
+//  SNSCheckTextView.swift
 //  Where_Are_You
 //
-//  Created by 오정석 on 12/1/2025.
+//  Created by 오정석 on 16/7/2025.
 //
 
 import UIKit
 
-class CheckPasswordView: UIView {
+class SNSCheckTextView: UIView {
     // MARK: - Properties
-    private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP1(text: "계정 삭제를 위해 \n비밀번호를 입력해주세요.", textColor: .black22))
+    private let titleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP1(text: "계정 삭제를 위해 \n아래 항목을 입력해주세요.", textColor: .black22))
     
-    private let passwordTitle = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "비밀번호", textColor: .black22), isPaddingLabel: true)
-
-    let passwordTextField = CustomTextField(placeholder: "비밀번호를 입력해주세요.")
+    let checkTextField = CustomTextField(placeholder: "온마이웨이 회원 탈퇴", placeholderColor: UIColor.rgb(red: 190, green: 179, blue: 229))
     
-    let passwordErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "비밀번호가 맞지 않습니다.", textColor: .error))
+    let checkErrorLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP5(text: "서버 오류", textColor: .error))
     
     private lazy var stackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [passwordTitle, passwordTextField, passwordErrorLabel])
+        let sv = UIStackView(arrangedSubviews: [checkTextField, checkErrorLabel])
         sv.axis = .vertical
         sv.spacing = 4
         return sv
@@ -31,7 +29,8 @@ class CheckPasswordView: UIView {
         super.init(frame: frame)
         backgroundColor = .white
         
-        passwordErrorLabel.isHidden = true
+        checkErrorLabel.isHidden = true
+        checkTextField.backgroundColor = UIColor.rgb(red: 249, green: 247, blue: 255)
         configureViewComponents()
         setupConstraints()
     }
@@ -67,9 +66,7 @@ class CheckPasswordView: UIView {
     }
     
     func updateLoginButtonState() {
-        let isPasswordEntered = !(passwordTextField.text?.isEmpty ?? true)
-        
-        if isPasswordEntered {
+        if checkTextField.text == "온마이웨이 회원 탈퇴" {
             deleteButton.updateBackgroundColor(.brandMain)
             deleteButton.isEnabled = true
         } else {

@@ -101,6 +101,7 @@ class MemberRepository: MemberRepositoryProtocol {
             switch result {
             case .success(let response):
                 UserDefaultsManager.shared.saveLoginData(response.data)
+                UserDefaultsManager.shared.saveLoginType("normal")
                 completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))
@@ -117,6 +118,7 @@ class MemberRepository: MemberRepositoryProtocol {
             switch result {
             case .success(let response):
                 UserDefaultsManager.shared.saveLoginData(response.data)
+                UserDefaultsManager.shared.saveLoginType("kakao")
                 completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))
@@ -149,6 +151,7 @@ class MemberRepository: MemberRepositoryProtocol {
             switch result {
             case .success(let response):
                 UserDefaultsManager.shared.saveLoginData(response.data)
+                UserDefaultsManager.shared.saveLoginType("apple")
                 completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))

@@ -26,6 +26,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = loginView
+        view.backgroundColor = .white
         setupViewModel()
         buttonAction()
         setupBindings()

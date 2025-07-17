@@ -47,10 +47,16 @@ class ReagreementAcountDeletionViewController: UIViewController {
     
     // MARK: - Selectors
     @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        popViewController()
     }
     @objc func nextButtonTapped() {
-        let controller = CheckPasswordViewController(comment: comment)
-        navigationController?.pushViewController(controller, animated: true)
+        let loginType = UserDefaultsManager.shared.getLoginType()
+        if loginType == "normal" {
+            let controller = CheckPasswordViewController(comment: comment)
+            pushToViewController(controller)
+        } else {
+            let controller = SNSCheckTextViewController(comment: comment)
+            pushToViewController(controller)
+        }
     }
 }

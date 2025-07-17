@@ -19,6 +19,7 @@ class UserDefaultsManager {
     private let profileImage = "profileImage"
     private let isLoggedIn = "isLoggedIn"
     private let fcmToken = "fcmToken"
+    private let loginType = "loginType"
     
     private init() {}
     
@@ -94,7 +95,16 @@ class UserDefaultsManager {
         return defaults.string(forKey: fcmToken) ?? ""
     }
     
-    // MARK: Login 작업들
+    // MARK: - LoginType
+    func saveLoginType(_ type: String) {
+        defaults.set(type, forKey: loginType)
+    }
+    
+    func getLoginType() -> String {
+        return defaults.string(forKey: loginType) ?? ""
+    }
+    
+    // MARK: - Login 작업들
     func saveLoginData(_ response: LoginResponse) {
         saveAccessToken(response.accessToken)
         saveRefreshToken(response.refreshToken)

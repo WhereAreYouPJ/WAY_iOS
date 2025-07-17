@@ -18,11 +18,12 @@ class CustomTextField: UITextField {
     
     init(textPadding: UIEdgeInsets = UIEdgeInsets(top: 0, left: LayoutAdapter.shared.scale(value: 12), bottom: 0, right: LayoutAdapter.shared.scale(value: 12)),
          placeholder: String,
-         hasBorder: Bool = true) {
+         hasBorder: Bool = true,
+         placeholderColor: UIColor? = nil) {
         self.textPadding = textPadding
         self.hasBorder = hasBorder
         super.init(frame: .zero)
-        setupTextField(placeholder: placeholder)
+        setupTextField(placeholder: placeholder, placeholderColor: placeholderColor)
         setupBorder()
     }
     
@@ -34,13 +35,17 @@ class CustomTextField: UITextField {
         setupBorder()
     }
     
-    func setupTextField(placeholder: String?) {
+    func setupTextField(placeholder: String?, placeholderColor: UIColor? = nil) {
         adjustsFontForContentSizeCategory = true
         font = UIFont(name: "Pretendard-Medium", size: 16)
-
+        
         // Set placeholder with color
         if let placeholderText = placeholder {
-            attributedPlaceholder = UIFont.CustomFont.bodyP3(text: placeholderText, textColor: .black66)
+            if let placeholderColor = placeholderColor {
+                attributedPlaceholder = UIFont.CustomFont.bodyP3(text: placeholderText, textColor: placeholderColor)
+            } else {
+                attributedPlaceholder = UIFont.CustomFont.bodyP3(text: placeholderText, textColor: .black66)
+            }
         }
     }
     

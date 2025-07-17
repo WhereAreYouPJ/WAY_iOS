@@ -43,6 +43,8 @@
 		9913A44F2C75CD0A00309DBF /* PhotoAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9913A44E2C75CD0A00309DBF /* PhotoAuthService.swift */; };
 		99149FEB2C4F97C300136097 /* ValidationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99149FEA2C4F97C300136097 /* ValidationHelper.swift */; };
 		99149FED2C4F97EA00136097 /* TimeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99149FEC2C4F97EA00136097 /* TimeHelper.swift */; };
+		9915FA2C2E27328F00E728D5 /* SNSCheckTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9915FA2B2E27328F00E728D5 /* SNSCheckTextView.swift */; };
+		9915FA2E2E2733A400E728D5 /* SNSCheckTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9915FA2D2E2733A400E728D5 /* SNSCheckTextViewController.swift */; };
 		9921F9592DB8B1C90091C634 /* TermsWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9921F9582DB8B1C90091C634 /* TermsWebViewController.swift */; };
 		992381882C7DC8C900FFCBCB /* MyDetailManageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992381872C7DC8C900FFCBCB /* MyDetailManageViewModel.swift */; };
 		99256F9E2DE42B3B00856B70 /* AdminAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99256F9D2DE42B3B00856B70 /* AdminAPI.swift */; };
@@ -342,7 +344,7 @@
 		D5A91D5B2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A91D5A2CBBADDB00DF0FA6 /* CustomAlertSwiftUI.swift */; };
 		D5AB2EE22D548E0D009E6741 /* MyLocation.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D5AB2EE12D548E0D009E6741 /* MyLocation.gpx */; };
 		D5B3B5392CB3DE63004353F6 /* DailyScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B3B5382CB3DE63004353F6 /* DailyScheduleViewModel.swift */; };
-		D5B79A162C5B83CD004EDDF2 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		D5B79A162C5B83CD004EDDF2 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D5BA308C2CE744C400958BF5 /* FriendAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308B2CE744C400958BF5 /* FriendAPI.swift */; };
 		D5BA308E2CE744CA00958BF5 /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308D2CE744CA00958BF5 /* FriendService.swift */; };
 		D5BA30902CE7453900958BF5 /* DeleteFriendBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BA308F2CE7453900958BF5 /* DeleteFriendBody.swift */; };
@@ -426,6 +428,8 @@
 		9913A44E2C75CD0A00309DBF /* PhotoAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAuthService.swift; sourceTree = "<group>"; };
 		99149FEA2C4F97C300136097 /* ValidationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationHelper.swift; sourceTree = "<group>"; };
 		99149FEC2C4F97EA00136097 /* TimeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeHelper.swift; sourceTree = "<group>"; };
+		9915FA2B2E27328F00E728D5 /* SNSCheckTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSCheckTextView.swift; sourceTree = "<group>"; };
+		9915FA2D2E2733A400E728D5 /* SNSCheckTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSCheckTextViewController.swift; sourceTree = "<group>"; };
 		9921F9582DB8B1C90091C634 /* TermsWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsWebViewController.swift; sourceTree = "<group>"; };
 		992381872C7DC8C900FFCBCB /* MyDetailManageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDetailManageViewModel.swift; sourceTree = "<group>"; };
 		99256F9D2DE42B3B00856B70 /* AdminAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminAPI.swift; sourceTree = "<group>"; };
@@ -1158,6 +1162,7 @@
 				99C5B9E42D30AEB200CD570F /* CommentAccountDeletionView.swift */,
 				99C5B9F22D3261A900CD570F /* ReasonSelectionTableViewCell.swift */,
 				99647EEC2D33B7E100D63B4B /* CheckPasswordView.swift */,
+				9915FA2B2E27328F00E728D5 /* SNSCheckTextView.swift */,
 				99647EF22D33DB3B00D63B4B /* CompleteDeleteView.swift */,
 			);
 			path = AccountDelete;
@@ -1170,6 +1175,7 @@
 				99C5B9EE2D3248EF00CD570F /* CommentDeletionViewController.swift */,
 				99647EEA2D33A1A700D63B4B /* ReagreementAcountDeletionViewController.swift */,
 				99647EEE2D33D83E00D63B4B /* CheckPasswordViewController.swift */,
+				9915FA2D2E2733A400E728D5 /* SNSCheckTextViewController.swift */,
 				99647EF02D33DB2600D63B4B /* CompleteDeleteViewController.swift */,
 			);
 			path = AccountDelete;
@@ -2132,9 +2138,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2211,9 +2221,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Where_Are_You/Pods-Where_Are_You-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2270,6 +2284,7 @@
 				99FBA5502C45394E002EEEC7 /* BannerViewModel.swift in Sources */,
 				997C10F42D8913FB0045CB3D /* ModifyProfileImage.swift in Sources */,
 				99C9B22C2C019C67008D7CBD /* LoginView.swift in Sources */,
+				9915FA2C2E27328F00E728D5 /* SNSCheckTextView.swift in Sources */,
 				99DF440D2D6DB2A200D75956 /* CustomImageView.swift in Sources */,
 				99949F5F2C58BBAD00AE0177 /* FeedsViewController.swift in Sources */,
 				D5BA30902CE7453900958BF5 /* DeleteFriendBody.swift in Sources */,
@@ -2316,7 +2331,7 @@
 				995175022C7EF95100E938DE /* LocationBookmarkViewModel.swift in Sources */,
 				D5CD68A42D351EA000B790E9 /* RefuseInvitedScheduleUseCase.swift in Sources */,
 				D5BA30922CE745A700958BF5 /* PostFavoriteFriendBody.swift in Sources */,
-				D5B79A162C5B83CD004EDDF2 /* BuildFile in Sources */,
+				D5B79A162C5B83CD004EDDF2 /* (null) in Sources */,
 				D5DCF8C42D69CA770045030C /* NotificationBadgeViewModel.swift in Sources */,
 				99256F9E2DE42B3B00856B70 /* AdminAPI.swift in Sources */,
 				D534B0FE2D06F0FD004864E0 /* CoordinateService.swift in Sources */,
@@ -2559,6 +2574,7 @@
 				99CA4F262C33B704007C027C /* ResetPasswordViewModel.swift in Sources */,
 				99D23FF42C6889BA00CFD4F0 /* FeedDetailViewModel.swift in Sources */,
 				D5161A6F2D95214200D92B39 /* ToastManager.swift in Sources */,
+				9915FA2E2E2733A400E728D5 /* SNSCheckTextViewController.swift in Sources */,
 				99DA18B92C4E132A00D5CDA6 /* TitleView.swift in Sources */,
 				D55C6C592CF5DD33005132DC /* FriendRequestRepository.swift in Sources */,
 				99C68E4C2C64B83D00DEC1F1 /* FeedRepository.swift in Sources */,
