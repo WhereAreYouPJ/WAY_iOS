@@ -45,7 +45,7 @@ class AgreementAcountDeletionViewController: UIViewController {
     
     // MARK: - Selectors
     @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        popViewController()
     }
     
     @objc func checkButtonTapped() {
@@ -58,8 +58,7 @@ class AgreementAcountDeletionViewController: UIViewController {
     }
     
     @objc func nextButtonTapped() {
-        print("nextbuttonTapped")
         let controller = CommentDeletionViewController()
-        navigationController?.pushViewController(controller, animated: true)
+        pushToViewController(controller)
     }
 }

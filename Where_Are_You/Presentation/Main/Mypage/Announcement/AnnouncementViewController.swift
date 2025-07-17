@@ -33,6 +33,6 @@ class AnnouncementViewController: UIViewController {
     }
     
     @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        popViewController()
     }
 }

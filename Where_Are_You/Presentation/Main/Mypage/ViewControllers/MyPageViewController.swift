@@ -72,7 +72,7 @@ class MyPageViewController: UIViewController {
                 let member = Member(userName: memberDetails.userName,
                                     profileImage: memberDetails.profileImage,
                                     memberCode: memberCode)
-                self?.email = memberDetails.email
+                self?.email = memberDetails.email ?? ""
                 self?.userName = memberDetails.userName
                 self?.myPageView.configureUI(member: member)
                 print("\(member.userName)의 memberSeq는: \(UserDefaultsManager.shared.getMemberSeq())")
@@ -108,7 +108,9 @@ class MyPageViewController: UIViewController {
             cancelTitle: "취소",
             actionTitle: "확인"
         ) { [weak self] in
-                self?.viewModel.logout()
+            self?.navigateToLogin()
+            UserDefaultsManager.shared.clearData()
+//                self?.viewModel.logout()
             }
         alert.showAlert(on: self)
     }

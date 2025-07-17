@@ -114,7 +114,7 @@ class AddFeedViewModel {
     
     // 일정 선택시 호출
     func selectSchedule(at indexPath: IndexPath) {
-        let key = Array(groupedSchedules.keys)[indexPath.section]
+        let key = sectionKeys[indexPath.section]
         if let schedule = groupedSchedules[key]?[indexPath.row] {
             if !schedule.feedExists {
                 selectedScheduleSeq = schedule.scheduleSeq

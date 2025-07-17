@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum SnsType {
+enum LoginType {
     case apple
     case kakao
     case account
@@ -17,7 +17,7 @@ class TermsAgreementViewController: UIViewController {
     // MARK: - Properties
     private let termsAgreementView = TermsAgreementView()
     private var isAgreed: Bool = false
-    private var snsType: SnsType
+    private var snsType: LoginType
     private var userName: String
     private var code: String
     
@@ -31,7 +31,7 @@ class TermsAgreementViewController: UIViewController {
         buttonActions()
     }
     
-    init(snsType: SnsType, userName: String = "", code: String = "") {
+    init(snsType: LoginType, userName: String = "", code: String = "") {
         self.snsType = snsType
         self.userName = userName
         self.code = code
@@ -86,7 +86,7 @@ class TermsAgreementViewController: UIViewController {
     // MARK: - Selectors
     
     @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        popViewController()
     }
     
     @objc func checkButtonTapped() {

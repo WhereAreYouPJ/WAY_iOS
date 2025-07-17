@@ -14,10 +14,10 @@ class SocialSignUpViewController: UIViewController {
     
     private var code: String = ""
     private var userName: String = ""
-    private var snsType: SnsType
+    private var snsType: LoginType
     
     // MARK: - Lifecycle
-    init(code: String, userName: String, snsType: SnsType) {
+    init(code: String, userName: String, snsType: LoginType) {
         self.code = code
         self.userName = userName
         self.snsType = snsType

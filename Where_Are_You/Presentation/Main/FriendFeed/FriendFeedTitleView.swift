@@ -82,7 +82,7 @@ class FriendFeedTitleView: UIView {
     private func setupConstraints() {
         segmentControl.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 13))
-            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 32))
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
             make.height.equalTo(29)
         }
         

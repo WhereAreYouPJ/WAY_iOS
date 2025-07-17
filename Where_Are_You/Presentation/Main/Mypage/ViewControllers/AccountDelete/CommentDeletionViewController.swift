@@ -93,11 +93,11 @@ class CommentDeletionViewController: UIViewController {
         
         // 회원탈퇴 조건 재확인뷰로 이동
         let controller = ReagreementAcountDeletionViewController(comment: comment)
-        navigationController?.pushViewController(controller, animated: true)
+        pushToViewController(controller)
     }
     
     @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        popViewController()
     }
 }
 

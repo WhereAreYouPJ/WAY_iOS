@@ -57,7 +57,7 @@ class AnnouncmentListViewController: UIViewController {
     }
     
     @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        popViewController()
     }
 }
 

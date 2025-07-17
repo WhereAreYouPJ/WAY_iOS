@@ -139,7 +139,7 @@ class SignUpFormViewController: UIViewController {
     }
     
     @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        popViewController()
     }
     
     @objc func authRequestButtonTapped() {

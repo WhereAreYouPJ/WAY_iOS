@@ -104,7 +104,7 @@ class PasswordResetViewController: UIViewController {
     }
     
     @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        popViewController()
     }
     
     @objc func hidePasswordButtonTapped(_ button: UIButton) {

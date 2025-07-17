@@ -15,14 +15,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = scene as? UIWindowScene else { return }
+//        
+//        let vc = SplashViewController()
+//        let navController = UINavigationController(rootViewController: vc)
+//            
+//        window = UIWindow(windowScene: scene)
+//        window?.rootViewController = navController
+//        window?.makeKeyAndVisible()
         
-        let vc = SplashViewController()
-        let navController = UINavigationController(rootViewController: vc)
+        let splashVC = SplashViewController()
             
-        window = UIWindow(windowScene: scene)
-        window?.rootViewController = navController
-        window?.makeKeyAndVisible()
-        
+            window = UIWindow(windowScene: scene)
+            window?.rootViewController = splashVC
+            window?.backgroundColor = UIColor.rgb(red: 123, green: 80, blue: 255)  // 💡 윈도우 배경도 맞춰서 설정
+            window?.makeKeyAndVisible()
         // ToastManager 초기화 (이렇게 하면 싱글톤 인스턴스가 생성됨)
         _ = ToastManager.shared
     }
