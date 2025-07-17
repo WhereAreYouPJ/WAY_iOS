@@ -56,59 +56,182 @@ class FeedParticipantView: UIView {
         }
     }
     
-    func configureParticipantImages(participants: [Info], delegate: FeedParticipantDelegate?) {
+    func configureParticipantImages(participants: [DetailFeedInfo], delegate: FeedParticipantDelegate?) {
         self.delegate = delegate
-        
         participantStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        
+
         for (index, participant) in participants.enumerated() {
-            // participant에서 작성했는지 안했는지 조건 확인하고 피드 작성을 안했으면 회색으로 뜨게 만들기
-            // 1. 작성했다면 지금 아래의 로직 사용
             let button = GradientButton()
-            
-            let profileImage = RoundImageView()
-            profileImage.kf.setImage(with: URL(string: participant.profileImageURL))
-            profileImage.clipsToBounds = true
-            button.addSubview(profileImage)
-            profileImage.snp.makeConstraints { make in
-                make.centerY.equalToSuperview()
-                make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 5))
-                make.height.width.equalTo(LayoutAdapter.shared.scale(value: 26))
-            }
-            
-            let userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: participant.userName, textColor: .black22))
-            button.addSubview(userNameLabel)
-            userNameLabel.snp.makeConstraints { make in
-                make.leading.equalTo(profileImage.snp.trailing).offset(LayoutAdapter.shared.scale(value: 6))
-                make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
-                make.centerY.equalToSuperview()
-            }
-            
-            button.layer.cornerRadius = LayoutAdapter.shared.scale(value: 37) / 2
-            button.applyGradientBorder(colors: [UIColor.rgb(red: 141, green: 103, blue: 255).cgColor, UIColor.rgb(red: 111, green: 77, blue: 215).cgColor], lineWidth: 1.5)
-            button.clipsToBounds = true
-            button.tag = index // 참가자의 인덱스를 태그로 저장
-            
-            // 버튼 클릭 이벤트
-            button.addTarget(self, action: #selector(didTapParticipantButton(_:)), for: .touchUpInside)
-                        
+            button.isFeedExists = participant.isFeedExists
+            updateParticipantButton(userName: participant.userName, isFeedExists: participant.isFeedExists, button: button, imageURLString: participant.profileImageURL, index: index)
+
+            applyParticipantButtonStyle(button: button, isFeedExists: participant.isFeedExists, isSelected: false)
+
             participantStackView.addArrangedSubview(button)
             button.layoutIfNeeded()
         }
+
         layoutIfNeeded()
+
+        // 첫 번째 버튼 선택 적용 (초기 상태)
         if let firstButton = participantStackView.arrangedSubviews.first as? GradientButton {
             updateSelectedButton(firstButton)
         }
     }
+
     
+//    func configureParticipantImages(participants: [DetailFeedInfo], delegate: FeedParticipantDelegate?) {
+//        self.delegate = delegate
+//        
+//        participantStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+//        
+//        for (index, participant) in participants.enumerated() {
+//            // participant에서 작성했는지 안했는지 조건 확인하고 피드 작성을 안했으면 회색으로 뜨게 만들기
+//            let button = GradientButton()
+//            if participant.isFeedExists {
+//                // 1. 작성했다면 지금 아래의 로직 사용
+//                updateParticipantButton(userName: participant.userName, button: button, imageURLString: participant.profileImageURL, index: index)
+//                button.applyGradientBorder(colors: [UIColor.rgb(red: 141, green: 103, blue: 255).cgColor, UIColor.rgb(red: 111, green: 77, blue: 215).cgColor], lineWidth: 1.5)
+//            } else {
+//                updateParticipantButton(userName: participant.userName, button: button, imageURLString: participant.profileImageURL, index: index)
+//                button.layer.borderColor = UIColor.lightGray.cgColor
+//                    button.layer.borderWidth = 1
+//            }
+//            let profileImage = RoundImageView()
+//            profileImage.kf.setImage(with: URL(string: participant.profileImageURL))
+//            profileImage.clipsToBounds = true
+//            button.addSubview(profileImage)
+//            profileImage.snp.makeConstraints { make in
+//                make.centerY.equalToSuperview()
+//                make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 5))
+//                make.height.width.equalTo(LayoutAdapter.shared.scale(value: 26))
+//            }
+//            
+//            let userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: participant.userName, textColor: .black22))
+//            button.addSubview(userNameLabel)
+//            userNameLabel.snp.makeConstraints { make in
+//                make.leading.equalTo(profileImage.snp.trailing).offset(LayoutAdapter.shared.scale(value: 6))
+//                make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
+//                make.centerY.equalToSuperview()
+//            }
+//            
+//            button.layer.cornerRadius = LayoutAdapter.shared.scale(value: 37) / 2
+//            button.applyGradientBorder(colors: [UIColor.rgb(red: 141, green: 103, blue: 255).cgColor, UIColor.rgb(red: 111, green: 77, blue: 215).cgColor], lineWidth: 1.5)
+//            button.clipsToBounds = true
+//            button.tag = index // 참가자의 인덱스를 태그로 저장
+//            
+//            // 버튼 클릭 이벤트
+//            button.addTarget(self, action: #selector(didTapParticipantButton(_:)), for: .touchUpInside)
+//                        
+//            participantStackView.addArrangedSubview(button)
+//            button.layoutIfNeeded()
+//        }
+//        layoutIfNeeded()
+//        if let firstButton = participantStackView.arrangedSubviews.first as? GradientButton {
+//            updateSelectedButton(firstButton)
+//        }
+//    }
+    
+    func updateParticipantButton(userName: String, isFeedExists: Bool, button: UIButton, imageURLString: String, index: Int) {
+        let profileImage = RoundImageView()
+        profileImage.kf.setImage(with: URL(string: imageURLString))
+        profileImage.clipsToBounds = true
+        button.addSubview(profileImage)
+        profileImage.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 5))
+            make.height.width.equalTo(LayoutAdapter.shared.scale(value: 26))
+        }
+        
+        let userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: userName, textColor: .black22))
+        button.addSubview(userNameLabel)
+        userNameLabel.snp.makeConstraints { make in
+            make.leading.equalTo(profileImage.snp.trailing).offset(LayoutAdapter.shared.scale(value: 6))
+            make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 10))
+            make.centerY.equalToSuperview()
+        }
+        
+        button.layer.cornerRadius = LayoutAdapter.shared.scale(value: 37) / 2
+        button.clipsToBounds = true
+        button.tag = index // 참가자의 인덱스를 태그로 저장
+        
+        // 버튼 클릭 이벤트
+        button.addTarget(self, action: #selector(didTapParticipantButton(_:)), for: .touchUpInside)
+                    
+        participantStackView.addArrangedSubview(button)
+        button.layoutIfNeeded()
+    }
+    
+    func applyParticipantButtonStyle(button: GradientButton, isFeedExists: Bool, isSelected: Bool) {
+        button.layer.sublayers?.filter { $0.name == "gradientBackground" }.forEach { $0.removeFromSuperlayer() }
+
+        if isSelected {
+            // ✅ 작성 + 선택됨
+            button.applyGradientBackground(colors: [
+                UIColor.rgb(red: 187, green: 158, blue: 255).cgColor,
+                UIColor.rgb(red: 122, green: 93, blue: 249).cgColor
+            ])
+            button.layer.borderWidth = 0
+            button.setTitleColor(.white, for: .normal)
+        } else {
+            if isFeedExists {
+                // ✅ 작성 + 미선택
+                button.backgroundColor = .brandHighLight1 // 연보라
+                button.layer.borderWidth = 0
+                button.setTitleColor(.black22, for: .normal)
+            } else {
+                // ✅ 미작성 + 미선택
+                button.backgroundColor = .blackF0
+                button.layer.borderColor = UIColor.rgb(red: 230, green: 230, blue: 230).cgColor
+                button.layer.borderWidth = 1
+                button.setTitleColor(.black22, for: .normal)
+            }
+        }
+        
+//        if isFeedExists {
+//            if isSelected {
+//                // ✅ 작성 + 선택됨
+//                button.applyGradientBackground(colors: [
+//                    UIColor.rgb(red: 187, green: 158, blue: 255).cgColor,
+//                    UIColor.rgb(red: 122, green: 93, blue: 249).cgColor
+//                ])
+//                button.layer.borderWidth = 0
+//                button.setTitleColor(.white, for: .normal)
+//            } else {
+//                // ✅ 작성 + 미선택
+//                button.backgroundColor = .brandHighLight1 // 연보라
+//                button.layer.borderWidth = 0
+//                button.setTitleColor(.black22, for: .normal)
+//            }
+//        } else {
+//            // ❌ 미작성
+//            button.backgroundColor = .blackF0
+//            button.layer.borderColor = UIColor.rgb(red: 230, green: 230, blue: 230).cgColor
+//            button.layer.borderWidth = 1
+//            button.setTitleColor(.black22, for: .normal)
+//        }
+    }
+
+
+//    private func updateSelectedButton(_ button: GradientButton) {
+//        // 이전 버튼의 선택 상태 해제
+////        selectedButton?.applyGradientBorder(colors: [UIColor.rgb(red: 141, green: 103, blue: 255).cgColor, UIColor.rgb(red: 111, green: 77, blue: 215).cgColor], lineWidth: 1.5)
+//        selectedButton?.layer.sublayers?.filter { $0.name == "gradientBackground" }.forEach { $0.removeFromSuperlayer() }
+//        
+//        button.applyGradientBackground(colors: [UIColor.rgb(red: 187, green: 158, blue: 255).cgColor, UIColor.rgb(red: 122, green: 93, blue: 249).cgColor])
+//        button.layer.borderColor = UIColor.clear.cgColor
+//        
+//        selectedButton = button
+//    }
     private func updateSelectedButton(_ button: GradientButton) {
-        // 이전 버튼의 선택 상태 해제
-//        selectedButton?.applyGradientBorder(colors: [UIColor.rgb(red: 141, green: 103, blue: 255).cgColor, UIColor.rgb(red: 111, green: 77, blue: 215).cgColor], lineWidth: 1.5)
-        selectedButton?.layer.sublayers?.filter { $0.name == "gradientBackground" }.forEach { $0.removeFromSuperlayer() }
-        
-        button.applyGradientBackground(colors: [UIColor.rgb(red: 187, green: 158, blue: 255).cgColor, UIColor.rgb(red: 122, green: 93, blue: 249).cgColor])
-        button.layer.borderColor = UIColor.clear.cgColor
-        
+        // 이전 선택된 버튼 스타일 리셋
+        if let prevButton = selectedButton {
+            applyParticipantButtonStyle(button: prevButton, isFeedExists: prevButton.isFeedExists, isSelected: false)
+        }
+
+        // 새로 선택된 버튼 스타일 적용
+        applyParticipantButtonStyle(button: button, isFeedExists: button.isFeedExists, isSelected: true)
+
         selectedButton = button
     }
     

@@ -66,7 +66,7 @@
             }
         }
         
-        func configureParticipants(participants: [Info]) {
+        func configureParticipants(participants: [DetailFeedInfo]) {
             participantsBoxView.configureParticipantImages(participants: participants, delegate: self)
         }
         
