@@ -7,6 +7,8 @@
 
 import UIKit
 class GradientButton: UIButton {
+    var isFeedExists: Bool = false
+    
     private var gradientBorderColors: [CGColor] = []
     private var gradientBorderLineWidth: CGFloat = 0
     func applyGradientBackground(colors: [CGColor]) {

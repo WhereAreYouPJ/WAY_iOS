@@ -7,6 +7,13 @@
 
 import UIKit
 
+struct DetailFeedInfo: Codable {
+    let memberSeq: Int
+    let userName: String
+    let profileImageURL: String // 프로필 이미지
+    let isFeedExists: Bool
+}
+
 class FeedDetailViewModel {
     private let getFeedDetailsUseCase: GetFeedDetailsUseCase
     private let deleteFeedUseCase: DeleteFeedUseCase
@@ -34,6 +41,7 @@ class FeedDetailViewModel {
 //    }
         
     private var participants: [Info] = []
+    private var detailFeedParticipants: [DetailFeedInfo] = []
     
     // MARK: - Lifecycle
     init(getFeedDetailsUseCase: GetFeedDetailsUseCase,
@@ -87,8 +95,20 @@ class FeedDetailViewModel {
         }
     }
     
-    func getParticipants() -> [Info] {
-        return participants
+    func getParticipants() -> [DetailFeedInfo] {
+        var result: [DetailFeedInfo] = []  // 매번 새로운 배열 생성
+        
+        for participant in participants {
+            let hasFeed = displayFeedContent.contains { $0.memberSeq == participant.memberSeq }
+            let detailInfo = DetailFeedInfo(
+                memberSeq: participant.memberSeq,
+                userName: participant.userName,
+                profileImageURL: participant.profileImageURL,
+                isFeedExists: hasFeed
+            )
+            result.append(detailInfo)
+        }
+        return result
     }
     
     // 특정 참가자의 피드 작성 여부 확인
