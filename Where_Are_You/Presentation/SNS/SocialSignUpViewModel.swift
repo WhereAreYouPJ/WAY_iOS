@@ -11,6 +11,7 @@ class SocialSignUpViewModel {
     
     // MARK: - Properties
     private let appleJoinUseCase: AppleJoinUseCase
+    private let kakaoJoinUseCase: KakaoJoinUseCase
     
     var onEmailDuplicate: (([String]) -> Void)?
     var onSignUpSuccess: (() -> Void)?
@@ -19,13 +20,29 @@ class SocialSignUpViewModel {
     var onUserNameValidationMessage: ((String, Bool) -> Void)?
     
     // MARK: - LifeCycle
-    init(appleJoinUseCae: AppleJoinUseCase) {
+    init(
+        appleJoinUseCae: AppleJoinUseCase,
+        kakaoJoinUseCase: KakaoJoinUseCase
+    ) {
         self.appleJoinUseCase = appleJoinUseCae
+        self.kakaoJoinUseCase = kakaoJoinUseCase
     }
     
     // MARK: - Helpers
     func appleJoin(userName: String, code: String) {
         appleJoinUseCase.execute(userName: userName, code: code) { result in
+            switch result {
+            case .success:
+                self.onSignUpSuccess?()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func kakaoJoin(userName: String, code: String) {
+        let body = KakaoJoinBody(userName: userName, code: code)
+        kakaoJoinUseCase.execute(request: body) { result in
             switch result {
             case .success:
                 self.onSignUpSuccess?()
