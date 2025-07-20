@@ -86,11 +86,8 @@ class LoginViewController: UIViewController {
         
         // 회원가입이 필요한 경우 TODO: 추후 소셜 회원가입 로직 수정되면 해당 코드 수정되어야.
         snsLoginViewModel.onNeedKakaoSignup = { [weak self] authCode in
-            DispatchQueue.main.async {
-                // 카카오 회원가입 화면으로 이동
-                let signUpVC = SocialSignUpViewController(code: authCode, userName: "", snsType: .kakao)
-                self?.pushToViewController(signUpVC)
-            }
+            let controller = TermsAgreementViewController(snsType: .kakao, code: authCode)
+            self?.pushToViewController(controller)
         }
     }
     
@@ -156,6 +153,7 @@ class LoginViewController: UIViewController {
                 print("카카오 계정 로그인 실패: \(error)")
             } else if let token = oauthToken {
                 print("카카오 계정 로그인 성공")
+                print("kakaoLoginWithAccount access token: \(token.accessToken), idToken: \(token.idToken ?? "")")
                 self.snsLoginViewModel.kakaoLogin(authCode: token.accessToken)
             }
         }

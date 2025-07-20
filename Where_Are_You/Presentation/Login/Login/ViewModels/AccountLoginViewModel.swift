@@ -17,7 +17,8 @@ class AccountLoginViewModel {
     var onAppleLoginState: ((Bool, String) -> Void)?
 
     init(accountLoginUseCase: AccountLoginUseCase,
-         appleLoginUseCase: AppleLoginUseCase) {
+         appleLoginUseCase: AppleLoginUseCase
+    ) {
         self.accountLoginUseCase = accountLoginUseCase
         self.appleLoginUseCase = appleLoginUseCase
     }
@@ -41,6 +42,7 @@ class AccountLoginViewModel {
     // 실패시 agreeTermViewcontroller로 이동해서 회원가입 진행
     func appleLogin(code: String) {
         let fcmToken = UserDefaultsManager.shared.getFcmToken()
+        print("code: \(code), fcmToken: \(fcmToken)")
         appleLoginUseCase.execute(code: code, fcmToken: fcmToken) { result in
             switch result {
             case .success:

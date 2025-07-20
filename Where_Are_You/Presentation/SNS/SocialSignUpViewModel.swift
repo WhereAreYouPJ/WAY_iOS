@@ -30,6 +30,7 @@ class SocialSignUpViewModel {
     
     // MARK: - Helpers
     func appleJoin(userName: String, code: String) {
+        print("userName: \(userName), code: \(code)")
         appleJoinUseCase.execute(userName: userName, code: code) { result in
             switch result {
             case .success:
@@ -42,12 +43,15 @@ class SocialSignUpViewModel {
     
     func kakaoJoin(userName: String, code: String) {
         let body = KakaoJoinBody(userName: userName, code: code)
+        print("userName: \(userName), code: \(code)")
         kakaoJoinUseCase.execute(request: body) { result in
             switch result {
             case .success:
                 self.onSignUpSuccess?()
+                print("SocialSignUpViewModel: KakaoJoin success")
             case .failure(let error):
                 print(error.localizedDescription)
+                print("SocialSignUpViewModel: KakaoJoin failed")
             }
         }
     }

@@ -93,10 +93,15 @@ class SocialSignUpViewController: UIViewController {
     }
     
     @objc private func signupButtonTapped() {
+        guard let currentUserName = socialSignUpView.userNameTextField.text, !currentUserName.isEmpty else {
+            print("⚠️ 사용자 이름이 입력되지 않았습니다")
+            return
+        }
+        
         if snsType == .apple {
-            viewModel.appleJoin(userName: userName, code: code)
+            viewModel.appleJoin(userName: currentUserName, code: code)
         } else {
-            viewModel.kakaoJoin(userName: userName, code: code)
+            viewModel.kakaoJoin(userName: currentUserName, code: code)
         }
     }
     
