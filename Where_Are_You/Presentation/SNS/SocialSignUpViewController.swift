@@ -47,7 +47,9 @@ class SocialSignUpViewController: UIViewController {
         let memberService = MemberService()
         let memberRepository = MemberRepository(memberService: memberService)
         viewModel = SocialSignUpViewModel(
-            appleJoinUseCae: AppleJoinUseCaseImpl(memberRepository: memberRepository))
+            appleJoinUseCae: AppleJoinUseCaseImpl(memberRepository: memberRepository),
+            kakaoJoinUseCase: KakaoJoinUseCaseImpl(memberRepository: memberRepository)
+        )
     }
     
     private func setupBindings() {
@@ -91,12 +93,15 @@ class SocialSignUpViewController: UIViewController {
     }
     
     @objc private func signupButtonTapped() {
-        guard let userName = socialSignUpView.userNameTextField.text else { return }
+        guard let currentUserName = socialSignUpView.userNameTextField.text, !currentUserName.isEmpty else {
+            print("⚠️ 사용자 이름이 입력되지 않았습니다")
+            return
+        }
         
         if snsType == .apple {
-            viewModel.appleJoin(userName: userName, code: code)
+            viewModel.appleJoin(userName: currentUserName, code: code)
         } else {
-            // 카카오 회원가입 - 주희님
+            viewModel.kakaoJoin(userName: currentUserName, code: code)
         }
     }
     

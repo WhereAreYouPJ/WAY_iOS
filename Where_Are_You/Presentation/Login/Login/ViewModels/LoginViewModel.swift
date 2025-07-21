@@ -21,6 +21,7 @@ class LoginViewModel {
         let fcmToken = UserDefaultsManager.shared.getFcmToken()
         
         kakaoLoginUseCase.execute(request: KakaoLoginBody(code: authCode, fcmToken: fcmToken)) { result in
+            print("LoginViewModel - kakaoLogin code: \(authCode), fcmToken: \(fcmToken)")
             switch result {
             case .success:
                 self.onLoginResult?(.success(()))
