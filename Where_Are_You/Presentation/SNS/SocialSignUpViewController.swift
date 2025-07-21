@@ -91,6 +91,8 @@ class SocialSignUpViewController: UIViewController {
     }
     
     @objc private func signupButtonTapped() {
+        guard let userName = socialSignUpView.userNameTextField.text else { return }
+        
         if snsType == .apple {
             viewModel.appleJoin(userName: userName, code: code)
         } else {

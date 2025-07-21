@@ -54,7 +54,7 @@ class FriendFeedTitleView: UIView {
     private lazy var barButtonStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [searchFriendButton, notificationButton, addButton])
         stackView.axis = .horizontal
-        stackView.spacing = 8
+        stackView.spacing = LayoutAdapter.shared.scale(value: 9)
         stackView.distribution = .fillEqually
         return stackView
     }()
@@ -91,8 +91,8 @@ class FriendFeedTitleView: UIView {
             make.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
         }
         
-        addButton.snp.makeConstraints { make in
-            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 24))
-        }
+//        addButton.snp.makeConstraints { make in
+//            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 24))
+//        }
     }
 }
