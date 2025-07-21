@@ -56,7 +56,7 @@ struct ScheduleView: View {
                             })
                         }
                     }
-                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 15))
+                    .padding(.horizontal, LayoutAdapter.shared.scale(value: 14))
                     .padding(.top, LayoutAdapter.shared.scale(value: 14))
                     
                     weekdayView
