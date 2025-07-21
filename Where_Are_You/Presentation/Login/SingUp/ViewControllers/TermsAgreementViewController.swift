@@ -149,8 +149,6 @@ class TermsAgreementViewController: UIViewController {
         }
         
         let controller = TermsWebViewController(title: title, urlString: url)
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true)
+        rootToViewcontroller(controller)
     }
 }

@@ -75,7 +75,6 @@ class MyPageViewController: UIViewController {
                 self?.email = memberDetails.email ?? ""
                 self?.userName = memberDetails.userName
                 self?.myPageView.configureUI(member: member)
-                print("\(member.userName)의 memberSeq는: \(UserDefaultsManager.shared.getMemberSeq())")
             }
         }
         
@@ -84,7 +83,6 @@ class MyPageViewController: UIViewController {
                 // 이미지 업로드 성공 시 UI 반영
                 if let updatedImage = self?.myPageView.profileImageView.image {
                     self?.myPageView.profileImageView.image = updatedImage
-                    print("프로필 이미지가 성공적으로 업데이트되었습니다.")
                 }
             }
         }
@@ -102,23 +100,24 @@ class MyPageViewController: UIViewController {
     
     // MARK: - Selectors
     @objc func logoutButtonTapped() {
+        // Handle "로그아웃"
         let alert = CustomAlert(
             title: "로그아웃",
             message: "로그아웃을 진행하시겠습니까?",
             cancelTitle: "취소",
             actionTitle: "확인"
         ) { [weak self] in
-            self?.navigateToLogin()
-            UserDefaultsManager.shared.clearData()
-//                self?.viewModel.logout()
+//            self?.navigateToLogin()
+//            UserDefaultsManager.shared.clearData()
+                self?.viewModel.logout()
             }
         alert.showAlert(on: self)
     }
     
     @objc func deleteAccountButtonTapped() {
-        // 회원탈퇴 버튼 눌림
+        // Handle "회원 탈퇴"
         let controller = AgreementAcountDeletionViewController(userName: userName)
-        pushToViewController(controller)
+        pushAndHideTabViewController(controller)
     }
     
     @objc private func editImage() {
@@ -129,22 +128,22 @@ class MyPageViewController: UIViewController {
         switch sender.tag {
         case 0:
             // Handle "내 정보 관리"
-            pushToViewController(MyDetailManageViewcontroller(userName: userName, email: email))
+            pushAndHideTabViewController(MyDetailManageViewcontroller(userName: userName, email: email))
         case 1:
             // Handle "위치 즐겨찾기"
-            pushToViewController(LocationBookmarkViewController())
+            pushAndHideTabViewController(LocationBookmarkViewController())
         case 2:
             // Handle "피드 책갈피"
-            pushToViewController(FeedBookMarkViewController())
+            pushAndHideTabViewController(FeedBookMarkViewController())
         case 3:
             // Handle "피드 보관함"
-            pushToViewController(FeedArchiveViewController())
+            pushAndHideTabViewController(FeedArchiveViewController())
         case 4:
             // Handle "공지사항"
-            pushToViewController(AnnouncmentListViewController())
+            pushAndHideTabViewController(AnnouncmentListViewController())
         case 5:
             // Handle "1:1 이용문의"
-            pushToViewController(InquiryViewController())
+            pushAndHideTabViewController(InquiryViewController())
         default:
             break
         }

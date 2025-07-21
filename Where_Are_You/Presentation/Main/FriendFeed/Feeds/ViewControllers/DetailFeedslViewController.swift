@@ -151,9 +151,7 @@ class FeedDetailViewController: UIViewController {
             guard let scheduleSeq = feed.scheduleSeq else { return }
             self?.viewModel.fetchDetailFeeds(scheduleSeq: scheduleSeq)
         }
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true)
+        pushAndHideTabViewController(controller)
     }
     
     private func hideFeed(_ feed: Feed) {
@@ -175,7 +173,7 @@ class FeedDetailViewController: UIViewController {
     // MARK: - Selectors
     
     @objc func backButtonTapped() {
-        dismiss(animated: true)
+        popViewController()
     }
     
     @objc func addButtonTapped() {
@@ -200,9 +198,7 @@ class FeedDetailViewController: UIViewController {
             guard let scheduleSeq = self?.representFeed.scheduleSeq else { return }
             self?.viewModel.fetchDetailFeeds(scheduleSeq: scheduleSeq)
         }
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true)
+        pushAndHideTabViewController(controller)
     }
 }
 

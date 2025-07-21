@@ -131,8 +131,6 @@ class MainHomeViewController: UIViewController {
     @objc private func moveToNotification() {
         let notificationView = NotificationView()
         let hostingController = UIHostingController(rootView: notificationView)
-//        hostingController.modalPresentationStyle = .fullScreen
-//        present(hostingController, animated: true)
         pushToViewController(hostingController)
     }
 }
