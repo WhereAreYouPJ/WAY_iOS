@@ -74,9 +74,7 @@ class LoginViewController: UIViewController {
                 switch result {
                 case .success: // 로그인 성공 -> 메인 화면으로
                     let controller = MainTabBarController()
-                    let nav = UINavigationController(rootViewController: controller)
-                    nav.modalPresentationStyle = .fullScreen
-                    self?.present(nav, animated: true, completion: nil)
+                    self?.rootToViewcontroller(controller)
                 case .failure(let error): // 로그인 실패
                     print("카카오 로그인 실패: \(error)")
                     self?.view.makeToast("로그인에 실패했습니다.", duration: 2.0)

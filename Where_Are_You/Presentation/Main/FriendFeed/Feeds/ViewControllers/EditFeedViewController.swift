@@ -68,7 +68,7 @@ class EditFeedViewController: UIViewController {
     private func setupBindings() {
         viewModel.onEditFeed = { [weak self] in
             DispatchQueue.main.async {
-                self?.dismiss(animated: true)
+                self?.popViewController()
             }
         }
     }
@@ -116,7 +116,7 @@ class EditFeedViewController: UIViewController {
     }
     
     @objc func backButtonTapped() {
-        dismiss(animated: true)
+        popViewController()
     }
     
     @objc func editFeedButtonTapped() {

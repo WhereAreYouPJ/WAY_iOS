@@ -42,6 +42,11 @@ extension UIViewController {
         }
     }
     
+    func pushAndHideTabViewController(_ controller: UIViewController) {
+        controller.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
     func popViewController() {
         navigationController?.popViewController(animated: true)
     }
