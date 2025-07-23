@@ -50,6 +50,13 @@ class MyPageView: UIView {
     
     let userCodeLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "유저 코드", textColor: .brandDark))
     
+    lazy var codeStackView: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [myCodeLabel, userCodeLabel])
+        sv.spacing = LayoutAdapter.shared.scale(value: 8)
+        sv.axis = .horizontal
+        return sv
+    }()
+    
     // 내정보관리, 위치 즐겨찾기, 피드책갈피, 피드보관함
     private lazy var manageStackView: UIStackView = createStackView(buttonTitles: ["내 정보 관리", "위치 즐겨찾기", "피드 책갈피", "피드 보관함"], startingTag: 0)
     
@@ -104,8 +111,9 @@ class MyPageView: UIView {
         profileBackgroundView.addSubview(moveToGallery)
         
         addSubview(userCodeBackgroundView)
-        userCodeBackgroundView.addSubview(myCodeLabel)
-        userCodeBackgroundView.addSubview(userCodeLabel)
+        userCodeBackgroundView.addSubview(codeStackView)
+//        userCodeBackgroundView.addSubview(myCodeLabel)
+//        userCodeBackgroundView.addSubview(userCodeLabel)
 
         addSubview(manageStackView)
         addSubview(supportStackView)
@@ -153,14 +161,8 @@ class MyPageView: UIView {
             make.leading.trailing.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 24))
         }
         
-        myCodeLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 111))
-            make.centerY.equalToSuperview()
-        }
-        
-        userCodeLabel.snp.makeConstraints { make in
-            make.leading.equalTo(myCodeLabel.snp.trailing).offset(LayoutAdapter.shared.scale(value: 8))
-            make.centerY.equalToSuperview()
+        codeStackView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
         
         // 내정보관리, 위치 즐겨찾기, 피드책갈피, 피드보관함

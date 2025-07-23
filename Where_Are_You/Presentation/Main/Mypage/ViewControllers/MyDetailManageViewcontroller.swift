@@ -68,8 +68,8 @@ class MyDetailManageViewcontroller: UIViewController {
         mydetailManageView.updateDetailButton.addTarget(self, action: #selector(updateDetailButtonTapped), for: .touchUpInside)
         mydetailManageView.userNameTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
 
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
-        view.addGestureRecognizer(tapGesture)
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
+//        view.addGestureRecognizer(tapGesture)
     }
    
     // 초기 설정

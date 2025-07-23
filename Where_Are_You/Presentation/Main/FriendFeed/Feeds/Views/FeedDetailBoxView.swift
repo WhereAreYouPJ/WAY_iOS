@@ -45,12 +45,28 @@ class FeedDetailBoxView: UIView {
         
     var titleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "t", textColor: .black22))
 
+//    private lazy var radialGradient: CAGradientLayer = {
+//        let gradient = CAGradientLayer()
+//        gradient.type = .radial
+//        gradient.colors = [
+//            UIColor.rgb(red: 247, green: 247, blue: 247).cgColor,
+//            UIColor.blackAC.cgColor
+//        ]
+//        gradient.locations = [0, 1]
+//        
+//        // (0,0)이 원의 중심, (1,1)이 원의 테두리
+//        gradient.startPoint = CGPoint(x: 0, y: 0)
+//        gradient.endPoint = CGPoint(x: 1, y: 1)
+//        return gradient
+//    }()
+    
     let participantBoxView: UIView = {
         let view = UIView()
         view.layer.borderColor = UIColor.blackF8.cgColor
-        view.backgroundColor = .blackAC
         view.layer.borderWidth = 1
+        view.backgroundColor = UIColor.rgb(red: 247, green: 247, blue: 247)
         view.layer.cornerRadius = LayoutAdapter.shared.scale(value: 19)
+        view.clipsToBounds = true
         view.snp.makeConstraints { make in
             make.height.equalTo(LayoutAdapter.shared.scale(value: 38))
         }
@@ -82,6 +98,7 @@ class FeedDetailBoxView: UIView {
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
+//        participantBoxView.layer.addSublayer(radialGradient)
         configureViewComponents()
         setupConstraints()
     }
@@ -89,6 +106,14 @@ class FeedDetailBoxView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        radialGradient.frame = participantBoxView.bounds
+//        
+//        print("Gradient Frame:", radialGradient.frame)
+//        print("ParticipantBox Frame:", participantBoxView.frame)
+//    }
     
     // MARK: - Helpers
     

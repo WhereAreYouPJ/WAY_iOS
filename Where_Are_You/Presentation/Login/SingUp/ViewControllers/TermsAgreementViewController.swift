@@ -149,6 +149,6 @@ class TermsAgreementViewController: UIViewController {
         }
         
         let controller = TermsWebViewController(title: title, urlString: url)
-        rootToViewcontroller(controller)
+        pushToViewController(controller)
     }
 }
