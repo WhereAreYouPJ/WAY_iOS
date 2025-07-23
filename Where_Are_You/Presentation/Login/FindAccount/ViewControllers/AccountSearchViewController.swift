@@ -93,7 +93,8 @@ class AccountSearchViewController: UIViewController {
         // 타이머 업데이트
         viewModel.onUpdateTimer = { [weak self] timeString in
             DispatchQueue.main.async {
-                self?.accountSearchView.timer.updateTextKeepingAttributes(newText: timeString)
+                self?.accountSearchView.timer.updateText(UIFont.CustomFont.bodyP4(text: timeString, textColor: .error))
+//                    .updateTextKeepingAttributes(newText: timeString)
             }
         }
     }

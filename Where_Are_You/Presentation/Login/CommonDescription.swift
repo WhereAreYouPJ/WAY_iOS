@@ -15,7 +15,7 @@ let invalidPasswordMessage = "영문 소문자, 숫자, 특수문자만 사용�
 let checkPasswordFailureMessage = "비밀번호가 일치하지 않습니다."
 
 // 이메일 전송, 인증
-let invalidEmailMessage = "유효하지 않은 이메일 형식입니다."
+let invalidEmailMessage = "올바른 이메일 주소가 아닙니다."
 let duplicateEmailFailureMessage = "이미 가입한 이메일입니다."
 let sendEmailVerifyCodeSuccessMessage = "인증코드가 전송되었습니다."
 let emailVerifyExpiredMessage = "이메일 재인증 요청이 필요합니다."

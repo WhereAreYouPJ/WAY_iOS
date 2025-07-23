@@ -14,6 +14,14 @@ class FeedArchiveViewController: UIViewController {
         view.configureUI(descriptionText: "아직은 숨긴 피드가 없어요. \n숨긴 피드는 이곳에서 복원이 가능해요.")
         return view
     }()
+    
+    private let loadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.color = .lightGray
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+    
     private var optionsView = MultiCustomOptionsContainerView()
 
     var viewModel: FeedArchiveViewModel!
@@ -87,6 +95,23 @@ class FeedArchiveViewController: UIViewController {
     private func setupActions() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleOutsideTap(_:)))
         view.addGestureRecognizer(tapGesture)
+    }
+    
+    func showLoadingFooter() {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: feedArchiveView.feedsTableView.bounds.width, height: 50))
+        footerView.addSubview(loadingIndicator)
+        
+        loadingIndicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
+        feedArchiveView.feedsTableView.tableFooterView = footerView
+        loadingIndicator.startAnimating()
+    }
+    
+    func hideLoadingFooter() {
+        loadingIndicator.stopAnimating()
+        feedArchiveView.feedsTableView.tableFooterView = nil
     }
     
     private func showOptions(for feed: Feed, at frame: CGRect, isAuthor: Bool) {
@@ -164,10 +189,8 @@ extension FeedArchiveViewController: FeedsTableViewCellDelegate {
     }
     
     func didTapFeedFixButton(feed: Feed, buttonFrame: CGRect) {
-        let convertedFrame = view.convert(buttonFrame, from: nil) // ViewController 기준으로 변환
         let isAuthor = feed.memberSeq == UserDefaultsManager.shared.getMemberSeq()
-        
-        showOptions(for: feed, at: convertedFrame, isAuthor: isAuthor)
+        showOptions(for: feed, at: buttonFrame, isAuthor: isAuthor)
     }
 }
 
@@ -190,5 +213,33 @@ extension FeedArchiveViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    // MARK: - 테이블뷰 스크롤시 optionView 사라지게
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        dismissFeedOptionIfNeeded()
+    }
+    
+    func dismissFeedOptionIfNeeded() {
+        if optionsView.isDescendant(of: self.view) {
+            optionsView.removeFromSuperview()
+        }
+    }
+    
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        let currentOffset = scrollView.contentOffset.y // frame영역의 origin에 비교했을때의 content view의 현재 origin 위치
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height // 화면에는 frame만큼 가득 찰 수 있기때문에 frame의 height를 빼준 것
+
+        // 스크롤 할 수 있는 영역보다 더 스크롤된 경우 (하단에서 스크롤이 더 된 경우)
+        if maximumOffset < currentOffset {
+            showLoadingFooter()
+            viewModel.fetchArchiveFeed()
+            
+            // 예시로 로딩 사라지게
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.hideLoadingFooter()
+            }
+        }
     }
 }

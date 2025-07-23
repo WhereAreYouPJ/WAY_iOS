@@ -47,7 +47,7 @@ class FeedArchiveViewModel {
             case .success(let data):
                 self.page += 1
                 self.rawArchiveFeedContent = data
-                self.displayArchiveFeedContent = rawArchiveFeedContent.compactMap { $0.toFeeds() }
+                self.displayArchiveFeedContent.append(contentsOf: data.compactMap { $0.toFeeds() })
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -58,6 +58,9 @@ class FeedArchiveViewModel {
         deleteFeedUseCase.execute(request: DeleteFeedRequest(memberSeq: memberSeq, feedSeq: feedSeq)) { [weak self] result in
             switch result {
             case .success:
+                if let index = self?.displayArchiveFeedContent.firstIndex(where: { $0.feedSeq == feedSeq }) {
+                    self?.displayArchiveFeedContent.remove(at: index)
+                }
                 self?.onArchiveFeedUpdated?()
             case .failure(let error):
                 print(error.localizedDescription)

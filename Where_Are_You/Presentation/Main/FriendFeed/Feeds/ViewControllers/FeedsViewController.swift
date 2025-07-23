@@ -262,6 +262,19 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource {
         return UITableView.automaticDimension
     }
     
+    // MARK: - 테이블뷰 스크롤시 optionView 사라지게
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        dismissFeedOptionIfNeeded()
+    }
+    
+    func dismissFeedOptionIfNeeded() {
+        if optionsView.isDescendant(of: self.view) {
+            optionsView.removeFromSuperview()
+        }
+        plusOptionButton.isHidden = true
+    }
+    
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
         let currentOffset = scrollView.contentOffset.y // frame영역의 origin에 비교했을때의 content view의 현재 origin 위치
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height // 화면에는 frame만큼 가득 찰 수 있기때문에 frame의 height를 빼준 것

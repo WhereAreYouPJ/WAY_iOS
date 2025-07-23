@@ -52,7 +52,7 @@ class FeedBookMarkViewModel {
                 self.page += 1
                 self.rawBookMarkFeedContent = data
                 
-                self.displayBookMarkFeedContent = rawBookMarkFeedContent.compactMap { $0.toFeeds() }
+                self.displayBookMarkFeedContent.append(contentsOf: data.compactMap { $0.toFeeds() })
                 self.onBookMarkFeedUpdated?()
                 self.delegate?.didUpdateBookMarkFeed()
             case .failure(let error):
@@ -90,6 +90,9 @@ class FeedBookMarkViewModel {
         deleteFeedUseCase.execute(request: DeleteFeedRequest(memberSeq: memberSeq, feedSeq: feedSeq)) { [weak self] result in
             switch result {
             case .success:
+                if let index = self?.displayBookMarkFeedContent.firstIndex(where: { $0.feedSeq == feedSeq }) {
+                    self?.displayBookMarkFeedContent.remove(at: index)
+                }
                 self?.onBookMarkFeedUpdated?()
             case .failure(let error):
                 print(error.localizedDescription)

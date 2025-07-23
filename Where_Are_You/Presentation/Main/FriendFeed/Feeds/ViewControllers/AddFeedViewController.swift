@@ -71,7 +71,7 @@ class AddFeedViewController: UIViewController {
 
         addFeedView.scheduleDropDown.dropDownTableView.separatorInset = .zero
         addFeedView.scheduleDropDown.dropDownTableView.contentInset = .zero
-        addFeedView.scheduleDropDown.dropDownTableView.sectionHeaderTopPadding = 0 //상단 여백 해결
+        addFeedView.scheduleDropDown.dropDownTableView.sectionHeaderTopPadding = 0
         addFeedView.scheduleDropDown.dropDownTableView.layoutMargins = .zero
     }
     
@@ -158,10 +158,10 @@ class AddFeedViewController: UIViewController {
     func checkUploadAvailability() {
         if scheduleSelected, let title = addFeedView.titleTextField.text, !title.isEmpty {
             addFeedView.creatFeedButton.updateBackgroundColor(.brandMain)
-            addFeedView.creatFeedButton.isEnabled = false
+            addFeedView.creatFeedButton.isEnabled = true
         } else {
             addFeedView.creatFeedButton.updateBackgroundColor(.blackAC)
-            addFeedView.creatFeedButton.isEnabled = true
+            addFeedView.creatFeedButton.isEnabled = false
         }
     }
     
