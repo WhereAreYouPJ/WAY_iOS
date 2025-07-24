@@ -42,29 +42,17 @@ class FeedDetailBoxView: UIView {
     }()
     
     var locationLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "l", textColor: .black66))
-        
+    
     var titleLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP3(text: "t", textColor: .black22))
-
-//    private lazy var radialGradient: CAGradientLayer = {
-//        let gradient = CAGradientLayer()
-//        gradient.type = .radial
-//        gradient.colors = [
-//            UIColor.rgb(red: 247, green: 247, blue: 247).cgColor,
-//            UIColor.blackAC.cgColor
-//        ]
-//        gradient.locations = [0, 1]
-//        
-//        // (0,0)이 원의 중심, (1,1)이 원의 테두리
-//        gradient.startPoint = CGPoint(x: 0, y: 0)
-//        gradient.endPoint = CGPoint(x: 1, y: 1)
-//        return gradient
-//    }()
+    
+    private let radialGradient = CAGradientLayer()
+    private let borderGradient = CAGradientLayer()
+    private let borderMask = CAShapeLayer()
     
     let participantBoxView: UIView = {
         let view = UIView()
         view.layer.borderColor = UIColor.blackF8.cgColor
         view.layer.borderWidth = 1
-        view.backgroundColor = UIColor.rgb(red: 247, green: 247, blue: 247)
         view.layer.cornerRadius = LayoutAdapter.shared.scale(value: 19)
         view.clipsToBounds = true
         view.snp.makeConstraints { make in
@@ -98,7 +86,7 @@ class FeedDetailBoxView: UIView {
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        participantBoxView.layer.addSublayer(radialGradient)
+        setupGradients()
         configureViewComponents()
         setupConstraints()
     }
@@ -107,15 +95,47 @@ class FeedDetailBoxView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        radialGradient.frame = participantBoxView.bounds
-//        
-//        print("Gradient Frame:", radialGradient.frame)
-//        print("ParticipantBox Frame:", participantBoxView.frame)
-//    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        // 🔹 radial frame 업데이트
+        radialGradient.frame = participantBoxView.bounds
+        
+        // 🔹 borderGradient + mask path 업데이트
+        borderGradient.frame = participantBoxView.bounds
+        let cornerRadius = LayoutAdapter.shared.scale(value: 19)
+        let path = UIBezierPath(
+            roundedRect: participantBoxView.bounds,
+            cornerRadius: cornerRadius
+        ).cgPath
+        borderMask.path = path
+        
+        print("Gradient Frame:", radialGradient.frame)
+        print("ParticipantBox Frame:", participantBoxView.frame)
+    }
     
     // MARK: - Helpers
+    private func setupGradients() {
+        // 🔹 Radial gradient 설정
+        radialGradient.type = .radial
+        radialGradient.colors = [
+            UIColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1.00).cgColor,
+            UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.00).cgColor
+        ]
+        radialGradient.locations = [0, 1]
+        radialGradient.startPoint = CGPoint(x: 0.5, y: 0.5)
+        radialGradient.endPoint = CGPoint(x: 1, y: 1)
+        participantBoxView.layer.insertSublayer(radialGradient, at: 0)
+        
+        // 🔹 Linear gradient 설정
+        borderGradient.colors = [
+            UIColor(red: 0.97, green: 0.97, blue: 0.97, alpha: 1.00).cgColor,
+            UIColor(red: 0.91, green: 0.91, blue: 0.91, alpha: 1.00).cgColor
+        ]
+        borderGradient.startPoint = CGPoint(x: 0, y: 0)
+        borderGradient.endPoint = CGPoint(x: 1, y: 1)
+        borderGradient.mask = borderMask
+        participantBoxView.layer.addSublayer(borderGradient)
+    }
     
     private func configureViewComponents() {
         addSubview(detailBox)
@@ -132,7 +152,7 @@ class FeedDetailBoxView: UIView {
         
         userNameLabel.setContentHuggingPriority(.required, for: .horizontal)
         userNameLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
-
+        
         locationLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         locationLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
     }
@@ -141,7 +161,7 @@ class FeedDetailBoxView: UIView {
         detailBox.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-       
+        
         profileImage.snp.makeConstraints { make in
             make.height.width.equalTo(LayoutAdapter.shared.scale(value: 56))
             make.top.bottom.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 4))
@@ -211,7 +231,7 @@ class FeedDetailBoxView: UIView {
         let scheduleFriendInfos = feed.scheduleFriendInfos ?? []
         let memberSeq = feed.memberSeq
         let participants = scheduleFriendInfos.compactMap { $0 }.filter { $0.memberSeq != memberSeq }.map { $0.profileImageURL }
-
+        
         configureParticipantImages(participants: participants)
         profileImage.kf.setImage(with: URL(string: feed.profileImageURL), placeholder: UIImage(named: "basic_profile_image"))
         userNameLabel.updateTextKeepingAttributes(newText: feed.userName)

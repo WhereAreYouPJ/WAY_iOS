@@ -43,7 +43,9 @@ class TermsAgreementView: UIView {
         view.layer.cornerRadius = 24
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
-        let shadowPath = UIBezierPath(roundedRect: CGRect(x: 0, y: -6, width: UIScreen.main.bounds.width, height: 192 + 6), cornerRadius: 24)
+        let shadowHeight: CGFloat = 6
+        let shadowRect = CGRect(x: 0, y: -shadowHeight, width: UIScreen.main.bounds.width, height: shadowHeight)
+        let shadowPath = UIBezierPath(roundedRect: shadowRect, cornerRadius: 24)
         view.layer.shadowPath = shadowPath.cgPath
         return view
     }()
@@ -115,7 +117,7 @@ class TermsAgreementView: UIView {
         }
         
         agreeTermButton.snp.makeConstraints { make in
-            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 20))
+            make.width.equalTo(agreeTermButton.snp.height)
         }
         
         termTitleStackView.snp.makeConstraints { make in
@@ -141,7 +143,7 @@ class TermsAgreementView: UIView {
         checkButton.tag = index
         checkButtons.append(checkButton)
         checkButton.snp.makeConstraints { make in
-            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 20))
+            make.width.equalTo(checkButton.snp.height)
         }
         
         // 약관 제목을 표시하는 라벨
@@ -152,6 +154,9 @@ class TermsAgreementView: UIView {
         viewButton.snp.makeConstraints { make in
             make.height.equalTo(22)
         }
+        //라벨과 버튼 사이의 공간을 유연하게 분배하려면 라벨의 content hugging priority를 낮게 설정 가능
+        viewButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        
         termButtons.append(viewButton)
         
         let contentStack = UIStackView(arrangedSubviews: [checkButton, titleLabel])
@@ -161,11 +166,6 @@ class TermsAgreementView: UIView {
         rowStack.axis = .horizontal
         rowStack.spacing = 0
         rowStack.distribution = .equalSpacing
-        return rowStack
-        
-        //라벨과 버튼 사이의 공간을 유연하게 분배하려면 라벨의 content hugging priority를 낮게 설정 가능
-        viewButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        
         return rowStack
     }
     
