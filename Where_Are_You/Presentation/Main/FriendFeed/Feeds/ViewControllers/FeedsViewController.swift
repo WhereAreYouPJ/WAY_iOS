@@ -170,9 +170,7 @@ class FeedsViewController: UIViewController {
         controller.onFeedEdited = { [weak self] in
             self?.viewModel.fetchFeeds()
         }
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true)
+        pushAndHideTabViewController(controller)
     }
     
     private func hideFeed(_ feed: Feed) {
@@ -208,9 +206,7 @@ class FeedsViewController: UIViewController {
         controller.onFeedCreated = { [weak self] in
             self?.viewModel.fetchFeeds()
         }
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true) // 또는 navigationController?.pushViewController(...)
+        pushAndHideTabViewController(controller)
     }
 }
 
@@ -240,9 +236,7 @@ extension FeedsViewController: FeedsTableViewCellDelegate {
     
     func didSelectFeed(feed: Feed) {
         let controller = FeedDetailViewController(feed: feed)
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true)
+        pushAndHideTabViewController(controller)
     }
 }
 
@@ -266,6 +260,19 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    // MARK: - 테이블뷰 스크롤시 optionView 사라지게
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        dismissFeedOptionIfNeeded()
+    }
+    
+    func dismissFeedOptionIfNeeded() {
+        if optionsView.isDescendant(of: self.view) {
+            optionsView.removeFromSuperview()
+        }
+        plusOptionButton.isHidden = true
     }
     
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {

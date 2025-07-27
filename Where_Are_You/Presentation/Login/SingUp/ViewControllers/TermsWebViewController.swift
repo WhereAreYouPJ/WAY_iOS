@@ -32,6 +32,8 @@ class TermsWebViewController: UIViewController {
         setupNavigationBar()
         setupWebView()
         loadURL()
+        
+        configureNavigationBar(title: titleText, backButtonAction: #selector(dismissView), showBackButton: true)
     }
     
     // MARK: - Setup
@@ -61,6 +63,7 @@ class TermsWebViewController: UIViewController {
     
     // MARK: - Actions
     @objc private func dismissView() {
-        dismiss(animated: true)
+//        dismiss(animated: true)
+        popViewController()
     }
 }

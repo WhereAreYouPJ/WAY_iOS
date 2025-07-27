@@ -93,7 +93,8 @@ class AccountSearchViewController: UIViewController {
         // 타이머 업데이트
         viewModel.onUpdateTimer = { [weak self] timeString in
             DispatchQueue.main.async {
-                self?.accountSearchView.timer.updateTextKeepingAttributes(newText: timeString)
+                self?.accountSearchView.timer.updateText(UIFont.CustomFont.bodyP4(text: timeString, textColor: .error))
+//                    .updateTextKeepingAttributes(newText: timeString)
             }
         }
     }
@@ -127,15 +128,33 @@ class AccountSearchViewController: UIViewController {
     @objc private func textFieldDidChange(_ textField: UITextField) {
         switch textField {
         case accountSearchView.emailTextField:
-            accountSearchView.requestAuthButton.updateBackgroundColor(.brandMain)
-            accountSearchView.requestAuthButton.isEnabled = true            
-            accountSearchView.authNumberCheckButton.updateTitle("확인")
-            accountSearchView.authNumberCheckButton.updateBackgroundColor(.brandMain)
-            accountSearchView.authNumberCheckButton.isEnabled = true
-            accountSearchView.bottomButtonView.updateBackgroundColor(.blackAC)
-            accountSearchView.bottomButtonView.isEnabled = false
+            resetAuthUI()
         default:
             break
         }
+    }
+    
+    private func resetAuthUI() {
+        accountSearchView.requestAuthButton.updateBackgroundColor(.brandMain)
+        accountSearchView.requestAuthButton.isEnabled = true
+        accountSearchView.emailErrorLabel.updateTextKeepingAttributes(newText: "")
+        
+        accountSearchView.authNumberCheckButton.updateBackgroundColor(.brandMain)
+        accountSearchView.authNumberCheckButton.isEnabled = true
+        accountSearchView.authNumberCheckButton.updateTitle("확인")
+
+        accountSearchView.authNumberTextField.setupTextField(placeholder: "인증코드 입력")
+        accountSearchView.authNumberTextField.backgroundColor = .white
+        accountSearchView.authNumberTextField.isEnabled = true
+        accountSearchView.authNumberTextField.attributedText = nil
+        
+        accountSearchView.authNumberErrorLabel.updateTextKeepingAttributes(newText: "")
+        
+        accountSearchView.bottomButtonView.updateBackgroundColor(.blackAC)
+        accountSearchView.bottomButtonView.isEnabled = false
+        
+        accountSearchView.authStack.isHidden = true
+
+        viewModel.email = ""
     }
 }

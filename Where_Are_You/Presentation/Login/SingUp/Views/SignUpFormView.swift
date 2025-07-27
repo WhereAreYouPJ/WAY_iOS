@@ -239,13 +239,15 @@ class SignUpFormView: UIView {
         
         hidePasswordButton.snp.makeConstraints { make in
             make.centerY.equalTo(passwordTextField)
-            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 20))
+//            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 20))
+            make.width.equalTo(hidePasswordButton.snp.height)
             make.trailing.equalTo(passwordTextField.snp.trailing).inset(LayoutAdapter.shared.scale(value: 12))
         }
         
         hideCheckPasswordButton.snp.makeConstraints { make in
             make.centerY.equalTo(checkPasswordTextField)
-            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 20))
+//            make.width.height.equalTo(LayoutAdapter.shared.scale(value: 20))
+            make.width.equalTo(hideCheckPasswordButton.snp.height)
             make.trailing.equalTo(checkPasswordTextField.snp.trailing).inset(LayoutAdapter.shared.scale(value: 12))
         }
         

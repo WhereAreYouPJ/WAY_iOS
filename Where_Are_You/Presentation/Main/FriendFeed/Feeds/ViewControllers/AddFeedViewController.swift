@@ -71,9 +71,8 @@ class AddFeedViewController: UIViewController {
 
         addFeedView.scheduleDropDown.dropDownTableView.separatorInset = .zero
         addFeedView.scheduleDropDown.dropDownTableView.contentInset = .zero
-        addFeedView.scheduleDropDown.dropDownTableView.sectionHeaderTopPadding = 0 //상단 여백 해결
+        addFeedView.scheduleDropDown.dropDownTableView.sectionHeaderTopPadding = 0
         addFeedView.scheduleDropDown.dropDownTableView.layoutMargins = .zero
-
     }
     
     private func setupNavigationBar() {
@@ -126,7 +125,7 @@ class AddFeedViewController: UIViewController {
         
         viewModel.onFeedCreated = { [weak self] in
             DispatchQueue.main.async {
-                self?.dismiss(animated: true)
+                self?.popViewController()
             }
         }
     }
@@ -159,10 +158,10 @@ class AddFeedViewController: UIViewController {
     func checkUploadAvailability() {
         if scheduleSelected, let title = addFeedView.titleTextField.text, !title.isEmpty {
             addFeedView.creatFeedButton.updateBackgroundColor(.brandMain)
-            addFeedView.creatFeedButton.isEnabled = false
+            addFeedView.creatFeedButton.isEnabled = true
         } else {
             addFeedView.creatFeedButton.updateBackgroundColor(.blackAC)
-            addFeedView.creatFeedButton.isEnabled = true
+            addFeedView.creatFeedButton.isEnabled = false
         }
     }
     
@@ -172,7 +171,7 @@ class AddFeedViewController: UIViewController {
     }
     
     @objc func backButtonTapped() {
-        dismiss(animated: true)
+        popViewController()
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
@@ -205,7 +204,7 @@ class AddFeedViewController: UIViewController {
     
     @objc func createFeed() {
         // 피드 생성하기 버튼 눌림
-print("create tapped")
+        print("create tapped")
         guard let title = addFeedView.titleTextField.text, !title.isEmpty else { return }
         let content = addFeedView.contentTextView.text == "어떤 하루를 보냈나요?" ? nil : addFeedView.contentTextView.text
         
@@ -280,16 +279,6 @@ extension AddFeedViewController: UITableViewDelegate, UITableViewDataSource {
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 8)) // ← 여기 여백 조절
             make.top.bottom.equalToSuperview()
         }
-        
-        // separator 직접 추가
-//        let separator = UIView()
-//        separator.backgroundColor = .white  // separator 색상 맞게 지정
-//        container.addSubview(separator)
-//        separator.snp.makeConstraints { make in
-//            make.leading.trailing.bottom.equalToSuperview()
-//            make.height.equalTo(1)  // 얇게
-//        }
-        
         return container
     }
 
