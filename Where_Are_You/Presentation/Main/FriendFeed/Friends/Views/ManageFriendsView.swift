@@ -11,6 +11,9 @@ import Kingfisher
 // TODO: 버튼 크기 수정 필요
 struct ManageFriendsView: View {
     @Environment(\.dismiss) private var dismiss
+    
+    @State private var receivedRequestButtonStates: [Int: (isAccepted: Bool, showMergedButton: Bool)] = [:]
+        
     @StateObject private var viewModel: ManageFriendsViewModel = {
         let repository = FriendRequestRepository(friendRequestService: FriendRequestService())
         let getListForSenderUseCase = GetListForSenderUseCaseImpl(repository: repository)
@@ -163,8 +166,31 @@ struct ManageFriendsView: View {
                         .frame(width: LayoutAdapter.shared.scale(value: 85), height: LayoutAdapter.shared.scale(value: 38))
                         .button14Style()
                     } else {
+                        // 상태를 바인딩으로 전달
+                        let isAcceptedBinding = Binding<Bool>(
+                            get: { receivedRequestButtonStates[request.friendRequestSeq]?.isAccepted ?? false },
+                            set: { newValue in
+                                if receivedRequestButtonStates[request.friendRequestSeq] == nil {
+                                    receivedRequestButtonStates[request.friendRequestSeq] = (false, false)
+                                }
+                                receivedRequestButtonStates[request.friendRequestSeq]?.isAccepted = newValue
+                            }
+                        )
+                        
+                        let showMergedButtonBinding = Binding<Bool>(
+                            get: { receivedRequestButtonStates[request.friendRequestSeq]?.showMergedButton ?? false },
+                            set: { newValue in
+                                if receivedRequestButtonStates[request.friendRequestSeq] == nil {
+                                    receivedRequestButtonStates[request.friendRequestSeq] = (false, false)
+                                }
+                                receivedRequestButtonStates[request.friendRequestSeq]?.showMergedButton = newValue
+                            }
+                        )
+                        
                         ButtonMergeView(
                             data: request,
+                            isAccepted: isAcceptedBinding,
+                            showMergedButton: showMergedButtonBinding,
                             acceptButtonTitle: "수락",
                             refuseButtonTitle: "삭제",
                             buttonWidth: 85,
