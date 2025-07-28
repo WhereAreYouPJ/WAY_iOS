@@ -86,7 +86,10 @@ class NetworkAlert: UIView {
     // MARK: - Selectors
 
     @objc private func dismissAlert() {
-        self.removeFromSuperview()
+        UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            exit(0)
+        }
     }
     
     @objc private func actionTapped() {

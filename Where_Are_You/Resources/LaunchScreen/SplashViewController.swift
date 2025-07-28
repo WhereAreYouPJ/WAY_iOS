@@ -84,10 +84,5 @@ class SplashViewController: UIViewController {
 
             window.rootViewController = nav
             window.makeKeyAndVisible()
-        
-        
-//        window.backgroundColor = .white  // 또는 원하는 색상
-
-//        UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve, animations: nil)
     }
 }
