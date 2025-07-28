@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ButtonMergeView<T>: View {
-    @State var isAccepted = false
-    @State var showMergedButton = false
+    @Binding var isAccepted: Bool // 외부에서 상태를 바인딩으로 받음
+    @Binding var showMergedButton: Bool
     
     // 데이터 객체
     let data: T
@@ -33,6 +33,8 @@ struct ButtonMergeView<T>: View {
     // 초기화 메서드
     init(
         data: T,
+        isAccepted: Binding<Bool>,
+        showMergedButton: Binding<Bool>,
         acceptButtonTitle: String = "수락하기",
         refuseButtonTitle: String = "거절하기",
         acceptButtonColor: Color = Color.brandDark,
@@ -45,6 +47,8 @@ struct ButtonMergeView<T>: View {
         onRefuse: @escaping (T) -> Void
     ) {
         self.data = data
+        self._isAccepted = isAccepted
+        self._showMergedButton = showMergedButton
         self.acceptButtonTitle = acceptButtonTitle
         self.refuseButtonTitle = refuseButtonTitle
         self.acceptButtonColor = acceptButtonColor
@@ -129,6 +133,8 @@ struct ButtonMergeViewFriendPreview: View {
             // 친구 요청 스타일의 ButtonMergeView
             ButtonMergeView(
                 data: PreviewFriendRequest(id: 1, name: "김지민"),
+                isAccepted: .constant(false),
+                showMergedButton: .constant(false),
                 acceptButtonTitle: "수락",
                 refuseButtonTitle: "삭제",
                 onAccept: { request in
@@ -146,6 +152,8 @@ struct ButtonMergeViewFriendPreview: View {
             
             ButtonMergeView(
                 data: PreviewFriendRequest(id: 1, name: "김지민"),
+                isAccepted: .constant(false),
+                showMergedButton: .constant(false),
                 acceptButtonTitle: "수락",
                 refuseButtonTitle: "삭제",
                 onAccept: { request in
@@ -169,6 +177,8 @@ struct ButtonMergeViewSchedulePreview: View {
             // 일정 초대 스타일의 ButtonMergeView
             ButtonMergeView(
                 data: PreviewSchedule(id: 101, title: "팀 미팅"),
+                isAccepted: .constant(false),
+                showMergedButton: .constant(false),
                 acceptButtonTitle: "수락하기",
                 refuseButtonTitle: "거절하기",
                 buttonWidth: .infinity,
