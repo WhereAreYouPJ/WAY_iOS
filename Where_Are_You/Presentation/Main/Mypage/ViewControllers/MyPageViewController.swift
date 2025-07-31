@@ -72,7 +72,7 @@ class MyPageViewController: UIViewController {
                 let member = Member(userName: memberDetails.userName,
                                     profileImage: memberDetails.profileImage,
                                     memberCode: memberCode)
-                print(memberDetails.email)
+                print("memberDetails: \(memberDetails.email)")
                 self?.email = memberDetails.email ?? ""
                 self?.userName = memberDetails.userName
                 self?.myPageView.configureUI(member: member)

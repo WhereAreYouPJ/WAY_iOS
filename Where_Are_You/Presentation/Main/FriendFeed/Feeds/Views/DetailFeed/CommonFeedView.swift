@@ -27,13 +27,20 @@ class CommonFeedView: UIView {
     let feedImagesView = FeedImagesView()
     let bookMarkButton = UIButton()
     
-    let descriptionLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "d", textColor: .black22))
+    let labelBackGroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .blackF8
+        view.layer.cornerRadius = 12
+        view.clipsToBounds = true
+        return view
+    }()
+    
+    let descriptionLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: "d", textColor: .black22), isPaddingLabel: true)
     
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        descriptionLabel.isHidden = true
-        descriptionLabel.backgroundColor = .blackF8
+        labelBackGroundView.isHidden = true
         configureViewComponents()
         setupActions()
         setupConstraints()
@@ -50,7 +57,8 @@ class CommonFeedView: UIView {
         addSubview(detailBox)
         addSubview(feedImagesView)
         addSubview(bookMarkButton)
-        addSubview(descriptionLabel)
+        addSubview(labelBackGroundView)
+        labelBackGroundView.addSubview(descriptionLabel)
     }
     
     private func setupActions() {
@@ -77,9 +85,15 @@ class CommonFeedView: UIView {
             make.trailing.equalToSuperview()
         }
         
-        descriptionLabel.snp.makeConstraints { make in
+        labelBackGroundView.snp.makeConstraints { make in
             make.top.equalTo(bookMarkButton.snp.bottom).offset(LayoutAdapter.shared.scale(value: 6))
             make.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        descriptionLabel.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 8))
+            make.top.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 12))
         }
     }
     
@@ -93,7 +107,7 @@ class CommonFeedView: UIView {
     func configure(with feed: Feed, delegate: CommonFeedViewDelegate?) {
         self.delegate2 = delegate
 
-        descriptionLabel.isHidden = (feed.content == nil)
+        labelBackGroundView.isHidden = (feed.content == nil)
         guard let content = feed.content else { return }
         descriptionLabel.updateTextKeepingAttributes(newText: content)
         detailBox.configure(with: feed)

@@ -89,8 +89,9 @@ class FeedParticipantView: UIView {
             make.leading.equalToSuperview().inset(LayoutAdapter.shared.scale(value: 5))
             make.height.width.equalTo(LayoutAdapter.shared.scale(value: 26))
         }
-        
+
         let userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: userName, textColor: .black22))
+        
         button.addSubview(userNameLabel)
         userNameLabel.snp.makeConstraints { make in
             make.leading.equalTo(profileImage.snp.trailing).offset(LayoutAdapter.shared.scale(value: 6))

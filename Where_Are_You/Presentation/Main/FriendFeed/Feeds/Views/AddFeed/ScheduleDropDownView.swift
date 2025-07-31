@@ -100,7 +100,6 @@ class ScheduleDropDown: UIView {
         moreButton.frame = footerView.bounds
         footerView.addSubview(moreButton)
         dropDownTableView.tableFooterView = footerView
-        
     }
 
     private func configureViewComponents() {
