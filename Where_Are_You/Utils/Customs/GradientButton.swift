@@ -8,6 +8,7 @@
 import UIKit
 class GradientButton: UIButton {
     var isFeedExists: Bool = false
+    var userNameLabel: UILabel?
     
     private var gradientBorderColors: [CGColor] = []
     private var gradientBorderLineWidth: CGFloat = 0

@@ -148,7 +148,7 @@ class FriendFeedViewController: UIViewController {
         titleView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(LayoutAdapter.shared.scale(value: 48))
+            make.height.equalTo(LayoutAdapter.shared.scale(value: 50))
         }
         
         feedsViewController.view.snp.makeConstraints { make in

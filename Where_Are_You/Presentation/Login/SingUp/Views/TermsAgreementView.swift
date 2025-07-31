@@ -154,7 +154,7 @@ class TermsAgreementView: UIView {
         viewButton.snp.makeConstraints { make in
             make.height.equalTo(22)
         }
-        //라벨과 버튼 사이의 공간을 유연하게 분배하려면 라벨의 content hugging priority를 낮게 설정 가능
+        // 라벨과 버튼 사이의 공간을 유연하게 분배하려면 라벨의 content hugging priority를 낮게 설정 가능
         viewButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         termButtons.append(viewButton)

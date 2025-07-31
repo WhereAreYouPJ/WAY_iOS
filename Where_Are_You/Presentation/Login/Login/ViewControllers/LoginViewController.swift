@@ -93,7 +93,7 @@ class LoginViewController: UIViewController {
     
     @objc func kakaoLoginTapped() {
         // 카카오톡 실행 가능 여부 확인
-        if (UserApi.isKakaoTalkLoginAvailable()) {
+        if UserApi.isKakaoTalkLoginAvailable() {
             // 카카오톡 앱으로 로그인 인증
             kakaoLonginWithApp()
         } else { // 카톡이 설치가 안 되어 있을 때

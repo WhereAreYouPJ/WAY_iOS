@@ -50,7 +50,6 @@ class FeedDetailViewController: UIViewController {
         setupView()
         setupBindings()
         setupActions()
-        
     }
     
     // MARK: - Helpers

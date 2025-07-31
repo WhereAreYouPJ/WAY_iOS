@@ -9,10 +9,10 @@ import UIKit
 
 class MyDetailManageViewcontroller: UIViewController {
     private let mydetailManageView = MyDetailManageView()
-    private var isEditingMode = false
+    private var isEditingMode: Bool = false
     
-    var userName: String
-    var email: String
+    var userName: String = ""
+    var email: String = ""
         
     private let addButton: UIButton = {
         let button = UIButton()
@@ -81,11 +81,11 @@ class MyDetailManageViewcontroller: UIViewController {
             mydetailManageView.emailTextfield.setupTextField(placeholder: email)
             mydetailManageView.emailTextfield.isUserInteractionEnabled = false
             mydetailManageView.emailTextfield.backgroundColor = .blackF0
-            mydetailManageView.userNameTextField.isUserInteractionEnabled = isEditingMode
-            mydetailManageView.updateDetailButton.isHidden = !isEditingMode
-            addButton.isHidden = isEditingMode
-            mydetailManageView.userNameTextField.setupTextField(placeholder: userName)
         }
+        mydetailManageView.userNameTextField.isUserInteractionEnabled = isEditingMode
+        mydetailManageView.updateDetailButton.isHidden = !isEditingMode
+        addButton.isHidden = isEditingMode
+        mydetailManageView.userNameTextField.setupTextField(placeholder: userName)
     }
     
     private func setupBindings() {
@@ -117,7 +117,7 @@ class MyDetailManageViewcontroller: UIViewController {
     }
     
     @objc private func modifyButtonTapped() {
-        isEditingMode.toggle()
+        isEditingMode = true
         mydetailManageView.modifyButton.isHidden = true
         configureInitialState()
     }
