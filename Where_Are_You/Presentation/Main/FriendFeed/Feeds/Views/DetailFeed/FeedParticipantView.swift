@@ -79,7 +79,7 @@ class FeedParticipantView: UIView {
         }
     }
 
-    func updateParticipantButton(userName: String, isFeedExists: Bool, button: UIButton, imageURLString: String, index: Int) {
+    func updateParticipantButton(userName: String, isFeedExists: Bool, button: GradientButton, imageURLString: String, index: Int) {
         let profileImage = RoundImageView()
         profileImage.kf.setImage(with: URL(string: imageURLString))
         profileImage.clipsToBounds = true
@@ -91,7 +91,8 @@ class FeedParticipantView: UIView {
         }
 
         let userNameLabel = StandardLabel(UIFont: UIFont.CustomFont.bodyP4(text: userName, textColor: .black22))
-        
+        button.userNameLabel = userNameLabel
+
         button.addSubview(userNameLabel)
         userNameLabel.snp.makeConstraints { make in
             make.leading.equalTo(profileImage.snp.trailing).offset(LayoutAdapter.shared.scale(value: 6))
@@ -120,19 +121,19 @@ class FeedParticipantView: UIView {
                 UIColor.rgb(red: 122, green: 93, blue: 249).cgColor
             ])
             button.layer.borderWidth = 0
-            button.setTitleColor(.white, for: .normal)
+            button.userNameLabel?.textColor = .blackF8
         } else {
             if isFeedExists {
                 // ✅ 작성 + 미선택
                 button.backgroundColor = .brandHighLight1 // 연보라
                 button.layer.borderWidth = 0
-                button.setTitleColor(.black22, for: .normal)
+                button.userNameLabel?.textColor = .black22
             } else {
                 // ✅ 미작성 + 미선택
                 button.backgroundColor = .blackF0
                 button.layer.borderColor = UIColor.rgb(red: 230, green: 230, blue: 230).cgColor
                 button.layer.borderWidth = 1
-                button.setTitleColor(.black22, for: .normal)
+                button.userNameLabel?.textColor = .black22
             }
         }
     }
