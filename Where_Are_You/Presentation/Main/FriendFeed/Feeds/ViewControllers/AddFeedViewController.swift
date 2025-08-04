@@ -190,9 +190,7 @@ class AddFeedViewController: UIViewController {
             addFeedView.scheduleDropDown.dropDownTableView.layer.zPosition = 1
             viewModel.fetchSchedules()
         }
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
+        self.view.layoutIfNeeded()
         if isScheduleEmpty {
             addFeedView.scheduleDropDown.dropDownTableView.isHidden = isScheduleEmpty // 테이블 뷰 표시/숨김 처리
             addFeedView.scheduleDropDown.emptyView.isHidden = !isDropdownVisible
