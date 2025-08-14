@@ -46,7 +46,7 @@ class SplashViewController: UIViewController {
     }
     
     func checkDeviceNetworkStatus() {
-        if !(DeviceManager.shared.networkStatue) {
+        if !(DeviceManager.shared.networkStatus) {
             DispatchQueue.main.async {
                 let networkAlert = NetworkAlert(action: {
                     self.checkDeviceNetworkStatus()
