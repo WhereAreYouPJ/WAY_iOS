@@ -21,8 +21,6 @@
 ### ✔ Frond-end
 <div>
 <img src="https://img.shields.io/badge/Android-34A853?style=for-the-badge&logo=Android&logoColor=white"/>
-<img src="https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=Kotlin&logoColor=white"/>
-<img src="https://img.shields.io/badge/Jetpack Compose-4285F4?style=for-the-badge&logo=Jetpack Compose&logoColor=white"/>
 </div>
 
 ### ✔ Back-end
@@ -33,15 +31,6 @@
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"/> <!-- MySQL -->
 <img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=Redis&logoColor=white"/> <!-- Redis -->
 <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=Firebase&logoColor=white"/> <!-- Firebase -->
-</div>
-
-### ✔ Infra
-<div>
-<img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=for-the-badge&logo=AmazonEC2&logoColor=white"/> <!-- Amazon EC2 -->
-<img src="https://img.shields.io/badge/Amazon Route 53-8C4FFF?style=for-the-badge&logo=Amazon Route 53&logoColor=white"> <!-- Amazon Route 53 -->
-<img src="https://img.shields.io/badge/Amazon S3-569A31?style=for-the-badge&logo=Amazon S3&logoColor=white"/> <!-- Amazon S3 -->
-<img src="https://img.shields.io/badge/Amazon RDS-527FFF?style=for-the-badge&logo=Amazon RDS&logoColor=white"/> <!-- Amazon RDS -->
-<img src="https://img.shields.io/badge/AWS Elastic Load Balancing-8C4FFF?style=for-the-badge&logo=AWS Elastic Load Balancing&logoColor=white"/> <!-- AWS Elastic Load Balancing -->
 </div>
 
 ### ✔ DevOps
